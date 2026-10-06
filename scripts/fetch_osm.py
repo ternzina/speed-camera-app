@@ -60,8 +60,15 @@ def fetch(code, refresh=False, phase='speed'):
         try:
             req = urllib.request.Request(endpoint+'?'+urllib.parse.urlencode({'data': query}),
                                          headers={'User-Agent': 'SpeedCameraBootstrap/1.0 (+https://github.com/ternzina/speed-camera-app; open data import)'})
+            deadline=time.monotonic()+(150 if phase=='speed' else 90)
             with urllib.request.urlopen(req, timeout=120 if phase=="speed" else 65) as response:
-                raw = response.read()
+                chunks=[]
+                while True:
+                    if time.monotonic()>deadline:raise TimeoutError('Download wall-clock limit exceeded')
+                    chunk=response.read(65536)
+                    if not chunk:break
+                    chunks.append(chunk)
+                raw=b''.join(chunks)
             data = json.loads(raw)
             if data.get('remark') or 'elements' not in data:
                 raise ValueError(data.get('remark', 'invalid response'))
