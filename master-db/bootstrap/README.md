@@ -103,3 +103,8 @@ plus the selected country. Per-camera provenance remains available in the full
 Supabase export. Real exported data required at most 1.66 MB for the three cached
 feeds during validation, within Android storage/cursor limits. Earlier cache
 formats are still readable. The app renders only nearby map markers.
+
+Malformed government rows are isolated and reported instead of aborting all
+countries. A conflicting known speed limit within 5 m of an authoritative record
+is held for review when lane/direction identity cannot be resolved. Unusable or
+implausible section endpoints are quarantined, never guessed.

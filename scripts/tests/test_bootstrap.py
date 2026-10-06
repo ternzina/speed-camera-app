@@ -13,6 +13,11 @@ def camera(cid='a',heading=0,kind='fixed_speed',lon=4):
                 camera_sources=[dict(source_code='OSM_BE',source_id=cid,retrieved_at='2026-01-01T00:00:00Z')])
 
 class BootstrapSafety(unittest.TestCase):
+    def test_malformed_official_row_does_not_abort_feed(self):
+        source=dict(code='TEST_FR',country_code='FR',name='Test',source_type='official_government',license='PDDL',license_url='https://example.org/license',source_url='https://example.org/data',adapter='france')
+        valid={'Numéro de radar':'1','Type de radar':'ETF','VMA':'50','Latitude':'48','Longitude':'2'}
+        errors=[];rows=list(official_records({'source':source,'retrieved_at':'2026-10-07','data':[{**valid,'Longitude':'bad'},valid]},errors))
+        self.assertEqual(len(rows),1);self.assertEqual(len(errors),1);self.assertEqual(rows[0]['longitude'],2)
     def test_units_unknowns(self):
         self.assertEqual(speed('25 mph'),40);self.assertEqual(speed(30,mph=True),48)
         for value in ['50;70','50 @ wet','signals','walk',0,999]:self.assertIsNone(speed(value))

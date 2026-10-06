@@ -38,7 +38,9 @@ def main():
             'secret_findings':findings,'excluded_local_paths':['.env.bootstrap','*.jks','node_modules/','.expo/','.bootstrap-venv/',
              'master-db/raw/','master-db/cache/','master-db/backups/','*.backup-*','*.before-*','build artifacts'],
             'note':'Previously published small non-secret server backups were removed from the current tree; unpublished bootstrap backup commit kept only on a local branch.'}
-    target=ROOT/'master-db/bootstrap/reports/git-safety.json';target.parent.mkdir(parents=True,exist_ok=True);target.write_text(json.dumps(report,indent=2)+'\n')
+    import argparse
+    parser=argparse.ArgumentParser();parser.add_argument('--output',default='master-db/bootstrap/reports/git-safety.json');args=parser.parse_args()
+    target=ROOT/args.output;target.parent.mkdir(parents=True,exist_ok=True);target.write_text(json.dumps(report,indent=2)+'\n')
     print(json.dumps({'tracked_files':len(files),'history_blobs_checked':len(checked),'forbidden_files':forbidden,'secret_findings':findings}))
     if forbidden or findings:raise SystemExit('STOP: publication safety findings require review')
 if __name__=='__main__':main()

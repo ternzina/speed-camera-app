@@ -65,6 +65,12 @@ def bearing(a,b):
     p1,p2=map(math.radians,(a[0],b[0]));dl=math.radians(b[1]-a[1])
     return math.degrees(math.atan2(math.sin(dl)*math.cos(p2), math.cos(p1)*math.sin(p2)-math.sin(p1)*math.cos(p2)*math.cos(dl)))%360
 
+def clean_raw(value):
+    if isinstance(value,float) and not math.isfinite(value):return str(value)
+    if isinstance(value,dict):return {k:clean_raw(v) for k,v in value.items()}
+    if isinstance(value,list):return [clean_raw(v) for v in value]
+    return value
+
 def base_record(source, external_id, lat, lon, typ, raw, **kw):
     return dict(canonical_id=source['code']+':'+str(external_id),country_code=source['country_code'],
                 latitude=lat,longitude=lon,camera_type=typ,speed_limit=None,direction=None,direction_raw=None,
@@ -83,82 +89,86 @@ def geometry_point(g):
     if g['type']=='MultiPoint' and len(g['coordinates'])==1:return g['coordinates'][0][:2]
     return None
 
-def official_records(envelope):
+def official_records(envelope, errors=None):
     source={**envelope['source'],'retrieved_at':envelope['retrieved_at']}
     data=envelope['data']
     for index,row in enumerate(data.get('features',[]) if isinstance(data,dict) else data):
-        p=row.get('properties',row); adapter=source['adapter'];coords=geometry_point(row.get('geometry'))
-        if adapter=='france':coords=[float(p['Longitude']),float(p['Latitude'])]
-        elif adapter=='dgt':coords=[float(p['longitude'][0]),float(p['latitude'][0])]
-        elif adapter=='nvdb':
-            # NVDB EPSG:4326 WKT uses authority axis order: latitude, longitude.
-            m=re.search(r'POINT(?: Z)?\s*\(\s*([\d.-]+)\s+([\d.-]+)',p.get('geometri',{}).get('wkt',''))
-            if not m:continue
-            coords=[float(m[2]),float(m[1])]
-        if coords:lon,lat=coords
-        else:
-            try:lat,lon=float(p['latitude']),float(p['longitude'])
-            except (KeyError,ValueError,TypeError):continue
-        typ=source.get('camera_type','red_light');external=None;rawdir=None;limit=None;road=None;city=source.get('city');region=None;status='active'
-        extra={}
-        if adapter=='france':
-            external=p['Numéro de radar'];t=p['Type de radar'];limit=speed(p.get('VMA'))
-            typ='red_light' if t=='ETFR' else 'other_enforcement' if t in ('ETPN','ETVM') else 'fixed_speed'
-            if t=='ETVM':status='review';extra['unresolved_average_speed_endpoint']=True
-        elif adapter=='dgt':
-            external=p['id'];road=(p.get('roadNumber') or [None])[0];rawdir=(p.get('directionRelative') or [None])[0]
-            if p.get('from') and p.get('to'):
-                typ='average_speed_section';lat,lon=p['from'];extra={'end_latitude':p['to'][0],'end_longitude':p['to'][1]}
-            else:typ='fixed_speed'
-        elif adapter=='nvdb':
-            external=p['id'];props={e['navn']:e.get('verdi') for e in p.get('egenskaper',[])}
-            road=props.get('Navn');rawdir=props.get('Kontollretning') or props.get('Kontrollretning');typ='fixed_speed';limit=speed(props.get('Fartsgrense'))
-            refs=p.get('lokasjon',{}).get('vegsystemreferanser',[])
-            if refs:
-                vs=refs[0].get('vegsystem',{});extra['road_ref']=str(vs.get('vegkategori',''))+str(vs.get('nummer',''))
-        elif adapter=='chicago':
-            external=p.get('id') or p.get('location_id') or p.get('intersection')
-            # One published record can monitor two approaches. Do not assume single direction.
-            rawdir=';'.join(str(p[k]) for k in ['first_approach','second_approach','third_approach'] if p.get(k)) or None
-            road=p.get('address') or p.get('intersection')
-        elif adapter=='dc':
-            external=p.get('ENFORCEMENT_SPACE_CODE') or p.get('GLOBALID')
-            t=str(p.get('ENFORCEMENT_TYPE','')).lower()
-            typ='speed_and_red_light' if 'red' in t and 'speed' in t else 'red_light' if 'red' in t else 'fixed_speed' if 'speed' in t else 'other_enforcement'
-            limit=speed(p.get('SPEED_LIMIT'),mph=True) if 'speed' in t else None
-            road=p.get('LOCATION_DESCRIPTION'); m=re.search(r'\b([NSEW]/B)\b',road or '')
-            rawdir=m[1] if m else None
-            if p.get('ACTIVE_STATUS')!='Active' or p.get('CAMERA_STATUS')!='Live':status='candidate'
-        elif adapter=='seattle':
-            external=p.get('ObjectId');t=str(p.get('Camera_Type','')).lower()
-            typ='red_light' if 'red' in t else 'fixed_speed' if 'speed' in t or 'school' in t else 'other_enforcement'
-            road=p.get('SPD_Camera_Name');m=re.match(r'^(NB|SB|EB|WB)\b',road or '');rawdir=m[1] if m else None
-        elif adapter=='baltimore':
-            external=p.get('GIS_ID') or p.get('OBJECTID');road=p.get('Location')
-            approaches=re.findall(r'\b(?:NB|SB|EB|WB)\b',road or '')
-            rawdir=approaches[0] if len(approaches)==1 else ';'.join(approaches) or None
-            if source.get('historical') or p.get('Status') not in ('Final','Active'):status='candidate'
-        elif adapter=='sfmta':
-            external=p['site_id'];typ='fixed_speed';road=p.get('location');limit=speed(p.get('posted_speed'),mph=True)
-            m=re.match(r'^(NB|SB|EB|WB)\b',road or '');rawdir=m[1] if m else None
-            extra['source_snapshot_date']=p.get('last_date')
-        elif adapter=='toronto':
-            external=p.get('RLC') or p.get('ID');road=p.get('NAME');region=p.get('DISTRICT')
-        elif adapter=='quebec':
-            t=p.get('typeAppareil','').lower();road=p.get('description');city=p.get('municipalite');region=p.get('region')
-            external=parse_qs(urlparse(p.get('urlImage','')).query).get('idSite',[None])[0]
-            typ='speed_and_red_light' if 'fixe' in t and 'rouge' in t else 'red_light' if 'rouge' in t else 'fixed_speed' if 'fixe' in t else 'other_enforcement'
-            if 'mobile' in t or p.get('dateFinService'):status='candidate'
-        elif adapter=='edmonton':
-            external=p.get('site_id');road=' '.join(str(p.get(k,'')) for k in ['approach','cross_street']);rawdir=p.get('travel_direction');limit=speed(p.get('posted_speed'));typ='red_light'
-            # Alberta restricted speed-on-green. Keep posted speed as context, not proof of speed enforcement.
-        elif adapter=='ottawa':
-            external=(p.get('INTERSECTION','').strip()+'|'+str(p.get('CAMERA_FACING')));road=p.get('INTERSECTION');rawdir=p.get('CAMERA_FACING');status='candidate'
-        if external is None:continue  # Do not create unstable row-number IDs.
-        r=base_record(source,external,lat,lon,typ,p)
-        r.update(direction=direction(rawdir),direction_raw=rawdir,speed_limit=limit,road_name=road,city=city,region=region,status=status,**extra)
-        if extra.get('unresolved_average_speed_endpoint'):r['confidence']='LOW'
-        yield r
+        try:
+            p=row.get('properties',row); adapter=source['adapter'];coords=geometry_point(row.get('geometry'))
+            if adapter=='france':coords=[float(p['Longitude']),float(p['Latitude'])]
+            elif adapter=='dgt':coords=[float(p['longitude'][0]),float(p['latitude'][0])]
+            elif adapter=='nvdb':
+                # NVDB EPSG:4326 WKT uses authority axis order: latitude, longitude.
+                m=re.search(r'POINT(?: Z)?\s*\(\s*([\d.-]+)\s+([\d.-]+)',p.get('geometri',{}).get('wkt',''))
+                if not m:continue
+                coords=[float(m[2]),float(m[1])]
+            if coords:lon,lat=coords
+            else:
+                try:lat,lon=float(p['latitude']),float(p['longitude'])
+                except (KeyError,ValueError,TypeError):continue
+            typ=source.get('camera_type','red_light');external=None;rawdir=None;limit=None;road=None;city=source.get('city');region=None;status='active'
+            extra={}
+            if adapter=='france':
+                external=p['Numéro de radar'];t=p['Type de radar'];limit=speed(p.get('VMA'))
+                typ='red_light' if t=='ETFR' else 'other_enforcement' if t in ('ETPN','ETVM') else 'fixed_speed'
+                if t=='ETVM':status='review';extra['unresolved_average_speed_endpoint']=True
+            elif adapter=='dgt':
+                external=p['id'];road=(p.get('roadNumber') or [None])[0];rawdir=(p.get('directionRelative') or [None])[0]
+                if p.get('from') and p.get('to'):
+                    typ='average_speed_section';lat,lon=p['from'];extra={'end_latitude':p['to'][0],'end_longitude':p['to'][1]}
+                else:typ='fixed_speed'
+            elif adapter=='nvdb':
+                external=p['id'];props={e['navn']:e.get('verdi') for e in p.get('egenskaper',[])}
+                road=props.get('Navn');rawdir=props.get('Kontollretning') or props.get('Kontrollretning');typ='fixed_speed';limit=speed(props.get('Fartsgrense'))
+                refs=p.get('lokasjon',{}).get('vegsystemreferanser',[])
+                if refs:
+                    vs=refs[0].get('vegsystem',{});extra['road_ref']=str(vs.get('vegkategori',''))+str(vs.get('nummer',''))
+            elif adapter=='chicago':
+                external=p.get('id') or p.get('location_id') or p.get('intersection')
+                # One published record can monitor two approaches. Do not assume single direction.
+                rawdir=';'.join(str(p[k]) for k in ['first_approach','second_approach','third_approach'] if p.get(k)) or None
+                road=p.get('address') or p.get('intersection')
+            elif adapter=='dc':
+                external=p.get('ENFORCEMENT_SPACE_CODE') or p.get('GLOBALID')
+                t=str(p.get('ENFORCEMENT_TYPE','')).lower()
+                typ='speed_and_red_light' if 'red' in t and 'speed' in t else 'red_light' if 'red' in t else 'fixed_speed' if 'speed' in t else 'other_enforcement'
+                limit=speed(p.get('SPEED_LIMIT'),mph=True) if 'speed' in t else None
+                road=p.get('LOCATION_DESCRIPTION'); m=re.search(r'\b([NSEW]/B)\b',road or '')
+                rawdir=m[1] if m else None
+                if p.get('ACTIVE_STATUS')!='Active' or p.get('CAMERA_STATUS')!='Live':status='candidate'
+            elif adapter=='seattle':
+                external=p.get('ObjectId');t=str(p.get('Camera_Type','')).lower()
+                typ='red_light' if 'red' in t else 'fixed_speed' if 'speed' in t or 'school' in t else 'other_enforcement'
+                road=p.get('SPD_Camera_Name');m=re.match(r'^(NB|SB|EB|WB)\b',road or '');rawdir=m[1] if m else None
+            elif adapter=='baltimore':
+                external=p.get('GIS_ID') or p.get('OBJECTID');road=p.get('Location')
+                approaches=re.findall(r'\b(?:NB|SB|EB|WB)\b',road or '')
+                rawdir=approaches[0] if len(approaches)==1 else ';'.join(approaches) or None
+                if source.get('historical') or p.get('Status') not in ('Final','Active'):status='candidate'
+            elif adapter=='sfmta':
+                external=p['site_id'];typ='fixed_speed';road=p.get('location');limit=speed(p.get('posted_speed'),mph=True)
+                m=re.match(r'^(NB|SB|EB|WB)\b',road or '');rawdir=m[1] if m else None
+                extra['source_snapshot_date']=p.get('last_date')
+            elif adapter=='toronto':
+                external=p.get('RLC') or p.get('ID');road=p.get('NAME');region=p.get('DISTRICT')
+            elif adapter=='quebec':
+                t=p.get('typeAppareil','').lower();road=p.get('description');city=p.get('municipalite');region=p.get('region')
+                external=parse_qs(urlparse(p.get('urlImage','')).query).get('idSite',[None])[0]
+                typ='speed_and_red_light' if 'fixe' in t and 'rouge' in t else 'red_light' if 'rouge' in t else 'fixed_speed' if 'fixe' in t else 'other_enforcement'
+                if 'mobile' in t or p.get('dateFinService'):status='candidate'
+            elif adapter=='edmonton':
+                external=p.get('site_id');road=' '.join(str(p.get(k,'')) for k in ['approach','cross_street']);rawdir=p.get('travel_direction');limit=speed(p.get('posted_speed'));typ='red_light'
+                # Alberta restricted speed-on-green. Keep posted speed as context, not proof of speed enforcement.
+            elif adapter=='ottawa':
+                external=(p.get('INTERSECTION','').strip()+'|'+str(p.get('CAMERA_FACING')));road=p.get('INTERSECTION');rawdir=p.get('CAMERA_FACING');status='candidate'
+            if external is None:continue  # Do not create unstable row-number IDs.
+            r=base_record(source,external,lat,lon,typ,p)
+            r.update(direction=direction(rawdir),direction_raw=rawdir,speed_limit=limit,road_name=road,city=city,region=region,status=status,**extra)
+            if extra.get('unresolved_average_speed_endpoint'):r['confidence']='LOW'
+            yield r
+        except (KeyError,ValueError,TypeError,IndexError) as exc:
+            if errors is not None:errors.append({'source_code':source['code'],'row_index':index,'error_type':type(exc).__name__,'reason':'Malformed source record; raw retained, other rows continue'})
+            continue
 
 def osm_records(data,code):
     meta=data['_bootstrap'];retrieved=meta['retrieved_at']
@@ -204,7 +214,7 @@ def osm_records(data,code):
         elif 'red' in enforcement or enforcement in ('traffic_signals','traffic_lights'):typ='red_light'
         elif tags.get('highway')=='speed_camera' or enforcement in ('speed','maxspeed'):typ='fixed_speed'
         else:typ='other_enforcement'
-        external=e['type']+'/'+str(e['id']);raw={'tags':tags,'osm_id':e['id'],'osm_type':e['type'],'osm_version':e.get('version'),'osm_last_modified':e.get('timestamp'),'relations':device_relations.get(key,[])}
+        external=e['type']+'/'+str(e['id']);raw={'tags':tags,'node_tags':e.get('tags',{}),'enforcement_relations':[{'id':rid,'version':elements[('relation',rid)].get('version'),'timestamp':elements[('relation',rid)].get('timestamp'),'tags':elements[('relation',rid)].get('tags',{})} for rid in device_relations.get(key,[])],'osm_id':e['id'],'osm_type':e['type'],'osm_version':e.get('version'),'osm_last_modified':e.get('timestamp'),'relations':device_relations.get(key,[])}
         r=base_record({**source,'retrieved_at':e.get('_observed_at') or retrieved},external,coords[0],coords[1],typ,raw,source_updated_at=e.get('timestamp'))
         rawdir=tags.get('direction') # camera:direction describes optical facing, not necessarily traffic travel
         r.update(direction=direction(rawdir),direction_raw=rawdir,speed_limit=speed(tags.get('maxspeed')),road_name=tags.get('addr:street') or tags.get('name'),road_ref=tags.get('ref'),city=tags.get('addr:city'),region=tags.get('addr:state'))
@@ -282,7 +292,7 @@ def main():
     ontario=shape(json.loads(ontario_path.read_text())['features'][0]['geometry']) if ontario_path.exists() else None
     policy_reviews=[]
     stats={c:dict(country_name=n,existing_before=0,official_found=0,osm_found=0,other_found=0,duplicates_merged=0,new_candidates=0,high_confidence=0,medium_confidence=0,low_confidence=0,with_speed_limit=0,with_direction=0,with_raw_direction=0,average_speed_sections=0,final_total=0,quarantined=0) for c,n in COUNTRIES.items()}
-    records=[];grid=collections.defaultdict(list);sources=[];rejected=[];merges=[]
+    records=[];grid=collections.defaultdict(list);sources=[];rejected=[];merges=[];conflicts=[];parse_errors=[]
     def gridkey(r):return r['country_code'],math.floor(r['latitude']/.001),math.floor(r['longitude']/.001)
     for b in json.loads((ROOT/'master-db/backups/pre-bootstrap-20261007/baseline-records.json').read_text()):
         r={**b,'camera_type':LEGACY_TYPES[b['record_type']],'direction':direction(b['direction_code']),
@@ -305,6 +315,8 @@ def main():
             if ontario.covers(Point(lon,lat)):
                 r.update(confidence='LOW',status='review',review_reason='Ontario municipal ASE authority ended 2025-11-14; OSM-only speed enforcement needs current authoritative confirmation',review_source_url='https://www.ontario.ca/page/reducing-speeding-real-time',policy_checked_at='2026-10-07')
                 policy_reviews.append({'canonical_id':r['canonical_id'],'reason':r['review_reason'],'source_url':r['review_source_url']})
+        source['raw_payload']=clean_raw(source['raw_payload'])
+        source['raw_payload_sha256']=hashlib.sha256(json.dumps(source['raw_payload'],sort_keys=True,ensure_ascii=False,separators=(',',':'),allow_nan=False).encode()).hexdigest()
         source.update({k:r.get(k) for k in ['latitude','longitude','end_latitude','end_longitude','speed_limit','direction','direction_raw']})
         category='osm_found' if source['source_type']=='openstreetmap' else 'official_found'
         stats[c][category]+=1
@@ -312,16 +324,26 @@ def main():
         if r['camera_type']=='average_speed_section':
             length=dist(r,{'latitude':r['end_latitude'],'longitude':r['end_longitude']})
             r['section_endpoint_distance_m']=round(length,1)
-            if not polygon.covers(Point(r['end_longitude'],r['end_latitude'])) or not 50<=length<=200000:
+            invalid_end=not (-90<=r['end_latitude']<=90 and -180<=r['end_longitude']<=180) or (r['end_latitude'],r['end_longitude'])==(0,0)
+            if invalid_end:
+                r.update(camera_type='other_enforcement',end_latitude=None,end_longitude=None)
+                source.update(end_latitude=None,end_longitude=None)
+            if invalid_end or not polygon.covers(Point(r['end_longitude'],r['end_latitude'])) or not 50<=length<=200000:
                 r.update(confidence='LOW',status='review',review_reason='Section endpoints outside country or implausible endpoint distance')
-        key=gridkey(r);matches=[]
+        key=gridkey(r);matches=[];disagreements=[]
+        longitude_cells=min(50,max(1,math.ceil(30/max(.6,111.32*abs(math.cos(math.radians(lat)))))))
         for di in (-1,0,1):
-            for dj in (-1,0,1):
+            for dj in range(-longitude_cells,longitude_cells+1):
                 for i in grid.get((c,key[1]+di,key[2]+dj),[]):
                     prior=records[i]
                     # Different source IDs in the same feed may be different lanes/devices.
                     if any(s['source_code']==source['source_code'] and s['source_id']!=source['source_id'] for s in prior['camera_sources']):continue
                     if compatible(prior,r):matches.append((dist(prior,r),i))
+                    elif source['source_type']=='openstreetmap' and prior['confidence']=='HIGH' and prior['camera_type']==r['camera_type'] and dist(prior,r)<=5 and prior.get('speed_limit') and r.get('speed_limit') and prior['speed_limit']!=r['speed_limit']:
+                        headings=[prior.get('direction'),r.get('direction')]
+                        same_heading=None in headings or min(abs(headings[0]-headings[1])%360,360-abs(headings[0]-headings[1])%360)<=25
+                        raw_compatible=not(prior.get('direction_raw') and r.get('direction_raw')) or (None not in headings) or normtext(prior['direction_raw'])==normtext(r['direction_raw'])
+                        if same_heading and raw_compatible:disagreements.append(prior['canonical_id'])
         if matches:
             _,i=min(matches);target=records[i]
             if not any(s['source_code']==source['source_code'] and s['source_id']==source['source_id'] for s in target['camera_sources']):
@@ -333,12 +355,15 @@ def main():
                 for field in ['speed_limit','direction','direction_raw','road_ref','road_name','city','region']:
                     if target.get(field) is None:target[field]=r.get(field)
             return
+        if disagreements:
+            r.update(confidence='LOW',status='review',review_reason='Speed disagreement with a very close authoritative record; identity/lane unresolved',conflicting_records=disagreements)
+            conflicts.append({'canonical_id':r['canonical_id'],'official_records':disagreements,'reason':r['review_reason']})
         if c in ('UA','PL'):r['status']='candidate' # current app exports stay unchanged
         stats[c]['new_candidates']+=1
         records.append(r);grid[key].append(len(records)-1)
     for path in sorted((ROOT/'master-db/raw/official').glob('*.json')):
         envelope=json.loads(path.read_text());sources.append({**envelope['source'],'retrieved_at':envelope['retrieved_at']})
-        for r in official_records(envelope):accept(r)
+        for r in official_records(envelope,parse_errors):accept(r)
     osm_files=list((ROOT/'master-db/cache/bootstrap/osm').glob('*.json'))
     for path in sorted(osm_files):
         if '.error.' in path.name:continue
@@ -367,6 +392,8 @@ def main():
     save(BASE/'reports/country-statistics.json',stats)
     save(BASE/'reports/dedupe-merges.json',merges)
     save(BASE/'reports/rejected.json',rejected)
+    save(BASE/'reports/source-conflicts.json',conflicts)
+    save(BASE/'reports/source-parse-errors.json',parse_errors)
     sample=[]
     for c in sorted(bycountry):
         new=[r for r in bycountry[c] if not r.get('protected_existing')]

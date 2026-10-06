@@ -84,7 +84,7 @@ def validate(records):
         assert r.get('direction') is None or 0<=r['direction']<360
         if r['camera_type']=='average_speed_section':
             assert r.get('end_latitude') is not None and r.get('end_longitude') is not None
-            assert -90<=r['end_latitude']<=90 and -180<=r['end_longitude']<=180
+            assert -90<=r['end_latitude']<=90 and -180<=r['end_longitude']<=180 and (r['end_latitude'],r['end_longitude'])!=(0,0)
         for source in r['camera_sources']:
             key=source['source_code'],source['source_id']
             assert key not in source_ids, 'duplicate external source identity: '+str(key)
@@ -101,7 +101,7 @@ def validate(records):
             'countries':len({r['country_code'] for r in records}),'camera_types':dict(types),
             'baseline_records_preserved':len(original),'source_records':len(source_ids),
             'invalid_coordinates':0,'duplicate_canonical_ids':0,'duplicate_source_ids':0,'low_confidence_active':0,
-            'notes':['Country membership checked against Natural Earth 1:10m polygons during normalization.',
+            'notes':['New record country membership checked against Natural Earth 1:10m polygons during normalization.',
                      'OSM envelopes clipped to country polygons; uncertain official coordinates quarantined.',
                      'Non-numeric direction and conditional/multi-valued maxspeed retained in raw provenance, not guessed.']}
     save(BASE/'reports/validation.json',report)
@@ -136,12 +136,12 @@ def stamp(value):
 def sync(records):
     with connect() as conn:
         before={cid:metadata for cid,metadata in conn.execute('select canonical_id,metadata from public.camera_records')}
-        links={(code,external):(cid,stamp(seen),state) for code,external,cid,seen,state in conn.execute('select s.code,l.external_id,r.canonical_id,l.last_seen_at,l.source_status from public.camera_source_links l join public.camera_sources s on s.id=l.source_id join public.camera_records r on r.id=l.camera_record_id')}
+        links={(code,external):(cid,stamp(seen),state,raw_hash) for code,external,cid,seen,state,raw_hash in conn.execute("select s.code,l.external_id,r.canonical_id,l.last_seen_at,l.source_status,l.raw_payload->'_source'->>'raw_payload_sha256' from public.camera_source_links l join public.camera_sources s on s.id=l.source_id join public.camera_records r on r.id=l.camera_record_id")}
         pending=[]
         for r in records:
             old=before.get(r['canonical_id'])
             unchanged=old is not None and (r.get('protected_existing') or (fingerprint(r)==fingerprint(old) and stamp(r.get('last_seen_at'))==stamp(old.get('last_seen_at'))))
-            same_sources=(r.get('protected_existing') or (old is not None and provenance_fingerprint(r)==provenance_fingerprint(old))) and all(links.get((s['source_code'],s['source_id']))==(r['canonical_id'],stamp(s['retrieved_at']),s.get('source_status',r['status'])) for s in r['camera_sources'])
+            same_sources=(r.get('protected_existing') or (old is not None and provenance_fingerprint(r)==provenance_fingerprint(old))) and all(links.get((s['source_code'],s['source_id']))==(r['canonical_id'],stamp(s['retrieved_at']),s.get('source_status',r['status']),s.get('raw_payload_sha256')) for s in r['camera_sources'])
             if not unchanged or not same_sources:pending.append(r)
         diff={'new':[],'changed':[],'provenance_changed':[],'missing_sources':json.loads((BASE/'reports/missing-observations.json').read_text()) if (BASE/'reports/missing-observations.json').exists() else [],'missing_from_snapshot':[],'unchanged_count':0,'never_delete_on_single_source_absence':True}
         for r in records:
