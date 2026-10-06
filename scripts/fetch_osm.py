@@ -8,6 +8,7 @@ import time
 import urllib.parse
 import urllib.request
 from pathlib import Path
+from osm_cache import replace_phase
 
 ROOT = Path(__file__).resolve().parents[1]
 CACHE = ROOT / 'master-db/cache/bootstrap/osm'
@@ -38,7 +39,7 @@ def fetch(code, refresh=False, phase='speed'):
     path = CACHE / f'{code}.json'
     if path.exists() and not refresh:
         x = json.loads(path.read_text())
-        if 'remark' not in x and 'elements' in x and phase in x.get('_bootstrap',{}).get('phases',['speed','enforcement']):
+        if 'remark' not in x and 'elements' in x and phase in x.get('_bootstrap',{}).get('phases',[]):
             return code, len(x['elements']), 'cached'
     # Country area queries can be expensive. Country/region envelopes are clipped to
     # independently downloaded country polygons by the normalizer, never assigned blindly.
@@ -47,34 +48,34 @@ def fetch(code, refresh=False, phase='speed'):
         b=','.join(str(round(v,5)) for v in bbox)
         if phase=='speed':clauses.append(f'node[highway=speed_camera]({b});')
         else:clauses.append(f'rel[type=enforcement]({b});')
-    if phase=='speed':query='[out:json][timeout:45];('+''.join(clauses)+');out meta center;'
+    if phase=='speed':query='[out:json][timeout:60];('+''.join(clauses)+');out meta center;'
     else:
         extras=[]
         for bbox in boxes(code):
             b=','.join(str(round(v,5)) for v in bbox)
             extras.extend([f'node[enforcement~"^(maxspeed|speed|average_speed|redlight|red_light|traffic_signals|traffic_lights|section_control)$"]({b});',f'way[highway=speed_camera]({b});'])
-        query='[out:json][timeout:45];('+''.join(clauses)+')->.enforcement;.enforcement out meta center;('+''.join(extras)+'node(r.enforcement:"device");node(r.enforcement:"from");node(r.enforcement:"to"););out meta center;'
+        query='[out:json][timeout:60];('+''.join(clauses)+')->.enforcement;.enforcement out meta;('+''.join(extras)+'node(r.enforcement:"device");node(r.enforcement:"from");node(r.enforcement:"to"););out meta center;'
     errors = []
-    for attempt in range(6):
+    for attempt in range(3):
         endpoint = ENDPOINTS[attempt % len(ENDPOINTS)]
         try:
             req = urllib.request.Request(endpoint+'?'+urllib.parse.urlencode({'data': query}),
                                          headers={'User-Agent': 'SpeedCameraBootstrap/1.0 (+https://github.com/ternzina/speed-camera-app; open data import)'})
-            with urllib.request.urlopen(req, timeout=65) as response:
+            with urllib.request.urlopen(req, timeout=100) as response:
                 raw = response.read()
             data = json.loads(raw)
             if data.get('remark') or 'elements' not in data:
                 raise ValueError(data.get('remark', 'invalid response'))
             prior=json.loads(path.read_text()) if path.exists() else {}
             phases=set(prior.get('_bootstrap',{}).get('phases',[]));phases.add(phase)
-            # Refresh of one phase must not erase the other phase's observations.
-            if prior:data['elements']=prior.get('elements',[])+data['elements']
-            data['_bootstrap'] = {'country_code': code, 'retrieved_at': dt.datetime.now(dt.timezone.utc).isoformat(), 'phases':sorted(phases),
+            data=replace_phase(prior,phase,data['elements'])
+            data['_bootstrap'] = {**prior.get('_bootstrap',{}),'country_code': code, 'retrieved_at': dt.datetime.now(dt.timezone.utc).isoformat(), 'phases':sorted(phases),
                                   'endpoint': endpoint, 'query': query, 'license': 'ODbL-1.0',
                                   'source_url': 'https://www.openstreetmap.org/copyright'}
             tmp = path.with_suffix('.tmp')
             tmp.write_text(json.dumps(data, ensure_ascii=False, separators=(',', ':')))
             tmp.replace(path)
+            (CACHE/f'{code}.error.json').unlink(missing_ok=True)
             print(f'{code}: {len(data["elements"])} OSM elements downloaded', flush=True)
             return code, len(data['elements']), 'downloaded'
         except Exception as exc:

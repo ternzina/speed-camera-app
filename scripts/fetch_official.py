@@ -8,6 +8,7 @@ import io
 import xml.etree.ElementTree as ET
 from pathlib import Path
 import requests
+from public_download import get as public_get
 
 ROOT = Path(__file__).resolve().parents[1]
 CACHE = ROOT / 'master-db/raw/official'
@@ -46,6 +47,30 @@ SOURCES = [
          url='https://services.arcgis.com/ZOyb2t4B0UYuYNYH/arcgis/rest/services/Automatic_Traffic_Safety_Cameras_(ATSC)_view/FeatureServer/0',
          source_url='https://www.arcgis.com/home/item.html?id=f3879db110b84473b4e3d669157c6a39',
          adapter='seattle', arcgis=True, city='Seattle'),
+    dict(code='BALTIMORE_FIXED',country_code='US',name='Baltimore ATVES fixed speed cameras',
+         source_type='official_government',license='Baltimore City Open Data Program, Article 1 §9-8(b)',
+         license_url='https://baltimore.legistar.com/LegislationDetail.aspx?ID=2547408&GUID=10605A37-B70C-4878-A829-21C7AB1067D2&FullText=1',
+         url='https://services3.arcgis.com/ZTvQ9NuONePFYofE/ArcGIS/rest/services/ATVES_Speed_Cameras_Fixed/FeatureServer/3',
+         source_url='https://www.arcgis.com/home/item.html?id=02625f728f714c78a5b3ad6aa06695b3',
+         adapter='baltimore',arcgis=True,city='Baltimore',camera_type='fixed_speed',historical=False),
+    dict(code='BALTIMORE_RED',country_code='US',name='Baltimore ATVES red light cameras',
+         source_type='official_government',license='Baltimore City Open Data Program, Article 1 §9-8(b)',
+         license_url='https://baltimore.legistar.com/LegislationDetail.aspx?ID=2547408&GUID=10605A37-B70C-4878-A829-21C7AB1067D2&FullText=1',
+         url='https://services3.arcgis.com/ZTvQ9NuONePFYofE/ArcGIS/rest/services/Baltimore_ATVES_Red_Light_Camera/FeatureServer/0',
+         source_url='https://www.arcgis.com/home/item.html?id=6c9b08a2bb6c40df94e4dec6f2e02cd8',
+         adapter='baltimore',arcgis=True,city='Baltimore',camera_type='red_light',historical=False),
+    dict(code='BALTIMORE_PORTABLE',country_code='US',name='Baltimore ATVES portable deployment sites',
+         source_type='official_government',license='Baltimore City Open Data Program, Article 1 §9-8(b)',
+         license_url='https://baltimore.legistar.com/LegislationDetail.aspx?ID=2547408&GUID=10605A37-B70C-4878-A829-21C7AB1067D2&FullText=1',
+         url='https://services3.arcgis.com/ZTvQ9NuONePFYofE/ArcGIS/rest/services/ATVES_Speed_Cameras_Portable/FeatureServer/1',
+         source_url='https://www.arcgis.com/home/item.html?id=ebf52af4f690414e916190255850aaca',
+         adapter='baltimore',arcgis=True,city='Baltimore',camera_type='other_enforcement',historical=True),
+    dict(code='SFMTA_SPEED', country_code='US', name='San Francisco Municipal Transportation Agency speed enforcement sites',
+         source_type='official_government', license='PDDL-1.0',
+         license_url='https://opendatacommons.org/licenses/pddl/1-0/',
+         url='https://data.sf.gov/resource/d5uh-bk84.json?$select=site_id,location,enforcement_type,posted_speed,latitude,longitude,max(date)%20as%20last_date&$group=site_id,location,enforcement_type,posted_speed,latitude,longitude&$limit=1000',
+         source_url='https://data.sf.gov/Transportation/Automated-Speed-Enforcement-Citations/d5uh-bk84',
+         adapter='sfmta', city='San Francisco'),
     dict(code='TORONTO_RLC', country_code='CA', name='City of Toronto Red Light Cameras',
          source_type='official_government', license='Open Government Licence – Toronto',
          license_url='https://open.toronto.ca/open-data-licence/',
@@ -97,12 +122,12 @@ def main(refresh=False):
                         elif source.get('format')=='nvdb':
                             rows=[]; url=source['url']
                             while url:
-                                r=requests.get(url,headers={'X-Client':'Speed Camera App Bootstrap - ternzina GitHub'},timeout=80);r.raise_for_status();page=r.json()
+                                r=public_get(url,headers={'X-Client':'Speed Camera App Bootstrap - ternzina GitHub'},timeout=80);r.raise_for_status();page=r.json()
                                 rows.extend(page['objekter'])
                                 url=page.get('metadata',{}).get('neste',{}).get('href') if page['objekter'] else None
                             data=rows
                         else:
-                            r=requests.get(source['url'],timeout=80);r.raise_for_status()
+                            r=public_get(source['url'],timeout=80);r.raise_for_status()
                             if source.get('format')=='csv-cp1252':data=[{k.strip():v.strip() for k,v in row.items()} for row in csv.DictReader(io.StringIO(r.content.decode('cp1252')),delimiter=';')]
                             elif source.get('format')=='datex2':
                                 root=ET.fromstring(r.content)
