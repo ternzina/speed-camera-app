@@ -1,0 +1,27 @@
+{
+  "existing": {
+    "speed_cameras": 70,
+    "red_light_cameras": 15,
+    "average_speed_records": 47
+  },
+  "canard": {
+    "PP": 504,
+    "RL": 169,
+    "OPP": 137
+  },
+  "confident_matches": {
+    "speed_cameras": 19,
+    "red_light_cameras": 0,
+    "average_speed_sections": 29
+  },
+  "ambiguous": {
+    "speed_cameras": 29,
+    "red_light_cameras": 15,
+    "average_speed_sections": 16
+  },
+  "unmatched_official": {
+    "PP": 485,
+    "RL": 169,
+    "OPP": 108
+  }
+}

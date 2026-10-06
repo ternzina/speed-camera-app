@@ -1,0 +1,35 @@
+# Dependencies and Expo local state
+node_modules/
+.expo/
+
+# Environment and credentials
+.env
+.env.*
+credentials.json
+credentials/
+**/credentials.json
+*.jks
+*.keystore
+*.p8
+*.p12
+*.pfx
+*.pem
+*.key
+*.mobileprovision
+.npmrc
+
+# Generated builds and local files
+dist/
+build/
+web-build/
+coverage/
+*.apk
+*.aab
+*.ipa
+*.log
+*.tsbuildinfo
+.DS_Store
+
+# Local backups
+*.backup-*
+*.before-*

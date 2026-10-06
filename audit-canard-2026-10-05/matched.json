@@ -1,0 +1,324 @@
+{
+  "speed_cameras": [
+    {
+      "local_id": "pl-speed-001",
+      "canard_id": 118548667,
+      "serial": "643294-60103",
+      "distance_m": 20.4
+    },
+    {
+      "local_id": "pl-speed-002",
+      "canard_id": 119533269,
+      "serial": "643294-60110",
+      "distance_m": 20.0
+    },
+    {
+      "local_id": "pl-speed-013",
+      "canard_id": 118949492,
+      "serial": "643294-60105",
+      "distance_m": 13.8
+    },
+    {
+      "local_id": "pl-speed-017",
+      "canard_id": 119842327,
+      "serial": "643294-60114",
+      "distance_m": 7.1
+    },
+    {
+      "local_id": "pl-speed-018",
+      "canard_id": 115163534,
+      "serial": "643294-60075",
+      "distance_m": 16.0
+    },
+    {
+      "local_id": "pl-speed-019",
+      "canard_id": 118176493,
+      "serial": "643294-60095",
+      "distance_m": 15.2
+    },
+    {
+      "local_id": "pl-speed-020",
+      "canard_id": 115605338,
+      "serial": "643294-60079",
+      "distance_m": 18.4
+    },
+    {
+      "local_id": "pl-speed-022",
+      "canard_id": 111871073,
+      "serial": "643294-60063",
+      "distance_m": 19.9
+    },
+    {
+      "local_id": "pl-speed-026",
+      "canard_id": 118369884,
+      "serial": "643294-60091",
+      "distance_m": 11.2
+    },
+    {
+      "local_id": "pl-speed-035",
+      "canard_id": 114847998,
+      "serial": "643294-60073",
+      "distance_m": 10.9
+    },
+    {
+      "local_id": "pl-speed-039",
+      "canard_id": 119351611,
+      "serial": "643294-60107",
+      "distance_m": 9.5
+    },
+    {
+      "local_id": "pl-speed-044",
+      "canard_id": 116221632,
+      "serial": "643294-60078",
+      "distance_m": 11.8
+    },
+    {
+      "local_id": "pl-speed-045",
+      "canard_id": 112450531,
+      "serial": "643294-60060",
+      "distance_m": 17.6
+    },
+    {
+      "local_id": "pl-speed-053",
+      "canard_id": 118176686,
+      "serial": "643294-60097",
+      "distance_m": 2.8
+    },
+    {
+      "local_id": "pl-speed-054",
+      "canard_id": 118176441,
+      "serial": "643294-60094",
+      "distance_m": 17.2
+    },
+    {
+      "local_id": "pl-speed-055",
+      "canard_id": 120186077,
+      "serial": "643294-60122",
+      "distance_m": 17.0
+    },
+    {
+      "local_id": "pl-speed-063",
+      "canard_id": 120185828,
+      "serial": "643294-60119",
+      "distance_m": 24.0
+    },
+    {
+      "local_id": "pl-speed-064",
+      "canard_id": 117323355,
+      "serial": "643294-60090",
+      "distance_m": 12.0
+    },
+    {
+      "local_id": "pl-speed-066",
+      "canard_id": 120186107,
+      "serial": "643294-60123",
+      "distance_m": 22.1
+    }
+  ],
+  "red_light_cameras": [],
+  "average_speed_sections": [
+    {
+      "local_id": "pl-avg-001",
+      "base_id": "pl-avg-001",
+      "canard_id": 112732201,
+      "serial": "CAM25004019",
+      "max_endpoint_distance_m": 35.1
+    },
+    {
+      "local_id": "pl-avg-004-v1",
+      "base_id": "pl-avg-004",
+      "canard_id": 118680187,
+      "serial": "CAM25004381",
+      "max_endpoint_distance_m": 13.6
+    },
+    {
+      "local_id": "pl-avg-004-v2",
+      "base_id": "pl-avg-004",
+      "canard_id": 118680112,
+      "serial": "CAM25004024",
+      "max_endpoint_distance_m": 20.7
+    },
+    {
+      "local_id": "pl-avg-006",
+      "base_id": "pl-avg-006",
+      "canard_id": 113783591,
+      "serial": "CAM25004026",
+      "max_endpoint_distance_m": 15.9
+    },
+    {
+      "local_id": "pl-avg-007",
+      "base_id": "pl-avg-007",
+      "canard_id": 113783705,
+      "serial": "CAM25004027",
+      "max_endpoint_distance_m": 1.2
+    },
+    {
+      "local_id": "pl-avg-008",
+      "base_id": "pl-avg-008",
+      "canard_id": 118679898,
+      "serial": "CAM25004028",
+      "max_endpoint_distance_m": 8.0
+    },
+    {
+      "local_id": "pl-avg-010",
+      "base_id": "pl-avg-010",
+      "canard_id": 113783696,
+      "serial": "CAM25004030",
+      "max_endpoint_distance_m": 30.7
+    },
+    {
+      "local_id": "pl-avg-012",
+      "base_id": "pl-avg-012",
+      "canard_id": 113783649,
+      "serial": "CAM25004031",
+      "max_endpoint_distance_m": 10.4
+    },
+    {
+      "local_id": "pl-avg-014",
+      "base_id": "pl-avg-014",
+      "canard_id": 113783659,
+      "serial": "CAM25004033",
+      "max_endpoint_distance_m": 29.6
+    },
+    {
+      "local_id": "pl-avg-016",
+      "base_id": "pl-avg-016",
+      "canard_id": 116594787,
+      "serial": "CAM25004036",
+      "max_endpoint_distance_m": 6.0
+    },
+    {
+      "local_id": "pl-avg-017",
+      "base_id": "pl-avg-017",
+      "canard_id": 113783685,
+      "serial": "CAM25004037",
+      "max_endpoint_distance_m": 15.4
+    },
+    {
+      "local_id": "pl-avg-019",
+      "base_id": "pl-avg-019",
+      "canard_id": 118680199,
+      "serial": "CAM25004039",
+      "max_endpoint_distance_m": 8.5
+    },
+    {
+      "local_id": "pl-avg-020",
+      "base_id": "pl-avg-020",
+      "canard_id": 116594825,
+      "serial": "CAM25004040",
+      "max_endpoint_distance_m": 27.4
+    },
+    {
+      "local_id": "pl-avg-021",
+      "base_id": "pl-avg-021",
+      "canard_id": 116594860,
+      "serial": "CAM25004387",
+      "max_endpoint_distance_m": 1.9
+    },
+    {
+      "local_id": "pl-avg-023",
+      "base_id": "pl-avg-023",
+      "canard_id": 118680037,
+      "serial": "CAM25004043",
+      "max_endpoint_distance_m": 19.5
+    },
+    {
+      "local_id": "pl-avg-028",
+      "base_id": "pl-avg-028",
+      "canard_id": 118679857,
+      "serial": "CAM25004049",
+      "max_endpoint_distance_m": 36.9
+    },
+    {
+      "local_id": "pl-avg-030",
+      "base_id": "pl-avg-030",
+      "canard_id": 117740692,
+      "serial": "CAM25004051",
+      "max_endpoint_distance_m": 30.9
+    },
+    {
+      "local_id": "pl-avg-031",
+      "base_id": "pl-avg-031",
+      "canard_id": 113783639,
+      "serial": "CAM25004052",
+      "max_endpoint_distance_m": 19.1
+    },
+    {
+      "local_id": "pl-avg-032",
+      "base_id": "pl-avg-032",
+      "canard_id": 117740698,
+      "serial": "CAM25004054",
+      "max_endpoint_distance_m": 0.0
+    },
+    {
+      "local_id": "pl-avg-033",
+      "base_id": "pl-avg-033",
+      "canard_id": 110646878,
+      "serial": "CAM25001968",
+      "max_endpoint_distance_m": 19.1
+    },
+    {
+      "local_id": "pl-avg-034-v1",
+      "base_id": "pl-avg-034",
+      "canard_id": 110646597,
+      "serial": "CAM25001970",
+      "max_endpoint_distance_m": 6.9
+    },
+    {
+      "local_id": "pl-avg-034-v2",
+      "base_id": "pl-avg-034",
+      "canard_id": 110646872,
+      "serial": "CAM25001969",
+      "max_endpoint_distance_m": 8.5
+    },
+    {
+      "local_id": "pl-avg-036",
+      "base_id": "pl-avg-036",
+      "canard_id": 117740855,
+      "serial": "CAM25004056",
+      "max_endpoint_distance_m": 27.5
+    },
+    {
+      "local_id": "pl-avg-038-v1",
+      "base_id": "pl-avg-038",
+      "canard_id": 118679802,
+      "serial": "CAM25004392",
+      "max_endpoint_distance_m": 9.7
+    },
+    {
+      "local_id": "pl-avg-038-v2",
+      "base_id": "pl-avg-038",
+      "canard_id": 118679789,
+      "serial": "CAM25004053",
+      "max_endpoint_distance_m": 9.6
+    },
+    {
+      "local_id": "pl-avg-039",
+      "base_id": "pl-avg-039",
+      "canard_id": 117740867,
+      "serial": "CAM25004057",
+      "max_endpoint_distance_m": 6.7
+    },
+    {
+      "local_id": "pl-avg-040",
+      "base_id": "pl-avg-040",
+      "canard_id": 117740738,
+      "serial": "CAM25004035",
+      "max_endpoint_distance_m": 0.0
+    },
+    {
+      "local_id": "pl-avg-041",
+      "base_id": "pl-avg-041",
+      "canard_id": 116215931,
+      "serial": "CAM25004046",
+      "max_endpoint_distance_m": 15.5
+    },
+    {
+      "local_id": "pl-avg-043",
+      "base_id": "pl-avg-043",
+      "canard_id": 118679827,
+      "serial": "CAM25004022",
+      "max_endpoint_distance_m": 24.2
+    }
+  ]
+}

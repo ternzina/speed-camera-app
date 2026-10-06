@@ -1,0 +1,54 @@
+{
+  "expo": {
+    "name": "CamAlert",
+    "slug": "speed-camera-prototype-direction",
+    "version": "0.8.2",
+    "orientation": "portrait",
+    "ios": {
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "Местоположение нужно, чтобы предупреждать о дорожных камерах во время поездки.",
+        "ITSAppUsesNonExemptEncryption": false,
+        "NSLocationAlwaysAndWhenInUseUsageDescription": "Разрешите геолокацию всегда, чтобы получать предупреждения о камерах при погашенном экране.",
+        "UIBackgroundModes": [
+          "location"
+        ]
+      },
+      "bundleIdentifier": "com.21wek.camera",
+      "buildNumber": "11"
+    },
+    "android": {
+      "permissions": [
+        "ACCESS_FINE_LOCATION",
+        "ACCESS_COARSE_LOCATION"
+      ],
+      "package": "com.camera21wek"
+    },
+    "plugins": [
+      "expo-status-bar",
+      [
+        "expo-location",
+        {
+          "locationWhenInUsePermission": "Местоположение нужно, чтобы предупреждать о дорожных камерах во время поездки.",
+          "locationAlwaysAndWhenInUsePermission": "Разрешите геолокацию всегда, чтобы получать предупреждения о камерах при погашенном экране.",
+          "isIosBackgroundLocationEnabled": true
+        }
+      ],
+      "expo-notifications",
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/splash-road-cameras-third.jpg",
+          "resizeMode": "cover",
+          "backgroundColor": "#062957"
+        }
+      ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "2040c47b-7eb7-4e19-af1e-a98604250033"
+      }
+    },
+    "icon": "./assets/icon.png"
+  }
+}

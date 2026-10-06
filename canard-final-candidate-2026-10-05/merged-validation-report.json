@@ -1,0 +1,499 @@
+{
+  "report": {
+    "active_candidate": {
+      "speed_cameras": 504,
+      "red_light_cameras": 169,
+      "average_speed_directional_records": 224,
+      "average_speed_physical_sections": 137
+    },
+    "legacy_preservation": {
+      "speed_ids_transferred": 67,
+      "speed_unconfirmed_kept_separately": 3,
+      "red_light_legacy_sites_linked": 15,
+      "opp_legacy_ids_transferred": 47
+    },
+    "validation": {
+      "duplicate_ids": [],
+      "missing_coordinates": [],
+      "speed_mapping_conflicts": [],
+      "opp_mapping_conflicts": []
+    },
+    "published": false
+  },
+  "red_light_legacy_links": [
+    {
+      "legacy_site_id": "pl-red-001",
+      "legacy_subtype": "intersection",
+      "canard_device_ids": [
+        "115815666",
+        "115815734",
+        "115815695",
+        "115815712"
+      ]
+    },
+    {
+      "legacy_site_id": "pl-red-002",
+      "legacy_subtype": "rail_crossing",
+      "canard_device_ids": [
+        "115544154",
+        "115544146"
+      ]
+    },
+    {
+      "legacy_site_id": "pl-red-003",
+      "legacy_subtype": "intersection",
+      "canard_device_ids": [
+        "118185199",
+        "118185248",
+        "118185167",
+        "118185278",
+        "118185369",
+        "118185216",
+        "118185349",
+        "118185181",
+        "118185339"
+      ]
+    },
+    {
+      "legacy_site_id": "pl-red-004",
+      "legacy_subtype": "rail_crossing",
+      "canard_device_ids": [
+        "121185565",
+        "121185645"
+      ]
+    },
+    {
+      "legacy_site_id": "pl-red-005",
+      "legacy_subtype": "intersection",
+      "canard_device_ids": [
+        "117740274",
+        "117740259",
+        "117740268",
+        "117740286"
+      ]
+    },
+    {
+      "legacy_site_id": "pl-red-006",
+      "legacy_subtype": "rail_crossing",
+      "canard_device_ids": [
+        "117620144",
+        "117620223"
+      ]
+    },
+    {
+      "legacy_site_id": "pl-red-007",
+      "legacy_subtype": "intersection",
+      "canard_device_ids": [
+        "116562073",
+        "116562097",
+        "116562202",
+        "116562108"
+      ]
+    },
+    {
+      "legacy_site_id": "pl-red-008",
+      "legacy_subtype": "rail_crossing",
+      "canard_device_ids": [
+        "116039157",
+        "116039194"
+      ]
+    },
+    {
+      "legacy_site_id": "pl-red-009",
+      "legacy_subtype": "intersection",
+      "canard_device_ids": [
+        "114968675",
+        "114968663",
+        "114968647",
+        "114968630"
+      ]
+    },
+    {
+      "legacy_site_id": "pl-red-010",
+      "legacy_subtype": "rail_crossing",
+      "canard_device_ids": [
+        "116039087",
+        "116039135"
+      ]
+    },
+    {
+      "legacy_site_id": "pl-red-011",
+      "legacy_subtype": "intersection",
+      "canard_device_ids": [
+        "121460680",
+        "121460819",
+        "121460719",
+        "121460769"
+      ]
+    },
+    {
+      "legacy_site_id": "pl-red-012",
+      "legacy_subtype": "intersection",
+      "canard_device_ids": [
+        "119255957",
+        "119255982",
+        "119255975"
+      ]
+    },
+    {
+      "legacy_site_id": "pl-red-013",
+      "legacy_subtype": "intersection",
+      "canard_device_ids": [
+        "122084834",
+        "122084860",
+        "122084723"
+      ]
+    },
+    {
+      "legacy_site_id": "pl-red-014",
+      "legacy_subtype": "intersection",
+      "canard_device_ids": [
+        "116899216",
+        "116899268",
+        "116899235",
+        "116899254"
+      ]
+    },
+    {
+      "legacy_site_id": "pl-red-015",
+      "legacy_subtype": "intersection",
+      "canard_device_ids": [
+        "116899169",
+        "116898661",
+        "116899086",
+        "116899130"
+      ]
+    }
+  ],
+  "opp_links": [
+    {
+      "legacy_id": "pl-avg-001",
+      "canard_base_id": "112732201",
+      "new_direction_variant": 1,
+      "official_id": "112732201:1",
+      "distance_m": 35.1
+    },
+    {
+      "legacy_id": "pl-avg-002",
+      "canard_base_id": "118679807",
+      "new_direction_variant": 1,
+      "official_id": "118679807:1",
+      "distance_m": 5.7
+    },
+    {
+      "legacy_id": "pl-avg-003",
+      "canard_base_id": "118680228",
+      "new_direction_variant": 1,
+      "official_id": "118680228:1",
+      "distance_m": 211.4
+    },
+    {
+      "legacy_id": "pl-avg-004-v1",
+      "canard_base_id": "118680187",
+      "new_direction_variant": 1,
+      "official_id": "118680187:1",
+      "distance_m": 13.6
+    },
+    {
+      "legacy_id": "pl-avg-004-v2",
+      "canard_base_id": "118680112",
+      "new_direction_variant": 1,
+      "official_id": "118680112:1",
+      "distance_m": 20.7
+    },
+    {
+      "legacy_id": "pl-avg-005-v1",
+      "canard_base_id": "118680069",
+      "new_direction_variant": 1,
+      "official_id": "118680069:1",
+      "distance_m": 96.2
+    },
+    {
+      "legacy_id": "pl-avg-005-v2",
+      "canard_base_id": "118680098",
+      "new_direction_variant": 1,
+      "official_id": "118680098:1",
+      "distance_m": 98.5
+    },
+    {
+      "legacy_id": "pl-avg-006",
+      "canard_base_id": "113783591",
+      "new_direction_variant": 1,
+      "official_id": "113783591:1",
+      "distance_m": 15.9
+    },
+    {
+      "legacy_id": "pl-avg-007",
+      "canard_base_id": "113783705",
+      "new_direction_variant": 1,
+      "official_id": "113783705:1",
+      "distance_m": 1.2
+    },
+    {
+      "legacy_id": "pl-avg-008",
+      "canard_base_id": "118679898",
+      "new_direction_variant": 1,
+      "official_id": "118679898:1",
+      "distance_m": 8.0
+    },
+    {
+      "legacy_id": "pl-avg-009",
+      "canard_base_id": "113783667",
+      "new_direction_variant": 1,
+      "official_id": "113783667:1",
+      "distance_m": 16.5
+    },
+    {
+      "legacy_id": "pl-avg-010",
+      "canard_base_id": "113783696",
+      "new_direction_variant": 1,
+      "official_id": "113783696:1",
+      "distance_m": 30.7
+    },
+    {
+      "legacy_id": "pl-avg-011",
+      "canard_base_id": "113783529",
+      "new_direction_variant": 1,
+      "official_id": "113783529:1",
+      "distance_m": 105.6
+    },
+    {
+      "legacy_id": "pl-avg-012",
+      "canard_base_id": "113783649",
+      "new_direction_variant": 1,
+      "official_id": "113783649:1",
+      "distance_m": 10.4
+    },
+    {
+      "legacy_id": "pl-avg-013",
+      "canard_base_id": "118679774",
+      "new_direction_variant": 1,
+      "official_id": "118679774:1",
+      "distance_m": 26.3
+    },
+    {
+      "legacy_id": "pl-avg-014",
+      "canard_base_id": "113783659",
+      "new_direction_variant": 1,
+      "official_id": "113783659:1",
+      "distance_m": 29.6
+    },
+    {
+      "legacy_id": "pl-avg-015",
+      "canard_base_id": "116594573",
+      "new_direction_variant": 1,
+      "official_id": "116594573:1",
+      "distance_m": 35.2
+    },
+    {
+      "legacy_id": "pl-avg-016",
+      "canard_base_id": "116594787",
+      "new_direction_variant": 1,
+      "official_id": "116594787:1",
+      "distance_m": 6.0
+    },
+    {
+      "legacy_id": "pl-avg-017",
+      "canard_base_id": "113783685",
+      "new_direction_variant": 1,
+      "official_id": "113783685:1",
+      "distance_m": 15.4
+    },
+    {
+      "legacy_id": "pl-avg-018",
+      "canard_base_id": "118679915",
+      "new_direction_variant": 1,
+      "official_id": "118679915:1",
+      "distance_m": 23.7
+    },
+    {
+      "legacy_id": "pl-avg-019",
+      "canard_base_id": "118680199",
+      "new_direction_variant": 1,
+      "official_id": "118680199:1",
+      "distance_m": 8.5
+    },
+    {
+      "legacy_id": "pl-avg-020",
+      "canard_base_id": "116594825",
+      "new_direction_variant": 1,
+      "official_id": "116594825:1",
+      "distance_m": 27.4
+    },
+    {
+      "legacy_id": "pl-avg-021",
+      "canard_base_id": "116594860",
+      "new_direction_variant": 1,
+      "official_id": "116594860:1",
+      "distance_m": 1.9
+    },
+    {
+      "legacy_id": "pl-avg-022",
+      "canard_base_id": "116594640",
+      "new_direction_variant": 1,
+      "official_id": "116594640:1",
+      "distance_m": 146.2
+    },
+    {
+      "legacy_id": "pl-avg-023",
+      "canard_base_id": "118680037",
+      "new_direction_variant": 1,
+      "official_id": "118680037:1",
+      "distance_m": 19.5
+    },
+    {
+      "legacy_id": "pl-avg-024",
+      "canard_base_id": "118679763",
+      "new_direction_variant": 1,
+      "official_id": "118679763:1",
+      "distance_m": 355.4
+    },
+    {
+      "legacy_id": "pl-avg-025",
+      "canard_base_id": "118679746",
+      "new_direction_variant": 1,
+      "official_id": "118679746:1",
+      "distance_m": 17.9
+    },
+    {
+      "legacy_id": "pl-avg-026",
+      "canard_base_id": "115049948",
+      "new_direction_variant": 1,
+      "official_id": "115049948:1",
+      "distance_m": 26.1
+    },
+    {
+      "legacy_id": "pl-avg-027",
+      "canard_base_id": "113783631",
+      "new_direction_variant": 1,
+      "official_id": "113783631:1",
+      "distance_m": 9.4
+    },
+    {
+      "legacy_id": "pl-avg-028",
+      "canard_base_id": "118679857",
+      "new_direction_variant": 1,
+      "official_id": "118679857:1",
+      "distance_m": 36.9
+    },
+    {
+      "legacy_id": "pl-avg-029",
+      "canard_base_id": "118680302",
+      "new_direction_variant": 1,
+      "official_id": "118680302:1",
+      "distance_m": 30.2
+    },
+    {
+      "legacy_id": "pl-avg-030",
+      "canard_base_id": "117740692",
+      "new_direction_variant": 1,
+      "official_id": "117740692:1",
+      "distance_m": 30.9
+    },
+    {
+      "legacy_id": "pl-avg-031",
+      "canard_base_id": "113783639",
+      "new_direction_variant": 1,
+      "official_id": "113783639:1",
+      "distance_m": 19.1
+    },
+    {
+      "legacy_id": "pl-avg-032",
+      "canard_base_id": "117740698",
+      "new_direction_variant": 1,
+      "official_id": "117740698:1",
+      "distance_m": 0.0
+    },
+    {
+      "legacy_id": "pl-avg-033",
+      "canard_base_id": "110646878",
+      "new_direction_variant": 1,
+      "official_id": "110646878:1",
+      "distance_m": 19.1
+    },
+    {
+      "legacy_id": "pl-avg-034-v1",
+      "canard_base_id": "110646597",
+      "new_direction_variant": 1,
+      "official_id": "110646597:1",
+      "distance_m": 6.9
+    },
+    {
+      "legacy_id": "pl-avg-034-v2",
+      "canard_base_id": "110646872",
+      "new_direction_variant": 2,
+      "official_id": "110646872:2",
+      "distance_m": 8.5
+    },
+    {
+      "legacy_id": "pl-avg-035",
+      "canard_base_id": "117740707",
+      "new_direction_variant": 1,
+      "official_id": "117740707:1",
+      "distance_m": 114.3
+    },
+    {
+      "legacy_id": "pl-avg-036",
+      "canard_base_id": "117740855",
+      "new_direction_variant": 1,
+      "official_id": "117740855:1",
+      "distance_m": 27.5
+    },
+    {
+      "legacy_id": "pl-avg-037",
+      "canard_base_id": "113783570",
+      "new_direction_variant": 1,
+      "official_id": "113783570:1",
+      "distance_m": 1.0
+    },
+    {
+      "legacy_id": "pl-avg-038-v1",
+      "canard_base_id": "118679802",
+      "new_direction_variant": 1,
+      "official_id": "118679802:1",
+      "distance_m": 9.7
+    },
+    {
+      "legacy_id": "pl-avg-038-v2",
+      "canard_base_id": "118679789",
+      "new_direction_variant": 1,
+      "official_id": "118679789:1",
+      "distance_m": 9.6
+    },
+    {
+      "legacy_id": "pl-avg-039",
+      "canard_base_id": "117740867",
+      "new_direction_variant": 1,
+      "official_id": "117740867:1",
+      "distance_m": 6.7
+    },
+    {
+      "legacy_id": "pl-avg-040",
+      "canard_base_id": "117740738",
+      "new_direction_variant": 1,
+      "official_id": "117740738:1",
+      "distance_m": 0.0
+    },
+    {
+      "legacy_id": "pl-avg-041",
+      "canard_base_id": "116215931",
+      "new_direction_variant": 1,
+      "official_id": "116215931:1",
+      "distance_m": 15.5
+    },
+    {
+      "legacy_id": "pl-avg-042",
+      "canard_base_id": "113783510",
+      "new_direction_variant": 1,
+      "official_id": "113783510:1",
+      "distance_m": 3.9
+    },
+    {
+      "legacy_id": "pl-avg-043",
+      "canard_base_id": "118679827",
+      "new_direction_variant": 1,
+      "official_id": "118679827:1",
+      "distance_m": 24.2
+    }
+  ]
+}

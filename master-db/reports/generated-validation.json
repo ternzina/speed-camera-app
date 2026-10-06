@@ -1,0 +1,21 @@
+{
+  "generated": {
+    "PL": "/Users/zina/Downloads/speed-camera-prototype-direction/master-db/generated/cameras-pl.json",
+    "UA": "/Users/zina/Downloads/speed-camera-prototype-direction/master-db/generated/cameras-ua.json"
+  },
+  "counts": {
+    "PL": {
+      "speed_cameras": 504,
+      "red_light_cameras": 169,
+      "average_speed_sections": 224,
+      "average_speed_physical_sections": 137,
+      "checkpoints": 0
+    },
+    "UA": 426
+  },
+  "validation": {
+    "problems": [],
+    "duplicate_pl_ids": []
+  },
+  "published": false
+}

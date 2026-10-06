@@ -1,0 +1,22 @@
+{
+  "matched": {
+    "speed_cameras": 24,
+    "red_light_cameras": 0,
+    "average_speed_sections": 7
+  },
+  "legacy_only": {
+    "speed_cameras": 18,
+    "red_light_cameras": 0,
+    "average_speed_sections": 0
+  },
+  "conflicts": {
+    "speed_cameras": 28,
+    "red_light_cameras": 15,
+    "average_speed_sections": 40
+  },
+  "new_canard": {
+    "speed_cameras": 480,
+    "red_light_cameras": 169,
+    "average_speed_sections": 217
+  }
+}

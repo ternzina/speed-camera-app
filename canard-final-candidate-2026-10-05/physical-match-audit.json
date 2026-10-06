@@ -1,0 +1,2171 @@
+{
+  "summary": {
+    "speed": {
+      "high_confidence": 64,
+      "medium": 3,
+      "weak": 0,
+      "none": 3
+    },
+    "red_light_sites": {
+      "high_confidence": 15,
+      "medium": 0,
+      "weak": 0,
+      "none": 0,
+      "canard_devices": 169,
+      "physical_sites_estimated": 68
+    },
+    "opp_physical": {
+      "high_confidence": 39,
+      "medium": 6,
+      "weak": 2,
+      "none": 0
+    }
+  },
+  "speed": [
+    {
+      "legacy_id": "pl-speed-001",
+      "location": "Annopol",
+      "road": "74",
+      "best": {
+        "score": 12,
+        "distance_m": 20.4,
+        "canard_id": "118548667",
+        "location": "Annopol",
+        "road": "74",
+        "road_match": true,
+        "location_match": true
+      },
+      "second_score": null
+    },
+    {
+      "legacy_id": "pl-speed-002",
+      "location": "Bartoszyce",
+      "road": "51",
+      "best": {
+        "score": 12,
+        "distance_m": 20.0,
+        "canard_id": "119533269",
+        "location": "Bartoszyce",
+        "road": "51",
+        "road_match": true,
+        "location_match": true
+      },
+      "second_score": null
+    },
+    {
+      "legacy_id": "pl-speed-003",
+      "location": "Bilsko",
+      "road": "75",
+      "best": {
+        "score": 12,
+        "distance_m": 47.3,
+        "canard_id": "112450626",
+        "location": "Bilsko",
+        "road": "75",
+        "road_match": true,
+        "location_match": true
+      },
+      "second_score": null
+    },
+    {
+      "legacy_id": "pl-speed-004",
+      "location": "Błonie",
+      "road": "92",
+      "best": {
+        "score": 8,
+        "distance_m": 66.0,
+        "canard_id": "120121853",
+        "location": "Błonie-Wieś",
+        "road": "92",
+        "road_match": true,
+        "location_match": false
+      },
+      "second_score": null
+    },
+    {
+      "legacy_id": "pl-speed-005",
+      "location": "Bolemin",
+      "road": "22",
+      "best": {
+        "score": 11,
+        "distance_m": 50.4,
+        "canard_id": "120121888",
+        "location": "Bolemin",
+        "road": "22",
+        "road_match": true,
+        "location_match": true
+      },
+      "second_score": null
+    },
+    {
+      "legacy_id": "pl-speed-006",
+      "location": "Budzyń",
+      "road": "11",
+      "best": {
+        "score": 10,
+        "distance_m": 180.9,
+        "canard_id": "118176756",
+        "location": "Budzyń",
+        "road": "11",
+        "road_match": true,
+        "location_match": true
+      },
+      "second_score": null
+    },
+    {
+      "legacy_id": "pl-speed-007",
+      "location": "Chodzież",
+      "road": "11",
+      "best": {
+        "score": 12,
+        "distance_m": 43.3,
+        "canard_id": "115622240",
+        "location": "Chodzież",
+        "road": "11",
+        "road_match": true,
+        "location_match": true
+      },
+      "second_score": null
+    },
+    {
+      "legacy_id": "pl-speed-008",
+      "location": "Chrząstowo",
+      "road": "22",
+      "best": {
+        "score": 11,
+        "distance_m": 85.7,
+        "canard_id": "116694317",
+        "location": "Chrząstowo",
+        "road": "22",
+        "road_match": true,
+        "location_match": true
+      },
+      "second_score": null
+    },
+    {
+      "legacy_id": "pl-speed-009",
+      "location": "Cmolas",
+      "road": "9",
+      "best": {
+        "score": 10,
+        "distance_m": 208.3,
+        "canard_id": "119842192",
+        "location": "Cmolas",
+        "road": "9",
+        "road_match": true,
+        "location_match": true
+      },
+      "second_score": null
+    },
+    {
+      "legacy_id": "pl-speed-010",
+      "location": "Cytrynowo",
+      "road": "15",
+      "best": {
+        "score": 11,
+        "distance_m": 57.0,
+        "canard_id": "117160432",
+        "location": "Cytrynowo",
+        "road": "15",
+        "road_match": true,
+        "location_match": true
+      },
+      "second_score": null
+    },
+    {
+      "legacy_id": "pl-speed-011",
+      "location": "Czarnowo",
+      "road": "80",
+      "best": {
+        "score": 12,
+        "distance_m": 30.8,
+        "canard_id": "118177054",
+        "location": "Czarnowo",
+        "road": "80",
+        "road_match": true,
+        "location_match": true
+      },
+      "second_score": null
+    },
+    {
+      "legacy_id": "pl-speed-012",
+      "location": "Waćmierek",
+      "road": "22",
+      "best": {
+        "score": 9,
+        "distance_m": 341.9,
+        "canard_id": "114717848",
+        "location": "Waćmierek",
+        "road": "22",
+        "road_match": true,
+        "location_match": true
+      },
+      "second_score": null
+    },
+    {
+      "legacy_id": "pl-speed-013",
+      "location": "Dobre Miasto",
+      "road": "51",
+      "best": {
+        "score": 12,
+        "distance_m": 13.8,
+        "canard_id": "118949492",
+        "location": "Dobre Miasto",
+        "road": "51",
+        "road_match": true,
+        "location_match": true
+      },
+      "second_score": null
+    },
+    {
+      "legacy_id": "pl-speed-014",
+      "location": "Drohiczyn",
+      "road": "62",
+      "best": {
+        "score": 12,
+        "distance_m": 29.9,
+        "canard_id": "118176576",
+        "location": "Drohiczyn",
+        "road": "62",
+        "road_match": true,
+        "location_match": true
+      },
+      "second_score": null
+    },
+    {
+      "legacy_id": "pl-speed-015",
+      "location": "Gać",
+      "road": "94",
+      "best": {
+        "score": 12,
+        "distance_m": 37.8,
+        "canard_id": "113122295",
+        "location": "Gać",
+        "road": "94",
+        "road_match": true,
+        "location_match": true
+      },
+      "second_score": null
+    },
+    {
+      "legacy_id": "pl-speed-016",
+      "location": "Głogoczów/Bęczarka",
+      "road": "7",
+      "best": {
+        "score": 6,
+        "distance_m": 542.1,
+        "canard_id": "117942531",
+        "location": "Głogoczów",
+        "road": "7",
+        "road_match": true,
+        "location_match": false
+      },
+      "second_score": null
+    },
+    {
+      "legacy_id": "pl-speed-017",
+      "location": "Głogów Małopolski",
+      "road": "9a",
+      "best": {
+        "score": 8,
+        "distance_m": 7.1,
+        "canard_id": "119842327",
+        "location": "Głogów Małopolski",
+        "road": "9",
+        "road_match": false,
+        "location_match": true
+      },
+      "second_score": null
+    },
+    {
+      "legacy_id": "pl-speed-018",
+      "location": "Gniewomirowice",
+      "road": "94",
+      "best": {
+        "score": 12,
+        "distance_m": 16.0,
+        "canard_id": "115163534",
+        "location": "Gniewomirowice",
+        "road": "94",
+        "road_match": true,
+        "location_match": true
+      },
+      "second_score": null
+    },
+    {
+      "legacy_id": "pl-speed-019",
+      "location": "Golina",
+      "road": "15",
+      "best": {
+        "score": 12,
+        "distance_m": 15.2,
+        "canard_id": "118176493",
+        "location": "Golina",
+        "road": "15",
+        "road_match": true,
+        "location_match": true
+      },
+      "second_score": null
+    },
+    {
+      "legacy_id": "pl-speed-020",
+      "location": "Goślice",
+      "road": "60",
+      "best": {
+        "score": 12,
+        "distance_m": 18.4,
+        "canard_id": "115605338",
+        "location": "Goślice",
+        "road": "60",
+        "road_match": true,
+        "location_match": true
+      },
+      "second_score": null
+    },
+    {
+      "legacy_id": "pl-speed-021",
+      "location": "Grabina",
+      "road": "60",
+      "best": {
+        "score": 11,
+        "distance_m": 60.9,
+        "canard_id": "118177110",
+        "location": "Grabina",
+        "road": "60",
+        "road_match": true,
+        "location_match": true
+      },
+      "second_score": null
+    },
+    {
+      "legacy_id": "pl-speed-022",
+      "location": "Grobniki",
+      "road": "38",
+      "best": {
+        "score": 12,
+        "distance_m": 19.9,
+        "canard_id": "111871073",
+        "location": "Grobniki",
+        "road": "38",
+        "road_match": true,
+        "location_match": true
+      },
+      "second_score": null
+    },
+    {
+      "legacy_id": "pl-speed-023",
+      "location": "Gwda Mała",
+      "road": "20",
+      "best": {
+        "score": 10,
+        "distance_m": 264.8,
+        "canard_id": "116648088",
+        "location": "Gwda Mała",
+        "road": "20",
+        "road_match": true,
+        "location_match": true
+      },
+      "second_score": null
+    },
+    {
+      "legacy_id": "pl-speed-024",
+      "location": "Bronowice",
+      "road": "12",
+      "best": {
+        "score": 11,
+        "distance_m": 70.1,
+        "canard_id": "117323117",
+        "location": "Bronowice",
+        "road": "12",
+        "road_match": true,
+        "location_match": true
+      },
+      "second_score": null
+    },
+    {
+      "legacy_id": "pl-speed-025",
+      "location": "Żary",
+      "road": "12",
+      "best": null,
+      "second_score": null
+    },
+    {
+      "legacy_id": "pl-speed-026",
+      "location": "Kochłowy",
+      "road": "11",
+      "best": {
+        "score": 12,
+        "distance_m": 11.2,
+        "canard_id": "118369884",
+        "location": "Kochłowy",
+        "road": "11",
+        "road_match": true,
+        "location_match": true
+      },
+      "second_score": null
+    },
+    {
+      "legacy_id": "pl-speed-027",
+      "location": "Kołbaskowo",
+      "road": "13",
+      "best": {
+        "score": 9,
+        "distance_m": 526.9,
+        "canard_id": "111995342",
+        "location": "Kołbaskowo",
+        "road": "13",
+        "road_match": true,
+        "location_match": true
+      },
+      "second_score": null
+    },
+    {
+      "legacy_id": "pl-speed-028",
+      "location": "Krępice",
+      "road": "94",
+      "best": {
+        "score": 10,
+        "distance_m": 176.5,
+        "canard_id": "118176943",
+        "location": "Krępice",
+        "road": "94",
+        "road_match": true,
+        "location_match": true
+      },
+      "second_score": null
+    },
+    {
+      "legacy_id": "pl-speed-029",
+      "location": "Krotoszyn",
+      "road": "15",
+      "best": {
+        "score": 11,
+        "distance_m": 76.7,
+        "canard_id": "117320446",
+        "location": "Krotoszyn",
+        "road": "15",
+        "road_match": true,
+        "location_match": true
+      },
+      "second_score": null
+    },
+    {
+      "legacy_id": "pl-speed-030",
+      "location": "Kuklinów",
+      "road": "36",
+      "best": {
+        "score": 11,
+        "distance_m": 76.7,
+        "canard_id": "119072319",
+        "location": "Kuklinów",
+        "road": "36",
+        "road_match": true,
+        "location_match": true
+      },
+      "second_score": null
+    },
+    {
+      "legacy_id": "pl-speed-031",
+      "location": "Liśnik Duży",
+      "road": "74",
+      "best": {
+        "score": 12,
+        "distance_m": 39.0,
+        "canard_id": "115163458",
+        "location": "Liśnik Duży",
+        "road": "74",
+        "road_match": true,
+        "location_match": true
+      },
+      "second_score": null
+    },
+    {
+      "legacy_id": "pl-speed-032",
+      "location": "Ładna",
+      "road": "94",
+      "best": {
+        "score": 11,
+        "distance_m": 51.3,
+        "canard_id": "115839265",
+        "location": "Ładna",
+        "road": "94",
+        "road_match": true,
+        "location_match": true
+      },
+      "second_score": null
+    },
+    {
+      "legacy_id": "pl-speed-033",
+      "location": "Łagów",
+      "road": "30",
+      "best": {
+        "score": 12,
+        "distance_m": 41.9,
+        "canard_id": "113122431",
+        "location": "Łagów",
+        "road": "30",
+        "road_match": true,
+        "location_match": true
+      },
+      "second_score": null
+    },
+    {
+      "legacy_id": "pl-speed-034",
+      "location": "Małujowice",
+      "road": "39",
+      "best": {
+        "score": 8,
+        "distance_m": 729.1,
+        "canard_id": "114847866",
+        "location": "Małujowice",
+        "road": "39",
+        "road_match": true,
+        "location_match": true
+      },
+      "second_score": null
+    },
+    {
+      "legacy_id": "pl-speed-035",
+      "location": "Mazurowice",
+      "road": "94",
+      "best": {
+        "score": 12,
+        "distance_m": 10.9,
+        "canard_id": "114847998",
+        "location": "Mazurowice",
+        "road": "94",
+        "road_match": true,
+        "location_match": true
+      },
+      "second_score": null
+    },
+    {
+      "legacy_id": "pl-speed-036",
+      "location": "między Rudnikami a Jaworznem",
+      "road": "42",
+      "best": null,
+      "second_score": null
+    },
+    {
+      "legacy_id": "pl-speed-037",
+      "location": "Minty",
+      "road": "57",
+      "best": {
+        "score": 10,
+        "distance_m": 209.1,
+        "canard_id": "119533375",
+        "location": "Minty",
+        "road": "57",
+        "road_match": true,
+        "location_match": true
+      },
+      "second_score": null
+    },
+    {
+      "legacy_id": "pl-speed-038",
+      "location": "Mirosławice",
+      "road": "35",
+      "best": {
+        "score": 9,
+        "distance_m": 357.5,
+        "canard_id": "114847667",
+        "location": "Mirosławice",
+        "road": "35",
+        "road_match": true,
+        "location_match": true
+      },
+      "second_score": null
+    },
+    {
+      "legacy_id": "pl-speed-039",
+      "location": "Mokre",
+      "road": "55",
+      "best": {
+        "score": 12,
+        "distance_m": 9.5,
+        "canard_id": "119351611",
+        "location": "Mokre",
+        "road": "55",
+        "road_match": true,
+        "location_match": true
+      },
+      "second_score": null
+    },
+    {
+      "legacy_id": "pl-speed-040",
+      "location": "Mościbrody",
+      "road": "63/61",
+      "best": null,
+      "second_score": null
+    },
+    {
+      "legacy_id": "pl-speed-041",
+      "location": "Narty",
+      "road": "58",
+      "best": {
+        "score": 9,
+        "distance_m": 398.0,
+        "canard_id": "118949564",
+        "location": "Narty",
+        "road": "58",
+        "road_match": true,
+        "location_match": true
+      },
+      "second_score": null
+    },
+    {
+      "legacy_id": "pl-speed-042",
+      "location": "Nowogród Bobrzański",
+      "road": "27",
+      "best": {
+        "score": 11,
+        "distance_m": 114.2,
+        "canard_id": "118176829",
+        "location": "Nowogród Bobrzański",
+        "road": "27",
+        "road_match": true,
+        "location_match": true
+      },
+      "second_score": null
+    },
+    {
+      "legacy_id": "pl-speed-043",
+      "location": "Czajowice/Bębło",
+      "road": "94",
+      "best": {
+        "score": 8,
+        "distance_m": 72.2,
+        "canard_id": "116222374",
+        "location": "Czajowice",
+        "road": "94",
+        "road_match": true,
+        "location_match": false
+      },
+      "second_score": null
+    },
+    {
+      "legacy_id": "pl-speed-044",
+      "location": "Osiek",
+      "road": "79",
+      "best": {
+        "score": 12,
+        "distance_m": 11.8,
+        "canard_id": "116221632",
+        "location": "Osiek",
+        "road": "79",
+        "road_match": true,
+        "location_match": true
+      },
+      "second_score": null
+    },
+    {
+      "legacy_id": "pl-speed-045",
+      "location": "Ostrowiec",
+      "road": "22",
+      "best": {
+        "score": 12,
+        "distance_m": 17.6,
+        "canard_id": "112450531",
+        "location": "Ostrowiec",
+        "road": "22",
+        "road_match": true,
+        "location_match": true
+      },
+      "second_score": null
+    },
+    {
+      "legacy_id": "pl-speed-046",
+      "location": "Paprotnia",
+      "road": "92",
+      "best": {
+        "score": 11,
+        "distance_m": 73.2,
+        "canard_id": "112684248",
+        "location": "Paprotnia",
+        "road": "92",
+        "road_match": true,
+        "location_match": true
+      },
+      "second_score": null
+    },
+    {
+      "legacy_id": "pl-speed-047",
+      "location": "Potok",
+      "road": "28",
+      "best": {
+        "score": 10,
+        "distance_m": 281.7,
+        "canard_id": "111995573",
+        "location": "Potok",
+        "road": "28",
+        "road_match": true,
+        "location_match": true
+      },
+      "second_score": null
+    },
+    {
+      "legacy_id": "pl-speed-048",
+      "location": "Racibórz",
+      "road": "45",
+      "best": {
+        "score": 11,
+        "distance_m": 98.7,
+        "canard_id": "110154258",
+        "location": "Racibórz",
+        "road": "45",
+        "road_match": true,
+        "location_match": true
+      },
+      "second_score": null
+    },
+    {
+      "legacy_id": "pl-speed-049",
+      "location": "Rębowo",
+      "road": "50",
+      "best": {
+        "score": 12,
+        "distance_m": 43.5,
+        "canard_id": "117323526",
+        "location": "Rębowo",
+        "road": "50",
+        "road_match": true,
+        "location_match": true
+      },
+      "second_score": null
+    },
+    {
+      "legacy_id": "pl-speed-050",
+      "location": "Rumianek",
+      "road": "92",
+      "best": {
+        "score": 8,
+        "distance_m": 639.1,
+        "canard_id": "112450441",
+        "location": "Rumianek",
+        "road": "92",
+        "road_match": true,
+        "location_match": true
+      },
+      "second_score": null
+    },
+    {
+      "legacy_id": "pl-speed-051",
+      "location": "Sandomierz",
+      "road": "77/79",
+      "best": {
+        "score": 8,
+        "distance_m": 32.4,
+        "canard_id": "116222191",
+        "location": "Sandomierz",
+        "road": "77",
+        "road_match": false,
+        "location_match": true
+      },
+      "second_score": null
+    },
+    {
+      "legacy_id": "pl-speed-052",
+      "location": "Sieroniowice",
+      "road": "88",
+      "best": {
+        "score": 10,
+        "distance_m": 204.3,
+        "canard_id": "112422888",
+        "location": "Sieroniowice",
+        "road": "88",
+        "road_match": true,
+        "location_match": true
+      },
+      "second_score": null
+    },
+    {
+      "legacy_id": "pl-speed-053",
+      "location": "Sierpc",
+      "road": "10",
+      "best": {
+        "score": 12,
+        "distance_m": 2.8,
+        "canard_id": "118176686",
+        "location": "Sierpc",
+        "road": "10",
+        "road_match": true,
+        "location_match": true
+      },
+      "second_score": null
+    },
+    {
+      "legacy_id": "pl-speed-054",
+      "location": "Skulsk",
+      "road": "25",
+      "best": {
+        "score": 12,
+        "distance_m": 17.2,
+        "canard_id": "118176441",
+        "location": "Skulsk",
+        "road": "25",
+        "road_match": true,
+        "location_match": true
+      },
+      "second_score": null
+    },
+    {
+      "legacy_id": "pl-speed-055",
+      "location": "Słubice",
+      "road": "31",
+      "best": {
+        "score": 8,
+        "distance_m": 17.0,
+        "canard_id": "120186077",
+        "location": "Słubice",
+        "road": "29",
+        "road_match": false,
+        "location_match": true
+      },
+      "second_score": null
+    },
+    {
+      "legacy_id": "pl-speed-056",
+      "location": "Słupno",
+      "road": "62",
+      "best": {
+        "score": 11,
+        "distance_m": 52.0,
+        "canard_id": "117605372",
+        "location": "Słupno",
+        "road": "62",
+        "road_match": true,
+        "location_match": true
+      },
+      "second_score": null
+    },
+    {
+      "legacy_id": "pl-speed-057",
+      "location": "Strzelce",
+      "road": "60",
+      "best": {
+        "score": 11,
+        "distance_m": 126.7,
+        "canard_id": "114717917",
+        "location": "Strzelce",
+        "road": "60",
+        "road_match": true,
+        "location_match": true
+      },
+      "second_score": null
+    },
+    {
+      "legacy_id": "pl-speed-058",
+      "location": "Strzelce",
+      "road": "35",
+      "best": {
+        "score": 9,
+        "distance_m": 511.2,
+        "canard_id": "115163592",
+        "location": "Strzelce",
+        "road": "35",
+        "road_match": true,
+        "location_match": true
+      },
+      "second_score": null
+    },
+    {
+      "legacy_id": "pl-speed-059",
+      "location": "Miradowo",
+      "road": "22",
+      "best": {
+        "score": 11,
+        "distance_m": 88.2,
+        "canard_id": "120185785",
+        "location": "Miradowo",
+        "road": "22",
+        "road_match": true,
+        "location_match": true
+      },
+      "second_score": null
+    },
+    {
+      "legacy_id": "pl-speed-060",
+      "location": "Szczytno",
+      "road": "53",
+      "best": {
+        "score": 7,
+        "distance_m": 110.0,
+        "canard_id": "120185929",
+        "location": "Szczytno",
+        "road": "57",
+        "road_match": false,
+        "location_match": true
+      },
+      "second_score": null
+    },
+    {
+      "legacy_id": "pl-speed-061",
+      "location": "Świdnica",
+      "road": "35",
+      "best": {
+        "score": 12,
+        "distance_m": 31.1,
+        "canard_id": "116570766",
+        "location": "Świdnica",
+        "road": "35",
+        "road_match": true,
+        "location_match": true
+      },
+      "second_score": null
+    },
+    {
+      "legacy_id": "pl-speed-062",
+      "location": "Tarnowskie Góry",
+      "road": "11",
+      "best": {
+        "score": 12,
+        "distance_m": 31.7,
+        "canard_id": "110154180",
+        "location": "Tarnowskie Góry",
+        "road": "11",
+        "road_match": true,
+        "location_match": true
+      },
+      "second_score": null
+    },
+    {
+      "legacy_id": "pl-speed-063",
+      "location": "Tywola",
+      "road": "15",
+      "best": {
+        "score": 12,
+        "distance_m": 24.0,
+        "canard_id": "120185828",
+        "location": "Tywola",
+        "road": "15",
+        "road_match": true,
+        "location_match": true
+      },
+      "second_score": null
+    },
+    {
+      "legacy_id": "pl-speed-064",
+      "location": "Strzeszowice",
+      "road": "12",
+      "best": {
+        "score": 12,
+        "distance_m": 12.0,
+        "canard_id": "117323355",
+        "location": "Strzeszowice",
+        "road": "12",
+        "road_match": true,
+        "location_match": true
+      },
+      "second_score": null
+    },
+    {
+      "legacy_id": "pl-speed-065",
+      "location": "Wojcieszyce",
+      "road": "3",
+      "best": {
+        "score": 7,
+        "distance_m": 101.1,
+        "canard_id": "117828286",
+        "location": "Wojcieszyce",
+        "road": "5",
+        "road_match": false,
+        "location_match": true
+      },
+      "second_score": null
+    },
+    {
+      "legacy_id": "pl-speed-066",
+      "location": "Woliczka",
+      "road": "94",
+      "best": {
+        "score": 12,
+        "distance_m": 22.1,
+        "canard_id": "120186107",
+        "location": "Woliczka",
+        "road": "94",
+        "road_match": true,
+        "location_match": true
+      },
+      "second_score": null
+    },
+    {
+      "legacy_id": "pl-speed-067",
+      "location": "Zajączkowo Tczewskie",
+      "road": "91",
+      "best": {
+        "score": 8,
+        "distance_m": 80.0,
+        "canard_id": "114717872",
+        "location": "Zajączkowo",
+        "road": "91",
+        "road_match": true,
+        "location_match": false
+      },
+      "second_score": null
+    },
+    {
+      "legacy_id": "pl-speed-068",
+      "location": "Zegrze",
+      "road": "61",
+      "best": {
+        "score": 12,
+        "distance_m": 38.8,
+        "canard_id": "120121590",
+        "location": "Zegrze",
+        "road": "61",
+        "road_match": true,
+        "location_match": true
+      },
+      "second_score": null
+    },
+    {
+      "legacy_id": "pl-speed-069",
+      "location": "Boczów",
+      "road": "92",
+      "best": {
+        "score": 11,
+        "distance_m": 53.5,
+        "canard_id": "120186164",
+        "location": "Boczów",
+        "road": "92",
+        "road_match": true,
+        "location_match": true
+      },
+      "second_score": null
+    },
+    {
+      "legacy_id": "pl-speed-070",
+      "location": "Żurawieniec",
+      "road": "60",
+      "best": {
+        "score": 11,
+        "distance_m": 85.2,
+        "canard_id": "114719462",
+        "location": "Żurawieniec",
+        "road": "60",
+        "road_match": true,
+        "location_match": true
+      },
+      "second_score": null
+    }
+  ],
+  "red_light": [
+    {
+      "legacy_id": "pl-red-001",
+      "subtype": "intersection",
+      "location": "Nekla",
+      "road": "92",
+      "best": {
+        "score": 12,
+        "distance_m": 1.6,
+        "devices_at_site": 4,
+        "canard_ids": [
+          "115815666",
+          "115815734",
+          "115815695",
+          "115815712"
+        ],
+        "roads": [
+          "92"
+        ],
+        "locations": [
+          "Nekla"
+        ]
+      }
+    },
+    {
+      "legacy_id": "pl-red-002",
+      "subtype": "rail_crossing",
+      "location": "Wymysłowo",
+      "road": "15",
+      "best": {
+        "score": 12,
+        "distance_m": 0.4,
+        "devices_at_site": 2,
+        "canard_ids": [
+          "115544154",
+          "115544146"
+        ],
+        "roads": [
+          "15"
+        ],
+        "locations": [
+          "Wymysłowo"
+        ]
+      }
+    },
+    {
+      "legacy_id": "pl-red-003",
+      "subtype": "intersection",
+      "location": "Tczew",
+      "road": "91",
+      "best": {
+        "score": 12,
+        "distance_m": 3.9,
+        "devices_at_site": 9,
+        "canard_ids": [
+          "118185199",
+          "118185248",
+          "118185167",
+          "118185278",
+          "118185369",
+          "118185216",
+          "118185349",
+          "118185181",
+          "118185339"
+        ],
+        "roads": [
+          "91"
+        ],
+        "locations": [
+          "Tczew"
+        ]
+      }
+    },
+    {
+      "legacy_id": "pl-red-004",
+      "subtype": "rail_crossing",
+      "location": "Barwałd Dolny",
+      "road": "52",
+      "best": {
+        "score": 9,
+        "distance_m": 1.1,
+        "devices_at_site": 2,
+        "canard_ids": [
+          "121185565",
+          "121185645"
+        ],
+        "roads": [
+          "52"
+        ],
+        "locations": [
+          "Barwałd Średni"
+        ]
+      }
+    },
+    {
+      "legacy_id": "pl-red-005",
+      "subtype": "intersection",
+      "location": "Malbork",
+      "road": "22",
+      "best": {
+        "score": 12,
+        "distance_m": 2.1,
+        "devices_at_site": 4,
+        "canard_ids": [
+          "117740274",
+          "117740259",
+          "117740268",
+          "117740286"
+        ],
+        "roads": [
+          "22"
+        ],
+        "locations": [
+          "Malbork"
+        ]
+      }
+    },
+    {
+      "legacy_id": "pl-red-006",
+      "subtype": "rail_crossing",
+      "location": "Większyce",
+      "road": "45",
+      "best": {
+        "score": 12,
+        "distance_m": 10.1,
+        "devices_at_site": 2,
+        "canard_ids": [
+          "117620144",
+          "117620223"
+        ],
+        "roads": [
+          "45"
+        ],
+        "locations": [
+          "Większyce"
+        ]
+      }
+    },
+    {
+      "legacy_id": "pl-red-007",
+      "subtype": "intersection",
+      "location": "Wolsztyn",
+      "road": "32",
+      "best": {
+        "score": 12,
+        "distance_m": 1.3,
+        "devices_at_site": 4,
+        "canard_ids": [
+          "116562073",
+          "116562097",
+          "116562202",
+          "116562108"
+        ],
+        "roads": [
+          "32"
+        ],
+        "locations": [
+          "Wolsztyn"
+        ]
+      }
+    },
+    {
+      "legacy_id": "pl-red-008",
+      "subtype": "rail_crossing",
+      "location": "Łąkociny",
+      "road": "36",
+      "best": {
+        "score": 12,
+        "distance_m": 1.4,
+        "devices_at_site": 2,
+        "canard_ids": [
+          "116039157",
+          "116039194"
+        ],
+        "roads": [
+          "36"
+        ],
+        "locations": [
+          "Łąkociny"
+        ]
+      }
+    },
+    {
+      "legacy_id": "pl-red-009",
+      "subtype": "intersection",
+      "location": "Kożuszki-Parcele",
+      "road": "92",
+      "best": {
+        "score": 9,
+        "distance_m": 4.1,
+        "devices_at_site": 4,
+        "canard_ids": [
+          "114968675",
+          "114968663",
+          "114968647",
+          "114968630"
+        ],
+        "roads": [
+          "92"
+        ],
+        "locations": [
+          "Kożuszki-Parcel"
+        ]
+      }
+    },
+    {
+      "legacy_id": "pl-red-010",
+      "subtype": "rail_crossing",
+      "location": "Piaski",
+      "road": "11",
+      "best": {
+        "score": 12,
+        "distance_m": 1.3,
+        "devices_at_site": 2,
+        "canard_ids": [
+          "116039087",
+          "116039135"
+        ],
+        "roads": [
+          "11"
+        ],
+        "locations": [
+          "Piaski"
+        ]
+      }
+    },
+    {
+      "legacy_id": "pl-red-011",
+      "subtype": "intersection",
+      "location": "Lipie Śląskie",
+      "road": "11",
+      "best": {
+        "score": 9,
+        "distance_m": 1.4,
+        "devices_at_site": 4,
+        "canard_ids": [
+          "121460680",
+          "121460819",
+          "121460719",
+          "121460769"
+        ],
+        "roads": [
+          "11"
+        ],
+        "locations": [
+          "Lubliniec"
+        ]
+      }
+    },
+    {
+      "legacy_id": "pl-red-012",
+      "subtype": "intersection",
+      "location": "Targowisko",
+      "road": "94",
+      "best": {
+        "score": 12,
+        "distance_m": 22.0,
+        "devices_at_site": 3,
+        "canard_ids": [
+          "119255957",
+          "119255982",
+          "119255975"
+        ],
+        "roads": [
+          "94"
+        ],
+        "locations": [
+          "Targowisko"
+        ]
+      }
+    },
+    {
+      "legacy_id": "pl-red-013",
+      "subtype": "intersection",
+      "location": "Czeladź",
+      "road": "94",
+      "best": {
+        "score": 12,
+        "distance_m": 6.1,
+        "devices_at_site": 3,
+        "canard_ids": [
+          "122084834",
+          "122084860",
+          "122084723"
+        ],
+        "roads": [
+          "94"
+        ],
+        "locations": [
+          "Czeladź"
+        ]
+      }
+    },
+    {
+      "legacy_id": "pl-red-014",
+      "subtype": "intersection",
+      "location": "Inwałd",
+      "road": "52",
+      "best": {
+        "score": 12,
+        "distance_m": 0.6,
+        "devices_at_site": 4,
+        "canard_ids": [
+          "116899216",
+          "116899268",
+          "116899235",
+          "116899254"
+        ],
+        "roads": [
+          "52"
+        ],
+        "locations": [
+          "Inwałd"
+        ]
+      }
+    },
+    {
+      "legacy_id": "pl-red-015",
+      "subtype": "intersection",
+      "location": "Kościelna Wieś",
+      "road": "12",
+      "best": {
+        "score": 12,
+        "distance_m": 14.5,
+        "devices_at_site": 4,
+        "canard_ids": [
+          "116899169",
+          "116898661",
+          "116899086",
+          "116899130"
+        ],
+        "roads": [
+          "12"
+        ],
+        "locations": [
+          "Kościelna Wieś"
+        ]
+      }
+    }
+  ],
+  "opp": [
+    {
+      "legacy_id": "pl-avg-001",
+      "base_id": "pl-avg-001",
+      "road": "A2",
+      "name": "węzeł Mińsk Mazowiecki – węzeł Janów",
+      "best": {
+        "score": 9,
+        "max_endpoint_distance_m": 35.1,
+        "canard_base_id": "112732201",
+        "directions": 2,
+        "road_match": true,
+        "direction_names": [
+          "W kierunku Terespola",
+          "W kierunku Warszawy"
+        ]
+      }
+    },
+    {
+      "legacy_id": "pl-avg-002",
+      "base_id": "pl-avg-002",
+      "road": "A4",
+      "name": "węzeł Łagiewniki – węzeł Wieliczka",
+      "best": {
+        "score": 9,
+        "max_endpoint_distance_m": 5.7,
+        "canard_base_id": "118679807",
+        "directions": 1,
+        "road_match": true,
+        "direction_names": [
+          "w kierunku Katowic"
+        ]
+      }
+    },
+    {
+      "legacy_id": "pl-avg-003",
+      "base_id": "pl-avg-003",
+      "road": "A1",
+      "name": "węzeł Częstochowa Południe – węzeł Woźniki",
+      "best": {
+        "score": 8,
+        "max_endpoint_distance_m": 211.4,
+        "canard_base_id": "118680228",
+        "directions": 2,
+        "road_match": true,
+        "direction_names": [
+          "w kierunku Gorzyczki",
+          "w kierunku Łodzi"
+        ]
+      }
+    },
+    {
+      "legacy_id": "pl-avg-004-v1",
+      "base_id": "pl-avg-004",
+      "road": "A1",
+      "name": "węzeł Piotrków Trybunalski Południe – węzeł Kamieńsk",
+      "best": {
+        "score": 9,
+        "max_endpoint_distance_m": 13.6,
+        "canard_base_id": "118680187",
+        "directions": 1,
+        "road_match": true,
+        "direction_names": [
+          "w kierunku Częstochowy"
+        ]
+      }
+    },
+    {
+      "legacy_id": "pl-avg-004-v2",
+      "base_id": "pl-avg-004",
+      "road": "A1",
+      "name": "węzeł Piotrków Trybunalski Południe – węzeł Kamieńsk",
+      "best": {
+        "score": 9,
+        "max_endpoint_distance_m": 20.7,
+        "canard_base_id": "118680112",
+        "directions": 1,
+        "road_match": true,
+        "direction_names": [
+          "w kierunku Łodzi"
+        ]
+      }
+    },
+    {
+      "legacy_id": "pl-avg-005-v1",
+      "base_id": "pl-avg-005",
+      "road": "A1",
+      "name": "wysokość m. Brodowe – węzeł Mykanów",
+      "best": {
+        "score": 9,
+        "max_endpoint_distance_m": 96.2,
+        "canard_base_id": "118680069",
+        "directions": 1,
+        "road_match": true,
+        "direction_names": [
+          "W kierunku Łodzi"
+        ]
+      }
+    },
+    {
+      "legacy_id": "pl-avg-005-v2",
+      "base_id": "pl-avg-005",
+      "road": "A1",
+      "name": "wysokość m. Brodowe – węzeł Mykanów",
+      "best": {
+        "score": 9,
+        "max_endpoint_distance_m": 98.5,
+        "canard_base_id": "118680098",
+        "directions": 1,
+        "road_match": true,
+        "direction_names": [
+          "W kierunku Częstochowy"
+        ]
+      }
+    },
+    {
+      "legacy_id": "pl-avg-006",
+      "base_id": "pl-avg-006",
+      "road": "S7",
+      "name": "węzeł Tarczyn Południe – węzeł Mszczonowska",
+      "best": {
+        "score": 9,
+        "max_endpoint_distance_m": 15.9,
+        "canard_base_id": "113783591",
+        "directions": 2,
+        "road_match": true,
+        "direction_names": [
+          "W kierunku Radomia",
+          "W kierunku Warszawy"
+        ]
+      }
+    },
+    {
+      "legacy_id": "pl-avg-007",
+      "base_id": "pl-avg-007",
+      "road": "S17",
+      "name": "Garwolin Zachód – Garwolin Południe",
+      "best": {
+        "score": 9,
+        "max_endpoint_distance_m": 1.2,
+        "canard_base_id": "113783705",
+        "directions": 2,
+        "road_match": true,
+        "direction_names": [
+          "W kierunku Lublina",
+          "W kierunku Warszawy"
+        ]
+      }
+    },
+    {
+      "legacy_id": "pl-avg-008",
+      "base_id": "pl-avg-008",
+      "road": "S6/S7",
+      "name": "węzeł Gdańsk Owczarnia – węzeł Gdańsk Lotnisko",
+      "best": {
+        "score": 5,
+        "max_endpoint_distance_m": 8.0,
+        "canard_base_id": "118679898",
+        "directions": 2,
+        "road_match": false,
+        "direction_names": [
+          "W stronę Łodzi",
+          "W stronę Gdyni"
+        ]
+      }
+    },
+    {
+      "legacy_id": "pl-avg-009",
+      "base_id": "pl-avg-009",
+      "road": "A6",
+      "name": "węzeł Dąbie – węzeł Rzęśnica",
+      "best": {
+        "score": 9,
+        "max_endpoint_distance_m": 16.5,
+        "canard_base_id": "113783667",
+        "directions": 1,
+        "road_match": true,
+        "direction_names": [
+          "w kier. Świnoujścia"
+        ]
+      }
+    },
+    {
+      "legacy_id": "pl-avg-010",
+      "base_id": "pl-avg-010",
+      "road": "S7",
+      "name": "Rychnowo – Olsztynek",
+      "best": {
+        "score": 5,
+        "max_endpoint_distance_m": 30.7,
+        "canard_base_id": "113783696",
+        "directions": 2,
+        "road_match": false,
+        "direction_names": [
+          "W kierunku Nidzicy",
+          "W kierunku Ostródy"
+        ]
+      }
+    },
+    {
+      "legacy_id": "pl-avg-011",
+      "base_id": "pl-avg-011",
+      "road": "A4",
+      "name": "węzeł Opole Zachód – MOP Prószków",
+      "best": {
+        "score": 8,
+        "max_endpoint_distance_m": 105.6,
+        "canard_base_id": "113783529",
+        "directions": 2,
+        "road_match": true,
+        "direction_names": [
+          "W stronę Katowic",
+          "W stronę Wrocławia"
+        ]
+      }
+    },
+    {
+      "legacy_id": "pl-avg-012",
+      "base_id": "pl-avg-012",
+      "road": "A2",
+      "name": "węzeł Koło – węzeł Dąbie",
+      "best": {
+        "score": 9,
+        "max_endpoint_distance_m": 10.4,
+        "canard_base_id": "113783649",
+        "directions": 2,
+        "road_match": true,
+        "direction_names": [
+          "W kierunku Warszawy",
+          "W kierunku Poznania"
+        ]
+      }
+    },
+    {
+      "legacy_id": "pl-avg-013",
+      "base_id": "pl-avg-013",
+      "road": "S7",
+      "name": "Kajetanów – węzeł Kielce Północ",
+      "best": {
+        "score": 9,
+        "max_endpoint_distance_m": 26.3,
+        "canard_base_id": "118679774",
+        "directions": 1,
+        "road_match": true,
+        "direction_names": [
+          "W kier. Radomia"
+        ]
+      }
+    },
+    {
+      "legacy_id": "pl-avg-014",
+      "base_id": "pl-avg-014",
+      "road": "S7",
+      "name": "węzeł Radom Północ – węzeł Wolanów",
+      "best": {
+        "score": 9,
+        "max_endpoint_distance_m": 29.6,
+        "canard_base_id": "113783659",
+        "directions": 2,
+        "road_match": true,
+        "direction_names": [
+          "W kierunku Krakowa",
+          "W kierunku Warszawy"
+        ]
+      }
+    },
+    {
+      "legacy_id": "pl-avg-015",
+      "base_id": "pl-avg-015",
+      "road": "S8",
+      "name": "węzeł Zielonka – węzeł Radzymin Południe",
+      "best": {
+        "score": 9,
+        "max_endpoint_distance_m": 35.2,
+        "canard_base_id": "116594573",
+        "directions": 1,
+        "road_match": true,
+        "direction_names": [
+          "w kier. Wyszkowa"
+        ]
+      }
+    },
+    {
+      "legacy_id": "pl-avg-016",
+      "base_id": "pl-avg-016",
+      "road": "S3",
+      "name": "Parłówko – Brzozowo",
+      "best": {
+        "score": 9,
+        "max_endpoint_distance_m": 6.0,
+        "canard_base_id": "116594787",
+        "directions": 2,
+        "road_match": true,
+        "direction_names": [
+          "W kier. Szczecina",
+          "W kier. Świnoujścia"
+        ]
+      }
+    },
+    {
+      "legacy_id": "pl-avg-017",
+      "base_id": "pl-avg-017",
+      "road": "S6",
+      "name": "Kołobrzeg – Kołobrzeg",
+      "best": {
+        "score": 9,
+        "max_endpoint_distance_m": 15.4,
+        "canard_base_id": "113783685",
+        "directions": 2,
+        "road_match": true,
+        "direction_names": [
+          "W kierunku Koszalina",
+          "W kierunku Szczecina"
+        ]
+      }
+    },
+    {
+      "legacy_id": "pl-avg-018",
+      "base_id": "pl-avg-018",
+      "road": "S6/S7",
+      "name": "w. Karczemki – Gdańsk ul. Jabłoniowa (węzeł Gdańsk Szadółki)",
+      "best": {
+        "score": 5,
+        "max_endpoint_distance_m": 23.7,
+        "canard_base_id": "118679915",
+        "directions": 1,
+        "road_match": false,
+        "direction_names": [
+          "w stronę Gdyni"
+        ]
+      }
+    },
+    {
+      "legacy_id": "pl-avg-019",
+      "base_id": "pl-avg-019",
+      "road": "S6/S7",
+      "name": "Węzeł Dworek – węzeł Nowy Dwór Gdański",
+      "best": {
+        "score": 5,
+        "max_endpoint_distance_m": 8.5,
+        "canard_base_id": "118680199",
+        "directions": 2,
+        "road_match": false,
+        "direction_names": [
+          "w stronę Warszawy",
+          "w stronę Gdańska"
+        ]
+      }
+    },
+    {
+      "legacy_id": "pl-avg-020",
+      "base_id": "pl-avg-020",
+      "road": "S7",
+      "name": "węzeł Pasłęk Północ – węzeł Marzewo",
+      "best": {
+        "score": 9,
+        "max_endpoint_distance_m": 27.4,
+        "canard_base_id": "116594825",
+        "directions": 1,
+        "road_match": true,
+        "direction_names": [
+          "w kier. Elbląga"
+        ]
+      }
+    },
+    {
+      "legacy_id": "pl-avg-021",
+      "base_id": "pl-avg-021",
+      "road": "S7",
+      "name": "węzeł Rączki – węzeł Nidzica Południe",
+      "best": {
+        "score": 9,
+        "max_endpoint_distance_m": 1.9,
+        "canard_base_id": "116594860",
+        "directions": 1,
+        "road_match": true,
+        "direction_names": [
+          "w stronę Warszawy"
+        ]
+      }
+    },
+    {
+      "legacy_id": "pl-avg-022",
+      "base_id": "pl-avg-022",
+      "road": "S51",
+      "name": "węzeł Olsztyn Południe – Stawiguda",
+      "best": {
+        "score": 4,
+        "max_endpoint_distance_m": 146.2,
+        "canard_base_id": "116594640",
+        "directions": 2,
+        "road_match": false,
+        "direction_names": [
+          "w kierunku Olsztynka",
+          "w kierunku Olsztyna"
+        ]
+      }
+    },
+    {
+      "legacy_id": "pl-avg-023",
+      "base_id": "pl-avg-023",
+      "road": "S8",
+      "name": "Kołaki – węzeł Mężenin",
+      "best": {
+        "score": 9,
+        "max_endpoint_distance_m": 19.5,
+        "canard_base_id": "118680037",
+        "directions": 2,
+        "road_match": true,
+        "direction_names": [
+          "w kierunku Białegostoku",
+          "w kierunku Warszawy"
+        ]
+      }
+    },
+    {
+      "legacy_id": "pl-avg-024",
+      "base_id": "pl-avg-024",
+      "road": "S17",
+      "name": "węzeł Kurów Zachód – węzeł Nałęczów",
+      "best": {
+        "score": 3,
+        "max_endpoint_distance_m": 355.4,
+        "canard_base_id": "118679763",
+        "directions": 2,
+        "road_match": false,
+        "direction_names": [
+          "W stronę Lublina",
+          "W stronę Warszawy"
+        ]
+      }
+    },
+    {
+      "legacy_id": "pl-avg-025",
+      "base_id": "pl-avg-025",
+      "road": "S19",
+      "name": "Lublin Węglin – Lublin Sławinek",
+      "best": {
+        "score": 9,
+        "max_endpoint_distance_m": 17.9,
+        "canard_base_id": "118679746",
+        "directions": 1,
+        "road_match": true,
+        "direction_names": [
+          "w kierunku Białegostoku"
+        ]
+      }
+    },
+    {
+      "legacy_id": "pl-avg-026",
+      "base_id": "pl-avg-026",
+      "road": "S8",
+      "name": "Nadarzyn – Nadarzyn",
+      "best": {
+        "score": 9,
+        "max_endpoint_distance_m": 26.1,
+        "canard_base_id": "115049948",
+        "directions": 1,
+        "road_match": true,
+        "direction_names": [
+          "W kierunku Warszawy"
+        ]
+      }
+    },
+    {
+      "legacy_id": "pl-avg-027",
+      "base_id": "pl-avg-027",
+      "road": "S8",
+      "name": "węzeł Opacz – węzeł Puchały",
+      "best": {
+        "score": 9,
+        "max_endpoint_distance_m": 9.4,
+        "canard_base_id": "113783631",
+        "directions": 1,
+        "road_match": true,
+        "direction_names": [
+          "W kierunku Janek"
+        ]
+      }
+    },
+    {
+      "legacy_id": "pl-avg-028",
+      "base_id": "pl-avg-028",
+      "road": "A1",
+      "name": "węzeł Kutno – węzeł Piątek",
+      "best": {
+        "score": 9,
+        "max_endpoint_distance_m": 36.9,
+        "canard_base_id": "118679857",
+        "directions": 2,
+        "road_match": true,
+        "direction_names": [
+          "w kierunku Łodzi",
+          "w kierunku Torunia"
+        ]
+      }
+    },
+    {
+      "legacy_id": "pl-avg-029",
+      "base_id": "pl-avg-029",
+      "road": "A1",
+      "name": "węzeł Zabrze Północ – węzeł Zabrze Zachód",
+      "best": {
+        "score": 9,
+        "max_endpoint_distance_m": 30.2,
+        "canard_base_id": "118680302",
+        "directions": 1,
+        "road_match": true,
+        "direction_names": [
+          "w kierunku Ostrawy"
+        ]
+      }
+    },
+    {
+      "legacy_id": "pl-avg-030",
+      "base_id": "pl-avg-030",
+      "road": "S5",
+      "name": "węzeł Pruszcz – węzeł Trzeciewiec",
+      "best": {
+        "score": 9,
+        "max_endpoint_distance_m": 30.9,
+        "canard_base_id": "117740692",
+        "directions": 2,
+        "road_match": true,
+        "direction_names": [
+          "w stronę Bydgoszczy",
+          "w stronę Grudziądza"
+        ]
+      }
+    },
+    {
+      "legacy_id": "pl-avg-031",
+      "base_id": "pl-avg-031",
+      "road": "S5",
+      "name": "węzeł Poznań Zachód – węzeł Stęszew",
+      "best": {
+        "score": 9,
+        "max_endpoint_distance_m": 19.1,
+        "canard_base_id": "113783639",
+        "directions": 2,
+        "road_match": true,
+        "direction_names": [
+          "w kierunku Wrocławia",
+          "w kierunku Poznania"
+        ]
+      }
+    },
+    {
+      "legacy_id": "pl-avg-032",
+      "base_id": "pl-avg-032",
+      "road": "S3",
+      "name": "Gorzów Zachód – Gorzów Południe",
+      "best": {
+        "score": 9,
+        "max_endpoint_distance_m": 0.0,
+        "canard_base_id": "117740698",
+        "directions": 2,
+        "road_match": true,
+        "direction_names": [
+          "W kier. Zielonej Góry",
+          "w kier. Szczecina"
+        ]
+      }
+    },
+    {
+      "legacy_id": "pl-avg-033",
+      "base_id": "pl-avg-033",
+      "road": "A4",
+      "name": "węzeł Kąty Wrocławskie – węzeł Pietrzykowice",
+      "best": {
+        "score": 9,
+        "max_endpoint_distance_m": 19.1,
+        "canard_base_id": "110646878",
+        "directions": 2,
+        "road_match": true,
+        "direction_names": [
+          "w stronę Wrocławia",
+          "w stronę Legnicy"
+        ]
+      }
+    },
+    {
+      "legacy_id": "pl-avg-034-v1",
+      "base_id": "pl-avg-034",
+      "road": "A8e",
+      "name": "węzeł Wrocław Północ – węzeł Wrocław Lotnisko",
+      "best": {
+        "score": 5,
+        "max_endpoint_distance_m": 6.9,
+        "canard_base_id": "110646597",
+        "directions": 1,
+        "road_match": false,
+        "direction_names": [
+          "W stronę Kudowy-Zdrój"
+        ]
+      }
+    },
+    {
+      "legacy_id": "pl-avg-034-v2",
+      "base_id": "pl-avg-034",
+      "road": "A8e",
+      "name": "węzeł Wrocław Północ – węzeł Wrocław Lotnisko",
+      "best": {
+        "score": 5,
+        "max_endpoint_distance_m": 8.5,
+        "canard_base_id": "110646872",
+        "directions": 1,
+        "road_match": false,
+        "direction_names": [
+          "W stronę Łodzi"
+        ]
+      }
+    },
+    {
+      "legacy_id": "pl-avg-035",
+      "base_id": "pl-avg-035",
+      "road": "A4",
+      "name": "węzeł Krzyżowa – węzeł Krzywa",
+      "best": {
+        "score": 8,
+        "max_endpoint_distance_m": 114.3,
+        "canard_base_id": "117740707",
+        "directions": 1,
+        "road_match": true,
+        "direction_names": [
+          "w kierunku Wrocławia"
+        ]
+      }
+    },
+    {
+      "legacy_id": "pl-avg-036",
+      "base_id": "pl-avg-036",
+      "road": "A4",
+      "name": "węzeł Tarnów Centrum – MOP Jawornik",
+      "best": {
+        "score": 9,
+        "max_endpoint_distance_m": 27.5,
+        "canard_base_id": "117740855",
+        "directions": 2,
+        "road_match": true,
+        "direction_names": [
+          "W kier. Rzeszowa",
+          "W kier. Krakowa"
+        ]
+      }
+    },
+    {
+      "legacy_id": "pl-avg-037",
+      "base_id": "pl-avg-037",
+      "road": "S8",
+      "name": "Ostrów Mazowiecka – Ostrów Mazowiecka",
+      "best": {
+        "score": 9,
+        "max_endpoint_distance_m": 1.0,
+        "canard_base_id": "113783570",
+        "directions": 1,
+        "road_match": true,
+        "direction_names": [
+          "w stronę Białegostoku"
+        ]
+      }
+    },
+    {
+      "legacy_id": "pl-avg-038-v1",
+      "base_id": "pl-avg-038",
+      "road": "A1",
+      "name": "węzeł Kamieńsk – węzeł Radomsko",
+      "best": {
+        "score": 9,
+        "max_endpoint_distance_m": 9.7,
+        "canard_base_id": "118679802",
+        "directions": 1,
+        "road_match": true,
+        "direction_names": [
+          "w kierunku Częstochowy"
+        ]
+      }
+    },
+    {
+      "legacy_id": "pl-avg-038-v2",
+      "base_id": "pl-avg-038",
+      "road": "A1",
+      "name": "węzeł Kamieńsk – węzeł Radomsko",
+      "best": {
+        "score": 9,
+        "max_endpoint_distance_m": 9.6,
+        "canard_base_id": "118679789",
+        "directions": 1,
+        "road_match": true,
+        "direction_names": [
+          "w kierunku Łodzi"
+        ]
+      }
+    },
+    {
+      "legacy_id": "pl-avg-039",
+      "base_id": "pl-avg-039",
+      "road": "28",
+      "name": "Rabka – Rabka",
+      "best": {
+        "score": 9,
+        "max_endpoint_distance_m": 6.7,
+        "canard_base_id": "117740867",
+        "directions": 2,
+        "road_match": true,
+        "direction_names": [
+          "W kier. Nowego Sącza",
+          "W kier. Skomielnej Białej"
+        ]
+      }
+    },
+    {
+      "legacy_id": "pl-avg-040",
+      "base_id": "pl-avg-040",
+      "road": "S6",
+      "name": "węzeł Borkowice – Stare Bielice",
+      "best": {
+        "score": 9,
+        "max_endpoint_distance_m": 0.0,
+        "canard_base_id": "117740738",
+        "directions": 2,
+        "road_match": true,
+        "direction_names": [
+          "w kierunku Koszalina",
+          "w kierunku Szczecina"
+        ]
+      }
+    },
+    {
+      "legacy_id": "pl-avg-041",
+      "base_id": "pl-avg-041",
+      "road": "A4",
+      "name": "wezęł Krapkowice – MOP Góra św. Anny",
+      "best": {
+        "score": 9,
+        "max_endpoint_distance_m": 15.5,
+        "canard_base_id": "116215931",
+        "directions": 2,
+        "road_match": true,
+        "direction_names": [
+          "W stronę Katowic",
+          "W stronę Wrocławia"
+        ]
+      }
+    },
+    {
+      "legacy_id": "pl-avg-042",
+      "base_id": "pl-avg-042",
+      "road": "S2",
+      "name": "węzeł Warszawa Wilanów – węzeł Lubelska",
+      "best": {
+        "score": 9,
+        "max_endpoint_distance_m": 3.9,
+        "canard_base_id": "113783510",
+        "directions": 1,
+        "road_match": true,
+        "direction_names": [
+          "W kierunku Siedlec"
+        ]
+      }
+    },
+    {
+      "legacy_id": "pl-avg-043",
+      "base_id": "pl-avg-043",
+      "road": "81",
+      "name": "Ochaby – Skoczów",
+      "best": {
+        "score": 9,
+        "max_endpoint_distance_m": 24.2,
+        "canard_base_id": "118679827",
+        "directions": 2,
+        "road_match": true,
+        "direction_names": [
+          "w kierunku Wisły",
+          "w kierunku Katowic"
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,1183 @@
+{
+  "speed_cameras": [
+    {
+      "local_id": "pl-speed-003",
+      "candidates": [
+        {
+          "canard_id": 112450626,
+          "serial": "643294-60062",
+          "distance_m": 47.3
+        },
+        {
+          "canard_id": 69598292,
+          "serial": "593-072-73170",
+          "distance_m": 10933.8
+        },
+        {
+          "canard_id": 91258620,
+          "serial": "23165FU10003782",
+          "distance_m": 14986.9
+        }
+      ]
+    },
+    {
+      "local_id": "pl-speed-004",
+      "candidates": [
+        {
+          "canard_id": 120121853,
+          "serial": "643294-60116",
+          "distance_m": 66.0
+        },
+        {
+          "canard_id": 87764064,
+          "serial": "23131FU10003678",
+          "distance_m": 11385.3
+        },
+        {
+          "canard_id": 10997041,
+          "serial": "593-072/72053",
+          "distance_m": 19360.3
+        }
+      ]
+    },
+    {
+      "local_id": "pl-speed-005",
+      "candidates": [
+        {
+          "canard_id": 120121888,
+          "serial": "643294-60117",
+          "distance_m": 50.4
+        },
+        {
+          "canard_id": 1250799,
+          "serial": "593-072/71714",
+          "distance_m": 7542.6
+        },
+        {
+          "canard_id": 86556452,
+          "serial": "23083FUS1000015",
+          "distance_m": 17174.3
+        }
+      ]
+    },
+    {
+      "local_id": "pl-speed-007",
+      "candidates": [
+        {
+          "canard_id": 115622240,
+          "serial": "643294-60077",
+          "distance_m": 43.3
+        },
+        {
+          "canard_id": 118176756,
+          "serial": "643294-60098",
+          "distance_m": 9733.1
+        },
+        {
+          "canard_id": 89139570,
+          "serial": "593-072-73312",
+          "distance_m": 18375.6
+        }
+      ]
+    },
+    {
+      "local_id": "pl-speed-008",
+      "candidates": [
+        {
+          "canard_id": 116694317,
+          "serial": "643294-60085",
+          "distance_m": 85.7
+        },
+        {
+          "canard_id": 89848068,
+          "serial": "593-072-73322",
+          "distance_m": 14877.2
+        },
+        {
+          "canard_id": 116648088,
+          "serial": "643294-60084",
+          "distance_m": 29753.3
+        }
+      ]
+    },
+    {
+      "local_id": "pl-speed-010",
+      "candidates": [
+        {
+          "canard_id": 117160432,
+          "serial": "643294-60086",
+          "distance_m": 57.0
+        },
+        {
+          "canard_id": 89848077,
+          "serial": "593-072-73323",
+          "distance_m": 14518.9
+        },
+        {
+          "canard_id": 8073065,
+          "serial": "593-072/72047",
+          "distance_m": 31081.1
+        }
+      ]
+    },
+    {
+      "local_id": "pl-speed-011",
+      "candidates": [
+        {
+          "canard_id": 118177054,
+          "serial": "643294-60101",
+          "distance_m": 30.8
+        },
+        {
+          "canard_id": 86773410,
+          "serial": "23083FUS1000009",
+          "distance_m": 4982.0
+        },
+        {
+          "canard_id": 86773593,
+          "serial": "23088FUS1000021",
+          "distance_m": 25717.5
+        }
+      ]
+    },
+    {
+      "local_id": "pl-speed-014",
+      "candidates": [
+        {
+          "canard_id": 118176576,
+          "serial": "643294-60096",
+          "distance_m": 29.9
+        },
+        {
+          "canard_id": 90880414,
+          "serial": "23114FU10003630",
+          "distance_m": 15010.1
+        },
+        {
+          "canard_id": 87764188,
+          "serial": "23143FU10003699",
+          "distance_m": 30693.9
+        }
+      ]
+    },
+    {
+      "local_id": "pl-speed-015",
+      "candidates": [
+        {
+          "canard_id": 113122295,
+          "serial": "643294-60065",
+          "distance_m": 37.8
+        },
+        {
+          "canard_id": 114847866,
+          "serial": "643294-60072",
+          "distance_m": 4744.3
+        },
+        {
+          "canard_id": 570285,
+          "serial": "593-072/71608",
+          "distance_m": 9309.7
+        }
+      ]
+    },
+    {
+      "local_id": "pl-speed-021",
+      "candidates": [
+        {
+          "canard_id": 118177110,
+          "serial": "643294-60102",
+          "distance_m": 60.9
+        },
+        {
+          "canard_id": 87764337,
+          "serial": "23130FU10003674",
+          "distance_m": 2651.5
+        },
+        {
+          "canard_id": 117605372,
+          "serial": "643294-60093",
+          "distance_m": 13475.4
+        }
+      ]
+    },
+    {
+      "local_id": "pl-speed-024",
+      "candidates": [
+        {
+          "canard_id": 117323117,
+          "serial": "643294-60092",
+          "distance_m": 70.1
+        },
+        {
+          "canard_id": 117323355,
+          "serial": "643294-60090",
+          "distance_m": 12563.4
+        },
+        {
+          "canard_id": 86556463,
+          "serial": "23081FUS1000007",
+          "distance_m": 23540.7
+        }
+      ]
+    },
+    {
+      "local_id": "pl-speed-029",
+      "candidates": [
+        {
+          "canard_id": 117320446,
+          "serial": "643294-60087",
+          "distance_m": 76.7
+        },
+        {
+          "canard_id": 119072319,
+          "serial": "643294-60106",
+          "distance_m": 9218.0
+        },
+        {
+          "canard_id": 87063888,
+          "serial": "23081FUS1000006",
+          "distance_m": 26273.4
+        }
+      ]
+    },
+    {
+      "local_id": "pl-speed-030",
+      "candidates": [
+        {
+          "canard_id": 119072319,
+          "serial": "643294-60106",
+          "distance_m": 76.7
+        },
+        {
+          "canard_id": 117320446,
+          "serial": "643294-60087",
+          "distance_m": 9170.1
+        },
+        {
+          "canard_id": 118176493,
+          "serial": "643294-60095",
+          "distance_m": 23159.3
+        }
+      ]
+    },
+    {
+      "local_id": "pl-speed-031",
+      "candidates": [
+        {
+          "canard_id": 115163458,
+          "serial": "643294-60076",
+          "distance_m": 39.0
+        },
+        {
+          "canard_id": 1203335,
+          "serial": "593-072/71689",
+          "distance_m": 3814.9
+        },
+        {
+          "canard_id": 118548667,
+          "serial": "643294-60103",
+          "distance_m": 15061.8
+        }
+      ]
+    },
+    {
+      "local_id": "pl-speed-032",
+      "candidates": [
+        {
+          "canard_id": 115839265,
+          "serial": "643294-60083",
+          "distance_m": 51.3
+        },
+        {
+          "canard_id": 90650567,
+          "serial": "23166FU10003786",
+          "distance_m": 4857.2
+        },
+        {
+          "canard_id": 82689469,
+          "serial": "593-072-73234",
+          "distance_m": 13467.7
+        }
+      ]
+    },
+    {
+      "local_id": "pl-speed-033",
+      "candidates": [
+        {
+          "canard_id": 113122431,
+          "serial": "643294-60066",
+          "distance_m": 41.9
+        },
+        {
+          "canard_id": 317360,
+          "serial": "593-072/71526",
+          "distance_m": 31836.3
+        },
+        {
+          "canard_id": 317010,
+          "serial": "593-072/71537",
+          "distance_m": 42059.3
+        }
+      ]
+    },
+    {
+      "local_id": "pl-speed-043",
+      "candidates": [
+        {
+          "canard_id": 116222374,
+          "serial": "643294-60081",
+          "distance_m": 72.2
+        },
+        {
+          "canard_id": 91258574,
+          "serial": "23170FU10003802",
+          "distance_m": 7580.3
+        },
+        {
+          "canard_id": 7466648,
+          "serial": "593-072/72039",
+          "distance_m": 7954.1
+        }
+      ]
+    },
+    {
+      "local_id": "pl-speed-046",
+      "candidates": [
+        {
+          "canard_id": 112684248,
+          "serial": "643294-60064",
+          "distance_m": 73.2
+        },
+        {
+          "canard_id": 91782413,
+          "serial": "593-072-73344",
+          "distance_m": 19160.8
+        },
+        {
+          "canard_id": 87064091,
+          "serial": "23114FU10003625",
+          "distance_m": 23833.4
+        }
+      ]
+    },
+    {
+      "local_id": "pl-speed-048",
+      "candidates": [
+        {
+          "canard_id": 110154258,
+          "serial": "643294-60054",
+          "distance_m": 98.7
+        },
+        {
+          "canard_id": 111871073,
+          "serial": "643294-60063",
+          "distance_m": 26379.9
+        },
+        {
+          "canard_id": 53752292,
+          "serial": "593-072/73126",
+          "distance_m": 30720.5
+        }
+      ]
+    },
+    {
+      "local_id": "pl-speed-049",
+      "candidates": [
+        {
+          "canard_id": 117323526,
+          "serial": "643294-60088",
+          "distance_m": 43.5
+        },
+        {
+          "canard_id": 87764172,
+          "serial": "23131FU10003677",
+          "distance_m": 20254.2
+        },
+        {
+          "canard_id": 1203338,
+          "serial": "593-072/71691",
+          "distance_m": 23930.6
+        }
+      ]
+    },
+    {
+      "local_id": "pl-speed-051",
+      "candidates": [
+        {
+          "canard_id": 116222191,
+          "serial": "643294-60080",
+          "distance_m": 32.4
+        },
+        {
+          "canard_id": 90085265,
+          "serial": "23165FU10003778",
+          "distance_m": 13545.0
+        },
+        {
+          "canard_id": 7998016,
+          "serial": "593-072/72041",
+          "distance_m": 14317.4
+        }
+      ]
+    },
+    {
+      "local_id": "pl-speed-056",
+      "candidates": [
+        {
+          "canard_id": 117605372,
+          "serial": "643294-60093",
+          "distance_m": 52.0
+        },
+        {
+          "canard_id": 115605338,
+          "serial": "643294-60079",
+          "distance_m": 11543.5
+        },
+        {
+          "canard_id": 118177110,
+          "serial": "643294-60102",
+          "distance_m": 13569.6
+        }
+      ]
+    },
+    {
+      "local_id": "pl-speed-059",
+      "candidates": [
+        {
+          "canard_id": 120185785,
+          "serial": "643294-60118",
+          "distance_m": 88.2
+        },
+        {
+          "canard_id": 89564247,
+          "serial": "23144FU10003705",
+          "distance_m": 4628.5
+        },
+        {
+          "canard_id": 90260255,
+          "serial": "593-072-73326",
+          "distance_m": 6669.6
+        }
+      ]
+    },
+    {
+      "local_id": "pl-speed-061",
+      "candidates": [
+        {
+          "canard_id": 116570766,
+          "serial": "643294-60082",
+          "distance_m": 31.1
+        },
+        {
+          "canard_id": 92044828,
+          "serial": "23142FU10003690",
+          "distance_m": 7004.0
+        },
+        {
+          "canard_id": 92128738,
+          "serial": "23205FU10003944",
+          "distance_m": 13430.6
+        }
+      ]
+    },
+    {
+      "local_id": "pl-speed-062",
+      "candidates": [
+        {
+          "canard_id": 110154180,
+          "serial": "643294-60055",
+          "distance_m": 31.7
+        },
+        {
+          "canard_id": 91359960,
+          "serial": "643294-60034",
+          "distance_m": 8281.0
+        },
+        {
+          "canard_id": 72888425,
+          "serial": "004",
+          "distance_m": 13810.7
+        }
+      ]
+    },
+    {
+      "local_id": "pl-speed-067",
+      "candidates": [
+        {
+          "canard_id": 114717872,
+          "serial": "643294-60067",
+          "distance_m": 80.0
+        },
+        {
+          "canard_id": 114717848,
+          "serial": "643294-60068",
+          "distance_m": 9141.2
+        },
+        {
+          "canard_id": 1203349,
+          "serial": "593-072/71704",
+          "distance_m": 12989.4
+        }
+      ]
+    },
+    {
+      "local_id": "pl-speed-068",
+      "candidates": [
+        {
+          "canard_id": 120121590,
+          "serial": "643294-60115",
+          "distance_m": 38.8
+        },
+        {
+          "canard_id": 90119883,
+          "serial": "23132FU10003680",
+          "distance_m": 5359.7
+        },
+        {
+          "canard_id": 87763526,
+          "serial": "23143FU10003700",
+          "distance_m": 13155.8
+        }
+      ]
+    },
+    {
+      "local_id": "pl-speed-069",
+      "candidates": [
+        {
+          "canard_id": 120186164,
+          "serial": "643294-60124",
+          "distance_m": 53.5
+        },
+        {
+          "canard_id": 86555561,
+          "serial": "23083FUS1000011",
+          "distance_m": 7761.2
+        },
+        {
+          "canard_id": 86554934,
+          "serial": "23083FUS1000010",
+          "distance_m": 9783.9
+        }
+      ]
+    },
+    {
+      "local_id": "pl-speed-070",
+      "candidates": [
+        {
+          "canard_id": 114719462,
+          "serial": "643294-60071",
+          "distance_m": 85.2
+        },
+        {
+          "canard_id": 4632159,
+          "serial": "593-072/72002",
+          "distance_m": 4383.9
+        },
+        {
+          "canard_id": 13066352,
+          "serial": "593-072/72062",
+          "distance_m": 5609.1
+        }
+      ]
+    }
+  ],
+  "red_light_cameras": [
+    {
+      "local_id": "pl-red-001",
+      "candidates": [
+        {
+          "canard_id": 115815734,
+          "serial": "0110104",
+          "distance_m": 1.6
+        },
+        {
+          "canard_id": 115815712,
+          "serial": "0110103",
+          "distance_m": 1.6
+        },
+        {
+          "canard_id": 115815666,
+          "serial": "0110101",
+          "distance_m": 1.6
+        }
+      ]
+    },
+    {
+      "local_id": "pl-red-002",
+      "candidates": [
+        {
+          "canard_id": 115544154,
+          "serial": "0220102",
+          "distance_m": 0.4
+        },
+        {
+          "canard_id": 115544146,
+          "serial": "0220101",
+          "distance_m": 0.4
+        }
+      ]
+    },
+    {
+      "local_id": "pl-red-003",
+      "candidates": [
+        {
+          "canard_id": 118185181,
+          "serial": "0110202",
+          "distance_m": 3.9
+        },
+        {
+          "canard_id": 118185248,
+          "serial": "0110206",
+          "distance_m": 3.9
+        },
+        {
+          "canard_id": 118185199,
+          "serial": "0110203",
+          "distance_m": 3.9
+        }
+      ]
+    },
+    {
+      "local_id": "pl-red-004",
+      "candidates": [
+        {
+          "canard_id": 121185645,
+          "serial": "0220202",
+          "distance_m": 1.1
+        },
+        {
+          "canard_id": 121185565,
+          "serial": "0220201",
+          "distance_m": 1.1
+        }
+      ]
+    },
+    {
+      "local_id": "pl-red-005",
+      "candidates": [
+        {
+          "canard_id": 117740286,
+          "serial": "0110304",
+          "distance_m": 2.1
+        },
+        {
+          "canard_id": 117740259,
+          "serial": "0110302",
+          "distance_m": 2.1
+        },
+        {
+          "canard_id": 117740274,
+          "serial": "0110303",
+          "distance_m": 2.1
+        }
+      ]
+    },
+    {
+      "local_id": "pl-red-006",
+      "candidates": [
+        {
+          "canard_id": 117620144,
+          "serial": "0220301",
+          "distance_m": 10.1
+        },
+        {
+          "canard_id": 117620223,
+          "serial": "0220302",
+          "distance_m": 10.1
+        }
+      ]
+    },
+    {
+      "local_id": "pl-red-007",
+      "candidates": [
+        {
+          "canard_id": 116562097,
+          "serial": "0110402",
+          "distance_m": 1.3
+        },
+        {
+          "canard_id": 116562108,
+          "serial": "0110403",
+          "distance_m": 1.3
+        },
+        {
+          "canard_id": 116562073,
+          "serial": "0110401",
+          "distance_m": 1.3
+        }
+      ]
+    },
+    {
+      "local_id": "pl-red-008",
+      "candidates": [
+        {
+          "canard_id": 116039157,
+          "serial": "0220401",
+          "distance_m": 1.4
+        },
+        {
+          "canard_id": 116039194,
+          "serial": "0220402",
+          "distance_m": 1.4
+        }
+      ]
+    },
+    {
+      "local_id": "pl-red-009",
+      "candidates": [
+        {
+          "canard_id": 114968647,
+          "serial": "0110502",
+          "distance_m": 4.1
+        },
+        {
+          "canard_id": 114968630,
+          "serial": "0110501",
+          "distance_m": 4.1
+        },
+        {
+          "canard_id": 114968675,
+          "serial": "0110504",
+          "distance_m": 4.1
+        }
+      ]
+    },
+    {
+      "local_id": "pl-red-010",
+      "candidates": [
+        {
+          "canard_id": 116039135,
+          "serial": "0220502",
+          "distance_m": 1.3
+        },
+        {
+          "canard_id": 116039087,
+          "serial": "0220501",
+          "distance_m": 1.3
+        }
+      ]
+    },
+    {
+      "local_id": "pl-red-011",
+      "candidates": [
+        {
+          "canard_id": 121460769,
+          "serial": "0110603",
+          "distance_m": 1.4
+        },
+        {
+          "canard_id": 121460819,
+          "serial": "0110604",
+          "distance_m": 1.4
+        },
+        {
+          "canard_id": 121460680,
+          "serial": "0110601",
+          "distance_m": 1.4
+        }
+      ]
+    },
+    {
+      "local_id": "pl-red-012",
+      "candidates": [
+        {
+          "canard_id": 119255982,
+          "serial": "0110703",
+          "distance_m": 22.0
+        },
+        {
+          "canard_id": 119255957,
+          "serial": "0110701",
+          "distance_m": 22.0
+        },
+        {
+          "canard_id": 119255975,
+          "serial": "0110702",
+          "distance_m": 22.0
+        }
+      ]
+    },
+    {
+      "local_id": "pl-red-013",
+      "candidates": [
+        {
+          "canard_id": 122084723,
+          "serial": "0110803",
+          "distance_m": 6.1
+        },
+        {
+          "canard_id": 122084860,
+          "serial": "0110801",
+          "distance_m": 6.1
+        },
+        {
+          "canard_id": 122084834,
+          "serial": "0110802",
+          "distance_m": 6.1
+        }
+      ]
+    },
+    {
+      "local_id": "pl-red-014",
+      "candidates": [
+        {
+          "canard_id": 116899268,
+          "serial": "0111004",
+          "distance_m": 0.6
+        },
+        {
+          "canard_id": 116899235,
+          "serial": "0111002",
+          "distance_m": 0.6
+        },
+        {
+          "canard_id": 116899254,
+          "serial": "0111003",
+          "distance_m": 0.6
+        }
+      ]
+    },
+    {
+      "local_id": "pl-red-015",
+      "candidates": [
+        {
+          "canard_id": 116899086,
+          "serial": "0110902",
+          "distance_m": 14.5
+        },
+        {
+          "canard_id": 116899169,
+          "serial": "0110904",
+          "distance_m": 14.5
+        },
+        {
+          "canard_id": 116899130,
+          "serial": "0110903",
+          "distance_m": 14.5
+        }
+      ]
+    }
+  ],
+  "average_speed_sections": [
+    {
+      "local_id": "pl-avg-002",
+      "candidates": [
+        {
+          "canard_id": 118679807,
+          "serial": "CAM25004021",
+          "max_endpoint_distance_m": 5.7
+        },
+        {
+          "canard_id": 118679818,
+          "serial": "CAM25004380",
+          "max_endpoint_distance_m": 5.7
+        },
+        {
+          "canard_id": 113414005,
+          "serial": "ICAR5C2501",
+          "max_endpoint_distance_m": 13358.6
+        }
+      ]
+    },
+    {
+      "local_id": "pl-avg-005-v1",
+      "candidates": [
+        {
+          "canard_id": 118680069,
+          "serial": "CAM25004025",
+          "max_endpoint_distance_m": 96.2
+        },
+        {
+          "canard_id": 118680098,
+          "serial": "CAM25004382",
+          "max_endpoint_distance_m": 233.4
+        },
+        {
+          "canard_id": 118679802,
+          "serial": "CAM25004392",
+          "max_endpoint_distance_m": 23171.2
+        }
+      ]
+    },
+    {
+      "local_id": "pl-avg-005-v2",
+      "candidates": [
+        {
+          "canard_id": 118680098,
+          "serial": "CAM25004382",
+          "max_endpoint_distance_m": 98.5
+        },
+        {
+          "canard_id": 118680069,
+          "serial": "CAM25004025",
+          "max_endpoint_distance_m": 244.2
+        },
+        {
+          "canard_id": 118679802,
+          "serial": "CAM25004392",
+          "max_endpoint_distance_m": 22931.5
+        }
+      ]
+    },
+    {
+      "local_id": "pl-avg-009",
+      "candidates": [
+        {
+          "canard_id": 113783667,
+          "serial": "CAM25004029",
+          "max_endpoint_distance_m": 16.5
+        },
+        {
+          "canard_id": 113783675,
+          "serial": "CAM25004383",
+          "max_endpoint_distance_m": 16.5
+        },
+        {
+          "canard_id": 116594787,
+          "serial": "CAM25004036",
+          "max_endpoint_distance_m": 45593.2
+        }
+      ]
+    },
+    {
+      "local_id": "pl-avg-011",
+      "candidates": [
+        {
+          "canard_id": 113783529,
+          "serial": "CAM25003404",
+          "max_endpoint_distance_m": 105.6
+        },
+        {
+          "canard_id": 116215931,
+          "serial": "CAM25004046",
+          "max_endpoint_distance_m": 28192.3
+        },
+        {
+          "canard_id": 8947143,
+          "serial": "CAM15001388",
+          "max_endpoint_distance_m": 30648.2
+        }
+      ]
+    },
+    {
+      "local_id": "pl-avg-013",
+      "candidates": [
+        {
+          "canard_id": 118679774,
+          "serial": "CAM25004032",
+          "max_endpoint_distance_m": 26.3
+        },
+        {
+          "canard_id": 118679783,
+          "serial": "CAM25004384",
+          "max_endpoint_distance_m": 26.3
+        },
+        {
+          "canard_id": 13861996,
+          "serial": "CAM15001375",
+          "max_endpoint_distance_m": 11886.9
+        }
+      ]
+    },
+    {
+      "local_id": "pl-avg-015",
+      "candidates": [
+        {
+          "canard_id": 116594573,
+          "serial": "CAM25004385",
+          "max_endpoint_distance_m": 35.2
+        },
+        {
+          "canard_id": 116594469,
+          "serial": "CAM25004034",
+          "max_endpoint_distance_m": 35.2
+        },
+        {
+          "canard_id": 71652912,
+          "serial": "CAM21003327",
+          "max_endpoint_distance_m": 10994.3
+        }
+      ]
+    },
+    {
+      "local_id": "pl-avg-018",
+      "candidates": [
+        {
+          "canard_id": 118679915,
+          "serial": "CAM25004038",
+          "max_endpoint_distance_m": 23.7
+        },
+        {
+          "canard_id": 118679980,
+          "serial": "CAM25004386",
+          "max_endpoint_distance_m": 23.7
+        },
+        {
+          "canard_id": 118679898,
+          "serial": "CAM25004028",
+          "max_endpoint_distance_m": 6424.5
+        }
+      ]
+    },
+    {
+      "local_id": "pl-avg-022",
+      "candidates": [
+        {
+          "canard_id": 116594640,
+          "serial": "CAM25004042",
+          "max_endpoint_distance_m": 146.2
+        },
+        {
+          "canard_id": 13501544,
+          "serial": "CAM15001372",
+          "max_endpoint_distance_m": 16367.2
+        },
+        {
+          "canard_id": 113783696,
+          "serial": "CAM25004030",
+          "max_endpoint_distance_m": 17724.1
+        }
+      ]
+    },
+    {
+      "local_id": "pl-avg-025",
+      "candidates": [
+        {
+          "canard_id": 118679746,
+          "serial": "CAM25004388",
+          "max_endpoint_distance_m": 17.9
+        },
+        {
+          "canard_id": 118679732,
+          "serial": "CAM25004045",
+          "max_endpoint_distance_m": 24.2
+        },
+        {
+          "canard_id": 12807853,
+          "serial": "CAM15001373",
+          "max_endpoint_distance_m": 23678.8
+        }
+      ]
+    },
+    {
+      "local_id": "pl-avg-026",
+      "candidates": [
+        {
+          "canard_id": 115049968,
+          "serial": "CAM25004389",
+          "max_endpoint_distance_m": 26.1
+        },
+        {
+          "canard_id": 115049948,
+          "serial": "CAM25004047",
+          "max_endpoint_distance_m": 26.1
+        },
+        {
+          "canard_id": 90797669,
+          "serial": "CAM22010778",
+          "max_endpoint_distance_m": 5994.5
+        }
+      ]
+    },
+    {
+      "local_id": "pl-avg-027",
+      "candidates": [
+        {
+          "canard_id": 113783631,
+          "serial": "CAM25004390",
+          "max_endpoint_distance_m": 9.4
+        },
+        {
+          "canard_id": 113783617,
+          "serial": "CAM25004048",
+          "max_endpoint_distance_m": 23.4
+        },
+        {
+          "canard_id": 71652927,
+          "serial": "CAM21003328",
+          "max_endpoint_distance_m": 9059.1
+        }
+      ]
+    },
+    {
+      "local_id": "pl-avg-029",
+      "candidates": [
+        {
+          "canard_id": 118680294,
+          "serial": "CAM25004050",
+          "max_endpoint_distance_m": 30.2
+        },
+        {
+          "canard_id": 118680302,
+          "serial": "CAM25004391",
+          "max_endpoint_distance_m": 30.2
+        },
+        {
+          "canard_id": 90799056,
+          "serial": "CAM23003839",
+          "max_endpoint_distance_m": 6425.9
+        }
+      ]
+    },
+    {
+      "local_id": "pl-avg-035",
+      "candidates": [
+        {
+          "canard_id": 117740707,
+          "serial": "CAM25004055",
+          "max_endpoint_distance_m": 114.3
+        },
+        {
+          "canard_id": 117740716,
+          "serial": "CAM25004393",
+          "max_endpoint_distance_m": 114.3
+        },
+        {
+          "canard_id": 13501468,
+          "serial": "CAM15001381",
+          "max_endpoint_distance_m": 59526.9
+        }
+      ]
+    },
+    {
+      "local_id": "pl-avg-037",
+      "candidates": [
+        {
+          "canard_id": 113783570,
+          "serial": "CAM25004379",
+          "max_endpoint_distance_m": 1.0
+        },
+        {
+          "canard_id": 113783542,
+          "serial": "CAM25004020",
+          "max_endpoint_distance_m": 1.3
+        },
+        {
+          "canard_id": 91414977,
+          "serial": "CAM23001807",
+          "max_endpoint_distance_m": 39943.7
+        }
+      ]
+    },
+    {
+      "local_id": "pl-avg-042",
+      "candidates": [
+        {
+          "canard_id": 113783510,
+          "serial": "CAM25003403",
+          "max_endpoint_distance_m": 3.9
+        },
+        {
+          "canard_id": 113783521,
+          "serial": "CAM25003402",
+          "max_endpoint_distance_m": 23.4
+        },
+        {
+          "canard_id": 12931379,
+          "serial": "CAM15001369",
+          "max_endpoint_distance_m": 12304.7
+        }
+      ]
+    }
+  ]
+}

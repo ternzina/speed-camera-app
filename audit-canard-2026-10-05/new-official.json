@@ -1,0 +1,6866 @@
+{
+  "PP": [
+    {
+      "id": 91352187,
+      "lon": 21.3418,
+      "lat": 53.38786666666667,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73341",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 69598266,
+      "lon": 17.980555555555554,
+      "lat": 50.4865,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73160",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 87063825,
+      "lon": 16.1924,
+      "lat": 52.1315,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23080FUS1000004",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 13226482,
+      "lon": 19.421083333333335,
+      "lat": 51.772888888888886,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/72037",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 314190,
+      "lon": 22.781388888888888,
+      "lat": 49.800444444444445,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/71510",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 117828286,
+      "lon": 15.637777777777778,
+      "lat": 50.88247222222222,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "643294-60051",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 28371801,
+      "lon": 20.958183333333334,
+      "lat": 52.33806388888889,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/71601",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 87763920,
+      "lon": 21.52375,
+      "lat": 53.1175,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23143FU10003698",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 88653843,
+      "lon": 20.653333333333332,
+      "lat": 54.16276666666666,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23142FU10003695",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 112450441,
+      "lon": 16.620308333333334,
+      "lat": 52.45772222222222,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "643294-60058",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 6664866,
+      "lon": 18.71672222222222,
+      "lat": 49.942388888888885,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/72033",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 90943374,
+      "lon": 19.644444444444446,
+      "lat": 52.18444444444444,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73338",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 570288,
+      "lon": 23.305,
+      "lat": 53.302027777777774,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/71676",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 91338672,
+      "lon": 19.685277777777777,
+      "lat": 51.406666666666666,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23166FU10003784",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 70721457,
+      "lon": 17.98943611111111,
+      "lat": 51.79634444444444,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73179",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 1203347,
+      "lon": 23.02861111111111,
+      "lat": 50.715833333333336,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/71701",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 90650593,
+      "lon": 20.677583333333335,
+      "lat": 49.9683,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23165FU10003776",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 88633134,
+      "lon": 18.632683333333333,
+      "lat": 53.01598333333333,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73297",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 3212650,
+      "lon": 18.992116666666668,
+      "lat": 49.9007,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/71967",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 30109709,
+      "lon": 21.00709722222222,
+      "lat": 52.21024722222222,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-071/71377",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 90310534,
+      "lon": 19.53891666666667,
+      "lat": 50.51275277777778,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23164FU10003767",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 72153956,
+      "lon": 18.72175,
+      "lat": 52.906549999999996,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73192",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 72153927,
+      "lon": 20.92245,
+      "lat": 52.31313333333333,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73189",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 69598339,
+      "lon": 18.980138888888888,
+      "lat": 50.134972222222224,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73169",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 91258583,
+      "lon": 20.733866666666668,
+      "lat": 49.573483333333336,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23167FU10003799",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 1203350,
+      "lon": 17.450555555555553,
+      "lat": 51.23352777777778,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/71705",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 1205059,
+      "lon": 20.781944444444445,
+      "lat": 51.89555555555555,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/71693",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 28795774,
+      "lon": 21.04716666666667,
+      "lat": 52.18991944444444,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-071/71074",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 88204274,
+      "lon": 19.151638888888886,
+      "lat": 50.71488888888889,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73300",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 4407422,
+      "lon": 18.260983333333332,
+      "lat": 54.60348333333334,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/72000",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 90880447,
+      "lon": 23.095666666666666,
+      "lat": 53.440916666666666,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23164FU10003772",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 87064157,
+      "lon": 18.929133333333336,
+      "lat": 52.25001666666667,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23114FU10003627",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 90650702,
+      "lon": 20.229266666666664,
+      "lat": 50.086083333333335,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23166FU10003783",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 87591640,
+      "lon": 21.33938333333333,
+      "lat": 53.761,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23115FU10003635",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 91352173,
+      "lon": 19.602216666666667,
+      "lat": 53.6085,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73342",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 4692295,
+      "lon": 19.409566666666667,
+      "lat": 51.85033333333333,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/72005",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 28795794,
+      "lon": 21.046669444444447,
+      "lat": 52.19044722222222,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-071/71073",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 570276,
+      "lon": 18.71899722222222,
+      "lat": 49.96723055555556,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/71685",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 1203346,
+      "lon": 22.30388888888889,
+      "lat": 50.96752777777778,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/71697",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 114717917,
+      "lon": 19.404555555555554,
+      "lat": 52.3105,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "643294-60069",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 90260299,
+      "lon": 18.1006,
+      "lat": 54.186,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73328",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 3714020,
+      "lon": 16.683611111111112,
+      "lat": 52.1175,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/71990",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 3714591,
+      "lon": 16.274083333333333,
+      "lat": 51.35169444444445,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/71970",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 90880466,
+      "lon": 22.9787,
+      "lat": 53.9338,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23165FU10003780",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 85249011,
+      "lon": 23.109650000000002,
+      "lat": 53.58968333333333,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73260",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 4170877,
+      "lon": 16.118166666666667,
+      "lat": 52.395383333333335,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/71996",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 1203330,
+      "lon": 18.58138888888889,
+      "lat": 50.79725,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/71681",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 86924814,
+      "lon": 22.937866666666668,
+      "lat": 54.118966666666665,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73283",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 9704114,
+      "lon": 17.3326,
+      "lat": 54.20516666666667,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/72009",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 87064091,
+      "lon": 18.087616666666666,
+      "lat": 52.24313333333333,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23114FU10003625",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 70721741,
+      "lon": 21.030775,
+      "lat": 52.23390555555556,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73162",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 354720,
+      "lon": 17.5875,
+      "lat": 50.334722222222226,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "231",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 320150,
+      "lon": 20.503833333333333,
+      "lat": 52.840183333333336,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/71518",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 91359928,
+      "lon": 20.90208611111111,
+      "lat": 52.185180555555554,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "643294-60035",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 88957950,
+      "lon": 19.498805555555556,
+      "lat": 51.19475,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73311",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 91782413,
+      "lon": 18.158866666666665,
+      "lat": 52.239875,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73344",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 87063866,
+      "lon": 17.875233333333334,
+      "lat": 51.48351666666667,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23080FUS1000002",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 92128818,
+      "lon": 19.765419444444444,
+      "lat": 51.39380277777778,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23088FUS1000026",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 72153935,
+      "lon": 23.137791666666665,
+      "lat": 53.07795277777778,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73190",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 92128738,
+      "lon": 16.281502777777778,
+      "lat": 50.8203,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23205FU10003944",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 3807838,
+      "lon": 21.306233333333335,
+      "lat": 53.85615,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/71986",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 87755767,
+      "lon": 19.534266666666667,
+      "lat": 52.21271666666667,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73287",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 87121262,
+      "lon": 16.52253333333333,
+      "lat": 54.00063333333333,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23114FU10003626",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 88686064,
+      "lon": 21.098583333333334,
+      "lat": 52.31483333333333,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73303",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 90650726,
+      "lon": 20.276805555555555,
+      "lat": 49.97647222222223,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23164FU10003765",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 91258574,
+      "lon": 19.712166666666665,
+      "lat": 50.23283333333333,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23170FU10003802",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 83727151,
+      "lon": 20.904916666666665,
+      "lat": 53.01088333333333,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73245",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 1203331,
+      "lon": 18.609555555555556,
+      "lat": 50.75227777777778,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/71682",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 570300,
+      "lon": 15.598055555555556,
+      "lat": 53.28138888888889,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/71605",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 116648088,
+      "lon": 16.81222222222222,
+      "lat": 53.73416666666667,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "643294-60084",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 90119883,
+      "lon": 20.989716666666666,
+      "lat": 52.504783333333336,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23132FU10003680",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 89921972,
+      "lon": 23.425716666666666,
+      "lat": 50.419666666666664,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23143FU10003696",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 3428597,
+      "lon": 20.557472222222223,
+      "lat": 49.97402777777778,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/71985",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 117323526,
+      "lon": 20.18722222222222,
+      "lat": 52.41361111111111,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "643294-60088",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 91956536,
+      "lon": 19.191111111111113,
+      "lat": 50.06527777777777,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23165FU10003781",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 90880319,
+      "lon": 19.743783333333333,
+      "lat": 53.64665,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23144FU10003707",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 114847667,
+      "lon": 16.783055555555556,
+      "lat": 50.95638888888889,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "643294-60070",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 8002011,
+      "lon": 19.46013888888889,
+      "lat": 51.097388888888894,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "361",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 91780875,
+      "lon": 15.549733333333334,
+      "lat": 52.25568333333333,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23145FU10003713",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 88463821,
+      "lon": 21.897949999999998,
+      "lat": 51.6519,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23137FU10003686",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 70719120,
+      "lon": 21.045072222222224,
+      "lat": 52.236869444444444,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73166",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 117323117,
+      "lon": 14.7625,
+      "lat": 51.55777777777777,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "643294-60092",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 89846068,
+      "lon": 17.20197222222222,
+      "lat": 52.397444444444446,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73317",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 114847866,
+      "lon": 17.38161388888889,
+      "lat": 50.846091666666666,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "643294-60072",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 92044801,
+      "lon": 19.503055555555555,
+      "lat": 51.73638888888889,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23170FU10003804",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 91780687,
+      "lon": 17.267888888888887,
+      "lat": 54.44713888888889,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23144FU10003709",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 111995573,
+      "lon": 21.688055555555557,
+      "lat": 49.72361111111111,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "643294-60059",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 89846108,
+      "lon": 16.685933333333335,
+      "lat": 52.26181666666667,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73319",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 87763698,
+      "lon": 21.081633333333333,
+      "lat": 52.6691,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23132FU10003681",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 113122431,
+      "lon": 15.03486111111111,
+      "lat": 51.15569444444444,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "643294-60066",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 570289,
+      "lon": 23.263055555555557,
+      "lat": 52.930277777777775,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/71677",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 115839265,
+      "lon": 21.085277777777776,
+      "lat": 50.0075,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "643294-60083",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 7459609,
+      "lon": 20.001175,
+      "lat": 49.49916666666667,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/72035",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 3210971,
+      "lon": 19.13363888888889,
+      "lat": 50.68827777777778,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/71965",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 85248784,
+      "lon": 20.474444444444444,
+      "lat": 53.83722222222222,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73253",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 4173617,
+      "lon": 21.28356666666667,
+      "lat": 51.845866666666666,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/71993",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 116222374,
+      "lon": 19.796666666666667,
+      "lat": 50.19027777777777,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "643294-60081",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 90310544,
+      "lon": 19.873233333333335,
+      "lat": 50.63268333333333,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23185FU10003891",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 86889235,
+      "lon": 17.1907,
+      "lat": 53.159933333333335,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23081FUS1000005",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 87063888,
+      "lon": 17.79126666666667,
+      "lat": 51.65605,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23081FUS1000006",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 88957775,
+      "lon": 20.16986111111111,
+      "lat": 51.25225,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73307",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 119533375,
+      "lon": 20.82461111111111,
+      "lat": 54.190555555555555,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "643294-60111",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 69598292,
+      "lon": 20.729402777777775,
+      "lat": 49.65902777777777,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73170",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 86736188,
+      "lon": 22.88,
+      "lat": 52.02861111111111,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73282",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 89921764,
+      "lon": 22.961194444444445,
+      "lat": 51.09238888888889,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23144FU10003706",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 88533510,
+      "lon": 17.682283333333334,
+      "lat": 50.75926666666667,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23145FU10003712",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 3429067,
+      "lon": 19.97911111111111,
+      "lat": 50.16308333333333,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/71972",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 69606009,
+      "lon": 19.962988888888887,
+      "lat": 50.085058333333336,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73174",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 83727354,
+      "lon": 20.897966666666665,
+      "lat": 53.24893333333333,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73246",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 88463800,
+      "lon": 21.534444444444446,
+      "lat": 51.59471111111112,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23144FU10003703",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 89949171,
+      "lon": 22.66033333333333,
+      "lat": 51.80905,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23145FU10003714",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 13066352,
+      "lon": 19.348055555555554,
+      "lat": 52.215,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/72062",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 3714983,
+      "lon": 16.285033333333335,
+      "lat": 51.244083333333336,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/71968",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 88533476,
+      "lon": 18.287833333333335,
+      "lat": 50.5171,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23143FU10003702",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 316430,
+      "lon": 16.826666666666668,
+      "lat": 50.645783333333334,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/71519",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 90880430,
+      "lon": 23.4316,
+      "lat": 53.37365,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23131FU10003679",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 86556357,
+      "lon": 14.569733333333334,
+      "lat": 52.368833333333335,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23076FUS1000001",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 83726746,
+      "lon": 21.490450000000003,
+      "lat": 53.015366666666665,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73244",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 113122295,
+      "lon": 17.365166666666667,
+      "lat": 50.88733333333333,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "643294-60065",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 71014409,
+      "lon": 18.535341666666667,
+      "lat": 54.172669444444445,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73183",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 88463933,
+      "lon": 22.50266388888889,
+      "lat": 51.55915833333333,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23145FU10003717",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 70721541,
+      "lon": 20.88277777777778,
+      "lat": 52.09277777777778,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73182",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 91338743,
+      "lon": 22.203616666666665,
+      "lat": 53.79253333333333,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23185FU10003893",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 92044690,
+      "lon": 19.484208333333335,
+      "lat": 51.78740277777778,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23167FU10003792",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 83494583,
+      "lon": 18.716016666666665,
+      "lat": 50.529666666666664,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73242",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 87763789,
+      "lon": 21.02723333333333,
+      "lat": 52.922916666666666,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23136FU10003684",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 87755404,
+      "lon": 19.418750000000003,
+      "lat": 51.662527777777775,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73292",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 85248965,
+      "lon": 23.194633333333332,
+      "lat": 52.80851666666666,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73258",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 88533504,
+      "lon": 17.69713888888889,
+      "lat": 50.14241666666667,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23131FU10003676",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 1234624,
+      "lon": 19.467783333333333,
+      "lat": 51.11103333333333,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/71706",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 1203348,
+      "lon": 23.056855555555558,
+      "lat": 53.16872222222222,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/71703",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 87764064,
+      "lon": 20.42246666666667,
+      "lat": 52.21266666666667,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23131FU10003678",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 87121068,
+      "lon": 16.677230555555557,
+      "lat": 54.35189722222222,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23114FU10003629",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 91338723,
+      "lon": 20.402944444444444,
+      "lat": 51.05288888888889,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23165FU10003779",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 70674246,
+      "lon": 21.026241666666667,
+      "lat": 52.23277777777778,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73161",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 83048839,
+      "lon": 19.228783333333332,
+      "lat": 50.47096666666667,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73236",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 89139570,
+      "lon": 17.012883333333335,
+      "lat": 53.13235,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73312",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 317360,
+      "lon": 15.469416666666667,
+      "lat": 51.24294444444445,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/71526",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 111995342,
+      "lon": 14.431555555555555,
+      "lat": 53.332638888888894,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "643294-60057",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 120186004,
+      "lon": 15.1825,
+      "lat": 51.74347222222222,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "643294-60121",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 87063943,
+      "lon": 18.09658333333333,
+      "lat": 51.84281666666667,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23081FUS1000008",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 90650862,
+      "lon": 20.339583333333334,
+      "lat": 49.447222222222216,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23124FU10003668",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 88957850,
+      "lon": 18.5472,
+      "lat": 51.63141666666667,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73309",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 28795873,
+      "lon": 20.97157222222222,
+      "lat": 52.20574166666667,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-071/71380",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 1234681,
+      "lon": 20.138333333333332,
+      "lat": 51.540388888888884,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/71709",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 1205069,
+      "lon": 16.584233333333334,
+      "lat": 53.2474,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/71680",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 118176576,
+      "lon": 22.648555555555554,
+      "lat": 52.40258333333333,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "643294-60096",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 3714930,
+      "lon": 16.65785,
+      "lat": 50.42838333333333,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/71969",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 114717848,
+      "lon": 18.699997222222223,
+      "lat": 54.04222222222222,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "643294-60068",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 90129523,
+      "lon": 18.107933333333335,
+      "lat": 54.58375,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73332",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 89846083,
+      "lon": 16.588438888888888,
+      "lat": 52.05711944444444,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73318",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 1255271,
+      "lon": 18.789,
+      "lat": 51.28216666666667,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/71702",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 91799034,
+      "lon": 22.32586388888889,
+      "lat": 50.07183888888889,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23164FU10003769",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 1255289,
+      "lon": 21.75842777777778,
+      "lat": 54.20243333333334,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/71708",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 85248986,
+      "lon": 23.105033333333335,
+      "lat": 53.57405000000001,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73259",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 1205067,
+      "lon": 16.44388888888889,
+      "lat": 51.82472222222223,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/71687",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 28371888,
+      "lon": 20.957413888888887,
+      "lat": 52.33818611111111,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/71603",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 86773593,
+      "lon": 18.400766666666666,
+      "lat": 52.89175,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23088FUS1000021",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 28796137,
+      "lon": 21.097305555555554,
+      "lat": 52.234861111111115,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-071/71374",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 72153948,
+      "lon": 20.0499,
+      "lat": 52.69135,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73191",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 86889726,
+      "lon": 16.860436111111113,
+      "lat": 53.142405555555555,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23087FUS1000017",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 87063798,
+      "lon": 16.381977777777777,
+      "lat": 52.49698888888889,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23088FUS1000020",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 10997012,
+      "lon": 16.82027777777778,
+      "lat": 50.68444444444444,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/72052",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 120185929,
+      "lon": 20.990833333333335,
+      "lat": 53.56027777777778,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "643294-60120",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 88957906,
+      "lon": 19.505383333333334,
+      "lat": 51.089083333333335,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73310",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 90085205,
+      "lon": 20.50529722222222,
+      "lat": 50.998672222222226,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23136FU10003682",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 570291,
+      "lon": 20.5625,
+      "lat": 50.93222222222222,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/71662",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 89564044,
+      "lon": 18.758183333333335,
+      "lat": 53.931999999999995,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23143FU10003701",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 570282,
+      "lon": 21.63313888888889,
+      "lat": 49.749722222222225,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/71665",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 358760,
+      "lon": 21.025027777777776,
+      "lat": 52.151444444444444,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "070",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 118176943,
+      "lon": 16.815,
+      "lat": 51.15361111111111,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "643294-60099",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 1203332,
+      "lon": 21.922222222222224,
+      "lat": 52.46083333333333,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/71683",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 81979555,
+      "lon": 21.40611111111111,
+      "lat": 49.85213888888889,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73219",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 89564247,
+      "lon": 18.311833333333333,
+      "lat": 53.92845,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23144FU10003705",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 88544332,
+      "lon": 18.552111111111113,
+      "lat": 50.80947222222222,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73302",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 69799229,
+      "lon": 19.778055555555554,
+      "lat": 50.03944444444444,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73176",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 91781010,
+      "lon": 20.583616666666664,
+      "lat": 50.85816944444444,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23167FU10003798",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 1203335,
+      "lon": 22.121861111111112,
+      "lat": 50.89383333333333,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/71689",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 89921998,
+      "lon": 23.143216666666667,
+      "lat": 51.17283333333333,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23136FU10003685",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 89921991,
+      "lon": 22.978116666666665,
+      "lat": 51.16128333333333,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23142FU10003692",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 28371712,
+      "lon": 21.018541666666664,
+      "lat": 52.10840833333334,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/71600",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 7846920,
+      "lon": 18.611211111111114,
+      "lat": 53.0263,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/72046",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 90650567,
+      "lon": 21.153566666666666,
+      "lat": 50.012233333333334,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23166FU10003786",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 319800,
+      "lon": 20.287133333333333,
+      "lat": 52.818313888888895,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/71516",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 92044648,
+      "lon": 16.71476388888889,
+      "lat": 54.36570555555556,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23142FU10003693",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 28372037,
+      "lon": 21.08098888888889,
+      "lat": 52.29385555555555,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/71604",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 86556463,
+      "lon": 15.096366666666666,
+      "lat": 51.6025,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23081FUS1000007",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 7998016,
+      "lon": 21.940916666666666,
+      "lat": 50.6345,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/72041",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 90260255,
+      "lon": 18.282066666666665,
+      "lat": 53.92151666666666,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73326",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 13226467,
+      "lon": 20.08888888888889,
+      "lat": 52.004444444444445,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/72034",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 88957806,
+      "lon": 19.893416666666667,
+      "lat": 51.35391666666667,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73308",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 87063842,
+      "lon": 16.484722222222224,
+      "lat": 51.82472222222223,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23083FUS1000013",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 87063765,
+      "lon": 16.502583333333334,
+      "lat": 52.48466666666667,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23087FUS1000016",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 7844332,
+      "lon": 20.223302777777775,
+      "lat": 51.52258611111111,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/72043",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 87121242,
+      "lon": 16.2956,
+      "lat": 53.33095,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23116FU10003637",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 118176756,
+      "lon": 16.969602777777776,
+      "lat": 52.89098333333333,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "643294-60098",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 83520879,
+      "lon": 21.93915,
+      "lat": 51.620400000000004,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73243",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 28222776,
+      "lon": 21.210361111111112,
+      "lat": 52.22419444444444,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "087",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 570296,
+      "lon": 21.08,
+      "lat": 50.77638888888889,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/71670",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 91779205,
+      "lon": 18.36738888888889,
+      "lat": 54.47708333333333,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23166FU10003789",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 86773465,
+      "lon": 18.65365,
+      "lat": 53.55573333333333,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23080FUS1000003",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 119842192,
+      "lon": 21.745555555555555,
+      "lat": 50.29333333333333,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "643294-60113",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 334990,
+      "lon": 15.224483333333334,
+      "lat": 51.98951666666667,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/71522",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 87531721,
+      "lon": 16.85027777777778,
+      "lat": 52.42861111111111,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73285",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 3807762,
+      "lon": 22.969266666666666,
+      "lat": 53.8032,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/71988",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 87764172,
+      "lon": 20.344666666666665,
+      "lat": 52.56894444444445,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23131FU10003677",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 1251937,
+      "lon": 22.11136666666667,
+      "lat": 53.22858333333333,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/71711",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 89846134,
+      "lon": 16.277583333333332,
+      "lat": 52.142583333333334,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73320",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 91258620,
+      "lon": 20.721533333333333,
+      "lat": 49.61403333333333,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23165FU10003782",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 92044828,
+      "lon": 16.37002222222222,
+      "lat": 50.85151944444445,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23142FU10003690",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 91631133,
+      "lon": 22.1541,
+      "lat": 50.44753333333333,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23205FU10003945",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 117942531,
+      "lon": 19.883330555555556,
+      "lat": 49.87916666666667,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "643294-60089",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 1234075,
+      "lon": 19.02777777777778,
+      "lat": 53.92916666666667,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/71690",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 69799259,
+      "lon": 21.18466666666667,
+      "lat": 52.03,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73177",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 90119895,
+      "lon": 21.548383333333334,
+      "lat": 52.261633333333336,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23186FU10003896",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 1215898,
+      "lon": 20.683891666666668,
+      "lat": 51.91705833333333,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/71698",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 87121098,
+      "lon": 14.712516666666666,
+      "lat": 52.74185,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23115FU10003633",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 87453508,
+      "lon": 14.540433333333333,
+      "lat": 53.32526666666667,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73288",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 69065567,
+      "lon": 21.923805555555557,
+      "lat": 49.974361111111115,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73172",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 120186164,
+      "lon": 14.943822222222222,
+      "lat": 52.322497222222225,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "643294-60124",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 88045854,
+      "lon": 23.19176388888889,
+      "lat": 53.121766666666666,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73295",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 90880386,
+      "lon": 22.252883333333333,
+      "lat": 52.97485,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23165FU10003774",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 1203338,
+      "lon": 20.203016666666667,
+      "lat": 52.62898333333333,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/71691",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 87121119,
+      "lon": 16.129783333333332,
+      "lat": 53.091883333333335,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23114FU10003628",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 90310583,
+      "lon": 16.240000000000002,
+      "lat": 51.36819444444445,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23164FU10003766",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 85248910,
+      "lon": 23.041966666666667,
+      "lat": 52.752633333333335,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73257",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 6664975,
+      "lon": 18.98552777777778,
+      "lat": 50.88386111111111,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/72036",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 89564142,
+      "lon": 17.865733333333335,
+      "lat": 54.5733,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23137FU10003688",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 4632194,
+      "lon": 19.732633333333332,
+      "lat": 51.964000000000006,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/72004",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 91544256,
+      "lon": 19.363033333333334,
+      "lat": 52.875416666666666,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23167FU10003793",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 87764337,
+      "lon": 19.611666666666668,
+      "lat": 52.467777777777776,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23130FU10003674",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 86555561,
+      "lon": 15.058050000000001,
+      "lat": 52.31458333333333,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23083FUS1000011",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 70701356,
+      "lon": 21.102222222222224,
+      "lat": 52.242222222222225,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73164",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 91780517,
+      "lon": 18.155666666666665,
+      "lat": 54.60426666666667,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23170FU10003800",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 83048898,
+      "lon": 19.15486111111111,
+      "lat": 50.37738888888889,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73237",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 341590,
+      "lon": 19.626258333333332,
+      "lat": 50.03098611111111,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/71543",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 29112790,
+      "lon": 21.103305555555558,
+      "lat": 52.121583333333334,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "086",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 119072319,
+      "lon": 17.313944444444445,
+      "lat": 51.732350000000004,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "643294-60106",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 9705699,
+      "lon": 21.891305555555554,
+      "lat": 49.84397222222223,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/72011",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 87591793,
+      "lon": 20.630305555555555,
+      "lat": 53.71255555555556,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23115FU10003632",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 83727701,
+      "lon": 19.147233333333332,
+      "lat": 49.846900000000005,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73247",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 85248731,
+      "lon": 16.17461666666667,
+      "lat": 54.18716666666666,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73250",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 69064422,
+      "lon": 19.10761111111111,
+      "lat": 49.59763888888889,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73171",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 87531375,
+      "lon": 16.873061111111113,
+      "lat": 52.37657222222222,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73290",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 10996859,
+      "lon": 22.273877777777777,
+      "lat": 51.619925,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/72051",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 91035586,
+      "lon": 19.225111111111108,
+      "lat": 50.76025,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73339",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 29112603,
+      "lon": 21.0232,
+      "lat": 52.2453,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/71598",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 89949044,
+      "lon": 23.5634,
+      "lat": 52.05405,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23136FU10003683",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 114717872,
+      "lon": 18.75027777777778,
+      "lat": 54.118611111111115,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "643294-60067",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 85229456,
+      "lon": 19.651283333333332,
+      "lat": 50.57735,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73248",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 86556452,
+      "lon": 15.016133333333332,
+      "lat": 52.583775,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23083FUS1000015",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 72888425,
+      "lon": 18.874916666666667,
+      "lat": 50.300444444444445,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "004",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 87064026,
+      "lon": 17.391616666666668,
+      "lat": 52.09171666666667,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23116FU10003636",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 90085225,
+      "lon": 20.82285,
+      "lat": 51.095800000000004,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23163FU10003762",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 43162617,
+      "lon": 19.801333333333336,
+      "lat": 49.8498,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "389",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 3957221,
+      "lon": 18.790466666666667,
+      "lat": 49.80433333333333,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/72006",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 111871302,
+      "lon": 18.609444444444446,
+      "lat": 51.03561111111111,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "643294-60061",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 91035834,
+      "lon": 18.835416666666667,
+      "lat": 50.216833333333334,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73340",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 90129542,
+      "lon": 18.37,
+      "lat": 54.34872222222222,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73334",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 87755444,
+      "lon": 19.431816666666666,
+      "lat": 51.71378333333334,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73293",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 4407288,
+      "lon": 18.274827777777777,
+      "lat": 54.60261111111111,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/71998",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 115622240,
+      "lon": 16.928819444444446,
+      "lat": 52.975388888888894,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "643294-60077",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 116570766,
+      "lon": 16.46861111111111,
+      "lat": 50.84388888888889,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "643294-60082",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 89139688,
+      "lon": 17.22518333333333,
+      "lat": 52.228566666666666,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73314",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 90310547,
+      "lon": 18.652416666666664,
+      "lat": 50.66489722222222,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23164FU10003768",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 89922022,
+      "lon": 23.34848333333333,
+      "lat": 51.16801666666667,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23144FU10003710",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 85248676,
+      "lon": 16.20535,
+      "lat": 54.205283333333334,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73249",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 87453571,
+      "lon": 14.67165,
+      "lat": 52.97678333333334,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73289",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 8073065,
+      "lon": 17.858055555555556,
+      "lat": 52.29333333333333,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/72047",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 1205068,
+      "lon": 16.906388888888888,
+      "lat": 51.63572222222222,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/71696",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 12213604,
+      "lon": 19.540222222222223,
+      "lat": 51.601444444444446,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/72056",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 91338755,
+      "lon": 23.489611111111113,
+      "lat": 53.40302777777778,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23185FU10003894",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 87764188,
+      "lon": 22.296855555555556,
+      "lat": 52.57705,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23143FU10003699",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 7841969,
+      "lon": 20.88015,
+      "lat": 53.0286,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/72044",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 90129554,
+      "lon": 18.36051666666667,
+      "lat": 54.38713333333333,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73335",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 89921732,
+      "lon": 23.183683333333335,
+      "lat": 50.82548333333334,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23145FU10003715",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 357710,
+      "lon": 21.73626666666667,
+      "lat": 50.45661666666667,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/71507",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 87763526,
+      "lon": 21.08936111111111,
+      "lat": 52.57036111111111,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23143FU10003700",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 87453422,
+      "lon": 14.489566666666667,
+      "lat": 53.22051666666667,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73286",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 4283799,
+      "lon": 17.942233333333334,
+      "lat": 51.844100000000005,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/71999",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 70764588,
+      "lon": 21.038263888888892,
+      "lat": 52.235438888888886,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73165",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 91258664,
+      "lon": 21.429694444444447,
+      "lat": 49.79775,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23167FU10003795",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 88685334,
+      "lon": 17.216749999999998,
+      "lat": 52.400277777777774,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73306",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 86556550,
+      "lon": 15.857194444444444,
+      "lat": 52.070888888888895,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23088FUS1000019",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 69065974,
+      "lon": 21.858333333333334,
+      "lat": 50.200833333333335,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73173",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 89564161,
+      "lon": 17.641333333333332,
+      "lat": 54.14805555555556,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23144FU10003708",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 69799278,
+      "lon": 20.858722222222223,
+      "lat": 51.86365833333333,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73178",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 85248765,
+      "lon": 23.0944,
+      "lat": 53.68835,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73252",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 88533521,
+      "lon": 16.784533333333336,
+      "lat": 53.164249999999996,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23143FU10003697",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 71087615,
+      "lon": 19.89,
+      "lat": 50.07944444444445,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73185",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 335450,
+      "lon": 15.380475,
+      "lat": 51.88431388888889,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/71545",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 83395004,
+      "lon": 22.636583333333334,
+      "lat": 51.42630555555555,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73241",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 91959005,
+      "lon": 15.4765,
+      "lat": 52.25407222222222,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73343",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 28222859,
+      "lon": 21.006416666666667,
+      "lat": 52.25988888888889,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "088",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 316780,
+      "lon": 16.806316666666667,
+      "lat": 50.588300000000004,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/71520",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 1250799,
+      "lon": 15.241216666666666,
+      "lat": 52.70926666666667,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/71714",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 91956453,
+      "lon": 15.924972222222221,
+      "lat": 52.095983333333336,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23167FU10003794",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 3807617,
+      "lon": 22.244233333333334,
+      "lat": 52.97081666666667,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/71987",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 1205060,
+      "lon": 20.88979722222222,
+      "lat": 51.87343888888889,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/71692",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 317710,
+      "lon": 15.684000000000001,
+      "lat": 51.2606,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/71523",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 87755684,
+      "lon": 19.81605,
+      "lat": 52.14576666666667,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73294",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 72153907,
+      "lon": 20.140888888888888,
+      "lat": 52.63891666666667,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73186",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 71840286,
+      "lon": 16.804052777777777,
+      "lat": 52.64864722222222,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73187",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 88533490,
+      "lon": 18.075116666666666,
+      "lat": 50.6051,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23144FU10003704",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 86554934,
+      "lon": 15.08765,
+      "lat": 52.31271666666667,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23083FUS1000010",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 317010,
+      "lon": 15.614383333333333,
+      "lat": 51.26043333333333,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/71537",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 86736146,
+      "lon": 23.32455,
+      "lat": 52.034933333333335,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73281",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 90880363,
+      "lon": 22.233666666666668,
+      "lat": 52.98086666666667,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23164FU10003764",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 570297,
+      "lon": 20.385233333333332,
+      "lat": 50.13738333333333,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/71679",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 334760,
+      "lon": 15.682566666666666,
+      "lat": 52.32101666666667,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/71525",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 91956930,
+      "lon": 21.39638888888889,
+      "lat": 53.65,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23166FU10003785",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 118177054,
+      "lon": 18.244472222222225,
+      "lat": 53.10294444444445,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "643294-60101",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 91780989,
+      "lon": 16.54544166666667,
+      "lat": 51.954658333333334,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23167FU10003796",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 91631157,
+      "lon": 21.485775,
+      "lat": 50.103388888888894,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23166FU10003788",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 87764024,
+      "lon": 21.495383333333333,
+      "lat": 51.366416666666666,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23129FU10003671",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 89847920,
+      "lon": 17.635133333333332,
+      "lat": 53.15905,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73321",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 90880461,
+      "lon": 23.105016666666668,
+      "lat": 53.53576666666667,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23164FU10003771",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 90730702,
+      "lon": 19.818766666666665,
+      "lat": 53.66563333333333,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73336",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 86736113,
+      "lon": 22.4414,
+      "lat": 51.30011666666666,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73280",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 120121853,
+      "lon": 20.589166666666664,
+      "lat": 52.19972222222222,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "643294-60116",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 91632775,
+      "lon": 21.822052777777778,
+      "lat": 53.151491666666665,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23145FU10003716",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 28220443,
+      "lon": 21.229666666666667,
+      "lat": 52.25022222222222,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "085",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 117605372,
+      "lon": 19.836944444444445,
+      "lat": 52.50527777777778,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "643294-60093",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 110154180,
+      "lon": 18.867722222222223,
+      "lat": 50.424277777777775,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "643294-60055",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 87064060,
+      "lon": 17.320816666666666,
+      "lat": 52.189449999999994,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23115FU10003634",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 86773619,
+      "lon": 19.198583333333335,
+      "lat": 52.643566666666665,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23088FUS1000025",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 10997041,
+      "lon": 20.32194722222222,
+      "lat": 52.139291666666665,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/72053",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 87591607,
+      "lon": 19.498683333333336,
+      "lat": 53.5938,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23111FU10003624",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 89846023,
+      "lon": 17.063283333333334,
+      "lat": 52.40546666666666,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73316",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 83232399,
+      "lon": 20.011733333333332,
+      "lat": 50.08618333333334,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73239",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 89848077,
+      "lon": 18.05195,
+      "lat": 52.6208,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73323",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 3428883,
+      "lon": 19.789944444444448,
+      "lat": 50.11611111111111,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/71983",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 87591806,
+      "lon": 20.94472222222222,
+      "lat": 53.40555555555555,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23116FU10003639",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 9705345,
+      "lon": 19.04981388888889,
+      "lat": 50.243294444444444,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/72010",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 89848068,
+      "lon": 17.428,
+      "lat": 53.684925,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73322",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 570284,
+      "lon": 21.84255,
+      "lat": 50.07126666666667,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/71669",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 87043364,
+      "lon": 18.991600000000002,
+      "lat": 49.90248333333333,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73284",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 1255318,
+      "lon": 19.280866666666665,
+      "lat": 51.82073333333334,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/71713",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 83536638,
+      "lon": 18.668000000000003,
+      "lat": 53.48571666666667,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23019FU10003526",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 88544350,
+      "lon": 18.268466666666665,
+      "lat": 50.702466666666666,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73301",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 90085983,
+      "lon": 17.3435,
+      "lat": 52.37453333333333,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23185FU10003892",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 90650831,
+      "lon": 20.082638888888887,
+      "lat": 49.43680555555555,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23116FU10003638",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 358750,
+      "lon": 21.125444444444444,
+      "lat": 52.13122222222222,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "071",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 12929330,
+      "lon": 19.22458333333333,
+      "lat": 52.02613888888889,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/72059",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 112684248,
+      "lon": 18.41975,
+      "lat": 52.17413888888888,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "643294-60064",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 90310576,
+      "lon": 16.303997222222222,
+      "lat": 51.33168333333334,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23186FU10003895",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 1250678,
+      "lon": 21.077166666666667,
+      "lat": 51.419555555555554,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/71700",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 91780863,
+      "lon": 15.891466666666666,
+      "lat": 54.0304,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23170FU10003803",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 117160432,
+      "lon": 17.85261666666667,
+      "lat": 52.57319166666667,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "643294-60086",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 8073184,
+      "lon": 18.61218611111111,
+      "lat": 53.03539722222222,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/72049",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 90650753,
+      "lon": 19.764722222222222,
+      "lat": 49.87,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23124FU10003669",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 4754720,
+      "lon": 19.398716666666665,
+      "lat": 51.0769,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/72007",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 86773410,
+      "lon": 18.215833333333332,
+      "lat": 53.06143333333333,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23083FUS1000009",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 82076390,
+      "lon": 14.513733333333333,
+      "lat": 53.420649999999995,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73221",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 53752843,
+      "lon": 14.59833888888889,
+      "lat": 53.39984444444445,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/73127",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 116222191,
+      "lon": 21.754722222222224,
+      "lat": 50.68666666666666,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "643294-60080",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 28795618,
+      "lon": 21.007,
+      "lat": 52.21041666666667,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-071/71375",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 8023410,
+      "lon": 19.481944444444444,
+      "lat": 52.58166666666667,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "363",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 3903803,
+      "lon": 19.586949999999998,
+      "lat": 53.605383333333336,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/71989",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 91798873,
+      "lon": 18.38061111111111,
+      "lat": 50.54805555555556,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23170FU10003801",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 85248871,
+      "lon": 22.888866666666665,
+      "lat": 53.83443333333334,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73255",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 87755630,
+      "lon": 19.425616666666667,
+      "lat": 51.807516666666665,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73291",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 90260267,
+      "lon": 18.0436,
+      "lat": 54.16585,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73327",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 116694317,
+      "lon": 17.226666666666667,
+      "lat": 53.62583333333333,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "643294-60085",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 570283,
+      "lon": 21.75611111111111,
+      "lat": 50.38638888888889,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/71671",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 82689469,
+      "lon": 20.903299999999998,
+      "lat": 49.97793333333333,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73234",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 1203333,
+      "lon": 22.677222222222223,
+      "lat": 51.28638888888889,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/71684",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 4632159,
+      "lon": 19.394444444444446,
+      "lat": 52.220555555555556,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/72002",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 118177110,
+      "lon": 19.640555555555554,
+      "lat": 52.48305555555556,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "643294-60102",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 90650642,
+      "lon": 20.2983,
+      "lat": 50.10693333333334,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23165FU10003775",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 90129485,
+      "lon": 18.509383333333332,
+      "lat": 53.274,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73331",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 100212156,
+      "lon": 19.156666666666666,
+      "lat": 50.7725,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "643294-60049",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 112450626,
+      "lon": 20.637558333333335,
+      "lat": 49.73693611111111,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "643294-60062",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 82689409,
+      "lon": 21.456416666666666,
+      "lat": 50.65585,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73235",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 8073429,
+      "lon": 21.762541666666667,
+      "lat": 52.559713888888886,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/72048",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 87591777,
+      "lon": 20.14488888888889,
+      "lat": 53.72269444444445,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23109FUS1000028",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 28795829,
+      "lon": 21.046980555555557,
+      "lat": 52.190105555555554,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-071/71072",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 89921946,
+      "lon": 23.38201666666667,
+      "lat": 50.58338333333334,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23145FU10003711",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 86773570,
+      "lon": 18.468999999999998,
+      "lat": 53.33603333333333,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23088FUS1000023",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 570285,
+      "lon": 17.278694444444444,
+      "lat": 50.95122222222223,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/71608",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 120185785,
+      "lon": 18.380833333333335,
+      "lat": 53.93258333333333,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "643294-60118",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 114719462,
+      "lon": 19.38675,
+      "lat": 52.258944444444445,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "643294-60071",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 91338814,
+      "lon": 21.310333333333332,
+      "lat": 52.880183333333335,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23167FU10003791",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 1203339,
+      "lon": 19.67858888888889,
+      "lat": 53.5023,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/71694",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 89564073,
+      "lon": 18.755233333333333,
+      "lat": 53.749233333333336,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23125FU10003670",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 91338733,
+      "lon": 22.65011111111111,
+      "lat": 51.211000000000006,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23166FU10003787",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 118176829,
+      "lon": 15.233583333333332,
+      "lat": 51.79452777777777,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "643294-60108",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 341800,
+      "lon": 15.151266666666666,
+      "lat": 52.0118,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/71542",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 28371845,
+      "lon": 20.95411111111111,
+      "lat": 52.18555555555555,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/71602",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 90730637,
+      "lon": 18.451466666666665,
+      "lat": 53.35163333333333,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73330",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 1255305,
+      "lon": 16.491666666666667,
+      "lat": 53.27972222222222,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/71710",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 72154147,
+      "lon": 22.547861111111114,
+      "lat": 51.25333333333333,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73194",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 1203341,
+      "lon": 18.093333333333334,
+      "lat": 51.81166666666666,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/71695",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 83045186,
+      "lon": 18.2035,
+      "lat": 54.24,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23019FU10003527",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 81979565,
+      "lon": 22.334866666666667,
+      "lat": 50.750733333333336,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73220",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 3428993,
+      "lon": 20.930333333333333,
+      "lat": 50.439611111111105,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/71971",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 90129535,
+      "lon": 18.04076666666667,
+      "lat": 54.5681,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73333",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 335220,
+      "lon": 15.088083333333334,
+      "lat": 52.05801111111111,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/71524",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 87764040,
+      "lon": 21.13865,
+      "lat": 51.94843333333333,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23129FU10003673",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 7466648,
+      "lon": 19.899313888888887,
+      "lat": 50.16374722222222,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/72039",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 87591756,
+      "lon": 23.03996666666667,
+      "lat": 52.6507,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23110FUS1000029",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 12213615,
+      "lon": 20.488772222222224,
+      "lat": 51.009797222222225,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/72057",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 120121888,
+      "lon": 15.25211111111111,
+      "lat": 52.642180555555555,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "643294-60117",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 7844425,
+      "lon": 22.310861111111112,
+      "lat": 50.82611111111112,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/72045",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 3428712,
+      "lon": 19.909694444444444,
+      "lat": 49.86125,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/71984",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 87763749,
+      "lon": 20.981916666666667,
+      "lat": 52.962183333333336,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23088FUS1000022",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 28359667,
+      "lon": 21.028027777777776,
+      "lat": 52.161,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/71599",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 1203334,
+      "lon": 22.987525,
+      "lat": 51.30000833333333,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/71686",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 13226496,
+      "lon": 15.351533333333332,
+      "lat": 53.470600000000005,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/72061",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 90943271,
+      "lon": 19.35388888888889,
+      "lat": 51.92805555555555,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73337",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 88463941,
+      "lon": 21.487750000000002,
+      "lat": 52.0655,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23145FU10003718",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 335910,
+      "lon": 14.48475,
+      "lat": 53.42635,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/71546",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 72153915,
+      "lon": 19.44188888888889,
+      "lat": 51.73291666666667,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73188",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 69798483,
+      "lon": 16.371444444444446,
+      "lat": 50.66002777777778,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73175",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 120121590,
+      "lon": 21.01888888888889,
+      "lat": 52.459722222222226,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "643294-60115",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 28795960,
+      "lon": 20.972252777777776,
+      "lat": 52.205761111111116,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-071/71379",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 90673616,
+      "lon": 19.16305,
+      "lat": 50.76376666666667,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73329",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 1255326,
+      "lon": 20.113750000000003,
+      "lat": 51.30569444444444,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/71715",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 87763865,
+      "lon": 21.463966666666664,
+      "lat": 53.23918333333334,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23131FU10003675",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 85248745,
+      "lon": 16.20103333333333,
+      "lat": 54.17458333333333,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73251",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 87764242,
+      "lon": 19.52513888888889,
+      "lat": 52.901694444444445,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23137FU10003689",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 90085658,
+      "lon": 15.96215,
+      "lat": 52.37593888888889,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23165FU10003777",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 10996708,
+      "lon": 22.72680833333333,
+      "lat": 51.30178055555555,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/72050",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 90650803,
+      "lon": 19.914352777777776,
+      "lat": 49.854225,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23142FU10003694",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 86556389,
+      "lon": 14.644183333333332,
+      "lat": 52.47848333333334,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23087FUS1000018",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 4509130,
+      "lon": 20.07552777777778,
+      "lat": 50.26522222222222,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "340",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 118949564,
+      "lon": 20.789444444444445,
+      "lat": 53.538888888888884,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "643294-60104",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 88633444,
+      "lon": 20.544783333333335,
+      "lat": 52.76893333333333,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73298",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 115163458,
+      "lon": 22.067777777777778,
+      "lat": 50.88777777777778,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "643294-60076",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 82689432,
+      "lon": 18.753533333333333,
+      "lat": 50.08371944444445,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73233",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 85248836,
+      "lon": 22.365433333333335,
+      "lat": 53.80365,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73254",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 90085265,
+      "lon": 21.569666666666667,
+      "lat": 50.718833333333336,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23165FU10003778",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 4632178,
+      "lon": 19.577716666666667,
+      "lat": 52.207950000000004,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/72003",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 357760,
+      "lon": 20.873883333333335,
+      "lat": 52.8095,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/71517",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 89949127,
+      "lon": 23.489133333333335,
+      "lat": 52.03746666666667,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23142FU10003691",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 87063928,
+      "lon": 17.824333333333332,
+      "lat": 51.72551666666667,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23083FUS1000012",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 90260240,
+      "lon": 18.064733333333333,
+      "lat": 53.829483333333336,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73325",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 313380,
+      "lon": 21.96333333333333,
+      "lat": 50.05694444444444,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/71512",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 90085250,
+      "lon": 21.197766666666666,
+      "lat": 51.03521666666666,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23165FU10003773",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 85248886,
+      "lon": 20.809416666666667,
+      "lat": 54.24091666666667,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73256",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 90129514,
+      "lon": 18.942800000000002,
+      "lat": 53.75888333333333,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73324",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 71087603,
+      "lon": 18.12647777777778,
+      "lat": 54.21897777777778,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73184",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 90085301,
+      "lon": 21.662883333333333,
+      "lat": 50.87821666666667,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23163FU10003763",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 570292,
+      "lon": 20.00638888888889,
+      "lat": 50.65555555555555,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/71668",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 91258711,
+      "lon": 22.338666666666665,
+      "lat": 50.33071666666667,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23185FU10003890",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 28797063,
+      "lon": 21.04648888888889,
+      "lat": 52.19060555555555,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-071/71071",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 90310612,
+      "lon": 16.4179,
+      "lat": 50.988033333333334,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23164FU10003770",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 86889490,
+      "lon": 17.322483333333334,
+      "lat": 53.153083333333335,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23088FUS1000024",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 83090592,
+      "lon": 19.478466666666666,
+      "lat": 50.30608333333333,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73238",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 335680,
+      "lon": 15.673533333333333,
+      "lat": 52.57683333333334,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/71544",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 88633479,
+      "lon": 15.720983333333333,
+      "lat": 52.332283333333336,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73296",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 91359960,
+      "lon": 18.889444444444443,
+      "lat": 50.35138888888889,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "643294-60034",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 72653893,
+      "lon": 20.013555555555556,
+      "lat": 51.806999999999995,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73218",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 72653866,
+      "lon": 16.8998,
+      "lat": 52.38822222222222,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73217",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 83232442,
+      "lon": 19.893683333333332,
+      "lat": 49.96246666666667,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73240",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 570277,
+      "lon": 21.730555555555554,
+      "lat": 50.06388888888888,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/71663",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 88685804,
+      "lon": 17.069233333333333,
+      "lat": 51.88421666666667,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73305",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 91956886,
+      "lon": 23.336566666666666,
+      "lat": 50.68555,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23167FU10003797",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 82689437,
+      "lon": 18.76805,
+      "lat": 50.240183333333334,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73232",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 13226489,
+      "lon": 19.315833333333334,
+      "lat": 51.95611111111111,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/72060",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 70721325,
+      "lon": 18.194769444444443,
+      "lat": 54.32810833333334,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73181",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 28796205,
+      "lon": 21.09772222222222,
+      "lat": 52.23458333333333,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-071/71381",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 115163592,
+      "lon": 16.660277777777775,
+      "lat": 50.91138888888889,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "643294-60074",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 53752292,
+      "lon": 18.538611111111113,
+      "lat": 50.28111111111111,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/73126",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 4169385,
+      "lon": 21.251833333333334,
+      "lat": 51.31113333333333,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/71994",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 89563904,
+      "lon": 18.983280555555552,
+      "lat": 54.04398055555556,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23129FU10003672",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 28796185,
+      "lon": 21.09733333333333,
+      "lat": 52.234833333333334,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-071/71378",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 88685962,
+      "lon": 21.497475,
+      "lat": 52.108725,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73299",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 70721492,
+      "lon": 18.37648888888889,
+      "lat": 54.416936111111106,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73180",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 89139718,
+      "lon": 18.078483333333335,
+      "lat": 51.22923333333333,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73315",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 570301,
+      "lon": 18.390555555555554,
+      "lat": 54.42972222222222,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/71674",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 3713317,
+      "lon": 16.564716666666666,
+      "lat": 51.920716666666664,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/71991",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 1504847,
+      "lon": 21.698888888888888,
+      "lat": 50.86888888888889,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/71721",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 117320446,
+      "lon": 17.410922222222222,
+      "lat": 51.67519444444444,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "643294-60087",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 90880414,
+      "lon": 22.8675,
+      "lat": 52.42027777777778,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23114FU10003630",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 1203328,
+      "lon": 19.83861111111111,
+      "lat": 49.8975,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/71607",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 85249053,
+      "lon": 23.106816666666667,
+      "lat": 53.58151666666667,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072-73261",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 112422888,
+      "lon": 18.346944444444443,
+      "lat": 50.45638888888889,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "643294-60056",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 89920659,
+      "lon": 23.03352777777778,
+      "lat": 51.04847222222222,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23137FU10003687",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 8023494,
+      "lon": 17.384138888888888,
+      "lat": 54.199888888888886,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "365",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 1203349,
+      "lon": 18.765833333333333,
+      "lat": 54.002722222222225,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/71704",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 28796107,
+      "lon": 21.097805555555553,
+      "lat": 52.234944444444444,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-071/71376",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 4407617,
+      "lon": 14.855858333333334,
+      "lat": 52.9124,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "593-072/72001",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 110154258,
+      "lon": 18.211944444444445,
+      "lat": 50.10166666666667,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "643294-60054",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 91258683,
+      "lon": 21.87955277777778,
+      "lat": 49.920677777777776,
+      "rodzajPomiaru": "PP",
+      "nrSeryjny": "23166FU10003790",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    }
+  ],
+  "RL": [
+    {
+      "id": 117620144,
+      "lon": 18.092694444444444,
+      "lat": 50.34377777777778,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "0220301",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 116562097,
+      "lon": 16.126555555555555,
+      "lat": 52.11419444444444,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "0110402",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 6506534,
+      "lon": 18.832969444444444,
+      "lat": 50.1372,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-ctrl-d000021",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 116899086,
+      "lon": 18.01086111111111,
+      "lat": 51.783944444444444,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "0110902",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 8552896,
+      "lon": 20.861222222222224,
+      "lat": 52.03861111111111,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-ctrl-d000035",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 118185181,
+      "lon": 18.777749999999997,
+      "lat": 54.092083333333335,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "0110202",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 27731738,
+      "lon": 20.935352777777776,
+      "lat": 52.363308333333336,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-cpuf4-000005",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 91058168,
+      "lon": 18.78852777777778,
+      "lat": 50.30981944444444,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-cpu-06b00149",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 118185248,
+      "lon": 18.777749999999997,
+      "lat": 54.092083333333335,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "0110206",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 90831463,
+      "lon": 19.656477777777777,
+      "lat": 51.40623611111111,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-cpu-06b00124",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 83347988,
+      "lon": 15.575844444444444,
+      "lat": 51.26153611111111,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-cpu-06b00109",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 91179279,
+      "lon": 17.71944444444444,
+      "lat": 52.85069444444444,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-cpu-06b00168",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 90802282,
+      "lon": 17.041416666666667,
+      "lat": 54.46497222222222,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-cpu-06b00117",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 116039135,
+      "lon": 18.064722222222223,
+      "lat": 51.23272222222222,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "0220502",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 91057722,
+      "lon": 20.64131111111111,
+      "lat": 50.871541666666666,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-cpu-06b00146",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 91114454,
+      "lon": 20.957988888888888,
+      "lat": 52.19018888888888,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-cpu-06b00142",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 118185199,
+      "lon": 18.777749999999997,
+      "lat": 54.092083333333335,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "0110203",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 118185349,
+      "lon": 18.777749999999997,
+      "lat": 54.092083333333335,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "0110209",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 90507038,
+      "lon": 17.591388888888886,
+      "lat": 53.151111111111106,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-cpu-06b00115",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 118185339,
+      "lon": 18.777749999999997,
+      "lat": 54.092083333333335,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "0110208",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 6289960,
+      "lon": 16.828019444444443,
+      "lat": 52.345755555555556,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-ctrl-d000010",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 116899169,
+      "lon": 18.01086111111111,
+      "lat": 51.783944444444444,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "0110904",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 91057751,
+      "lon": 19.936583333333335,
+      "lat": 50.02911111111111,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-cpu-06b00147",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 6048838,
+      "lon": 18.361686111111112,
+      "lat": 54.38025833333333,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-ctrl-d000004",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 90831477,
+      "lon": 20.00425,
+      "lat": 50.066944444444445,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-cpu-06b00125",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 91633457,
+      "lon": 20.957988888888888,
+      "lat": 52.19018888888888,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-cpu-06b00174",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 91125784,
+      "lon": 18.958416666666665,
+      "lat": 49.976444444444446,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-cpu-06b00131",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 31628787,
+      "lon": 17.591388888888886,
+      "lat": 53.151111111111106,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-cpuh5-000054",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 91114372,
+      "lon": 19.536944444444448,
+      "lat": 51.76061111111111,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-cpu-06b00137",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 82185679,
+      "lon": 16.972055555555553,
+      "lat": 51.11975,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-cpu-06b00101",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 116899268,
+      "lon": 19.39211111111111,
+      "lat": 49.863083333333336,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "0111004",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 83348313,
+      "lon": 16.86163888888889,
+      "lat": 51.14652777777778,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-cpu-06b00108",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 88819902,
+      "lon": 20.71486111111111,
+      "lat": 49.61745555555556,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-cpu-06b00112",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 82080000,
+      "lon": 19.037794444444447,
+      "lat": 49.839311111111115,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-cpu-06b00105",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 91125761,
+      "lon": 18.958416666666665,
+      "lat": 49.976444444444446,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-cpu-06b00130",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 5927987,
+      "lon": 16.066991666666667,
+      "lat": 51.496775,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-ctrl-d000001",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 91179040,
+      "lon": 19.442194444444446,
+      "lat": 51.736444444444444,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-cpu-06b00163",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 90831400,
+      "lon": 19.656477777777777,
+      "lat": 51.40623611111111,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-cpu-06b00122",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 117740286,
+      "lon": 19.028055555555554,
+      "lat": 54.03508333333333,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "0110304",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 117620223,
+      "lon": 18.092694444444444,
+      "lat": 50.34377777777778,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "0220302",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 115815734,
+      "lon": 17.412916666666664,
+      "lat": 52.368138888888886,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "0110104",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 114968647,
+      "lon": 20.312416666666667,
+      "lat": 52.22263888888889,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "0110502",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 7250318,
+      "lon": 21.827955555555555,
+      "lat": 51.39996388888889,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-ctrl-d000031",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 90802169,
+      "lon": 17.041416666666667,
+      "lat": 54.46497222222222,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-cpu-06b00116",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 8552131,
+      "lon": 20.861222222222224,
+      "lat": 52.03861111111111,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-ctrl-d000036",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 91114385,
+      "lon": 16.912491666666664,
+      "lat": 52.40782222222222,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-cpu-06b00138",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 91114306,
+      "lon": 19.536944444444448,
+      "lat": 51.76061111111111,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-cpu-06b00135",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 122084723,
+      "lon": 19.10252777777778,
+      "lat": 50.32216666666667,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "0110803",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 90831351,
+      "lon": 19.67666666666667,
+      "lat": 51.40602777777778,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-cpu-06b00120",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 118185167,
+      "lon": 18.777749999999997,
+      "lat": 54.092083333333335,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "0110201",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 121460769,
+      "lon": 18.64925,
+      "lat": 50.67422222222222,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "0110603",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 91633448,
+      "lon": 18.85886388888889,
+      "lat": 50.28043888888889,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-cpu-06b00173",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 6507259,
+      "lon": 20.871719444444444,
+      "lat": 49.96928055555556,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-ctrl-d000023",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 96352275,
+      "lon": 21.827955555555555,
+      "lat": 51.39996388888889,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-cpu-06a00102",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 116039087,
+      "lon": 18.064722222222223,
+      "lat": 51.23272222222222,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "0220501",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 91114425,
+      "lon": 20.957988888888888,
+      "lat": 52.19018888888888,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-cpu-06b00141",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 91633477,
+      "lon": 23.200805555555554,
+      "lat": 53.14041666666667,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-cpu-06b00175",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 91184678,
+      "lon": 19.434444444444445,
+      "lat": 51.815749999999994,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-cpu-06b00156",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 83348289,
+      "lon": 16.93261111111111,
+      "lat": 51.123444444444445,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-cpu-06b00107",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 91114420,
+      "lon": 16.912491666666664,
+      "lat": 52.40782222222222,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-cpu-06b00140",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 91058294,
+      "lon": 23.166833333333333,
+      "lat": 53.11841666666667,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-cpu-06b00153",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 91057708,
+      "lon": 20.64131111111111,
+      "lat": 50.871541666666666,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-cpu-06b00145",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 116562108,
+      "lon": 16.126555555555555,
+      "lat": 52.11419444444444,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "0110403",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 91114296,
+      "lon": 20.64131111111111,
+      "lat": 50.871541666666666,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-cpu-06b00134",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 24687819,
+      "lon": 19.139444444444443,
+      "lat": 52.52388888888889,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-cpuf4-000001",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 118185369,
+      "lon": 18.777749999999997,
+      "lat": 54.092083333333335,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "0110210",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 115544154,
+      "lon": 17.764833333333332,
+      "lat": 52.558166666666665,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "0220102",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 91114273,
+      "lon": 18.528194444444445,
+      "lat": 53.95691666666667,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-cpu-06b00132",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 8552725,
+      "lon": 20.935352777777776,
+      "lat": 52.363308333333336,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-ctrl-d000026",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 8552241,
+      "lon": 21.11438888888889,
+      "lat": 52.33427777777778,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-ctrl-d000034",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 6289954,
+      "lon": 16.78986666666667,
+      "lat": 53.15022777777778,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-ctrl-d000009",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 13095255,
+      "lon": 22.061111111111114,
+      "lat": 50.57611111111112,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-ctrl-d000056",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 116899235,
+      "lon": 19.39211111111111,
+      "lat": 49.863083333333336,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "0111002",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 91352745,
+      "lon": 18.47694444444444,
+      "lat": 52.61611111111111,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-cpu-06b00171",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 28974533,
+      "lon": 19.583619444444444,
+      "lat": 50.2742,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-cpuh5-000018",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 6143675,
+      "lon": 18.361686111111112,
+      "lat": 54.38025833333333,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-ctrl-d000005",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 115815712,
+      "lon": 17.412916666666664,
+      "lat": 52.368138888888886,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "0110103",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 115815666,
+      "lon": 17.412916666666664,
+      "lat": 52.368138888888886,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "0110101",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 116899254,
+      "lon": 19.39211111111111,
+      "lat": 49.863083333333336,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "0111003",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 115544146,
+      "lon": 17.764833333333332,
+      "lat": 52.558166666666665,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "0220101",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 31644065,
+      "lon": 22.061111111111114,
+      "lat": 50.57611111111112,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-cpuf4-000006",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 12796562,
+      "lon": 22.061111111111114,
+      "lat": 50.57611111111112,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-ctrl-d000046",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 101310973,
+      "lon": 15.736266666666666,
+      "lat": 50.90852777777778,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-cpu-06b00204",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 91184827,
+      "lon": 16.498555555555555,
+      "lat": 50.85388888888889,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-cpu-06b00111",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 122084860,
+      "lon": 19.10252777777778,
+      "lat": 50.32216666666667,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "0110801",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 116039157,
+      "lon": 17.66333333333333,
+      "lat": 51.65786111111111,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "0220401",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 91058201,
+      "lon": 18.78852777777778,
+      "lat": 50.30981944444444,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-cpu-06b00150",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 12796530,
+      "lon": 21.605,
+      "lat": 50.04944444444444,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-ctrl-d000054",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 116899130,
+      "lon": 18.01086111111111,
+      "lat": 51.783944444444444,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "0110903",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 6289966,
+      "lon": 16.828019444444443,
+      "lat": 52.345755555555556,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-ctrl-d000011",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 118185216,
+      "lon": 18.777749999999997,
+      "lat": 54.092083333333335,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "0110204",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 91179161,
+      "lon": 14.500027777777778,
+      "lat": 53.428888888888885,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-cpu-06b00166",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 91184784,
+      "lon": 19.421111111111113,
+      "lat": 51.780277777777776,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-cpu-06b00159",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 116562073,
+      "lon": 16.126555555555555,
+      "lat": 52.11419444444444,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "0110401",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 114968630,
+      "lon": 20.312416666666667,
+      "lat": 52.22263888888889,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "0110501",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 119255982,
+      "lon": 20.299083333333336,
+      "lat": 49.971805555555555,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "0110703",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 8552758,
+      "lon": 19.406080555555555,
+      "lat": 51.85626111111111,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-ctrl-d000028",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 91057943,
+      "lon": 19.936583333333335,
+      "lat": 50.02911111111111,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-cpu-06b00148",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 90831411,
+      "lon": 19.656477777777777,
+      "lat": 51.40623611111111,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-cpu-06b00123",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 91424352,
+      "lon": 19.536944444444448,
+      "lat": 51.76061111111111,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-cpu-06b00172",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 91057663,
+      "lon": 19.421111111111113,
+      "lat": 51.780277777777776,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-cpu-06b00143",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 90831494,
+      "lon": 20.00425,
+      "lat": 50.066944444444445,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-cpu-06b00127",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 122084834,
+      "lon": 19.10252777777778,
+      "lat": 50.32216666666667,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "0110802",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 12796545,
+      "lon": 21.605,
+      "lat": 50.04944444444444,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-ctrl-d000055",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 91179059,
+      "lon": 14.500027777777778,
+      "lat": 53.428888888888885,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-cpu-06b00165",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 12796520,
+      "lon": 21.605,
+      "lat": 50.04944444444444,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-ctrl-d000053",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 91352624,
+      "lon": 21.17941666666667,
+      "lat": 52.25661111111111,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-cpu-06b00169",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 90802327,
+      "lon": 18.890638888888887,
+      "lat": 50.17811111111111,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-cpu-06b00119",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 12796569,
+      "lon": 22.061111111111114,
+      "lat": 50.57611111111112,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-ctrl-d000047",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 8552162,
+      "lon": 20.935352777777776,
+      "lat": 52.363308333333336,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-ctrl-d000027",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 6443609,
+      "lon": 18.718055555555555,
+      "lat": 53.0575,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-ctrl-d000014",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 91185013,
+      "lon": 20.48661388888889,
+      "lat": 53.75573333333333,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-cpu-06b00161",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 121185645,
+      "lon": 19.58313888888889,
+      "lat": 49.86513888888889,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "0220202",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 82079864,
+      "lon": 19.037794444444447,
+      "lat": 49.839311111111115,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-cpu-06b00103",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 6443623,
+      "lon": 18.718055555555555,
+      "lat": 53.0575,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-ctrl-d000015",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 88820106,
+      "lon": 20.71486111111111,
+      "lat": 49.61745555555556,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-cpu-06b00114",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 91184543,
+      "lon": 19.434444444444445,
+      "lat": 51.815749999999994,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-cpu-06b00154",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 83348018,
+      "lon": 16.498555555555555,
+      "lat": 50.85388888888889,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-cpu-06b00110",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 9984691,
+      "lon": 20.935352777777776,
+      "lat": 52.363308333333336,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-ctrl-d000043",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 91184921,
+      "lon": 20.48661388888889,
+      "lat": 53.75573333333333,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-cpu-06b00160",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 121185565,
+      "lon": 19.58313888888889,
+      "lat": 49.86513888888889,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "0220201",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 114968675,
+      "lon": 20.312416666666667,
+      "lat": 52.22263888888889,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "0110504",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 116039194,
+      "lon": 17.66333333333333,
+      "lat": 51.65786111111111,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "0220402",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 116899216,
+      "lon": 19.39211111111111,
+      "lat": 49.863083333333336,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "0111001",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 12796630,
+      "lon": 22.061111111111114,
+      "lat": 50.57611111111112,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-ctrl-d000048",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 116898661,
+      "lon": 18.01086111111111,
+      "lat": 51.783944444444444,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "0110901",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 24687831,
+      "lon": 19.139444444444443,
+      "lat": 52.52388888888889,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-cpuf4-000002",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 91179026,
+      "lon": 19.442194444444446,
+      "lat": 51.736444444444444,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-cpu-06b00162",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 91057684,
+      "lon": 20.64131111111111,
+      "lat": 50.871541666666666,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-cpu-06b00144",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 91058233,
+      "lon": 23.200805555555554,
+      "lat": 53.14041666666667,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-cpu-06b00151",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 117740259,
+      "lon": 19.028055555555554,
+      "lat": 54.03508333333333,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "0110302",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 121460819,
+      "lon": 18.64925,
+      "lat": 50.67422222222222,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "0110604",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 82079977,
+      "lon": 19.037794444444447,
+      "lat": 49.839311111111115,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-cpu-06b00104",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 91114402,
+      "lon": 16.912491666666664,
+      "lat": 52.40782222222222,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-cpu-06b00139",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 85974175,
+      "lon": 16.972055555555553,
+      "lat": 51.11975,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-cpu-06b00102",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 91352699,
+      "lon": 19.431150000000002,
+      "lat": 51.06226944444444,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-cpu-06b00170",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 116562202,
+      "lon": 16.126555555555555,
+      "lat": 52.11419444444444,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "0110404",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 6048809,
+      "lon": 18.09934722222222,
+      "lat": 54.58087777777778,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-ctrl-d000007",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 91114334,
+      "lon": 19.536944444444448,
+      "lat": 51.76061111111111,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-cpu-06b00136",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 117740274,
+      "lon": 19.028055555555554,
+      "lat": 54.03508333333333,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "0110303",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 12796605,
+      "lon": 22.061111111111114,
+      "lat": 50.57611111111112,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-ctrl-d000049",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 5927997,
+      "lon": 16.066991666666667,
+      "lat": 51.496775,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-ctrl-d000002",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 8552222,
+      "lon": 19.406080555555555,
+      "lat": 51.85626111111111,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-ctrl-d000030",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 91058267,
+      "lon": 23.200805555555554,
+      "lat": 53.14041666666667,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-cpu-06b00152",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 6506669,
+      "lon": 18.617722222222223,
+      "lat": 50.39725,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-ctrl-d000020",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 91179047,
+      "lon": 14.500027777777778,
+      "lat": 53.428888888888885,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-cpu-06b00164",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 91184600,
+      "lon": 19.434444444444445,
+      "lat": 51.815749999999994,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-cpu-06b00155",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 12796553,
+      "lon": 22.061111111111114,
+      "lat": 50.57611111111112,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-ctrl-d000045",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 91179270,
+      "lon": 18.573805555555555,
+      "lat": 51.21804166666667,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-cpu-06b00167",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 90802314,
+      "lon": 18.890638888888887,
+      "lat": 50.17811111111111,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-cpu-06b00118",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 88820069,
+      "lon": 20.71486111111111,
+      "lat": 49.61745555555556,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-cpu-06b00113",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 8552968,
+      "lon": 21.11438888888889,
+      "lat": 52.33427777777778,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-ctrl-d000033",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 6289941,
+      "lon": 16.78986666666667,
+      "lat": 53.15022777777778,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-ctrl-d000008",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 119255957,
+      "lon": 20.299083333333336,
+      "lat": 49.971805555555555,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "0110701",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 90831486,
+      "lon": 20.00425,
+      "lat": 50.066944444444445,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-cpu-06b00126",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 118185278,
+      "lon": 18.777749999999997,
+      "lat": 54.092083333333335,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "0110207",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 106063998,
+      "lon": 20.935352777777776,
+      "lat": 52.363308333333336,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-cpu-06b00205",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 90831392,
+      "lon": 19.67666666666667,
+      "lat": 51.40602777777778,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-cpu-06b00121",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 121460680,
+      "lon": 18.64925,
+      "lat": 50.67422222222222,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "0110601",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 114968663,
+      "lon": 20.312416666666667,
+      "lat": 52.22263888888889,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "0110503",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 121460719,
+      "lon": 18.64925,
+      "lat": 50.67422222222222,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "0110602",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 101310922,
+      "lon": 15.736266666666666,
+      "lat": 50.90852777777778,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-cpu-06b00203",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 117740268,
+      "lon": 19.028055555555554,
+      "lat": 54.03508333333333,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "0110301",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 119255975,
+      "lon": 20.299083333333336,
+      "lat": 49.971805555555555,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "0110702",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 6506662,
+      "lon": 18.617722222222223,
+      "lat": 50.39725,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-ctrl-d000019",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 6506621,
+      "lon": 18.832969444444444,
+      "lat": 50.1372,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-ctrl-d000022",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 115815695,
+      "lon": 17.412916666666664,
+      "lat": 52.368138888888886,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "0110102",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 6507439,
+      "lon": 19.583619444444444,
+      "lat": 50.2742,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-ctrl-d000024",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    },
+    {
+      "id": 12796660,
+      "lon": 22.061111111111114,
+      "lat": 50.57611111111112,
+      "rodzajPomiaru": "PC",
+      "nrSeryjny": "ncar-h-ctrl-d000051",
+      "lok2PktDlugosc": null,
+      "lok2PktSzerokosc": null
+    }
+  ],
+  "OPP": [
+    {
+      "id": 91414742,
+      "lon": 18.289205555555558,
+      "lat": 52.149683333333336,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "CAM23001804",
+      "lok2PktDlugosc": 18.447991667,
+      "lok2PktSzerokosc": 52.151241667
+    },
+    {
+      "id": 90799008,
+      "lon": 18.136275,
+      "lat": 52.804788888888886,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "CAM23001428",
+      "lok2PktDlugosc": 18.193775,
+      "lok2PktSzerokosc": 52.803297222
+    },
+    {
+      "id": 113783521,
+      "lon": 21.118472222222223,
+      "lat": 52.15522222222222,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "CAM25003402",
+      "lok2PktDlugosc": 21.248027778,
+      "lok2PktSzerokosc": 52.194
+    },
+    {
+      "id": 12825204,
+      "lon": 16.151477777777778,
+      "lat": 50.848847222222226,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "CAM15001365",
+      "lok2PktDlugosc": 16.158961111,
+      "lok2PktSzerokosc": 50.870661111
+    },
+    {
+      "id": 91414977,
+      "lon": 21.45617777777778,
+      "lat": 52.5558,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "CAM23001807",
+      "lok2PktDlugosc": 21.49585,
+      "lok2PktSzerokosc": 52.604833333
+    },
+    {
+      "id": 90797669,
+      "lon": 20.771077777777776,
+      "lat": 52.14033333333333,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "CAM22010778",
+      "lok2PktDlugosc": 20.757744444,
+      "lok2PktSzerokosc": 52.131575
+    },
+    {
+      "id": 90797708,
+      "lon": 18.79423888888889,
+      "lat": 50.029177777777775,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "CAM22010779",
+      "lok2PktDlugosc": 18.851355556,
+      "lok2PktSzerokosc": 50.015727778
+    },
+    {
+      "id": 91415246,
+      "lon": 17.09736111111111,
+      "lat": 51.14277777777778,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "CAM23003838",
+      "lok2PktDlugosc": 17.129444444,
+      "lok2PktSzerokosc": 51.153722222
+    },
+    {
+      "id": 91414765,
+      "lon": 18.7668,
+      "lat": 52.86190277777778,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "CAM23001806",
+      "lok2PktDlugosc": 18.8492,
+      "lok2PktSzerokosc": 52.768963889
+    },
+    {
+      "id": 113414005,
+      "lon": 19.914416666666664,
+      "lat": 50.11377777777778,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "ICAR5C2501",
+      "lok2PktDlugosc": 19.930527778,
+      "lok2PktSzerokosc": 50.112444444
+    },
+    {
+      "id": 89607544,
+      "lon": 23.84681111111111,
+      "lat": 50.858575,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "CAM23001425",
+      "lok2PktDlugosc": 23.881572222,
+      "lok2PktSzerokosc": 50.829875
+    },
+    {
+      "id": 90798983,
+      "lon": 18.921622222222222,
+      "lat": 53.50544444444444,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "CAM23001805",
+      "lok2PktDlugosc": 18.9398,
+      "lok2PktSzerokosc": 53.517880556
+    },
+    {
+      "id": 117740707,
+      "lon": 15.658888888888889,
+      "lat": 51.32138888888889,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "CAM25004055",
+      "lok2PktDlugosc": 15.786111111,
+      "lok2PktSzerokosc": 51.278611111
+    },
+    {
+      "id": 118680294,
+      "lon": 18.761833333333332,
+      "lat": 50.37352777777778,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "CAM25004050",
+      "lok2PktDlugosc": 18.723861111,
+      "lok2PktSzerokosc": 50.350580556
+    },
+    {
+      "id": 13862446,
+      "lon": 20.994555555555557,
+      "lat": 49.99254722222222,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "CAM15001378",
+      "lok2PktDlugosc": 21.049105556,
+      "lok2PktSzerokosc": 50.008269444
+    },
+    {
+      "id": 8947143,
+      "lon": 17.553944444444443,
+      "lat": 50.79388888888889,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "CAM15001388",
+      "lok2PktDlugosc": 17.581416667,
+      "lok2PktSzerokosc": 50.787666667
+    },
+    {
+      "id": 118680069,
+      "lon": 19.363972222222223,
+      "lat": 51.064,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "CAM25004025",
+      "lok2PktDlugosc": 19.219277778,
+      "lok2PktSzerokosc": 50.918583333
+    },
+    {
+      "id": 13861852,
+      "lon": 19.230355555555555,
+      "lat": 51.34194166666667,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "CAM15001383",
+      "lok2PktDlugosc": 19.249972222,
+      "lok2PktSzerokosc": 51.343158333
+    },
+    {
+      "id": 90799076,
+      "lon": 17.344513888888887,
+      "lat": 50.81216944444444,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "CAM23000027",
+      "lok2PktDlugosc": 17.3459,
+      "lok2PktSzerokosc": 50.788475
+    },
+    {
+      "id": 90799066,
+      "lon": 18.980627777777777,
+      "lat": 50.270202777777776,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "CAM23003841",
+      "lok2PktDlugosc": 18.963716667,
+      "lok2PktSzerokosc": 50.273980556
+    },
+    {
+      "id": 89607603,
+      "lon": 21.864625,
+      "lat": 51.52186944444444,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "CAM23001426",
+      "lok2PktDlugosc": 21.877561111,
+      "lok2PktSzerokosc": 51.476877778
+    },
+    {
+      "id": 12825846,
+      "lon": 18.401777777777777,
+      "lat": 49.960055555555556,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "CAM15001371",
+      "lok2PktDlugosc": 18.411555556,
+      "lok2PktSzerokosc": 49.96425
+    },
+    {
+      "id": 12807853,
+      "lon": 22.73616666666667,
+      "lat": 51.304111111111105,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "CAM15001373",
+      "lok2PktDlugosc": 22.775861111,
+      "lok2PktSzerokosc": 51.297083333
+    },
+    {
+      "id": 25181164,
+      "lon": 18.3415,
+      "lat": 54.61966666666667,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "CAM16003406",
+      "lok2PktDlugosc": 18.344666667,
+      "lok2PktSzerokosc": 54.63325
+    },
+    {
+      "id": 91414277,
+      "lon": 19.27111111111111,
+      "lat": 51.64797222222222,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "CAM23001801",
+      "lok2PktDlugosc": 19.320972222,
+      "lok2PktSzerokosc": 51.680222222
+    },
+    {
+      "id": 90798227,
+      "lon": 18.293897222222224,
+      "lat": 54.275277777777774,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "CAM22010787",
+      "lok2PktDlugosc": 18.308272222,
+      "lok2PktSzerokosc": 54.297969444
+    },
+    {
+      "id": 86963874,
+      "lon": 20.955416666666665,
+      "lat": 51.66583333333333,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "CAM23000026",
+      "lok2PktDlugosc": 21.033777778,
+      "lok2PktSzerokosc": 51.555472222
+    },
+    {
+      "id": 13861967,
+      "lon": 20.124055555555557,
+      "lat": 51.775277777777774,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "CAM15001384",
+      "lok2PktDlugosc": 20.170638889,
+      "lok2PktSzerokosc": 51.772972222
+    },
+    {
+      "id": 113783542,
+      "lon": 21.876641666666668,
+      "lat": 52.80891944444444,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "CAM25004020",
+      "lok2PktDlugosc": 21.905558333,
+      "lok2PktSzerokosc": 52.820641667
+    },
+    {
+      "id": 13862149,
+      "lon": 21.06537777777778,
+      "lat": 52.15171111111111,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "CAM15001387",
+      "lok2PktDlugosc": 21.033269444,
+      "lok2PktSzerokosc": 52.140291667
+    },
+    {
+      "id": 113783667,
+      "lon": 14.720372222222222,
+      "lat": 53.39924166666667,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "CAM25004029",
+      "lok2PktDlugosc": 14.756872222,
+      "lok2PktSzerokosc": 53.419266667
+    },
+    {
+      "id": 13500954,
+      "lon": 15.657833333333334,
+      "lat": 52.091,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "CAM15001363",
+      "lok2PktDlugosc": 15.7009,
+      "lok2PktSzerokosc": 52.096783333
+    },
+    {
+      "id": 118680302,
+      "lon": 18.761833333333332,
+      "lat": 50.37352777777778,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "CAM25004391",
+      "lok2PktDlugosc": 18.723861111,
+      "lok2PktSzerokosc": 50.350580556
+    },
+    {
+      "id": 110977275,
+      "lon": 20.629716666666667,
+      "lat": 52.374002777777775,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "CAM25004549",
+      "lok2PktDlugosc": 20.592775,
+      "lok2PktSzerokosc": 52.261941667
+    },
+    {
+      "id": 12825787,
+      "lon": 16.158336111111108,
+      "lat": 50.87048333333333,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "CAM15001380",
+      "lok2PktDlugosc": 16.151830556,
+      "lok2PktSzerokosc": 50.84975
+    },
+    {
+      "id": 118679915,
+      "lon": 18.519666666666666,
+      "lat": 54.35908333333334,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "CAM25004038",
+      "lok2PktDlugosc": 18.538833333,
+      "lok2PktSzerokosc": 54.328694444
+    },
+    {
+      "id": 90798375,
+      "lon": 18.668886111111114,
+      "lat": 50.31542222222222,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "CAM23001424",
+      "lok2PktDlugosc": 18.709455556,
+      "lok2PktSzerokosc": 50.312605556
+    },
+    {
+      "id": 91414183,
+      "lon": 20.102222222222224,
+      "lat": 51.995555555555555,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "CAM22010782",
+      "lok2PktDlugosc": 20.126388889,
+      "lok2PktSzerokosc": 51.979166667
+    },
+    {
+      "id": 117740716,
+      "lon": 15.658888888888889,
+      "lat": 51.32138888888889,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "CAM25004393",
+      "lok2PktDlugosc": 15.786111111,
+      "lok2PktSzerokosc": 51.278611111
+    },
+    {
+      "id": 13861996,
+      "lon": 20.735222222222223,
+      "lat": 50.86569444444444,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "CAM15001375",
+      "lok2PktDlugosc": 20.790611111,
+      "lok2PktSzerokosc": 50.861111111
+    },
+    {
+      "id": 90798297,
+      "lon": 17.812727777777777,
+      "lat": 50.30016666666666,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "CAM23001422",
+      "lok2PktDlugosc": 17.810936111,
+      "lok2PktSzerokosc": 50.279158333
+    },
+    {
+      "id": 113783510,
+      "lon": 21.11863888888889,
+      "lat": 52.155,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "CAM25003403",
+      "lok2PktDlugosc": 21.248055556,
+      "lok2PktSzerokosc": 52.194
+    },
+    {
+      "id": 118680098,
+      "lon": 19.363805555555558,
+      "lat": 51.064027777777774,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "CAM25004382",
+      "lok2PktDlugosc": 19.220777778,
+      "lok2PktSzerokosc": 50.9205
+    },
+    {
+      "id": 89607636,
+      "lon": 21.342447222222223,
+      "lat": 50.00929722222222,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "CAM23001430",
+      "lok2PktDlugosc": 21.354530556,
+      "lok2PktSzerokosc": 50.014897222
+    },
+    {
+      "id": 13500662,
+      "lon": 20.252861111111113,
+      "lat": 52.20805555555556,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "CAM15001367",
+      "lok2PktDlugosc": 20.277333333,
+      "lok2PktSzerokosc": 52.186611111
+    },
+    {
+      "id": 71652927,
+      "lon": 20.867286111111113,
+      "lat": 52.21902777777778,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "CAM21003328",
+      "lok2PktDlugosc": 20.891725,
+      "lok2PktSzerokosc": 52.242263889
+    },
+    {
+      "id": 12931401,
+      "lon": 18.84947222222222,
+      "lat": 50.4345,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "CAM15001379",
+      "lok2PktDlugosc": 18.862916667,
+      "lok2PktSzerokosc": 50.431972222
+    },
+    {
+      "id": 90798996,
+      "lon": 18.284536111111112,
+      "lat": 54.31651944444444,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "CAM23001427",
+      "lok2PktDlugosc": 18.302894444,
+      "lok2PktSzerokosc": 54.321555556
+    },
+    {
+      "id": 116594640,
+      "lon": 20.421111111111113,
+      "lat": 53.70611111111111,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "CAM25004042",
+      "lok2PktDlugosc": 20.315555556,
+      "lok2PktSzerokosc": 53.607222222
+    },
+    {
+      "id": 13862413,
+      "lon": 21.856972222222225,
+      "lat": 49.684038888888885,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "CAM15001386",
+      "lok2PktDlugosc": 21.8492,
+      "lok2PktSzerokosc": 49.673988889
+    },
+    {
+      "id": 86963975,
+      "lon": 14.242277777777778,
+      "lat": 53.89094444444444,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "CAM23003840",
+      "lok2PktDlugosc": 14.269166667,
+      "lok2PktSzerokosc": 53.901722222
+    },
+    {
+      "id": 11337015,
+      "lon": 20.958949999999998,
+      "lat": 52.8337,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "CAM15001377",
+      "lok2PktDlugosc": 20.984283333,
+      "lok2PktSzerokosc": 52.839
+    },
+    {
+      "id": 118679774,
+      "lon": 20.705566666666666,
+      "lat": 50.953405555555555,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "CAM25004032",
+      "lok2PktDlugosc": 20.676302778,
+      "lok2PktSzerokosc": 50.941558333
+    },
+    {
+      "id": 115049968,
+      "lon": 20.823888888888888,
+      "lat": 52.10066666666667,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "CAM25004389",
+      "lok2PktDlugosc": 20.792722222,
+      "lok2PktSzerokosc": 52.08225
+    },
+    {
+      "id": 91418175,
+      "lon": 16.86138888888889,
+      "lat": 52.35219444444444,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "CAM23003973",
+      "lok2PktDlugosc": 16.969888889,
+      "lok2PktSzerokosc": 52.348388889
+    },
+    {
+      "id": 91414451,
+      "lon": 20.994722222222222,
+      "lat": 51.89694444444444,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "CAM23000032",
+      "lok2PktDlugosc": 21.095555556,
+      "lok2PktSzerokosc": 51.915555556
+    },
+    {
+      "id": 91414174,
+      "lon": 19.36031388888889,
+      "lat": 51.641530555555555,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "CAM22010781",
+      "lok2PktDlugosc": 19.361105556,
+      "lok2PktSzerokosc": 51.622388889
+    },
+    {
+      "id": 89607520,
+      "lon": 22.51911111111111,
+      "lat": 50.11783333333334,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "CAM22010786",
+      "lok2PktDlugosc": 22.493666667,
+      "lok2PktSzerokosc": 50.099111111
+    },
+    {
+      "id": 13862031,
+      "lon": 22.901027777777777,
+      "lat": 51.29888888888889,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "CAM15001368",
+      "lok2PktDlugosc": 22.95525,
+      "lok2PktSzerokosc": 51.303944444
+    },
+    {
+      "id": 13501525,
+      "lon": 19.904555555555554,
+      "lat": 49.650999999999996,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "CAM15001390",
+      "lok2PktDlugosc": 19.889944444,
+      "lok2PktSzerokosc": 49.667222222
+    },
+    {
+      "id": 71652912,
+      "lon": 21.10263888888889,
+      "lat": 52.30758333333333,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "CAM21003327",
+      "lok2PktDlugosc": 21.044527778,
+      "lok2PktSzerokosc": 52.302888889
+    },
+    {
+      "id": 118679783,
+      "lon": 20.705566666666666,
+      "lat": 50.953405555555555,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "CAM25004384",
+      "lok2PktDlugosc": 20.676302778,
+      "lok2PktSzerokosc": 50.941558333
+    },
+    {
+      "id": 86963966,
+      "lon": 14.912308333333334,
+      "lat": 52.67460833333333,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "CAM23001429",
+      "lok2PktDlugosc": 14.957783333,
+      "lok2PktSzerokosc": 52.676625
+    },
+    {
+      "id": 91413968,
+      "lon": 19.420625,
+      "lat": 51.70659444444445,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "CAM22010780",
+      "lok2PktDlugosc": 19.371088889,
+      "lok2PktSzerokosc": 51.709663889
+    },
+    {
+      "id": 91414698,
+      "lon": 16.72637222222222,
+      "lat": 52.41266111111111,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "CAM23001803",
+      "lok2PktDlugosc": 16.735511111,
+      "lok2PktSzerokosc": 52.432494444
+    },
+    {
+      "id": 12825860,
+      "lon": 18.581583333333334,
+      "lat": 50.199416666666664,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "CAM15001364",
+      "lok2PktDlugosc": 18.600222222,
+      "lok2PktSzerokosc": 50.215222222
+    },
+    {
+      "id": 91414226,
+      "lon": 19.236580555555555,
+      "lat": 52.440861111111104,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "CAM23001421",
+      "lok2PktDlugosc": 19.356483333,
+      "lok2PktSzerokosc": 52.339944444
+    },
+    {
+      "id": 113414032,
+      "lon": 19.92863888888889,
+      "lat": 50.11252777777778,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "ICAR5C2502",
+      "lok2PktDlugosc": 19.913416667,
+      "lok2PktSzerokosc": 50.114305556
+    },
+    {
+      "id": 91417929,
+      "lon": 16.86138888888889,
+      "lat": 52.35219444444444,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "CAM23003974",
+      "lok2PktDlugosc": 16.969888889,
+      "lok2PktSzerokosc": 52.348388889
+    },
+    {
+      "id": 118679807,
+      "lon": 19.949194444444444,
+      "lat": 50.00044444444445,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "CAM25004021",
+      "lok2PktDlugosc": 20.003583333,
+      "lok2PktSzerokosc": 50.001805556
+    },
+    {
+      "id": 116594573,
+      "lon": 21.153225,
+      "lat": 52.326025,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "CAM25004385",
+      "lok2PktDlugosc": 21.196002778,
+      "lok2PktSzerokosc": 52.388463889
+    },
+    {
+      "id": 118679980,
+      "lon": 18.519666666666666,
+      "lat": 54.35908333333334,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "CAM25004386",
+      "lok2PktDlugosc": 18.538833333,
+      "lok2PktSzerokosc": 54.328694444
+    },
+    {
+      "id": 10764316,
+      "lon": 23.289683333333336,
+      "lat": 53.04821666666666,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "CAM15001389",
+      "lok2PktDlugosc": 23.321283333,
+      "lok2PktSzerokosc": 53.021066667
+    },
+    {
+      "id": 118679818,
+      "lon": 19.949194444444444,
+      "lat": 50.00044444444445,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "CAM25004380",
+      "lok2PktDlugosc": 20.003583333,
+      "lok2PktSzerokosc": 50.001805556
+    },
+    {
+      "id": 13501468,
+      "lon": 16.23951388888889,
+      "lat": 51.70731666666667,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "CAM15001381",
+      "lok2PktDlugosc": 16.259069444,
+      "lok2PktSzerokosc": 51.725569444
+    },
+    {
+      "id": 71652931,
+      "lon": 20.89136111111111,
+      "lat": 52.242444444444445,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "CAM21003329",
+      "lok2PktDlugosc": 20.868083333,
+      "lok2PktSzerokosc": 52.220111111
+    },
+    {
+      "id": 113783617,
+      "lon": 20.905002777777778,
+      "lat": 52.16119722222222,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "CAM25004048",
+      "lok2PktDlugosc": 20.886583333,
+      "lok2PktSzerokosc": 52.144361111
+    },
+    {
+      "id": 13861774,
+      "lon": 20.021583333333332,
+      "lat": 51.55611111111111,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "CAM15001362",
+      "lok2PktDlugosc": 20.0495,
+      "lok2PktSzerokosc": 51.550305556
+    },
+    {
+      "id": 118680228,
+      "lon": 19.051472222222223,
+      "lat": 50.740611111111114,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "CAM25004023",
+      "lok2PktDlugosc": 19.031983333,
+      "lok2PktSzerokosc": 50.60525
+    },
+    {
+      "id": 90798213,
+      "lon": 22.972527777777778,
+      "lat": 53.04805555555556,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "CAM23000031",
+      "lok2PktDlugosc": 22.848888889,
+      "lok2PktSzerokosc": 53.041444444
+    },
+    {
+      "id": 86963955,
+      "lon": 16.621555555555556,
+      "lat": 51.035444444444444,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "CAM23000034",
+      "lok2PktDlugosc": 16.732558333,
+      "lok2PktSzerokosc": 51.019625
+    },
+    {
+      "id": 113783529,
+      "lon": 17.71286111111111,
+      "lat": 50.65591666666666,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "CAM25003404",
+      "lok2PktDlugosc": 17.852638889,
+      "lok2PktSzerokosc": 50.573361111
+    },
+    {
+      "id": 90798353,
+      "lon": 18.57438888888889,
+      "lat": 50.04185833333333,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "CAM23001423",
+      "lok2PktDlugosc": 18.587880556,
+      "lok2PktSzerokosc": 50.029291667
+    },
+    {
+      "id": 13862113,
+      "lon": 21.305127777777777,
+      "lat": 53.825875,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "CAM15001376",
+      "lok2PktDlugosc": 21.334166667,
+      "lok2PktSzerokosc": 53.779719444
+    },
+    {
+      "id": 13862235,
+      "lon": 21.78805555555556,
+      "lat": 50.231500000000004,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "CAM15001385",
+      "lok2PktDlugosc": 21.8145,
+      "lok2PktSzerokosc": 50.214722222
+    },
+    {
+      "id": 86963938,
+      "lon": 15.182491666666666,
+      "lat": 52.956825,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "CAM23000029",
+      "lok2PktDlugosc": 15.191472222,
+      "lok2PktSzerokosc": 52.887569444
+    },
+    {
+      "id": 113783675,
+      "lon": 14.720372222222222,
+      "lat": 53.39924166666667,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "CAM25004383",
+      "lok2PktDlugosc": 14.756872222,
+      "lok2PktSzerokosc": 53.419266667
+    },
+    {
+      "id": 89605797,
+      "lon": 21.903499999999998,
+      "lat": 50.03886111111111,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "CAM22010783",
+      "lok2PktDlugosc": 21.951472222,
+      "lok2PktSzerokosc": 50.054833333
+    },
+    {
+      "id": 13501544,
+      "lon": 20.229,
+      "lat": 53.74426666666667,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "CAM15001372",
+      "lok2PktDlugosc": 20.297394444,
+      "lok2PktSzerokosc": 53.759905556
+    },
+    {
+      "id": 118679746,
+      "lon": 22.44125,
+      "lat": 51.215472222222225,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "CAM25004388",
+      "lok2PktDlugosc": 22.437027778,
+      "lok2PktSzerokosc": 51.276583333
+    },
+    {
+      "id": 116594469,
+      "lon": 21.153225,
+      "lat": 52.326025,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "CAM25004034",
+      "lok2PktDlugosc": 21.196002778,
+      "lok2PktSzerokosc": 52.388463889
+    },
+    {
+      "id": 113783631,
+      "lon": 20.904999999999998,
+      "lat": 52.16119444444444,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "CAM25004390",
+      "lok2PktDlugosc": 20.886388889,
+      "lok2PktSzerokosc": 52.14445
+    },
+    {
+      "id": 90798253,
+      "lon": 18.428633333333334,
+      "lat": 51.27568333333333,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "CAM23000033",
+      "lok2PktDlugosc": 18.476894444,
+      "lok2PktSzerokosc": 51.261155556
+    },
+    {
+      "id": 90797792,
+      "lon": 18.808308333333333,
+      "lat": 50.22686388888889,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "CAM23000030",
+      "lok2PktDlugosc": 18.824508333,
+      "lok2PktSzerokosc": 50.221522222
+    },
+    {
+      "id": 90798287,
+      "lon": 18.96358611111111,
+      "lat": 50.273783333333334,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "CAM23001802",
+      "lok2PktDlugosc": 18.980477778,
+      "lok2PktSzerokosc": 50.270119444
+    },
+    {
+      "id": 89605843,
+      "lon": 21.687944444444444,
+      "lat": 49.561,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "CAM22010784",
+      "lok2PktDlugosc": 21.684177778,
+      "lok2PktSzerokosc": 49.548805556
+    },
+    {
+      "id": 12931379,
+      "lon": 21.261944444444445,
+      "lat": 52.22230555555556,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "CAM15001369",
+      "lok2PktDlugosc": 21.281666667,
+      "lok2PktSzerokosc": 52.221583333
+    },
+    {
+      "id": 89605782,
+      "lon": 20.530369444444442,
+      "lat": 51.98106666666667,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "CAM23000025",
+      "lok2PktDlugosc": 20.571869444,
+      "lok2PktSzerokosc": 51.972547222
+    },
+    {
+      "id": 12825830,
+      "lon": 21.944388888888888,
+      "lat": 50.57211111111111,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "CAM15001370",
+      "lok2PktDlugosc": 22.034111111,
+      "lok2PktSzerokosc": 50.569525
+    },
+    {
+      "id": 89607811,
+      "lon": 21.88872222222222,
+      "lat": 49.80661111111111,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "CAM23000028",
+      "lok2PktDlugosc": 21.911566667,
+      "lok2PktSzerokosc": 49.803222222
+    },
+    {
+      "id": 118679732,
+      "lon": 22.440925,
+      "lat": 51.215605555555555,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "CAM25004045",
+      "lok2PktDlugosc": 22.436888889,
+      "lok2PktSzerokosc": 51.276666667
+    },
+    {
+      "id": 116594833,
+      "lon": 20.339447222222223,
+      "lat": 53.40828055555556,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "CAM25004041",
+      "lok2PktDlugosc": 20.435972222,
+      "lok2PktSzerokosc": 53.333861111
+    },
+    {
+      "id": 113783570,
+      "lon": 21.876638888888888,
+      "lat": 52.80891666666666,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "CAM25004379",
+      "lok2PktDlugosc": 21.905555556,
+      "lok2PktSzerokosc": 52.820638889
+    },
+    {
+      "id": 118679763,
+      "lon": 22.143372222222222,
+      "lat": 51.43137222222222,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "CAM25004044",
+      "lok2PktDlugosc": 22.269611111,
+      "lok2PktSzerokosc": 51.384691667
+    },
+    {
+      "id": 115049948,
+      "lon": 20.823888888888888,
+      "lat": 52.10066666666667,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "CAM25004047",
+      "lok2PktDlugosc": 20.792722222,
+      "lok2PktSzerokosc": 52.08225
+    },
+    {
+      "id": 90799056,
+      "lon": 18.737125000000002,
+      "lat": 50.31138333333333,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "CAM23003839",
+      "lok2PktDlugosc": 18.829808333,
+      "lok2PktSzerokosc": 50.335288889
+    },
+    {
+      "id": 12825720,
+      "lon": 21.03162222222222,
+      "lat": 52.13998888888889,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "CAM15001366",
+      "lok2PktDlugosc": 21.063252778,
+      "lok2PktSzerokosc": 52.150588889
+    },
+    {
+      "id": 71652896,
+      "lon": 21.044861111111114,
+      "lat": 52.302527777777776,
+      "rodzajPomiaru": "PO",
+      "nrSeryjny": "CAM21003326",
+      "lok2PktDlugosc": 21.102694444,
+      "lok2PktSzerokosc": 52.30725
+    }
+  ]
+}
