@@ -33,3 +33,18 @@ coverage/
 # Local backups
 *.backup-*
 *.before-*
+
+# Bootstrap runtime, downloaded caches and local snapshots
+.bootstrap-venv/
+master-db/bootstrap/cache/
+master-db/bootstrap/backups/
+master-db/bootstrap/sql-batches/
+
+# Local acquisition data and production snapshots
+master-db/raw/
+master-db/cache/
+master-db/backups/
+
+# Python runtime cache
+__pycache__/
+*.pyc
