@@ -45,7 +45,8 @@ def fetch(code, refresh=False, phase='speed'):
     # independently downloaded country polygons by the normalizer, never assigned blindly.
     def make_query(area_mode):
         regions=['area.country'] if area_mode else [','.join(str(round(v,5)) for v in bbox) for bbox in boxes(code)]
-        prefix='[out:json][timeout:25][maxsize:100000000];'
+        server_timeout=90 if phase=='speed' else 25
+        prefix=f'[out:json][timeout:{server_timeout}][maxsize:100000000];'
         if area_mode:prefix+=f'area["ISO3166-1"="{code}"][admin_level=2]->.country;.country out ids;'
         if phase=='speed':return prefix+'('+''.join(f'node[highway=speed_camera]({r});' for r in regions)+');out meta;'
         relations=''.join(f'rel[type=enforcement]({r});' for r in regions)
@@ -59,7 +60,7 @@ def fetch(code, refresh=False, phase='speed'):
         try:
             req = urllib.request.Request(endpoint+'?'+urllib.parse.urlencode({'data': query}),
                                          headers={'User-Agent': 'SpeedCameraBootstrap/1.0 (+https://github.com/ternzina/speed-camera-app; open data import)'})
-            with urllib.request.urlopen(req, timeout=65) as response:
+            with urllib.request.urlopen(req, timeout=120 if phase=="speed" else 65) as response:
                 raw = response.read()
             data = json.loads(raw)
             if data.get('remark') or 'elements' not in data:
