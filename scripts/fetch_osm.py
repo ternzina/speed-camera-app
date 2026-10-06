@@ -51,7 +51,7 @@ def fetch(code, refresh=False, phase='speed'):
         relations=''.join(f'rel[type=enforcement]({r});' for r in regions)
         extras=''.join(f'node[enforcement~"^(maxspeed|speed|average_speed|redlight|red_light|traffic_signals|traffic_lights|section_control)$"]({r});way[highway=speed_camera]({r});' for r in regions)
         return prefix+'('+relations+')->.enforcement;.enforcement out meta;('+extras+'node(r.enforcement:"device");node(r.enforcement:"from");node(r.enforcement:"to"););out meta center;'
-    area_mode=True
+    area_mode=phase != "speed"
     query=make_query(area_mode)
     errors = []
     for attempt in range(3):

@@ -108,3 +108,8 @@ Malformed government rows are isolated and reported instead of aborting all
 countries. A conflicting known speed limit within 5 m of an authoritative record
 is held for review when lane/direction identity cannot be resolved. Unusable or
 implausible section endpoints are quarantined, never guessed.
+
+OSM-only New Jersey red-light devices and Alberta combined speed/red-light devices
+are held for review against current authority changes. Alberta has individual approved
+exceptions; a blanket claim that all devices are inactive is not made. See the policy
+review report for primary NJDOT / police sources and the checked date.

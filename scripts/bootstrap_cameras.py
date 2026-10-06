@@ -111,6 +111,9 @@ def official_records(envelope, errors=None):
             if adapter=='france':
                 external=p['Numéro de radar'];t=p['Type de radar'];limit=speed(p.get('VMA'))
                 typ='red_light' if t=='ETFR' else 'other_enforcement' if t in ('ETPN','ETVM') else 'fixed_speed'
+                if t in ('ETT','ETU') and limit is None:
+                    typ='other_enforcement';extra['possible_camera_types']=['fixed_speed','red_light','speed_and_red_light']
+                    extra['classification_note']='Official turret/urban hardware can enforce speed or red-light; active mode is not specified'
                 if t=='ETVM':status='review';extra['unresolved_average_speed_endpoint']=True
             elif adapter=='dgt':
                 external=p['id'];road=(p.get('roadNumber') or [None])[0];rawdir=(p.get('directionRelative') or [None])[0]
@@ -224,7 +227,9 @@ def osm_records(data,code):
         yield r
 
 def compatible(a,b):
-    if a['camera_type']!=b['camera_type']:return False
+    if a['camera_type']!=b['camera_type']:
+        explicit_possible=(a['camera_type']=='other_enforcement' and b['camera_type'] in a.get('possible_camera_types',[])) or (b['camera_type']=='other_enforcement' and a['camera_type'] in b.get('possible_camera_types',[]))
+        if not explicit_possible or dist(a,b)>5:return False
     if a.get('speed_limit') and b.get('speed_limit') and a['speed_limit']!=b['speed_limit']:return False
     if a.get('direction') is not None and b.get('direction') is not None:
         d=abs(a['direction']-b['direction'])%360
@@ -290,6 +295,10 @@ def main():
         if code and code!='-99':polygons[code]=shape(f['geometry'])
     ontario_path=ROOT/'master-db/cache/bootstrap/ontario.geojson'
     ontario=shape(json.loads(ontario_path.read_text())['features'][0]['geometry']) if ontario_path.exists() else None
+    admin_path=ROOT/'master-db/cache/bootstrap/admin1.geojson'
+    reviewed_regions={}
+    if admin_path.exists():
+        reviewed_regions={f['properties'].get('iso_3166_2'):shape(f['geometry']) for f in json.loads(admin_path.read_text())['features'] if f['properties'].get('iso_3166_2') in ('US-NJ','CA-AB')}
     policy_reviews=[]
     stats={c:dict(country_name=n,existing_before=0,official_found=0,osm_found=0,other_found=0,duplicates_merged=0,new_candidates=0,high_confidence=0,medium_confidence=0,low_confidence=0,with_speed_limit=0,with_direction=0,with_raw_direction=0,average_speed_sections=0,final_total=0,quarantined=0) for c,n in COUNTRIES.items()}
     records=[];grid=collections.defaultdict(list);sources=[];rejected=[];merges=[];conflicts=[];parse_errors=[]
@@ -350,6 +359,8 @@ def main():
                 target['camera_sources'].extend(r['camera_sources']);stats[c]['duplicates_merged']+=1
                 merges.append(dict(country_code=c,canonical_id=target['canonical_id'],source_id=r['canonical_id'],distance_m=round(dist(target,r),3)))
             if not target.get('protected_existing'):
+                if target['camera_type']=='other_enforcement' and r['camera_type'] in target.get('possible_camera_types',[]):
+                    target['camera_type']=r['camera_type'];target['classification_source']=source['source_code']+':'+source['source_id']
                 if r['confidence']=='HIGH':target['confidence']='HIGH'
                 # Preserve earlier authoritative coordinates; do not average them.
                 for field in ['speed_limit','direction','direction_raw','road_ref','road_name','city','region']:
@@ -375,6 +386,13 @@ def main():
     for r in records:
         if r['country_code']=='CA' and r['camera_type'] in ('fixed_speed','speed_and_red_light','average_speed_start','average_speed_end','average_speed_section') and ontario is not None and ontario.covers(Point(r['longitude'],r['latitude'])) and not any(x['source_type']!='openstreetmap' for x in r['camera_sources']):
             r.update(confidence='LOW',status='review',review_reason='Ontario municipal ASE authority ended 2025-11-14; OSM-only speed enforcement needs current authoritative confirmation',review_source_url='https://www.ontario.ca/page/reducing-speeding-real-time',policy_checked_at='2026-10-07')
+        if not r.get('protected_existing') and r['camera_sources'] and all(x['source_type']=='openstreetmap' for x in r['camera_sources']):
+            rules=[('US-NJ','US',('red_light','speed_and_red_light'),'NJDOT ended automated red-light pilot and directed disconnection; OSM-only device requires current authority confirmation','https://www.nj.gov/transportation/refdata/rlr/'),
+                   ('CA-AB','CA',('speed_and_red_light',),'Alberta restricted speed-on-green from April 2025; individual approved exceptions exist and require authoritative device confirmation','https://www.camrosepolice.ca/reactivation-of-isds-at-68-street-and-48-avenue/')]
+            for region,country,types,reason,url in rules:
+                if r['country_code']==country and r['camera_type'] in types and region in reviewed_regions and reviewed_regions[region].covers(Point(r['longitude'],r['latitude'])):
+                    r.update(confidence='LOW',status='review',review_reason=reason,review_source_url=url,policy_checked_at='2026-10-07')
+                    policy_reviews.append({'canonical_id':r['canonical_id'],'reason':reason,'source_url':url})
     save(BASE/'reports/policy-reviews.json',policy_reviews)
     save(BASE/'reports/missing-observations.json',missing)
     for r in records:

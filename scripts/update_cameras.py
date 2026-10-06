@@ -38,7 +38,11 @@ def ensure_inputs():
         boundary.parent.mkdir(parents=True,exist_ok=True)
         response=public_get('https://raw.githubusercontent.com/datasets/geo-countries/master/data/countries.geojson',timeout=90)
         response.raise_for_status();boundary.write_bytes(response.content)
-    ontario=ROOT/'master-db/cache/bootstrap/ontario.geojson'
+    admin=ROOT/'master-db/cache/bootstrap/admin1.geojson'
+    if not admin.exists():
+        response=public_get('https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_10m_admin_1_states_provinces.geojson',timeout=90)
+        response.raise_for_status();save(admin,response.json())
+    ontario=ROOT/'master-db/cache/bootstrap/ontario.geojson' 
     if not ontario.exists():
         response=public_get('https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_10m_admin_1_states_provinces.geojson',timeout=90)
         response.raise_for_status();features=[f for f in response.json()['features'] if f['properties'].get('iso_3166_2')=='CA-ON']

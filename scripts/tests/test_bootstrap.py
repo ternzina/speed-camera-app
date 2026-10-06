@@ -18,6 +18,11 @@ class BootstrapSafety(unittest.TestCase):
         valid={'Numéro de radar':'1','Type de radar':'ETF','VMA':'50','Latitude':'48','Longitude':'2'}
         errors=[];rows=list(official_records({'source':source,'retrieved_at':'2026-10-07','data':[{**valid,'Longitude':'bad'},valid]},errors))
         self.assertEqual(len(rows),1);self.assertEqual(len(errors),1);self.assertEqual(rows[0]['longitude'],2)
+    def test_ambiguous_hardware_requires_close_explicit_mode(self):
+        a=camera(kind='other_enforcement');a['possible_camera_types']=['fixed_speed','red_light','speed_and_red_light']
+        self.assertTrue(compatible(a,camera(kind='red_light')))
+        self.assertFalse(compatible(a,camera(kind='red_light',lon=4.0002)))
+        a.pop('possible_camera_types');self.assertFalse(compatible(a,camera(kind='red_light')))
     def test_units_unknowns(self):
         self.assertEqual(speed('25 mph'),40);self.assertEqual(speed(30,mph=True),48)
         for value in ['50;70','50 @ wet','signals','walk',0,999]:self.assertIsNone(speed(value))
