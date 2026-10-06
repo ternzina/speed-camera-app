@@ -35,7 +35,7 @@ def main():
             if re.search(pattern,data):findings.append({'path':name,'finding':kind,'blob':sha})
     report={'checked_at':dt.datetime.now(dt.timezone.utc).isoformat(),'branch':'main','commit':head,
             'tracked_files':len(files),'history_blobs_checked':len(checked),'forbidden_files_in_head':forbidden,
-            'secret_findings':findings,'excluded_local_paths':['.env.bootstrap','*.jks','node_modules/','.expo/','.bootstrap-venv/',
+            'secret_findings':findings,'excluded_actual_sensitive_files':sorted(str(p.relative_to(ROOT)) for pattern in ('.env*','*.jks','*.keystore','credentials.json') for p in ROOT.glob(pattern) if p.is_file()),'excluded_local_paths':['.env.bootstrap','*.jks','node_modules/','.expo/','.bootstrap-venv/',
              'master-db/raw/','master-db/cache/','master-db/backups/','*.backup-*','*.before-*','build artifacts'],
             'note':'Previously published small non-secret server backups were removed from the current tree; unpublished bootstrap backup commit kept only on a local branch.'}
     import argparse
