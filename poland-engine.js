@@ -66,6 +66,7 @@ export function nearestPolandPoint(plData, latitude, longitude, heading, maxDist
     const d = distanceMeters(latitude, longitude, p.latitude, p.longitude);
     if (d > maxDistance) continue;
     if (!isAhead(latitude, longitude, heading, p)) continue;
+    if (p.direction != null && /^\d+(\.\d+)?$/.test(String(p.direction)) && angleDiff(heading, Number(p.direction)) > 60) continue;
     if (d < bestDistance) {
       bestDistance = d;
       best = { ...p, distance: Math.round(d) };

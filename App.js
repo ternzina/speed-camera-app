@@ -15,6 +15,8 @@ import { StatusBar } from "expo-status-bar";
 import data from "./cameras.json";
 import plData from "./cameras-pl.json";
 import { nearestPolandPoint, detectAverageSpeedSection, averageSectionSpeech } from "./poland-engine";
+import { cameraPoints, countryFeed } from "./camera-data";
+import { COUNTRY_NAMES } from "./countries";
 
 const BACKGROUND_LOCATION_TASK = "camera-background-location-v060";
 const MIN_MOVING_SPEED_KMH = 8;
@@ -141,6 +143,7 @@ const DEFAULT_SETTINGS = {
 let bgSettings = DEFAULT_SETTINGS;
 let bgHiddenIds = new Set();
 let bgLastAlert = { id: null, at: 0, distance: Infinity };
+let bgCameraFeeds = {};
 
 const toRad = v => (v * Math.PI) / 180;
 const toDeg = v => (v * 180) / Math.PI;
@@ -174,7 +177,8 @@ function alertDistanceForSpeed(speedKmh, settings) {
   return settings.fastDistance;
 }
 function visibleCameras() {
-  return (data.cameras || []).filter(c => !bgHiddenIds.has(String(c.id)));
+  return cameraPoints(countryFeed(bgCameraFeeds, bgSettings.country, data, plData))
+    .filter(c => !bgHiddenIds.has(String(c.id)));
 }
 function findNearestAny(latitude, longitude, max = Infinity) {
   let best = null, bestDistance = Infinity;
@@ -190,6 +194,7 @@ function findNearestAhead(latitude, longitude, movementHeading, maxDistance = 50
   for (const cam of visibleCameras()) {
     const d = distanceMeters(latitude, longitude, cam.latitude, cam.longitude);
     if (d > maxDistance) continue;
+    if (cam.direction != null && /^\d+(\.\d+)?$/.test(String(cam.direction)) && angleDiff(movementHeading,Number(cam.direction))>60) continue;
     const camBearing = bearingDegrees(latitude, longitude, cam.latitude, cam.longitude);
     if (angleDiff(movementHeading, camBearing) <= FORWARD_ANGLE_DEGREES && d < bestDistance) {
       bestDistance = d;
@@ -212,6 +217,11 @@ TaskManager.defineTask(BACKGROUND_LOCATION_TASK, async ({ data: taskData, error 
     bgSettings = sraw ? { ...DEFAULT_SETTINGS, ...JSON.parse(sraw) } : DEFAULT_SETTINGS;
     const hraw = await AsyncStorage.getItem(HIDDEN_KEY);
     bgHiddenIds = new Set(hraw ? JSON.parse(hraw).map(String) : []);
+    const cacheRaw = await AsyncStorage.getItem(REMOTE_CACHE_KEY);
+    if (cacheRaw) {
+      const cache = JSON.parse(cacheRaw);
+      bgCameraFeeds = cache.feeds || {UA:cache.ua,PL:cache.pl};
+    }
   } catch {}
 
   const pos = taskData.locations[taskData.locations.length - 1];
@@ -228,11 +238,11 @@ TaskManager.defineTask(BACKGROUND_LOCATION_TASK, async ({ data: taskData, error 
   if (bgLastAlert.id === cam.id && now - bgLastAlert.at < 45000 && bgLastAlert.distance - cam.distance < 250) return;
   bgLastAlert = { id: cam.id, at: now, distance: cam.distance };
 
-  const over = speedKmh > Number(cam.speed_limit);
+  const over = cam.speed_limit != null && speedKmh > Number(cam.speed_limit);
   await Notifications.scheduleNotificationAsync({
     content: {
       title: `Камера через ${cam.distance < 1000 ? `${cam.distance} м` : `${(cam.distance/1000).toFixed(1)} км`}`,
-      body: over ? `Скорость ${speedKmh}. Ограничение ${cam.speed_limit}.` : `Ограничение ${cam.speed_limit} км/ч.`,
+      body: cam.speed_limit == null ? "Камера впереди." : over ? `Скорость ${speedKmh}. Ограничение ${cam.speed_limit}.` : `Ограничение ${cam.speed_limit} км/ч.`,
       sound: "default",
     },
     trigger: null,
@@ -242,8 +252,6 @@ TaskManager.defineTask(BACKGROUND_LOCATION_TASK, async ({ data: taskData, error 
 export default function App() {
   const [settings, setSettings] = useState(DEFAULT_SETTINGS);
   const t = I18N[settings.language] || I18N.ru;
-  const activeUAData = remoteUA || data;
-  const activePLData = remotePL || plData;
 
   const [coords, setCoords] = useState(null);
   const [nearest, setNearest] = useState(null);
@@ -257,8 +265,14 @@ export default function App() {
   const [history, setHistory] = useState([]);
   const [hiddenIds, setHiddenIds] = useState([]);
   const [reports, setReports] = useState([]);
-  const [remoteUA,setRemoteUA]=useState(null);
-  const [remotePL,setRemotePL]=useState(null);
+  const [remoteFeeds,setRemoteFeeds]=useState({});
+  const [countryCoverage,setCountryCoverage]=useState([]);
+  const remoteFeedsRef=useRef({});
+  const selectedCountry=String(settings.country||"ua").toUpperCase();
+  const activeUAData=countryFeed(remoteFeeds,"UA",data,plData);
+  const activePLData=countryFeed(remoteFeeds,selectedCountry==="UA"?"PL":selectedCountry,data,plData);
+  const activeCountryFeedRef=useRef(activePLData);
+  activeCountryFeedRef.current=activePLData;
   const [coverage,setCoverage]=useState(null);
   const [lastDataUpdate,setLastDataUpdate]=useState(null);
   const [tab, setTab] = useState("drive");
@@ -283,6 +297,14 @@ export default function App() {
         }
         const r = await AsyncStorage.getItem(REPORTS_KEY);
         if (r) setReports(JSON.parse(r));
+        const cached = await AsyncStorage.getItem(REMOTE_CACHE_KEY);
+        if (cached) {
+          const saved=JSON.parse(cached);
+          const feeds=saved.feeds||{UA:saved.ua,PL:saved.pl};
+          remoteFeedsRef.current=feeds;bgCameraFeeds=feeds;setRemoteFeeds(feeds);
+          setCountryCoverage(saved.countries||[]);setCoverage(saved.cov||null);setLastDataUpdate(saved.stamp||null);
+        }
+        await refreshRemoteData(true);
         const started = await Location.hasStartedLocationUpdatesAsync(BACKGROUND_LOCATION_TASK);
         setBackgroundEnabled(started);
       } catch {}
@@ -300,33 +322,35 @@ export default function App() {
     bgSettings = settings;
   }, [settings]);
 
-  async function refreshRemoteData(silent=false) {
+  useEffect(() => {
+    if (active) stopTracking();
+    setNearest(null);setAhead(null);setPlSectionId(null);plLastSectionState.current=null;
+    refreshRemoteData(true,selectedCountry);
+  }, [selectedCountry]);
+
+  async function refreshRemoteData(silent=false,country=selectedCountry) {
     try {
-      const [uaRes, plRes] = await Promise.all([
-        fetch(`${CAMERA_API_URL}?country=UA`, { cache: "no-store" }),
-        fetch(`${CAMERA_API_URL}?country=PL`, { cache: "no-store" }),
+      const codes=[...new Set(["UA","PL",country])];
+      const [responses,covRes] = await Promise.all([
+        Promise.all(codes.map(code=>fetch(`${CAMERA_API_URL}?country=${encodeURIComponent(code)}`, { cache: "no-store" }))),
+        fetch(`${CAMERA_API_URL}?country=coverage`, { cache: "no-store" }),
       ]);
-      if (!uaRes.ok || !plRes.ok) throw new Error("remote data unavailable");
-      const ua = await uaRes.json();
-      const pl = await plRes.json();
-      const cov = {
-        UA: {
-          speed_cameras: ua.count ?? ua.cameras?.length ?? 0,
-        },
-        PL: {
-          speed_cameras: pl.counts?.speed_cameras ?? 0,
-          red_light_cameras: pl.counts?.red_light_cameras ?? 0,
-          average_speed_sections: pl.counts?.average_speed_sections ?? 0,
-        },
-      };
-      setRemoteUA(ua);
-      setRemotePL(pl);
-      setCoverage(cov);
+      if (responses.some(res=>!res.ok)) throw new Error("remote data unavailable");
+      const payloads=await Promise.all(responses.map(res=>res.json()));
+      const feeds={...remoteFeedsRef.current};
+      codes.forEach((code,index)=>{feeds[code]=payloads[index];});
+      const countries=covRes.ok?(await covRes.json()).countries||[]:countryCoverage;
+      const ua=feeds.UA,pl=feeds.PL;
+      /* Legacy export shapes are kept by the existing endpoint. */
+      const cov={UA:{speed_cameras:ua.count??ua.cameras?.length??0},PL:pl.counts||{}};
+      remoteFeedsRef.current=feeds;bgCameraFeeds=feeds;
+      setRemoteFeeds(feeds);setCountryCoverage(countries);setCoverage(cov);
       const stamp = new Date().toISOString();
       setLastDataUpdate(stamp);
-      await AsyncStorage.setItem(REMOTE_CACHE_KEY, JSON.stringify({ua,pl,cov,stamp}));
+      await AsyncStorage.setItem(REMOTE_CACHE_KEY, JSON.stringify({feeds,countries,ua,pl,cov,stamp}));
       if (!silent) Alert.alert(t.updated);
       return true;
+
     } catch {
       return false;
     }
@@ -416,10 +440,10 @@ export default function App() {
 
         bgHiddenIds = new Set(hiddenIds.map(String));
 
-        if (settings.country === "pl") {
+        if (selectedCountry !== "UA") {
           const point =
             kmh >= MIN_MOVING_SPEED_KMH && h != null
-              ? nearestPolandPoint(activePLData, latitude, longitude, h, 5000)
+              ? nearestPolandPoint(activeCountryFeedRef.current, latitude, longitude, h, 5000)
               : null;
 
           setNearest(point);
@@ -466,7 +490,7 @@ export default function App() {
           const sectionEvent =
             h != null
               ? detectAverageSpeedSection(
-                  activePLData,
+                  activeCountryFeedRef.current,
                   latitude,
                   longitude,
                   h,
@@ -649,7 +673,7 @@ export default function App() {
 
       <ScrollView contentContainerStyle={s.container}>
         <Text style={s.title}>{t.title}</Text>
-        <Text style={s.subtitle}>v0.6 · {(data.cameras || []).length-hiddenIds.length} камер</Text>
+        <Text style={s.subtitle}>{COUNTRY_NAMES[selectedCountry]||selectedCountry} · {visibleCameras().length} камер</Text>
 
         {tab === "drive" && <>
           <View style={[s.card, danger && s.cardDanger]}>
@@ -711,7 +735,7 @@ export default function App() {
               <View key={String(cam.id)} style={s.listItem}>
                 <View style={{flex:1}}>
                   <Text style={s.listTitle}>{cam.location || cam.road_index || cam.region}</Text>
-                  <Text style={s.listSub}>{cam.region} · {cam.speed_limit} км/ч</Text>
+                  <Text style={s.listSub}>{cam.region}{cam.speed_limit != null ? ` · ${cam.speed_limit} км/ч` : ""}</Text>
                 </View>
                 <Text style={s.listDistance}>{cam.distance>=1000?`${(cam.distance/1000).toFixed(1)} км`:`${cam.distance} м`}</Text>
               </View>
@@ -737,6 +761,16 @@ export default function App() {
 
         {tab === "settings" && (
           <View style={s.settingsCard}>
+            <Text style={s.sectionTitle}>{t.country}</Text>
+            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+              {[...new Set(["UA","PL",...countryCoverage.map(x=>x.country_code)])].map(code=>(
+                <Pressable key={code} accessibilityRole="radio" accessibilityState={{selected:selectedCountry===code}}
+                  onPress={()=>setSettings({...settings,country:code.toLowerCase()})}
+                  style={[s.lang,selectedCountry===code&&s.langActive]}>
+                  <Text>{COUNTRY_NAMES[code]||code}</Text>
+                </Pressable>
+              ))}
+            </ScrollView>
             <Text style={s.sectionTitle}>{t.languageLabel}</Text>
             <View style={s.row}>
               {["ru","uk","en","pl"].map(l => <Pressable key={l} onPress={()=>setSettings({...settings,language:l})} style={[s.lang,settings.language===l&&s.langActive]}><Text>{l==="uk"?"UA":l.toUpperCase()}</Text></Pressable>)}
@@ -762,10 +796,8 @@ export default function App() {
 
             <Text style={s.sectionTitle}>{t.coverage}</Text>
             <View style={s.coverageCard}>
-              <Text style={s.coverageLine}>🇺🇦 Ukraine: {coverage?.ua?.speed_cameras ?? (activeUAData.cameras||[]).length}</Text>
-              <Text style={s.coverageLine}>🇵🇱 Polska: {coverage?.pl?.speed_cameras ?? (activePLData.speed_cameras||[]).length} fotoradarów</Text>
-              <Text style={s.coverageLine}>🚦 RedLight: {coverage?.pl?.red_light_cameras ?? (activePLData.red_light_cameras||[]).length}</Text>
-              <Text style={s.coverageLine}>🛣️ OPP: {coverage?.pl?.average_speed_sections ?? (activePLData.average_speed_sections||[]).filter(x=>!x._example_only).length}</Text>
+              {countryCoverage.map(item=><Text key={item.country_code} style={s.coverageLine}>{COUNTRY_NAMES[item.country_code]||item.country_code}: {item.total}</Text>)}
+              <Pressable onPress={()=>Linking.openURL("https://www.openstreetmap.org/copyright")}><Text style={s.coverageLine}>© OpenStreetMap contributors · ODbL 1.0</Text></Pressable>
             </View>
 
             <Text style={s.sectionTitle}>{t.about}</Text>
@@ -805,12 +837,12 @@ export default function App() {
 
 function cameraTypeLabel(cam, language="ru"){
   if(!cam) return "";
-  const type=cam.type || "speed_camera";
+  const type=({fixed_speed:"speed_camera",average_speed_section:"average_speed",average_speed_start:"average_speed",average_speed_end:"average_speed",other_enforcement:"checkpoint"})[cam.camera_type] || cam.camera_type || cam.type || "speed_camera";
   const labels={
-    ru:{speed_camera:"Камера скорости",red_light:"Контроль красного света",checkpoint:"Контрольная точка",average_speed:"Средняя скорость"},
-    uk:{speed_camera:"Камера швидкості",red_light:"Контроль червоного світла",checkpoint:"Контрольна точка",average_speed:"Середня швидкість"},
-    en:{speed_camera:"Speed camera",red_light:"Red-light camera",checkpoint:"Checkpoint",average_speed:"Average-speed control"},
-    pl:{speed_camera:"Fotoradar",red_light:"Kontrola czerwonego światła",checkpoint:"Punkt kontroli",average_speed:"Odcinkowy pomiar prędkości"}
+    ru:{speed_and_red_light:"Скорость и красный свет",speed_camera:"Камера скорости",red_light:"Контроль красного света",checkpoint:"Контрольная точка",average_speed:"Средняя скорость"},
+    uk:{speed_and_red_light:"Швидкість і червоне світло",speed_camera:"Камера швидкості",red_light:"Контроль червоного світла",checkpoint:"Контрольна точка",average_speed:"Середня швидкість"},
+    en:{speed_and_red_light:"Speed and red-light camera",speed_camera:"Speed camera",red_light:"Red-light camera",checkpoint:"Checkpoint",average_speed:"Average-speed control"},
+    pl:{speed_and_red_light:"Prędkość i czerwone światło",speed_camera:"Fotoradar",red_light:"Kontrola czerwonego światła",checkpoint:"Punkt kontroli",average_speed:"Odcinkowy pomiar prędkości"}
   };
   return (labels[language]||labels.ru)[type] || type;
 }
@@ -865,5 +897,3 @@ note:{fontSize:12,lineHeight:18,opacity:.55}
     </Pressable>
   );
 }
-
-
