@@ -27,7 +27,13 @@ def main():
         for r,s in group[:2]:
             key=(s['source_code'],s['source_id'])
             if key not in seen:chosen.append((r,s));seen.add(key)
-    nodes=sorted({int(s['source_id'].split('/')[1]) for r,s in chosen if s['source_type']=='openstreetmap'})
+    section_countries=set()
+    for r in records:
+        if r['camera_type']=='average_speed_section' and r['status']=='active' and r['country_code'] not in section_countries and r['camera_sources']:
+            source=r['camera_sources'][0];key=(source['source_code'],source['source_id'])
+            if key not in seen:chosen.append((r,source));seen.add(key);section_countries.add(r['country_code'])
+        if len(section_countries)>=6:break
+    nodes=sorted({int(s['source_id'].split('/')[1]) for r,s in chosen if s['source_type']=='openstreetmap' and s['source_id'].startswith('node/')})
     response=requests.get('https://api.openstreetmap.org/api/0.6/nodes',params={'nodes':','.join(map(str,nodes))},timeout=60)
     response.raise_for_status();xml=response.content
     cache=ROOT/'master-db/cache/bootstrap/qa';cache.mkdir(parents=True,exist_ok=True);(cache/'live-sample-nodes.osm').write_bytes(xml)
@@ -38,7 +44,16 @@ def main():
         db={cid:(lat,lon,kind) for cid,lat,lon,kind in conn.execute('select canonical_id,latitude,longitude,camera_type from public.camera_records')}
         for r,s in chosen:
             a=db[r['canonical_id']];assert close(a[0],r['latitude']) and close(a[1],r['longitude']) and a[2]==r['camera_type']
-            if s['source_type']=='openstreetmap':
+            if s['source_type']=='openstreetmap' and s['source_id'].startswith('relation/'):
+                relation_id=s['source_id'].split('/')[1]
+                response=requests.get('https://api.openstreetmap.org/api/0.6/relation/'+relation_id+'/full',timeout=60);response.raise_for_status()
+                root=ET.fromstring(response.content);relation=root.find('relation');points={x.get('id'):x for x in root.findall('node')}
+                roles={m.get('role'):points.get(m.get('ref')) for m in relation.findall('member') if m.get('type')=='node' and m.get('role') in ('from','to')}
+                assert all(roles.get(k) is not None for k in ('from','to'))
+                assert close(roles['from'].get('lat'),s['latitude']) and close(roles['from'].get('lon'),s['longitude'])
+                assert close(roles['to'].get('lat'),s['end_latitude']) and close(roles['to'].get('lon'),s['end_longitude'])
+                evidence='Live OSM enforcement relation and explicit ordered from/to member coordinates; Supabase read-back';observed_version=relation.get('version')
+            elif s['source_type']=='openstreetmap':
                 n=live[int(s['source_id'].split('/')[1])];tags={x.get('k'):x.get('v') for x in n.findall('tag')}
                 assert close(n.get('lat'),s['latitude']) and close(n.get('lon'),s['longitude']),s['source_id']
                 assert tags.get('highway')=='speed_camera' or tags.get('enforcement') or s['raw_payload'].get('relations')

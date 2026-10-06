@@ -15,7 +15,7 @@ import { StatusBar } from "expo-status-bar";
 import data from "./cameras.json";
 import plData from "./cameras-pl.json";
 import { nearestPolandPoint, detectAverageSpeedSection, averageSectionSpeech } from "./poland-engine";
-import { cameraPoints, countryFeed } from "./camera-data";
+import { cameraPoints, countryFeed, loadCameraCache, saveCameraCache } from "./camera-data";
 import { COUNTRY_NAMES } from "./countries";
 
 const BACKGROUND_LOCATION_TASK = "camera-background-location-v060";
@@ -217,9 +217,8 @@ TaskManager.defineTask(BACKGROUND_LOCATION_TASK, async ({ data: taskData, error 
     bgSettings = sraw ? { ...DEFAULT_SETTINGS, ...JSON.parse(sraw) } : DEFAULT_SETTINGS;
     const hraw = await AsyncStorage.getItem(HIDDEN_KEY);
     bgHiddenIds = new Set(hraw ? JSON.parse(hraw).map(String) : []);
-    const cacheRaw = await AsyncStorage.getItem(REMOTE_CACHE_KEY);
-    if (cacheRaw) {
-      const cache = JSON.parse(cacheRaw);
+    const cache = await loadCameraCache(AsyncStorage,REMOTE_CACHE_KEY);
+    if (cache) {
       bgCameraFeeds = cache.feeds || {UA:cache.ua,PL:cache.pl};
     }
   } catch {}
@@ -297,9 +296,8 @@ export default function App() {
         }
         const r = await AsyncStorage.getItem(REPORTS_KEY);
         if (r) setReports(JSON.parse(r));
-        const cached = await AsyncStorage.getItem(REMOTE_CACHE_KEY);
-        if (cached) {
-          const saved=JSON.parse(cached);
+        const saved = await loadCameraCache(AsyncStorage,REMOTE_CACHE_KEY);
+        if (saved) {
           const feeds=saved.feeds||{UA:saved.ua,PL:saved.pl};
           remoteFeedsRef.current=feeds;bgCameraFeeds=feeds;setRemoteFeeds(feeds);
           setCountryCoverage(saved.countries||[]);setCoverage(saved.cov||null);setLastDataUpdate(saved.stamp||null);
@@ -347,7 +345,7 @@ export default function App() {
       setRemoteFeeds(feeds);setCountryCoverage(countries);setCoverage(cov);
       const stamp = new Date().toISOString();
       setLastDataUpdate(stamp);
-      await AsyncStorage.setItem(REMOTE_CACHE_KEY, JSON.stringify({feeds,countries,ua,pl,cov,stamp}));
+      await saveCameraCache(AsyncStorage,REMOTE_CACHE_KEY,{feeds,countries,cov,stamp},country).catch(()=>{});
       if (!silent) Alert.alert(t.updated);
       return true;
 

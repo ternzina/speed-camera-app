@@ -190,6 +190,7 @@ def osm_records(data,code):
             if len(endpoints)==2:
                 a,b=endpoints['from'],endpoints['to'];r=base_record(source,'relation/'+str(e['id']),a[0],a[1],'average_speed_section',{'tags':tags,'members':e.get('members'),'osm_relation':e['id']},source_updated_at=e.get('timestamp'))
                 r.update(end_latitude=b[0],end_longitude=b[1],direction=direction(tags.get('direction')),direction_raw=tags.get('direction'),speed_limit=speed(tags.get('maxspeed')),road_ref=tags.get('ref'),road_name=tags.get('name'))
+                r['camera_sources'][0]['source_url']='https://www.openstreetmap.org/relation/'+str(e['id'])
                 sections.append(r)
     yield from sections
     for key,e in elements.items():
@@ -280,7 +281,7 @@ def main():
     ontario_path=ROOT/'master-db/cache/bootstrap/ontario.geojson'
     ontario=shape(json.loads(ontario_path.read_text())['features'][0]['geometry']) if ontario_path.exists() else None
     policy_reviews=[]
-    stats={c:dict(country_name=n,existing_before=0,official_found=0,osm_found=0,other_found=0,duplicates_merged=0,new_candidates=0,high_confidence=0,medium_confidence=0,low_confidence=0,with_speed_limit=0,with_direction=0,average_speed_sections=0,final_total=0,quarantined=0) for c,n in COUNTRIES.items()}
+    stats={c:dict(country_name=n,existing_before=0,official_found=0,osm_found=0,other_found=0,duplicates_merged=0,new_candidates=0,high_confidence=0,medium_confidence=0,low_confidence=0,with_speed_limit=0,with_direction=0,with_raw_direction=0,average_speed_sections=0,final_total=0,quarantined=0) for c,n in COUNTRIES.items()}
     records=[];grid=collections.defaultdict(list);sources=[];rejected=[];merges=[]
     def gridkey(r):return r['country_code'],math.floor(r['latitude']/.001),math.floor(r['longitude']/.001)
     for b in json.loads((ROOT/'master-db/backups/pre-bootstrap-20261007/baseline-records.json').read_text()):
@@ -308,7 +309,11 @@ def main():
         category='osm_found' if source['source_type']=='openstreetmap' else 'official_found'
         stats[c][category]+=1
         if r['speed_limit'] is not None and not 5<=r['speed_limit']<=200:raise ValueError('invalid speed')
-        if r['camera_type']=='average_speed_section' and not polygon.covers(Point(r['end_longitude'],r['end_latitude'])):r.update(confidence='LOW',status='review')
+        if r['camera_type']=='average_speed_section':
+            length=dist(r,{'latitude':r['end_latitude'],'longitude':r['end_longitude']})
+            r['section_endpoint_distance_m']=round(length,1)
+            if not polygon.covers(Point(r['end_longitude'],r['end_latitude'])) or not 50<=length<=200000:
+                r.update(confidence='LOW',status='review',review_reason='Section endpoints outside country or implausible endpoint distance')
         key=gridkey(r);matches=[]
         for di in (-1,0,1):
             for dj in (-1,0,1):
@@ -350,6 +355,7 @@ def main():
     for r in records:
         st=stats[r['country_code']];st['final_total']+=1;st[r['confidence'].lower()+'_confidence']+=1
         st['with_speed_limit']+=r.get('speed_limit') is not None;st['with_direction']+=r.get('direction') is not None
+        st['with_raw_direction']+=bool(r.get('direction_raw'))
         st['average_speed_sections']+=r['camera_type']=='average_speed_section'
     bycountry=collections.defaultdict(list)
     for r in records:bycountry[r['country_code']].append(r)

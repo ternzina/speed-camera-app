@@ -84,7 +84,10 @@ def main(refresh=False,countries=None):
             print(code,report['seed_ids'],'seed IDs;',report['speed_camera_nodes'],'current speed cameras verified',flush=True)
         except Exception as e:
             reports.append({'country_code':code,'status':'failed','error':str(e)});print(code,'failed',str(e)[:140],flush=True)
-    (ROOT/'master-db/bootstrap/reports/osm-api-verification.json').write_text(json.dumps(reports,indent=2))
+    target=ROOT/'master-db/bootstrap/reports/osm-api-verification.json'
+    previous={r['country_code']:r for r in json.loads(target.read_text())} if target.exists() else {}
+    previous.update({r['country_code']:r for r in reports})
+    target.write_text(json.dumps(sorted(previous.values(),key=lambda x:x['country_code']),indent=2))
 
 if __name__=='__main__':
     import argparse

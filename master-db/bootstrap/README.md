@@ -97,3 +97,9 @@ municipal ASE prohibition effective 2025-11-14, using the Ontario polygon and th
 official policy at https://www.ontario.ca/page/reducing-speeding-real-time . Red-light
 records are retained. The policy rule was checked on 2026-10-07; later legal changes
 need a reviewed rule update, not automatic activation from stale OSM tags.
+
+The app persists compact trip data in bounded AsyncStorage chunks, retaining UA/PL
+plus the selected country. Per-camera provenance remains available in the full
+Supabase export. Real exported data required at most 1.66 MB for the three cached
+feeds during validation, within Android storage/cursor limits. Earlier cache
+formats are still readable. The app renders only nearby map markers.

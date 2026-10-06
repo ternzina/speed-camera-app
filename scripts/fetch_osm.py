@@ -15,7 +15,7 @@ CACHE = ROOT / 'master-db/cache/bootstrap/osm'
 COUNTRIES = dict(zip(
     'UA PL FR ES DE GB IE PT IT AT CH BE NL LU DK SE NO FI IS CZ SK HU RO BG HR SI RS BA ME MK AL GR LT LV EE MD CY MT XK TR AD LI MC SM VA US CA'.split(),
     ['Ukraine','Poland','France','Spain','Germany','United Kingdom','Ireland','Portugal','Italy','Austria','Switzerland','Belgium','Netherlands','Luxembourg','Denmark','Sweden','Norway','Finland','Iceland','Czech Republic','Slovakia','Hungary','Romania','Bulgaria','Croatia','Slovenia','Serbia','Bosnia and Herzegovina','Montenegro','North Macedonia','Albania','Greece','Lithuania','Latvia','Estonia','Moldova','Cyprus','Malta','Kosovo','Turkey','Andorra','Liechtenstein','Monaco','San Marino','Vatican City','USA','Canada']))
-ENDPOINTS = ['https://overpass.private.coffee/api/interpreter', 'https://overpass-api.de/api/interpreter']
+ENDPOINTS = ['https://lambert.openstreetmap.de/api/interpreter', 'https://overpass.private.coffee/api/interpreter', 'https://overpass-api.de/api/interpreter']
 
 def boxes(code):
     from shapely.geometry import shape
@@ -43,29 +43,30 @@ def fetch(code, refresh=False, phase='speed'):
             return code, len(x['elements']), 'cached'
     # Country area queries can be expensive. Country/region envelopes are clipped to
     # independently downloaded country polygons by the normalizer, never assigned blindly.
-    clauses=[]
-    for bbox in boxes(code):
-        b=','.join(str(round(v,5)) for v in bbox)
-        if phase=='speed':clauses.append(f'node[highway=speed_camera]({b});')
-        else:clauses.append(f'rel[type=enforcement]({b});')
-    if phase=='speed':query='[out:json][timeout:60];('+''.join(clauses)+');out meta center;'
-    else:
-        extras=[]
-        for bbox in boxes(code):
-            b=','.join(str(round(v,5)) for v in bbox)
-            extras.extend([f'node[enforcement~"^(maxspeed|speed|average_speed|redlight|red_light|traffic_signals|traffic_lights|section_control)$"]({b});',f'way[highway=speed_camera]({b});'])
-        query='[out:json][timeout:60];('+''.join(clauses)+')->.enforcement;.enforcement out meta;('+''.join(extras)+'node(r.enforcement:"device");node(r.enforcement:"from");node(r.enforcement:"to"););out meta center;'
+    def make_query(area_mode):
+        regions=['area.country'] if area_mode else [','.join(str(round(v,5)) for v in bbox) for bbox in boxes(code)]
+        prefix='[out:json][timeout:25][maxsize:100000000];'
+        if area_mode:prefix+=f'area["ISO3166-1"="{code}"][admin_level=2]->.country;.country out ids;'
+        if phase=='speed':return prefix+'('+''.join(f'node[highway=speed_camera]({r});' for r in regions)+');out meta;'
+        relations=''.join(f'rel[type=enforcement]({r});' for r in regions)
+        extras=''.join(f'node[enforcement~"^(maxspeed|speed|average_speed|redlight|red_light|traffic_signals|traffic_lights|section_control)$"]({r});way[highway=speed_camera]({r});' for r in regions)
+        return prefix+'('+relations+')->.enforcement;.enforcement out meta;('+extras+'node(r.enforcement:"device");node(r.enforcement:"from");node(r.enforcement:"to"););out meta center;'
+    area_mode=True
+    query=make_query(area_mode)
     errors = []
     for attempt in range(3):
         endpoint = ENDPOINTS[attempt % len(ENDPOINTS)]
         try:
             req = urllib.request.Request(endpoint+'?'+urllib.parse.urlencode({'data': query}),
                                          headers={'User-Agent': 'SpeedCameraBootstrap/1.0 (+https://github.com/ternzina/speed-camera-app; open data import)'})
-            with urllib.request.urlopen(req, timeout=100) as response:
+            with urllib.request.urlopen(req, timeout=65) as response:
                 raw = response.read()
             data = json.loads(raw)
             if data.get('remark') or 'elements' not in data:
                 raise ValueError(data.get('remark', 'invalid response'))
+            if area_mode and not any(e['type']=='area' for e in data['elements']):
+                area_mode=False;query=make_query(False);raise ValueError('Country area unavailable; switching to envelopes')
+            data['elements']=[e for e in data['elements'] if e['type']!='area']
             prior=json.loads(path.read_text()) if path.exists() else {}
             phases=set(prior.get('_bootstrap',{}).get('phases',[]));phases.add(phase)
             data=replace_phase(prior,phase,data['elements'])

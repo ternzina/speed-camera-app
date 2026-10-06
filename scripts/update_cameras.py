@@ -12,6 +12,7 @@ import gzip
 import hashlib
 import json
 import time
+import shutil
 from public_download import get as public_get
 from pathlib import Path
 import psycopg
@@ -110,13 +111,42 @@ def fingerprint(r):
     fields=['country_code','camera_type','latitude','longitude','end_latitude','end_longitude','speed_limit','direction','road_name','road_ref','city','region','confidence','status']
     return {k:round(r[k],9) if k in ('latitude','longitude','end_latitude','end_longitude') and r.get(k) is not None else r.get(k) for k in fields}
 
+def provenance_fingerprint(r):
+    def freeze(x):
+        if isinstance(x,float):return round(x,9)
+        if isinstance(x,dict):return {k:freeze(v) for k,v in sorted(x.items()) if k!='raw_payload'}
+        if isinstance(x,list):return [freeze(v) for v in x]
+        return x
+    sources=r.get('camera_sources',r.get('provenance',[]))
+    return freeze(sorted(sources,key=lambda s:(s['source_code'],s['source_id'])))
+
+def backup_snapshot():
+    if not DATA.exists():return
+    target=ROOT/'master-db/backups/import-snapshots'/dt.datetime.now(dt.timezone.utc).strftime('%Y%m%dT%H%M%S.%fZ')
+    target.mkdir(parents=True,exist_ok=True);manifest={}
+    for path in DATA.glob('*.json.gz'):
+        shutil.copy2(path,target/path.name);manifest[path.name]=hashlib.sha256(path.read_bytes()).hexdigest()
+    save(target/'manifest.json',manifest)
+
+def stamp(value):
+    if value is None:return None
+    if isinstance(value,str):value=dt.datetime.fromisoformat(value.replace('Z','+00:00'))
+    return value.astimezone(dt.timezone.utc).isoformat()
+
 def sync(records):
-    pending=[r for r in records if r['camera_sources'] or not r.get('protected_existing')]
     with connect() as conn:
         before={cid:metadata for cid,metadata in conn.execute('select canonical_id,metadata from public.camera_records')}
-        diff={'new':[],'changed':[],'missing_sources':json.loads((BASE/'reports/missing-observations.json').read_text()) if (BASE/'reports/missing-observations.json').exists() else [],'missing_from_snapshot':[],'unchanged_count':0,'never_delete_on_single_source_absence':True}
+        links={(code,external):(cid,stamp(seen),state) for code,external,cid,seen,state in conn.execute('select s.code,l.external_id,r.canonical_id,l.last_seen_at,l.source_status from public.camera_source_links l join public.camera_sources s on s.id=l.source_id join public.camera_records r on r.id=l.camera_record_id')}
+        pending=[]
+        for r in records:
+            old=before.get(r['canonical_id'])
+            unchanged=old is not None and (r.get('protected_existing') or (fingerprint(r)==fingerprint(old) and stamp(r.get('last_seen_at'))==stamp(old.get('last_seen_at'))))
+            same_sources=(r.get('protected_existing') or (old is not None and provenance_fingerprint(r)==provenance_fingerprint(old))) and all(links.get((s['source_code'],s['source_id']))==(r['canonical_id'],stamp(s['retrieved_at']),s.get('source_status',r['status'])) for s in r['camera_sources'])
+            if not unchanged or not same_sources:pending.append(r)
+        diff={'new':[],'changed':[],'provenance_changed':[],'missing_sources':json.loads((BASE/'reports/missing-observations.json').read_text()) if (BASE/'reports/missing-observations.json').exists() else [],'missing_from_snapshot':[],'unchanged_count':0,'never_delete_on_single_source_absence':True}
         for r in records:
             cid=r['canonical_id']
+            if cid in before and not r.get('protected_existing') and provenance_fingerprint(r)!=provenance_fingerprint(before[cid]):diff['provenance_changed'].append(cid)
             if cid not in before:diff['new'].append(cid)
             elif r.get('protected_existing'):diff['unchanged_count']+=1
             elif fingerprint(r)!=fingerprint(before[cid]):diff['changed'].append(cid)
@@ -159,6 +189,7 @@ def main():
     if args.sync_only:records=load_records()
     else:
         if not args.normalize_only:
+            backup_snapshot()
             fetch_official(refresh=not args.resume)
             fetch_seeded(refresh=not args.resume,countries=args.countries)
             for phase in ['speed','enforcement']:
