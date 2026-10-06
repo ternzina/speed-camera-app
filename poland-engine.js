@@ -102,6 +102,7 @@ export function detectAverageSpeedSection(plData, latitude, longitude, heading, 
     };
     const d = distanceMeters(latitude, longitude, start.latitude, start.longitude);
     if (d > 2500) continue;
+    if (s.direction != null && /^\d+(\.\d+)?$/.test(String(s.direction)) && angleDiff(heading,Number(s.direction))>60) continue;
     if (!isAhead(latitude, longitude, heading, start, 55)) continue;
     if (d < bestDistance) {
       bestDistance = d;

@@ -15,7 +15,7 @@ CACHE = ROOT / 'master-db/cache/bootstrap/osm'
 COUNTRIES = dict(zip(
     'UA PL FR ES DE GB IE PT IT AT CH BE NL LU DK SE NO FI IS CZ SK HU RO BG HR SI RS BA ME MK AL GR LT LV EE MD CY MT XK TR AD LI MC SM VA US CA'.split(),
     ['Ukraine','Poland','France','Spain','Germany','United Kingdom','Ireland','Portugal','Italy','Austria','Switzerland','Belgium','Netherlands','Luxembourg','Denmark','Sweden','Norway','Finland','Iceland','Czech Republic','Slovakia','Hungary','Romania','Bulgaria','Croatia','Slovenia','Serbia','Bosnia and Herzegovina','Montenegro','North Macedonia','Albania','Greece','Lithuania','Latvia','Estonia','Moldova','Cyprus','Malta','Kosovo','Turkey','Andorra','Liechtenstein','Monaco','San Marino','Vatican City','USA','Canada']))
-ENDPOINTS = ['https://overpass-api.de/api/interpreter', 'https://overpass.private.coffee/api/interpreter']
+ENDPOINTS = ['https://overpass.private.coffee/api/interpreter', 'https://overpass-api.de/api/interpreter']
 
 def boxes(code):
     from shapely.geometry import shape
@@ -76,13 +76,14 @@ def fetch(code, refresh=False, phase='speed'):
             tmp.write_text(json.dumps(data, ensure_ascii=False, separators=(',', ':')))
             tmp.replace(path)
             (CACHE/f'{code}.error.json').unlink(missing_ok=True)
+            (CACHE/f'{code}.{phase}.error.json').unlink(missing_ok=True)
             print(f'{code}: {len(data["elements"])} OSM elements downloaded', flush=True)
             return code, len(data['elements']), 'downloaded'
         except Exception as exc:
             errors.append(f'{endpoint}: {type(exc).__name__}: {exc}')
             print(f'{code} attempt {attempt+1}: {str(exc)[:160]}', flush=True)
             time.sleep(30 if isinstance(exc,urllib.error.HTTPError) and exc.code in (429,406) else min(30, 3 * 2 ** attempt))
-    (CACHE / f'{code}.error.json').write_text(json.dumps({'country_code': code, 'errors': errors}, indent=2))
+    (CACHE / f'{code}.{phase}.error.json').write_text(json.dumps({'country_code': code, 'phase':phase,'retrieved_at':dt.datetime.now(dt.timezone.utc).isoformat(),'errors': errors}, indent=2))
     return code, 0, 'failed'
 
 def main():

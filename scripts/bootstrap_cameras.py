@@ -208,7 +208,7 @@ def osm_records(data,code):
         rawdir=tags.get('direction') # camera:direction describes optical facing, not necessarily traffic travel
         r.update(direction=direction(rawdir),direction_raw=rawdir,speed_limit=speed(tags.get('maxspeed')),road_name=tags.get('addr:street') or tags.get('name'),road_ref=tags.get('ref'),city=tags.get('addr:city'),region=tags.get('addr:state'))
         r['camera_sources'][0]['source_url']='https://www.openstreetmap.org/'+external
-        if tags.get('disused:highway') or tags.get('disused')=='yes' or tags.get('operational_status') in ('inactive','removed') or tags.get('construction')=='yes':r['status']='candidate'
+        if tags.get('camera:type')=='mobile' or tags.get('mobile')=='yes' or tags.get('disused:highway') or tags.get('disused')=='yes' or tags.get('operational_status') in ('inactive','removed') or tags.get('construction')=='yes':r['status']='candidate'
         if enforcement in ('average_speed','section_control'):r.update(confidence='LOW',status='review')
         yield r
 
@@ -264,7 +264,7 @@ def reconcile_snapshots(records,previous):
             # All observations now belong to another canonical record. Preserve history,
             # stop publishing the obsolete alias, and do not steal source links back.
             retained={**old,'status':'candidate','camera_sources':[],
-                      'historical_provenance':old['camera_sources'],'superseded_by_dedupe':True}
+                      'historical_provenance':old.get('historical_provenance') or old['camera_sources'] or old.get('provenance',[]),'superseded_by_dedupe':True}
         records.append(retained)
     return missing
 
@@ -277,6 +277,9 @@ def main():
         code=f['properties'].get('ISO3166-1-Alpha-2')
         code={'France':'FR','Norway':'NO','Kosovo':'XK'}.get(f['properties']['name'],code)
         if code and code!='-99':polygons[code]=shape(f['geometry'])
+    ontario_path=ROOT/'master-db/cache/bootstrap/ontario.geojson'
+    ontario=shape(json.loads(ontario_path.read_text())['features'][0]['geometry']) if ontario_path.exists() else None
+    policy_reviews=[]
     stats={c:dict(country_name=n,existing_before=0,official_found=0,osm_found=0,other_found=0,duplicates_merged=0,new_candidates=0,high_confidence=0,medium_confidence=0,low_confidence=0,with_speed_limit=0,with_direction=0,average_speed_sections=0,final_total=0,quarantined=0) for c,n in COUNTRIES.items()}
     records=[];grid=collections.defaultdict(list);sources=[];rejected=[];merges=[]
     def gridkey(r):return r['country_code'],math.floor(r['latitude']/.001),math.floor(r['longitude']/.001)
@@ -296,6 +299,11 @@ def main():
             if r['camera_sources'][0]['source_type']=='openstreetmap':return
             r.update(confidence='LOW',status='review');stats[c]['quarantined']+=1
         source=r['camera_sources'][0]
+        if c=='CA' and source['source_type']=='openstreetmap' and r['camera_type'] in ('fixed_speed','speed_and_red_light','average_speed_start','average_speed_end','average_speed_section'):
+            if ontario is None:raise ValueError('Ontario boundary required for current enforcement policy review')
+            if ontario.covers(Point(lon,lat)):
+                r.update(confidence='LOW',status='review',review_reason='Ontario municipal ASE authority ended 2025-11-14; OSM-only speed enforcement needs current authoritative confirmation',review_source_url='https://www.ontario.ca/page/reducing-speeding-real-time',policy_checked_at='2026-10-07')
+                policy_reviews.append({'canonical_id':r['canonical_id'],'reason':r['review_reason'],'source_url':r['review_source_url']})
         source.update({k:r.get(k) for k in ['latitude','longitude','end_latitude','end_longitude','speed_limit','direction','direction_raw']})
         category='osm_found' if source['source_type']=='openstreetmap' else 'official_found'
         stats[c][category]+=1
@@ -334,6 +342,10 @@ def main():
         sources.append(dict(code='OSM_'+code,country_code=code,name='OpenStreetMap contributors ('+code+')',source_type='openstreetmap',license='ODbL-1.0',license_url='https://opendatacommons.org/licenses/odbl/1-0/',source_url='https://www.openstreetmap.org/copyright',retrieved_at=data['_bootstrap']['retrieved_at']))
         for r in osm_records(data,code):accept(r)
     missing=reconcile_snapshots(records,previous)
+    for r in records:
+        if r['country_code']=='CA' and r['camera_type'] in ('fixed_speed','speed_and_red_light','average_speed_start','average_speed_end','average_speed_section') and ontario is not None and ontario.covers(Point(r['longitude'],r['latitude'])) and not any(x['source_type']!='openstreetmap' for x in r['camera_sources']):
+            r.update(confidence='LOW',status='review',review_reason='Ontario municipal ASE authority ended 2025-11-14; OSM-only speed enforcement needs current authoritative confirmation',review_source_url='https://www.ontario.ca/page/reducing-speeding-real-time',policy_checked_at='2026-10-07')
+    save(BASE/'reports/policy-reviews.json',policy_reviews)
     save(BASE/'reports/missing-observations.json',missing)
     for r in records:
         st=stats[r['country_code']];st['final_total']+=1;st[r['confidence'].lower()+'_confidence']+=1

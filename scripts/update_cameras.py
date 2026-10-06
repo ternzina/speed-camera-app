@@ -12,6 +12,7 @@ import gzip
 import hashlib
 import json
 import time
+from public_download import get as public_get
 from pathlib import Path
 import psycopg
 from psycopg.types.json import Jsonb
@@ -30,10 +31,46 @@ def connect():
                            password=creds['password'],dbname='postgres',sslmode='require',connect_timeout=15,
                            prepare_threshold=None)
 
+def ensure_inputs():
+    boundary=ROOT/'master-db/cache/bootstrap/countries.geojson'
+    if not boundary.exists():
+        boundary.parent.mkdir(parents=True,exist_ok=True)
+        response=public_get('https://raw.githubusercontent.com/datasets/geo-countries/master/data/countries.geojson',timeout=90)
+        response.raise_for_status();boundary.write_bytes(response.content)
+    ontario=ROOT/'master-db/cache/bootstrap/ontario.geojson'
+    if not ontario.exists():
+        response=public_get('https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_10m_admin_1_states_provinces.geojson',timeout=90)
+        response.raise_for_status();features=[f for f in response.json()['features'] if f['properties'].get('iso_3166_2')=='CA-ON']
+        assert len(features)==1,'Ontario policy boundary unavailable'
+        save(ontario,{'type':'FeatureCollection','features':features})
+    baseline=ROOT/'master-db/backups/pre-bootstrap-20261007/baseline-records.json'
+    if not baseline.exists():
+        with connect() as conn:rows=[x[0] for x in conn.execute('select camera_bootstrap_private.baseline_records()')]
+        assert len(rows)==1323,'unexpected immutable bootstrap baseline'
+        save(baseline,rows)
+
 def load_records():
     records=[]
     for path in sorted(DATA.glob('*.json.gz')):records.extend(json.loads(gzip.decompress(path.read_bytes())))
     return records
+
+def recover_unsnapshotted():
+    """Retain old aliases/database observations after interrupted snapshot transitions."""
+    known=[r['canonical_id'] for r in load_records()]
+    if not known:return
+    with connect() as conn:
+        rows=list(conn.execute("select canonical_id,metadata from public.camera_records where metadata ? 'provenance' and not (canonical_id=any(%s))",(known,)))
+        grouped=collections.defaultdict(list)
+        for cid,meta in rows:
+            if not meta.get('canonical_id') or meta.get('protected_existing'):continue
+            sources=[]
+            for raw, in conn.execute('select l.raw_payload from public.camera_source_links l join public.camera_records r on r.id=l.camera_record_id where r.canonical_id=%s',(cid,)):
+                source=raw.get('_source')
+                if source:sources.append({**source,'raw_payload':{k:v for k,v in raw.items() if k!='_source'}})
+            grouped[meta['country_code']].append({**meta,'camera_sources':sources,'historical_provenance':meta.get('provenance',[])})
+        for code,extra in grouped.items():
+            path=DATA/(code+'.json.gz');prior=json.loads(gzip.decompress(path.read_bytes())) if path.exists() else []
+            path.write_bytes(gzip.compress(json.dumps(prior+extra,ensure_ascii=False).encode(),mtime=0))
 
 def validate(records):
     ids=set(); source_ids=set(); types=collections.Counter(); low_active=[]
@@ -71,7 +108,7 @@ def validate(records):
 
 def fingerprint(r):
     fields=['country_code','camera_type','latitude','longitude','end_latitude','end_longitude','speed_limit','direction','road_name','road_ref','city','region','confidence','status']
-    return {k:r.get(k) for k in fields}
+    return {k:round(r[k],9) if k in ('latitude','longitude','end_latitude','end_longitude') and r.get(k) is not None else r.get(k) for k in fields}
 
 def sync(records):
     pending=[r for r in records if r['camera_sources'] or not r.get('protected_existing')]
@@ -118,6 +155,7 @@ def main():
     parser=argparse.ArgumentParser();parser.add_argument('--sync-only',action='store_true');parser.add_argument('--normalize-only',action='store_true')
     parser.add_argument('--resume',action='store_true',help='Reuse completed source downloads instead of refreshing')
     parser.add_argument('--countries',nargs='+',default=list(COUNTRIES));args=parser.parse_args()
+    ensure_inputs()
     if args.sync_only:records=load_records()
     else:
         if not args.normalize_only:
@@ -125,6 +163,7 @@ def main():
             fetch_seeded(refresh=not args.resume,countries=args.countries)
             for phase in ['speed','enforcement']:
                 for c in args.countries:fetch(c,refresh=not args.resume,phase=phase)
+        recover_unsnapshotted()
         records=normalize()
     report=validate(records);print('Validation passed:',report['record_count'],'records',flush=True)
     if not args.normalize_only:sync(records)
