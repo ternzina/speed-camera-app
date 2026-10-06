@@ -7,6 +7,10 @@ REPORTS=ROOT/'master-db/bootstrap/reports'
 def read(name):return json.loads((REPORTS/name).read_text())
 def main():
     stats=read('country-statistics.json');prod=read('production-verification.json');samples=read('independent-sample-validation.json')
+    sources=read('database-sources.json')
+    providers={('OSM' if r['code'].startswith('OSM_') else 'Chicago' if r['code'].startswith('CHICAGO_') else 'Baltimore' if r['code'].startswith('BALTIMORE_') else r['code']) for r in sources}
+    acquisition=read('osm-downloads-speed.json')
+    incomplete=[r[0] for r in acquisition if str(r[2]).startswith('failed')]
     published={r['country_code']:r['export_records'] for r in prod['checks']}
     rows=[dict(country_code=c,**s,production_published=published.get(c,0)) for c,s in stats.items()]
     with (REPORTS/'country-statistics.csv').open('w',newline='') as f:
@@ -14,8 +18,8 @@ def main():
     lines=['# Production Master DB bootstrap','',f"Verified: {prod['checked_at']}",'',
       f"Existing Supabase project `ydgzsdlwnurychkbgsmn`: **{prod['database_total']:,} stored records**, **{prod['production_active']:,} published**, **{len(prod['checks'])} countries with published data**.",
       f"Added stored identities versus the preserved 1,323-row baseline: {prod['database_total']-1323:,}. Published Europe: {prod['europe_active']:,}; USA: {prod['usa_active']:,}; Canada: {prod['canada_active']:,}.",'',
-      f"Sources: {prod['sources']} country/feed registrations, including {prod['official_sources']} official feeds. OSM country partitions are one independent source provider. OSM-only published records: {prod['osm_only_active']:,}.",
-      '','All country exports were fetched from the deployed public Edge Function and compared with actual database counts. LOW publication, invalid coordinates/limits, missing section endpoints, duplicate canonical IDs and merged same-feed lane identities: **0**.',
+      f"Sources: {prod['sources']} country/feed registrations, including {prod['official_sources']} official feeds. Independent provider groups: {len(providers)} (Chicago/Baltimore feeds grouped by authority; OSM country partitions count as one). OSM-only published records: {prod['osm_only_active']:,}.",
+      '', f"Supplemental broad OSM speed queries completed for {47-len(incomplete)}/47 countries; incomplete: {', '.join(incomplete) or 'none'}. Full enforcement queries completed for all 47. Retained primary OSM API/government observations are used where broad requests fail. Acquisition errors and snapshot dates remain explicit.",'','All country exports were fetched from the deployed public Edge Function and compared with actual database counts. LOW publication, invalid coordinates/limits, missing section endpoints, duplicate canonical IDs and merged same-feed lane identities: **0**.',
       '','The original 1,323 UA/PL records and legacy export contracts are preserved. New UA/PL observations are held inactive pending a reviewed feed replacement. Existing bundles remain offline fallbacks; Supabase is the primary source.',
       '', f"Independent source sample checks: {samples['sample_count']} passed across {samples['countries']} countries. These are automated OSM API/government geometry checks, not on-road verification; see `independent-sample-validation.json`.",
       '', 'Nine importer safety checks and application smoke checks passed. iOS/Android Expo exports passed. Native devices and store releases were not tested or published; existing installed store versions need a later app release to receive code changes.',
