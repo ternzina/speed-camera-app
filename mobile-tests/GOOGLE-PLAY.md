@@ -1,11 +1,10 @@
-# Google Play internal testing — 2026-10-07
+# Google Play 1.0.0 (6) — 2026-10-07
 
-The user authorized Android testing alongside TestFlight. Apple processing does not gate an Android upload.
+Production Android EAS build: `d1aafbef-0aba-4d09-abe7-3742e9ff6308`.
+Source: `237de455d44fd9663427d3bee955ed9166c50223` on `feature/r2-offline-release`, including Driver Mode and latest Trip/Map/Report UI (`11ebaa6b`). Package `com.camera21wek`, version `1.0.0`, versionCode `6`.
 
-App 0.9.0, package com.camera21wek. Existing local/EAS Android versionCode 4 increased to 5 for the current geography/offline UI. iOS build number remains 13. EAS production Android build ID 59e7668f-0062-45a8-a28f-a08fd85a5d8f, source commit fdeaec4b. Current build state and artifact are recorded in builds.json.
+Build queued in Free Tier queue. EAS website showed about 1h 19m remaining after 15m 28s elapsed. Estimate is approximate, not completion confirmation.
 
-Submission profile explicitly targets Google Play internal testing. No public production release is configured or performed.
+Existing Google Play CamAlert app confirmed in the authorized Dolphin/Anty profile. Internal testing draft release 2 updated and saved: “6 (1.0.0) — Driver Mode” with English release notes. No AAB uploaded yet. User asked to clarify internal vs existing closed tester track; build does not depend on that choice. No public production release or paid EAS upgrade performed.
 
-The initial ordinary Chrome session only exposed HerLight, leading to an incorrect assumption that CamAlert was absent. The user screenshot showed the existing app. The correct Dolphin/Anty profile was located and confirms full access to CamAlert (console app 4973206564233406869). Its v0.8.2 (3) is already available in internal and closed testing. No new app or package is needed. EAS has no Google Play service-account key, so publication can use the authenticated native browser instead.
-
-An internal-testing update draft was saved with name “5 (0.9.0) — offline countries” and English release notes describing multi-country offline downloads, localization, coverage filtering and dataset updates. Draft release 2, track 4701629391442996966. Build 5 has now finished in EAS; no AAB or rollout was submitted. It contains the 0.9.0 offline/geography UI and predates the Driver Mode 1.0 changes. The current 1.0.0 source candidate uses Android versionCode 6 and must have a new binary before distribution.
+Older Android build 0.9.0 (5), `59e7668f-0062-45a8-a28f-a08fd85a5d8f`, predates Driver Mode and must not be uploaded as the latest release. App Store TestFlight upload 1.0.0 (14) already finished separately.

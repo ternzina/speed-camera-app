@@ -1,17 +1,17 @@
 {
-  "checkedAt": "2026-10-07T17:33:14.959293+00:00",
+  "checkedAt": "2026-10-07T17:55:45.710900+00:00",
   "branch": "feature/r2-offline-release",
   "appVersion": "1.0.0",
   "sourceCommit": "11ebaa6b1a155a1cc73c175225274dd733e7dbab",
   "android": {
-    "id": "59e7668f-0062-45a8-a28f-a08fd85a5d8f",
-    "status": "FINISHED",
-    "versionCode": 5,
-    "appVersion": "0.9.0",
-    "sourceCommit": "fdeaec4b4b53419ef9fbc26286fa098102edd75e",
-    "url": "https://expo.dev/accounts/bembi26/projects/speed-camera-prototype-direction/builds/59e7668f-0062-45a8-a28f-a08fd85a5d8f",
-    "artifact": "https://expo.dev/artifacts/eas/SK3vOEuEtJme1o_WDIUNOILDJSGdE-Nq0lLmdzFiNdc.aab",
-    "completedAt": "2026-10-07T14:38:44.184Z"
+    "id": "d1aafbef-0aba-4d09-abe7-3742e9ff6308",
+    "status": "IN_QUEUE",
+    "versionCode": 6,
+    "appVersion": "1.0.0",
+    "sourceCommit": "237de455d44fd9663427d3bee955ed9166c50223",
+    "url": "https://expo.dev/accounts/bembi26/projects/speed-camera-prototype-direction/builds/d1aafbef-0aba-4d09-abe7-3742e9ff6308",
+    "createdAt": "2026-10-07T17:39:02.047Z",
+    "queueEstimateObserved": "About 1h 19m remaining after 15m 28s elapsed; Free Tier queue"
   },
   "ios": {
     "id": null,
@@ -80,13 +80,13 @@
     "submissionPerformed": false,
     "consoleAppId": "4973206564233406869",
     "releaseDraftUrl": "https://play.google.com/console/u/0/developers/8497998036565797248/app/4973206564233406869/tracks/4701629391442996966/releases/2/prepare",
-    "reason": "Correct Dolphin/Anty profile has full access. Existing v0.8.2 (3) confirmed in internal and closed testing. Update draft saved; waiting for Android build 5."
+    "reason": "1.0.0 (6) production build is in EAS Free Tier queue. Updated internal testing draft saved; no AAB uploaded yet."
   },
   "driverModeCandidate": {
     "appVersion": "1.0.0",
     "iosBuildNumber": "14",
     "androidVersionCode": 6,
-    "status": "IOS_UPLOADED_TESTFLIGHT_ANDROID_NOT_BUILT",
+    "status": "IOS_UPLOADED_TESTFLIGHT_ANDROID_QUEUED",
     "storeSubmissionPerformed": true,
     "note": "iOS 1.0.0 (14) includes Driver Mode and product UI. Android artifact remains older 0.9.0 (5); no new Android upload."
   },
@@ -113,5 +113,15 @@
     "completedAt": "2026-10-07T13:10:24.202Z",
     "appleProcessingState": "PROCESSING",
     "appleUrl": "https://appstoreconnect.apple.com/apps/6818647205/testflight/ios"
+  },
+  "previousAndroid5": {
+    "id": "59e7668f-0062-45a8-a28f-a08fd85a5d8f",
+    "status": "FINISHED",
+    "versionCode": 5,
+    "appVersion": "0.9.0",
+    "sourceCommit": "fdeaec4b4b53419ef9fbc26286fa098102edd75e",
+    "url": "https://expo.dev/accounts/bembi26/projects/speed-camera-prototype-direction/builds/59e7668f-0062-45a8-a28f-a08fd85a5d8f",
+    "artifact": "https://expo.dev/artifacts/eas/SK3vOEuEtJme1o_WDIUNOILDJSGdE-Nq0lLmdzFiNdc.aab",
+    "completedAt": "2026-10-07T14:38:44.184Z"
   }
 }
