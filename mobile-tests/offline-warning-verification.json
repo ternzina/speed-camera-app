@@ -1,5 +1,5 @@
 {
-  "checkedAt": "2026-10-07T12:18:30.546Z",
+  "checkedAt": "2026-10-07T16:18:51.574Z",
   "datasetsStoredOnDisk": 6,
   "newStorageInstanceAfterRestart": true,
   "cacheChunksChecksumVerified": true,
@@ -8,37 +8,49 @@
     {
       "country": "UA",
       "backgroundWarningFromDiskCache": true,
-      "foregroundSelection": "shared nearest-ahead engine verified",
+      "foregroundSelection": "actual App GPS callback passed",
+      "localVoicePhrase": true,
+      "foregroundSpeechCalls": 1,
       "networkRequests": 0
     },
     {
       "country": "PL",
       "backgroundWarningFromDiskCache": true,
-      "foregroundSelection": "passed",
+      "foregroundSelection": "actual App GPS callback passed",
+      "localVoicePhrase": true,
+      "foregroundSpeechCalls": 1,
       "networkRequests": 0
     },
     {
       "country": "DE",
       "backgroundWarningFromDiskCache": true,
-      "foregroundSelection": "passed",
+      "foregroundSelection": "actual App GPS callback passed",
+      "localVoicePhrase": true,
+      "foregroundSpeechCalls": 1,
       "networkRequests": 0
     },
     {
       "country": "FR",
       "backgroundWarningFromDiskCache": true,
-      "foregroundSelection": "passed",
+      "foregroundSelection": "actual App GPS callback passed",
+      "localVoicePhrase": true,
+      "foregroundSpeechCalls": 1,
       "networkRequests": 0
     },
     {
       "country": "US",
       "backgroundWarningFromDiskCache": true,
-      "foregroundSelection": "passed",
+      "foregroundSelection": "actual App GPS callback passed",
+      "localVoicePhrase": true,
+      "foregroundSpeechCalls": 1,
       "networkRequests": 0
     },
     {
       "country": "CA",
       "backgroundWarningFromDiskCache": true,
-      "foregroundSelection": "passed",
+      "foregroundSelection": "actual App GPS callback passed",
+      "localVoicePhrase": true,
+      "foregroundSpeechCalls": 1,
       "networkRequests": 0
     }
   ],

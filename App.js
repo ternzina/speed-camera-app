@@ -1,8 +1,17 @@
-
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import {
-  SafeAreaView, View, Text, StyleSheet, Pressable, Alert, ScrollView,
-  Modal, TextInput, Switch, Vibration, Linking
+  SafeAreaView,
+  View,
+  Text,
+  StyleSheet,
+  Pressable,
+  Alert,
+  ScrollView,
+  Modal,
+  TextInput,
+  Switch,
+  Vibration,
+  Linking,
 } from "react-native";
 import * as Location from "expo-location";
 import * as Speech from "expo-speech";
@@ -14,10 +23,27 @@ import MapView, { Marker, Circle } from "react-native-maps";
 import { StatusBar } from "expo-status-bar";
 import data from "./cameras.json";
 import plData from "./cameras-pl.json";
-import { nearestPolandPoint, detectAverageSpeedSection, averageSectionSpeech } from "./poland-engine";
-import { cameraPoints, countryFeed, loadCameraCache, saveCameraCache } from "./camera-data";
+import { averageSectionSpeech } from "./poland-engine";
+import {
+  cameraPoints,
+  countryFeed,
+  loadCameraCache,
+  saveCameraCache,
+} from "./camera-data";
 import { countryLabel, buildCountryLists } from "./countries";
 import { refreshCountryDelivery } from "./camera-delivery";
+import {
+  drivingPoints,
+  nearestDrivingPoint,
+  warningDistances,
+  warningDecision,
+  warningPhrase,
+  voiceLocale,
+  advanceAverageTrip,
+  distanceBetween,
+  bearingBetween,
+} from "./driver-engine";
+import { DRIVER_COPY, drivingLabel } from "./driver-copy";
 
 const BACKGROUND_LOCATION_TASK = "camera-background-location-v060";
 const MIN_MOVING_SPEED_KMH = 8;
@@ -42,72 +68,206 @@ const URLS = {
 
 const I18N = {
   ru: {
-    title: "Камеры на дорогах", start: "Начать поездку", stop: "Остановить",
-    nearest: "Ближайшая камера", ahead: "Камера впереди по ходу движения",
-    waitMove: "Ждёт движения", speed: "Текущая скорость",
-    direction: "Направление", background: "Фоновый режим", on: "Включён", off: "Выключен",
-    enable: "Включить", disable: "Выключить", map: "Карта", nearby: "Рядом",
-    settings: "Настройки", history: "История", report: "Сообщить о камере",
-    removed: "Камеры больше нет", limit: "Ограничение",
-    aheadWarn: "Впереди камера", gpsWorks: "GPS работает", gpsWait: "GPS ждёт",
-    saved: "Сохранено", cancel: "Отмена", send: "Сохранить сообщение",
-    reportTitle: "Новая камера", removedTitle: "Камеры больше нет",
+    title: "Камеры на дорогах",
+    start: "Начать поездку",
+    stop: "Остановить",
+    nearest: "Ближайшая камера",
+    ahead: "Камера впереди по ходу движения",
+    waitMove: "Ждёт движения",
+    speed: "Текущая скорость",
+    direction: "Направление",
+    background: "Фоновый режим",
+    on: "Включён",
+    off: "Выключен",
+    enable: "Включить",
+    disable: "Выключить",
+    map: "Карта",
+    nearby: "Рядом",
+    settings: "Настройки",
+    history: "История",
+    report: "Сообщить о камере",
+    removed: "Камеры больше нет",
+    limit: "Ограничение",
+    aheadWarn: "Впереди камера",
+    gpsWorks: "GPS работает",
+    gpsWait: "GPS ждёт",
+    saved: "Сохранено",
+    cancel: "Отмена",
+    send: "Сохранить сообщение",
+    reportTitle: "Новая камера",
+    removedTitle: "Камеры больше нет",
     note: "Сообщения пока сохраняются на телефоне. Сервер синхронизации подключим отдельно.",
-    about: "О приложении", privacy: "Политика конфиденциальности", safety: "Безопасность",
-    sources: "Источники данных", support: "Поддержка", terms: "Условия использования",
-    reportHelp: "Как сообщить о камере", website: "Сайт приложения", coverage: "Покрытие", dataUpdate: "Обновление базы", lastUpdate: "Последнее обновление", updateNow: "Обновить сейчас", updated: "База обновлена", reportSent: "Сообщение отправлено на проверку", reportFailed: "Не удалось отправить, сохранено на телефоне", country: "Страна", ukraine: "Украина", poland: "Польша", languageLabel: "Язык", voiceLabel: "Голос", vibrationLabel: "Вибрация", smartDistanceLabel: "Умная дистанция по скорости", distancesLabel: "Дистанции предупреждения", band1: "До 60 км/ч", band2: "60–89 км/ч", band3: "90–119 км/ч", band4: "120+ км/ч"
+    about: "О приложении",
+    privacy: "Политика конфиденциальности",
+    safety: "Безопасность",
+    sources: "Источники данных",
+    support: "Поддержка",
+    terms: "Условия использования",
+    reportHelp: "Как сообщить о камере",
+    website: "Сайт приложения",
+    coverage: "Покрытие",
+    dataUpdate: "Обновление базы",
+    lastUpdate: "Последнее обновление",
+    updateNow: "Обновить сейчас",
+    updated: "База обновлена",
+    reportSent: "Сообщение отправлено на проверку",
+    reportFailed: "Не удалось отправить, сохранено на телефоне",
+    country: "Страна",
+    ukraine: "Украина",
+    poland: "Польша",
+    languageLabel: "Язык",
+    voiceLabel: "Голос",
+    vibrationLabel: "Вибрация",
+    smartDistanceLabel: "Умная дистанция по скорости",
+    distancesLabel: "Дистанции предупреждения",
+    band1: "До 60 км/ч",
+    band2: "60–89 км/ч",
+    band3: "90–119 км/ч",
+    band4: "120+ км/ч",
   },
   uk: {
-    title: "Камери на дорогах", start: "Почати поїздку", stop: "Зупинити",
-    nearest: "Найближча камера", ahead: "Камера попереду за напрямком руху",
-    waitMove: "Очікує руху", speed: "Поточна швидкість",
-    direction: "Напрямок", background: "Фоновий режим", on: "Увімкнено", off: "Вимкнено",
-    enable: "Увімкнути", disable: "Вимкнути", map: "Карта", nearby: "Поруч",
-    settings: "Налаштування", history: "Історія", report: "Повідомити про камеру",
-    removed: "Камери більше немає", limit: "Обмеження",
-    aheadWarn: "Попереду камера", gpsWorks: "GPS працює", gpsWait: "GPS очікує",
-    saved: "Збережено", cancel: "Скасувати", send: "Зберегти повідомлення",
-    reportTitle: "Нова камера", removedTitle: "Камери більше немає",
+    title: "Камери на дорогах",
+    start: "Почати поїздку",
+    stop: "Зупинити",
+    nearest: "Найближча камера",
+    ahead: "Камера попереду за напрямком руху",
+    waitMove: "Очікує руху",
+    speed: "Поточна швидкість",
+    direction: "Напрямок",
+    background: "Фоновий режим",
+    on: "Увімкнено",
+    off: "Вимкнено",
+    enable: "Увімкнути",
+    disable: "Вимкнути",
+    map: "Карта",
+    nearby: "Поруч",
+    settings: "Налаштування",
+    history: "Історія",
+    report: "Повідомити про камеру",
+    removed: "Камери більше немає",
+    limit: "Обмеження",
+    aheadWarn: "Попереду камера",
+    gpsWorks: "GPS працює",
+    gpsWait: "GPS очікує",
+    saved: "Збережено",
+    cancel: "Скасувати",
+    send: "Зберегти повідомлення",
+    reportTitle: "Нова камера",
+    removedTitle: "Камери більше немає",
     note: "Повідомлення поки зберігаються на телефоні. Сервер синхронізації підключимо окремо.",
-    about: "Про застосунок", privacy: "Політика конфіденційності", safety: "Безпека",
-    sources: "Джерела даних", support: "Підтримка", terms: "Умови використання",
-    reportHelp: "Як повідомити про камеру", website: "Сайт застосунку", coverage: "Покриття", dataUpdate: "Оновлення бази", lastUpdate: "Останнє оновлення", updateNow: "Оновити зараз", updated: "Базу оновлено", reportSent: "Повідомлення надіслано на перевірку", reportFailed: "Не вдалося надіслати, збережено на телефоні", country: "Країна", ukraine: "Україна", poland: "Польща", languageLabel: "Мова", voiceLabel: "Голос", vibrationLabel: "Вібрація", smartDistanceLabel: "Розумна дистанція за швидкістю", distancesLabel: "Дистанції попередження", band1: "До 60 км/год", band2: "60–89 км/год", band3: "90–119 км/год", band4: "120+ км/год"
+    about: "Про застосунок",
+    privacy: "Політика конфіденційності",
+    safety: "Безпека",
+    sources: "Джерела даних",
+    support: "Підтримка",
+    terms: "Умови використання",
+    reportHelp: "Як повідомити про камеру",
+    website: "Сайт застосунку",
+    coverage: "Покриття",
+    dataUpdate: "Оновлення бази",
+    lastUpdate: "Останнє оновлення",
+    updateNow: "Оновити зараз",
+    updated: "Базу оновлено",
+    reportSent: "Повідомлення надіслано на перевірку",
+    reportFailed: "Не вдалося надіслати, збережено на телефоні",
+    country: "Країна",
+    ukraine: "Україна",
+    poland: "Польща",
+    languageLabel: "Мова",
+    voiceLabel: "Голос",
+    vibrationLabel: "Вібрація",
+    smartDistanceLabel: "Розумна дистанція за швидкістю",
+    distancesLabel: "Дистанції попередження",
+    band1: "До 60 км/год",
+    band2: "60–89 км/год",
+    band3: "90–119 км/год",
+    band4: "120+ км/год",
   },
   en: {
-    title: "Road Cameras", start: "Start trip", stop: "Stop",
-    nearest: "Nearest camera", ahead: "Camera ahead",
-    waitMove: "Waiting for movement", speed: "Current speed",
-    direction: "Direction", background: "Background mode", on: "On", off: "Off",
-    enable: "Enable", disable: "Disable", map: "Map", nearby: "Nearby",
-    settings: "Settings", history: "History", report: "Report camera",
-    removed: "Camera is gone", limit: "Speed limit",
-    aheadWarn: "Camera ahead", gpsWorks: "GPS active", gpsWait: "GPS waiting",
-    saved: "Saved", cancel: "Cancel", send: "Save report",
-    reportTitle: "New camera", removedTitle: "Camera is gone",
+    title: "Road Cameras",
+    start: "Start trip",
+    stop: "Stop",
+    nearest: "Nearest camera",
+    ahead: "Camera ahead",
+    waitMove: "Waiting for movement",
+    speed: "Current speed",
+    direction: "Direction",
+    background: "Background mode",
+    on: "On",
+    off: "Off",
+    enable: "Enable",
+    disable: "Disable",
+    map: "Map",
+    nearby: "Nearby",
+    settings: "Settings",
+    history: "History",
+    report: "Report camera",
+    removed: "Camera is gone",
+    limit: "Speed limit",
+    aheadWarn: "Camera ahead",
+    gpsWorks: "GPS active",
+    gpsWait: "GPS waiting",
+    saved: "Saved",
+    cancel: "Cancel",
+    send: "Save report",
+    reportTitle: "New camera",
+    removedTitle: "Camera is gone",
     note: "Reports are stored on this phone for now. Server sync will be connected separately.",
-    about: "About", privacy: "Privacy Policy", safety: "Safety",
-    sources: "Data sources", support: "Support", terms: "Terms of Use",
-    reportHelp: "How to report a camera", website: "App website", coverage: "Coverage", dataUpdate: "Database update", lastUpdate: "Last update", updateNow: "Update now", updated: "Database updated", reportSent: "Report sent for review", reportFailed: "Could not send; saved on this phone", country: "Country", ukraine: "Ukraine", poland: "Poland", languageLabel: "Language", voiceLabel: "Voice", vibrationLabel: "Vibration", smartDistanceLabel: "Smart distance by speed", distancesLabel: "Alert distances", band1: "Up to 60 km/h", band2: "60–89 km/h", band3: "90–119 km/h", band4: "120+ km/h"
+    about: "About",
+    privacy: "Privacy Policy",
+    safety: "Safety",
+    sources: "Data sources",
+    support: "Support",
+    terms: "Terms of Use",
+    reportHelp: "How to report a camera",
+    website: "App website",
+    coverage: "Coverage",
+    dataUpdate: "Database update",
+    lastUpdate: "Last update",
+    updateNow: "Update now",
+    updated: "Database updated",
+    reportSent: "Report sent for review",
+    reportFailed: "Could not send; saved on this phone",
+    country: "Country",
+    ukraine: "Ukraine",
+    poland: "Poland",
+    languageLabel: "Language",
+    voiceLabel: "Voice",
+    vibrationLabel: "Vibration",
+    smartDistanceLabel: "Smart distance by speed",
+    distancesLabel: "Alert distances",
+    band1: "Up to 60 km/h",
+    band2: "60–89 km/h",
+    band3: "90–119 km/h",
+    band4: "120+ km/h",
   },
   pl: {
     title: "Kamery drogowe",
-    drive: "Jazda", map: "Mapa", nearby: "W pobliżu",
-    history: "Historia", settings: "Ustawienia",
-    start: "Rozpocznij jazdę", stop: "Zatrzymaj",
+    drive: "Jazda",
+    map: "Mapa",
+    nearby: "W pobliżu",
+    history: "Historia",
+    settings: "Ustawienia",
+    start: "Rozpocznij jazdę",
+    stop: "Zatrzymaj",
     nearest: "Najbliższy fotoradar",
     ahead: "Fotoradar przed Tobą",
     waitMove: "Czeka na ruch",
     speed: "Aktualna prędkość",
     direction: "Kierunek",
-    gpsWorks: "GPS działa", gpsWait: "GPS czeka",
+    gpsWorks: "GPS działa",
+    gpsWait: "GPS czeka",
     background: "Tryb w tle",
-    on: "Włączony", off: "Wyłączony",
-    enable: "Włącz", disable: "Wyłącz",
+    on: "Włączony",
+    off: "Wyłączony",
+    enable: "Włącz",
+    disable: "Wyłącz",
     limit: "Ograniczenie",
     aheadWarn: "Fotoradar przed Tobą",
     report: "Zgłoś fotoradar",
     removed: "Fotoradaru już nie ma",
-    saved: "Zapisano", cancel: "Anuluj",
+    saved: "Zapisano",
+    cancel: "Anuluj",
     send: "Zapisz zgłoszenie",
     reportTitle: "Nowy fotoradar",
     removedTitle: "Fotoradaru już nie ma",
@@ -120,10 +280,26 @@ const I18N = {
     support: "Pomoc",
     terms: "Warunki korzystania",
     reportHelp: "Jak zgłosić fotoradar",
-    website: "Strona aplikacji", coverage: "Zasięg", dataUpdate: "Aktualizacja bazy", lastUpdate: "Ostatnia aktualizacja", updateNow: "Aktualizuj teraz", updated: "Baza zaktualizowana", reportSent: "Zgłoszenie wysłano do weryfikacji", reportFailed: "Nie udało się wysłać; zapisano na telefonie",
-    country: "Kraj", languageLabel: "Język", voiceLabel: "Głos", vibrationLabel: "Wibracje", smartDistanceLabel: "Inteligentna odległość według prędkości", distancesLabel: "Odległości ostrzegania", band1: "Do 60 km/h", band2: "60–89 km/h", band3: "90–119 km/h", band4: "120+ km/h",
+    website: "Strona aplikacji",
+    coverage: "Zasięg",
+    dataUpdate: "Aktualizacja bazy",
+    lastUpdate: "Ostatnia aktualizacja",
+    updateNow: "Aktualizuj teraz",
+    updated: "Baza zaktualizowana",
+    reportSent: "Zgłoszenie wysłano do weryfikacji",
+    reportFailed: "Nie udało się wysłać; zapisano na telefonie",
+    country: "Kraj",
+    languageLabel: "Język",
+    voiceLabel: "Głos",
+    vibrationLabel: "Wibracje",
+    smartDistanceLabel: "Inteligentna odległość według prędkości",
+    distancesLabel: "Odległości ostrzegania",
+    band1: "Do 60 km/h",
+    band2: "60–89 km/h",
+    band3: "90–119 km/h",
+    band4: "120+ km/h",
     ukraine: "Ukraina",
-    poland: "Polska"
+    poland: "Polska",
   },
 };
 
@@ -137,7 +313,6 @@ const DEFAULT_SETTINGS = {
   roadDistance: 900,
   highwayDistance: 1200,
   fastDistance: 1500,
-
 };
 
 let bgSettings = DEFAULT_SETTINGS;
@@ -145,9 +320,9 @@ let bgHiddenIds = new Set();
 let bgLastAlert = { id: null, at: 0, distance: Infinity };
 let bgCameraFeeds = {};
 
-const toRad = v => (v * Math.PI) / 180;
-const toDeg = v => (v * 180) / Math.PI;
-const norm = a => ((a % 360) + 360) % 360;
+const toRad = (v) => (v * Math.PI) / 180;
+const toDeg = (v) => (v * 180) / Math.PI;
+const norm = (a) => ((a % 360) + 360) % 360;
 
 function angleDiff(a, b) {
   const d = Math.abs(norm(a) - norm(b));
@@ -163,90 +338,130 @@ function distanceMeters(lat1, lon1, lat2, lon2) {
   return 2 * R * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 }
 function bearingDegrees(lat1, lon1, lat2, lon2) {
-  const p1 = toRad(lat1), p2 = toRad(lat2);
-  const l1 = toRad(lon1), l2 = toRad(lon2);
-  const y = Math.sin(l2-l1) * Math.cos(p2);
-  const x = Math.cos(p1)*Math.sin(p2) - Math.sin(p1)*Math.cos(p2)*Math.cos(l2-l1);
+  const p1 = toRad(lat1),
+    p2 = toRad(lat2);
+  const l1 = toRad(lon1),
+    l2 = toRad(lon2);
+  const y = Math.sin(l2 - l1) * Math.cos(p2);
+  const x =
+    Math.cos(p1) * Math.sin(p2) -
+    Math.sin(p1) * Math.cos(p2) * Math.cos(l2 - l1);
   return norm(toDeg(Math.atan2(y, x)));
 }
 function alertDistanceForSpeed(speedKmh, settings) {
-  if (!settings.smartDistance) return settings.roadDistance;
-  if (speedKmh < 60) return settings.cityDistance;
-  if (speedKmh < 90) return settings.roadDistance;
-  if (speedKmh < 120) return settings.highwayDistance;
-  return settings.fastDistance;
+  return warningDistances(speedKmh, settings).first;
 }
 function visibleCameras() {
-  return cameraPoints(countryFeed(bgCameraFeeds, bgSettings.country, data, plData))
-    .filter(c => !bgHiddenIds.has(String(c.id)));
+  return drivingPoints(
+    countryFeed(bgCameraFeeds, bgSettings.country, data, plData),
+  ).filter((c) => !bgHiddenIds.has(String(c.id)));
 }
 function findNearestAny(latitude, longitude, max = Infinity) {
-  let best = null, bestDistance = Infinity;
+  let best = null,
+    bestDistance = Infinity;
   for (const cam of visibleCameras()) {
     const d = distanceMeters(latitude, longitude, cam.latitude, cam.longitude);
-    if (d < bestDistance && d <= max) { bestDistance = d; best = cam; }
+    if (d < bestDistance && d <= max) {
+      bestDistance = d;
+      best = cam;
+    }
   }
   return best ? { ...best, distance: Math.round(bestDistance) } : null;
 }
-function findNearestAhead(latitude, longitude, movementHeading, maxDistance = 5000) {
-  if (movementHeading == null) return null;
-  let best = null, bestDistance = Infinity;
-  for (const cam of visibleCameras()) {
-    const d = distanceMeters(latitude, longitude, cam.latitude, cam.longitude);
-    if (d > maxDistance) continue;
-    if (cam.direction != null && /^\d+(\.\d+)?$/.test(String(cam.direction)) && angleDiff(movementHeading,Number(cam.direction))>60) continue;
-    const camBearing = bearingDegrees(latitude, longitude, cam.latitude, cam.longitude);
-    if (angleDiff(movementHeading, camBearing) <= FORWARD_ANGLE_DEGREES && d < bestDistance) {
-      bestDistance = d;
-      best = { ...cam, distance: Math.round(d) };
-    }
-  }
-  return best;
+function findNearestAhead(
+  latitude,
+  longitude,
+  movementHeading,
+  maxDistance = 5000,
+  accuracy = 0,
+) {
+  return nearestDrivingPoint(
+    visibleCameras(),
+    { latitude, longitude },
+    movementHeading,
+    maxDistance,
+    accuracy,
+  );
 }
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
-    shouldShowBanner: true, shouldShowList: true, shouldPlaySound: true, shouldSetBadge: false,
+    shouldShowBanner: true,
+    shouldShowList: true,
+    shouldPlaySound: true,
+    shouldSetBadge: false,
   }),
 });
 
-TaskManager.defineTask(BACKGROUND_LOCATION_TASK, async ({ data: taskData, error }) => {
-  if (error || !taskData?.locations?.length) return;
-  try {
-    const sraw = await AsyncStorage.getItem(SETTINGS_KEY);
-    bgSettings = sraw ? { ...DEFAULT_SETTINGS, ...JSON.parse(sraw) } : DEFAULT_SETTINGS;
-    const hraw = await AsyncStorage.getItem(HIDDEN_KEY);
-    bgHiddenIds = new Set(hraw ? JSON.parse(hraw).map(String) : []);
-    const cache = await loadCameraCache(AsyncStorage,REMOTE_CACHE_KEY);
-    if (cache) {
-      bgCameraFeeds = cache.feeds || {UA:cache.ua,PL:cache.pl};
-    }
-  } catch {}
+TaskManager.defineTask(
+  BACKGROUND_LOCATION_TASK,
+  async ({ data: taskData, error }) => {
+    if (error || !taskData?.locations?.length) return;
+    try {
+      const sraw = await AsyncStorage.getItem(SETTINGS_KEY);
+      bgSettings = sraw
+        ? { ...DEFAULT_SETTINGS, ...JSON.parse(sraw) }
+        : DEFAULT_SETTINGS;
+      const hraw = await AsyncStorage.getItem(HIDDEN_KEY);
+      bgHiddenIds = new Set(hraw ? JSON.parse(hraw).map(String) : []);
+      const cache = await loadCameraCache(AsyncStorage, REMOTE_CACHE_KEY);
+      if (cache) {
+        bgCameraFeeds = cache.feeds || { UA: cache.ua, PL: cache.pl };
+      }
+    } catch {}
 
-  const pos = taskData.locations[taskData.locations.length - 1];
-  const { latitude, longitude, speed: rawSpeed, heading: rawHeading } = pos.coords;
-  const speedKmh = typeof rawSpeed === "number" && rawSpeed >= 0 ? Math.round(rawSpeed * 3.6) : 0;
-  const heading = typeof rawHeading === "number" && rawHeading >= 0 ? norm(rawHeading) : null;
-  if (speedKmh < MIN_MOVING_SPEED_KMH || heading == null) return;
+    const pos = taskData.locations[taskData.locations.length - 1];
+    const {
+      latitude,
+      longitude,
+      speed: rawSpeed,
+      heading: rawHeading,
+    } = pos.coords;
+    const speedKmh =
+      typeof rawSpeed === "number" && rawSpeed >= 0
+        ? Math.round(rawSpeed * 3.6)
+        : 0;
+    const heading =
+      typeof rawHeading === "number" && rawHeading >= 0
+        ? norm(rawHeading)
+        : null;
+    if (
+      speedKmh < MIN_MOVING_SPEED_KMH ||
+      heading == null ||
+      pos.coords.accuracy > 80
+    )
+      return;
 
-  const threshold = alertDistanceForSpeed(speedKmh, bgSettings);
-  const cam = findNearestAhead(latitude, longitude, heading, Math.max(5000, threshold + 1000));
-  if (!cam || cam.distance > threshold) return;
+    const threshold = alertDistanceForSpeed(speedKmh, bgSettings);
+    const cam = findNearestAhead(
+      latitude,
+      longitude,
+      heading,
+      Math.max(5000, threshold + 1000),
+    );
+    if (!cam || cam.distance > threshold) return;
 
-  const now = Date.now();
-  if (bgLastAlert.id === cam.id && now - bgLastAlert.at < 45000 && bgLastAlert.distance - cam.distance < 250) return;
-  bgLastAlert = { id: cam.id, at: now, distance: cam.distance };
-
-  const over = cam.speed_limit != null && speedKmh > Number(cam.speed_limit);
-  await Notifications.scheduleNotificationAsync({
-    content: {
-      title: `Камера через ${cam.distance < 1000 ? `${cam.distance} м` : `${(cam.distance/1000).toFixed(1)} км`}`,
-      body: cam.speed_limit == null ? "Камера впереди." : over ? `Скорость ${speedKmh}. Ограничение ${cam.speed_limit}.` : `Ограничение ${cam.speed_limit} км/ч.`,
-      sound: "default",
-    },
-    trigger: null,
-  });
-});
+    const result = warningDecision(bgLastAlert, cam, speedKmh, bgSettings);
+    bgLastAlert = result.memory;
+    if (!result.event) return;
+    await Notifications.scheduleNotificationAsync({
+      content: {
+        title: drivingLabel(
+          cam,
+          DRIVER_COPY[bgSettings.language] || DRIVER_COPY.ru,
+        ),
+        body: warningPhrase(
+          cam,
+          result.event,
+          result.over,
+          bgSettings.language,
+        ),
+        sound: bgSettings.voice ? "default" : null,
+      },
+      trigger: null,
+    });
+  },
+);
 
 export default function App() {
   const [settings, setSettings] = useState(DEFAULT_SETTINGS);
@@ -257,43 +472,153 @@ export default function App() {
   const [ahead, setAhead] = useState(null);
   const [speedKmh, setSpeedKmh] = useState(0);
   const [heading, setHeading] = useState(null);
-  const [plSectionId, setPlSectionId] = useState(null);
+  const [averageTrip, setAverageTrip] = useState(null);
   const plLastSectionState = useRef(null);
   const [active, setActive] = useState(false);
   const [backgroundEnabled, setBackgroundEnabled] = useState(false);
   const [history, setHistory] = useState([]);
   const [hiddenIds, setHiddenIds] = useState([]);
   const [reports, setReports] = useState([]);
-  const [remoteFeeds,setRemoteFeeds]=useState({});
-  const [countryCoverage,setCountryCoverage]=useState([]);
-  const countryCoverageRef=useRef([]);
-  const [cacheReady,setCacheReady]=useState(false);
-  const [downloadSelection,setDownloadSelection]=useState([]);
-  const [downloading,setDownloading]=useState(false);
-  const [downloadStatus,setDownloadStatus]=useState("");
-  const deliveryQueue=useRef(Promise.resolve());
+  const [remoteFeeds, setRemoteFeeds] = useState({});
+  const [countryCoverage, setCountryCoverage] = useState([]);
+  const countryCoverageRef = useRef([]);
+  const [cacheReady, setCacheReady] = useState(false);
+  const [downloadSelection, setDownloadSelection] = useState([]);
+  const [downloading, setDownloading] = useState(false);
+  const [downloadStatus, setDownloadStatus] = useState("");
+  const deliveryQueue = useRef(Promise.resolve());
   const offlineText = {
-    ru: {explanation:"Скачанные камеры и предупреждения доступны без интернета при включённой геолокации. Карта загружается отдельно.",downloaded:"Скачанные",available:"Доступные страны",territories:"Территории",none:"Пока нет скачанных стран",cameras:"камер",hint:"Нажмите название для выбора страны. Отметьте страны справа для офлайн-загрузки.",title:"Страны офлайн",download:"Скачать выбранные",update:"Доступно обновление",ready:"Сохранено офлайн",missing:"Не скачано",busy:"Загрузка",failed:"Не удалось скачать или сохранить",done:"Сохранено",empty:"Нет локальных данных. Подключитесь к интернету и скачайте страну."},
-    uk: {explanation:"Завантажені камери й попередження доступні без інтернету, якщо геолокацію ввімкнено. Карта завантажується окремо.",downloaded:"Завантажені",available:"Доступні країни",territories:"Території",none:"Поки немає завантажених країн",cameras:"камер",hint:"Натисніть назву, щоб вибрати країну. Позначте країни праворуч для офлайн-завантаження.",title:"Країни офлайн",download:"Завантажити вибрані",update:"Доступне оновлення",ready:"Збережено офлайн",missing:"Не завантажено",busy:"Завантаження",failed:"Не вдалося завантажити або зберегти",done:"Збережено",empty:"Немає локальних даних. Підключіться до інтернету й завантажте країну."},
-    en: {explanation:"Downloaded cameras and alerts work without internet when location is enabled. Map tiles load separately.",downloaded:"Downloaded",available:"Available countries",territories:"Territories",none:"No countries downloaded yet",cameras:"cameras",hint:"Tap a name to choose your driving country. Check countries on the right to download for offline use.",title:"Offline countries",download:"Download selected",update:"Update available",ready:"Saved offline",missing:"Not downloaded",busy:"Downloading",failed:"Could not download or save",done:"Saved",empty:"No local data. Connect to the internet and download this country."},
-    pl: {explanation:"Pobrane kamery i ostrzeżenia działają bez internetu przy włączonej lokalizacji. Mapa pobiera się osobno.",downloaded:"Pobrane",available:"Dostępne kraje",territories:"Terytoria",none:"Nie pobrano jeszcze krajów",cameras:"kamer",hint:"Dotknij nazwy, aby wybrać kraj. Zaznacz kraje po prawej stronie, aby pobrać je offline.",title:"Kraje offline",download:"Pobierz wybrane",update:"Dostępna aktualizacja",ready:"Zapisano offline",missing:"Nie pobrano",busy:"Pobieranie",failed:"Nie udało się pobrać lub zapisać",done:"Zapisano",empty:"Brak danych lokalnych. Połącz się z internetem i pobierz kraj."}
-  }[settings.language] || {explanation:"Downloaded cameras and alerts work without internet when location is enabled. Map tiles load separately.",downloaded:"Downloaded",available:"Available countries",territories:"Territories",none:"No countries downloaded yet",cameras:"cameras",hint:"Tap a name to choose your driving country. Check countries on the right to download for offline use.",title:"Offline countries",download:"Download selected",update:"Update available",ready:"Saved offline",missing:"Not downloaded",busy:"Downloading",failed:"Could not download or save",done:"Saved",empty:"No local data. Connect and download this country."};
-  const remoteFeedsRef=useRef({});
-  const countryVersionsRef=useRef({});
-  const selectedCountry=String(settings.country||"ua").toUpperCase();
-  const activeUAData=countryFeed(remoteFeeds,"UA",data,plData);
-  const activePLData=countryFeed(remoteFeeds,selectedCountry==="UA"?"PL":selectedCountry,data,plData);
-  const activeCountryFeedRef=useRef(activePLData);
-  activeCountryFeedRef.current=activePLData;
-  const [coverage,setCoverage]=useState(null);
-  const [lastDataUpdate,setLastDataUpdate]=useState(null);
+    ru: {
+      explanation:
+        "Скачанные камеры и предупреждения доступны без интернета при включённой геолокации. Карта загружается отдельно.",
+      downloaded: "Скачанные",
+      available: "Доступные страны",
+      territories: "Территории",
+      none: "Пока нет скачанных стран",
+      cameras: "камер",
+      hint: "Нажмите название для выбора страны. Отметьте страны справа для офлайн-загрузки.",
+      title: "Страны офлайн",
+      download: "Скачать выбранные",
+      update: "Доступно обновление",
+      ready: "Сохранено офлайн",
+      missing: "Не скачано",
+      busy: "Загрузка",
+      failed: "Не удалось скачать или сохранить",
+      done: "Сохранено",
+      empty:
+        "Нет локальных данных. Подключитесь к интернету и скачайте страну.",
+    },
+    uk: {
+      explanation:
+        "Завантажені камери й попередження доступні без інтернету, якщо геолокацію ввімкнено. Карта завантажується окремо.",
+      downloaded: "Завантажені",
+      available: "Доступні країни",
+      territories: "Території",
+      none: "Поки немає завантажених країн",
+      cameras: "камер",
+      hint: "Натисніть назву, щоб вибрати країну. Позначте країни праворуч для офлайн-завантаження.",
+      title: "Країни офлайн",
+      download: "Завантажити вибрані",
+      update: "Доступне оновлення",
+      ready: "Збережено офлайн",
+      missing: "Не завантажено",
+      busy: "Завантаження",
+      failed: "Не вдалося завантажити або зберегти",
+      done: "Збережено",
+      empty:
+        "Немає локальних даних. Підключіться до інтернету й завантажте країну.",
+    },
+    en: {
+      explanation:
+        "Downloaded cameras and alerts work without internet when location is enabled. Map tiles load separately.",
+      downloaded: "Downloaded",
+      available: "Available countries",
+      territories: "Territories",
+      none: "No countries downloaded yet",
+      cameras: "cameras",
+      hint: "Tap a name to choose your driving country. Check countries on the right to download for offline use.",
+      title: "Offline countries",
+      download: "Download selected",
+      update: "Update available",
+      ready: "Saved offline",
+      missing: "Not downloaded",
+      busy: "Downloading",
+      failed: "Could not download or save",
+      done: "Saved",
+      empty:
+        "No local data. Connect to the internet and download this country.",
+    },
+    pl: {
+      explanation:
+        "Pobrane kamery i ostrzeżenia działają bez internetu przy włączonej lokalizacji. Mapa pobiera się osobno.",
+      downloaded: "Pobrane",
+      available: "Dostępne kraje",
+      territories: "Terytoria",
+      none: "Nie pobrano jeszcze krajów",
+      cameras: "kamer",
+      hint: "Dotknij nazwy, aby wybrać kraj. Zaznacz kraje po prawej stronie, aby pobrać je offline.",
+      title: "Kraje offline",
+      download: "Pobierz wybrane",
+      update: "Dostępna aktualizacja",
+      ready: "Zapisano offline",
+      missing: "Nie pobrano",
+      busy: "Pobieranie",
+      failed: "Nie udało się pobrać lub zapisać",
+      done: "Zapisano",
+      empty: "Brak danych lokalnych. Połącz się z internetem i pobierz kraj.",
+    },
+  }[settings.language] || {
+    explanation:
+      "Downloaded cameras and alerts work without internet when location is enabled. Map tiles load separately.",
+    downloaded: "Downloaded",
+    available: "Available countries",
+    territories: "Territories",
+    none: "No countries downloaded yet",
+    cameras: "cameras",
+    hint: "Tap a name to choose your driving country. Check countries on the right to download for offline use.",
+    title: "Offline countries",
+    download: "Download selected",
+    update: "Update available",
+    ready: "Saved offline",
+    missing: "Not downloaded",
+    busy: "Downloading",
+    failed: "Could not download or save",
+    done: "Saved",
+    empty: "No local data. Connect and download this country.",
+  };
+  const remoteFeedsRef = useRef({});
+  const countryVersionsRef = useRef({});
+  const selectedCountry = String(settings.country || "ua").toUpperCase();
+  const activeUAData = countryFeed(remoteFeeds, "UA", data, plData);
+  const activePLData = countryFeed(remoteFeeds, selectedCountry, data, plData);
+  const activeCountryFeedRef = useRef(activePLData);
+  activeCountryFeedRef.current = activePLData;
+  const [coverage, setCoverage] = useState(null);
+  const [lastDataUpdate, setLastDataUpdate] = useState(null);
   const [tab, setTab] = useState("drive");
   const [modal, setModal] = useState(null);
   const [reportNote, setReportNote] = useState("");
   const sub = useRef(null);
   const timer = useRef(null);
-  const lastSpoken = useRef({ id: null, distance: Infinity });
-  const countryLists = useMemo(()=>buildCountryLists(countryCoverage,remoteFeeds,settings.language),[countryCoverage,remoteFeeds,settings.language]);
+  const lastSpoken = useRef(null);
+  const gpsPrevious = useRef(null);
+  const averageOverspeedSpoken = useRef(null);
+  const countryLists = useMemo(
+    () => buildCountryLists(countryCoverage, remoteFeeds, settings.language),
+    [countryCoverage, remoteFeeds, settings.language],
+  );
+
+  const [reportType, setReportType] = useState("speed_camera");
+  const historyRef = useRef(history);
+  historyRef.current = history;
+  const drivingRef = useRef({});
+  drivingRef.current = {
+    settings,
+    hiddenIds,
+    feed: activePLData,
+    country: selectedCountry,
+  };
+  const dcopy = DRIVER_COPY[settings.language] || DRIVER_COPY.ru;
 
   useEffect(() => {
     (async () => {
@@ -310,16 +635,26 @@ export default function App() {
         }
         const r = await AsyncStorage.getItem(REPORTS_KEY);
         if (r) setReports(JSON.parse(r));
-        const saved = await loadCameraCache(AsyncStorage,REMOTE_CACHE_KEY);
+        const saved = await loadCameraCache(AsyncStorage, REMOTE_CACHE_KEY);
         if (saved) {
-          const feeds=saved.feeds||{UA:saved.ua,PL:saved.pl};
-          remoteFeedsRef.current=feeds;countryVersionsRef.current=saved.countryVersions||{};bgCameraFeeds=feeds;setRemoteFeeds(feeds);
-          countryCoverageRef.current=saved.countries||[];setCountryCoverage(saved.countries||[]);setCoverage(saved.cov||null);setLastDataUpdate(saved.stamp||null);
+          const feeds = saved.feeds || { UA: saved.ua, PL: saved.pl };
+          remoteFeedsRef.current = feeds;
+          countryVersionsRef.current = saved.countryVersions || {};
+          bgCameraFeeds = feeds;
+          setRemoteFeeds(feeds);
+          countryCoverageRef.current = saved.countries || [];
+          setCountryCoverage(saved.countries || []);
+          setCoverage(saved.cov || null);
+          setLastDataUpdate(saved.stamp || null);
         }
         setCacheReady(true);
-        const started = await Location.hasStartedLocationUpdatesAsync(BACKGROUND_LOCATION_TASK);
+        const started = await Location.hasStartedLocationUpdatesAsync(
+          BACKGROUND_LOCATION_TASK,
+        );
         setBackgroundEnabled(started);
-      } catch { setCacheReady(true); }
+      } catch {
+        setCacheReady(true);
+      }
     })();
 
     return () => {
@@ -330,79 +665,205 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    if(cacheReady) AsyncStorage.setItem(SETTINGS_KEY, JSON.stringify(settings)).catch(()=>{});
+    if (cacheReady)
+      AsyncStorage.setItem(SETTINGS_KEY, JSON.stringify(settings)).catch(
+        () => {},
+      );
     bgSettings = settings;
-  }, [settings,cacheReady]);
+  }, [settings, cacheReady]);
 
   useEffect(() => {
     if (active) stopTracking();
-    setNearest(null);setAhead(null);setPlSectionId(null);plLastSectionState.current=null;
-    if(cacheReady) refreshRemoteData(true,selectedCountry);
-  }, [selectedCountry,cacheReady]);
+    setNearest(null);
+    setAhead(null);
+    setAverageTrip(null);
+    plLastSectionState.current = null;
+    if (cacheReady) refreshRemoteData(true, selectedCountry);
+  }, [selectedCountry, cacheReady]);
 
-  function refreshRemoteData(silent=false,country=selectedCountry) {
-    const run=()=>performRefresh(silent,country);
-    deliveryQueue.current=deliveryQueue.current.catch(()=>{}).then(run);
+  function refreshRemoteData(silent = false, country = selectedCountry) {
+    const run = () => performRefresh(silent, country);
+    deliveryQueue.current = deliveryQueue.current.catch(() => {}).then(run);
     return deliveryQueue.current;
   }
 
-  async function performRefresh(silent,country) {
+  async function performRefresh(silent, country) {
     try {
-      const result=await refreshCountryDelivery({country,feeds:remoteFeedsRef.current,versions:countryVersionsRef.current,countries:countryCoverageRef.current});
-      countryCoverageRef.current=result.countries;
+      const result = await refreshCountryDelivery({
+        country,
+        feeds: remoteFeedsRef.current,
+        versions: countryVersionsRef.current,
+        countries: countryCoverageRef.current,
+      });
+      countryCoverageRef.current = result.countries;
       setCountryCoverage(result.countries);
-      if (!result.feed || result.source==='offline' || result.source==='bundled') {
-        await saveCameraCache(AsyncStorage,REMOTE_CACHE_KEY,{feeds:remoteFeedsRef.current,countries:result.countries,cov:coverage,stamp:lastDataUpdate,countryVersions:countryVersionsRef.current});
-        if(!silent) Alert.alert(offlineText.failed);
+      if (
+        !result.feed ||
+        result.source === "offline" ||
+        result.source === "bundled"
+      ) {
+        await saveCameraCache(AsyncStorage, REMOTE_CACHE_KEY, {
+          feeds: remoteFeedsRef.current,
+          countries: result.countries,
+          cov: coverage,
+          stamp: lastDataUpdate,
+          countryVersions: countryVersionsRef.current,
+        });
+        if (!silent) Alert.alert(offlineText.failed);
         return false;
       }
-      const feeds={...remoteFeedsRef.current,[country]:result.feed};
-      const countryVersions={...countryVersionsRef.current};
-      if(result.version)countryVersions[country]=result.version;else delete countryVersions[country];
-      const countries=result.countries;
-      const coverageFor=code=>countries.find(entry=>entry.country_code===code);
-      const ua=feeds.UA,pl=feeds.PL;
-      const cov={UA:{speed_cameras:ua?.count??ua?.cameras?.length??coverageFor('UA')?.speed_cameras??0},PL:pl?.counts||coverageFor('PL')||{}};
+      const feeds = { ...remoteFeedsRef.current, [country]: result.feed };
+      const countryVersions = { ...countryVersionsRef.current };
+      if (result.version) countryVersions[country] = result.version;
+      else delete countryVersions[country];
+      const countries = result.countries;
+      const coverageFor = (code) =>
+        countries.find((entry) => entry.country_code === code);
+      const ua = feeds.UA,
+        pl = feeds.PL;
+      const cov = {
+        UA: {
+          speed_cameras:
+            ua?.count ??
+            ua?.cameras?.length ??
+            coverageFor("UA")?.speed_cameras ??
+            0,
+        },
+        PL: pl?.counts || coverageFor("PL") || {},
+      };
       const stamp = new Date().toISOString();
-      await saveCameraCache(AsyncStorage,REMOTE_CACHE_KEY,{feeds,countries,cov,stamp,countryVersions},country);
-      remoteFeedsRef.current=feeds;countryVersionsRef.current=countryVersions;bgCameraFeeds=feeds;
-      setRemoteFeeds(feeds);setCountryCoverage(countries);setCoverage(cov);setLastDataUpdate(stamp);
+      await saveCameraCache(
+        AsyncStorage,
+        REMOTE_CACHE_KEY,
+        { feeds, countries, cov, stamp, countryVersions },
+        country,
+      );
+      remoteFeedsRef.current = feeds;
+      countryVersionsRef.current = countryVersions;
+      bgCameraFeeds = feeds;
+      setRemoteFeeds(feeds);
+      setCountryCoverage(countries);
+      setCoverage(cov);
+      setLastDataUpdate(stamp);
       if (!silent) Alert.alert(t.updated);
       return true;
-
     } catch {
-      if(!silent) Alert.alert(offlineText.failed);
+      if (!silent) Alert.alert(offlineText.failed);
       return false;
     }
   }
 
   async function downloadCountries() {
     setDownloading(true);
-    const failed=[];
-    for(const code of downloadSelection) {
-      setDownloadStatus(`${offlineText.busy}: ${countryLabel(code,settings.language)}`);
-      if(!await refreshRemoteData(true,code)) failed.push(code);
+    const failed = [];
+    for (const code of downloadSelection) {
+      setDownloadStatus(
+        `${offlineText.busy}: ${countryLabel(code, settings.language)}`,
+      );
+      if (!(await refreshRemoteData(true, code))) failed.push(code);
     }
-    setDownloadStatus(failed.length ? `${offlineText.failed}: ${failed.map(code=>countryLabel(code,settings.language)).join(", ")}` : offlineText.done);
+    setDownloadStatus(
+      failed.length
+        ? `${offlineText.failed}: ${failed.map((code) => countryLabel(code, settings.language)).join(", ")}`
+        : offlineText.done,
+    );
     setDownloading(false);
   }
 
   function renderCountryRow(item) {
-    const code=item.country_code, checked=downloadSelection.includes(code), saved=!!remoteFeeds[code];
-    const update=saved&&item.version&&countryVersionsRef.current[code]!==item.version;
-    return <View key={code} style={[s.dataCard,selectedCountry===code&&{borderColor:"#2685e3",borderWidth:2}]}>
-      <Pressable accessibilityRole="radio" accessibilityState={{selected:selectedCountry===code}}
-        accessibilityLabel={item.label} onPress={()=>setSettings(previous=>({...previous,country:code.toLowerCase()}))} style={{flex:1,paddingVertical:6}}>
-        <Text style={s.dataLabel}>{item.label}</Text>
-        <Text style={s.note}>{item.publishedCount} {offlineText.cameras} · {saved?offlineText.ready:offlineText.missing}</Text>
-        {!!update&&<Text style={s.note}>{offlineText.update}</Text>}
-      </Pressable>
-      <Pressable disabled={downloading} accessibilityRole="checkbox" accessibilityLabel={`${offlineText.download}: ${item.label}`}
-        accessibilityState={{checked,disabled:downloading}} onPress={()=>setDownloadSelection(previous=>previous.includes(code)?previous.filter(x=>x!==code):[...previous,code])}
-        style={[s.lang,{minWidth:44,minHeight:44,alignItems:"center",justifyContent:"center"}]}>
-        <Text style={{fontSize:24}}>{checked?"☑":"☐"}</Text>
-      </Pressable>
-    </View>;
+    const code = item.country_code,
+      checked = downloadSelection.includes(code),
+      saved = !!remoteFeeds[code];
+    const update =
+      saved &&
+      item.version &&
+      countryVersionsRef.current[code] !== item.version;
+    const bytes =
+      item.size_bytes || item.export_size_bytes || item.byte_size || item.bytes;
+    const updated =
+      remoteFeeds[code]?.generated_at || remoteFeeds[code]?.updated_at;
+    return (
+      <View
+        key={code}
+        style={[
+          s.dataCard,
+          selectedCountry === code && {
+            borderColor: "#2685e3",
+            borderWidth: 2,
+          },
+        ]}
+      >
+        <Pressable
+          accessibilityRole="radio"
+          accessibilityState={{ selected: selectedCountry === code }}
+          accessibilityLabel={item.label}
+          onPress={() =>
+            setSettings((previous) => ({
+              ...previous,
+              country: code.toLowerCase(),
+            }))
+          }
+          style={{ flex: 1, paddingVertical: 6 }}
+        >
+          <Text style={s.dataLabel}>{item.label}</Text>
+          <Text style={s.note}>
+            {item.publishedCount.toLocaleString(settings.language)}{" "}
+            {offlineText.cameras} ·{" "}
+            {bytes
+              ? `${(bytes / 1000000).toLocaleString(settings.language, { maximumFractionDigits: 1 })} МБ`
+              : dcopy.sizeUnknown}
+          </Text>
+          {saved && <Text style={s.savedLabel}>{dcopy.saved}</Text>}
+          {saved && updated && (
+            <Text style={s.note}>
+              {new Date(updated).toDateString() === new Date().toDateString()
+                ? dcopy.today
+                : `${dcopy.updated} ${new Date(updated).toLocaleDateString(settings.language)}`}
+            </Text>
+          )}
+          {!!update && <Text style={s.note}>{offlineText.update}</Text>}
+        </Pressable>
+        {(!saved || update) && (
+          <Pressable
+            accessibilityRole="button"
+            disabled={downloading}
+            onPress={() => refreshRemoteData(false, code)}
+            style={s.countryDownload}
+          >
+            <Text style={s.countryDownloadText}>
+              {update ? dcopy.update : dcopy.download}
+            </Text>
+          </Pressable>
+        )}
+        <Pressable
+          disabled={downloading}
+          accessibilityRole="checkbox"
+          accessibilityLabel={`${offlineText.download}: ${item.label}`}
+          accessibilityState={{ checked, disabled: downloading }}
+          onPress={() =>
+            setDownloadSelection((previous) =>
+              previous.includes(code)
+                ? previous.filter((x) => x !== code)
+                : [...previous, code],
+            )
+          }
+          style={[
+            s.lang,
+            {
+              flex: 0,
+              width: 44,
+              minWidth: 44,
+              minHeight: 44,
+              paddingHorizontal: 0,
+              alignItems: "center",
+              justifyContent: "center",
+            },
+          ]}
+        >
+          <Text style={{ fontSize: 24 }}>{checked ? "☑" : "☐"}</Text>
+        </Pressable>
+      </View>
+    );
   }
 
   async function sendReportToServer(item) {
@@ -421,7 +882,8 @@ export default function App() {
   }
 
   async function saveHistory(item) {
-    const next = [item, ...history].slice(0, 100);
+    const next = [item, ...historyRef.current].slice(0, 100);
+    historyRef.current = next;
     setHistory(next);
     await AsyncStorage.setItem(HISTORY_KEY, JSON.stringify(next));
   }
@@ -438,36 +900,41 @@ export default function App() {
     await AsyncStorage.setItem(HIDDEN_KEY, JSON.stringify(next));
   }
 
-  function speakWarning(cam, threshold) {
-    if (!cam || cam.distance > threshold) return;
-    const last = lastSpoken.current;
-    if (last.id === cam.id && last.distance - cam.distance < 250) return;
-
-    const over = speedKmh > Number(cam.speed_limit);
-    if (settings.vibration) {
-      Vibration.vibrate(over ? [0, 250, 120, 250] : [0, 250]);
-      Haptics.notificationAsync(over ? Haptics.NotificationFeedbackType.Warning : Haptics.NotificationFeedbackType.Success).catch(()=>{});
+  function speakWarning(cam, kmh, currentSettings) {
+    const result = warningDecision(
+      lastSpoken.current,
+      cam,
+      kmh,
+      currentSettings,
+    );
+    lastSpoken.current = result.memory;
+    if (!result.event) return;
+    if (currentSettings.vibration) {
+      Vibration.vibrate(result.over ? [0, 200, 100, 200] : [0, 120]);
+      Haptics.notificationAsync(
+        result.over
+          ? Haptics.NotificationFeedbackType.Warning
+          : Haptics.NotificationFeedbackType.Success,
+      ).catch(() => {});
     }
-    if (settings.voice) {
-      const rounded = Math.max(100, Math.round(cam.distance / 100) * 100);
-      Speech.stop();
+    if (currentSettings.voice)
       Speech.speak(
-        over
-          ? `Камера впереди через ${rounded} метров. Снизьте скорость. Ограничение ${cam.speed_limit}.`
-          : `Камера впереди через ${rounded} метров. Ограничение ${cam.speed_limit}.`,
-        { language: settings.language === "uk" ? "uk-UA" : settings.language === "en" ? "en-US" : "ru-RU", rate: 0.95 }
+        warningPhrase(cam, result.event, result.over, currentSettings.language),
+        { language: voiceLocale(currentSettings.language), rate: 0.95 },
       );
-    }
-    lastSpoken.current = { id: cam.id, distance: cam.distance };
-    saveHistory({
-      id: `${Date.now()}-${cam.id}`,
-      cameraId: cam.id,
-      when: new Date().toISOString(),
-      distance: cam.distance,
-      speed: speedKmh,
-      limit: cam.speed_limit,
-      location: cam.location || cam.road_index || cam.region,
-    });
+    if (result.event === "first")
+      saveHistory({
+        id: `${Date.now()}-${cam.id}`,
+        cameraId: cam.id,
+        when: new Date().toISOString(),
+        distance: cam.distance,
+        speed: kmh,
+        limit: cam.speed_limit,
+        location: drivingLabel(
+          cam,
+          DRIVER_COPY[currentSettings.language] || DRIVER_COPY.ru,
+        ),
+      });
   }
 
   async function startTracking() {
@@ -478,144 +945,122 @@ export default function App() {
     }
     if (sub.current) sub.current.remove();
     sub.current = await Location.watchPositionAsync(
-      { accuracy: Location.Accuracy.BestForNavigation, timeInterval: 1000, distanceInterval: 5 },
-      pos => {
+      {
+        accuracy: Location.Accuracy.BestForNavigation,
+        timeInterval: 1000,
+        distanceInterval: 5,
+      },
+      (pos) => {
         const { latitude, longitude, speed: rs, heading: rh } = pos.coords;
-        const kmh = typeof rs === "number" && rs >= 0 ? Math.round(rs * 3.6) : 0;
-        const h = typeof rh === "number" && rh >= 0 ? norm(rh) : null;
+        const kmh =
+          typeof rs === "number" && rs >= 0 ? Math.round(rs * 3.6) : 0;
+        const previous = gpsPrevious.current;
+        const position = { latitude, longitude };
+        const h =
+          pos.coords.accuracy > 80
+            ? null
+            : typeof rh === "number" && rh >= 0
+              ? norm(rh)
+              : previous && distanceBetween(previous, position) >= 8
+                ? bearingBetween(previous, position)
+                : null;
+        gpsPrevious.current = position;
         setCoords({ latitude, longitude });
         setSpeedKmh(kmh);
         setHeading(h);
 
-        bgHiddenIds = new Set(hiddenIds.map(String));
-
-        if (selectedCountry !== "UA") {
-          const point =
-            kmh >= MIN_MOVING_SPEED_KMH && h != null
-              ? nearestPolandPoint(activeCountryFeedRef.current, latitude, longitude, h, 5000)
-              : null;
-
-          setNearest(point);
-          setAhead(point);
-
-          if (point) {
-            const threshold = alertDistanceForSpeed(kmh, settings);
-
-            if (point.distance <= threshold && settings.voice) {
-              const rounded = Math.max(100, Math.round(point.distance / 100) * 100);
-
-              const kind =
-                point.type === "red_light"
-                  ? "Kontrola czerwonego światła"
-                  : point.type === "checkpoint"
-                  ? "Punkt kontroli"
-                  : "Fotoradar";
-
-              Speech.stop();
-
-              Speech.speak(
-                settings.language === "pl"
-                  ? `${kind} za ${rounded} metrów.${point.speed_limit ? ` Ograniczenie ${point.speed_limit}.` : ""}`
-                  : settings.language === "uk"
-                  ? `Камера попереду через ${rounded} метрів.${point.speed_limit ? ` Обмеження ${point.speed_limit}.` : ""}`
-                  : settings.language === "en"
-                  ? `Camera ahead in ${rounded} meters.${point.speed_limit ? ` Speed limit ${point.speed_limit}.` : ""}`
-                  : `Камера впереди через ${rounded} метров.${point.speed_limit ? ` Ограничение ${point.speed_limit}.` : ""}`,
-                {
-                  language:
-                    settings.language === "pl"
-                      ? "pl-PL"
-                      : settings.language === "uk"
-                      ? "uk-UA"
-                      : settings.language === "en"
-                      ? "en-US"
-                      : "ru-RU",
-                  rate: 0.95
-                }
-              );
-            }
-          }
-
-          const sectionEvent =
-            h != null
-              ? detectAverageSpeedSection(
-                  activeCountryFeedRef.current,
-                  latitude,
-                  longitude,
-                  h,
-                  plSectionId
-                )
-              : null;
-
-          if (sectionEvent) {
-            const key = `${sectionEvent.section.id}:${sectionEvent.state}`;
-
-            if (plLastSectionState.current !== key) {
-              plLastSectionState.current = key;
-
-              if (sectionEvent.state === "entering") {
-                setPlSectionId(String(sectionEvent.section.id));
-              }
-
-              if (sectionEvent.state === "ending") {
-                setPlSectionId(null);
-              }
-
-              const phrase = averageSectionSpeech(
-                sectionEvent,
-                settings.language
-              );
-
-              if (phrase && settings.voice) {
-                Speech.stop();
-
-                Speech.speak(phrase, {
-                  language:
-                    settings.language === "pl"
-                      ? "pl-PL"
-                      : settings.language === "uk"
-                      ? "uk-UA"
-                      : settings.language === "en"
-                      ? "en-US"
-                      : "ru-RU",
-                  rate: 0.95
-                });
-              }
-            }
-          } else if (plSectionId == null) {
-            plLastSectionState.current = null;
-          }
-
-          return;
-        }
-
-        const n = findNearestAny(latitude, longitude);
-        setNearest(n);
-
-        const a =
+        const current = drivingRef.current;
+        const points = drivingPoints(current.feed).filter(
+          (p) => !current.hiddenIds.map(String).includes(String(p.id)),
+        );
+        const point =
           kmh >= MIN_MOVING_SPEED_KMH && h != null
-            ? findNearestAhead(latitude, longitude, h)
+            ? nearestDrivingPoint(
+                points,
+                { latitude, longitude },
+                h,
+                5000,
+                pos.coords.accuracy,
+              )
             : null;
-
-        setAhead(a);
-
-        if (a) {
-          speakWarning(a, alertDistanceForSpeed(kmh, settings));
+        setNearest(null);
+        setAhead(point);
+        const progress = advanceAverageTrip(
+          plLastSectionState.current,
+          current.feed,
+          { latitude, longitude },
+          h,
+          pos.timestamp || Date.now(),
+          pos.coords.accuracy,
+        );
+        plLastSectionState.current = progress.trip;
+        setAverageTrip(progress.trip);
+        if (
+          point &&
+          progress.event !== "entering" &&
+          progress.event !== "ending"
+        )
+          speakWarning(point, kmh, current.settings);
+        if (!progress.trip) averageOverspeedSpoken.current = null;
+        if (
+          progress.trip &&
+          progress.trip.section.speed_limit > 0 &&
+          progress.trip.average > progress.trip.section.speed_limit + 3 &&
+          progress.trip.lastAt - progress.trip.startedAt >= 15000 &&
+          averageOverspeedSpoken.current !== progress.trip.section.id
+        ) {
+          averageOverspeedSpoken.current = progress.trip.section.id;
+          if (current.settings.voice)
+            Speech.speak(
+              warningPhrase(
+                { ...progress.trip.section, distance: 0 },
+                "over",
+                true,
+                current.settings.language,
+              ),
+              { language: voiceLocale(current.settings.language), rate: 0.95 },
+            );
         }
-      }
+        if (progress.event === "entering" || progress.event === "ending") {
+          const phrase = averageSectionSpeech(
+            { state: progress.event, section: progress.section },
+            current.settings.language,
+          );
+          if (current.settings.voice && phrase)
+            Speech.speak(phrase, {
+              language: voiceLocale(current.settings.language),
+              rate: 0.95,
+            });
+        }
+      },
     );
+    lastSpoken.current = null;
+    gpsPrevious.current = null;
+    averageOverspeedSpoken.current = null;
+    bgLastAlert = null;
     setActive(true);
   }
 
   function stopTracking() {
-    if (sub.current) { sub.current.remove(); sub.current = null; }
+    if (sub.current) {
+      sub.current.remove();
+      sub.current = null;
+    }
     Speech.stop();
-    setActive(false); setAhead(null); setHeading(null);
+    setActive(false);
+    setSpeedKmh(0);
+    setAhead(null);
+    setHeading(null);
+    setAverageTrip(null);
+    plLastSectionState.current = null;
+    lastSpoken.current = null;
   }
 
   async function toggleBackground() {
     if (backgroundEnabled) {
-      if (await Location.hasStartedLocationUpdatesAsync(BACKGROUND_LOCATION_TASK)) {
+      if (
+        await Location.hasStartedLocationUpdatesAsync(BACKGROUND_LOCATION_TASK)
+      ) {
         await Location.stopLocationUpdatesAsync(BACKGROUND_LOCATION_TASK);
       }
       setBackgroundEnabled(false);
@@ -626,7 +1071,10 @@ export default function App() {
     await Notifications.requestPermissionsAsync();
     const bg = await Location.requestBackgroundPermissionsAsync();
     if (bg.status !== "granted") {
-      Alert.alert("Фоновый режим", "Для фоновых предупреждений выбери доступ к геолокации «Всегда».");
+      Alert.alert(
+        "Фоновый режим",
+        "Для фоновых предупреждений выбери доступ к геолокации «Всегда».",
+      );
       return;
     }
     await Location.startLocationUpdatesAsync(BACKGROUND_LOCATION_TASK, {
@@ -644,19 +1092,33 @@ export default function App() {
     if (!coords) return [];
     bgHiddenIds = new Set(hiddenIds.map(String));
     return visibleCameras()
-      .map(c => ({...c, distance: Math.round(distanceMeters(coords.latitude, coords.longitude, c.latitude, c.longitude))}))
-      .sort((a,b)=>a.distance-b.distance)
-      .slice(0,20);
+      .map((c) => ({
+        ...c,
+        distance: Math.round(
+          distanceMeters(
+            coords.latitude,
+            coords.longitude,
+            c.latitude,
+            c.longitude,
+          ),
+        ),
+      }))
+      .sort((a, b) => a.distance - b.distance)
+      .slice(0, 20);
   }
 
   async function reportNewCamera() {
     if (!coords) {
-      Alert.alert("GPS", "Сначала включи поездку, чтобы приложение знало координаты.");
+      Alert.alert(
+        "GPS",
+        "Сначала включи поездку, чтобы приложение знало координаты.",
+      );
       return;
     }
     const item = {
       id: `new-${Date.now()}`,
       type: "new",
+      camera_type: reportType,
       latitude: coords.latitude,
       longitude: coords.longitude,
       note: reportNote,
@@ -669,10 +1131,7 @@ export default function App() {
 
     const sent = await sendReportToServer(item);
 
-    Alert.alert(
-      t.saved,
-      sent ? t.reportSent : t.reportFailed
-    );
+    Alert.alert(t.saved, sent ? t.reportSent : t.reportFailed);
   }
 
   async function reportRemovedCamera(cam) {
@@ -693,100 +1152,240 @@ export default function App() {
 
     const sent = await sendReportToServer(item);
 
-    Alert.alert(
-      t.saved,
-      sent ? t.reportSent : t.reportFailed
-    );
+    Alert.alert(t.saved, sent ? t.reportSent : t.reportFailed);
   }
 
-  const shownCam = ahead || nearest;
-  const shownDistance = ahead?.distance ?? nearest?.distance;
+  const shownCam = ahead;
+  const shownDistance = ahead?.distance;
   const currentThreshold = alertDistanceForSpeed(speedKmh, settings);
-  const danger = shownDistance != null && shownDistance <= currentThreshold && !!ahead;
+  const danger =
+    shownDistance != null && shownDistance <= currentThreshold && !!ahead;
 
+  const drivingLimit =
+    averageTrip?.section?.speed_limit || shownCam?.speed_limit;
+  const overLimit = drivingLimit > 0 && speedKmh > drivingLimit + 3;
+  const closeStage = shownDistance <= Math.max(250, (speedKmh / 3.6) * 12);
+  const nearStage =
+    shownDistance <= warningDistances(speedKmh, settings).second;
   const nav = [
-    ["drive","🚗","Поездка"], ["map","🗺️",t.map], ["nearby","📍",t.nearby],
-    ["history","🕘",t.history], ["settings","⚙️",t.settings]
+    ["drive", "◉", dcopy.drive],
+    ["map", "⌖", t.map],
+    ["offline", "↓", dcopy.offline],
+    ["settings", "⚙", dcopy.settings],
   ];
 
   return (
     <SafeAreaView style={s.safe}>
-      <StatusBar style="auto" />
-      <View style={s.nav}>
-        {nav.map(([key,icon,label]) => (
-          <Pressable key={key} onPress={()=>setTab(key)} style={[s.navItem, tab===key && s.navActive]}>
-            <Text style={s.navIcon}>{icon}</Text><Text style={s.navLabel}>{label}</Text>
-          </Pressable>
-        ))}
-      </View>
+      <StatusBar style="dark" />
+      <ScrollView
+        contentContainerStyle={[s.container, { flexGrow: 1 }]}
+        showsVerticalScrollIndicator={false}
+      >
+        <View style={s.topBar}>
+          <Text style={s.brand}>
+            {tab === "drive"
+              ? "CamAlert"
+              : tab === "offline"
+                ? dcopy.offline
+                : tab === "settings"
+                  ? dcopy.settings
+                  : t.map}
+          </Text>
+          <Text style={s.countryPill}>
+            {countryLabel(selectedCountry, settings.language)}
+          </Text>
+        </View>
 
-      <ScrollView contentContainerStyle={s.container}>
-        <Text style={s.title}>{t.title}</Text>
-        <Text style={s.subtitle}>{countryLabel(selectedCountry,settings.language)} · {visibleCameras().length} камер</Text>
-
-        {tab === "drive" && <>
-          <View style={[s.card, danger && s.cardDanger]}>
-            <Text style={s.label}>{ahead ? t.ahead : active && speedKmh < MIN_MOVING_SPEED_KMH ? t.waitMove : t.nearest}</Text>
-            {shownCam ? <>
-              <Text style={s.distance}>{shownDistance >= 1000 ? `${(shownDistance/1000).toFixed(1)} км` : `${shownDistance} м`}</Text>
-              <Text style={s.place}>{shownCam.location || shownCam.road_index || shownCam.region}</Text>
-              <Text style={s.region}>{shownCam.region}</Text>
-              <Text style={s.typeLabel}>{cameraTypeLabel(shownCam,settings.language)}</Text>
-              {danger && <View style={s.warningBox}><Text style={s.warningText}>{t.aheadWarn}</Text><Text style={s.warningSub}>{currentThreshold} м</Text></View>}
-              {shownCam.speed_limit != null && (
-                <View style={s.limitRow}>
-                  <View style={s.limitCircle}><Text style={s.limitText}>{shownCam.speed_limit}</Text></View>
-                  <View><Text style={s.small}>{t.limit}</Text><Text style={s.value}>{shownCam.speed_limit} км/ч</Text></View>
+        {tab === "drive" && (
+          <View style={s.driver}>
+            <Text style={s.protection}>
+              {active
+                ? coords
+                  ? heading != null && speedKmh >= MIN_MOVING_SPEED_KMH
+                    ? dcopy.active
+                    : dcopy.heading
+                  : dcopy.gps
+                : dcopy.idle}
+            </Text>
+            <View style={s.speedPanel}>
+              <Text
+                adjustsFontSizeToFit
+                numberOfLines={1}
+                style={[s.heroSpeed, overLimit && s.speedOver]}
+              >
+                {speedKmh}
+              </Text>
+              <Text style={s.speedUnit}>{dcopy.unit}</Text>
+              {(averageTrip?.section?.speed_limit || shownCam?.speed_limit) >
+                0 && (
+                <View style={s.driverLimit}>
+                  <Text style={s.limitCaption}>{dcopy.limit}</Text>
+                  <Text style={s.driverLimitNumber}>
+                    {averageTrip?.section?.speed_limit || shownCam.speed_limit}
+                  </Text>
                 </View>
               )}
-            </> : <Text style={s.empty}>{t.start}</Text>}
-          </View>
-
-          <View style={s.row}>
-            <View style={s.stat}><Text style={s.small}>{t.speed}</Text><Text style={s.statValue}>{speedKmh}</Text><Text style={s.unit}>км/ч</Text></View>
-            <View style={s.stat}><Text style={s.small}>{t.direction}</Text><Text style={s.heading}>{heading==null?t.waitMove:`${Math.round(heading)}°`}</Text><Text style={s.unit}>{coords?t.gpsWorks:t.gpsWait}</Text></View>
-          </View>
-
-          <View style={s.backgroundCard}>
-            <View style={{flex:1}}>
-              <Text style={s.backgroundTitle}>{t.background}</Text>
-              <Text style={s.backgroundText}>{backgroundEnabled?t.on:t.off}</Text>
             </View>
-            <Pressable onPress={toggleBackground} style={[s.smallButton, backgroundEnabled&&s.smallButtonStop]}>
-              <Text style={s.smallButtonText}>{backgroundEnabled?t.disable:t.enable}</Text>
-            </Pressable>
+            {averageTrip ? (
+              <View
+                style={[
+                  s.driverAlert,
+                  averageTrip.section.speed_limit > 0 &&
+                    averageTrip.average > averageTrip.section.speed_limit + 3 &&
+                    s.driverAlertOver,
+                ]}
+              >
+                <Text style={s.alertTitle}>{dcopy.average}</Text>
+                <Text style={s.averageNumber}>
+                  {dcopy.averageValue}: {Math.round(averageTrip.average)}{" "}
+                  {dcopy.unit}
+                </Text>
+                <Text style={s.alertDetail}>
+                  {dcopy.limit} {averageTrip.section.speed_limit || "—"} ·{" "}
+                  {dcopy.remaining} ≈{" "}
+                  {(averageTrip.remaining / 1000).toLocaleString(
+                    settings.language,
+                    { maximumFractionDigits: 1 },
+                  )}{" "}
+                  {dcopy.km}
+                </Text>
+              </View>
+            ) : shownCam ? (
+              <View
+                accessibilityLiveRegion="polite"
+                style={[
+                  s.driverAlert,
+                  closeStage && s.driverAlertClose,
+                  nearStage && s.driverAlertNear,
+                  overLimit && s.driverAlertOver,
+                ]}
+              >
+                <Text style={s.alertIcon}>
+                  {shownCam.type === "red_light_camera"
+                    ? "🚦"
+                    : shownCam.type === "mobile_control"
+                      ? "👮"
+                      : "📷"}
+                </Text>
+                <Text style={s.alertTitle}>
+                  {drivingLabel(shownCam, dcopy)}
+                </Text>
+                <Text style={s.alertDistance}>
+                  {shownDistance} {dcopy.meters}
+                </Text>
+                <Text style={s.alertDetail}>
+                  {overLimit
+                    ? dcopy.slow
+                    : shownCam.speed_limit
+                      ? `${dcopy.limit} ${shownCam.speed_limit}`
+                      : ""}
+                </Text>
+              </View>
+            ) : (
+              <View style={s.clearCard}>
+                <Text style={s.clearTitle}>
+                  {active &&
+                  coords &&
+                  heading != null &&
+                  speedKmh >= MIN_MOVING_SPEED_KMH
+                    ? dcopy.clear
+                    : active
+                      ? dcopy.heading
+                      : dcopy.idle}
+                </Text>
+              </View>
+            )}
+            <View style={s.tripActions}>
+              <Pressable
+                accessibilityRole="button"
+                onPress={active ? stopTracking : startTracking}
+                style={[s.tripButton, active && s.tripStop]}
+              >
+                <Text
+                  style={[s.tripButtonText, active && { color: "#152535" }]}
+                >
+                  {active ? t.stop : t.start}
+                </Text>
+              </Pressable>
+              <Pressable
+                accessibilityRole="button"
+                accessibilityLabel={dcopy.add}
+                onPress={() => setModal("add")}
+                style={s.addButton}
+              >
+                <Text style={s.addGlyph}>＋</Text>
+              </Pressable>
+            </View>
           </View>
-
-          <Pressable onPress={active?stopTracking:startTracking} style={[s.button,active&&s.stop]}>
-            <Text style={s.buttonText}>{active?t.stop:t.start}</Text>
-          </Pressable>
-
-          <View style={s.row}>
-            <Pressable onPress={()=>setModal("new")} style={s.action}><Text style={s.actionText}>＋ {t.report}</Text></Pressable>
-            <Pressable onPress={()=>shownCam?setModal("removed"):null} style={s.action}><Text style={s.actionText}>− {t.removed}</Text></Pressable>
-          </View>
-        </>}
-
-        {tab === "map" && (
-          coords ?
-          <MapView style={s.map} initialRegion={{latitude:coords.latitude, longitude:coords.longitude, latitudeDelta:0.18, longitudeDelta:0.18}} showsUserLocation followsUserLocation>
-            {nearbyList().slice(0,50).map(cam => (
-              <Marker key={String(cam.id)} coordinate={{latitude:cam.latitude,longitude:cam.longitude}} title={cam.location || cam.region} description={cam.speed_limit != null ? `${cam.speed_limit} км/ч` : undefined} />
-            ))}
-            <Circle center={{latitude:coords.latitude,longitude:coords.longitude}} radius={currentThreshold} />
-          </MapView>
-          : <Text style={s.empty}>Включи поездку, чтобы открыть карту вокруг тебя.</Text>
         )}
+
+        {tab === "map" &&
+          (coords ? (
+            <MapView
+              style={s.map}
+              initialRegion={{
+                latitude: coords.latitude,
+                longitude: coords.longitude,
+                latitudeDelta: 0.18,
+                longitudeDelta: 0.18,
+              }}
+              showsUserLocation
+              followsUserLocation
+            >
+              {nearbyList()
+                .slice(0, 50)
+                .map((cam) => (
+                  <Marker
+                    key={String(cam.id)}
+                    coordinate={{
+                      latitude: cam.latitude,
+                      longitude: cam.longitude,
+                    }}
+                    title={cam.location || cam.region}
+                    description={
+                      cam.speed_limit != null
+                        ? `${cam.speed_limit} км/ч`
+                        : undefined
+                    }
+                  />
+                ))}
+              <Circle
+                center={{
+                  latitude: coords.latitude,
+                  longitude: coords.longitude,
+                }}
+                radius={currentThreshold}
+              />
+            </MapView>
+          ) : (
+            <Text style={s.empty}>
+              Включи поездку, чтобы открыть карту вокруг тебя.
+            </Text>
+          ))}
 
         {tab === "nearby" && (
           <View style={s.list}>
-            {nearbyList().map(cam => (
+            {nearbyList().map((cam) => (
               <View key={String(cam.id)} style={s.listItem}>
-                <View style={{flex:1}}>
-                  <Text style={s.listTitle}>{cam.location || cam.road_index || cam.region}</Text>
-                  <Text style={s.listSub}>{cam.region}{cam.speed_limit != null ? ` · ${cam.speed_limit} км/ч` : ""}</Text>
+                <View style={{ flex: 1 }}>
+                  <Text style={s.listTitle}>
+                    {cam.location ||
+                      cam.road_index ||
+                      cam.region ||
+                      drivingLabel(cam, dcopy)}
+                  </Text>
+                  <Text style={s.listSub}>
+                    {cam.region}
+                    {cam.speed_limit != null
+                      ? ` · ${cam.speed_limit} км/ч`
+                      : ""}
+                  </Text>
                 </View>
-                <Text style={s.listDistance}>{cam.distance>=1000?`${(cam.distance/1000).toFixed(1)} км`:`${cam.distance} м`}</Text>
+                <Text style={s.listDistance}>
+                  {cam.distance >= 1000
+                    ? `${(cam.distance / 1000).toFixed(1)} км`
+                    : `${cam.distance} м`}
+                </Text>
               </View>
             ))}
             {!coords && <Text style={s.empty}>Сначала включи поездку.</Text>}
@@ -795,169 +1394,756 @@ export default function App() {
 
         {tab === "history" && (
           <View style={s.list}>
-            {history.map(h => (
+            {history.map((h) => (
               <View key={h.id} style={s.listItem}>
-                <View style={{flex:1}}>
+                <View style={{ flex: 1 }}>
                   <Text style={s.listTitle}>{h.location}</Text>
-                  <Text style={s.listSub}>{new Date(h.when).toLocaleString()} · {h.speed} км/ч</Text>
+                  <Text style={s.listSub}>
+                    {new Date(h.when).toLocaleString()} · {h.speed} км/ч
+                  </Text>
                 </View>
                 <Text style={s.listDistance}>{h.limit}</Text>
               </View>
             ))}
-            {!history.length && <Text style={s.empty}>Предупреждений пока не было.</Text>}
+            {!history.length && (
+              <Text style={s.empty}>Предупреждений пока не было.</Text>
+            )}
           </View>
         )}
 
-        {tab === "settings" && (
+        {tab === "offline" && (
           <View style={s.settingsCard}>
-            <Text style={s.sectionTitle}>{t.country}</Text>
-            {!remoteFeeds[selectedCountry] && !["UA","PL"].includes(selectedCountry) && <Text style={s.note}>{offlineText.empty}</Text>}
-            <Text style={s.sectionTitle}>{offlineText.title} ({countryLists.visible.length})</Text>
+            {!remoteFeeds[selectedCountry] &&
+              !["UA", "PL"].includes(selectedCountry) && (
+                <Text style={s.note}>{offlineText.empty}</Text>
+              )}
             <Text style={s.note}>{offlineText.hint}</Text>
-            <Text style={s.note}>{offlineText.explanation}</Text>
-            <ScrollView style={{maxHeight:360}} nestedScrollEnabled>
+            <Text style={s.note}>{dcopy.maps}</Text>
+            <View>
               <Text style={s.sectionTitle}>{offlineText.downloaded}</Text>
-              {!countryLists.downloaded.length&&<Text style={s.note}>{offlineText.none}</Text>}
+              {!countryLists.downloaded.length && (
+                <Text style={s.note}>{offlineText.none}</Text>
+              )}
               {countryLists.downloaded.map(renderCountryRow)}
               <Text style={s.sectionTitle}>{offlineText.available}</Text>
               {countryLists.available.map(renderCountryRow)}
-            </ScrollView>
-            {!!countryLists.territories.length&&<Pressable onPress={()=>setModal("territories")} style={s.smallButton}>
-              <Text style={s.smallButtonText}>{offlineText.territories} ({countryLists.territories.length})</Text>
-            </Pressable>}
-            <Pressable disabled={downloading||!downloadSelection.length} onPress={downloadCountries} style={[s.smallButton,{opacity:downloading||!downloadSelection.length?0.5:1}]}>
-              <Text style={s.smallButtonText}>{offlineText.download} ({downloadSelection.length})</Text>
+            </View>
+            {!!countryLists.territories.length && (
+              <Pressable
+                onPress={() => setModal("territories")}
+                style={s.smallButton}
+              >
+                <Text style={s.smallButtonText}>
+                  {offlineText.territories} ({countryLists.territories.length})
+                </Text>
+              </Pressable>
+            )}
+            <Pressable
+              disabled={downloading || !downloadSelection.length}
+              onPress={downloadCountries}
+              style={[
+                s.smallButton,
+                { opacity: downloading || !downloadSelection.length ? 0.5 : 1 },
+              ]}
+            >
+              <Text style={s.smallButtonText}>
+                {offlineText.download} ({downloadSelection.length})
+              </Text>
             </Pressable>
-            {!!downloadStatus&&<Text accessibilityLiveRegion="polite" style={s.note}>{downloadStatus}</Text>}
+            {!!downloadStatus && (
+              <Text accessibilityLiveRegion="polite" style={s.note}>
+                {downloadStatus}
+              </Text>
+            )}
+          </View>
+        )}
+        {tab === "settings" && (
+          <View style={s.settingsCard}>
+            <Pressable onPress={() => setTab("offline")} style={s.dataCard}>
+              <Text style={s.dataLabel}>{dcopy.offline} →</Text>
+            </Pressable>
+            <Pressable onPress={() => setTab("nearby")} style={s.dataCard}>
+              <Text style={s.dataLabel}>{t.nearby} →</Text>
+            </Pressable>
+            <Pressable onPress={() => setTab("history")} style={s.dataCard}>
+              <Text style={s.dataLabel}>{t.history} →</Text>
+            </Pressable>
+            <View style={s.backgroundCard}>
+              <Text style={[s.dataLabel, { flex: 1 }]}>{dcopy.background}</Text>
+              <Switch
+                value={backgroundEnabled}
+                onValueChange={() =>
+                  toggleBackground().catch(() =>
+                    Alert.alert(dcopy.background, dcopy.gps),
+                  )
+                }
+              />
+            </View>
             <Text style={s.sectionTitle}>{t.languageLabel}</Text>
             <View style={s.row}>
-              {["ru","uk","en","pl"].map(l => <Pressable key={l} onPress={()=>setSettings({...settings,language:l})} style={[s.lang,settings.language===l&&s.langActive]}><Text>{l==="uk"?"UA":l.toUpperCase()}</Text></Pressable>)}
+              {["ru", "uk", "en", "pl"].map((l) => (
+                <Pressable
+                  key={l}
+                  onPress={() => setSettings({ ...settings, language: l })}
+                  style={[s.lang, settings.language === l && s.langActive]}
+                >
+                  <Text>
+                    {
+                      {
+                        ru: "Русский",
+                        uk: "Українська",
+                        en: "English",
+                        pl: "Polski",
+                      }[l]
+                    }
+                  </Text>
+                </Pressable>
+              ))}
             </View>
-            <SettingSwitch label={t.voiceLabel} value={settings.voice} onChange={v=>setSettings({...settings,voice:v})}/>
-            <SettingSwitch label={t.vibrationLabel} value={settings.vibration} onChange={v=>setSettings({...settings,vibration:v})}/>
-            <SettingSwitch label={t.smartDistanceLabel} value={settings.smartDistance} onChange={v=>setSettings({...settings,smartDistance:v})}/>
-            <Text style={s.sectionTitle}>{t.distancesLabel}</Text>
-            {[
-              [t.band1,"cityDistance"],[t.band2,"roadDistance"],
-              [t.band3,"highwayDistance"],[t.band4,"fastDistance"]
-            ].map(([label,key]) => <DistanceRow key={key} label={label} value={settings[key]} setValue={v=>setSettings({...settings,[key]:v})}/>)}
+            <SettingSwitch
+              label={t.voiceLabel}
+              value={settings.voice}
+              onChange={(v) => setSettings({ ...settings, voice: v })}
+            />
+            <SettingSwitch
+              label={t.vibrationLabel}
+              value={settings.vibration}
+              onChange={(v) => setSettings({ ...settings, vibration: v })}
+            />
+            <SettingSwitch
+              label={t.smartDistanceLabel}
+              value={settings.smartDistance}
+              onChange={(v) => setSettings({ ...settings, smartDistance: v })}
+            />
+            {!settings.smartDistance && (
+              <>
+                <Text style={s.sectionTitle}>{t.distancesLabel}</Text>
+                {[
+                  [t.band1, "cityDistance"],
+                  [t.band2, "roadDistance"],
+                  [t.band3, "highwayDistance"],
+                  [t.band4, "fastDistance"],
+                ].map(([label, key]) => (
+                  <DistanceRow
+                    key={key}
+                    label={label}
+                    value={settings[key]}
+                    setValue={(v) => setSettings({ ...settings, [key]: v })}
+                  />
+                ))}
+              </>
+            )}
             <Text style={s.sectionTitle}>{t.dataUpdate}</Text>
             <View style={s.dataCard}>
-              <View style={{flex:1}}>
+              <View style={{ flex: 1 }}>
                 <Text style={s.dataLabel}>{t.lastUpdate}</Text>
-                <Text style={s.dataValue}>{lastDataUpdate ? new Date(lastDataUpdate).toLocaleString() : "—"}</Text>
+                <Text style={s.dataValue}>
+                  {lastDataUpdate
+                    ? new Date(lastDataUpdate).toLocaleString()
+                    : "—"}
+                </Text>
               </View>
-              <Pressable onPress={()=>refreshRemoteData(false)} style={s.smallButton}>
+              <Pressable
+                onPress={() => refreshRemoteData(false)}
+                style={s.smallButton}
+              >
                 <Text style={s.smallButtonText}>{t.updateNow}</Text>
               </Pressable>
             </View>
 
             <Text style={s.sectionTitle}>{t.coverage}</Text>
             <View style={s.coverageCard}>
-              {countryLists.coverage.map(item=><Text key={item.country_code} style={s.coverageLine}>{item.label}: {item.publishedCount}</Text>)}
-              <Pressable onPress={()=>Linking.openURL("https://www.openstreetmap.org/copyright")}><Text style={s.coverageLine}>© OpenStreetMap contributors · ODbL 1.0</Text></Pressable>
+              {countryLists.coverage.map((item) => (
+                <Text key={item.country_code} style={s.coverageLine}>
+                  {item.label}: {item.publishedCount}
+                </Text>
+              ))}
+              <Pressable
+                onPress={() =>
+                  Linking.openURL("https://www.openstreetmap.org/copyright")
+                }
+              >
+                <Text style={s.coverageLine}>
+                  © OpenStreetMap contributors · ODbL 1.0
+                </Text>
+              </Pressable>
             </View>
 
             <Text style={s.sectionTitle}>{t.about}</Text>
-            <AboutLink label={t.privacy} url={URLS.privacy}/>
-            <AboutLink label={t.safety} url={URLS.safety}/>
-            <AboutLink label={t.sources} url={URLS.sources}/>
-            <AboutLink label={t.reportHelp} url={URLS.reportHelp}/>
-            <AboutLink label={t.support} url={URLS.support}/>
-            <AboutLink label={t.terms} url={URLS.terms}/>
-            <AboutLink label={t.website} url={URLS.home}/>
-            <Text style={s.note}>Локальных сообщений: {reports.length}. Скрытых камер: {hiddenIds.length}.</Text>
+            <AboutLink label={t.privacy} url={URLS.privacy} />
+            <AboutLink label={t.safety} url={URLS.safety} />
+            <AboutLink label={t.sources} url={URLS.sources} />
+            <AboutLink label={t.reportHelp} url={URLS.reportHelp} />
+            <AboutLink label={t.support} url={URLS.support} />
+            <AboutLink label={t.terms} url={URLS.terms} />
+            <AboutLink label={t.website} url={URLS.home} />
           </View>
         )}
       </ScrollView>
+      <View style={s.nav}>
+        {nav.map(([key, icon, label]) => (
+          <Pressable
+            key={key}
+            onPress={() => setTab(key)}
+            style={[s.navItem, tab === key && s.navActive]}
+          >
+            <Text style={s.navIcon}>{icon}</Text>
+            <Text style={s.navLabel}>{label}</Text>
+          </Pressable>
+        ))}
+      </View>
 
-      <Modal visible={modal==="territories"} transparent animationType="slide" onRequestClose={()=>setModal(null)}>
-        <View style={s.modalShade}><View style={s.modalCard}>
-          <Text style={s.modalTitle}>{offlineText.territories}</Text>
-          <ScrollView style={{maxHeight:360}}>{countryLists.territories.map(renderCountryRow)}</ScrollView>
-          <Pressable onPress={()=>setModal(null)} style={s.smallButton}><Text style={s.smallButtonText}>✓</Text></Pressable>
-        </View></View>
+      <Modal
+        visible={modal === "territories"}
+        transparent
+        animationType="slide"
+        onRequestClose={() => setModal(null)}
+      >
+        <View style={s.modalShade}>
+          <View style={s.modalCard}>
+            <Text style={s.modalTitle}>{offlineText.territories}</Text>
+            <ScrollView style={{ maxHeight: 360 }}>
+              {countryLists.territories.map(renderCountryRow)}
+            </ScrollView>
+            <Pressable onPress={() => setModal(null)} style={s.smallButton}>
+              <Text style={s.smallButtonText}>✓</Text>
+            </Pressable>
+          </View>
+        </View>
       </Modal>
 
-      <Modal visible={modal==="new"} transparent animationType="slide">
-        <View style={s.modalShade}><View style={s.modalCard}>
-          <Text style={s.modalTitle}>{t.reportTitle}</Text>
-          <Text style={s.modalText}>{coords ? `${coords.latitude.toFixed(5)}, ${coords.longitude.toFixed(5)}` : "GPS недоступен"}</Text>
-          <TextInput style={s.input} value={reportNote} onChangeText={setReportNote} placeholder="Комментарий, например направление или тип камеры" multiline />
-          <Pressable onPress={reportNewCamera} style={s.button}><Text style={s.buttonText}>{t.send}</Text></Pressable>
-          <Pressable onPress={()=>setModal(null)} style={s.cancel}><Text>{t.cancel}</Text></Pressable>
-        </View></View>
+      <Modal
+        visible={modal === "add"}
+        transparent
+        animationType="slide"
+        onRequestClose={() => setModal(null)}
+      >
+        <View style={s.modalShade}>
+          <View style={s.modalCard}>
+            <Text style={s.modalTitle}>{dcopy.add}</Text>
+            {[
+              ["speed_camera", "📷", dcopy.camera],
+              ["mobile_control", "👮", dcopy.mobile],
+              ["red_light_camera", "🚦", dcopy.red],
+            ].map(([type, icon, label]) => (
+              <Pressable
+                key={type}
+                accessibilityRole="button"
+                onPress={() => {
+                  setReportType(type);
+                  setModal("new");
+                }}
+                style={s.reportChoice}
+              >
+                <Text style={s.reportChoiceText}>
+                  {icon} {label}
+                </Text>
+              </Pressable>
+            ))}
+            {shownCam && (
+              <Pressable onPress={() => setModal("removed")} style={s.cancel}>
+                <Text>{t.removed}</Text>
+              </Pressable>
+            )}
+            <Pressable onPress={() => setModal(null)} style={s.cancel}>
+              <Text>{t.cancel}</Text>
+            </Pressable>
+          </View>
+        </View>
+      </Modal>
+      <Modal
+        visible={modal === "new"}
+        transparent
+        animationType="slide"
+        onRequestClose={() => setModal(null)}
+      >
+        <View style={s.modalShade}>
+          <View style={s.modalCard}>
+            <Text style={s.modalTitle}>{t.reportTitle}</Text>
+            <Text style={s.modalText}>
+              {coords ? dcopy.position : dcopy.noPosition}
+            </Text>
+            <TextInput
+              style={s.input}
+              value={reportNote}
+              onChangeText={setReportNote}
+              placeholder="Комментарий, например направление или тип камеры"
+              multiline
+            />
+            <Pressable onPress={reportNewCamera} style={s.button}>
+              <Text style={s.buttonText}>{t.send}</Text>
+            </Pressable>
+            <Pressable onPress={() => setModal(null)} style={s.cancel}>
+              <Text>{t.cancel}</Text>
+            </Pressable>
+          </View>
+        </View>
       </Modal>
 
-      <Modal visible={modal==="removed"} transparent animationType="slide">
-        <View style={s.modalShade}><View style={s.modalCard}>
-          <Text style={s.modalTitle}>{t.removedTitle}</Text>
-          <Text style={s.modalText}>{shownCam?.location || shownCam?.region}</Text>
-          <Pressable onPress={()=>reportRemovedCamera(shownCam)} style={[s.button,s.stop]}><Text style={s.buttonText}>{t.removed}</Text></Pressable>
-          <Pressable onPress={()=>setModal(null)} style={s.cancel}><Text>{t.cancel}</Text></Pressable>
-        </View></View>
+      <Modal visible={modal === "removed"} transparent animationType="slide">
+        <View style={s.modalShade}>
+          <View style={s.modalCard}>
+            <Text style={s.modalTitle}>{t.removedTitle}</Text>
+            <Text style={s.modalText}>
+              {shownCam?.location || shownCam?.region}
+            </Text>
+            <Pressable
+              onPress={() => reportRemovedCamera(shownCam)}
+              style={[s.button, s.stop]}
+            >
+              <Text style={s.buttonText}>{t.removed}</Text>
+            </Pressable>
+            <Pressable onPress={() => setModal(null)} style={s.cancel}>
+              <Text>{t.cancel}</Text>
+            </Pressable>
+          </View>
+        </View>
       </Modal>
     </SafeAreaView>
   );
 }
 
-function cameraTypeLabel(cam, language="ru"){
-  if(!cam) return "";
-  const type=({fixed_speed:"speed_camera",average_speed_section:"average_speed",average_speed_start:"average_speed",average_speed_end:"average_speed",other_enforcement:"checkpoint"})[cam.camera_type] || cam.camera_type || cam.type || "speed_camera";
-  const labels={
-    ru:{speed_and_red_light:"Скорость и красный свет",speed_camera:"Камера скорости",red_light:"Контроль красного света",checkpoint:"Контрольная точка",average_speed:"Средняя скорость"},
-    uk:{speed_and_red_light:"Швидкість і червоне світло",speed_camera:"Камера швидкості",red_light:"Контроль червоного світла",checkpoint:"Контрольна точка",average_speed:"Середня швидкість"},
-    en:{speed_and_red_light:"Speed and red-light camera",speed_camera:"Speed camera",red_light:"Red-light camera",checkpoint:"Checkpoint",average_speed:"Average-speed control"},
-    pl:{speed_and_red_light:"Prędkość i czerwone światło",speed_camera:"Fotoradar",red_light:"Kontrola czerwonego światła",checkpoint:"Punkt kontroli",average_speed:"Odcinkowy pomiar prędkości"}
+function cameraTypeLabel(cam, language = "ru") {
+  if (!cam) return "";
+  const type =
+    {
+      fixed_speed: "speed_camera",
+      average_speed_section: "average_speed",
+      average_speed_start: "average_speed",
+      average_speed_end: "average_speed",
+      other_enforcement: "checkpoint",
+    }[cam.camera_type] ||
+    cam.camera_type ||
+    cam.type ||
+    "speed_camera";
+  const labels = {
+    ru: {
+      speed_and_red_light: "Скорость и красный свет",
+      speed_camera: "Камера скорости",
+      red_light: "Контроль красного света",
+      checkpoint: "Контрольная точка",
+      average_speed: "Средняя скорость",
+    },
+    uk: {
+      speed_and_red_light: "Швидкість і червоне світло",
+      speed_camera: "Камера швидкості",
+      red_light: "Контроль червоного світла",
+      checkpoint: "Контрольна точка",
+      average_speed: "Середня швидкість",
+    },
+    en: {
+      speed_and_red_light: "Speed and red-light camera",
+      speed_camera: "Speed camera",
+      red_light: "Red-light camera",
+      checkpoint: "Checkpoint",
+      average_speed: "Average-speed control",
+    },
+    pl: {
+      speed_and_red_light: "Prędkość i czerwone światło",
+      speed_camera: "Fotoradar",
+      red_light: "Kontrola czerwonego światła",
+      checkpoint: "Punkt kontroli",
+      average_speed: "Odcinkowy pomiar prędkości",
+    },
   };
-  return (labels[language]||labels.ru)[type] || type;
+  return (labels[language] || labels.ru)[type] || type;
 }
 
-function SettingSwitch({label,value,onChange}) {
-  return <View style={s.settingRow}><Text style={s.settingLabel}>{label}</Text><Switch value={value} onValueChange={onChange}/></View>
-}
-function DistanceRow({label,value,setValue}) {
-  return <View style={s.settingRow}>
-    <Text style={s.settingLabel}>{label}</Text>
-    <View style={s.stepper}>
-      <Pressable onPress={()=>setValue(Math.max(200,value-100))} style={s.stepBtn}><Text>−</Text></Pressable>
-      <Text style={s.stepValue}>{value} м</Text>
-      <Pressable onPress={()=>setValue(Math.min(3000,value+100))} style={s.stepBtn}><Text>＋</Text></Pressable>
+function SettingSwitch({ label, value, onChange }) {
+  return (
+    <View style={s.settingRow}>
+      <Text style={s.settingLabel}>{label}</Text>
+      <Switch value={value} onValueChange={onChange} />
     </View>
-  </View>
+  );
+}
+function DistanceRow({ label, value, setValue }) {
+  return (
+    <View style={s.settingRow}>
+      <Text style={s.settingLabel}>{label}</Text>
+      <View style={s.stepper}>
+        <Pressable
+          onPress={() => setValue(Math.max(200, value - 100))}
+          style={s.stepBtn}
+        >
+          <Text>−</Text>
+        </Pressable>
+        <Text style={s.stepValue}>{value} м</Text>
+        <Pressable
+          onPress={() => setValue(Math.min(3000, value + 100))}
+          style={s.stepBtn}
+        >
+          <Text>＋</Text>
+        </Pressable>
+      </View>
+    </View>
+  );
 }
 
 const s = StyleSheet.create({
-  safe:{flex:1,backgroundColor:"#f5f6f8"},
-  container:{padding:18,paddingBottom:150,gap:14},
-  nav:{position:"absolute",left:12,right:12,bottom:10,zIndex:20,backgroundColor:"#fff",borderRadius:20,flexDirection:"row",padding:6,shadowOpacity:.12,shadowRadius:15},
-  navItem:{flex:1,alignItems:"center",paddingVertical:5,borderRadius:13},navActive:{backgroundColor:"#eef0f3"},
-  navIcon:{fontSize:17},navLabel:{fontSize:9,marginTop:1},
-  title:{fontSize:30,fontWeight:"800",marginTop:8},subtitle:{fontSize:14,opacity:.55},
-  card:{backgroundColor:"#fff",borderRadius:24,padding:22,borderWidth:3,borderColor:"transparent"},cardDanger:{borderColor:"#ff8a00"},
-  label:{fontSize:14,opacity:.55},distance:{fontSize:48,fontWeight:"900",marginTop:4},place:{fontSize:18,fontWeight:"700",marginTop:8},region:{fontSize:14,opacity:.55,marginTop:3},
-  warningBox:{marginTop:14,padding:13,borderRadius:14,backgroundColor:"#fff2df"},warningText:{fontSize:18,fontWeight:"800"},warningSub:{fontSize:12,opacity:.6},
-  limitRow:{flexDirection:"row",alignItems:"center",gap:14,marginTop:18},limitCircle:{width:66,height:66,borderRadius:33,borderWidth:6,borderColor:"#d32f2f",alignItems:"center",justifyContent:"center"},limitText:{fontSize:24,fontWeight:"900"},
-  small:{fontSize:13,opacity:.55},value:{fontSize:18,fontWeight:"700"},empty:{fontSize:17,opacity:.6,paddingVertical:20},
-  row:{flexDirection:"row",gap:12},stat:{flex:1,backgroundColor:"#fff",borderRadius:20,padding:18},statValue:{fontSize:38,fontWeight:"900"},heading:{fontSize:14,fontWeight:"800",marginTop:8,lineHeight:18},unit:{fontSize:12,opacity:.55},
-  backgroundCard:{backgroundColor:"#fff",borderRadius:20,padding:16,flexDirection:"row",alignItems:"center",gap:12},backgroundTitle:{fontSize:17,fontWeight:"800"},backgroundText:{fontSize:12,opacity:.55},
-  smallButton:{backgroundColor:"#111",paddingVertical:10,paddingHorizontal:13,borderRadius:12},smallButtonStop:{backgroundColor:"#8b1e1e"},smallButtonText:{color:"#fff",fontWeight:"800"},
-  button:{backgroundColor:"#111",borderRadius:18,paddingVertical:17,alignItems:"center"},stop:{backgroundColor:"#8b1e1e"},buttonText:{color:"#fff",fontSize:18,fontWeight:"800"},
-  action:{flex:1,backgroundColor:"#fff",borderRadius:16,padding:15,borderWidth:1,borderColor:"#ddd"},actionText:{fontWeight:"700",fontSize:13},
-  testButton:{backgroundColor:"#fff",borderRadius:16,paddingVertical:15,alignItems:"center",borderWidth:2,borderColor:"#111"},testButtonText:{fontWeight:"800"},
-  map:{height:560,borderRadius:22,overflow:"hidden"},list:{gap:10},listItem:{backgroundColor:"#fff",borderRadius:16,padding:15,flexDirection:"row",alignItems:"center",gap:10},listTitle:{fontSize:15,fontWeight:"700"},listSub:{fontSize:12,opacity:.55,marginTop:3},listDistance:{fontWeight:"800"},
-  settingsCard:{backgroundColor:"#fff",borderRadius:22,padding:18,gap:12},sectionTitle:{fontSize:18,fontWeight:"800",marginTop:6},settingRow:{flexDirection:"row",alignItems:"center",justifyContent:"space-between",paddingVertical:9,borderBottomWidth:1,borderBottomColor:"#eee"},settingLabel:{fontSize:14,flex:1},stepper:{flexDirection:"row",alignItems:"center",gap:8},stepBtn:{width:34,height:34,borderRadius:10,backgroundColor:"#eee",alignItems:"center",justifyContent:"center"},stepValue:{minWidth:58,textAlign:"center",fontWeight:"700"},lang:{flex:1,padding:12,backgroundColor:"#eee",borderRadius:12,alignItems:"center"},langActive:{backgroundColor:"#cfd7ff"},aboutRow:{flexDirection:"row",alignItems:"center",justifyContent:"space-between",paddingVertical:12,borderBottomWidth:1,borderBottomColor:"#eee"},aboutLabel:{fontSize:15},chev:{fontSize:24,opacity:.35},
-  modalShade:{flex:1,backgroundColor:"rgba(0,0,0,.45)",justifyContent:"flex-end"},modalCard:{backgroundColor:"#fff",padding:22,borderTopLeftRadius:26,borderTopRightRadius:26,gap:14},modalTitle:{fontSize:23,fontWeight:"800"},modalText:{opacity:.6},input:{minHeight:90,borderWidth:1,borderColor:"#ddd",borderRadius:14,padding:12,textAlignVertical:"top"},cancel:{alignItems:"center",padding:12},
-  typeLabel:{fontSize:12,fontWeight:"700",opacity:.5,marginTop:5},
-  dataCard:{backgroundColor:"#f3f4f6",borderRadius:14,padding:14,flexDirection:"row",alignItems:"center",gap:12},
-  dataLabel:{fontSize:12,opacity:.55},
-  dataValue:{fontSize:13,fontWeight:"700",marginTop:3},
-  coverageCard:{backgroundColor:"#f3f4f6",borderRadius:14,padding:14,gap:8},
-  coverageLine:{fontSize:14,fontWeight:"650"},
-note:{fontSize:12,lineHeight:18,opacity:.55}
-});function AboutLink({label,url}) {
+  topBar: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    gap: 12,
+    marginBottom: 20,
+    flexWrap: "wrap",
+  },
+  brand: { fontSize: 22, fontWeight: "800", color: "#152535" },
+  countryPill: {
+    fontSize: 14,
+    color: "#42586b",
+    backgroundColor: "#e8eef3",
+    padding: 10,
+    borderRadius: 18,
+  },
+  driver: { flex: 1, justifyContent: "space-between", gap: 20 },
+  protection: {
+    fontSize: 14,
+    fontWeight: "600",
+    color: "#467566",
+    textAlign: "center",
+  },
+  speedPanel: { alignItems: "center", paddingVertical: 12 },
+  heroSpeed: {
+    fontSize: 116,
+    lineHeight: 130,
+    fontWeight: "800",
+    fontVariant: ["tabular-nums"],
+    color: "#152535",
+    letterSpacing: -4,
+    maxWidth: "100%",
+  },
+  speedOver: { color: "#bb3535" },
+  speedUnit: { fontSize: 18, color: "#738495" },
+  driverLimit: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 12,
+    marginTop: 22,
+  },
+  limitCaption: {
+    fontSize: 13,
+    fontWeight: "700",
+    color: "#738495",
+    letterSpacing: 1,
+  },
+  driverLimitNumber: {
+    fontSize: 26,
+    fontWeight: "800",
+    borderWidth: 3,
+    borderColor: "#cc5353",
+    borderRadius: 30,
+    minWidth: 60,
+    minHeight: 60,
+    textAlign: "center",
+    textAlignVertical: "center",
+    paddingTop: 10,
+    paddingHorizontal: 8,
+    color: "#152535",
+  },
+  driverAlert: {
+    borderRadius: 28,
+    backgroundColor: "#e6eefb",
+    padding: 22,
+    alignItems: "center",
+    borderWidth: 1,
+    borderColor: "#cfdef2",
+    gap: 8,
+  },
+  driverAlertClose: { backgroundColor: "#edf1f8", borderColor: "#b3c7e3" },
+  driverAlertNear: {
+    backgroundColor: "#fff0d8",
+    borderColor: "#e7c88b",
+    borderWidth: 2,
+  },
+  driverAlertOver: { backgroundColor: "#ffe8e5", borderColor: "#dd7970" },
+  alertIcon: { fontSize: 30 },
+  alertTitle: {
+    fontSize: 20,
+    fontWeight: "700",
+    color: "#253c50",
+    textAlign: "center",
+  },
+  alertDistance: {
+    fontSize: 42,
+    fontWeight: "800",
+    fontVariant: ["tabular-nums"],
+    color: "#152535",
+  },
+  alertDetail: { fontSize: 16, color: "#526779", textAlign: "center" },
+  averageNumber: {
+    fontSize: 30,
+    fontWeight: "800",
+    color: "#152535",
+    textAlign: "center",
+  },
+  clearCard: { padding: 24, borderRadius: 26, backgroundColor: "#e5f2ec" },
+  clearTitle: {
+    fontSize: 20,
+    fontWeight: "600",
+    color: "#37725c",
+    textAlign: "center",
+  },
+  tripActions: { flexDirection: "row", gap: 12, marginTop: 8 },
+  tripButton: {
+    flex: 1,
+    minHeight: 60,
+    backgroundColor: "#215db5",
+    borderRadius: 22,
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 14,
+  },
+  tripStop: { backgroundColor: "#e7edf3" },
+  tripButtonText: { color: "#fff", fontSize: 18, fontWeight: "700" },
+  addButton: {
+    width: 64,
+    minHeight: 64,
+    backgroundColor: "#152535",
+    borderRadius: 22,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  addGlyph: { fontSize: 36, color: "#fff" },
+  reportChoice: {
+    padding: 20,
+    minHeight: 64,
+    borderRadius: 18,
+    backgroundColor: "#edf2f7",
+    marginVertical: 6,
+  },
+  reportChoiceText: { fontSize: 22, fontWeight: "600" },
+  savedLabel: {
+    color: "#267653",
+    fontSize: 14,
+    fontWeight: "600",
+    marginTop: 8,
+  },
+  countryDownload: {
+    backgroundColor: "#e6efff",
+    padding: 12,
+    borderRadius: 14,
+    minHeight: 44,
+    justifyContent: "center",
+  },
+  countryDownloadText: { color: "#215db5", fontWeight: "700" },
+
+  safe: { flex: 1, backgroundColor: "#f5f6f8" },
+  container: { padding: 20, paddingBottom: 24, gap: 14 },
+  nav: {
+    marginHorizontal: 12,
+    marginBottom: 8,
+    backgroundColor: "#fff",
+    borderRadius: 20,
+    flexDirection: "row",
+    padding: 6,
+    shadowOpacity: 0.12,
+    shadowRadius: 15,
+  },
+  navItem: {
+    flex: 1,
+    alignItems: "center",
+    paddingVertical: 10,
+    minHeight: 52,
+    borderRadius: 13,
+  },
+  navActive: { backgroundColor: "#eef0f3" },
+  navIcon: { fontSize: 17 },
+  navLabel: { fontSize: 9, marginTop: 1 },
+  title: { fontSize: 30, fontWeight: "800", marginTop: 8 },
+  subtitle: { fontSize: 14, opacity: 0.55 },
+  card: {
+    backgroundColor: "#fff",
+    borderRadius: 24,
+    padding: 22,
+    borderWidth: 3,
+    borderColor: "transparent",
+  },
+  cardDanger: { borderColor: "#ff8a00" },
+  label: { fontSize: 14, opacity: 0.55 },
+  distance: { fontSize: 48, fontWeight: "900", marginTop: 4 },
+  place: { fontSize: 18, fontWeight: "700", marginTop: 8 },
+  region: { fontSize: 14, opacity: 0.55, marginTop: 3 },
+  warningBox: {
+    marginTop: 14,
+    padding: 13,
+    borderRadius: 14,
+    backgroundColor: "#fff2df",
+  },
+  warningText: { fontSize: 18, fontWeight: "800" },
+  warningSub: { fontSize: 12, opacity: 0.6 },
+  limitRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 14,
+    marginTop: 18,
+  },
+  limitCircle: {
+    width: 66,
+    height: 66,
+    borderRadius: 33,
+    borderWidth: 6,
+    borderColor: "#d32f2f",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  limitText: { fontSize: 24, fontWeight: "900" },
+  small: { fontSize: 13, opacity: 0.55 },
+  value: { fontSize: 18, fontWeight: "700" },
+  empty: { fontSize: 17, opacity: 0.6, paddingVertical: 20 },
+  row: { flexDirection: "row", gap: 8, flexWrap: "wrap" },
+  stat: { flex: 1, backgroundColor: "#fff", borderRadius: 20, padding: 18 },
+  statValue: { fontSize: 38, fontWeight: "900" },
+  heading: { fontSize: 14, fontWeight: "800", marginTop: 8, lineHeight: 18 },
+  unit: { fontSize: 12, opacity: 0.55 },
+  backgroundCard: {
+    backgroundColor: "#fff",
+    borderRadius: 20,
+    padding: 16,
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 12,
+  },
+  backgroundTitle: { fontSize: 17, fontWeight: "800" },
+  backgroundText: { fontSize: 12, opacity: 0.55 },
+  smallButton: {
+    backgroundColor: "#111",
+    paddingVertical: 10,
+    paddingHorizontal: 13,
+    borderRadius: 12,
+  },
+  smallButtonStop: { backgroundColor: "#8b1e1e" },
+  smallButtonText: { color: "#fff", fontWeight: "800" },
+  button: {
+    backgroundColor: "#111",
+    borderRadius: 18,
+    paddingVertical: 17,
+    alignItems: "center",
+  },
+  stop: { backgroundColor: "#8b1e1e" },
+  buttonText: { color: "#fff", fontSize: 18, fontWeight: "800" },
+  action: {
+    flex: 1,
+    backgroundColor: "#fff",
+    borderRadius: 16,
+    padding: 15,
+    borderWidth: 1,
+    borderColor: "#ddd",
+  },
+  actionText: { fontWeight: "700", fontSize: 13 },
+  testButton: {
+    backgroundColor: "#fff",
+    borderRadius: 16,
+    paddingVertical: 15,
+    alignItems: "center",
+    borderWidth: 2,
+    borderColor: "#111",
+  },
+  testButtonText: { fontWeight: "800" },
+  map: { height: 560, borderRadius: 22, overflow: "hidden" },
+  list: { gap: 10 },
+  listItem: {
+    backgroundColor: "#fff",
+    borderRadius: 16,
+    padding: 15,
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+  },
+  listTitle: { fontSize: 15, fontWeight: "700" },
+  listSub: { fontSize: 12, opacity: 0.55, marginTop: 3 },
+  listDistance: { fontWeight: "800" },
+  settingsCard: {
+    backgroundColor: "#fff",
+    borderRadius: 22,
+    padding: 18,
+    gap: 12,
+  },
+  sectionTitle: { fontSize: 18, fontWeight: "800", marginTop: 6 },
+  settingRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingVertical: 9,
+    borderBottomWidth: 1,
+    borderBottomColor: "#eee",
+  },
+  settingLabel: { fontSize: 14, flex: 1 },
+  stepper: { flexDirection: "row", alignItems: "center", gap: 8 },
+  stepBtn: {
+    width: 34,
+    height: 34,
+    borderRadius: 10,
+    backgroundColor: "#eee",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  stepValue: { minWidth: 58, textAlign: "center", fontWeight: "700" },
+  lang: {
+    flex: 1,
+    padding: 12,
+    backgroundColor: "#eee",
+    borderRadius: 12,
+    alignItems: "center",
+  },
+  langActive: { backgroundColor: "#cfd7ff" },
+  aboutRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingVertical: 12,
+    borderBottomWidth: 1,
+    borderBottomColor: "#eee",
+  },
+  aboutLabel: { fontSize: 15 },
+  chev: { fontSize: 24, opacity: 0.35 },
+  modalShade: {
+    flex: 1,
+    backgroundColor: "rgba(0,0,0,.45)",
+    justifyContent: "flex-end",
+  },
+  modalCard: {
+    backgroundColor: "#fff",
+    padding: 22,
+    borderTopLeftRadius: 26,
+    borderTopRightRadius: 26,
+    gap: 14,
+  },
+  modalTitle: { fontSize: 23, fontWeight: "800" },
+  modalText: { opacity: 0.6 },
+  input: {
+    minHeight: 90,
+    borderWidth: 1,
+    borderColor: "#ddd",
+    borderRadius: 14,
+    padding: 12,
+    textAlignVertical: "top",
+  },
+  cancel: { alignItems: "center", padding: 12 },
+  typeLabel: { fontSize: 12, fontWeight: "700", opacity: 0.5, marginTop: 5 },
+  dataCard: {
+    backgroundColor: "#f3f4f6",
+    borderRadius: 14,
+    padding: 14,
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 12,
+  },
+  dataLabel: { fontSize: 17, fontWeight: "700", color: "#253c50" },
+  dataValue: { fontSize: 13, fontWeight: "700", marginTop: 3 },
+  coverageCard: {
+    backgroundColor: "#f3f4f6",
+    borderRadius: 14,
+    padding: 14,
+    gap: 8,
+  },
+  coverageLine: { fontSize: 14, fontWeight: "650" },
+  note: { fontSize: 12, lineHeight: 18, opacity: 0.55 },
+});
+function AboutLink({ label, url }) {
   return (
-    <Pressable onPress={()=>Linking.openURL(url)} style={s.aboutRow}>
+    <Pressable onPress={() => Linking.openURL(url)} style={s.aboutRow}>
       <Text style={s.aboutLabel}>{label}</Text>
       <Text style={s.chev}>›</Text>
     </Pressable>

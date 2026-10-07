@@ -1,15 +1,17 @@
 {
-  "checkedAt": "2026-10-07T13:17:58.805581+00:00",
+  "checkedAt": "2026-10-07T16:18:43.313728+00:00",
   "branch": "feature/r2-offline-release",
   "appVersion": "0.9.0",
   "sourceCommit": "93346d4e3082c5249ee2799321fc480422a71fbc",
   "android": {
     "id": "59e7668f-0062-45a8-a28f-a08fd85a5d8f",
-    "status": "IN_QUEUE",
+    "status": "FINISHED",
     "versionCode": 5,
     "appVersion": "0.9.0",
     "sourceCommit": "fdeaec4b4b53419ef9fbc26286fa098102edd75e",
-    "url": "https://expo.dev/accounts/bembi26/projects/speed-camera-prototype-direction/builds/59e7668f-0062-45a8-a28f-a08fd85a5d8f"
+    "url": "https://expo.dev/accounts/bembi26/projects/speed-camera-prototype-direction/builds/59e7668f-0062-45a8-a28f-a08fd85a5d8f",
+    "artifact": "https://expo.dev/artifacts/eas/SK3vOEuEtJme1o_WDIUNOILDJSGdE-Nq0lLmdzFiNdc.aab",
+    "completedAt": "2026-10-07T14:38:44.184Z"
   },
   "ios": {
     "id": null,
@@ -76,5 +78,13 @@
     "consoleAppId": "4973206564233406869",
     "releaseDraftUrl": "https://play.google.com/console/u/0/developers/8497998036565797248/app/4973206564233406869/tracks/4701629391442996966/releases/2/prepare",
     "reason": "Correct Dolphin/Anty profile has full access. Existing v0.8.2 (3) confirmed in internal and closed testing. Update draft saved; waiting for Android build 5."
+  },
+  "driverModeCandidate": {
+    "appVersion": "1.0.0",
+    "iosBuildNumber": "14",
+    "androidVersionCode": 6,
+    "status": "SOURCE_VERIFIED_NOT_BUILT",
+    "storeSubmissionPerformed": false,
+    "note": "Existing 0.9.0 build artifacts predate Driver Mode 1.0."
   }
 }

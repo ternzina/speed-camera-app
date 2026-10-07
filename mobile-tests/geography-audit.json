@@ -1,6 +1,6 @@
 {
-  "checkedAt": "2026-10-07T12:33:41.305Z",
-  "manifestGeneratedAt": "2026-10-07T12:19:30.666202+00:00",
+  "checkedAt": "2026-10-07T16:19:44.998Z",
+  "manifestGeneratedAt": "2026-10-07T15:46:28.747582+00:00",
   "countries": 120,
   "regions": 0,
   "territories": 1,
@@ -97,7 +97,7 @@
       "code": "US",
       "name": "США",
       "datasetCountry": "US",
-      "records": 3482,
+      "records": 3509,
       "pointGroups": [
         "speed_cameras",
         "red_light_cameras",
@@ -113,7 +113,7 @@
       "code": "CA",
       "name": "Канада",
       "datasetCountry": "CA",
-      "records": 1312,
+      "records": 1343,
       "pointGroups": [
         "speed_cameras",
         "red_light_cameras",

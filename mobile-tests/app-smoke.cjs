@@ -16,7 +16,7 @@ const stubs={'react':React,'react-native':native,'expo-location':{},'expo-speech
 const moduleApp={exports:{}};const code=babel.transformSync(fs.readFileSync(path.join(root,'App.js'),'utf8'),{configFile:false,babelrc:false,plugins:['@babel/plugin-transform-react-jsx','@babel/plugin-transform-modules-commonjs']}).code;
 vm.runInNewContext(code,{module:moduleApp,exports:moduleApp.exports,require:name=>name in stubs?stubs[name]:name.endsWith('.json')?JSON.parse(fs.readFileSync(path.join(root,name))):plain(name.slice(2)+'.js'),Set,Date,console,setInterval,clearInterval});
 for(const country of ['ua','pl','de','fr','us','ca','ru','by','ge','am','az']){stateIndex=0;stateOverrides={0:{country,language:'en',smartDistance:true,cityDistance:500,roadDistance:800,highwayDistance:1000,fastDistance:1500}};assert.ok(moduleApp.exports.default());}
-stateIndex=0;stateOverrides={0:{country:'de',language:'ru'},12:{PL:feed},13:[{country_code:'DE',record_count:5794},{country_code:'PL',record_count:897},{country_code:'OM',record_count:459},{country_code:'PA',record_count:16},{country_code:'TW',record_count:875},{country_code:'CA',geography_level:'province',province_code:'ON',name:'Ontario',record_count:500}],20:'settings'};
+stateIndex=0;stateOverrides={0:{country:'de',language:'ru'},12:{PL:feed},13:[{country_code:'DE',record_count:5794},{country_code:'PL',record_count:897},{country_code:'OM',record_count:459},{country_code:'PA',record_count:16},{country_code:'TW',record_count:875},{country_code:'CA',geography_level:'province',province_code:'ON',name:'Ontario',record_count:500}],20:'offline'};
 const settingsTree=moduleApp.exports.default();
 function nodes(tree,out=[]){if(tree&&typeof tree==='object'){if(tree.type==='Modal'&&tree.props?.visible===false)return out;out.push(tree);for(const child of tree.children||[])for(const item of Array.isArray(child)?child:[child])nodes(item,out);}return out;}
 const checkboxes=nodes(settingsTree).filter(n=>n.props?.accessibilityRole==='checkbox');
@@ -25,7 +25,7 @@ assert.ok(checkboxes[0].props.accessibilityLabel.includes('Польша'));
 assert.ok(checkboxes.some(n=>n.props.accessibilityLabel.includes('Оман')));
 assert.ok(!checkboxes.some(n=>n.props.accessibilityLabel.includes('Панама')||n.props.accessibilityLabel.includes('Тайвань')||n.props.accessibilityLabel.includes('Ontario')));
 assert.ok(nodes(settingsTree).some(n=>n.type==='Text'&&n.children.includes('Скачанные')));
-assert.ok(nodes(settingsTree).some(n=>n.type==='Text'&&n.children.includes('Скачать выбранные')));
+assert.ok(nodes(settingsTree).some(n=>n.type==='Text'&&n.children.some(x=>typeof x==='string'&&x.includes('Скачать выбранные'))));
 const omanCheckbox=checkboxes.find(n=>n.props.accessibilityLabel.includes('Оман'));
 omanCheckbox.props.onPress();assert.deepEqual(stateOverrides[15],['OM']);assert.equal(stateOverrides[0].country,'de');
 const omanRadio=nodes(settingsTree).find(n=>n.props?.accessibilityRole==='radio'&&n.props.accessibilityLabel.includes('Оман'));
