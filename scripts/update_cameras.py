@@ -112,7 +112,7 @@ def validate(records):
     return report
 
 def fingerprint(r):
-    fields=['country_code','camera_type','latitude','longitude','end_latitude','end_longitude','speed_limit','direction','road_name','road_ref','city','region','confidence','status']
+    fields=['country_code','camera_type','latitude','longitude','end_latitude','end_longitude','speed_limit','direction','road_name','road_ref','city','region','confidence','status','review_reason','review_source_url','primary_api_review','policy_checked_at']
     return {k:round(r[k],9) if k in ('latitude','longitude','end_latitude','end_longitude') and r.get(k) is not None else r.get(k) for k in fields}
 
 def provenance_fingerprint(r):
