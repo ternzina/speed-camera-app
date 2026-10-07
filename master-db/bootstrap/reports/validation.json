@@ -1,0 +1,23 @@
+{
+  "checked_at": "2026-10-07T00:03:07.370066+00:00",
+  "record_count": 50141,
+  "countries": 44,
+  "camera_types": {
+    "fixed_speed": 39027,
+    "average_speed_section": 1425,
+    "other_enforcement": 4154,
+    "speed_and_red_light": 1869,
+    "red_light": 3666
+  },
+  "baseline_records_preserved": 1323,
+  "source_records": 49852,
+  "invalid_coordinates": 0,
+  "duplicate_canonical_ids": 0,
+  "duplicate_source_ids": 0,
+  "low_confidence_active": 0,
+  "notes": [
+    "New record country membership checked against Natural Earth 1:10m polygons during normalization.",
+    "OSM envelopes clipped to country polygons; uncertain official coordinates quarantined.",
+    "Non-numeric direction and conditional/multi-valued maxspeed retained in raw provenance, not guessed."
+  ]
+}

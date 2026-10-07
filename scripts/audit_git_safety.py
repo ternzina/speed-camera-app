@@ -7,6 +7,8 @@ import subprocess
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 PATTERNS={
+ 'literal_credential':rb'''(?i)\b(?:password|api_key|service_role_key|client_secret|access_token|refresh_token)["']?\s*[:=]\s*["'][^"'\r\n]{12,}["']''',
+ 'sql_password':rb'''(?i)\bPASSWORD\s+['"][^'"\r\n]{12,}['"]''',
  'private_key':rb'-----BEGIN (?:RSA |EC |OPENSSH |DSA )?PRIVATE KEY-----',
  'github_token':rb'\b(?:gh[pousr]_[A-Za-z0-9]{20,}|github_pat_[A-Za-z0-9_]{30,})\b',
  'aws_access_key':rb'\b(?:AKIA|ASIA)[A-Z0-9]{16}\b',

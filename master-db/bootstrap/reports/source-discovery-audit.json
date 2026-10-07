@@ -1,0 +1,142 @@
+{
+  "checked_at": "2026-10-07",
+  "coverage_note": "Source search outcomes; absence of an imported official feed does not imply absence of cameras. Nationwide OSM covers US/CA.",
+  "regions": [
+    {
+      "country_code": "US",
+      "region": "Washington DC",
+      "status": "imported",
+      "imported_source_codes": "DDOT_DC",
+      "source_url": "https://www.arcgis.com/home/item.html?id=03d94dc6579949ae9d7c9dd8ffebeb89",
+      "notes": "Current automated safety camera GIS; inactive/planned records remain candidates."
+    },
+    {
+      "country_code": "US",
+      "region": "Chicago / Illinois",
+      "status": "imported",
+      "imported_source_codes": "CHICAGO_SPEED,CHICAGO_RED",
+      "source_url": "https://data.cityofchicago.org/d/4i42-qv3h",
+      "notes": "Official city camera locations, including multiple approaches; limits not guessed."
+    },
+    {
+      "country_code": "US",
+      "region": "San Francisco / California",
+      "status": "imported",
+      "imported_source_codes": "SFMTA_SPEED",
+      "source_url": "https://data.sf.gov/Transportation/Automated-Speed-Enforcement-Citations/d5uh-bk84",
+      "notes": "PDDL licensed official site IDs and explicit coordinates. Aggregate citations by device; preserve opposing devices at the same intersection."
+    },
+    {
+      "country_code": "US",
+      "region": "Baltimore / Maryland",
+      "status": "imported",
+      "imported_source_codes": "BALTIMORE_FIXED,BALTIMORE_RED,BALTIMORE_PORTABLE",
+      "source_url": "https://www.arcgis.com/home/item.html?id=02625f728f714c78a5b3ad6aa06695b3",
+      "notes": "Open Baltimore city datasets; commercial reuse permitted by Article 1 §9-8(b). Portable site list kept as candidates."
+    },
+    {
+      "country_code": "US",
+      "region": "Seattle / Washington State",
+      "status": "imported",
+      "imported_source_codes": "SEATTLE_ATSC",
+      "source_url": "https://www.arcgis.com/home/item.html?id=f3879db110b84473b4e3d669157c6a39",
+      "notes": "Active SDOT camera GIS; device ObjectId preserves lane/direction pairs."
+    },
+    {
+      "country_code": "US",
+      "region": "New York City",
+      "status": "osm_fallback",
+      "imported_source_codes": null,
+      "source_url": "https://www.nyc.gov/html/dot/html/motorist/vision-zero-safe-driving.shtml",
+      "notes": "Official program/citation material found; no current licensed exact camera-point feed identified. Ticket geocoding and historical inferred locations were not imported."
+    },
+    {
+      "country_code": "US",
+      "region": "Philadelphia",
+      "status": "osm_fallback",
+      "imported_source_codes": null,
+      "source_url": "https://philapark.org/camera-based-enforcement/",
+      "notes": "Official intersection/program information found; no licensed current machine-readable exact camera-point layer identified."
+    },
+    {
+      "country_code": "US",
+      "region": "Los Angeles",
+      "status": "osm_fallback",
+      "imported_source_codes": null,
+      "source_url": "https://ladot.lacity.gov/speed-safety-system",
+      "notes": "Official rollout information found; planned/program material is not proof of active fixed cameras."
+    },
+    {
+      "country_code": "US",
+      "region": "Virginia, New Jersey, Ohio, Oregon",
+      "status": "osm_fallback",
+      "imported_source_codes": null,
+      "source_url": "https://wiki.openstreetmap.org/wiki/Relation:enforcement",
+      "notes": "ArcGIS government layers searched; no verified reusable current enforcement-point source added. Ordinary DOT traffic-monitoring CCTV excluded."
+    },
+    {
+      "country_code": "CA",
+      "region": "Toronto / Ontario",
+      "status": "imported",
+      "imported_source_codes": "TORONTO_RLC",
+      "source_url": "https://open.toronto.ca/dataset/red-light-cameras/",
+      "notes": "Current official red-light GIS. OSM-only Ontario speed enforcement quarantined against the official municipal ASE ban effective 2025-11-14."
+    },
+    {
+      "country_code": "CA",
+      "region": "Quebec / Montreal",
+      "status": "imported",
+      "imported_source_codes": "QUEBEC_MTQ",
+      "source_url": "https://www.donneesquebec.ca/recherche/dataset/radar-photo",
+      "notes": "Official province-wide radar GIS; mobile/ended sites are candidates."
+    },
+    {
+      "country_code": "CA",
+      "region": "Edmonton / Alberta",
+      "status": "imported",
+      "imported_source_codes": "EDMONTON_ISD",
+      "source_url": "https://data.edmonton.ca/d/7fnd-72gr",
+      "notes": "Intersection safety devices imported as red-light enforcement; posted speed is context and not proof of speed-on-green operation."
+    },
+    {
+      "country_code": "CA",
+      "region": "Ottawa",
+      "status": "candidates",
+      "imported_source_codes": "OTTAWA_RLC_2025",
+      "source_url": "https://www.arcgis.com/home/item.html?id=ad519955709c4ed78d03726933b531e1",
+      "notes": "Historical citation-location data; not automatically asserted active. Current OSM observations collected separately."
+    },
+    {
+      "country_code": "CA",
+      "region": "British Columbia / Vancouver",
+      "status": "osm_fallback",
+      "imported_source_codes": null,
+      "source_url": "https://catalogue.data.gov.bc.ca/dataset/intersection-safety-camera-violation-tickets-by-location",
+      "notes": "Licensed official violation counts found, but CSV has no coordinates. Official map exists; its Google map coordinates were not imported under an unverified reuse license."
+    },
+    {
+      "country_code": "CA",
+      "region": "Calgary",
+      "status": "osm_fallback",
+      "imported_source_codes": null,
+      "source_url": "https://data.calgary.ca/",
+      "notes": "Intersection camera dataset checked but returned no usable current coordinates. Traffic signal/monitoring cameras not substituted for enforcement cameras."
+    },
+    {
+      "country_code": "CA",
+      "region": "Winnipeg",
+      "status": "osm_fallback",
+      "imported_source_codes": null,
+      "source_url": "https://data.winnipeg.ca/",
+      "notes": "Open traffic-camera layer is TMC/PTZ monitoring, not enforcement, and was excluded."
+    },
+    {
+      "country_code": "CA",
+      "region": "Cornwall",
+      "status": "excluded",
+      "imported_source_codes": null,
+      "source_url": "https://www.arcgis.com/",
+      "notes": "Located GIS terms explicitly restricted commercial reuse/redistribution/automated access; not imported."
+    }
+  ]
+}

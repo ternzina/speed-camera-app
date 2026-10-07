@@ -1,0 +1,132 @@
+[
+  {
+    "canonical_id": "OSM_CA:node/5410295344",
+    "source_code": "OSM_CA",
+    "source_id": "node/5410295344"
+  },
+  {
+    "canonical_id": "OSM_CA:node/11635396531",
+    "source_code": "OSM_CA",
+    "source_id": "node/11635396531"
+  },
+  {
+    "canonical_id": "OSM_CA:node/12559418123",
+    "source_code": "OSM_CA",
+    "source_id": "node/12559418123"
+  },
+  {
+    "canonical_id": "OSM_CA:node/12720432515",
+    "source_code": "OSM_CA",
+    "source_id": "node/12720432515"
+  },
+  {
+    "canonical_id": "OSM_CA:node/12720698902",
+    "source_code": "OSM_CA",
+    "source_id": "node/12720698902"
+  },
+  {
+    "canonical_id": "OSM_CA:node/12720704230",
+    "source_code": "OSM_CA",
+    "source_id": "node/12720704230"
+  },
+  {
+    "canonical_id": "OSM_CA:node/12720735125",
+    "source_code": "OSM_CA",
+    "source_id": "node/12720735125"
+  },
+  {
+    "canonical_id": "OSM_CA:node/12720739263",
+    "source_code": "OSM_CA",
+    "source_id": "node/12720739263"
+  },
+  {
+    "canonical_id": "OSM_US:node/4500221835",
+    "source_code": "OSM_US",
+    "source_id": "node/4500221835"
+  },
+  {
+    "canonical_id": "OSM_US:node/5846593764",
+    "source_code": "OSM_US",
+    "source_id": "node/5846593764"
+  },
+  {
+    "canonical_id": "OSM_US:node/8918090831",
+    "source_code": "OSM_US",
+    "source_id": "node/8918090831"
+  },
+  {
+    "canonical_id": "OSM_US:node/9332882501",
+    "source_code": "OSM_US",
+    "source_id": "node/9332882501"
+  },
+  {
+    "canonical_id": "OSM_LV:node/11078722416",
+    "source_code": "OSM_LV",
+    "source_id": "node/11078722416"
+  },
+  {
+    "canonical_id": "OSM_LV:node/11078722417",
+    "source_code": "OSM_LV",
+    "source_id": "node/11078722417"
+  },
+  {
+    "canonical_id": "OSM_NL:node/4987151329",
+    "source_code": "OSM_NL",
+    "source_id": "node/4987151329"
+  },
+  {
+    "canonical_id": "OSM_MK:node/170786636",
+    "source_code": "OSM_MK",
+    "source_id": "node/170786636"
+  },
+  {
+    "canonical_id": "OSM_MK:node/10588563281",
+    "source_code": "OSM_MK",
+    "source_id": "node/10588563281"
+  },
+  {
+    "canonical_id": "OSM_MK:node/12917435755",
+    "source_code": "OSM_MK",
+    "source_id": "node/12917435755"
+  },
+  {
+    "canonical_id": "OSM_UA:node/287832215",
+    "source_code": "OSM_UA",
+    "source_id": "node/287832215"
+  },
+  {
+    "canonical_id": "OSM_LU:node/1582417948",
+    "source_code": "OSM_LU",
+    "source_id": "node/1582417948"
+  },
+  {
+    "canonical_id": "OSM_LU:node/7019145200",
+    "source_code": "OSM_LU",
+    "source_id": "node/7019145200"
+  },
+  {
+    "canonical_id": "OSM_FI:node/1435909823",
+    "source_code": "OSM_FI",
+    "source_id": "node/1435909823"
+  },
+  {
+    "canonical_id": "OSM_FI:node/1837748771",
+    "source_code": "OSM_FI",
+    "source_id": "node/1837748771"
+  },
+  {
+    "canonical_id": "OSM_FI:node/6034771998",
+    "source_code": "OSM_FI",
+    "source_id": "node/6034771998"
+  },
+  {
+    "canonical_id": "OSM_LT:node/5004559620",
+    "source_code": "OSM_LT",
+    "source_id": "node/5004559620"
+  },
+  {
+    "canonical_id": "OSM_LT:node/5022600935",
+    "source_code": "OSM_LT",
+    "source_id": "node/5022600935"
+  }
+]

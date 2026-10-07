@@ -1,0 +1,27 @@
+{
+  "app.json": {
+    "sha256": "b96dcfca65c8b979a9fa44cd520dfd30e94ebe5597e6b6e6ac40a23293af613f",
+    "unchanged_from_original_snapshot": true
+  },
+  "eas.json": {
+    "sha256": "013b95fcfc4f1c343757173f7de6432a095ad858e3cb6b4e67c730bb47046302",
+    "unchanged_from_original_snapshot": true
+  },
+  "package.json": {
+    "sha256": "7c559d55bc413ab05d2fc859475e95c3a87fb5c1dfbfb53171ef40b9edc8584d",
+    "unchanged_from_original_snapshot": true
+  },
+  "package-lock.json": {
+    "sha256": "9a4a76aa0cb4d485c480ab78b4248dc8a81bf2a974a23803c3cc2bd0b2560bf0",
+    "unchanged_from_original_snapshot": true
+  },
+  "cameras.json": {
+    "sha256": "b57bea2a7e454575cbbc20425367eb0a8f20ad540038fbaccb1a325d8c0732fe",
+    "unchanged_from_original_snapshot": true
+  },
+  "cameras-pl.json": {
+    "sha256": "7c9574041e86bda2a10685e7445455de7b2026744bf6395f962d581d74ea0280",
+    "unchanged_from_original_snapshot": true
+  },
+  "credential_file_mode": "0o600"
+}

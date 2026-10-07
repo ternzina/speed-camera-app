@@ -1,0 +1,1417 @@
+[
+  {
+    "canonical_id": "OSM_FR:node/10533271",
+    "official_records": [
+      "FR_INTERIEUR:12386"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/322575641",
+    "official_records": [
+      "FR_INTERIEUR:12696"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/399611908",
+    "official_records": [
+      "FR_INTERIEUR:12368"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/399614980",
+    "official_records": [
+      "FR_INTERIEUR:12367"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/411156687",
+    "official_records": [
+      "FR_INTERIEUR:12237"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/411559030",
+    "official_records": [
+      "FR_INTERIEUR:12794"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/411559247",
+    "official_records": [
+      "FR_INTERIEUR:12794"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/411567413",
+    "official_records": [
+      "FR_INTERIEUR:12773"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/412779511",
+    "official_records": [
+      "FR_INTERIEUR:12481"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/418030229",
+    "official_records": [
+      "FR_INTERIEUR:12346"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/448450783",
+    "official_records": [
+      "FR_INTERIEUR:12540"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/467110854",
+    "official_records": [
+      "FR_INTERIEUR:51072"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/616921245",
+    "official_records": [
+      "FR_INTERIEUR:12388"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/616921248",
+    "official_records": [
+      "FR_INTERIEUR:12705"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/702961340",
+    "official_records": [
+      "FR_INTERIEUR:12709"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/769292927",
+    "official_records": [
+      "FR_INTERIEUR:12459"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/783299571",
+    "official_records": [
+      "FR_INTERIEUR:12535"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/788827580",
+    "official_records": [
+      "FR_INTERIEUR:12787"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/793796462",
+    "official_records": [
+      "FR_INTERIEUR:12603"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/794292497",
+    "official_records": [
+      "FR_INTERIEUR:12477"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/804416263",
+    "official_records": [
+      "FR_INTERIEUR:12456"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/903613915",
+    "official_records": [
+      "FR_INTERIEUR:12706"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/915077105",
+    "official_records": [
+      "FR_INTERIEUR:55133"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/937201467",
+    "official_records": [
+      "FR_INTERIEUR:51280"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/937993279",
+    "official_records": [
+      "FR_INTERIEUR:12815"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/939578551",
+    "official_records": [
+      "FR_INTERIEUR:12772"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/957674255",
+    "official_records": [
+      "FR_INTERIEUR:12421"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/966271173",
+    "official_records": [
+      "FR_INTERIEUR:12628"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/1108435305",
+    "official_records": [
+      "FR_INTERIEUR:51181"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/1115893557",
+    "official_records": [
+      "FR_INTERIEUR:7166"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/1132306866",
+    "official_records": [
+      "FR_INTERIEUR:12358"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/1133523034",
+    "official_records": [
+      "FR_INTERIEUR:12347"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/1142956326",
+    "official_records": [
+      "FR_INTERIEUR:12434"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/1151498205",
+    "official_records": [
+      "FR_INTERIEUR:12333"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/1157931125",
+    "official_records": [
+      "FR_INTERIEUR:12519"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/1190008087",
+    "official_records": [
+      "FR_INTERIEUR:12474"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/1192867255",
+    "official_records": [
+      "FR_INTERIEUR:12754"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/1210778921",
+    "official_records": [
+      "FR_INTERIEUR:12622"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/1210778924",
+    "official_records": [
+      "FR_INTERIEUR:12649"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/1210792998",
+    "official_records": [
+      "FR_INTERIEUR:12692"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/1217740232",
+    "official_records": [
+      "FR_INTERIEUR:12612"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/1241234682",
+    "official_records": [
+      "FR_INTERIEUR:4218"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/1262347985",
+    "official_records": [
+      "FR_INTERIEUR:12664"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/1271376872",
+    "official_records": [
+      "FR_INTERIEUR:12407"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/1285124461",
+    "official_records": [
+      "FR_INTERIEUR:12445"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/1301123915",
+    "official_records": [
+      "FR_INTERIEUR:12857"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/1313290561",
+    "official_records": [
+      "FR_INTERIEUR:12398"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/1313302217",
+    "official_records": [
+      "FR_INTERIEUR:12426"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/1315508125",
+    "official_records": [
+      "FR_INTERIEUR:55053"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/1322219141",
+    "official_records": [
+      "FR_INTERIEUR:51666"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/1323600370",
+    "official_records": [
+      "FR_INTERIEUR:12580"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/1323661893",
+    "official_records": [
+      "FR_INTERIEUR:12588"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/1330861372",
+    "official_records": [
+      "FR_INTERIEUR:51667"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/1351854184",
+    "official_records": [
+      "FR_INTERIEUR:12728"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/1371862458",
+    "official_records": [
+      "FR_INTERIEUR:12557"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/1377110686",
+    "official_records": [
+      "FR_INTERIEUR:12400"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/1378503978",
+    "official_records": [
+      "FR_INTERIEUR:12553"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/1381569350",
+    "official_records": [
+      "FR_INTERIEUR:12415"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/1388678445",
+    "official_records": [
+      "FR_INTERIEUR:12850"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/1389767924",
+    "official_records": [
+      "FR_INTERIEUR:12235"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/1392599750",
+    "official_records": [
+      "FR_INTERIEUR:12598"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/1392803206",
+    "official_records": [
+      "FR_INTERIEUR:12594"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/1399601546",
+    "official_records": [
+      "FR_INTERIEUR:12763"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/1411553852",
+    "official_records": [
+      "FR_INTERIEUR:4312"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/1411561795",
+    "official_records": [
+      "FR_INTERIEUR:51456"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/1416741127",
+    "official_records": [
+      "FR_INTERIEUR:12593"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/1416741132",
+    "official_records": [
+      "FR_INTERIEUR:12596"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/1418590243",
+    "official_records": [
+      "FR_INTERIEUR:12604"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/1418720827",
+    "official_records": [
+      "FR_INTERIEUR:12583"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/1421743227",
+    "official_records": [
+      "FR_INTERIEUR:12372"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/1474011341",
+    "official_records": [
+      "FR_INTERIEUR:12025"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/1510568867",
+    "official_records": [
+      "FR_INTERIEUR:12814"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/1591142428",
+    "official_records": [
+      "FR_INTERIEUR:12510"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/1603916606",
+    "official_records": [
+      "FR_INTERIEUR:51301"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/1604273858",
+    "official_records": [
+      "FR_INTERIEUR:12342"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/1620816180",
+    "official_records": [
+      "FR_INTERIEUR:55140"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/1737421955",
+    "official_records": [
+      "FR_INTERIEUR:12279"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/1785028660",
+    "official_records": [
+      "FR_INTERIEUR:12476",
+      "FR_INTERIEUR:12485"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/1789696211",
+    "official_records": [
+      "FR_INTERIEUR:55320"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/1797621023",
+    "official_records": [
+      "FR_INTERIEUR:51256"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/1816257572",
+    "official_records": [
+      "FR_INTERIEUR:55020"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/1816319316",
+    "official_records": [
+      "FR_INTERIEUR:55018"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/1834892393",
+    "official_records": [
+      "FR_INTERIEUR:12549"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/1851347064",
+    "official_records": [
+      "FR_INTERIEUR:51298"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/1874944231",
+    "official_records": [
+      "FR_INTERIEUR:6044"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/1894425920",
+    "official_records": [
+      "FR_INTERIEUR:55628"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/1964833325",
+    "official_records": [
+      "FR_INTERIEUR:55034"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/1976663793",
+    "official_records": [
+      "FR_INTERIEUR:12564"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/1976924913",
+    "official_records": [
+      "FR_INTERIEUR:12336"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/1978484097",
+    "official_records": [
+      "FR_INTERIEUR:55278"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/1989368359",
+    "official_records": [
+      "FR_INTERIEUR:12691"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/1989413066",
+    "official_records": [
+      "FR_INTERIEUR:12488"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/1992002894",
+    "official_records": [
+      "FR_INTERIEUR:12769"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/1992423907",
+    "official_records": [
+      "FR_INTERIEUR:51413"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/1992571337",
+    "official_records": [
+      "FR_INTERIEUR:12663"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/1992633321",
+    "official_records": [
+      "FR_INTERIEUR:12605"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/1993335792",
+    "official_records": [
+      "FR_INTERIEUR:12597"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/1996659438",
+    "official_records": [
+      "FR_INTERIEUR:51597"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/2011484827",
+    "official_records": [
+      "FR_INTERIEUR:12797"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/2022592529",
+    "official_records": [
+      "FR_INTERIEUR:12760"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/2043506129",
+    "official_records": [
+      "FR_INTERIEUR:51477"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/2043534695",
+    "official_records": [
+      "FR_INTERIEUR:7334"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/2045365834",
+    "official_records": [
+      "FR_INTERIEUR:51410"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/2053286124",
+    "official_records": [
+      "FR_INTERIEUR:51164"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/2070562161",
+    "official_records": [
+      "FR_INTERIEUR:12629"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/2080823585",
+    "official_records": [
+      "FR_INTERIEUR:51551"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/2082230342",
+    "official_records": [
+      "FR_INTERIEUR:12071"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/2093085297",
+    "official_records": [
+      "FR_INTERIEUR:12469"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/2140273167",
+    "official_records": [
+      "FR_INTERIEUR:55400"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/2140294402",
+    "official_records": [
+      "FR_INTERIEUR:12473"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/2140303268",
+    "official_records": [
+      "FR_INTERIEUR:55251"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/2149036522",
+    "official_records": [
+      "FR_INTERIEUR:55212"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/2206380672",
+    "official_records": [
+      "FR_INTERIEUR:55218"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/2207135624",
+    "official_records": [
+      "FR_INTERIEUR:55219"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/2207142659",
+    "official_records": [
+      "FR_INTERIEUR:55223"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/2210425095",
+    "official_records": [
+      "FR_INTERIEUR:12185"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/2210428320",
+    "official_records": [
+      "FR_INTERIEUR:12143"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/2216656762",
+    "official_records": [
+      "FR_INTERIEUR:12439"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/2252460384",
+    "official_records": [
+      "FR_INTERIEUR:12055"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/2263241297",
+    "official_records": [
+      "FR_INTERIEUR:7429"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/2266079770",
+    "official_records": [
+      "FR_INTERIEUR:4004"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/2266593827",
+    "official_records": [
+      "FR_INTERIEUR:51226"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/2277982353",
+    "official_records": [
+      "FR_INTERIEUR:51252"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/2279151463",
+    "official_records": [
+      "FR_INTERIEUR:12699"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/2281797589",
+    "official_records": [
+      "FR_INTERIEUR:12059"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/2281819541",
+    "official_records": [
+      "FR_INTERIEUR:12491"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/2281830058",
+    "official_records": [
+      "FR_INTERIEUR:12796"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/2281845871",
+    "official_records": [
+      "FR_INTERIEUR:12340"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/2286070030",
+    "official_records": [
+      "FR_INTERIEUR:55621"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/2336207753",
+    "official_records": [
+      "FR_INTERIEUR:55245"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/2360052080",
+    "official_records": [
+      "FR_INTERIEUR:12550"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/2364176790",
+    "official_records": [
+      "FR_INTERIEUR:55341"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/2408999082",
+    "official_records": [
+      "FR_INTERIEUR:12601"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/2526088610",
+    "official_records": [
+      "FR_INTERIEUR:55161"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/2552980206",
+    "official_records": [
+      "FR_INTERIEUR:12515"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/2579444188",
+    "official_records": [
+      "FR_INTERIEUR:51135"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/2579788715",
+    "official_records": [
+      "FR_INTERIEUR:12458"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/2579794890",
+    "official_records": [
+      "FR_INTERIEUR:12135"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/2579875375",
+    "official_records": [
+      "FR_INTERIEUR:12658"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/2586282624",
+    "official_records": [
+      "FR_INTERIEUR:55547"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/2586285896",
+    "official_records": [
+      "FR_INTERIEUR:12751"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/2588303368",
+    "official_records": [
+      "FR_INTERIEUR:12547"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/2591305333",
+    "official_records": [
+      "FR_INTERIEUR:55162"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/2617810329",
+    "official_records": [
+      "FR_INTERIEUR:6068"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/2617822621",
+    "official_records": [
+      "FR_INTERIEUR:6067"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/2618856322",
+    "official_records": [
+      "FR_INTERIEUR:12115"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/2619527353",
+    "official_records": [
+      "FR_INTERIEUR:4579"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/2624005072",
+    "official_records": [
+      "FR_INTERIEUR:7109"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/2628861555",
+    "official_records": [
+      "FR_INTERIEUR:12620"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/2984234607",
+    "official_records": [
+      "FR_INTERIEUR:12688"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/3011149842",
+    "official_records": [
+      "FR_INTERIEUR:55396"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/3022692196",
+    "official_records": [
+      "FR_INTERIEUR:12639"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/3378981275",
+    "official_records": [
+      "FR_INTERIEUR:12638"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/3790545467",
+    "official_records": [
+      "FR_INTERIEUR:12276"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/4208538829",
+    "official_records": [
+      "FR_INTERIEUR:12293"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/4243200771",
+    "official_records": [
+      "FR_INTERIEUR:12288"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/4462599354",
+    "official_records": [
+      "FR_INTERIEUR:12297"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/4502472096",
+    "official_records": [
+      "FR_INTERIEUR:55266"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/4549017656",
+    "official_records": [
+      "FR_INTERIEUR:12267"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/4878445822",
+    "official_records": [
+      "FR_INTERIEUR:12083"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/4910814359",
+    "official_records": [
+      "FR_INTERIEUR:12530"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/4986906725",
+    "official_records": [
+      "FR_INTERIEUR:12172"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/5104052515",
+    "official_records": [
+      "FR_INTERIEUR:50245"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/5123794765",
+    "official_records": [
+      "FR_INTERIEUR:12483"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/5143625933",
+    "official_records": [
+      "FR_INTERIEUR:12313"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/5586455792",
+    "official_records": [
+      "FR_INTERIEUR:12348"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/5775812718",
+    "official_records": [
+      "FR_INTERIEUR:55424"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/6535534834",
+    "official_records": [
+      "FR_INTERIEUR:51101"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/7372809373",
+    "official_records": [
+      "FR_INTERIEUR:55570"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/7783773950",
+    "official_records": [
+      "FR_INTERIEUR:12193"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/7930537735",
+    "official_records": [
+      "FR_INTERIEUR:51173"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/8598415427",
+    "official_records": [
+      "FR_INTERIEUR:12522"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/8853589597",
+    "official_records": [
+      "FR_INTERIEUR:51326"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/8879398425",
+    "official_records": [
+      "FR_INTERIEUR:51509"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/8889551320",
+    "official_records": [
+      "FR_INTERIEUR:12756"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/8943659859",
+    "official_records": [
+      "FR_INTERIEUR:51352"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/8962320155",
+    "official_records": [
+      "FR_INTERIEUR:12758"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/8965820795",
+    "official_records": [
+      "FR_INTERIEUR:12537"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/9041042913",
+    "official_records": [
+      "FR_INTERIEUR:12513"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/9066172594",
+    "official_records": [
+      "FR_INTERIEUR:12633"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/9074049621",
+    "official_records": [
+      "FR_INTERIEUR:12149"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/9078684937",
+    "official_records": [
+      "FR_INTERIEUR:12565"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/9079676130",
+    "official_records": [
+      "FR_INTERIEUR:4476"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/11070055015",
+    "official_records": [
+      "FR_INTERIEUR:12435"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/11078578226",
+    "official_records": [
+      "FR_INTERIEUR:12669"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/11276859696",
+    "official_records": [
+      "FR_INTERIEUR:12651"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/11451606271",
+    "official_records": [
+      "FR_INTERIEUR:12406"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/11599311643",
+    "official_records": [
+      "FR_INTERIEUR:51488"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/12988433380",
+    "official_records": [
+      "FR_INTERIEUR:4419"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/12993183483",
+    "official_records": [
+      "FR_INTERIEUR:12067"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/4450585678",
+    "official_records": [
+      "FR_INTERIEUR:51532"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/14022836532",
+    "official_records": [
+      "FR_INTERIEUR:12146"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/14053504184",
+    "official_records": [
+      "FR_INTERIEUR:12573"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/14162761848",
+    "official_records": [
+      "FR_INTERIEUR:12425"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_FR:node/14189541483",
+    "official_records": [
+      "FR_INTERIEUR:12496"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_PL:node/2564524989",
+    "official_records": [
+      "PL:CANARD:speed_camera:87063928"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_PL:node/2566153024",
+    "official_records": [
+      "PL:CANARD:speed_camera:91544256"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_PL:node/2568901846",
+    "official_records": [
+      "PL:CANARD:speed_camera:88463821"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_PL:node/9472499422",
+    "official_records": [
+      "PL:CANARD:speed_camera:28797063"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_PL:node/13623698609",
+    "official_records": [
+      "PL:CANARD:speed_camera:114847866"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_PL:node/13995445175",
+    "official_records": [
+      "PL:CANARD:speed_camera:120186164"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  },
+  {
+    "canonical_id": "OSM_PL:node/14120235872",
+    "official_records": [
+      "PL:CANARD:speed_camera:118949564"
+    ],
+    "reason": "Speed disagreement with a very close authoritative record; identity/lane unresolved"
+  }
+]

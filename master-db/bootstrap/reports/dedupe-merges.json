@@ -1,0 +1,6416 @@
+[
+  {
+    "country_code": "CA",
+    "canonical_id": "QUEBEC_MTQ:13",
+    "source_id": "OSM_CA:node/6092933110",
+    "distance_m": 0.0
+  },
+  {
+    "country_code": "CA",
+    "canonical_id": "QUEBEC_MTQ:30",
+    "source_id": "OSM_CA:node/6092933111",
+    "distance_m": 0.0
+  },
+  {
+    "country_code": "CA",
+    "canonical_id": "TORONTO_RLC:6310",
+    "source_id": "OSM_CA:node/21099015",
+    "distance_m": 2.27
+  },
+  {
+    "country_code": "CA",
+    "canonical_id": "TORONTO_RLC:6067",
+    "source_id": "OSM_CA:node/21099086",
+    "distance_m": 3.056
+  },
+  {
+    "country_code": "CA",
+    "canonical_id": "TORONTO_RLC:6050",
+    "source_id": "OSM_CA:node/21292296",
+    "distance_m": 4.032
+  },
+  {
+    "country_code": "CA",
+    "canonical_id": "TORONTO_RLC:6061",
+    "source_id": "OSM_CA:node/21631747",
+    "distance_m": 2.841
+  },
+  {
+    "country_code": "CA",
+    "canonical_id": "TORONTO_RLC:6101",
+    "source_id": "OSM_CA:node/25768536",
+    "distance_m": 4.94
+  },
+  {
+    "country_code": "CA",
+    "canonical_id": "TORONTO_RLC:6064",
+    "source_id": "OSM_CA:node/25768773",
+    "distance_m": 1.38
+  },
+  {
+    "country_code": "CA",
+    "canonical_id": "TORONTO_RLC:6066",
+    "source_id": "OSM_CA:node/25768774",
+    "distance_m": 1.651
+  },
+  {
+    "country_code": "CA",
+    "canonical_id": "TORONTO_RLC:6011",
+    "source_id": "OSM_CA:node/29656446",
+    "distance_m": 3.171
+  },
+  {
+    "country_code": "CA",
+    "canonical_id": "TORONTO_RLC:6025",
+    "source_id": "OSM_CA:node/29656852",
+    "distance_m": 4.412
+  },
+  {
+    "country_code": "CA",
+    "canonical_id": "TORONTO_RLC:6245",
+    "source_id": "OSM_CA:node/29687914",
+    "distance_m": 2.176
+  },
+  {
+    "country_code": "CA",
+    "canonical_id": "TORONTO_RLC:6062",
+    "source_id": "OSM_CA:node/31333691",
+    "distance_m": 1.453
+  },
+  {
+    "country_code": "CA",
+    "canonical_id": "TORONTO_RLC:6077",
+    "source_id": "OSM_CA:node/32376754",
+    "distance_m": 3.14
+  },
+  {
+    "country_code": "CA",
+    "canonical_id": "TORONTO_RLC:6059",
+    "source_id": "OSM_CA:node/32500179",
+    "distance_m": 1.899
+  },
+  {
+    "country_code": "CA",
+    "canonical_id": "TORONTO_RLC:6053",
+    "source_id": "OSM_CA:node/35515858",
+    "distance_m": 1.805
+  },
+  {
+    "country_code": "CA",
+    "canonical_id": "TORONTO_RLC:6051",
+    "source_id": "OSM_CA:node/46929220",
+    "distance_m": 3.632
+  },
+  {
+    "country_code": "CA",
+    "canonical_id": "TORONTO_RLC:6013",
+    "source_id": "OSM_CA:node/90778393",
+    "distance_m": 2.298
+  },
+  {
+    "country_code": "CA",
+    "canonical_id": "TORONTO_RLC:6212",
+    "source_id": "OSM_CA:node/95197083",
+    "distance_m": 1.864
+  },
+  {
+    "country_code": "CA",
+    "canonical_id": "TORONTO_RLC:6117",
+    "source_id": "OSM_CA:node/156900260",
+    "distance_m": 4.373
+  },
+  {
+    "country_code": "CA",
+    "canonical_id": "TORONTO_RLC:6018",
+    "source_id": "OSM_CA:node/208595718",
+    "distance_m": 2.862
+  },
+  {
+    "country_code": "CA",
+    "canonical_id": "TORONTO_RLC:6020",
+    "source_id": "OSM_CA:node/249721650",
+    "distance_m": 0.99
+  },
+  {
+    "country_code": "CA",
+    "canonical_id": "TORONTO_RLC:6029",
+    "source_id": "OSM_CA:node/267467891",
+    "distance_m": 1.224
+  },
+  {
+    "country_code": "CA",
+    "canonical_id": "TORONTO_RLC:6190",
+    "source_id": "OSM_CA:node/427658932",
+    "distance_m": 1.376
+  },
+  {
+    "country_code": "CA",
+    "canonical_id": "TORONTO_RLC:6023",
+    "source_id": "OSM_CA:node/427826636",
+    "distance_m": 4.841
+  },
+  {
+    "country_code": "CA",
+    "canonical_id": "TORONTO_RLC:6021",
+    "source_id": "OSM_CA:node/427987276",
+    "distance_m": 3.748
+  },
+  {
+    "country_code": "CA",
+    "canonical_id": "TORONTO_RLC:6094",
+    "source_id": "OSM_CA:node/430559288",
+    "distance_m": 4.218
+  },
+  {
+    "country_code": "CA",
+    "canonical_id": "TORONTO_RLC:6005",
+    "source_id": "OSM_CA:node/430566417",
+    "distance_m": 2.398
+  },
+  {
+    "country_code": "CA",
+    "canonical_id": "TORONTO_RLC:6036",
+    "source_id": "OSM_CA:node/431380696",
+    "distance_m": 3.737
+  },
+  {
+    "country_code": "CA",
+    "canonical_id": "TORONTO_RLC:6182",
+    "source_id": "OSM_CA:node/432730641",
+    "distance_m": 4.765
+  },
+  {
+    "country_code": "CA",
+    "canonical_id": "TORONTO_RLC:6003",
+    "source_id": "OSM_CA:node/432732986",
+    "distance_m": 4.055
+  },
+  {
+    "country_code": "CA",
+    "canonical_id": "TORONTO_RLC:6226",
+    "source_id": "OSM_CA:node/432796552",
+    "distance_m": 2.235
+  },
+  {
+    "country_code": "CA",
+    "canonical_id": "TORONTO_RLC:6092",
+    "source_id": "OSM_CA:node/448036130",
+    "distance_m": 4.705
+  },
+  {
+    "country_code": "CA",
+    "canonical_id": "OTTAWA_RLC_2025:FISHER @ MEADOWLANDS|Southbound",
+    "source_id": "OSM_CA:node/901777104",
+    "distance_m": 1.726
+  },
+  {
+    "country_code": "CA",
+    "canonical_id": "OTTAWA_RLC_2025:SAUNDERSON @ SMYTH|Eastbound",
+    "source_id": "OSM_CA:node/903995400",
+    "distance_m": 1.537
+  },
+  {
+    "country_code": "CA",
+    "canonical_id": "TORONTO_RLC:6072",
+    "source_id": "OSM_CA:node/1557899320",
+    "distance_m": 3.513
+  },
+  {
+    "country_code": "ES",
+    "canonical_id": "ES_DGT:GUID_CABINACINEMOMETRO_120429",
+    "source_id": "OSM_ES:node/613852",
+    "distance_m": 2.757
+  },
+  {
+    "country_code": "ES",
+    "canonical_id": "ES_DGT:GUID_CABINACINEMOMETRO_120554",
+    "source_id": "OSM_ES:node/25997408",
+    "distance_m": 3.405
+  },
+  {
+    "country_code": "ES",
+    "canonical_id": "ES_DGT:GUID_CABINACINEMOMETRO_120521",
+    "source_id": "OSM_ES:node/992000570",
+    "distance_m": 3.437
+  },
+  {
+    "country_code": "ES",
+    "canonical_id": "ES_DGT:GUID_CABINACINEMOMETRO_120396",
+    "source_id": "OSM_ES:node/992000962",
+    "distance_m": 4.538
+  },
+  {
+    "country_code": "ES",
+    "canonical_id": "ES_DGT:GUID_CABINACINEMOMETRO_120558",
+    "source_id": "OSM_ES:node/992001400",
+    "distance_m": 2.762
+  },
+  {
+    "country_code": "ES",
+    "canonical_id": "ES_DGT:GUID_CABINACINEMOMETRO_120319",
+    "source_id": "OSM_ES:node/992001631",
+    "distance_m": 4.015
+  },
+  {
+    "country_code": "ES",
+    "canonical_id": "ES_DGT:GUID_CABINACINEMOMETRO_120137",
+    "source_id": "OSM_ES:node/992001773",
+    "distance_m": 1.324
+  },
+  {
+    "country_code": "ES",
+    "canonical_id": "ES_DGT:GUID_CABINACINEMOMETRO_120003",
+    "source_id": "OSM_ES:node/992001844",
+    "distance_m": 4.626
+  },
+  {
+    "country_code": "ES",
+    "canonical_id": "ES_DGT:GUID_CABINACINEMOMETRO_120677",
+    "source_id": "OSM_ES:node/992002582",
+    "distance_m": 0.835
+  },
+  {
+    "country_code": "ES",
+    "canonical_id": "ES_DGT:GUID_CABINACINEMOMETRO_120450",
+    "source_id": "OSM_ES:node/992002648",
+    "distance_m": 3.341
+  },
+  {
+    "country_code": "ES",
+    "canonical_id": "ES_DGT:GUID_CABINACINEMOMETRO_163708",
+    "source_id": "OSM_ES:node/992003204",
+    "distance_m": 1.775
+  },
+  {
+    "country_code": "ES",
+    "canonical_id": "ES_DGT:GUID_CABINACINEMOMETRO_120212",
+    "source_id": "OSM_ES:node/992003259",
+    "distance_m": 3.69
+  },
+  {
+    "country_code": "ES",
+    "canonical_id": "ES_DGT:GUID_CABINACINEMOMETRO_120537",
+    "source_id": "OSM_ES:node/992004055",
+    "distance_m": 2.075
+  },
+  {
+    "country_code": "ES",
+    "canonical_id": "ES_DGT:GUID_CABINACINEMOMETRO_120542",
+    "source_id": "OSM_ES:node/992004685",
+    "distance_m": 3.65
+  },
+  {
+    "country_code": "ES",
+    "canonical_id": "ES_DGT:GUID_CABINACINEMOMETRO_120207",
+    "source_id": "OSM_ES:node/992005322",
+    "distance_m": 0.0
+  },
+  {
+    "country_code": "ES",
+    "canonical_id": "ES_DGT:GUID_CABINACINEMOMETRO_120074",
+    "source_id": "OSM_ES:node/992005574",
+    "distance_m": 2.541
+  },
+  {
+    "country_code": "ES",
+    "canonical_id": "ES_DGT:GUID_CABINACINEMOMETRO_120445",
+    "source_id": "OSM_ES:node/992005746",
+    "distance_m": 4.48
+  },
+  {
+    "country_code": "ES",
+    "canonical_id": "ES_DGT:GUID_CABINACINEMOMETRO_120540",
+    "source_id": "OSM_ES:node/992006310",
+    "distance_m": 4.326
+  },
+  {
+    "country_code": "ES",
+    "canonical_id": "ES_DGT:GUID_CABINACINEMOMETRO_120101",
+    "source_id": "OSM_ES:node/992006537",
+    "distance_m": 4.897
+  },
+  {
+    "country_code": "ES",
+    "canonical_id": "ES_DGT:GUID_CABINACINEMOMETRO_120047",
+    "source_id": "OSM_ES:node/992006739",
+    "distance_m": 4.221
+  },
+  {
+    "country_code": "ES",
+    "canonical_id": "ES_DGT:GUID_CABINACINEMOMETRO_120279",
+    "source_id": "OSM_ES:node/992007173",
+    "distance_m": 4.374
+  },
+  {
+    "country_code": "ES",
+    "canonical_id": "ES_DGT:GUID_CABINACINEMOMETRO_120002",
+    "source_id": "OSM_ES:node/992007265",
+    "distance_m": 0.0
+  },
+  {
+    "country_code": "ES",
+    "canonical_id": "ES_DGT:GUID_CABINACINEMOMETRO_120548",
+    "source_id": "OSM_ES:node/1364820078",
+    "distance_m": 2.297
+  },
+  {
+    "country_code": "ES",
+    "canonical_id": "ES_DGT:GUID_CABINACINEMOMETRO_120132",
+    "source_id": "OSM_ES:node/2164323805",
+    "distance_m": 4.895
+  },
+  {
+    "country_code": "ES",
+    "canonical_id": "ES_DGT:GUID_CABINACINEMOMETRO_120453",
+    "source_id": "OSM_ES:node/2334938860",
+    "distance_m": 4.572
+  },
+  {
+    "country_code": "ES",
+    "canonical_id": "ES_DGT:GUID_CABINACINEMOMETRO_120124",
+    "source_id": "OSM_ES:node/2334938870",
+    "distance_m": 1.138
+  },
+  {
+    "country_code": "ES",
+    "canonical_id": "ES_DGT:GUID_CABINACINEMOMETRO_120062",
+    "source_id": "OSM_ES:node/2334938897",
+    "distance_m": 2.934
+  },
+  {
+    "country_code": "ES",
+    "canonical_id": "ES_DGT:GUID_CABINACINEMOMETRO_120469",
+    "source_id": "OSM_ES:node/2378267003",
+    "distance_m": 4.328
+  },
+  {
+    "country_code": "ES",
+    "canonical_id": "ES_DGT:GUID_CABINACINEMOMETRO_120473",
+    "source_id": "OSM_ES:node/2378267086",
+    "distance_m": 3.83
+  },
+  {
+    "country_code": "ES",
+    "canonical_id": "ES_DGT:GUID_CABINACINEMOMETRO_120082",
+    "source_id": "OSM_ES:node/2378267103",
+    "distance_m": 1.647
+  },
+  {
+    "country_code": "ES",
+    "canonical_id": "ES_DGT:GUID_CABINACINEMOMETRO_162926",
+    "source_id": "OSM_ES:node/4068539888",
+    "distance_m": 2.775
+  },
+  {
+    "country_code": "ES",
+    "canonical_id": "ES_DGT:GUID_CABINACINEMOMETRO_120125",
+    "source_id": "OSM_ES:node/4338709165",
+    "distance_m": 3.087
+  },
+  {
+    "country_code": "ES",
+    "canonical_id": "ES_DGT:GUID_CABINACINEMOMETRO_165268",
+    "source_id": "OSM_ES:node/4539336641",
+    "distance_m": 1.251
+  },
+  {
+    "country_code": "ES",
+    "canonical_id": "ES_DGT:GUID_CABINACINEMOMETRO_120025",
+    "source_id": "OSM_ES:node/4922487161",
+    "distance_m": 4.799
+  },
+  {
+    "country_code": "ES",
+    "canonical_id": "ES_DGT:GUID_CABINACINEMOMETRO_120574",
+    "source_id": "OSM_ES:node/4922487297",
+    "distance_m": 4.364
+  },
+  {
+    "country_code": "ES",
+    "canonical_id": "ES_DGT:GUID_CABINACINEMOMETRO_166990",
+    "source_id": "OSM_ES:node/7277584610",
+    "distance_m": 0.851
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:FE284183",
+    "source_id": "OSM_FR:node/152683",
+    "distance_m": 2.115
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55307",
+    "source_id": "OSM_FR:node/25965927",
+    "distance_m": 0.273
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51211",
+    "source_id": "OSM_FR:node/97730811",
+    "distance_m": 1.614
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51302",
+    "source_id": "OSM_FR:node/266222023",
+    "distance_m": 1.254
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51640",
+    "source_id": "OSM_FR:node/287116132",
+    "distance_m": 0.922
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:6765",
+    "source_id": "OSM_FR:node/287739135",
+    "distance_m": 1.586
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55377",
+    "source_id": "OSM_FR:node/295506329",
+    "distance_m": 0.641
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:276",
+    "source_id": "OSM_FR:node/309464058",
+    "distance_m": 3.444
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51411",
+    "source_id": "OSM_FR:node/317016991",
+    "distance_m": 4.706
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55081",
+    "source_id": "OSM_FR:node/324685428",
+    "distance_m": 2.691
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51006",
+    "source_id": "OSM_FR:node/369464491",
+    "distance_m": 1.288
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:188",
+    "source_id": "OSM_FR:node/394015952",
+    "distance_m": 3.817
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51674",
+    "source_id": "OSM_FR:node/394684703",
+    "distance_m": 3.095
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:396",
+    "source_id": "OSM_FR:node/394692868",
+    "distance_m": 3.097
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:483",
+    "source_id": "OSM_FR:node/394710047",
+    "distance_m": 4.324
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51175",
+    "source_id": "OSM_FR:node/394849926",
+    "distance_m": 2.571
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:7003",
+    "source_id": "OSM_FR:node/401428163",
+    "distance_m": 0.756
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:105",
+    "source_id": "OSM_FR:node/401445495",
+    "distance_m": 3.247
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:162",
+    "source_id": "OSM_FR:node/408751055",
+    "distance_m": 2.605
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55456",
+    "source_id": "OSM_FR:node/410316195",
+    "distance_m": 0.76
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:103",
+    "source_id": "OSM_FR:node/411148436",
+    "distance_m": 0.404
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51028",
+    "source_id": "OSM_FR:node/412276318",
+    "distance_m": 1.139
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:4386",
+    "source_id": "OSM_FR:node/412690299",
+    "distance_m": 2.837
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51134",
+    "source_id": "OSM_FR:node/412725093",
+    "distance_m": 0.653
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51030",
+    "source_id": "OSM_FR:node/412726072",
+    "distance_m": 3.613
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:136",
+    "source_id": "OSM_FR:node/415078226",
+    "distance_m": 1.26
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:143",
+    "source_id": "OSM_FR:node/415131977",
+    "distance_m": 2.833
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:122",
+    "source_id": "OSM_FR:node/415140123",
+    "distance_m": 1.032
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:4403",
+    "source_id": "OSM_FR:node/415438048",
+    "distance_m": 4.547
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:3033",
+    "source_id": "OSM_FR:node/416055029",
+    "distance_m": 1.331
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:3032",
+    "source_id": "OSM_FR:node/417148253",
+    "distance_m": 2.506
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:4417",
+    "source_id": "OSM_FR:node/418349042",
+    "distance_m": 4.489
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:798",
+    "source_id": "OSM_FR:node/419720705",
+    "distance_m": 2.172
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:4352",
+    "source_id": "OSM_FR:node/437847450",
+    "distance_m": 2.842
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51503",
+    "source_id": "OSM_FR:node/453668033",
+    "distance_m": 4.921
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51284",
+    "source_id": "OSM_FR:node/470590700",
+    "distance_m": 2.434
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:650",
+    "source_id": "OSM_FR:node/470646585",
+    "distance_m": 0.706
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:4708",
+    "source_id": "OSM_FR:node/472503458",
+    "distance_m": 3.234
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:3043",
+    "source_id": "OSM_FR:node/483407255",
+    "distance_m": 1.265
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51421",
+    "source_id": "OSM_FR:node/496147186",
+    "distance_m": 1.157
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51192",
+    "source_id": "OSM_FR:node/598138059",
+    "distance_m": 3.625
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:354",
+    "source_id": "OSM_FR:node/616921251",
+    "distance_m": 1.143
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:7292",
+    "source_id": "OSM_FR:node/679664618",
+    "distance_m": 2.937
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:12545",
+    "source_id": "OSM_FR:node/682403574",
+    "distance_m": 3.805
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:715",
+    "source_id": "OSM_FR:node/684749306",
+    "distance_m": 3.193
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:6622",
+    "source_id": "OSM_FR:node/713235029",
+    "distance_m": 2.946
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:361",
+    "source_id": "OSM_FR:node/721070444",
+    "distance_m": 2.622
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55160",
+    "source_id": "OSM_FR:node/723075368",
+    "distance_m": 4.21
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51434",
+    "source_id": "OSM_FR:node/725890536",
+    "distance_m": 4.121
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55110",
+    "source_id": "OSM_FR:node/769326283",
+    "distance_m": 1.472
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55058",
+    "source_id": "OSM_FR:node/769330151",
+    "distance_m": 0.661
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55313",
+    "source_id": "OSM_FR:node/773005589",
+    "distance_m": 2.562
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55203",
+    "source_id": "OSM_FR:node/778736148",
+    "distance_m": 2.581
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:575",
+    "source_id": "OSM_FR:node/779745851",
+    "distance_m": 0.147
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55591",
+    "source_id": "OSM_FR:node/780462270",
+    "distance_m": 1.235
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:3228",
+    "source_id": "OSM_FR:node/782984314",
+    "distance_m": 2.491
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:108",
+    "source_id": "OSM_FR:node/786618331",
+    "distance_m": 0.99
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51609",
+    "source_id": "OSM_FR:node/789646502",
+    "distance_m": 1.529
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:4107",
+    "source_id": "OSM_FR:node/804435788",
+    "distance_m": 4.201
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51351",
+    "source_id": "OSM_FR:node/804482913",
+    "distance_m": 4.77
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55590",
+    "source_id": "OSM_FR:node/804611241",
+    "distance_m": 1.776
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51144",
+    "source_id": "OSM_FR:node/821696327",
+    "distance_m": 2.707
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:7285",
+    "source_id": "OSM_FR:node/860138444",
+    "distance_m": 1.698
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:682",
+    "source_id": "OSM_FR:node/886776016",
+    "distance_m": 4.292
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:199",
+    "source_id": "OSM_FR:node/893164235",
+    "distance_m": 1.176
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:976",
+    "source_id": "OSM_FR:node/903616013",
+    "distance_m": 0.415
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51171",
+    "source_id": "OSM_FR:node/903870464",
+    "distance_m": 1.993
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55258",
+    "source_id": "OSM_FR:node/919898169",
+    "distance_m": 1.209
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55414",
+    "source_id": "OSM_FR:node/919905991",
+    "distance_m": 2.914
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:3009",
+    "source_id": "OSM_FR:node/919988357",
+    "distance_m": 4.461
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55385",
+    "source_id": "OSM_FR:node/920007573",
+    "distance_m": 1.11
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55107",
+    "source_id": "OSM_FR:node/920007608",
+    "distance_m": 1.378
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55198",
+    "source_id": "OSM_FR:node/920010668",
+    "distance_m": 1.298
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:941",
+    "source_id": "OSM_FR:node/921106672",
+    "distance_m": 4.561
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55055",
+    "source_id": "OSM_FR:node/921117682",
+    "distance_m": 1.725
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51313",
+    "source_id": "OSM_FR:node/928554208",
+    "distance_m": 1.625
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55237",
+    "source_id": "OSM_FR:node/937244269",
+    "distance_m": 4.281
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:4774",
+    "source_id": "OSM_FR:node/937615568",
+    "distance_m": 1.422
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:172",
+    "source_id": "OSM_FR:node/938039782",
+    "distance_m": 2.252
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55211",
+    "source_id": "OSM_FR:node/938085339",
+    "distance_m": 1.295
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55452",
+    "source_id": "OSM_FR:node/939939117",
+    "distance_m": 2.436
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:4112",
+    "source_id": "OSM_FR:node/942900402",
+    "distance_m": 3.377
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51139",
+    "source_id": "OSM_FR:node/950696201",
+    "distance_m": 1.747
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:FE284191",
+    "source_id": "OSM_FR:node/975874502",
+    "distance_m": 3.16
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51454",
+    "source_id": "OSM_FR:node/997416043",
+    "distance_m": 1.15
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:12723",
+    "source_id": "OSM_FR:node/1016283181",
+    "distance_m": 1.569
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55104",
+    "source_id": "OSM_FR:node/1025739167",
+    "distance_m": 1.885
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:12260",
+    "source_id": "OSM_FR:node/1047958872",
+    "distance_m": 1.638
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:12259",
+    "source_id": "OSM_FR:node/1047958878",
+    "distance_m": 4.303
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:223",
+    "source_id": "OSM_FR:node/1048331191",
+    "distance_m": 1.101
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:50401",
+    "source_id": "OSM_FR:node/1049300991",
+    "distance_m": 3.173
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:50404",
+    "source_id": "OSM_FR:node/1049846578",
+    "distance_m": 3.095
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:6707",
+    "source_id": "OSM_FR:node/1066713100",
+    "distance_m": 4.091
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51288",
+    "source_id": "OSM_FR:node/1066720871",
+    "distance_m": 0.656
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51261",
+    "source_id": "OSM_FR:node/1071725705",
+    "distance_m": 3.381
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55019",
+    "source_id": "OSM_FR:node/1075493503",
+    "distance_m": 1.953
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55031",
+    "source_id": "OSM_FR:node/1127780899",
+    "distance_m": 0.953
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:518",
+    "source_id": "OSM_FR:node/1133526390",
+    "distance_m": 0.618
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55305",
+    "source_id": "OSM_FR:node/1137821215",
+    "distance_m": 0.953
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:6842",
+    "source_id": "OSM_FR:node/1148842001",
+    "distance_m": 2.069
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:6018",
+    "source_id": "OSM_FR:node/1151381945",
+    "distance_m": 3.046
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:50309",
+    "source_id": "OSM_FR:node/1152974632",
+    "distance_m": 4.856
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51058",
+    "source_id": "OSM_FR:node/1155247133",
+    "distance_m": 4.001
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:7247",
+    "source_id": "OSM_FR:node/1155274868",
+    "distance_m": 3.696
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51159",
+    "source_id": "OSM_FR:node/1155413330",
+    "distance_m": 3.265
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51158",
+    "source_id": "OSM_FR:node/1155432933",
+    "distance_m": 1.123
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:4167",
+    "source_id": "OSM_FR:node/1156745741",
+    "distance_m": 3.696
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:4047",
+    "source_id": "OSM_FR:node/1157495389",
+    "distance_m": 3.629
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:121",
+    "source_id": "OSM_FR:node/1160233346",
+    "distance_m": 1.259
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:112",
+    "source_id": "OSM_FR:node/1200428752",
+    "distance_m": 2.268
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51502",
+    "source_id": "OSM_FR:node/1200629270",
+    "distance_m": 1.911
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51237",
+    "source_id": "OSM_FR:node/1201125705",
+    "distance_m": 1.652
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51414",
+    "source_id": "OSM_FR:node/1224765780",
+    "distance_m": 2.117
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:6061",
+    "source_id": "OSM_FR:node/1226436730",
+    "distance_m": 0.995
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55038",
+    "source_id": "OSM_FR:node/1236534148",
+    "distance_m": 1.66
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55182",
+    "source_id": "OSM_FR:node/1241086381",
+    "distance_m": 0.63
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55032",
+    "source_id": "OSM_FR:node/1264658201",
+    "distance_m": 2.47
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:6514",
+    "source_id": "OSM_FR:node/1280458466",
+    "distance_m": 1.391
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:4756",
+    "source_id": "OSM_FR:node/1282566030",
+    "distance_m": 2.032
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51131",
+    "source_id": "OSM_FR:node/1284086720",
+    "distance_m": 0.365
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:230",
+    "source_id": "OSM_FR:node/1287565542",
+    "distance_m": 3.731
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51203",
+    "source_id": "OSM_FR:node/1287570565",
+    "distance_m": 0.988
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51441",
+    "source_id": "OSM_FR:node/1288037983",
+    "distance_m": 2.46
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51055",
+    "source_id": "OSM_FR:node/1288194081",
+    "distance_m": 1.245
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51073",
+    "source_id": "OSM_FR:node/1288232822",
+    "distance_m": 0.542
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:7037",
+    "source_id": "OSM_FR:node/1288863166",
+    "distance_m": 0.345
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51409",
+    "source_id": "OSM_FR:node/1289466019",
+    "distance_m": 1.859
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51148",
+    "source_id": "OSM_FR:node/1291664947",
+    "distance_m": 0.951
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51331",
+    "source_id": "OSM_FR:node/1294223354",
+    "distance_m": 1.947
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51603",
+    "source_id": "OSM_FR:node/1294298580",
+    "distance_m": 2.195
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51371",
+    "source_id": "OSM_FR:node/1294298585",
+    "distance_m": 0.954
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:FE238206",
+    "source_id": "OSM_FR:node/1313044519",
+    "distance_m": 2.65
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:390",
+    "source_id": "OSM_FR:node/1313884606",
+    "distance_m": 1.852
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55499",
+    "source_id": "OSM_FR:node/1313888491",
+    "distance_m": 0.316
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:128",
+    "source_id": "OSM_FR:node/1315163369",
+    "distance_m": 1.564
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51300",
+    "source_id": "OSM_FR:node/1322156186",
+    "distance_m": 1.447
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51066",
+    "source_id": "OSM_FR:node/1322198199",
+    "distance_m": 1.4
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51065",
+    "source_id": "OSM_FR:node/1322229207",
+    "distance_m": 2.585
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51601",
+    "source_id": "OSM_FR:node/1322299825",
+    "distance_m": 2.48
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51599",
+    "source_id": "OSM_FR:node/1322321909",
+    "distance_m": 1.055
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51010",
+    "source_id": "OSM_FR:node/1323513930",
+    "distance_m": 4.876
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:4253",
+    "source_id": "OSM_FR:node/1323725503",
+    "distance_m": 4.983
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:4642",
+    "source_id": "OSM_FR:node/1330935465",
+    "distance_m": 2.521
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:163",
+    "source_id": "OSM_FR:node/1330973325",
+    "distance_m": 3.92
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:324",
+    "source_id": "OSM_FR:node/1339095183",
+    "distance_m": 1.021
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55139",
+    "source_id": "OSM_FR:node/1340285282",
+    "distance_m": 1.439
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:825",
+    "source_id": "OSM_FR:node/1357798717",
+    "distance_m": 2.551
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55466",
+    "source_id": "OSM_FR:node/1370936560",
+    "distance_m": 2.026
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55076",
+    "source_id": "OSM_FR:node/1378987558",
+    "distance_m": 1.919
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:259",
+    "source_id": "OSM_FR:node/1379018830",
+    "distance_m": 2.834
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55622",
+    "source_id": "OSM_FR:node/1379612198",
+    "distance_m": 3.895
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:131",
+    "source_id": "OSM_FR:node/1387776067",
+    "distance_m": 4.478
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:520",
+    "source_id": "OSM_FR:node/1387782905",
+    "distance_m": 1.348
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:12618",
+    "source_id": "OSM_FR:node/1387797791",
+    "distance_m": 1.169
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:7146",
+    "source_id": "OSM_FR:node/1395307336",
+    "distance_m": 1.235
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51621",
+    "source_id": "OSM_FR:node/1407626700",
+    "distance_m": 2.747
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:7397",
+    "source_id": "OSM_FR:node/1407741539",
+    "distance_m": 2.456
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:4487",
+    "source_id": "OSM_FR:node/1411423773",
+    "distance_m": 3.942
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51541",
+    "source_id": "OSM_FR:node/1417610781",
+    "distance_m": 4.756
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51231",
+    "source_id": "OSM_FR:node/1419489818",
+    "distance_m": 0.829
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:4349",
+    "source_id": "OSM_FR:node/1419524356",
+    "distance_m": 2.366
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:6834",
+    "source_id": "OSM_FR:node/1419631515",
+    "distance_m": 3.72
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51093",
+    "source_id": "OSM_FR:node/1427113934",
+    "distance_m": 3.193
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51187",
+    "source_id": "OSM_FR:node/1428422429",
+    "distance_m": 4.654
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51170",
+    "source_id": "OSM_FR:node/1433927352",
+    "distance_m": 0.78
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:50055",
+    "source_id": "OSM_FR:node/1438678871",
+    "distance_m": 2.803
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55060",
+    "source_id": "OSM_FR:node/1450136114",
+    "distance_m": 2.304
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:6833",
+    "source_id": "OSM_FR:node/1450136116",
+    "distance_m": 3.522
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55649",
+    "source_id": "OSM_FR:node/1459591173",
+    "distance_m": 0.775
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55508",
+    "source_id": "OSM_FR:node/1484103774",
+    "distance_m": 2.025
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55042",
+    "source_id": "OSM_FR:node/1487211153",
+    "distance_m": 4.151
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:12800",
+    "source_id": "OSM_FR:node/1504378139",
+    "distance_m": 2.346
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:6609",
+    "source_id": "OSM_FR:node/1510523904",
+    "distance_m": 2.086
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51276",
+    "source_id": "OSM_FR:node/1576142805",
+    "distance_m": 0.534
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:525",
+    "source_id": "OSM_FR:node/1601756757",
+    "distance_m": 2.209
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51490",
+    "source_id": "OSM_FR:node/1604091236",
+    "distance_m": 2.675
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51353",
+    "source_id": "OSM_FR:node/1604126727",
+    "distance_m": 2.726
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:8991",
+    "source_id": "OSM_FR:node/1615594387",
+    "distance_m": 4.815
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:12544",
+    "source_id": "OSM_FR:node/1630585066",
+    "distance_m": 1.284
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:FE269159",
+    "source_id": "OSM_FR:node/1659319287",
+    "distance_m": 3.746
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55105",
+    "source_id": "OSM_FR:node/1660002717",
+    "distance_m": 1.589
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51283",
+    "source_id": "OSM_FR:node/1667625410",
+    "distance_m": 0.99
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:FE284192",
+    "source_id": "OSM_FR:node/1672853893",
+    "distance_m": 3.893
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51275",
+    "source_id": "OSM_FR:node/1683936483",
+    "distance_m": 2.901
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55398",
+    "source_id": "OSM_FR:node/1730515515",
+    "distance_m": 2.376
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55059",
+    "source_id": "OSM_FR:node/1734083838",
+    "distance_m": 0.987
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:4154",
+    "source_id": "OSM_FR:node/1748910639",
+    "distance_m": 0.979
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51438",
+    "source_id": "OSM_FR:node/1758123094",
+    "distance_m": 3.029
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55156",
+    "source_id": "OSM_FR:node/1768657783",
+    "distance_m": 1.345
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51659",
+    "source_id": "OSM_FR:node/1781335982",
+    "distance_m": 1.939
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55322",
+    "source_id": "OSM_FR:node/1789657903",
+    "distance_m": 4.086
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55366",
+    "source_id": "OSM_FR:node/1789675110",
+    "distance_m": 3.152
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55370",
+    "source_id": "OSM_FR:node/1789905503",
+    "distance_m": 1.451
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55304",
+    "source_id": "OSM_FR:node/1789912155",
+    "distance_m": 0.31
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55346",
+    "source_id": "OSM_FR:node/1789930699",
+    "distance_m": 1.176
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55350",
+    "source_id": "OSM_FR:node/1789961561",
+    "distance_m": 1.071
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55371",
+    "source_id": "OSM_FR:node/1790181142",
+    "distance_m": 3.123
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:252",
+    "source_id": "OSM_FR:node/1790197856",
+    "distance_m": 1.847
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55286",
+    "source_id": "OSM_FR:node/1791246215",
+    "distance_m": 2.256
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55428",
+    "source_id": "OSM_FR:node/1791266003",
+    "distance_m": 0.895
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55277",
+    "source_id": "OSM_FR:node/1791268846",
+    "distance_m": 1.544
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51153",
+    "source_id": "OSM_FR:node/1793592312",
+    "distance_m": 1.103
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:7150",
+    "source_id": "OSM_FR:node/1800420567",
+    "distance_m": 4.447
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55372",
+    "source_id": "OSM_FR:node/1800433219",
+    "distance_m": 4.131
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:6504",
+    "source_id": "OSM_FR:node/1800590694",
+    "distance_m": 1.658
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:550",
+    "source_id": "OSM_FR:node/1800616661",
+    "distance_m": 3.936
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55291",
+    "source_id": "OSM_FR:node/1800662443",
+    "distance_m": 0.466
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:4540",
+    "source_id": "OSM_FR:node/1800926553",
+    "distance_m": 3.25
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55394",
+    "source_id": "OSM_FR:node/1808401579",
+    "distance_m": 0.972
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55411",
+    "source_id": "OSM_FR:node/1808418257",
+    "distance_m": 1.651
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51186",
+    "source_id": "OSM_FR:node/1817089445",
+    "distance_m": 3.148
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51619",
+    "source_id": "OSM_FR:node/1829432013",
+    "distance_m": 1.023
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55504",
+    "source_id": "OSM_FR:node/1833340452",
+    "distance_m": 2.293
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51445",
+    "source_id": "OSM_FR:node/1833798594",
+    "distance_m": 3.998
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51188",
+    "source_id": "OSM_FR:node/1837393976",
+    "distance_m": 4.346
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:11133",
+    "source_id": "OSM_FR:node/1842641181",
+    "distance_m": 2.048
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:7125",
+    "source_id": "OSM_FR:node/1865438639",
+    "distance_m": 2.087
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:7233",
+    "source_id": "OSM_FR:node/1877273107",
+    "distance_m": 2.691
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51090",
+    "source_id": "OSM_FR:node/1877273108",
+    "distance_m": 1.324
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55577",
+    "source_id": "OSM_FR:node/1879384437",
+    "distance_m": 2.68
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55362",
+    "source_id": "OSM_FR:node/1922347351",
+    "distance_m": 0.838
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:166",
+    "source_id": "OSM_FR:node/1942600451",
+    "distance_m": 3.532
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:204",
+    "source_id": "OSM_FR:node/1951239270",
+    "distance_m": 1.502
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55464",
+    "source_id": "OSM_FR:node/1962467304",
+    "distance_m": 4.014
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:486",
+    "source_id": "OSM_FR:node/1974703311",
+    "distance_m": 1.556
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51233",
+    "source_id": "OSM_FR:node/1974724110",
+    "distance_m": 4.11
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55141",
+    "source_id": "OSM_FR:node/1974949646",
+    "distance_m": 3.5
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55329",
+    "source_id": "OSM_FR:node/1976153517",
+    "distance_m": 1.11
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55672",
+    "source_id": "OSM_FR:node/1976460257",
+    "distance_m": 0.349
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55272",
+    "source_id": "OSM_FR:node/1976497823",
+    "distance_m": 2.975
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55415",
+    "source_id": "OSM_FR:node/1976555652",
+    "distance_m": 1.908
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55306",
+    "source_id": "OSM_FR:node/1979813933",
+    "distance_m": 4.022
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:824",
+    "source_id": "OSM_FR:node/1981862747",
+    "distance_m": 0.889
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51307",
+    "source_id": "OSM_FR:node/1985510984",
+    "distance_m": 2.553
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:6525",
+    "source_id": "OSM_FR:node/1985692377",
+    "distance_m": 4.129
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:302",
+    "source_id": "OSM_FR:node/1985854283",
+    "distance_m": 3.475
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55431",
+    "source_id": "OSM_FR:node/1986987573",
+    "distance_m": 0.58
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55007",
+    "source_id": "OSM_FR:node/1986996188",
+    "distance_m": 4.26
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51374",
+    "source_id": "OSM_FR:node/1988674390",
+    "distance_m": 4.796
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51617",
+    "source_id": "OSM_FR:node/1989257513",
+    "distance_m": 0.314
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51396",
+    "source_id": "OSM_FR:node/1989281038",
+    "distance_m": 1.251
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51292",
+    "source_id": "OSM_FR:node/1989306086",
+    "distance_m": 2.027
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51297",
+    "source_id": "OSM_FR:node/1989319265",
+    "distance_m": 2.2
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51241",
+    "source_id": "OSM_FR:node/1989337963",
+    "distance_m": 2.522
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:4039",
+    "source_id": "OSM_FR:node/1989995598",
+    "distance_m": 3.081
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51089",
+    "source_id": "OSM_FR:node/1990653113",
+    "distance_m": 0.91
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:6613",
+    "source_id": "OSM_FR:node/1991891421",
+    "distance_m": 1.852
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51088",
+    "source_id": "OSM_FR:node/1991907743",
+    "distance_m": 0.527
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51094",
+    "source_id": "OSM_FR:node/1991930735",
+    "distance_m": 3.315
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51267",
+    "source_id": "OSM_FR:node/1992088341",
+    "distance_m": 1.947
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:7007",
+    "source_id": "OSM_FR:node/1992434485",
+    "distance_m": 1.599
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51184",
+    "source_id": "OSM_FR:node/1992998572",
+    "distance_m": 2.73
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51246",
+    "source_id": "OSM_FR:node/1993303889",
+    "distance_m": 2.752
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51044",
+    "source_id": "OSM_FR:node/1993312124",
+    "distance_m": 3.89
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51306",
+    "source_id": "OSM_FR:node/1993315965",
+    "distance_m": 2.478
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51305",
+    "source_id": "OSM_FR:node/1993325622",
+    "distance_m": 2.317
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51064",
+    "source_id": "OSM_FR:node/1993328181",
+    "distance_m": 0.382
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:349",
+    "source_id": "OSM_FR:node/1996151189",
+    "distance_m": 3.002
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:350",
+    "source_id": "OSM_FR:node/1996171779",
+    "distance_m": 2.934
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:4457",
+    "source_id": "OSM_FR:node/1997342596",
+    "distance_m": 0.775
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:FE260103",
+    "source_id": "OSM_FR:node/1997380568",
+    "distance_m": 1.234
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:FE260119",
+    "source_id": "OSM_FR:node/1997440857",
+    "distance_m": 0.535
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55201",
+    "source_id": "OSM_FR:node/1998240208",
+    "distance_m": 3.536
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55200",
+    "source_id": "OSM_FR:node/1999577430",
+    "distance_m": 0.381
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55205",
+    "source_id": "OSM_FR:node/2000611658",
+    "distance_m": 1.966
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55199",
+    "source_id": "OSM_FR:node/2001814927",
+    "distance_m": 1.06
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55202",
+    "source_id": "OSM_FR:node/2001824124",
+    "distance_m": 1.615
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55070",
+    "source_id": "OSM_FR:node/2007729923",
+    "distance_m": 1.421
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55071",
+    "source_id": "OSM_FR:node/2007733729",
+    "distance_m": 0.873
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55183",
+    "source_id": "OSM_FR:node/2008954700",
+    "distance_m": 1.555
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:11228",
+    "source_id": "OSM_FR:node/2014679755",
+    "distance_m": 3.671
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51295",
+    "source_id": "OSM_FR:node/2015712267",
+    "distance_m": 3.538
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:4061",
+    "source_id": "OSM_FR:node/2016983200",
+    "distance_m": 1.201
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:4060",
+    "source_id": "OSM_FR:node/2017108192",
+    "distance_m": 1.613
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51235",
+    "source_id": "OSM_FR:node/2017143507",
+    "distance_m": 2.703
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51029",
+    "source_id": "OSM_FR:node/2017734959",
+    "distance_m": 3.645
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55283",
+    "source_id": "OSM_FR:node/2022089975",
+    "distance_m": 1.493
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55571",
+    "source_id": "OSM_FR:node/2022122204",
+    "distance_m": 3.336
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:12018",
+    "source_id": "OSM_FR:node/2022553888",
+    "distance_m": 2.064
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55477",
+    "source_id": "OSM_FR:node/2025438432",
+    "distance_m": 4.404
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:4649",
+    "source_id": "OSM_FR:node/2025942230",
+    "distance_m": 4.443
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55597",
+    "source_id": "OSM_FR:node/2025946293",
+    "distance_m": 1.926
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55506",
+    "source_id": "OSM_FR:node/2025951078",
+    "distance_m": 3.899
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55008",
+    "source_id": "OSM_FR:node/2029493163",
+    "distance_m": 2.025
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55316",
+    "source_id": "OSM_FR:node/2029509786",
+    "distance_m": 4.126
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55562",
+    "source_id": "OSM_FR:node/2029526511",
+    "distance_m": 4.01
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55526",
+    "source_id": "OSM_FR:node/2031315221",
+    "distance_m": 3.711
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51106",
+    "source_id": "OSM_FR:node/2037364618",
+    "distance_m": 2.884
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:651",
+    "source_id": "OSM_FR:node/2038964506",
+    "distance_m": 3.113
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:271",
+    "source_id": "OSM_FR:node/2039051373",
+    "distance_m": 0.907
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51365",
+    "source_id": "OSM_FR:node/2043687589",
+    "distance_m": 2.335
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51102",
+    "source_id": "OSM_FR:node/2043738987",
+    "distance_m": 2.835
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51007",
+    "source_id": "OSM_FR:node/2043747043",
+    "distance_m": 3.913
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51042",
+    "source_id": "OSM_FR:node/2043760017",
+    "distance_m": 2.42
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:7159",
+    "source_id": "OSM_FR:node/2045229647",
+    "distance_m": 4.163
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51285",
+    "source_id": "OSM_FR:node/2045357446",
+    "distance_m": 1.804
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51123",
+    "source_id": "OSM_FR:node/2045693380",
+    "distance_m": 3.197
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51130",
+    "source_id": "OSM_FR:node/2045718641",
+    "distance_m": 2.856
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51104",
+    "source_id": "OSM_FR:node/2045728450",
+    "distance_m": 2.438
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:4522",
+    "source_id": "OSM_FR:node/2047044536",
+    "distance_m": 0.973
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51166",
+    "source_id": "OSM_FR:node/2048815840",
+    "distance_m": 0.488
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51162",
+    "source_id": "OSM_FR:node/2052386715",
+    "distance_m": 3.399
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51157",
+    "source_id": "OSM_FR:node/2055208483",
+    "distance_m": 1.898
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55067",
+    "source_id": "OSM_FR:node/2058505960",
+    "distance_m": 4.241
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55068",
+    "source_id": "OSM_FR:node/2061066394",
+    "distance_m": 1.663
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55069",
+    "source_id": "OSM_FR:node/2061069586",
+    "distance_m": 3.723
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55390",
+    "source_id": "OSM_FR:node/2062334401",
+    "distance_m": 2.72
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55051",
+    "source_id": "OSM_FR:node/2063702816",
+    "distance_m": 2.96
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:7461",
+    "source_id": "OSM_FR:node/2068608381",
+    "distance_m": 3.616
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:6559",
+    "source_id": "OSM_FR:node/2068627580",
+    "distance_m": 3.743
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55540",
+    "source_id": "OSM_FR:node/2068638533",
+    "distance_m": 3.503
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55630",
+    "source_id": "OSM_FR:node/2068688143",
+    "distance_m": 1.482
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55333",
+    "source_id": "OSM_FR:node/2069952782",
+    "distance_m": 2.029
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55437",
+    "source_id": "OSM_FR:node/2070617408",
+    "distance_m": 0.839
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:FE221000",
+    "source_id": "OSM_FR:node/2076946235",
+    "distance_m": 0.998
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:FE221001",
+    "source_id": "OSM_FR:node/2076946774",
+    "distance_m": 2.225
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55096",
+    "source_id": "OSM_FR:node/2077116957",
+    "distance_m": 2.541
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55093",
+    "source_id": "OSM_FR:node/2077118451",
+    "distance_m": 1.064
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51520",
+    "source_id": "OSM_FR:node/2096928638",
+    "distance_m": 1.801
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:12820",
+    "source_id": "OSM_FR:node/2100728712",
+    "distance_m": 0.7
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:4223",
+    "source_id": "OSM_FR:node/2127085350",
+    "distance_m": 3.678
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:FE206209",
+    "source_id": "OSM_FR:node/2129213946",
+    "distance_m": 1.049
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51586",
+    "source_id": "OSM_FR:node/2130972408",
+    "distance_m": 2.315
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:623",
+    "source_id": "OSM_FR:node/2138920117",
+    "distance_m": 2.957
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:6882",
+    "source_id": "OSM_FR:node/2139146776",
+    "distance_m": 2.605
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51011",
+    "source_id": "OSM_FR:node/2139203309",
+    "distance_m": 3.133
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51281",
+    "source_id": "OSM_FR:node/2139209444",
+    "distance_m": 1.27
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51368",
+    "source_id": "OSM_FR:node/2139234870",
+    "distance_m": 1.79
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51110",
+    "source_id": "OSM_FR:node/2139244258",
+    "distance_m": 2.169
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:4743",
+    "source_id": "OSM_FR:node/2139283280",
+    "distance_m": 1.46
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51206",
+    "source_id": "OSM_FR:node/2139303680",
+    "distance_m": 2.72
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:6848",
+    "source_id": "OSM_FR:node/2139311333",
+    "distance_m": 4.477
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51122",
+    "source_id": "OSM_FR:node/2139320866",
+    "distance_m": 1.172
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51111",
+    "source_id": "OSM_FR:node/2139795911",
+    "distance_m": 1.825
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51595",
+    "source_id": "OSM_FR:node/2143491156",
+    "distance_m": 1.587
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:6573",
+    "source_id": "OSM_FR:node/2144732896",
+    "distance_m": 3.544
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51682",
+    "source_id": "OSM_FR:node/2144979815",
+    "distance_m": 3.113
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:297",
+    "source_id": "OSM_FR:node/2145703950",
+    "distance_m": 3.629
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51668",
+    "source_id": "OSM_FR:node/2145709911",
+    "distance_m": 0.609
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55425",
+    "source_id": "OSM_FR:node/2149427065",
+    "distance_m": 1.053
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55213",
+    "source_id": "OSM_FR:node/2149434799",
+    "distance_m": 1.517
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:11092",
+    "source_id": "OSM_FR:node/2204281962",
+    "distance_m": 1.382
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51669",
+    "source_id": "OSM_FR:node/2204291626",
+    "distance_m": 3.045
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51060",
+    "source_id": "OSM_FR:node/2204308800",
+    "distance_m": 0.083
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:739",
+    "source_id": "OSM_FR:node/2205079509",
+    "distance_m": 0.408
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51061",
+    "source_id": "OSM_FR:node/2205089140",
+    "distance_m": 1.847
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55073",
+    "source_id": "OSM_FR:node/2206287487",
+    "distance_m": 2.279
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55072",
+    "source_id": "OSM_FR:node/2206297131",
+    "distance_m": 3.881
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55171",
+    "source_id": "OSM_FR:node/2206304868",
+    "distance_m": 2.57
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:448",
+    "source_id": "OSM_FR:node/2206320961",
+    "distance_m": 0.516
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55013",
+    "source_id": "OSM_FR:node/2206411073",
+    "distance_m": 1.716
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55010",
+    "source_id": "OSM_FR:node/2207146411",
+    "distance_m": 0.438
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55222",
+    "source_id": "OSM_FR:node/2208991921",
+    "distance_m": 0.338
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51013",
+    "source_id": "OSM_FR:node/2215960644",
+    "distance_m": 2.479
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:4707",
+    "source_id": "OSM_FR:node/2215960645",
+    "distance_m": 2.882
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51019",
+    "source_id": "OSM_FR:node/2217001251",
+    "distance_m": 3.583
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51016",
+    "source_id": "OSM_FR:node/2217976022",
+    "distance_m": 4.739
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55297",
+    "source_id": "OSM_FR:node/2237274159",
+    "distance_m": 1.859
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:883",
+    "source_id": "OSM_FR:node/2237368842",
+    "distance_m": 1.043
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55460",
+    "source_id": "OSM_FR:node/2237451417",
+    "distance_m": 3.244
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55116",
+    "source_id": "OSM_FR:node/2242355994",
+    "distance_m": 4.611
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55158",
+    "source_id": "OSM_FR:node/2242396366",
+    "distance_m": 4.236
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55114",
+    "source_id": "OSM_FR:node/2242431222",
+    "distance_m": 3.596
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55119",
+    "source_id": "OSM_FR:node/2242709674",
+    "distance_m": 2.482
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55112",
+    "source_id": "OSM_FR:node/2242718454",
+    "distance_m": 0.899
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55501",
+    "source_id": "OSM_FR:node/2242731164",
+    "distance_m": 2.891
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:6588",
+    "source_id": "OSM_FR:node/2242747540",
+    "distance_m": 1.337
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55120",
+    "source_id": "OSM_FR:node/2242753179",
+    "distance_m": 4.557
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55015",
+    "source_id": "OSM_FR:node/2242846049",
+    "distance_m": 0.946
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:284",
+    "source_id": "OSM_FR:node/2242854645",
+    "distance_m": 0.687
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:8927",
+    "source_id": "OSM_FR:node/2259615346",
+    "distance_m": 1.34
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51250",
+    "source_id": "OSM_FR:node/2259648430",
+    "distance_m": 1.512
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51236",
+    "source_id": "OSM_FR:node/2263207720",
+    "distance_m": 1.472
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:6722",
+    "source_id": "OSM_FR:node/2263275055",
+    "distance_m": 4.418
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:12559",
+    "source_id": "OSM_FR:node/2264690278",
+    "distance_m": 1.689
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51641",
+    "source_id": "OSM_FR:node/2264709492",
+    "distance_m": 1.245
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51519",
+    "source_id": "OSM_FR:node/2264717940",
+    "distance_m": 0.979
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51243",
+    "source_id": "OSM_FR:node/2264725159",
+    "distance_m": 1.667
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:413",
+    "source_id": "OSM_FR:node/2266602244",
+    "distance_m": 2.44
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51069",
+    "source_id": "OSM_FR:node/2266604291",
+    "distance_m": 4.23
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55057",
+    "source_id": "OSM_FR:node/2274396650",
+    "distance_m": 1.279
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51263",
+    "source_id": "OSM_FR:node/2278456965",
+    "distance_m": 0.09
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:871",
+    "source_id": "OSM_FR:node/2278550431",
+    "distance_m": 1.957
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51190",
+    "source_id": "OSM_FR:node/2280539388",
+    "distance_m": 0.672
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51606",
+    "source_id": "OSM_FR:node/2282787829",
+    "distance_m": 1.528
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:11209",
+    "source_id": "OSM_FR:node/2283822508",
+    "distance_m": 2.911
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55355",
+    "source_id": "OSM_FR:node/2283843891",
+    "distance_m": 4.383
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55384",
+    "source_id": "OSM_FR:node/2283898032",
+    "distance_m": 4.495
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:4072",
+    "source_id": "OSM_FR:node/2285922953",
+    "distance_m": 0.3
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55249",
+    "source_id": "OSM_FR:node/2285944782",
+    "distance_m": 0.534
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55356",
+    "source_id": "OSM_FR:node/2292134051",
+    "distance_m": 0.533
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55310",
+    "source_id": "OSM_FR:node/2292168753",
+    "distance_m": 2.807
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51269",
+    "source_id": "OSM_FR:node/2295437629",
+    "distance_m": 0.648
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51487",
+    "source_id": "OSM_FR:node/2295464383",
+    "distance_m": 4.079
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51105",
+    "source_id": "OSM_FR:node/2295584074",
+    "distance_m": 3.013
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:6625",
+    "source_id": "OSM_FR:node/2295664577",
+    "distance_m": 3.516
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51126",
+    "source_id": "OSM_FR:node/2295704268",
+    "distance_m": 1.54
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:232",
+    "source_id": "OSM_FR:node/2330956485",
+    "distance_m": 1.148
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55554",
+    "source_id": "OSM_FR:node/2374974285",
+    "distance_m": 2.442
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55330",
+    "source_id": "OSM_FR:node/2387114516",
+    "distance_m": 0.287
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55132",
+    "source_id": "OSM_FR:node/2411831160",
+    "distance_m": 2.635
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51212",
+    "source_id": "OSM_FR:node/2494840546",
+    "distance_m": 0.988
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55626",
+    "source_id": "OSM_FR:node/2494941137",
+    "distance_m": 3.205
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:7156",
+    "source_id": "OSM_FR:node/2515250449",
+    "distance_m": 3.538
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:11012",
+    "source_id": "OSM_FR:node/2570599860",
+    "distance_m": 1.287
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55308",
+    "source_id": "OSM_FR:node/2571041499",
+    "distance_m": 0.257
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55443",
+    "source_id": "OSM_FR:node/2575704094",
+    "distance_m": 1.667
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51167",
+    "source_id": "OSM_FR:node/2578024119",
+    "distance_m": 0.467
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51112",
+    "source_id": "OSM_FR:node/2579410958",
+    "distance_m": 0.74
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:339",
+    "source_id": "OSM_FR:node/2580396685",
+    "distance_m": 0.723
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:4258",
+    "source_id": "OSM_FR:node/2580473145",
+    "distance_m": 0.493
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55043",
+    "source_id": "OSM_FR:node/2583207034",
+    "distance_m": 1.808
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:7012",
+    "source_id": "OSM_FR:node/2585693271",
+    "distance_m": 4.911
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:11185",
+    "source_id": "OSM_FR:node/2588191877",
+    "distance_m": 2.831
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51150",
+    "source_id": "OSM_FR:node/2588329824",
+    "distance_m": 1.863
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:4135",
+    "source_id": "OSM_FR:node/2588337851",
+    "distance_m": 1.833
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51119",
+    "source_id": "OSM_FR:node/2588365171",
+    "distance_m": 2.841
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51155",
+    "source_id": "OSM_FR:node/2588378000",
+    "distance_m": 2.363
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51151",
+    "source_id": "OSM_FR:node/2588722980",
+    "distance_m": 1.073
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51036",
+    "source_id": "OSM_FR:node/2588729433",
+    "distance_m": 1.684
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51294",
+    "source_id": "OSM_FR:node/2588738210",
+    "distance_m": 2.213
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51253",
+    "source_id": "OSM_FR:node/2588743436",
+    "distance_m": 1.09
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:609",
+    "source_id": "OSM_FR:node/2588755016",
+    "distance_m": 1.348
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51137",
+    "source_id": "OSM_FR:node/2588759643",
+    "distance_m": 2.163
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55152",
+    "source_id": "OSM_FR:node/2589207808",
+    "distance_m": 1.849
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55126",
+    "source_id": "OSM_FR:node/2589222697",
+    "distance_m": 1.398
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55624",
+    "source_id": "OSM_FR:node/2589377712",
+    "distance_m": 0.922
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55611",
+    "source_id": "OSM_FR:node/2589455056",
+    "distance_m": 1.491
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55135",
+    "source_id": "OSM_FR:node/2589482747",
+    "distance_m": 2.2
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:4013",
+    "source_id": "OSM_FR:node/2589492658",
+    "distance_m": 2.145
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55129",
+    "source_id": "OSM_FR:node/2589528246",
+    "distance_m": 2.869
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55039",
+    "source_id": "OSM_FR:node/2590041492",
+    "distance_m": 2.046
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55226",
+    "source_id": "OSM_FR:node/2590050968",
+    "distance_m": 4.753
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55041",
+    "source_id": "OSM_FR:node/2590081520",
+    "distance_m": 0.404
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55040",
+    "source_id": "OSM_FR:node/2590490004",
+    "distance_m": 4.29
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:4130",
+    "source_id": "OSM_FR:node/2590495120",
+    "distance_m": 2.012
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55177",
+    "source_id": "OSM_FR:node/2590547153",
+    "distance_m": 1.366
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55179",
+    "source_id": "OSM_FR:node/2590568557",
+    "distance_m": 2.152
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:6749",
+    "source_id": "OSM_FR:node/2590588879",
+    "distance_m": 0.932
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:334",
+    "source_id": "OSM_FR:node/2590594957",
+    "distance_m": 0.178
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55175",
+    "source_id": "OSM_FR:node/2591307428",
+    "distance_m": 1.929
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55389",
+    "source_id": "OSM_FR:node/2592353371",
+    "distance_m": 0.813
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:695",
+    "source_id": "OSM_FR:node/2592356219",
+    "distance_m": 2.534
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55036",
+    "source_id": "OSM_FR:node/2592357749",
+    "distance_m": 0.875
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55085",
+    "source_id": "OSM_FR:node/2604220738",
+    "distance_m": 0.532
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55086",
+    "source_id": "OSM_FR:node/2604224889",
+    "distance_m": 0.877
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55088",
+    "source_id": "OSM_FR:node/2604246907",
+    "distance_m": 2.952
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51575",
+    "source_id": "OSM_FR:node/2604809128",
+    "distance_m": 0.824
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:4317",
+    "source_id": "OSM_FR:node/2616620170",
+    "distance_m": 4.506
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:7265",
+    "source_id": "OSM_FR:node/2616641936",
+    "distance_m": 1.607
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:6066",
+    "source_id": "OSM_FR:node/2616921123",
+    "distance_m": 2.295
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51225",
+    "source_id": "OSM_FR:node/2617847373",
+    "distance_m": 1.358
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51081",
+    "source_id": "OSM_FR:node/2617862144",
+    "distance_m": 2.203
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55326",
+    "source_id": "OSM_FR:node/2618245238",
+    "distance_m": 2.496
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:8505",
+    "source_id": "OSM_FR:node/2618756109",
+    "distance_m": 2.201
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:7079",
+    "source_id": "OSM_FR:node/2618771415",
+    "distance_m": 2.569
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55281",
+    "source_id": "OSM_FR:node/2618816917",
+    "distance_m": 2.671
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:757",
+    "source_id": "OSM_FR:node/2618820280",
+    "distance_m": 1.55
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55676",
+    "source_id": "OSM_FR:node/2618830182",
+    "distance_m": 3.205
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:185",
+    "source_id": "OSM_FR:node/2618837768",
+    "distance_m": 1.847
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:4093",
+    "source_id": "OSM_FR:node/2618906402",
+    "distance_m": 0.71
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55029",
+    "source_id": "OSM_FR:node/2618961854",
+    "distance_m": 1.442
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55028",
+    "source_id": "OSM_FR:node/2618966790",
+    "distance_m": 3.236
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51079",
+    "source_id": "OSM_FR:node/2619513431",
+    "distance_m": 2.753
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:4581",
+    "source_id": "OSM_FR:node/2619529876",
+    "distance_m": 2.592
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51656",
+    "source_id": "OSM_FR:node/2619537835",
+    "distance_m": 1.189
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:3111",
+    "source_id": "OSM_FR:node/2619555397",
+    "distance_m": 3.576
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:967",
+    "source_id": "OSM_FR:node/2619560233",
+    "distance_m": 1.033
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:367",
+    "source_id": "OSM_FR:node/2619580789",
+    "distance_m": 0.826
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51156",
+    "source_id": "OSM_FR:node/2626693332",
+    "distance_m": 0.663
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51168",
+    "source_id": "OSM_FR:node/2626699533",
+    "distance_m": 1.116
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51121",
+    "source_id": "OSM_FR:node/2628847848",
+    "distance_m": 0.42
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55541",
+    "source_id": "OSM_FR:node/2653652171",
+    "distance_m": 3.186
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55565",
+    "source_id": "OSM_FR:node/2653652174",
+    "distance_m": 1.977
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51114",
+    "source_id": "OSM_FR:node/2667217331",
+    "distance_m": 1.818
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:4139",
+    "source_id": "OSM_FR:node/2695087506",
+    "distance_m": 2.164
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:606",
+    "source_id": "OSM_FR:node/3001430901",
+    "distance_m": 0.876
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:FE269163",
+    "source_id": "OSM_FR:node/3051462356",
+    "distance_m": 0.911
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:FE283121",
+    "source_id": "OSM_FR:node/3063539084",
+    "distance_m": 4.018
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:FE213105",
+    "source_id": "OSM_FR:node/3136723211",
+    "distance_m": 1.548
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:FE213148",
+    "source_id": "OSM_FR:node/3136727202",
+    "distance_m": 0.58
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:FE284196",
+    "source_id": "OSM_FR:node/3136917875",
+    "distance_m": 4.109
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:12607",
+    "source_id": "OSM_FR:node/3145898840",
+    "distance_m": 1.116
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51116",
+    "source_id": "OSM_FR:node/3245982265",
+    "distance_m": 2.516
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51050",
+    "source_id": "OSM_FR:node/3472044405",
+    "distance_m": 3.004
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55467",
+    "source_id": "OSM_FR:node/3666133609",
+    "distance_m": 2.863
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55064",
+    "source_id": "OSM_FR:node/3691794766",
+    "distance_m": 4.245
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55174",
+    "source_id": "OSM_FR:node/4114250376",
+    "distance_m": 3.392
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51293",
+    "source_id": "OSM_FR:node/4244422865",
+    "distance_m": 2.683
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:50420",
+    "source_id": "OSM_FR:node/4276577627",
+    "distance_m": 2.8
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51141",
+    "source_id": "OSM_FR:node/4318579270",
+    "distance_m": 3.481
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51425",
+    "source_id": "OSM_FR:node/4332524844",
+    "distance_m": 0.611
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51615",
+    "source_id": "OSM_FR:node/4434719547",
+    "distance_m": 2.314
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51113",
+    "source_id": "OSM_FR:node/4747711277",
+    "distance_m": 0.134
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:FE283132",
+    "source_id": "OSM_FR:node/4785281048",
+    "distance_m": 3.276
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55262",
+    "source_id": "OSM_FR:node/4820601145",
+    "distance_m": 2.594
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55335",
+    "source_id": "OSM_FR:node/4871284582",
+    "distance_m": 4.349
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55379",
+    "source_id": "OSM_FR:node/4979913517",
+    "distance_m": 4.477
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:4188",
+    "source_id": "OSM_FR:node/4986907778",
+    "distance_m": 1.313
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55280",
+    "source_id": "OSM_FR:node/4986907916",
+    "distance_m": 1.97
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:408",
+    "source_id": "OSM_FR:node/5148353822",
+    "distance_m": 1.139
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:12817",
+    "source_id": "OSM_FR:node/5338740660",
+    "distance_m": 0.877
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:12799",
+    "source_id": "OSM_FR:node/5339228917",
+    "distance_m": 4.08
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55052",
+    "source_id": "OSM_FR:node/5455178189",
+    "distance_m": 0.572
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51133",
+    "source_id": "OSM_FR:node/5521189636",
+    "distance_m": 3.572
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51645",
+    "source_id": "OSM_FR:node/5673543209",
+    "distance_m": 1.031
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:4775",
+    "source_id": "OSM_FR:node/5794191881",
+    "distance_m": 3.001
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51063",
+    "source_id": "OSM_FR:node/5822206844",
+    "distance_m": 0.91
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51244",
+    "source_id": "OSM_FR:node/5824547335",
+    "distance_m": 0.86
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:FE230135",
+    "source_id": "OSM_FR:node/5853102454",
+    "distance_m": 1.399
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51201",
+    "source_id": "OSM_FR:node/5896051346",
+    "distance_m": 3.53
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:8356",
+    "source_id": "OSM_FR:node/5959704321",
+    "distance_m": 1.729
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:FE288100",
+    "source_id": "OSM_FR:node/6048820199",
+    "distance_m": 0.91
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55000",
+    "source_id": "OSM_FR:node/6070965351",
+    "distance_m": 4.394
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51588",
+    "source_id": "OSM_FR:node/6138261712",
+    "distance_m": 1.559
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:20043",
+    "source_id": "OSM_FR:node/6360019973",
+    "distance_m": 4.236
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55002",
+    "source_id": "OSM_FR:node/6438294301",
+    "distance_m": 3.226
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55134",
+    "source_id": "OSM_FR:node/6456082133",
+    "distance_m": 1.986
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55434",
+    "source_id": "OSM_FR:node/6483608227",
+    "distance_m": 0.448
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55263",
+    "source_id": "OSM_FR:node/6740187307",
+    "distance_m": 1.782
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:8867",
+    "source_id": "OSM_FR:node/6773722958",
+    "distance_m": 2.836
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:11261",
+    "source_id": "OSM_FR:node/6773780917",
+    "distance_m": 4.628
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55317",
+    "source_id": "OSM_FR:node/6955103919",
+    "distance_m": 2.733
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55127",
+    "source_id": "OSM_FR:node/7105213283",
+    "distance_m": 2.832
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55022",
+    "source_id": "OSM_FR:node/7134285782",
+    "distance_m": 1.469
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:20185",
+    "source_id": "OSM_FR:node/7143133665",
+    "distance_m": 1.997
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:4390",
+    "source_id": "OSM_FR:node/7251568112",
+    "distance_m": 4.035
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:6691",
+    "source_id": "OSM_FR:node/7363556250",
+    "distance_m": 2.424
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:FE203100",
+    "source_id": "OSM_FR:node/7376568626",
+    "distance_m": 3.379
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:20200",
+    "source_id": "OSM_FR:node/7592454674",
+    "distance_m": 2.458
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55294",
+    "source_id": "OSM_FR:node/7687964831",
+    "distance_m": 2.287
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55035",
+    "source_id": "OSM_FR:node/7704728928",
+    "distance_m": 3.336
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51100",
+    "source_id": "OSM_FR:node/7750429233",
+    "distance_m": 2.341
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55004",
+    "source_id": "OSM_FR:node/7761718361",
+    "distance_m": 1.967
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51583",
+    "source_id": "OSM_FR:node/7783745476",
+    "distance_m": 3.21
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:12195",
+    "source_id": "OSM_FR:node/7813041331",
+    "distance_m": 3.269
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51308",
+    "source_id": "OSM_FR:node/7856878261",
+    "distance_m": 1.101
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51428",
+    "source_id": "OSM_FR:node/7858867383",
+    "distance_m": 3.838
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51080",
+    "source_id": "OSM_FR:node/7858988348",
+    "distance_m": 0.358
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51349",
+    "source_id": "OSM_FR:node/7860234780",
+    "distance_m": 0.601
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51655",
+    "source_id": "OSM_FR:node/7891002487",
+    "distance_m": 0.542
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51348",
+    "source_id": "OSM_FR:node/7893111721",
+    "distance_m": 1.701
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:20179",
+    "source_id": "OSM_FR:node/7937319435",
+    "distance_m": 4.233
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:652",
+    "source_id": "OSM_FR:node/7990819482",
+    "distance_m": 0.946
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55049",
+    "source_id": "OSM_FR:node/8126584862",
+    "distance_m": 3.148
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:65042",
+    "source_id": "OSM_FR:node/8479111803",
+    "distance_m": 1.668
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51379",
+    "source_id": "OSM_FR:node/8495033936",
+    "distance_m": 0.861
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51380",
+    "source_id": "OSM_FR:node/8561281284",
+    "distance_m": 1.368
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51346",
+    "source_id": "OSM_FR:node/8576335539",
+    "distance_m": 2.866
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51400",
+    "source_id": "OSM_FR:node/8708678012",
+    "distance_m": 1.83
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:7031",
+    "source_id": "OSM_FR:node/8715283145",
+    "distance_m": 1.216
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:FE203154",
+    "source_id": "OSM_FR:node/8809419951",
+    "distance_m": 0.817
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55168",
+    "source_id": "OSM_FR:node/8845984999",
+    "distance_m": 3.371
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51321",
+    "source_id": "OSM_FR:node/8850929629",
+    "distance_m": 2.168
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51416",
+    "source_id": "OSM_FR:node/8851019865",
+    "distance_m": 4.567
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51332",
+    "source_id": "OSM_FR:node/8851246874",
+    "distance_m": 4.574
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51403",
+    "source_id": "OSM_FR:node/8851266677",
+    "distance_m": 1.829
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51404",
+    "source_id": "OSM_FR:node/8851350821",
+    "distance_m": 1.658
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51402",
+    "source_id": "OSM_FR:node/8851393979",
+    "distance_m": 1.21
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51393",
+    "source_id": "OSM_FR:node/8851914467",
+    "distance_m": 4.432
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51382",
+    "source_id": "OSM_FR:node/8851950686",
+    "distance_m": 4.198
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51366",
+    "source_id": "OSM_FR:node/8852788488",
+    "distance_m": 4.342
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51340",
+    "source_id": "OSM_FR:node/8852908694",
+    "distance_m": 2.258
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51335",
+    "source_id": "OSM_FR:node/8853036934",
+    "distance_m": 3.303
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51342",
+    "source_id": "OSM_FR:node/8853126592",
+    "distance_m": 2.938
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51338",
+    "source_id": "OSM_FR:node/8853467891",
+    "distance_m": 2.221
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51319",
+    "source_id": "OSM_FR:node/8853745518",
+    "distance_m": 2.272
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51328",
+    "source_id": "OSM_FR:node/8853831217",
+    "distance_m": 2.398
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51347",
+    "source_id": "OSM_FR:node/8855759687",
+    "distance_m": 2.686
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51317",
+    "source_id": "OSM_FR:node/8855783916",
+    "distance_m": 3.894
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51324",
+    "source_id": "OSM_FR:node/8855911929",
+    "distance_m": 1.812
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51316",
+    "source_id": "OSM_FR:node/8856864801",
+    "distance_m": 1.202
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51062",
+    "source_id": "OSM_FR:node/8857472165",
+    "distance_m": 1.902
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55423",
+    "source_id": "OSM_FR:node/8860555540",
+    "distance_m": 1.257
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:FE263207",
+    "source_id": "OSM_FR:node/8860863751",
+    "distance_m": 0.933
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51357",
+    "source_id": "OSM_FR:node/8875053122",
+    "distance_m": 2.599
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:8358",
+    "source_id": "OSM_FR:node/8879084769",
+    "distance_m": 1.678
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55363",
+    "source_id": "OSM_FR:node/8887097432",
+    "distance_m": 1.613
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:3108",
+    "source_id": "OSM_FR:node/8890112879",
+    "distance_m": 3.73
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55269",
+    "source_id": "OSM_FR:node/8891471695",
+    "distance_m": 2.983
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51449",
+    "source_id": "OSM_FR:node/8898605895",
+    "distance_m": 4.579
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55539",
+    "source_id": "OSM_FR:node/8913332083",
+    "distance_m": 3.324
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:50023",
+    "source_id": "OSM_FR:node/8928969220",
+    "distance_m": 2.174
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:FE278100",
+    "source_id": "OSM_FR:node/8930613188",
+    "distance_m": 1.229
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51592",
+    "source_id": "OSM_FR:node/8935298740",
+    "distance_m": 1.298
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:FE260107",
+    "source_id": "OSM_FR:node/8947909551",
+    "distance_m": 2.031
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:FE260111",
+    "source_id": "OSM_FR:node/8947961292",
+    "distance_m": 2.669
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:FE260110",
+    "source_id": "OSM_FR:node/8948033757",
+    "distance_m": 2.689
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:FE260104",
+    "source_id": "OSM_FR:node/8948105624",
+    "distance_m": 1.234
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55354",
+    "source_id": "OSM_FR:node/8948235389",
+    "distance_m": 3.431
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55405",
+    "source_id": "OSM_FR:node/8954793755",
+    "distance_m": 4.721
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55260",
+    "source_id": "OSM_FR:node/8960330717",
+    "distance_m": 0.968
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51466",
+    "source_id": "OSM_FR:node/8969071171",
+    "distance_m": 2.061
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51377",
+    "source_id": "OSM_FR:node/8973316302",
+    "distance_m": 1.339
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55240",
+    "source_id": "OSM_FR:node/8975834067",
+    "distance_m": 2.141
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51419",
+    "source_id": "OSM_FR:node/8989334971",
+    "distance_m": 2.982
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51264",
+    "source_id": "OSM_FR:node/8990483194",
+    "distance_m": 4.378
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55402",
+    "source_id": "OSM_FR:node/9025072828",
+    "distance_m": 1.353
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55404",
+    "source_id": "OSM_FR:node/9025126617",
+    "distance_m": 3.065
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55193",
+    "source_id": "OSM_FR:node/9025850719",
+    "distance_m": 3.199
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55300",
+    "source_id": "OSM_FR:node/9027742650",
+    "distance_m": 4.101
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:FE221100",
+    "source_id": "OSM_FR:node/9027926810",
+    "distance_m": 1.208
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51370",
+    "source_id": "OSM_FR:node/9028049362",
+    "distance_m": 1.534
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51406",
+    "source_id": "OSM_FR:node/9028872870",
+    "distance_m": 4.396
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55435",
+    "source_id": "OSM_FR:node/9032754238",
+    "distance_m": 1.701
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55461",
+    "source_id": "OSM_FR:node/9038589150",
+    "distance_m": 1.174
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:6619",
+    "source_id": "OSM_FR:node/9040009552",
+    "distance_m": 4.001
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51369",
+    "source_id": "OSM_FR:node/9041672829",
+    "distance_m": 2.688
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55242",
+    "source_id": "OSM_FR:node/9043626257",
+    "distance_m": 3.35
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55441",
+    "source_id": "OSM_FR:node/9044760196",
+    "distance_m": 4.321
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55426",
+    "source_id": "OSM_FR:node/9044865574",
+    "distance_m": 3.422
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51197",
+    "source_id": "OSM_FR:node/9045285631",
+    "distance_m": 4.37
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51381",
+    "source_id": "OSM_FR:node/9047633228",
+    "distance_m": 1.732
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51401",
+    "source_id": "OSM_FR:node/9049965268",
+    "distance_m": 2.388
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51154",
+    "source_id": "OSM_FR:node/9049986891",
+    "distance_m": 1.915
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51423",
+    "source_id": "OSM_FR:node/9052550704",
+    "distance_m": 3.656
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51389",
+    "source_id": "OSM_FR:node/9052579103",
+    "distance_m": 4.794
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:469",
+    "source_id": "OSM_FR:node/9058295249",
+    "distance_m": 1.148
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:FE278102",
+    "source_id": "OSM_FR:node/9061952617",
+    "distance_m": 2.504
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:FE283122",
+    "source_id": "OSM_FR:node/9063490479",
+    "distance_m": 2.524
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:FE283124",
+    "source_id": "OSM_FR:node/9063491945",
+    "distance_m": 0.329
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:FE283138",
+    "source_id": "OSM_FR:node/9063522870",
+    "distance_m": 3.143
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51436",
+    "source_id": "OSM_FR:node/9067059855",
+    "distance_m": 2.94
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51339",
+    "source_id": "OSM_FR:node/9067287723",
+    "distance_m": 0.836
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51418",
+    "source_id": "OSM_FR:node/9067295914",
+    "distance_m": 0.843
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:20091",
+    "source_id": "OSM_FR:node/9067369867",
+    "distance_m": 1.371
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:FE260101",
+    "source_id": "OSM_FR:node/9067497600",
+    "distance_m": 2.753
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51501",
+    "source_id": "OSM_FR:node/9071041723",
+    "distance_m": 2.864
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:454",
+    "source_id": "OSM_FR:node/9073974049",
+    "distance_m": 1.797
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:8667",
+    "source_id": "OSM_FR:node/9076915650",
+    "distance_m": 1.705
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51562",
+    "source_id": "OSM_FR:node/9079756360",
+    "distance_m": 0.391
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:FE213140",
+    "source_id": "OSM_FR:node/9085910967",
+    "distance_m": 2.875
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:FE213103",
+    "source_id": "OSM_FR:node/9086088756",
+    "distance_m": 0.955
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:FE213150",
+    "source_id": "OSM_FR:node/9090118625",
+    "distance_m": 4.729
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:FE213144",
+    "source_id": "OSM_FR:node/9090341838",
+    "distance_m": 0.423
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:FE213142",
+    "source_id": "OSM_FR:node/9090400547",
+    "distance_m": 1.698
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:FE213112",
+    "source_id": "OSM_FR:node/9090432684",
+    "distance_m": 4.987
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:FE242205",
+    "source_id": "OSM_FR:node/9111530986",
+    "distance_m": 1.985
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:FE242204",
+    "source_id": "OSM_FR:node/9111530988",
+    "distance_m": 1.826
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:FE284190",
+    "source_id": "OSM_FR:node/9122867486",
+    "distance_m": 4.826
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:FE284194",
+    "source_id": "OSM_FR:node/9123620117",
+    "distance_m": 1.429
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:FE206199",
+    "source_id": "OSM_FR:node/9125885667",
+    "distance_m": 0.852
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:FE206197",
+    "source_id": "OSM_FR:node/9125885669",
+    "distance_m": 1.157
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:FE206201",
+    "source_id": "OSM_FR:node/9125927188",
+    "distance_m": 1.233
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:FE269160",
+    "source_id": "OSM_FR:node/9127214150",
+    "distance_m": 1.385
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:FE269161",
+    "source_id": "OSM_FR:node/9127251451",
+    "distance_m": 2.661
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:FE213603",
+    "source_id": "OSM_FR:node/9128701185",
+    "distance_m": 1.716
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:FE213604",
+    "source_id": "OSM_FR:node/9128794295",
+    "distance_m": 1.291
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:FE260117",
+    "source_id": "OSM_FR:node/9267414810",
+    "distance_m": 2.973
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:60034",
+    "source_id": "OSM_FR:node/9269744390",
+    "distance_m": 0.738
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:20055",
+    "source_id": "OSM_FR:node/9388765556",
+    "distance_m": 0.967
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55361",
+    "source_id": "OSM_FR:node/9521791864",
+    "distance_m": 3.51
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51448",
+    "source_id": "OSM_FR:node/9525149563",
+    "distance_m": 3.165
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55478",
+    "source_id": "OSM_FR:node/9825309927",
+    "distance_m": 3.97
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55349",
+    "source_id": "OSM_FR:node/9917804700",
+    "distance_m": 2.713
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:FE260114",
+    "source_id": "OSM_FR:node/9957197046",
+    "distance_m": 2.997
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:60038",
+    "source_id": "OSM_FR:node/10130645370",
+    "distance_m": 2.913
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51478",
+    "source_id": "OSM_FR:node/10174101794",
+    "distance_m": 2.68
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51471",
+    "source_id": "OSM_FR:node/10180146399",
+    "distance_m": 2.311
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51499",
+    "source_id": "OSM_FR:node/10295234417",
+    "distance_m": 1.786
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:50439",
+    "source_id": "OSM_FR:node/10297867131",
+    "distance_m": 3.314
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:8640",
+    "source_id": "OSM_FR:node/10543187109",
+    "distance_m": 0.694
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55395",
+    "source_id": "OSM_FR:node/10726237789",
+    "distance_m": 4.857
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51469",
+    "source_id": "OSM_FR:node/10768473345",
+    "distance_m": 4.049
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51443",
+    "source_id": "OSM_FR:node/10919838242",
+    "distance_m": 1.335
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:12729",
+    "source_id": "OSM_FR:node/11002742024",
+    "distance_m": 3.083
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51549",
+    "source_id": "OSM_FR:node/11029496482",
+    "distance_m": 3.206
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:12625",
+    "source_id": "OSM_FR:node/11061886832",
+    "distance_m": 3.37
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51407",
+    "source_id": "OSM_FR:node/11079918232",
+    "distance_m": 3.076
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51437",
+    "source_id": "OSM_FR:node/11119145571",
+    "distance_m": 1.829
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51033",
+    "source_id": "OSM_FR:node/11212755505",
+    "distance_m": 0.688
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51446",
+    "source_id": "OSM_FR:node/11216199048",
+    "distance_m": 3.834
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51589",
+    "source_id": "OSM_FR:node/11353812882",
+    "distance_m": 2.903
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51616",
+    "source_id": "OSM_FR:node/11537191406",
+    "distance_m": 3.127
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:7163",
+    "source_id": "OSM_FR:node/11570547134",
+    "distance_m": 4.527
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:50241",
+    "source_id": "OSM_FR:node/11786157693",
+    "distance_m": 3.358
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51624",
+    "source_id": "OSM_FR:node/11796097638",
+    "distance_m": 2.827
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51633",
+    "source_id": "OSM_FR:node/11823009076",
+    "distance_m": 1.884
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51646",
+    "source_id": "OSM_FR:node/11875775105",
+    "distance_m": 2.067
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51578",
+    "source_id": "OSM_FR:node/11940023822",
+    "distance_m": 2.247
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55687",
+    "source_id": "OSM_FR:node/11947703764",
+    "distance_m": 2.574
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51507",
+    "source_id": "OSM_FR:node/11955382215",
+    "distance_m": 4.031
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51458",
+    "source_id": "OSM_FR:node/11959915270",
+    "distance_m": 4.068
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51577",
+    "source_id": "OSM_FR:node/11998289490",
+    "distance_m": 2.769
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51657",
+    "source_id": "OSM_FR:node/12005624113",
+    "distance_m": 2.174
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51608",
+    "source_id": "OSM_FR:node/12005712222",
+    "distance_m": 1.869
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51613",
+    "source_id": "OSM_FR:node/12008960262",
+    "distance_m": 0.042
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51555",
+    "source_id": "OSM_FR:node/12017486634",
+    "distance_m": 1.195
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55665",
+    "source_id": "OSM_FR:node/12046770189",
+    "distance_m": 3.765
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55666",
+    "source_id": "OSM_FR:node/12046770190",
+    "distance_m": 2.472
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:60022",
+    "source_id": "OSM_FR:node/12382766780",
+    "distance_m": 1.418
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51545",
+    "source_id": "OSM_FR:node/12813886538",
+    "distance_m": 0.697
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55664",
+    "source_id": "OSM_FR:node/12866336061",
+    "distance_m": 4.872
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51547",
+    "source_id": "OSM_FR:node/12886339742",
+    "distance_m": 1.409
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:FE293103",
+    "source_id": "OSM_FR:node/12899521530",
+    "distance_m": 1.072
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:FE293104",
+    "source_id": "OSM_FR:node/12899721703",
+    "distance_m": 0.792
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51489",
+    "source_id": "OSM_FR:node/12903435208",
+    "distance_m": 0.922
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51596",
+    "source_id": "OSM_FR:node/12903518850",
+    "distance_m": 1.93
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:FE278104",
+    "source_id": "OSM_FR:node/12906396876",
+    "distance_m": 2.072
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51472",
+    "source_id": "OSM_FR:node/12908202882",
+    "distance_m": 3.707
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51636",
+    "source_id": "OSM_FR:node/12909480084",
+    "distance_m": 2.684
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51465",
+    "source_id": "OSM_FR:node/12910961042",
+    "distance_m": 3.942
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51464",
+    "source_id": "OSM_FR:node/12910999382",
+    "distance_m": 4.026
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55616",
+    "source_id": "OSM_FR:node/12979726846",
+    "distance_m": 2.927
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:FE231607",
+    "source_id": "OSM_FR:node/13172849204",
+    "distance_m": 0.828
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51358",
+    "source_id": "OSM_FR:node/13295092166",
+    "distance_m": 2.885
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:346",
+    "source_id": "OSM_FR:node/13327876822",
+    "distance_m": 4.732
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51447",
+    "source_id": "OSM_FR:node/13453099410",
+    "distance_m": 3.08
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55550",
+    "source_id": "OSM_FR:node/13621231859",
+    "distance_m": 2.978
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:FE195019",
+    "source_id": "OSM_FR:node/702830763",
+    "distance_m": 3.182
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:FE144002",
+    "source_id": "OSM_FR:node/989037482",
+    "distance_m": 2.955
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:FE331001",
+    "source_id": "OSM_FR:node/1194486509",
+    "distance_m": 2.783
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:FE159024",
+    "source_id": "OSM_FR:node/1411659273",
+    "distance_m": 4.423
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:FE274002",
+    "source_id": "OSM_FR:node/1816617955",
+    "distance_m": 0.692
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:FE154007",
+    "source_id": "OSM_FR:node/1917421340",
+    "distance_m": 4.895
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:932",
+    "source_id": "OSM_FR:node/1985838134",
+    "distance_m": 2.582
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:FE121013",
+    "source_id": "OSM_FR:node/2076947368",
+    "distance_m": 3.342
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:FE159019",
+    "source_id": "OSM_FR:node/2303009617",
+    "distance_m": 3.287
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:FE144000",
+    "source_id": "OSM_FR:node/2324194385",
+    "distance_m": 1.206
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:FE364025",
+    "source_id": "OSM_FR:node/2326390497",
+    "distance_m": 2.01
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:FE191013",
+    "source_id": "OSM_FR:node/2345998328",
+    "distance_m": 2.855
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:FE379000",
+    "source_id": "OSM_FR:node/2494906827",
+    "distance_m": 0.658
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:FE159007",
+    "source_id": "OSM_FR:node/3392862117",
+    "distance_m": 2.592
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:FE159022",
+    "source_id": "OSM_FR:node/3656928260",
+    "distance_m": 3.975
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:FE274010",
+    "source_id": "OSM_FR:node/3936302019",
+    "distance_m": 3.272
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:FE159028",
+    "source_id": "OSM_FR:node/6385589274",
+    "distance_m": 2.395
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:FE274011",
+    "source_id": "OSM_FR:node/6740292130",
+    "distance_m": 2.179
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:FE162001",
+    "source_id": "OSM_FR:node/7187631585",
+    "distance_m": 3.253
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:FE162008",
+    "source_id": "OSM_FR:node/7187631586",
+    "distance_m": 1.656
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:FE162019",
+    "source_id": "OSM_FR:node/7188260132",
+    "distance_m": 2.912
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:FE162015",
+    "source_id": "OSM_FR:node/7188260727",
+    "distance_m": 2.862
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:FE162020",
+    "source_id": "OSM_FR:node/7188297533",
+    "distance_m": 0.902
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:FE162016",
+    "source_id": "OSM_FR:node/7188297535",
+    "distance_m": 0.589
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:FE159037",
+    "source_id": "OSM_FR:node/7188346182",
+    "distance_m": 4.065
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:FE159040",
+    "source_id": "OSM_FR:node/7188346183",
+    "distance_m": 1.507
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:FE162022",
+    "source_id": "OSM_FR:node/7188462531",
+    "distance_m": 2.917
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:FE162017",
+    "source_id": "OSM_FR:node/7188469535",
+    "distance_m": 4.458
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:FE118001",
+    "source_id": "OSM_FR:node/9104702765",
+    "distance_m": 1.972
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:FE242000",
+    "source_id": "OSM_FR:node/9111433580",
+    "distance_m": 3.96
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:FE333000",
+    "source_id": "OSM_FR:node/9112921281",
+    "distance_m": 3.47
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:20012",
+    "source_id": "OSM_FR:node/13986245466",
+    "distance_m": 2.371
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:20161",
+    "source_id": "OSM_FR:node/13992527167",
+    "distance_m": 0.661
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:20054",
+    "source_id": "OSM_FR:node/13992635848",
+    "distance_m": 4.313
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:20178",
+    "source_id": "OSM_FR:node/13995044967",
+    "distance_m": 4.718
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:6670",
+    "source_id": "OSM_FR:node/14000243467",
+    "distance_m": 4.652
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51573",
+    "source_id": "OSM_FR:node/14053840453",
+    "distance_m": 1.193
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:51378",
+    "source_id": "OSM_FR:node/14094961384",
+    "distance_m": 1.022
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55677",
+    "source_id": "OSM_FR:node/14142294402",
+    "distance_m": 2.421
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55568",
+    "source_id": "OSM_FR:node/14168524336",
+    "distance_m": 4.17
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:12157",
+    "source_id": "OSM_FR:node/14181179588",
+    "distance_m": 2.921
+  },
+  {
+    "country_code": "FR",
+    "canonical_id": "FR_INTERIEUR:55534",
+    "source_id": "OSM_FR:node/14189512464",
+    "distance_m": 4.653
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:82424716",
+    "source_id": "OSM_NO:node/645686",
+    "distance_m": 0.43
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:90963449",
+    "source_id": "OSM_NO:node/12270380",
+    "distance_m": 0.328
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:81565635",
+    "source_id": "OSM_NO:node/27169099",
+    "distance_m": 0.785
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:81565636",
+    "source_id": "OSM_NO:node/357243727",
+    "distance_m": 1.295
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:375207439",
+    "source_id": "OSM_NO:node/365813075",
+    "distance_m": 1.178
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:375207440",
+    "source_id": "OSM_NO:node/366184642",
+    "distance_m": 1.052
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:154779803",
+    "source_id": "OSM_NO:node/370873763",
+    "distance_m": 0.832
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:92266666",
+    "source_id": "OSM_NO:node/395583732",
+    "distance_m": 0.385
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:154779800",
+    "source_id": "OSM_NO:node/408890665",
+    "distance_m": 0.883
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:83791491",
+    "source_id": "OSM_NO:node/416120555",
+    "distance_m": 0.231
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:930110073",
+    "source_id": "OSM_NO:node/439208795",
+    "distance_m": 0.201
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:78899319",
+    "source_id": "OSM_NO:node/497882472",
+    "distance_m": 0.088
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:255231781",
+    "source_id": "OSM_NO:node/748589581",
+    "distance_m": 2.041
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:255231756",
+    "source_id": "OSM_NO:node/748589589",
+    "distance_m": 0.342
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:853082627",
+    "source_id": "OSM_NO:node/772214157",
+    "distance_m": 0.323
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:80034637",
+    "source_id": "OSM_NO:node/810419846",
+    "distance_m": 1.219
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:80034638",
+    "source_id": "OSM_NO:node/810419850",
+    "distance_m": 0.179
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:101518039",
+    "source_id": "OSM_NO:node/819299879",
+    "distance_m": 0.347
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:84509122",
+    "source_id": "OSM_NO:node/819335479",
+    "distance_m": 1.301
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:84509120",
+    "source_id": "OSM_NO:node/819335490",
+    "distance_m": 1.214
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:181486066",
+    "source_id": "OSM_NO:node/825194566",
+    "distance_m": 0.499
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:181486067",
+    "source_id": "OSM_NO:node/825194569",
+    "distance_m": 1.351
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:300983241",
+    "source_id": "OSM_NO:node/840292287",
+    "distance_m": 0.641
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:375353820",
+    "source_id": "OSM_NO:node/840788780",
+    "distance_m": 0.741
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:266730930",
+    "source_id": "OSM_NO:node/842083507",
+    "distance_m": 4.634
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:84545142",
+    "source_id": "OSM_NO:node/1089333897",
+    "distance_m": 0.327
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:131095284",
+    "source_id": "OSM_NO:node/1421446072",
+    "distance_m": 0.839
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:163676146",
+    "source_id": "OSM_NO:node/1421446079",
+    "distance_m": 1.833
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:81566071",
+    "source_id": "OSM_NO:node/1421446091",
+    "distance_m": 0.813
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:300983244",
+    "source_id": "OSM_NO:node/1421446103",
+    "distance_m": 0.371
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:101518040",
+    "source_id": "OSM_NO:node/1421446114",
+    "distance_m": 0.048
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:131095288",
+    "source_id": "OSM_NO:node/1421446116",
+    "distance_m": 2.346
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:135674650",
+    "source_id": "OSM_NO:node/1421446120",
+    "distance_m": 0.883
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:131095285",
+    "source_id": "OSM_NO:node/1421446133",
+    "distance_m": 0.261
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:131095293",
+    "source_id": "OSM_NO:node/1421446134",
+    "distance_m": 2.033
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:83725423",
+    "source_id": "OSM_NO:node/1421446136",
+    "distance_m": 0.514
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:80034636",
+    "source_id": "OSM_NO:node/1421446141",
+    "distance_m": 0.176
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:101569659",
+    "source_id": "OSM_NO:node/1421446152",
+    "distance_m": 0.498
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:87742334",
+    "source_id": "OSM_NO:node/1421446153",
+    "distance_m": 0.241
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:83725426",
+    "source_id": "OSM_NO:node/1421446164",
+    "distance_m": 4.791
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:135674648",
+    "source_id": "OSM_NO:node/1421446165",
+    "distance_m": 2.025
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:101569732",
+    "source_id": "OSM_NO:node/1421446168",
+    "distance_m": 0.392
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:81566063",
+    "source_id": "OSM_NO:node/1421446174",
+    "distance_m": 0.254
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:83791473",
+    "source_id": "OSM_NO:node/1421446182",
+    "distance_m": 0.452
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:181486064",
+    "source_id": "OSM_NO:node/1421446193",
+    "distance_m": 0.419
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:159536396",
+    "source_id": "OSM_NO:node/1421446195",
+    "distance_m": 0.296
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:745268391",
+    "source_id": "OSM_NO:node/1421446198",
+    "distance_m": 4.421
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:83725424",
+    "source_id": "OSM_NO:node/1421446210",
+    "distance_m": 0.184
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:163676197",
+    "source_id": "OSM_NO:node/1421446213",
+    "distance_m": 0.172
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:81566064",
+    "source_id": "OSM_NO:node/1421446214",
+    "distance_m": 0.949
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:101518060",
+    "source_id": "OSM_NO:node/1421446220",
+    "distance_m": 0.601
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:300983242",
+    "source_id": "OSM_NO:node/1421446231",
+    "distance_m": 1.288
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:434487117",
+    "source_id": "OSM_NO:node/1435030061",
+    "distance_m": 0.84
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:163303894",
+    "source_id": "OSM_NO:node/1491968220",
+    "distance_m": 0.596
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:163303895",
+    "source_id": "OSM_NO:node/1491968221",
+    "distance_m": 0.343
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:91685164",
+    "source_id": "OSM_NO:node/1491968222",
+    "distance_m": 0.487
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:91685163",
+    "source_id": "OSM_NO:node/1491968223",
+    "distance_m": 0.182
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:163303900",
+    "source_id": "OSM_NO:node/1491968229",
+    "distance_m": 0.378
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:163303901",
+    "source_id": "OSM_NO:node/1491968230",
+    "distance_m": 0.48
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:1004717057",
+    "source_id": "OSM_NO:node/1755027699",
+    "distance_m": 1.166
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:82424740",
+    "source_id": "OSM_NO:node/1792040224",
+    "distance_m": 2.761
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:82424743",
+    "source_id": "OSM_NO:node/1792078637",
+    "distance_m": 0.856
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:376909887",
+    "source_id": "OSM_NO:node/1792218606",
+    "distance_m": 0.672
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:376909888",
+    "source_id": "OSM_NO:node/1792226323",
+    "distance_m": 0.236
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:78899321",
+    "source_id": "OSM_NO:node/1804473470",
+    "distance_m": 0.08
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:78899323",
+    "source_id": "OSM_NO:node/1804473472",
+    "distance_m": 0.037
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:78899325",
+    "source_id": "OSM_NO:node/1804473473",
+    "distance_m": 0.031
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:92719273",
+    "source_id": "OSM_NO:node/2181125021",
+    "distance_m": 1.285
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:90958426",
+    "source_id": "OSM_NO:node/2674844842",
+    "distance_m": 0.828
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:226421825",
+    "source_id": "OSM_NO:node/2689075084",
+    "distance_m": 0.547
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:371088928",
+    "source_id": "OSM_NO:node/2713368746",
+    "distance_m": 4.246
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:573966002",
+    "source_id": "OSM_NO:node/3046263132",
+    "distance_m": 0.463
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:92719271",
+    "source_id": "OSM_NO:node/3354215052",
+    "distance_m": 1.597
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:163303904",
+    "source_id": "OSM_NO:node/3372029649",
+    "distance_m": 0.492
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:284346885",
+    "source_id": "OSM_NO:node/3373982872",
+    "distance_m": 1.844
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:284346883",
+    "source_id": "OSM_NO:node/3373982875",
+    "distance_m": 1.041
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:82424662",
+    "source_id": "OSM_NO:node/3374443445",
+    "distance_m": 0.231
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:82424719",
+    "source_id": "OSM_NO:node/3374443446",
+    "distance_m": 0.439
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:142359494",
+    "source_id": "OSM_NO:node/3397446651",
+    "distance_m": 1.225
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:163303905",
+    "source_id": "OSM_NO:node/3397446658",
+    "distance_m": 0.317
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:82424704",
+    "source_id": "OSM_NO:node/3424828450",
+    "distance_m": 0.287
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:82424707",
+    "source_id": "OSM_NO:node/3424828600",
+    "distance_m": 0.635
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:82424725",
+    "source_id": "OSM_NO:node/3454509741",
+    "distance_m": 0.43
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:82424722",
+    "source_id": "OSM_NO:node/3454509742",
+    "distance_m": 0.066
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:82424680",
+    "source_id": "OSM_NO:node/3454509743",
+    "distance_m": 1.156
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:82424686",
+    "source_id": "OSM_NO:node/3454509744",
+    "distance_m": 0.835
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:276760444",
+    "source_id": "OSM_NO:node/3674386835",
+    "distance_m": 0.561
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:276760448",
+    "source_id": "OSM_NO:node/3674388152",
+    "distance_m": 0.788
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:276760446",
+    "source_id": "OSM_NO:node/3689994054",
+    "distance_m": 0.125
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:154779806",
+    "source_id": "OSM_NO:node/4624182974",
+    "distance_m": 0.341
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:276760441",
+    "source_id": "OSM_NO:node/4624183637",
+    "distance_m": 1.164
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:84545141",
+    "source_id": "OSM_NO:node/4625904828",
+    "distance_m": 0.498
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:86229785",
+    "source_id": "OSM_NO:node/4625904845",
+    "distance_m": 0.294
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:276852130",
+    "source_id": "OSM_NO:node/4625904849",
+    "distance_m": 1.004
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:276850655",
+    "source_id": "OSM_NO:node/4625904850",
+    "distance_m": 0.993
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:329856045",
+    "source_id": "OSM_NO:node/4625904856",
+    "distance_m": 0.756
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:329856044",
+    "source_id": "OSM_NO:node/4625904857",
+    "distance_m": 1.678
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:191720524",
+    "source_id": "OSM_NO:node/4626584740",
+    "distance_m": 1.762
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:191720463",
+    "source_id": "OSM_NO:node/4626584746",
+    "distance_m": 0.554
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:319741782",
+    "source_id": "OSM_NO:node/4626584751",
+    "distance_m": 0.687
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:101517034",
+    "source_id": "OSM_NO:node/4626584753",
+    "distance_m": 1.821
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:101517035",
+    "source_id": "OSM_NO:node/4626584769",
+    "distance_m": 0.884
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:159536556",
+    "source_id": "OSM_NO:node/4626584771",
+    "distance_m": 1.399
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:217618486",
+    "source_id": "OSM_NO:node/4626584772",
+    "distance_m": 0.505
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:130265730",
+    "source_id": "OSM_NO:node/4626584783",
+    "distance_m": 0.78
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:114885214",
+    "source_id": "OSM_NO:node/4626595793",
+    "distance_m": 0.544
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:745268425",
+    "source_id": "OSM_NO:node/4626595795",
+    "distance_m": 0.353
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:154771173",
+    "source_id": "OSM_NO:node/4629757130",
+    "distance_m": 0.661
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:154771171",
+    "source_id": "OSM_NO:node/4629757138",
+    "distance_m": 3.44
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:154771169",
+    "source_id": "OSM_NO:node/4629757148",
+    "distance_m": 1.499
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:366990281",
+    "source_id": "OSM_NO:node/4629757165",
+    "distance_m": 0.452
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:795170276",
+    "source_id": "OSM_NO:node/4629757166",
+    "distance_m": 0.545
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:92266662",
+    "source_id": "OSM_NO:node/4629757180",
+    "distance_m": 2.733
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:132191533",
+    "source_id": "OSM_NO:node/4629757188",
+    "distance_m": 2.02
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:132191517",
+    "source_id": "OSM_NO:node/4629757715",
+    "distance_m": 4.531
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:119580448",
+    "source_id": "OSM_NO:node/4629757762",
+    "distance_m": 4.844
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:132148383",
+    "source_id": "OSM_NO:node/4629757764",
+    "distance_m": 0.513
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:132148379",
+    "source_id": "OSM_NO:node/4629757769",
+    "distance_m": 0.775
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:132148371",
+    "source_id": "OSM_NO:node/4629757771",
+    "distance_m": 0.089
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:132148367",
+    "source_id": "OSM_NO:node/4629757772",
+    "distance_m": 0.341
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:132148363",
+    "source_id": "OSM_NO:node/4629757776",
+    "distance_m": 0.131
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:132148355",
+    "source_id": "OSM_NO:node/4629757785",
+    "distance_m": 0.264
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:132148347",
+    "source_id": "OSM_NO:node/4629757788",
+    "distance_m": 0.18
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:132148351",
+    "source_id": "OSM_NO:node/4629757790",
+    "distance_m": 0.636
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:82424752",
+    "source_id": "OSM_NO:node/4630218750",
+    "distance_m": 0.659
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:82424755",
+    "source_id": "OSM_NO:node/4630218751",
+    "distance_m": 1.648
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:217592512",
+    "source_id": "OSM_NO:node/4630218759",
+    "distance_m": 1.236
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:217592515",
+    "source_id": "OSM_NO:node/4630218760",
+    "distance_m": 0.617
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:82424665",
+    "source_id": "OSM_NO:node/4630218777",
+    "distance_m": 2.776
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:79628629",
+    "source_id": "OSM_NO:node/4630219090",
+    "distance_m": 0.431
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:80034629",
+    "source_id": "OSM_NO:node/4630219092",
+    "distance_m": 0.175
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:853082618",
+    "source_id": "OSM_NO:node/4630432685",
+    "distance_m": 0.056
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:80823540",
+    "source_id": "OSM_NO:node/4630434816",
+    "distance_m": 0.607
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:80824483",
+    "source_id": "OSM_NO:node/4630434817",
+    "distance_m": 1.18
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:80917396",
+    "source_id": "OSM_NO:node/4630434819",
+    "distance_m": 0.861
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:80917395",
+    "source_id": "OSM_NO:node/4630434822",
+    "distance_m": 0.355
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:114284331",
+    "source_id": "OSM_NO:node/4630434825",
+    "distance_m": 1.482
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:114283987",
+    "source_id": "OSM_NO:node/4630434826",
+    "distance_m": 0.321
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:80917393",
+    "source_id": "OSM_NO:node/4630434827",
+    "distance_m": 1.138
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:91571101",
+    "source_id": "OSM_NO:node/4632368525",
+    "distance_m": 0.713
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:89284021",
+    "source_id": "OSM_NO:node/4632368561",
+    "distance_m": 0.439
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:89284022",
+    "source_id": "OSM_NO:node/4632368562",
+    "distance_m": 0.53
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:87742338",
+    "source_id": "OSM_NO:node/4635997857",
+    "distance_m": 0.326
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:86573551",
+    "source_id": "OSM_NO:node/4638191630",
+    "distance_m": 0.783
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:135479376",
+    "source_id": "OSM_NO:node/6545741952",
+    "distance_m": 0.561
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:226421833",
+    "source_id": "OSM_NO:node/6545795862",
+    "distance_m": 0.305
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:226421829",
+    "source_id": "OSM_NO:node/6545795863",
+    "distance_m": 0.332
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:191720455",
+    "source_id": "OSM_NO:node/6545849383",
+    "distance_m": 0.197
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:87643546",
+    "source_id": "OSM_NO:node/6545889011",
+    "distance_m": 0.161
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:132087601",
+    "source_id": "OSM_NO:node/6545903892",
+    "distance_m": 0.1
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:80034631",
+    "source_id": "OSM_NO:node/6545933177",
+    "distance_m": 0.775
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:87110377",
+    "source_id": "OSM_NO:node/6949576819",
+    "distance_m": 0.138
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:266730928",
+    "source_id": "OSM_NO:node/9407961138",
+    "distance_m": 4.078
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:79682153",
+    "source_id": "OSM_NO:node/9407970229",
+    "distance_m": 0.041
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:432129817",
+    "source_id": "OSM_NO:node/9407970230",
+    "distance_m": 0.027
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:1017744649",
+    "source_id": "OSM_NO:node/12669601215",
+    "distance_m": 0.475
+  },
+  {
+    "country_code": "NO",
+    "canonical_id": "NO_NVDB:1017744645",
+    "source_id": "OSM_NO:node/12669601216",
+    "distance_m": 2.589
+  },
+  {
+    "country_code": "PL",
+    "canonical_id": "PL:CANARD:speed_camera:320150",
+    "source_id": "OSM_PL:node/279652965",
+    "distance_m": 4.426
+  },
+  {
+    "country_code": "PL",
+    "canonical_id": "PL:CANARD:speed_camera:89848068",
+    "source_id": "OSM_PL:node/2398969526",
+    "distance_m": 1.172
+  },
+  {
+    "country_code": "PL",
+    "canonical_id": "PL:CANARD:speed_camera:88957850",
+    "source_id": "OSM_PL:node/2560745259",
+    "distance_m": 2.934
+  },
+  {
+    "country_code": "PL",
+    "canonical_id": "PL:CANARD:speed_camera:87763865",
+    "source_id": "OSM_PL:node/2566174660",
+    "distance_m": 4.807
+  },
+  {
+    "country_code": "PL",
+    "canonical_id": "PL:CANARD:speed_camera:91338743",
+    "source_id": "OSM_PL:node/2566262261",
+    "distance_m": 3.338
+  },
+  {
+    "country_code": "PL",
+    "canonical_id": "PL:CANARD:speed_camera:83520879",
+    "source_id": "OSM_PL:node/2568978542",
+    "distance_m": 3.443
+  },
+  {
+    "country_code": "PL",
+    "canonical_id": "PL:CANARD:speed_camera:28795618",
+    "source_id": "OSM_PL:node/3163428426",
+    "distance_m": 3.539
+  },
+  {
+    "country_code": "PL",
+    "canonical_id": "PL:CANARD:speed_camera:87763789",
+    "source_id": "OSM_PL:node/3455237702",
+    "distance_m": 2.532
+  },
+  {
+    "country_code": "PL",
+    "canonical_id": "PL:CANARD:speed_camera:83727151",
+    "source_id": "OSM_PL:node/3455237870",
+    "distance_m": 1.566
+  },
+  {
+    "country_code": "PL",
+    "canonical_id": "PL:CANARD:speed_camera:86773619",
+    "source_id": "OSM_PL:node/3656468751",
+    "distance_m": 2.022
+  },
+  {
+    "country_code": "PL",
+    "canonical_id": "PL:CANARD:speed_camera:87764040",
+    "source_id": "OSM_PL:node/4429665345",
+    "distance_m": 2.113
+  },
+  {
+    "country_code": "PL",
+    "canonical_id": "PL:CANARD:speed_camera:88685334",
+    "source_id": "OSM_PL:node/6389492690",
+    "distance_m": 2.411
+  },
+  {
+    "country_code": "PL",
+    "canonical_id": "PL:CANARD:speed_camera:8073429",
+    "source_id": "OSM_PL:node/6432306827",
+    "distance_m": 4.272
+  },
+  {
+    "country_code": "PL",
+    "canonical_id": "PL:CANARD:speed_camera:28796205",
+    "source_id": "OSM_PL:node/7263867687",
+    "distance_m": 3.268
+  },
+  {
+    "country_code": "PL",
+    "canonical_id": "PL:CANARD:speed_camera:28796185",
+    "source_id": "OSM_PL:node/7263867688",
+    "distance_m": 2.625
+  },
+  {
+    "country_code": "PL",
+    "canonical_id": "PL:CANARD:speed_camera:28796137",
+    "source_id": "OSM_PL:node/7263867689",
+    "distance_m": 4.867
+  },
+  {
+    "country_code": "PL",
+    "canonical_id": "PL:CANARD:speed_camera:87591607",
+    "source_id": "OSM_PL:node/8986669956",
+    "distance_m": 1.298
+  },
+  {
+    "country_code": "PL",
+    "canonical_id": "PL:CANARD:speed_camera:88686064",
+    "source_id": "OSM_PL:node/9773217217",
+    "distance_m": 0.795
+  },
+  {
+    "country_code": "PL",
+    "canonical_id": "PL:CANARD:speed_camera:87764242",
+    "source_id": "OSM_PL:node/9831398323",
+    "distance_m": 3.038
+  },
+  {
+    "country_code": "PL",
+    "canonical_id": "PL:CANARD:speed_camera:87764064",
+    "source_id": "OSM_PL:node/9936291981",
+    "distance_m": 4.633
+  },
+  {
+    "country_code": "PL",
+    "canonical_id": "PL:CANARD:speed_camera:120186107",
+    "source_id": "OSM_PL:node/13077818194",
+    "distance_m": 1.56
+  },
+  {
+    "country_code": "PL",
+    "canonical_id": "PL:CANARD:speed_camera:358750",
+    "source_id": "OSM_PL:node/13123280466",
+    "distance_m": 4.591
+  },
+  {
+    "country_code": "PL",
+    "canonical_id": "PL:CANARD:speed_camera:90650593",
+    "source_id": "OSM_PL:node/13369639311",
+    "distance_m": 3.769
+  },
+  {
+    "country_code": "PL",
+    "canonical_id": "PL:CANARD:speed_camera:86556550",
+    "source_id": "OSM_PL:node/13409154949",
+    "distance_m": 4.832
+  },
+  {
+    "country_code": "PL",
+    "canonical_id": "PL:CANARD:speed_camera:120121888",
+    "source_id": "OSM_PL:node/13968145854",
+    "distance_m": 3.996
+  },
+  {
+    "country_code": "UA",
+    "canonical_id": "UA:PATROL:speed_camera:36",
+    "source_id": "OSM_UA:node/620533605",
+    "distance_m": 1.038
+  },
+  {
+    "country_code": "UA",
+    "canonical_id": "UA:PATROL:speed_camera:10",
+    "source_id": "OSM_UA:node/7465104542",
+    "distance_m": 3.033
+  },
+  {
+    "country_code": "UA",
+    "canonical_id": "UA:PATROL:speed_camera:5",
+    "source_id": "OSM_UA:node/7468194291",
+    "distance_m": 2.844
+  },
+  {
+    "country_code": "UA",
+    "canonical_id": "UA:PATROL:speed_camera:16",
+    "source_id": "OSM_UA:node/7468194292",
+    "distance_m": 4.539
+  },
+  {
+    "country_code": "UA",
+    "canonical_id": "UA:PATROL:speed_camera:15",
+    "source_id": "OSM_UA:node/7468194293",
+    "distance_m": 3.51
+  },
+  {
+    "country_code": "UA",
+    "canonical_id": "UA:PATROL:speed_camera:139",
+    "source_id": "OSM_UA:node/9021101466",
+    "distance_m": 4.786
+  },
+  {
+    "country_code": "UA",
+    "canonical_id": "UA:PATROL:speed_camera:46",
+    "source_id": "OSM_UA:node/9023391634",
+    "distance_m": 4.673
+  },
+  {
+    "country_code": "UA",
+    "canonical_id": "UA:PATROL:speed_camera:76",
+    "source_id": "OSM_UA:node/9026954802",
+    "distance_m": 4.571
+  },
+  {
+    "country_code": "UA",
+    "canonical_id": "UA:PATROL:speed_camera:112",
+    "source_id": "OSM_UA:node/9064804186",
+    "distance_m": 2.577
+  },
+  {
+    "country_code": "UA",
+    "canonical_id": "UA:PATROL:speed_camera:135",
+    "source_id": "OSM_UA:node/9067943579",
+    "distance_m": 1.433
+  },
+  {
+    "country_code": "UA",
+    "canonical_id": "UA:PATROL:speed_camera:58",
+    "source_id": "OSM_UA:node/9076382134",
+    "distance_m": 4.084
+  },
+  {
+    "country_code": "UA",
+    "canonical_id": "UA:PATROL:speed_camera:152",
+    "source_id": "OSM_UA:node/9077554435",
+    "distance_m": 1.532
+  },
+  {
+    "country_code": "UA",
+    "canonical_id": "UA:PATROL:speed_camera:153",
+    "source_id": "OSM_UA:node/9077554436",
+    "distance_m": 4.665
+  },
+  {
+    "country_code": "UA",
+    "canonical_id": "UA:PATROL:speed_camera:108",
+    "source_id": "OSM_UA:node/9151222429",
+    "distance_m": 3.656
+  },
+  {
+    "country_code": "UA",
+    "canonical_id": "UA:PATROL:speed_camera:95",
+    "source_id": "OSM_UA:node/9155981455",
+    "distance_m": 4.402
+  },
+  {
+    "country_code": "UA",
+    "canonical_id": "UA:PATROL:speed_camera:53",
+    "source_id": "OSM_UA:node/9165965322",
+    "distance_m": 4.05
+  },
+  {
+    "country_code": "UA",
+    "canonical_id": "UA:PATROL:speed_camera:132",
+    "source_id": "OSM_UA:node/9219500327",
+    "distance_m": 3.139
+  },
+  {
+    "country_code": "UA",
+    "canonical_id": "UA:PATROL:speed_camera:167",
+    "source_id": "OSM_UA:node/12071683480",
+    "distance_m": 4.105
+  },
+  {
+    "country_code": "UA",
+    "canonical_id": "UA:PATROL:speed_camera:148",
+    "source_id": "OSM_UA:node/12214769225",
+    "distance_m": 3.832
+  },
+  {
+    "country_code": "UA",
+    "canonical_id": "UA:PATROL:speed_camera:30",
+    "source_id": "OSM_UA:node/12217490280",
+    "distance_m": 0.058
+  },
+  {
+    "country_code": "UA",
+    "canonical_id": "UA:PATROL:speed_camera:23",
+    "source_id": "OSM_UA:node/12217502351",
+    "distance_m": 0.013
+  },
+  {
+    "country_code": "UA",
+    "canonical_id": "UA:PATROL:speed_camera:24",
+    "source_id": "OSM_UA:node/12217502352",
+    "distance_m": 0.015
+  },
+  {
+    "country_code": "UA",
+    "canonical_id": "UA:PATROL:speed_camera:102",
+    "source_id": "OSM_UA:node/12231598857",
+    "distance_m": 3.907
+  },
+  {
+    "country_code": "UA",
+    "canonical_id": "UA:PATROL:speed_camera:33",
+    "source_id": "OSM_UA:node/12231806193",
+    "distance_m": 0.871
+  },
+  {
+    "country_code": "UA",
+    "canonical_id": "UA:PATROL:speed_camera:31",
+    "source_id": "OSM_UA:node/12244446212",
+    "distance_m": 4.184
+  },
+  {
+    "country_code": "UA",
+    "canonical_id": "UA:PATROL:speed_camera:89",
+    "source_id": "OSM_UA:node/12272988277",
+    "distance_m": 4.245
+  },
+  {
+    "country_code": "UA",
+    "canonical_id": "UA:PATROL:speed_camera:63",
+    "source_id": "OSM_UA:node/12273038599",
+    "distance_m": 1.943
+  },
+  {
+    "country_code": "UA",
+    "canonical_id": "UA:PATROL:speed_camera:88",
+    "source_id": "OSM_UA:node/12409510378",
+    "distance_m": 3.671
+  },
+  {
+    "country_code": "UA",
+    "canonical_id": "UA:PATROL:speed_camera:120",
+    "source_id": "OSM_UA:node/12765928455",
+    "distance_m": 2.84
+  },
+  {
+    "country_code": "UA",
+    "canonical_id": "UA:PATROL:speed_camera:235",
+    "source_id": "OSM_UA:node/13463661064",
+    "distance_m": 3.043
+  },
+  {
+    "country_code": "US",
+    "canonical_id": "CHICAGO_SPEED:279",
+    "source_id": "OSM_US:node/5076522476",
+    "distance_m": 2.843
+  },
+  {
+    "country_code": "US",
+    "canonical_id": "SEATTLE_ATSC:51",
+    "source_id": "OSM_US:node/8010597227",
+    "distance_m": 6.682
+  },
+  {
+    "country_code": "US",
+    "canonical_id": "CHICAGO_SPEED:278",
+    "source_id": "OSM_US:node/8023991516",
+    "distance_m": 9.001
+  },
+  {
+    "country_code": "US",
+    "canonical_id": "SEATTLE_ATSC:65",
+    "source_id": "OSM_US:node/11221253588",
+    "distance_m": 8.414
+  },
+  {
+    "country_code": "US",
+    "canonical_id": "CHICAGO_SPEED:285",
+    "source_id": "OSM_US:node/11374686921",
+    "distance_m": 9.298
+  },
+  {
+    "country_code": "US",
+    "canonical_id": "CHICAGO_SPEED:286",
+    "source_id": "OSM_US:node/11374686922",
+    "distance_m": 24.856
+  },
+  {
+    "country_code": "US",
+    "canonical_id": "SEATTLE_ATSC:59",
+    "source_id": "OSM_US:node/11702651550",
+    "distance_m": 1.494
+  },
+  {
+    "country_code": "US",
+    "canonical_id": "SEATTLE_ATSC:37",
+    "source_id": "OSM_US:node/11982396022",
+    "distance_m": 3.195
+  },
+  {
+    "country_code": "US",
+    "canonical_id": "SEATTLE_ATSC:38",
+    "source_id": "OSM_US:node/11982396023",
+    "distance_m": 4.885
+  },
+  {
+    "country_code": "US",
+    "canonical_id": "DDOT_DC:ATE 0283",
+    "source_id": "OSM_US:node/12541095764",
+    "distance_m": 2.657
+  },
+  {
+    "country_code": "US",
+    "canonical_id": "DDOT_DC:ATE 0175",
+    "source_id": "OSM_US:node/12543165381",
+    "distance_m": 25.669
+  },
+  {
+    "country_code": "US",
+    "canonical_id": "DDOT_DC:ATE 0589",
+    "source_id": "OSM_US:node/12578283031",
+    "distance_m": 4.172
+  },
+  {
+    "country_code": "US",
+    "canonical_id": "DDOT_DC:ATE 0022",
+    "source_id": "OSM_US:node/12578283040",
+    "distance_m": 15.244
+  },
+  {
+    "country_code": "US",
+    "canonical_id": "DDOT_DC:ATE 0526",
+    "source_id": "OSM_US:node/12578283041",
+    "distance_m": 6.712
+  },
+  {
+    "country_code": "US",
+    "canonical_id": "DDOT_DC:ATE 0561",
+    "source_id": "OSM_US:node/12578283043",
+    "distance_m": 14.038
+  },
+  {
+    "country_code": "US",
+    "canonical_id": "DDOT_DC:ATE 0375",
+    "source_id": "OSM_US:node/12578283044",
+    "distance_m": 4.884
+  },
+  {
+    "country_code": "US",
+    "canonical_id": "DDOT_DC:ATE 0121",
+    "source_id": "OSM_US:node/12578283046",
+    "distance_m": 6.924
+  },
+  {
+    "country_code": "US",
+    "canonical_id": "DDOT_DC:ATE 0082",
+    "source_id": "OSM_US:node/12578283050",
+    "distance_m": 4.658
+  },
+  {
+    "country_code": "US",
+    "canonical_id": "DDOT_DC:ATE 0329",
+    "source_id": "OSM_US:node/12578341744",
+    "distance_m": 4.003
+  },
+  {
+    "country_code": "US",
+    "canonical_id": "DDOT_DC:ATE 0336",
+    "source_id": "OSM_US:node/12578383385",
+    "distance_m": 3.216
+  },
+  {
+    "country_code": "US",
+    "canonical_id": "DDOT_DC:ATE 0187",
+    "source_id": "OSM_US:node/12578389595",
+    "distance_m": 15.439
+  },
+  {
+    "country_code": "US",
+    "canonical_id": "DDOT_DC:ATE 0418",
+    "source_id": "OSM_US:node/12580439684",
+    "distance_m": 12.301
+  },
+  {
+    "country_code": "US",
+    "canonical_id": "DDOT_DC:ATE 0284",
+    "source_id": "OSM_US:node/12580439687",
+    "distance_m": 15.76
+  },
+  {
+    "country_code": "US",
+    "canonical_id": "DDOT_DC:ATE 0541",
+    "source_id": "OSM_US:node/12580439689",
+    "distance_m": 10.353
+  },
+  {
+    "country_code": "US",
+    "canonical_id": "DDOT_DC:ATE 0363",
+    "source_id": "OSM_US:node/12580439692",
+    "distance_m": 3.018
+  },
+  {
+    "country_code": "US",
+    "canonical_id": "DDOT_DC:ATE 0816",
+    "source_id": "OSM_US:node/12580477707",
+    "distance_m": 9.543
+  },
+  {
+    "country_code": "US",
+    "canonical_id": "DDOT_DC:ATE 0168",
+    "source_id": "OSM_US:node/12580477709",
+    "distance_m": 4.406
+  },
+  {
+    "country_code": "US",
+    "canonical_id": "DDOT_DC:ATE 0094",
+    "source_id": "OSM_US:node/12580479023",
+    "distance_m": 5.77
+  },
+  {
+    "country_code": "US",
+    "canonical_id": "DDOT_DC:ATE 0176",
+    "source_id": "OSM_US:node/12580485630",
+    "distance_m": 10.765
+  },
+  {
+    "country_code": "US",
+    "canonical_id": "SFMTA_SPEED:MTAF012",
+    "source_id": "OSM_US:node/12889680095",
+    "distance_m": 18.091
+  },
+  {
+    "country_code": "US",
+    "canonical_id": "SFMTA_SPEED:MTAF011",
+    "source_id": "OSM_US:node/12889680096",
+    "distance_m": 16.981
+  },
+  {
+    "country_code": "US",
+    "canonical_id": "CHICAGO_SPEED:75",
+    "source_id": "OSM_US:node/13064471935",
+    "distance_m": 4.388
+  },
+  {
+    "country_code": "US",
+    "canonical_id": "CHICAGO_RED:3947 N Austin Ave",
+    "source_id": "OSM_US:node/13261802811",
+    "distance_m": 4.248
+  },
+  {
+    "country_code": "US",
+    "canonical_id": "CHICAGO_RED:3577 N Austin Ave",
+    "source_id": "OSM_US:node/13261802987",
+    "distance_m": 1.081
+  }
+]

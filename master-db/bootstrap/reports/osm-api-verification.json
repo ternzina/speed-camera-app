@@ -1,0 +1,398 @@
+[
+  {
+    "country_code": "AD",
+    "seed_url": "https://speedcams.world/downloads/ad/ad-all.csv",
+    "seed_ids": 11,
+    "current_nodes": 11,
+    "speed_camera_nodes": 11,
+    "retrieved_at": "2026-10-06T22:49:09.227451+00:00",
+    "status": "verified_live"
+  },
+  {
+    "country_code": "AL",
+    "seed_url": "https://speedcams.world/downloads/al/al-all.csv",
+    "seed_ids": 2,
+    "current_nodes": 2,
+    "speed_camera_nodes": 2,
+    "retrieved_at": "2026-10-06T22:48:53.490629+00:00",
+    "status": "verified_live"
+  },
+  {
+    "country_code": "AT",
+    "seed_url": "https://speedcams.world/downloads/at/at-all.csv",
+    "seed_ids": 1366,
+    "current_nodes": 1350,
+    "speed_camera_nodes": 1347,
+    "retrieved_at": "2026-10-06T22:48:04.234135+00:00",
+    "status": "verified_live"
+  },
+  {
+    "country_code": "BA",
+    "seed_url": "https://speedcams.world/downloads/ba/ba-all.csv",
+    "seed_ids": 238,
+    "current_nodes": 237,
+    "speed_camera_nodes": 236,
+    "retrieved_at": "2026-10-06T22:48:48.971965+00:00",
+    "status": "verified_live"
+  },
+  {
+    "country_code": "BE",
+    "seed_url": "https://speedcams.world/downloads/be/be-all.csv",
+    "seed_ids": 1490,
+    "current_nodes": 1476,
+    "speed_camera_nodes": 1466,
+    "retrieved_at": "2026-10-06T22:48:11.558361+00:00",
+    "status": "verified_live"
+  },
+  {
+    "country_code": "BG",
+    "seed_url": "https://speedcams.world/downloads/bg/bg-all.csv",
+    "seed_ids": 69,
+    "current_nodes": 69,
+    "speed_camera_nodes": 69,
+    "retrieved_at": "2026-10-06T22:48:41.441694+00:00",
+    "status": "verified_live"
+  },
+  {
+    "country_code": "CA",
+    "seed_url": "https://speedcams.world/downloads/ca/ca-all.csv",
+    "seed_ids": 450,
+    "current_nodes": 431,
+    "speed_camera_nodes": 422,
+    "retrieved_at": "2026-10-06T22:49:18.665864+00:00",
+    "status": "verified_live"
+  },
+  {
+    "country_code": "CH",
+    "seed_url": "https://speedcams.world/downloads/ch/ch-all.csv",
+    "seed_ids": 607,
+    "current_nodes": 595,
+    "speed_camera_nodes": 593,
+    "retrieved_at": "2026-10-06T22:48:07.226138+00:00",
+    "status": "verified_live"
+  },
+  {
+    "country_code": "CY",
+    "seed_url": "https://speedcams.world/downloads/cy/cy-all.csv",
+    "seed_ids": 74,
+    "current_nodes": 74,
+    "speed_camera_nodes": 74,
+    "retrieved_at": "2026-10-06T22:49:03.121268+00:00",
+    "status": "verified_live"
+  },
+  {
+    "country_code": "CZ",
+    "seed_url": "https://speedcams.world/downloads/cz/cz-all.csv",
+    "seed_ids": 1276,
+    "current_nodes": 1264,
+    "speed_camera_nodes": 1260,
+    "retrieved_at": "2026-10-06T22:48:34.984125+00:00",
+    "status": "verified_live"
+  },
+  {
+    "country_code": "DE",
+    "seed_url": "https://speedcams.world/downloads/de/de-all.csv",
+    "seed_ids": 5140,
+    "current_nodes": 5091,
+    "speed_camera_nodes": 5063,
+    "retrieved_at": "2026-10-06T22:47:32.449203+00:00",
+    "status": "verified_live"
+  },
+  {
+    "country_code": "DK",
+    "seed_url": "https://speedcams.world/downloads/dk/dk-all.csv",
+    "seed_ids": 22,
+    "current_nodes": 22,
+    "speed_camera_nodes": 22,
+    "retrieved_at": "2026-10-06T22:48:17.552526+00:00",
+    "status": "verified_live"
+  },
+  {
+    "country_code": "EE",
+    "seed_url": "https://speedcams.world/downloads/ee/ee-all.csv",
+    "seed_ids": 84,
+    "current_nodes": 84,
+    "speed_camera_nodes": 84,
+    "retrieved_at": "2026-10-06T22:48:59.977714+00:00",
+    "status": "verified_live"
+  },
+  {
+    "country_code": "ES",
+    "seed_url": "https://speedcams.world/downloads/es/es-all.csv",
+    "seed_ids": 2508,
+    "current_nodes": 2363,
+    "speed_camera_nodes": 2316,
+    "retrieved_at": "2026-10-06T22:47:16.844448+00:00",
+    "status": "verified_live"
+  },
+  {
+    "country_code": "FI",
+    "seed_url": "https://speedcams.world/downloads/fi/fi-all.csv",
+    "seed_ids": 835,
+    "current_nodes": 832,
+    "speed_camera_nodes": 828,
+    "retrieved_at": "2026-10-06T22:48:29.099957+00:00",
+    "status": "verified_live"
+  },
+  {
+    "country_code": "FR",
+    "seed_url": "https://speedcams.world/downloads/fr/fr-all.csv",
+    "seed_ids": 3822,
+    "current_nodes": 3779,
+    "speed_camera_nodes": 3766,
+    "retrieved_at": "2026-10-06T22:47:08.644253+00:00",
+    "status": "verified_live"
+  },
+  {
+    "country_code": "GB",
+    "seed_url": "https://speedcams.world/downloads/gb/gb-all.csv",
+    "seed_ids": 3350,
+    "current_nodes": 3339,
+    "speed_camera_nodes": 3336,
+    "retrieved_at": "2026-10-06T22:47:42.044501+00:00",
+    "status": "verified_live"
+  },
+  {
+    "country_code": "GR",
+    "seed_url": "https://speedcams.world/downloads/gr/gr-all.csv",
+    "seed_ids": 407,
+    "current_nodes": 407,
+    "speed_camera_nodes": 407,
+    "retrieved_at": "2026-10-06T22:48:55.110692+00:00",
+    "status": "verified_live"
+  },
+  {
+    "country_code": "HR",
+    "seed_url": "https://speedcams.world/downloads/hr/hr-all.csv",
+    "seed_ids": 609,
+    "current_nodes": 602,
+    "speed_camera_nodes": 598,
+    "retrieved_at": "2026-10-06T22:48:44.248530+00:00",
+    "status": "verified_live"
+  },
+  {
+    "country_code": "HU",
+    "seed_url": "https://speedcams.world/downloads/hu/hu-all.csv",
+    "seed_ids": 392,
+    "current_nodes": 390,
+    "speed_camera_nodes": 390,
+    "retrieved_at": "2026-10-06T22:48:38.302527+00:00",
+    "status": "verified_live"
+  },
+  {
+    "country_code": "IE",
+    "seed_url": "https://speedcams.world/downloads/ie/ie-all.csv",
+    "seed_ids": 19,
+    "current_nodes": 19,
+    "speed_camera_nodes": 19,
+    "retrieved_at": "2026-10-06T22:47:43.553823+00:00",
+    "status": "verified_live"
+  },
+  {
+    "country_code": "IS",
+    "seed_url": "https://speedcams.world/downloads/is/is-all.csv",
+    "seed_ids": 17,
+    "current_nodes": 14,
+    "speed_camera_nodes": 13,
+    "retrieved_at": "2026-10-06T22:48:30.519471+00:00",
+    "status": "verified_live"
+  },
+  {
+    "country_code": "IT",
+    "seed_url": "https://speedcams.world/downloads/it/it-all.csv",
+    "seed_ids": 4805,
+    "current_nodes": 4735,
+    "speed_camera_nodes": 4724,
+    "retrieved_at": "2026-10-06T22:47:59.748002+00:00",
+    "status": "verified_live"
+  },
+  {
+    "country_code": "LI",
+    "seed_url": "https://speedcams.world/downloads/li/li-all.csv",
+    "seed_ids": 3,
+    "current_nodes": 3,
+    "speed_camera_nodes": 3,
+    "retrieved_at": "2026-10-06T22:49:10.788354+00:00",
+    "status": "verified_live"
+  },
+  {
+    "country_code": "LT",
+    "seed_url": "https://speedcams.world/downloads/lt/lt-all.csv",
+    "seed_ids": 358,
+    "current_nodes": 354,
+    "speed_camera_nodes": 352,
+    "retrieved_at": "2026-10-06T22:48:56.655628+00:00",
+    "status": "verified_live"
+  },
+  {
+    "country_code": "LU",
+    "seed_url": "https://speedcams.world/downloads/lu/lu-all.csv",
+    "seed_ids": 35,
+    "current_nodes": 35,
+    "speed_camera_nodes": 35,
+    "retrieved_at": "2026-10-06T22:48:15.935293+00:00",
+    "status": "verified_live"
+  },
+  {
+    "country_code": "LV",
+    "seed_url": "https://speedcams.world/downloads/lv/lv-all.csv",
+    "seed_ids": 138,
+    "current_nodes": 137,
+    "speed_camera_nodes": 135,
+    "retrieved_at": "2026-10-06T22:48:58.217203+00:00",
+    "status": "verified_live"
+  },
+  {
+    "country_code": "MC",
+    "seed_url": "https://speedcams.world/downloads/mc/mc-all.csv",
+    "seed_ids": 6,
+    "current_nodes": 6,
+    "speed_camera_nodes": 6,
+    "retrieved_at": "2026-10-06T22:49:12.362612+00:00",
+    "status": "verified_live"
+  },
+  {
+    "country_code": "MD",
+    "seed_url": "https://speedcams.world/downloads/md/md-all.csv",
+    "seed_ids": 79,
+    "current_nodes": 79,
+    "speed_camera_nodes": 79,
+    "retrieved_at": "2026-10-06T22:49:01.549998+00:00",
+    "status": "verified_live"
+  },
+  {
+    "country_code": "ME",
+    "seed_url": "https://speedcams.world/downloads/me/me-all.csv",
+    "seed_ids": 13,
+    "current_nodes": 13,
+    "speed_camera_nodes": 13,
+    "retrieved_at": "2026-10-06T22:48:50.343130+00:00",
+    "status": "verified_live"
+  },
+  {
+    "country_code": "MK",
+    "seed_url": "https://speedcams.world/downloads/mk/mk-all.csv",
+    "seed_ids": 90,
+    "current_nodes": 71,
+    "speed_camera_nodes": 66,
+    "retrieved_at": "2026-10-06T22:48:51.927386+00:00",
+    "status": "verified_live"
+  },
+  {
+    "country_code": "MT",
+    "seed_url": "https://speedcams.world/downloads/mt/mt-all.csv",
+    "seed_ids": 20,
+    "current_nodes": 20,
+    "speed_camera_nodes": 20,
+    "retrieved_at": "2026-10-06T22:49:04.689213+00:00",
+    "status": "verified_live"
+  },
+  {
+    "country_code": "NL",
+    "seed_url": "https://speedcams.world/downloads/nl/nl-all.csv",
+    "seed_ids": 855,
+    "current_nodes": 846,
+    "speed_camera_nodes": 842,
+    "retrieved_at": "2026-10-06T22:48:14.410225+00:00",
+    "status": "verified_live"
+  },
+  {
+    "country_code": "NO",
+    "seed_url": "https://speedcams.world/downloads/no/no-all.csv",
+    "seed_ids": 338,
+    "current_nodes": 336,
+    "speed_camera_nodes": 336,
+    "retrieved_at": "2026-10-06T22:48:25.934091+00:00",
+    "status": "verified_live"
+  },
+  {
+    "country_code": "PL",
+    "seed_url": "https://speedcams.world/downloads/pl/pl-all.csv",
+    "seed_ids": 685,
+    "current_nodes": 643,
+    "speed_camera_nodes": 547,
+    "retrieved_at": "2026-10-06T22:46:57.121135+00:00",
+    "status": "verified_live"
+  },
+  {
+    "country_code": "PT",
+    "seed_url": "https://speedcams.world/downloads/pt/pt-all.csv",
+    "seed_ids": 284,
+    "current_nodes": 282,
+    "speed_camera_nodes": 282,
+    "retrieved_at": "2026-10-06T22:47:45.177126+00:00",
+    "status": "verified_live"
+  },
+  {
+    "country_code": "RO",
+    "seed_url": "https://speedcams.world/downloads/ro/ro-all.csv",
+    "seed_ids": 255,
+    "current_nodes": 252,
+    "speed_camera_nodes": 252,
+    "retrieved_at": "2026-10-06T22:48:39.869820+00:00",
+    "status": "verified_live"
+  },
+  {
+    "country_code": "RS",
+    "seed_url": "https://speedcams.world/downloads/rs/rs-all.csv",
+    "seed_ids": 265,
+    "current_nodes": 261,
+    "speed_camera_nodes": 248,
+    "retrieved_at": "2026-10-06T22:48:47.440449+00:00",
+    "status": "verified_live"
+  },
+  {
+    "country_code": "SE",
+    "seed_url": "https://speedcams.world/downloads/se/se-all.csv",
+    "seed_ids": 2420,
+    "current_nodes": 2414,
+    "speed_camera_nodes": 2414,
+    "retrieved_at": "2026-10-06T22:48:24.331597+00:00",
+    "status": "verified_live"
+  },
+  {
+    "country_code": "SI",
+    "seed_url": "https://speedcams.world/downloads/si/si-all.csv",
+    "seed_ids": 176,
+    "current_nodes": 173,
+    "speed_camera_nodes": 172,
+    "retrieved_at": "2026-10-06T22:48:45.850892+00:00",
+    "status": "verified_live"
+  },
+  {
+    "country_code": "SK",
+    "seed_url": "https://speedcams.world/downloads/sk/sk-all.csv",
+    "seed_ids": 66,
+    "current_nodes": 66,
+    "speed_camera_nodes": 64,
+    "retrieved_at": "2026-10-06T22:48:36.579819+00:00",
+    "status": "verified_live"
+  },
+  {
+    "country_code": "TR",
+    "seed_url": "https://speedcams.world/downloads/tr/tr-all.csv",
+    "seed_ids": 619,
+    "current_nodes": 614,
+    "speed_camera_nodes": 611,
+    "retrieved_at": "2026-10-06T22:49:07.648714+00:00",
+    "status": "verified_live"
+  },
+  {
+    "country_code": "UA",
+    "seed_url": "https://speedcams.world/downloads/ua/ua-all.csv",
+    "seed_ids": 430,
+    "current_nodes": 429,
+    "speed_camera_nodes": 429,
+    "retrieved_at": "2026-10-06T22:46:54.190256+00:00",
+    "status": "verified_live"
+  },
+  {
+    "country_code": "US",
+    "seed_url": "https://speedcams.world/downloads/us/us-all.csv",
+    "seed_ids": 1131,
+    "current_nodes": 1117,
+    "speed_camera_nodes": 1106,
+    "retrieved_at": "2026-10-06T22:49:16.883438+00:00",
+    "status": "verified_live"
+  }
+]

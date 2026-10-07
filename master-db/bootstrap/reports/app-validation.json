@@ -1,0 +1,22 @@
+{
+  "app_country_render_smoke": [
+    "UA",
+    "PL",
+    "FR",
+    "US",
+    "CA"
+  ],
+  "cache_test_records": 10000,
+  "cache_chunk_max_chars": 200000,
+  "max_real_trip_cache_bytes": 1659081,
+  "legacy_cache_compatibility": true,
+  "opposing_direction_filter": true,
+  "original_polish_section_ending": true,
+  "unit_safety_checks": 10,
+  "native_device_or_store_release_tested": false,
+  "expo_export_platforms": [
+    "android",
+    "ios"
+  ],
+  "expo_export_successful": true
+}

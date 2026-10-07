@@ -1,0 +1,490 @@
+[
+  {
+    "code": "BALTIMORE_FIXED",
+    "name": "Baltimore ATVES fixed speed cameras",
+    "source_type": "official_government",
+    "country_code": "US",
+    "source_url": "https://www.arcgis.com/home/item.html?id=02625f728f714c78a5b3ad6aa06695b3",
+    "license_notes": "Baltimore City Open Data Program, Article 1 §9-8(b) | https://baltimore.legistar.com/LegislationDetail.aspx?ID=2547408&GUID=10605A37-B70C-4878-A829-21C7AB1067D2&FullText=1"
+  },
+  {
+    "code": "BALTIMORE_PORTABLE",
+    "name": "Baltimore ATVES portable deployment sites",
+    "source_type": "official_government",
+    "country_code": "US",
+    "source_url": "https://www.arcgis.com/home/item.html?id=ebf52af4f690414e916190255850aaca",
+    "license_notes": "Baltimore City Open Data Program, Article 1 §9-8(b) | https://baltimore.legistar.com/LegislationDetail.aspx?ID=2547408&GUID=10605A37-B70C-4878-A829-21C7AB1067D2&FullText=1"
+  },
+  {
+    "code": "BALTIMORE_RED",
+    "name": "Baltimore ATVES red light cameras",
+    "source_type": "official_government",
+    "country_code": "US",
+    "source_url": "https://www.arcgis.com/home/item.html?id=6c9b08a2bb6c40df94e4dec6f2e02cd8",
+    "license_notes": "Baltimore City Open Data Program, Article 1 §9-8(b) | https://baltimore.legistar.com/LegislationDetail.aspx?ID=2547408&GUID=10605A37-B70C-4878-A829-21C7AB1067D2&FullText=1"
+  },
+  {
+    "code": "CANARD_PL",
+    "name": "CANARD / GITD",
+    "source_type": "official_government",
+    "country_code": "PL",
+    "source_url": "https://www.canard.gitd.gov.pl/",
+    "license_notes": "Official Polish road enforcement source; imported from CamAlert Master DB snapshot 2026-10-05"
+  },
+  {
+    "code": "CHICAGO_RED",
+    "name": "City of Chicago red light camera locations",
+    "source_type": "official_government",
+    "country_code": "US",
+    "source_url": "https://data.cityofchicago.org/d/thvf-6diy",
+    "license_notes": "Chicago Data Portal Terms of Use | https://www.chicago.gov/city/en/narr/foia/data_disclaimer.html"
+  },
+  {
+    "code": "CHICAGO_SPEED",
+    "name": "City of Chicago speed camera locations",
+    "source_type": "official_government",
+    "country_code": "US",
+    "source_url": "https://data.cityofchicago.org/d/4i42-qv3h",
+    "license_notes": "Chicago Data Portal Terms of Use | https://www.chicago.gov/city/en/narr/foia/data_disclaimer.html"
+  },
+  {
+    "code": "DDOT_DC",
+    "name": "District Department of Transportation Automated Safety Cameras",
+    "source_type": "official_government",
+    "country_code": "US",
+    "source_url": "https://www.arcgis.com/home/item.html?id=03d94dc6579949ae9d7c9dd8ffebeb89",
+    "license_notes": "CC-BY-4.0 | https://creativecommons.org/licenses/by/4.0/"
+  },
+  {
+    "code": "EDMONTON_ISD",
+    "name": "City of Edmonton Intersection Safety Device Locations",
+    "source_type": "official_government",
+    "country_code": "CA",
+    "source_url": "https://data.edmonton.ca/d/7fnd-72gr",
+    "license_notes": "City of Edmonton Open Data Terms of Use | https://www.edmonton.ca/city_government/initiatives_innovation/open-data"
+  },
+  {
+    "code": "ES_DGT",
+    "name": "Dirección General de Tráfico fixed and average speed radar locations",
+    "source_type": "official_government",
+    "country_code": "ES",
+    "source_url": "https://nap.dgt.es/es/dataset/radares-fijos-dgt",
+    "license_notes": "CC-BY-4.0 | https://nap.dgt.es/es/dataset/radares-fijos-dgt"
+  },
+  {
+    "code": "FR_INTERIEUR",
+    "name": "Ministère de l'intérieur Liste des radars fixes en France (December 2025)",
+    "source_type": "official_government",
+    "country_code": "FR",
+    "source_url": "https://www.data.gouv.fr/datasets/liste-des-radars-fixes-en-france",
+    "license_notes": "Licence Ouverte 2.0 | https://www.etalab.gouv.fr/licence-ouverte-open-licence/"
+  },
+  {
+    "code": "NO_NVDB",
+    "name": "Statens vegvesen NVDB ATK-punkt (162)",
+    "source_type": "official_government",
+    "country_code": "NO",
+    "source_url": "https://nvdb-docs.atlas.vegvesen.no/nvdbapil/v4/introduksjon/Oversikt/",
+    "license_notes": "NLOD-2.0 | https://data.norge.no/nlod/no/2.0"
+  },
+  {
+    "code": "OSM_AD",
+    "name": "OpenStreetMap contributors (AD)",
+    "source_type": "openstreetmap",
+    "country_code": "AD",
+    "source_url": "https://www.openstreetmap.org/node/51366154",
+    "license_notes": "ODbL-1.0 | https://opendatacommons.org/licenses/odbl/1-0/"
+  },
+  {
+    "code": "OSM_AL",
+    "name": "OpenStreetMap contributors (AL)",
+    "source_type": "openstreetmap",
+    "country_code": "AL",
+    "source_url": "https://www.openstreetmap.org/node/2403700705",
+    "license_notes": "ODbL-1.0 | https://opendatacommons.org/licenses/odbl/1-0/"
+  },
+  {
+    "code": "OSM_AT",
+    "name": "OpenStreetMap contributors (AT)",
+    "source_type": "openstreetmap",
+    "country_code": "AT",
+    "source_url": "https://www.openstreetmap.org/node/13885920",
+    "license_notes": "ODbL-1.0 | https://opendatacommons.org/licenses/odbl/1-0/"
+  },
+  {
+    "code": "OSM_BA",
+    "name": "OpenStreetMap contributors (BA)",
+    "source_type": "openstreetmap",
+    "country_code": "BA",
+    "source_url": "https://www.openstreetmap.org/node/32603549",
+    "license_notes": "ODbL-1.0 | https://opendatacommons.org/licenses/odbl/1-0/"
+  },
+  {
+    "code": "OSM_BE",
+    "name": "OpenStreetMap contributors (BE)",
+    "source_type": "openstreetmap",
+    "country_code": "BE",
+    "source_url": "https://www.openstreetmap.org/node/636417",
+    "license_notes": "ODbL-1.0 | https://opendatacommons.org/licenses/odbl/1-0/"
+  },
+  {
+    "code": "OSM_BG",
+    "name": "OpenStreetMap contributors (BG)",
+    "source_type": "openstreetmap",
+    "country_code": "BG",
+    "source_url": "https://www.openstreetmap.org/node/277258281",
+    "license_notes": "ODbL-1.0 | https://opendatacommons.org/licenses/odbl/1-0/"
+  },
+  {
+    "code": "OSM_CA",
+    "name": "OpenStreetMap contributors (CA)",
+    "source_type": "openstreetmap",
+    "country_code": "CA",
+    "source_url": "https://www.openstreetmap.org/node/6092933111",
+    "license_notes": "ODbL-1.0 | https://opendatacommons.org/licenses/odbl/1-0/"
+  },
+  {
+    "code": "OSM_CH",
+    "name": "OpenStreetMap contributors (CH)",
+    "source_type": "openstreetmap",
+    "country_code": "CH",
+    "source_url": "https://www.openstreetmap.org/node/455305",
+    "license_notes": "ODbL-1.0 | https://opendatacommons.org/licenses/odbl/1-0/"
+  },
+  {
+    "code": "OSM_CY",
+    "name": "OpenStreetMap contributors (CY)",
+    "source_type": "openstreetmap",
+    "country_code": "CY",
+    "source_url": "https://www.openstreetmap.org/node/2064210233",
+    "license_notes": "ODbL-1.0 | https://opendatacommons.org/licenses/odbl/1-0/"
+  },
+  {
+    "code": "OSM_CZ",
+    "name": "OpenStreetMap contributors (CZ)",
+    "source_type": "openstreetmap",
+    "country_code": "CZ",
+    "source_url": "https://www.openstreetmap.org/node/7082479",
+    "license_notes": "ODbL-1.0 | https://opendatacommons.org/licenses/odbl/1-0/"
+  },
+  {
+    "code": "OSM_DE",
+    "name": "OpenStreetMap contributors (DE)",
+    "source_type": "openstreetmap",
+    "country_code": "DE",
+    "source_url": "https://www.openstreetmap.org/node/478454",
+    "license_notes": "ODbL-1.0 | https://opendatacommons.org/licenses/odbl/1-0/"
+  },
+  {
+    "code": "OSM_DK",
+    "name": "OpenStreetMap contributors (DK)",
+    "source_type": "openstreetmap",
+    "country_code": "DK",
+    "source_url": "https://www.openstreetmap.org/node/5948339474",
+    "license_notes": "ODbL-1.0 | https://opendatacommons.org/licenses/odbl/1-0/"
+  },
+  {
+    "code": "OSM_EE",
+    "name": "OpenStreetMap contributors (EE)",
+    "source_type": "openstreetmap",
+    "country_code": "EE",
+    "source_url": "https://www.openstreetmap.org/node/918295149",
+    "license_notes": "ODbL-1.0 | https://opendatacommons.org/licenses/odbl/1-0/"
+  },
+  {
+    "code": "OSM_ES",
+    "name": "OpenStreetMap contributors (ES)",
+    "source_type": "openstreetmap",
+    "country_code": "ES",
+    "source_url": "https://www.openstreetmap.org/node/992007265",
+    "license_notes": "ODbL-1.0 | https://opendatacommons.org/licenses/odbl/1-0/"
+  },
+  {
+    "code": "OSM_FI",
+    "name": "OpenStreetMap contributors (FI)",
+    "source_type": "openstreetmap",
+    "country_code": "FI",
+    "source_url": "https://www.openstreetmap.org/node/21521868",
+    "license_notes": "ODbL-1.0 | https://opendatacommons.org/licenses/odbl/1-0/"
+  },
+  {
+    "code": "OSM_FR",
+    "name": "OpenStreetMap contributors (FR)",
+    "source_type": "openstreetmap",
+    "country_code": "FR",
+    "source_url": "https://www.openstreetmap.org/node/2022553888",
+    "license_notes": "ODbL-1.0 | https://opendatacommons.org/licenses/odbl/1-0/"
+  },
+  {
+    "code": "OSM_GB",
+    "name": "OpenStreetMap contributors (GB)",
+    "source_type": "openstreetmap",
+    "country_code": "GB",
+    "source_url": "https://www.openstreetmap.org/node/104478",
+    "license_notes": "ODbL-1.0 | https://opendatacommons.org/licenses/odbl/1-0/"
+  },
+  {
+    "code": "OSM_GR",
+    "name": "OpenStreetMap contributors (GR)",
+    "source_type": "openstreetmap",
+    "country_code": "GR",
+    "source_url": "https://www.openstreetmap.org/node/152671242",
+    "license_notes": "ODbL-1.0 | https://opendatacommons.org/licenses/odbl/1-0/"
+  },
+  {
+    "code": "OSM_HR",
+    "name": "OpenStreetMap contributors (HR)",
+    "source_type": "openstreetmap",
+    "country_code": "HR",
+    "source_url": "https://www.openstreetmap.org/node/60051328",
+    "license_notes": "ODbL-1.0 | https://opendatacommons.org/licenses/odbl/1-0/"
+  },
+  {
+    "code": "OSM_HU",
+    "name": "OpenStreetMap contributors (HU)",
+    "source_type": "openstreetmap",
+    "country_code": "HU",
+    "source_url": "https://www.openstreetmap.org/node/21513588",
+    "license_notes": "ODbL-1.0 | https://opendatacommons.org/licenses/odbl/1-0/"
+  },
+  {
+    "code": "OSM_IE",
+    "name": "OpenStreetMap contributors (IE)",
+    "source_type": "openstreetmap",
+    "country_code": "IE",
+    "source_url": "https://www.openstreetmap.org/node/2100377610",
+    "license_notes": "ODbL-1.0 | https://opendatacommons.org/licenses/odbl/1-0/"
+  },
+  {
+    "code": "OSM_IS",
+    "name": "OpenStreetMap contributors (IS)",
+    "source_type": "openstreetmap",
+    "country_code": "IS",
+    "source_url": "https://www.openstreetmap.org/node/389109633",
+    "license_notes": "ODbL-1.0 | https://opendatacommons.org/licenses/odbl/1-0/"
+  },
+  {
+    "code": "OSM_IT",
+    "name": "OpenStreetMap contributors (IT)",
+    "source_type": "openstreetmap",
+    "country_code": "IT",
+    "source_url": "https://www.openstreetmap.org/node/14905772",
+    "license_notes": "ODbL-1.0 | https://opendatacommons.org/licenses/odbl/1-0/"
+  },
+  {
+    "code": "OSM_LI",
+    "name": "OpenStreetMap contributors (LI)",
+    "source_type": "openstreetmap",
+    "country_code": "LI",
+    "source_url": "https://www.openstreetmap.org/node/5357811368",
+    "license_notes": "ODbL-1.0 | https://opendatacommons.org/licenses/odbl/1-0/"
+  },
+  {
+    "code": "OSM_LT",
+    "name": "OpenStreetMap contributors (LT)",
+    "source_type": "openstreetmap",
+    "country_code": "LT",
+    "source_url": "https://www.openstreetmap.org/node/303226812",
+    "license_notes": "ODbL-1.0 | https://opendatacommons.org/licenses/odbl/1-0/"
+  },
+  {
+    "code": "OSM_LU",
+    "name": "OpenStreetMap contributors (LU)",
+    "source_type": "openstreetmap",
+    "country_code": "LU",
+    "source_url": "https://www.openstreetmap.org/node/61840762",
+    "license_notes": "ODbL-1.0 | https://opendatacommons.org/licenses/odbl/1-0/"
+  },
+  {
+    "code": "OSM_LV",
+    "name": "OpenStreetMap contributors (LV)",
+    "source_type": "openstreetmap",
+    "country_code": "LV",
+    "source_url": "https://www.openstreetmap.org/node/59645054",
+    "license_notes": "ODbL-1.0 | https://opendatacommons.org/licenses/odbl/1-0/"
+  },
+  {
+    "code": "OSM_MC",
+    "name": "OpenStreetMap contributors (MC)",
+    "source_type": "openstreetmap",
+    "country_code": "MC",
+    "source_url": "https://www.openstreetmap.org/node/6991451723",
+    "license_notes": "ODbL-1.0 | https://opendatacommons.org/licenses/odbl/1-0/"
+  },
+  {
+    "code": "OSM_MD",
+    "name": "OpenStreetMap contributors (MD)",
+    "source_type": "openstreetmap",
+    "country_code": "MD",
+    "source_url": "https://www.openstreetmap.org/node/269075326",
+    "license_notes": "ODbL-1.0 | https://opendatacommons.org/licenses/odbl/1-0/"
+  },
+  {
+    "code": "OSM_ME",
+    "name": "OpenStreetMap contributors (ME)",
+    "source_type": "openstreetmap",
+    "country_code": "ME",
+    "source_url": "https://www.openstreetmap.org/node/282057936",
+    "license_notes": "ODbL-1.0 | https://opendatacommons.org/licenses/odbl/1-0/"
+  },
+  {
+    "code": "OSM_MK",
+    "name": "OpenStreetMap contributors (MK)",
+    "source_type": "openstreetmap",
+    "country_code": "MK",
+    "source_url": "https://www.openstreetmap.org/node/299303434",
+    "license_notes": "ODbL-1.0 | https://opendatacommons.org/licenses/odbl/1-0/"
+  },
+  {
+    "code": "OSM_MT",
+    "name": "OpenStreetMap contributors (MT)",
+    "source_type": "openstreetmap",
+    "country_code": "MT",
+    "source_url": "https://www.openstreetmap.org/node/246178677",
+    "license_notes": "ODbL-1.0 | https://opendatacommons.org/licenses/odbl/1-0/"
+  },
+  {
+    "code": "OSM_NL",
+    "name": "OpenStreetMap contributors (NL)",
+    "source_type": "openstreetmap",
+    "country_code": "NL",
+    "source_url": "https://www.openstreetmap.org/node/42116879",
+    "license_notes": "ODbL-1.0 | https://opendatacommons.org/licenses/odbl/1-0/"
+  },
+  {
+    "code": "OSM_NO",
+    "name": "OpenStreetMap contributors (NO)",
+    "source_type": "openstreetmap",
+    "country_code": "NO",
+    "source_url": "https://www.openstreetmap.org/node/9407970280",
+    "license_notes": "ODbL-1.0 | https://opendatacommons.org/licenses/odbl/1-0/"
+  },
+  {
+    "code": "OSM_PL",
+    "name": "OpenStreetMap contributors (PL)",
+    "source_type": "openstreetmap",
+    "country_code": "PL",
+    "source_url": "https://www.openstreetmap.org/node/11670285051",
+    "license_notes": "ODbL-1.0 | https://opendatacommons.org/licenses/odbl/1-0/"
+  },
+  {
+    "code": "OSM_PT",
+    "name": "OpenStreetMap contributors (PT)",
+    "source_type": "openstreetmap",
+    "country_code": "PT",
+    "source_url": "https://www.openstreetmap.org/node/25507196",
+    "license_notes": "ODbL-1.0 | https://opendatacommons.org/licenses/odbl/1-0/"
+  },
+  {
+    "code": "OSM_RO",
+    "name": "OpenStreetMap contributors (RO)",
+    "source_type": "openstreetmap",
+    "country_code": "RO",
+    "source_url": "https://www.openstreetmap.org/node/673388",
+    "license_notes": "ODbL-1.0 | https://opendatacommons.org/licenses/odbl/1-0/"
+  },
+  {
+    "code": "OSM_RS",
+    "name": "OpenStreetMap contributors (RS)",
+    "source_type": "openstreetmap",
+    "country_code": "RS",
+    "source_url": "https://www.openstreetmap.org/node/256224255",
+    "license_notes": "ODbL-1.0 | https://opendatacommons.org/licenses/odbl/1-0/"
+  },
+  {
+    "code": "OSM_SE",
+    "name": "OpenStreetMap contributors (SE)",
+    "source_type": "openstreetmap",
+    "country_code": "SE",
+    "source_url": "https://www.openstreetmap.org/node/312691",
+    "license_notes": "ODbL-1.0 | https://opendatacommons.org/licenses/odbl/1-0/"
+  },
+  {
+    "code": "OSM_SI",
+    "name": "OpenStreetMap contributors (SI)",
+    "source_type": "openstreetmap",
+    "country_code": "SI",
+    "source_url": "https://www.openstreetmap.org/node/26452243",
+    "license_notes": "ODbL-1.0 | https://opendatacommons.org/licenses/odbl/1-0/"
+  },
+  {
+    "code": "OSM_SK",
+    "name": "OpenStreetMap contributors (SK)",
+    "source_type": "openstreetmap",
+    "country_code": "SK",
+    "source_url": "https://www.openstreetmap.org/node/26610651",
+    "license_notes": "ODbL-1.0 | https://opendatacommons.org/licenses/odbl/1-0/"
+  },
+  {
+    "code": "OSM_TR",
+    "name": "OpenStreetMap contributors (TR)",
+    "source_type": "openstreetmap",
+    "country_code": "TR",
+    "source_url": "https://www.openstreetmap.org/node/31678600",
+    "license_notes": "ODbL-1.0 | https://opendatacommons.org/licenses/odbl/1-0/"
+  },
+  {
+    "code": "OSM_UA",
+    "name": "OpenStreetMap contributors (UA)",
+    "source_type": "openstreetmap",
+    "country_code": "UA",
+    "source_url": "https://www.openstreetmap.org/node/7468194291",
+    "license_notes": "ODbL-1.0 | https://opendatacommons.org/licenses/odbl/1-0/"
+  },
+  {
+    "code": "OSM_US",
+    "name": "OpenStreetMap contributors (US)",
+    "source_type": "openstreetmap",
+    "country_code": "US",
+    "source_url": "https://www.openstreetmap.org/node/8023991516",
+    "license_notes": "ODbL-1.0 | https://opendatacommons.org/licenses/odbl/1-0/"
+  },
+  {
+    "code": "OTTAWA_RLC_2025",
+    "name": "City of Ottawa red light camera locations in 2025 violations dataset",
+    "source_type": "official_government",
+    "country_code": "CA",
+    "source_url": "https://www.arcgis.com/home/item.html?id=ad519955709c4ed78d03726933b531e1",
+    "license_notes": "Open Government Licence – City of Ottawa | https://ottawa.ca/en/city-hall/open-transparent-and-accountable-government/open-data"
+  },
+  {
+    "code": "PATROL_UA",
+    "name": "Patrol Police Ukraine",
+    "source_type": "official_government",
+    "country_code": "UA",
+    "source_url": "https://patrolpolice.gov.ua/automatic_fixation/informatsiya-pro-vstanovleni-kaf/",
+    "license_notes": "Official Ukraine automatic enforcement source; imported from CamAlert Master DB snapshot 2026-10-02"
+  },
+  {
+    "code": "QUEBEC_MTQ",
+    "name": "Ministère des Transports et de la Mobilité durable Radar photo",
+    "source_type": "official_government",
+    "country_code": "CA",
+    "source_url": "https://www.donneesquebec.ca/recherche/dataset/radar-photo",
+    "license_notes": "CC-BY-4.0 | https://www.donneesquebec.ca/licence/"
+  },
+  {
+    "code": "SEATTLE_ATSC",
+    "name": "Seattle Department of Transportation active traffic safety cameras",
+    "source_type": "official_government",
+    "country_code": "US",
+    "source_url": "https://www.arcgis.com/home/item.html?id=f3879db110b84473b4e3d669157c6a39",
+    "license_notes": "City of Seattle Open Data Terms | https://data.seattle.gov/stories/s/Terms-of-Use/6h3i-jb7p"
+  },
+  {
+    "code": "SFMTA_SPEED",
+    "name": "San Francisco Municipal Transportation Agency speed enforcement sites",
+    "source_type": "official_government",
+    "country_code": "US",
+    "source_url": "https://data.sf.gov/Transportation/Automated-Speed-Enforcement-Citations/d5uh-bk84",
+    "license_notes": "PDDL-1.0 | https://opendatacommons.org/licenses/pddl/1-0/"
+  },
+  {
+    "code": "TORONTO_RLC",
+    "name": "City of Toronto Red Light Cameras",
+    "source_type": "official_government",
+    "country_code": "CA",
+    "source_url": "https://open.toronto.ca/dataset/red-light-cameras/",
+    "license_notes": "Open Government Licence – Toronto | https://open.toronto.ca/open-data-licence/"
+  }
+]

@@ -1,0 +1,23 @@
+{
+  "checked_at": "2026-10-06T23:15:52.291683+00:00",
+  "branch": "main",
+  "commit": "ead8cdf97291247614b742bd07188ea4d2346a67",
+  "tracked_files": 55,
+  "history_blobs_checked": 62,
+  "forbidden_files_in_head": [],
+  "secret_findings": [],
+  "excluded_local_paths": [
+    ".env.bootstrap",
+    "*.jks",
+    "node_modules/",
+    ".expo/",
+    ".bootstrap-venv/",
+    "master-db/raw/",
+    "master-db/cache/",
+    "master-db/backups/",
+    "*.backup-*",
+    "*.before-*",
+    "build artifacts"
+  ],
+  "note": "Previously published small non-secret server backups were removed from the current tree; unpublished bootstrap backup commit kept only on a local branch."
+}

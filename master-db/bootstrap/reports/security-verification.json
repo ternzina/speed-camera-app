@@ -1,0 +1,11 @@
+{
+  "checked_at": "2026-10-07T00:06:11.703944+00:00",
+  "original_1323_records_changed": 0,
+  "advisor_warning_or_error_count": 0,
+  "advisor_info_count": 6,
+  "info_explanation": "RLS without public policies intentionally closes backup, import_runs and staging tables.",
+  "remediation_reference": "https://supabase.com/docs/guides/database/database-linter?lint=0008_rls_enabled_no_policy",
+  "anon_can_ingest": false,
+  "anon_can_access_backup": false,
+  "backup_original_count": 1323
+}

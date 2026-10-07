@@ -1,0 +1,288 @@
+{
+  "checked_at": "2026-10-07T00:05:11.687078+00:00",
+  "project_ref": "ydgzsdlwnurychkbgsmn",
+  "endpoint": "https://ydgzsdlwnurychkbgsmn.supabase.co/functions/v1/camera-export",
+  "database_total": 50141,
+  "production_active": 45061,
+  "low_published": 0,
+  "invalid_coordinates_or_speed": 0,
+  "sections_missing_endpoints": 0,
+  "duplicate_canonical_ids": 0,
+  "same_feed_lane_pairs_merged": 0,
+  "published_geography_checked": 45061,
+  "legacy_boundary_exceptions": [
+    "PL:CANARD:speed_camera:120186077"
+  ],
+  "sources": 61,
+  "official_sources": 17,
+  "osm_only_active": 37867,
+  "europe_active": 41176,
+  "usa_active": 2771,
+  "canada_active": 1114,
+  "checks": [
+    {
+      "country_code": "AD",
+      "database_active_records": 11,
+      "export_records": 11,
+      "result": "passed"
+    },
+    {
+      "country_code": "AL",
+      "database_active_records": 2,
+      "export_records": 2,
+      "result": "passed"
+    },
+    {
+      "country_code": "AT",
+      "database_active_records": 1500,
+      "export_records": 1500,
+      "result": "passed"
+    },
+    {
+      "country_code": "BA",
+      "database_active_records": 246,
+      "export_records": 246,
+      "result": "passed"
+    },
+    {
+      "country_code": "BE",
+      "database_active_records": 1689,
+      "export_records": 1689,
+      "result": "passed"
+    },
+    {
+      "country_code": "BG",
+      "database_active_records": 77,
+      "export_records": 77,
+      "result": "passed"
+    },
+    {
+      "country_code": "CA",
+      "database_active_records": 1114,
+      "export_records": 1114,
+      "result": "passed"
+    },
+    {
+      "country_code": "CH",
+      "database_active_records": 710,
+      "export_records": 710,
+      "result": "passed"
+    },
+    {
+      "country_code": "CY",
+      "database_active_records": 74,
+      "export_records": 74,
+      "result": "passed"
+    },
+    {
+      "country_code": "CZ",
+      "database_active_records": 1318,
+      "export_records": 1318,
+      "result": "passed"
+    },
+    {
+      "country_code": "DE",
+      "database_active_records": 5793,
+      "export_records": 5793,
+      "result": "passed"
+    },
+    {
+      "country_code": "DK",
+      "database_active_records": 24,
+      "export_records": 24,
+      "result": "passed"
+    },
+    {
+      "country_code": "EE",
+      "database_active_records": 85,
+      "export_records": 85,
+      "result": "passed"
+    },
+    {
+      "country_code": "ES",
+      "database_active_records": 3213,
+      "export_records": 3213,
+      "result": "passed"
+    },
+    {
+      "country_code": "FI",
+      "database_active_records": 951,
+      "export_records": 951,
+      "result": "passed"
+    },
+    {
+      "country_code": "FR",
+      "database_active_records": 6221,
+      "export_records": 6221,
+      "result": "passed"
+    },
+    {
+      "country_code": "GB",
+      "database_active_records": 3415,
+      "export_records": 3415,
+      "result": "passed"
+    },
+    {
+      "country_code": "GR",
+      "database_active_records": 411,
+      "export_records": 411,
+      "result": "passed"
+    },
+    {
+      "country_code": "HR",
+      "database_active_records": 965,
+      "export_records": 965,
+      "result": "passed"
+    },
+    {
+      "country_code": "HU",
+      "database_active_records": 540,
+      "export_records": 540,
+      "result": "passed"
+    },
+    {
+      "country_code": "IE",
+      "database_active_records": 15,
+      "export_records": 15,
+      "result": "passed"
+    },
+    {
+      "country_code": "IS",
+      "database_active_records": 20,
+      "export_records": 20,
+      "result": "passed"
+    },
+    {
+      "country_code": "IT",
+      "database_active_records": 6010,
+      "export_records": 6010,
+      "result": "passed"
+    },
+    {
+      "country_code": "LI",
+      "database_active_records": 8,
+      "export_records": 8,
+      "result": "passed"
+    },
+    {
+      "country_code": "LT",
+      "database_active_records": 370,
+      "export_records": 370,
+      "result": "passed"
+    },
+    {
+      "country_code": "LU",
+      "database_active_records": 37,
+      "export_records": 37,
+      "result": "passed"
+    },
+    {
+      "country_code": "LV",
+      "database_active_records": 135,
+      "export_records": 135,
+      "result": "passed"
+    },
+    {
+      "country_code": "MC",
+      "database_active_records": 6,
+      "export_records": 6,
+      "result": "passed"
+    },
+    {
+      "country_code": "MD",
+      "database_active_records": 79,
+      "export_records": 79,
+      "result": "passed"
+    },
+    {
+      "country_code": "ME",
+      "database_active_records": 13,
+      "export_records": 13,
+      "result": "passed"
+    },
+    {
+      "country_code": "MK",
+      "database_active_records": 164,
+      "export_records": 164,
+      "result": "passed"
+    },
+    {
+      "country_code": "MT",
+      "database_active_records": 22,
+      "export_records": 22,
+      "result": "passed"
+    },
+    {
+      "country_code": "NL",
+      "database_active_records": 645,
+      "export_records": 645,
+      "result": "passed"
+    },
+    {
+      "country_code": "NO",
+      "database_active_records": 525,
+      "export_records": 525,
+      "result": "passed"
+    },
+    {
+      "country_code": "PL",
+      "database_active_records": 897,
+      "export_records": 897,
+      "result": "passed"
+    },
+    {
+      "country_code": "PT",
+      "database_active_records": 328,
+      "export_records": 328,
+      "result": "passed"
+    },
+    {
+      "country_code": "RO",
+      "database_active_records": 330,
+      "export_records": 330,
+      "result": "passed"
+    },
+    {
+      "country_code": "RS",
+      "database_active_records": 426,
+      "export_records": 426,
+      "result": "passed"
+    },
+    {
+      "country_code": "SE",
+      "database_active_records": 2471,
+      "export_records": 2471,
+      "result": "passed"
+    },
+    {
+      "country_code": "SI",
+      "database_active_records": 277,
+      "export_records": 277,
+      "result": "passed"
+    },
+    {
+      "country_code": "SK",
+      "database_active_records": 68,
+      "export_records": 68,
+      "result": "passed"
+    },
+    {
+      "country_code": "TR",
+      "database_active_records": 659,
+      "export_records": 659,
+      "result": "passed"
+    },
+    {
+      "country_code": "UA",
+      "database_active_records": 426,
+      "export_records": 426,
+      "result": "passed"
+    },
+    {
+      "country_code": "US",
+      "database_active_records": 2771,
+      "export_records": 2771,
+      "result": "passed"
+    }
+  ]
+}
