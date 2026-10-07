@@ -48,3 +48,6 @@ master-db/backups/
 # Python runtime cache
 __pycache__/
 *.pyc
+
+# Generated iOS project for local Expo/Xcode builds
+/ios/

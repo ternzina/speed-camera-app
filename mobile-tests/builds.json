@@ -12,10 +12,27 @@
   },
   "ios": {
     "id": null,
-    "status": "BLOCKED_BY_EAS_QUOTA",
+    "status": "FINISHED_LOCAL",
     "buildNumber": "12",
-    "reason": "EAS Free plan monthly iOS build allowance exhausted; rejected before Build ID allocation",
-    "quotaResetDate": "2026-11-01"
+    "builder": "Xcode 26.6 / xcodebuild archive + exportArchive",
+    "sourceCommit": "dd90a04207adba3c0db94d741af389f95e376c70",
+    "archive": "/Users/zina/Downloads/speed-camera-r2-offline-release/build/CamAlert-0.9.0-12.xcarchive",
+    "artifact": "/Users/zina/Downloads/speed-camera-r2-offline-release/build/ios-production/CamAlert-0.9.0-12.ipa",
+    "sizeBytes": 9414347,
+    "sha256": "0013439d0e4d3f0b0578d12539031af0b2410a1a84304c996376b60d65ce2bd4",
+    "signatureVerified": true,
+    "entitlementsVerified": true,
+    "hermesBundlePresent": true,
+    "exportMethod": "app-store-connect",
+    "exportDestination": "export",
+    "checkedAt": "2026-10-07T10:41:30.429116+00:00",
+    "cloudAttempt": {
+      "id": null,
+      "status": "BLOCKED_BY_EAS_QUOTA",
+      "buildNumber": "12",
+      "reason": "EAS Free plan monthly iOS build allowance exhausted; rejected before Build ID allocation",
+      "quotaResetDate": "2026-11-01"
+    }
   },
   "storeSubmissionPerformed": false
 }

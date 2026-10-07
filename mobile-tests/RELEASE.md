@@ -18,5 +18,13 @@ These are automated data/cache/render checks and production compilation checks. 
 Build execution on 2026-10-07:
 - Android production build ID: e1aad5c1-c8e3-4479-a824-1ba711a4ba67 (source commit 93346d4e), FINISHED. App 0.9.0, versionCode 4.
   AAB: https://expo.dev/artifacts/eas/CJPBpyoMUpBR9aHxtNUX8KjnPpZhUyp85R9Ulhg-XXI.aab
-- iOS production request was rejected before a Build ID was allocated: EAS Free plan monthly iOS builds exhausted, resets 2026-11-01. Existing iOS credentials were resolved successfully. Build 0.9.0 (12) requires restored quota or an account plan upgrade, then `npx eas-cli build --platform ios --profile production --non-interactive --no-wait`.
+- iOS production request was rejected before a Build ID was allocated: EAS Free plan monthly iOS builds exhausted, resets 2026-11-01. Existing iOS credentials were resolved successfully. The cloud request remains blocked; iOS 0.9.0 (12) was subsequently built locally with Xcode as described below.
 - No App Store Connect or Google Play submission was requested.
+
+Local iOS production build completed on 2026-10-07:
+- Xcode 26.6 archive and `exportArchive` succeeded. App version 0.9.0, buildNumber 12, bundle identifier com.21wek.camera; application source unchanged from the Android release.
+- IPA: `build/ios-production/CamAlert-0.9.0-12.ipa` (9,414,347 bytes). Archive: `build/CamAlert-0.9.0-12.xcarchive`, opened in Xcode.
+- Export method app-store-connect, destination export: no upload or submission performed. The local build has no EAS Build ID.
+- Exported IPA signature verified with `codesign --verify --deep --strict`; production APNs, correct team/application identifier, get-task-allow=false, version/build number and embedded Hermes bundle verified.
+- SHA-256: 0013439d0e4d3f0b0578d12539031af0b2410a1a84304c996376b60d65ce2bd4.
+- Native project, build outputs and downloaded signing credentials are ignored by Git. Regenerate the native project with Expo prebuild for future local builds; use the exact certificate included in the provisioning profile for signing.
