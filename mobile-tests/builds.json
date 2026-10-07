@@ -1,14 +1,15 @@
 {
-  "checkedAt": "2026-10-07T13:12:01.436850+00:00",
+  "checkedAt": "2026-10-07T13:17:58.805581+00:00",
   "branch": "feature/r2-offline-release",
   "appVersion": "0.9.0",
   "sourceCommit": "93346d4e3082c5249ee2799321fc480422a71fbc",
   "android": {
-    "id": "e1aad5c1-c8e3-4479-a824-1ba711a4ba67",
-    "status": "FINISHED",
-    "versionCode": 4,
-    "url": "https://expo.dev/accounts/bembi26/projects/speed-camera-prototype-direction/builds/e1aad5c1-c8e3-4479-a824-1ba711a4ba67",
-    "artifact": "https://expo.dev/artifacts/eas/CJPBpyoMUpBR9aHxtNUX8KjnPpZhUyp85R9Ulhg-XXI.aab"
+    "id": "59e7668f-0062-45a8-a28f-a08fd85a5d8f",
+    "status": "IN_QUEUE",
+    "versionCode": 5,
+    "appVersion": "0.9.0",
+    "sourceCommit": "fdeaec4b4b53419ef9fbc26286fa098102edd75e",
+    "url": "https://expo.dev/accounts/bembi26/projects/speed-camera-prototype-direction/builds/59e7668f-0062-45a8-a28f-a08fd85a5d8f"
   },
   "ios": {
     "id": null,
@@ -59,5 +60,19 @@
     "appleProcessingState": "PROCESSING",
     "appleUrl": "https://appstoreconnect.apple.com/apps/6818647205/testflight/ios"
   },
-  "publicAppStoreReleasePerformed": false
+  "publicAppStoreReleasePerformed": false,
+  "previousAndroid": {
+    "id": "e1aad5c1-c8e3-4479-a824-1ba711a4ba67",
+    "status": "FINISHED",
+    "versionCode": 4,
+    "url": "https://expo.dev/accounts/bembi26/projects/speed-camera-prototype-direction/builds/e1aad5c1-c8e3-4479-a824-1ba711a4ba67",
+    "artifact": "https://expo.dev/artifacts/eas/CJPBpyoMUpBR9aHxtNUX8KjnPpZhUyp85R9Ulhg-XXI.aab"
+  },
+  "googlePlaySubmission": {
+    "status": "BLOCKED_BY_ACCOUNT_ACCESS",
+    "track": "internal",
+    "package": "com.camera21wek",
+    "submissionPerformed": false,
+    "reason": "Current Google Play Console account HerLight exposes only com.herlight.app; Create app is disabled and requires permission. No EAS Google Play submission service-account key configured."
+  }
 }
