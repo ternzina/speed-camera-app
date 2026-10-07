@@ -1,10 +1,11 @@
 # Google Play 1.0.0 (6) — 2026-10-07
 
-Production Android EAS build: `d1aafbef-0aba-4d09-abe7-3742e9ff6308`.
-Source: `237de455d44fd9663427d3bee955ed9166c50223` on `feature/r2-offline-release`, including Driver Mode and latest Trip/Map/Report UI (`11ebaa6b`). Package `com.camera21wek`, version `1.0.0`, versionCode `6`.
+Local production Android build finished using EAS local / Gradle bundleRelease, after the Free Tier queue showed about 94 min waiting. The superseded queued build `d1aafbef-0aba-4d09-abe7-3742e9ff6308` was canceled; it predates the Android map fix. Local builds have no EAS Build ID.
 
-Build queued in Free Tier queue. EAS website showed about 1h 19m remaining after 15m 28s elapsed. Estimate is approximate, not completion confirmation.
+Source: `6239d698dd48e74d69834aee19b882c8e8471672`, branch `feature/r2-offline-release`. Package `com.camera21wek`, version `1.0.0`, versionCode `6`. Artifact: `build/CamAlert-1.0.0-6.aab`. SHA-256: `c4fa1001a0631a0069ab61039f697d53078c73d0a1b5072fe2882a5058a194cc`. JAR signature verified; certificate SHA1 `A5:5C:51:B5:13:BB:F3:08:6B:CF:93:D8:7C:86:32:91:BE:A4:E4:EE`. Embedded production JS bundle present. No backend/collection/main changes.
 
-Existing Google Play CamAlert app confirmed in the authorized Dolphin/Anty profile. Internal testing draft release 2 updated and saved: “6 (1.0.0) — Driver Mode” with English release notes. No AAB uploaded yet. User asked to clarify internal vs existing closed tester track; build does not depend on that choice. No public production release or paid EAS upgrade performed.
+Android manifests lacked a Google Maps key. The Android map surface now uses bundled Leaflet 1.9.4 with React Native WebView and OpenStreetMap tiles; iOS keeps Apple Maps. Local camera clusters, user coordinate, marker actions, locate and nearby-fit are retained. Map tiles need internet; camera datasets and warning logic remain local. Mobile, driver, product, Android map bridge and six-country offline-warning tests passed. Expo Hermes export succeeded for both platforms. Embedded map renderer visually verified in Chrome with public test coordinates. Physical Android acceptance remains for testers.
 
-Older Android build 0.9.0 (5), `59e7668f-0062-45a8-a28f-a08fd85a5d8f`, predates Driver Mode and must not be uploaded as the latest release. App Store TestFlight upload 1.0.0 (14) already finished separately.
+Existing Google Play CamAlert confirmed in the Dolphin/Anty owner profile and in Chrome after selecting the existing herlightapp Google account (account index 7). Internal testing draft release 2 saved as “6 (1.0.0) — Driver Mode”, with English notes.
+
+**Not uploaded / not rolled out yet.** Browser file chooser rejected `setFiles` because the ChatGPT extension lacks Allow access to file URLs. Native file-picker fallback was attempted, but native app control was interrupted while the user was using Chrome. Opening chrome://extensions was then rejected by the browser URL security policy (only HTTP/HTTPS allowed); the agent must not change this setting through an alternate surface. Requested user action: enable that setting manually, or choose the AAB in Google Play using the normal file picker. Continue upload and confirm the test release only after the required user input. No public production release, new security permission, or paid EAS upgrade performed.

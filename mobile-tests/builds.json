@@ -1,17 +1,21 @@
 {
-  "checkedAt": "2026-10-07T17:55:45.710900+00:00",
+  "checkedAt": "2026-10-07T18:26:08.964435+00:00",
   "branch": "feature/r2-offline-release",
   "appVersion": "1.0.0",
   "sourceCommit": "11ebaa6b1a155a1cc73c175225274dd733e7dbab",
   "android": {
-    "id": "d1aafbef-0aba-4d09-abe7-3742e9ff6308",
-    "status": "IN_QUEUE",
-    "versionCode": 6,
+    "id": null,
+    "status": "FINISHED_LOCAL",
+    "builder": "EAS local Android / Gradle bundleRelease",
     "appVersion": "1.0.0",
-    "sourceCommit": "237de455d44fd9663427d3bee955ed9166c50223",
-    "url": "https://expo.dev/accounts/bembi26/projects/speed-camera-prototype-direction/builds/d1aafbef-0aba-4d09-abe7-3742e9ff6308",
-    "createdAt": "2026-10-07T17:39:02.047Z",
-    "queueEstimateObserved": "About 1h 19m remaining after 15m 28s elapsed; Free Tier queue"
+    "versionCode": 6,
+    "sourceCommit": "6239d698dd48e74d69834aee19b882c8e8471672",
+    "artifact": "/Users/zina/Downloads/speed-camera-r2-offline-release/build/CamAlert-1.0.0-6.aab",
+    "sha256": "c4fa1001a0631a0069ab61039f697d53078c73d0a1b5072fe2882a5058a194cc",
+    "sizeBytes": 52071898,
+    "signatureVerified": true,
+    "signingCertificateSHA1": "A5:5C:51:B5:13:BB:F3:08:6B:CF:93:D8:7C:86:32:91:BE:A4:E4:EE",
+    "embeddedHermesBundleVerified": true
   },
   "ios": {
     "id": null,
@@ -74,19 +78,19 @@
     "artifact": "https://expo.dev/artifacts/eas/CJPBpyoMUpBR9aHxtNUX8KjnPpZhUyp85R9Ulhg-XXI.aab"
   },
   "googlePlaySubmission": {
-    "status": "WAITING_FOR_BUILD",
+    "status": "BROWSER_FILE_ACCESS_REQUIRED",
     "track": "internal",
     "package": "com.camera21wek",
     "submissionPerformed": false,
     "consoleAppId": "4973206564233406869",
-    "releaseDraftUrl": "https://play.google.com/console/u/0/developers/8497998036565797248/app/4973206564233406869/tracks/4701629391442996966/releases/2/prepare",
-    "reason": "1.0.0 (6) production build is in EAS Free Tier queue. Updated internal testing draft saved; no AAB uploaded yet."
+    "releaseDraftUrl": "https://play.google.com/console/u/7/developers/8497998036565797248/app/4973206564233406869/tracks/4701629391442996966/releases/2/prepare",
+    "reason": "Verified AAB ready. Full CamAlert access confirmed by selecting the existing herlightapp Google account in Chrome (account index 7). Browser fileChooser.setFiles requires ChatGPT extension Allow access to file URLs. Opening chrome://extensions was rejected by browser URL security policy; user must enable the setting manually or upload the AAB using the normal file picker. No AAB upload/rollout performed."
   },
   "driverModeCandidate": {
     "appVersion": "1.0.0",
     "iosBuildNumber": "14",
     "androidVersionCode": 6,
-    "status": "IOS_UPLOADED_TESTFLIGHT_ANDROID_QUEUED",
+    "status": "IOS_TESTFLIGHT_UPLOADED_ANDROID_READY_TO_UPLOAD",
     "storeSubmissionPerformed": true,
     "note": "iOS 1.0.0 (14) includes Driver Mode and product UI. Android artifact remains older 0.9.0 (5); no new Android upload."
   },
@@ -123,5 +127,16 @@
     "url": "https://expo.dev/accounts/bembi26/projects/speed-camera-prototype-direction/builds/59e7668f-0062-45a8-a28f-a08fd85a5d8f",
     "artifact": "https://expo.dev/artifacts/eas/SK3vOEuEtJme1o_WDIUNOILDJSGdE-Nq0lLmdzFiNdc.aab",
     "completedAt": "2026-10-07T14:38:44.184Z"
+  },
+  "androidCloudAttempt6": {
+    "id": "d1aafbef-0aba-4d09-abe7-3742e9ff6308",
+    "status": "CANCELED",
+    "versionCode": 6,
+    "appVersion": "1.0.0",
+    "sourceCommit": "237de455d44fd9663427d3bee955ed9166c50223",
+    "url": "https://expo.dev/accounts/bembi26/projects/speed-camera-prototype-direction/builds/d1aafbef-0aba-4d09-abe7-3742e9ff6308",
+    "createdAt": "2026-10-07T17:39:02.047Z",
+    "queueEstimateObserved": "About 1h 19m remaining after 15m 28s elapsed; Free Tier queue",
+    "reason": "Free Tier queue ~94 min. Superseded by local signed build, with Android map fix."
   }
 }
