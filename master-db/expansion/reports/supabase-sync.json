@@ -1,0 +1,1168 @@
+{
+  "finished_at": "2026-10-07T07:02:17.902492+00:00",
+  "records_in_database": 65134,
+  "source_links": 66168,
+  "rows_checked": 0,
+  "batch_totals": {},
+  "counts": [
+    {
+      "country_code": "AD",
+      "camera_type": "fixed_speed",
+      "count": 11,
+      "active": true
+    },
+    {
+      "country_code": "AL",
+      "camera_type": "fixed_speed",
+      "count": 2,
+      "active": true
+    },
+    {
+      "country_code": "AM",
+      "camera_type": "fixed_speed",
+      "count": 280,
+      "active": true
+    },
+    {
+      "country_code": "AT",
+      "camera_type": "average_speed_section",
+      "count": 9,
+      "active": true
+    },
+    {
+      "country_code": "AT",
+      "camera_type": "fixed_speed",
+      "count": 1402,
+      "active": true
+    },
+    {
+      "country_code": "AT",
+      "camera_type": "other_enforcement",
+      "count": 26,
+      "active": false
+    },
+    {
+      "country_code": "AT",
+      "camera_type": "other_enforcement",
+      "count": 35,
+      "active": true
+    },
+    {
+      "country_code": "AT",
+      "camera_type": "red_light",
+      "count": 33,
+      "active": true
+    },
+    {
+      "country_code": "AT",
+      "camera_type": "speed_and_red_light",
+      "count": 21,
+      "active": true
+    },
+    {
+      "country_code": "AZ",
+      "camera_type": "fixed_speed",
+      "count": 691,
+      "active": true
+    },
+    {
+      "country_code": "BA",
+      "camera_type": "fixed_speed",
+      "count": 246,
+      "active": true
+    },
+    {
+      "country_code": "BE",
+      "camera_type": "average_speed_section",
+      "count": 121,
+      "active": true
+    },
+    {
+      "country_code": "BE",
+      "camera_type": "fixed_speed",
+      "count": 14,
+      "active": false
+    },
+    {
+      "country_code": "BE",
+      "camera_type": "fixed_speed",
+      "count": 1287,
+      "active": true
+    },
+    {
+      "country_code": "BE",
+      "camera_type": "other_enforcement",
+      "count": 391,
+      "active": false
+    },
+    {
+      "country_code": "BE",
+      "camera_type": "other_enforcement",
+      "count": 29,
+      "active": true
+    },
+    {
+      "country_code": "BE",
+      "camera_type": "red_light",
+      "count": 39,
+      "active": true
+    },
+    {
+      "country_code": "BE",
+      "camera_type": "speed_and_red_light",
+      "count": 213,
+      "active": true
+    },
+    {
+      "country_code": "BG",
+      "camera_type": "fixed_speed",
+      "count": 74,
+      "active": true
+    },
+    {
+      "country_code": "BG",
+      "camera_type": "other_enforcement",
+      "count": 3,
+      "active": true
+    },
+    {
+      "country_code": "BY",
+      "camera_type": "average_speed_section",
+      "count": 16,
+      "active": true
+    },
+    {
+      "country_code": "BY",
+      "camera_type": "fixed_speed",
+      "count": 549,
+      "active": true
+    },
+    {
+      "country_code": "BY",
+      "camera_type": "other_enforcement",
+      "count": 2,
+      "active": false
+    },
+    {
+      "country_code": "BY",
+      "camera_type": "red_light",
+      "count": 4,
+      "active": true
+    },
+    {
+      "country_code": "CA",
+      "camera_type": "fixed_speed",
+      "count": 152,
+      "active": false
+    },
+    {
+      "country_code": "CA",
+      "camera_type": "fixed_speed",
+      "count": 280,
+      "active": true
+    },
+    {
+      "country_code": "CA",
+      "camera_type": "other_enforcement",
+      "count": 131,
+      "active": false
+    },
+    {
+      "country_code": "CA",
+      "camera_type": "other_enforcement",
+      "count": 2,
+      "active": true
+    },
+    {
+      "country_code": "CA",
+      "camera_type": "red_light",
+      "count": 87,
+      "active": false
+    },
+    {
+      "country_code": "CA",
+      "camera_type": "red_light",
+      "count": 993,
+      "active": true
+    },
+    {
+      "country_code": "CA",
+      "camera_type": "speed_and_red_light",
+      "count": 15,
+      "active": false
+    },
+    {
+      "country_code": "CA",
+      "camera_type": "speed_and_red_light",
+      "count": 37,
+      "active": true
+    },
+    {
+      "country_code": "CH",
+      "camera_type": "average_speed_section",
+      "count": 6,
+      "active": false
+    },
+    {
+      "country_code": "CH",
+      "camera_type": "average_speed_section",
+      "count": 3,
+      "active": true
+    },
+    {
+      "country_code": "CH",
+      "camera_type": "fixed_speed",
+      "count": 546,
+      "active": true
+    },
+    {
+      "country_code": "CH",
+      "camera_type": "other_enforcement",
+      "count": 12,
+      "active": false
+    },
+    {
+      "country_code": "CH",
+      "camera_type": "other_enforcement",
+      "count": 12,
+      "active": true
+    },
+    {
+      "country_code": "CH",
+      "camera_type": "red_light",
+      "count": 80,
+      "active": true
+    },
+    {
+      "country_code": "CH",
+      "camera_type": "speed_and_red_light",
+      "count": 69,
+      "active": true
+    },
+    {
+      "country_code": "CY",
+      "camera_type": "fixed_speed",
+      "count": 70,
+      "active": true
+    },
+    {
+      "country_code": "CY",
+      "camera_type": "other_enforcement",
+      "count": 67,
+      "active": false
+    },
+    {
+      "country_code": "CY",
+      "camera_type": "speed_and_red_light",
+      "count": 4,
+      "active": true
+    },
+    {
+      "country_code": "CZ",
+      "camera_type": "average_speed_section",
+      "count": 143,
+      "active": true
+    },
+    {
+      "country_code": "CZ",
+      "camera_type": "fixed_speed",
+      "count": 5,
+      "active": false
+    },
+    {
+      "country_code": "CZ",
+      "camera_type": "fixed_speed",
+      "count": 1781,
+      "active": true
+    },
+    {
+      "country_code": "CZ",
+      "camera_type": "other_enforcement",
+      "count": 71,
+      "active": false
+    },
+    {
+      "country_code": "CZ",
+      "camera_type": "red_light",
+      "count": 12,
+      "active": true
+    },
+    {
+      "country_code": "CZ",
+      "camera_type": "speed_and_red_light",
+      "count": 1,
+      "active": true
+    },
+    {
+      "country_code": "DE",
+      "camera_type": "average_speed_section",
+      "count": 6,
+      "active": false
+    },
+    {
+      "country_code": "DE",
+      "camera_type": "average_speed_section",
+      "count": 10,
+      "active": true
+    },
+    {
+      "country_code": "DE",
+      "camera_type": "fixed_speed",
+      "count": 11,
+      "active": false
+    },
+    {
+      "country_code": "DE",
+      "camera_type": "fixed_speed",
+      "count": 4828,
+      "active": true
+    },
+    {
+      "country_code": "DE",
+      "camera_type": "other_enforcement",
+      "count": 13,
+      "active": false
+    },
+    {
+      "country_code": "DE",
+      "camera_type": "other_enforcement",
+      "count": 444,
+      "active": true
+    },
+    {
+      "country_code": "DE",
+      "camera_type": "red_light",
+      "count": 69,
+      "active": true
+    },
+    {
+      "country_code": "DE",
+      "camera_type": "speed_and_red_light",
+      "count": 1,
+      "active": false
+    },
+    {
+      "country_code": "DE",
+      "camera_type": "speed_and_red_light",
+      "count": 443,
+      "active": true
+    },
+    {
+      "country_code": "DK",
+      "camera_type": "fixed_speed",
+      "count": 24,
+      "active": true
+    },
+    {
+      "country_code": "EE",
+      "camera_type": "fixed_speed",
+      "count": 85,
+      "active": true
+    },
+    {
+      "country_code": "ES",
+      "camera_type": "average_speed_section",
+      "count": 5,
+      "active": false
+    },
+    {
+      "country_code": "ES",
+      "camera_type": "average_speed_section",
+      "count": 355,
+      "active": true
+    },
+    {
+      "country_code": "ES",
+      "camera_type": "fixed_speed",
+      "count": 12,
+      "active": false
+    },
+    {
+      "country_code": "ES",
+      "camera_type": "fixed_speed",
+      "count": 2627,
+      "active": true
+    },
+    {
+      "country_code": "ES",
+      "camera_type": "other_enforcement",
+      "count": 440,
+      "active": false
+    },
+    {
+      "country_code": "ES",
+      "camera_type": "other_enforcement",
+      "count": 36,
+      "active": true
+    },
+    {
+      "country_code": "ES",
+      "camera_type": "red_light",
+      "count": 141,
+      "active": true
+    },
+    {
+      "country_code": "ES",
+      "camera_type": "speed_and_red_light",
+      "count": 124,
+      "active": true
+    },
+    {
+      "country_code": "FI",
+      "camera_type": "fixed_speed",
+      "count": 6,
+      "active": false
+    },
+    {
+      "country_code": "FI",
+      "camera_type": "fixed_speed",
+      "count": 949,
+      "active": true
+    },
+    {
+      "country_code": "FI",
+      "camera_type": "other_enforcement",
+      "count": 1,
+      "active": true
+    },
+    {
+      "country_code": "FI",
+      "camera_type": "speed_and_red_light",
+      "count": 1,
+      "active": true
+    },
+    {
+      "country_code": "FR",
+      "camera_type": "average_speed_section",
+      "count": 4,
+      "active": false
+    },
+    {
+      "country_code": "FR",
+      "camera_type": "average_speed_section",
+      "count": 36,
+      "active": true
+    },
+    {
+      "country_code": "FR",
+      "camera_type": "fixed_speed",
+      "count": 260,
+      "active": false
+    },
+    {
+      "country_code": "FR",
+      "camera_type": "fixed_speed",
+      "count": 4986,
+      "active": true
+    },
+    {
+      "country_code": "FR",
+      "camera_type": "other_enforcement",
+      "count": 147,
+      "active": false
+    },
+    {
+      "country_code": "FR",
+      "camera_type": "other_enforcement",
+      "count": 135,
+      "active": true
+    },
+    {
+      "country_code": "FR",
+      "camera_type": "red_light",
+      "count": 4,
+      "active": false
+    },
+    {
+      "country_code": "FR",
+      "camera_type": "red_light",
+      "count": 599,
+      "active": true
+    },
+    {
+      "country_code": "FR",
+      "camera_type": "speed_and_red_light",
+      "count": 26,
+      "active": false
+    },
+    {
+      "country_code": "FR",
+      "camera_type": "speed_and_red_light",
+      "count": 466,
+      "active": true
+    },
+    {
+      "country_code": "GB",
+      "camera_type": "average_speed_section",
+      "count": 35,
+      "active": true
+    },
+    {
+      "country_code": "GB",
+      "camera_type": "fixed_speed",
+      "count": 62,
+      "active": false
+    },
+    {
+      "country_code": "GB",
+      "camera_type": "fixed_speed",
+      "count": 3527,
+      "active": true
+    },
+    {
+      "country_code": "GB",
+      "camera_type": "other_enforcement",
+      "count": 251,
+      "active": false
+    },
+    {
+      "country_code": "GB",
+      "camera_type": "other_enforcement",
+      "count": 39,
+      "active": true
+    },
+    {
+      "country_code": "GB",
+      "camera_type": "red_light",
+      "count": 37,
+      "active": true
+    },
+    {
+      "country_code": "GB",
+      "camera_type": "speed_and_red_light",
+      "count": 24,
+      "active": true
+    },
+    {
+      "country_code": "GE",
+      "camera_type": "fixed_speed",
+      "count": 208,
+      "active": true
+    },
+    {
+      "country_code": "GE",
+      "camera_type": "other_enforcement",
+      "count": 1,
+      "active": false
+    },
+    {
+      "country_code": "GR",
+      "camera_type": "fixed_speed",
+      "count": 2,
+      "active": false
+    },
+    {
+      "country_code": "GR",
+      "camera_type": "fixed_speed",
+      "count": 407,
+      "active": true
+    },
+    {
+      "country_code": "GR",
+      "camera_type": "speed_and_red_light",
+      "count": 4,
+      "active": true
+    },
+    {
+      "country_code": "HR",
+      "camera_type": "average_speed_section",
+      "count": 1,
+      "active": false
+    },
+    {
+      "country_code": "HR",
+      "camera_type": "fixed_speed",
+      "count": 965,
+      "active": true
+    },
+    {
+      "country_code": "HU",
+      "camera_type": "fixed_speed",
+      "count": 426,
+      "active": true
+    },
+    {
+      "country_code": "HU",
+      "camera_type": "other_enforcement",
+      "count": 5,
+      "active": false
+    },
+    {
+      "country_code": "HU",
+      "camera_type": "other_enforcement",
+      "count": 113,
+      "active": true
+    },
+    {
+      "country_code": "HU",
+      "camera_type": "speed_and_red_light",
+      "count": 1,
+      "active": true
+    },
+    {
+      "country_code": "IE",
+      "camera_type": "average_speed_section",
+      "count": 5,
+      "active": true
+    },
+    {
+      "country_code": "IE",
+      "camera_type": "fixed_speed",
+      "count": 10,
+      "active": true
+    },
+    {
+      "country_code": "IE",
+      "camera_type": "other_enforcement",
+      "count": 10,
+      "active": false
+    },
+    {
+      "country_code": "IS",
+      "camera_type": "average_speed_section",
+      "count": 2,
+      "active": false
+    },
+    {
+      "country_code": "IS",
+      "camera_type": "average_speed_section",
+      "count": 2,
+      "active": true
+    },
+    {
+      "country_code": "IS",
+      "camera_type": "fixed_speed",
+      "count": 14,
+      "active": true
+    },
+    {
+      "country_code": "IS",
+      "camera_type": "other_enforcement",
+      "count": 6,
+      "active": false
+    },
+    {
+      "country_code": "IS",
+      "camera_type": "red_light",
+      "count": 4,
+      "active": true
+    },
+    {
+      "country_code": "IT",
+      "camera_type": "average_speed_section",
+      "count": 9,
+      "active": false
+    },
+    {
+      "country_code": "IT",
+      "camera_type": "average_speed_section",
+      "count": 44,
+      "active": true
+    },
+    {
+      "country_code": "IT",
+      "camera_type": "fixed_speed",
+      "count": 4,
+      "active": false
+    },
+    {
+      "country_code": "IT",
+      "camera_type": "fixed_speed",
+      "count": 5065,
+      "active": true
+    },
+    {
+      "country_code": "IT",
+      "camera_type": "other_enforcement",
+      "count": 73,
+      "active": false
+    },
+    {
+      "country_code": "IT",
+      "camera_type": "other_enforcement",
+      "count": 430,
+      "active": true
+    },
+    {
+      "country_code": "IT",
+      "camera_type": "red_light",
+      "count": 387,
+      "active": true
+    },
+    {
+      "country_code": "IT",
+      "camera_type": "speed_and_red_light",
+      "count": 97,
+      "active": true
+    },
+    {
+      "country_code": "LI",
+      "camera_type": "fixed_speed",
+      "count": 6,
+      "active": true
+    },
+    {
+      "country_code": "LI",
+      "camera_type": "red_light",
+      "count": 2,
+      "active": true
+    },
+    {
+      "country_code": "LT",
+      "camera_type": "average_speed_section",
+      "count": 180,
+      "active": true
+    },
+    {
+      "country_code": "LT",
+      "camera_type": "fixed_speed",
+      "count": 2,
+      "active": false
+    },
+    {
+      "country_code": "LT",
+      "camera_type": "fixed_speed",
+      "count": 189,
+      "active": true
+    },
+    {
+      "country_code": "LT",
+      "camera_type": "other_enforcement",
+      "count": 186,
+      "active": false
+    },
+    {
+      "country_code": "LT",
+      "camera_type": "red_light",
+      "count": 1,
+      "active": true
+    },
+    {
+      "country_code": "LU",
+      "camera_type": "average_speed_section",
+      "count": 1,
+      "active": false
+    },
+    {
+      "country_code": "LU",
+      "camera_type": "average_speed_section",
+      "count": 8,
+      "active": true
+    },
+    {
+      "country_code": "LU",
+      "camera_type": "fixed_speed",
+      "count": 29,
+      "active": true
+    },
+    {
+      "country_code": "LU",
+      "camera_type": "other_enforcement",
+      "count": 37,
+      "active": false
+    },
+    {
+      "country_code": "LV",
+      "camera_type": "average_speed_section",
+      "count": 17,
+      "active": true
+    },
+    {
+      "country_code": "LV",
+      "camera_type": "fixed_speed",
+      "count": 2,
+      "active": false
+    },
+    {
+      "country_code": "LV",
+      "camera_type": "fixed_speed",
+      "count": 136,
+      "active": true
+    },
+    {
+      "country_code": "LV",
+      "camera_type": "other_enforcement",
+      "count": 3,
+      "active": false
+    },
+    {
+      "country_code": "LV",
+      "camera_type": "speed_and_red_light",
+      "count": 2,
+      "active": true
+    },
+    {
+      "country_code": "MC",
+      "camera_type": "fixed_speed",
+      "count": 6,
+      "active": true
+    },
+    {
+      "country_code": "MD",
+      "camera_type": "fixed_speed",
+      "count": 79,
+      "active": true
+    },
+    {
+      "country_code": "ME",
+      "camera_type": "fixed_speed",
+      "count": 13,
+      "active": true
+    },
+    {
+      "country_code": "MK",
+      "camera_type": "fixed_speed",
+      "count": 3,
+      "active": false
+    },
+    {
+      "country_code": "MK",
+      "camera_type": "fixed_speed",
+      "count": 164,
+      "active": true
+    },
+    {
+      "country_code": "MT",
+      "camera_type": "fixed_speed",
+      "count": 22,
+      "active": true
+    },
+    {
+      "country_code": "NL",
+      "camera_type": "average_speed_section",
+      "count": 1,
+      "active": false
+    },
+    {
+      "country_code": "NL",
+      "camera_type": "average_speed_section",
+      "count": 65,
+      "active": true
+    },
+    {
+      "country_code": "NL",
+      "camera_type": "fixed_speed",
+      "count": 456,
+      "active": true
+    },
+    {
+      "country_code": "NL",
+      "camera_type": "other_enforcement",
+      "count": 378,
+      "active": false
+    },
+    {
+      "country_code": "NL",
+      "camera_type": "other_enforcement",
+      "count": 33,
+      "active": true
+    },
+    {
+      "country_code": "NL",
+      "camera_type": "red_light",
+      "count": 15,
+      "active": true
+    },
+    {
+      "country_code": "NL",
+      "camera_type": "speed_and_red_light",
+      "count": 76,
+      "active": true
+    },
+    {
+      "country_code": "NO",
+      "camera_type": "average_speed_section",
+      "count": 5,
+      "active": false
+    },
+    {
+      "country_code": "NO",
+      "camera_type": "average_speed_section",
+      "count": 42,
+      "active": true
+    },
+    {
+      "country_code": "NO",
+      "camera_type": "fixed_speed",
+      "count": 74,
+      "active": false
+    },
+    {
+      "country_code": "NO",
+      "camera_type": "fixed_speed",
+      "count": 481,
+      "active": true
+    },
+    {
+      "country_code": "NO",
+      "camera_type": "other_enforcement",
+      "count": 89,
+      "active": false
+    },
+    {
+      "country_code": "NO",
+      "camera_type": "other_enforcement",
+      "count": 2,
+      "active": true
+    },
+    {
+      "country_code": "PL",
+      "camera_type": "average_speed_section",
+      "count": 235,
+      "active": false
+    },
+    {
+      "country_code": "PL",
+      "camera_type": "average_speed_section",
+      "count": 224,
+      "active": true
+    },
+    {
+      "country_code": "PL",
+      "camera_type": "fixed_speed",
+      "count": 619,
+      "active": false
+    },
+    {
+      "country_code": "PL",
+      "camera_type": "fixed_speed",
+      "count": 504,
+      "active": true
+    },
+    {
+      "country_code": "PL",
+      "camera_type": "other_enforcement",
+      "count": 518,
+      "active": false
+    },
+    {
+      "country_code": "PL",
+      "camera_type": "red_light",
+      "count": 356,
+      "active": false
+    },
+    {
+      "country_code": "PL",
+      "camera_type": "red_light",
+      "count": 169,
+      "active": true
+    },
+    {
+      "country_code": "PL",
+      "camera_type": "speed_and_red_light",
+      "count": 9,
+      "active": false
+    },
+    {
+      "country_code": "PT",
+      "camera_type": "average_speed_section",
+      "count": 10,
+      "active": true
+    },
+    {
+      "country_code": "PT",
+      "camera_type": "fixed_speed",
+      "count": 2,
+      "active": false
+    },
+    {
+      "country_code": "PT",
+      "camera_type": "fixed_speed",
+      "count": 331,
+      "active": true
+    },
+    {
+      "country_code": "PT",
+      "camera_type": "other_enforcement",
+      "count": 10,
+      "active": false
+    },
+    {
+      "country_code": "RO",
+      "camera_type": "fixed_speed",
+      "count": 6,
+      "active": false
+    },
+    {
+      "country_code": "RO",
+      "camera_type": "fixed_speed",
+      "count": 330,
+      "active": true
+    },
+    {
+      "country_code": "RS",
+      "camera_type": "fixed_speed",
+      "count": 386,
+      "active": true
+    },
+    {
+      "country_code": "RS",
+      "camera_type": "other_enforcement",
+      "count": 32,
+      "active": false
+    },
+    {
+      "country_code": "RS",
+      "camera_type": "red_light",
+      "count": 2,
+      "active": true
+    },
+    {
+      "country_code": "RS",
+      "camera_type": "speed_and_red_light",
+      "count": 38,
+      "active": true
+    },
+    {
+      "country_code": "RU",
+      "camera_type": "fixed_speed",
+      "count": 4,
+      "active": false
+    },
+    {
+      "country_code": "RU",
+      "camera_type": "fixed_speed",
+      "count": 10613,
+      "active": true
+    },
+    {
+      "country_code": "RU",
+      "camera_type": "speed_and_red_light",
+      "count": 47,
+      "active": true
+    },
+    {
+      "country_code": "SE",
+      "camera_type": "fixed_speed",
+      "count": 23,
+      "active": false
+    },
+    {
+      "country_code": "SE",
+      "camera_type": "fixed_speed",
+      "count": 2471,
+      "active": true
+    },
+    {
+      "country_code": "SI",
+      "camera_type": "average_speed_section",
+      "count": 2,
+      "active": true
+    },
+    {
+      "country_code": "SI",
+      "camera_type": "fixed_speed",
+      "count": 1,
+      "active": false
+    },
+    {
+      "country_code": "SI",
+      "camera_type": "fixed_speed",
+      "count": 275,
+      "active": true
+    },
+    {
+      "country_code": "SI",
+      "camera_type": "other_enforcement",
+      "count": 1,
+      "active": false
+    },
+    {
+      "country_code": "SK",
+      "camera_type": "fixed_speed",
+      "count": 67,
+      "active": true
+    },
+    {
+      "country_code": "SK",
+      "camera_type": "speed_and_red_light",
+      "count": 1,
+      "active": true
+    },
+    {
+      "country_code": "TR",
+      "camera_type": "average_speed_section",
+      "count": 8,
+      "active": true
+    },
+    {
+      "country_code": "TR",
+      "camera_type": "fixed_speed",
+      "count": 650,
+      "active": true
+    },
+    {
+      "country_code": "TR",
+      "camera_type": "other_enforcement",
+      "count": 43,
+      "active": false
+    },
+    {
+      "country_code": "TR",
+      "camera_type": "red_light",
+      "count": 1,
+      "active": true
+    },
+    {
+      "country_code": "UA",
+      "camera_type": "fixed_speed",
+      "count": 421,
+      "active": false
+    },
+    {
+      "country_code": "UA",
+      "camera_type": "fixed_speed",
+      "count": 426,
+      "active": true
+    },
+    {
+      "country_code": "UA",
+      "camera_type": "other_enforcement",
+      "count": 8,
+      "active": false
+    },
+    {
+      "country_code": "US",
+      "camera_type": "fixed_speed",
+      "count": 161,
+      "active": false
+    },
+    {
+      "country_code": "US",
+      "camera_type": "fixed_speed",
+      "count": 2006,
+      "active": true
+    },
+    {
+      "country_code": "US",
+      "camera_type": "other_enforcement",
+      "count": 280,
+      "active": false
+    },
+    {
+      "country_code": "US",
+      "camera_type": "other_enforcement",
+      "count": 111,
+      "active": true
+    },
+    {
+      "country_code": "US",
+      "camera_type": "red_light",
+      "count": 14,
+      "active": false
+    },
+    {
+      "country_code": "US",
+      "camera_type": "red_light",
+      "count": 1074,
+      "active": true
+    },
+    {
+      "country_code": "US",
+      "camera_type": "speed_and_red_light",
+      "count": 199,
+      "active": true
+    }
+  ],
+  "low_active": 0
+}

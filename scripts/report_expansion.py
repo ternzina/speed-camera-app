@@ -20,9 +20,10 @@ def main():
     with (REPORT/'country-growth.csv').open('w',newline='') as f:
         writer=csv.DictWriter(f,fieldnames=list(rows[0]));writer.writeheader();writer.writerows(rows)
     accepted={r[0] for r in new};dupes={}
-    for path in list((REPORT/'rounds').glob('*dedupe.json'))+[REPORT/'dedupe.json']:
+    for path in list((ROOT/'master-db/backups/expansion/dedupe-rounds').glob('*dedupe.json.gz'))+list((REPORT/'rounds').glob('*dedupe.json'))+[REPORT/'dedupe.json']:
         if not path.exists():continue
-        for item in json.loads(path.read_text())['items']:
+        data=json.loads(gzip.decompress(path.read_bytes()) if path.suffix=='.gz' else path.read_text())
+        for item in data.get('items',[]):
             if item['source_id'] not in accepted:
                 dupes[(item['source_id'],item['reason'])]=item
     unique_source_ids={k[0] for k in dupes};spatial={k[0] for k in dupes if k[1]=='compatible spatial duplicate'}
@@ -42,6 +43,8 @@ def main():
         phases=json.loads(acquisition.read_text())
         summary['osm_acquisition_phase_outcomes']=dict(collections.Counter(r['result'] for r in phases))
         summary['osm_acquisition_countries_attempted']=len({r['country'] for r in phases})
+    compact=REPORT/'osm-compact-relations-acquisition.json'
+    if compact.exists():summary['compact_relation_acquisition']=json.loads(compact.read_text())
     save(REPORT/'expansion-summary.json',summary)
     configs=[]
     for name in ('app.json','eas.json','package.json','package-lock.json','App.js','config.js'):
@@ -73,7 +76,7 @@ All raw downloads, caches, credentials and backups stay under this project and a
 
 From this production project: `.bootstrap-venv/bin/python scripts/update_cameras.py --expand --acquire`. The existing isolated interpreter, ignored limited database credentials and frozen baseline snapshots are used. Normalization checks source identities and conservative spatial compatibility against every current production record. Append-only writes reject pre-existing canonical identities and source-link identities before any write. New OSM evidence is refreshed before sync; batches are resumable. Snapshots are deliberately not distributed through Git.
 
-A separate acquisition attempt can be resumed with `.bootstrap-venv/bin/python scripts/fetch_expansion_osm.py --all-phases`; completed downloads are reused. Run `scripts/discover_primary_relations.py` with the same interpreter for the targeted membership discovery. Use `scripts/verify_expansion.py` and `verify_production.main(Path('master-db/expansion/reports'))` after sync. These checks read the existing production database and public export.
+A separate acquisition attempt can be resumed with `.bootstrap-venv/bin/python scripts/fetch_expansion_osm.py --all-phases`; completed downloads are reused. Run `scripts/discover_primary_relations.py` with the same interpreter for the targeted membership discovery. The missing/empty relation pass can be retried with `scripts/fetch_expansion_osm.py --compact-relations --countries ISO...`; this omits approximate ways and preserves old empty files under ignored backups. Use `scripts/verify_expansion.py` and `verify_production.main(Path('master-db/expansion/reports'))` after sync. These checks read the existing production database and public export.
 '''
     (REPORT/'EXPANSION-REPORT.md').write_text(text)
     print({k:summary[k] for k in ('before','after','new_records','new_records_published','published_after','countries_after','unique_duplicate_source_observations_discarded')},flush=True)

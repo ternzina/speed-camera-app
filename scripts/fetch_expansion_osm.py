@@ -1,15 +1,19 @@
 #!/usr/bin/env python3
 """Additional OSM predicates and countries; acquisition never alters previous phases."""
-import argparse,concurrent.futures,datetime,gzip,json,time,urllib.request,urllib.parse
+import argparse,concurrent.futures,datetime,gzip,json,shutil,time,urllib.request,urllib.parse
 from pathlib import Path
 from fetch_osm import COUNTRIES,ENDPOINTS
 ROOT=Path(__file__).resolve().parents[1];CACHE=ROOT/'master-db/cache/expansion/osm';CACHE.mkdir(parents=True,exist_ok=True)
 NEW={'RU':'Russia','BY':'Belarus','GE':'Georgia','AM':'Armenia','AZ':'Azerbaijan','IM':'Isle of Man','JE':'Jersey','GG':'Guernsey','FO':'Faroe Islands','GI':'Gibraltar','AX':'Åland Islands'}
 COUNTRIES.update(NEW)
 EXTRA='[enforcement];node(area.a)[speed_camera];node(area.a)["traffic_signals:camera"];node(area.a)["traffic_signals:red_light_camera"];node(area.a)[red_light_camera];node(area.a)["camera:enforcement"];node(area.a)["surveillance:purpose"="traffic_enforcement"];node(area.a)["surveillance:type"="speed_camera"];node(area.a)["camera:type"~"^(speed|red_light|average_speed|section_control)$"]'
-def fetch(code,relations=False,speed=False):
+def fetch(code,relations=False,speed=False,compact=False):
  path=CACHE/(code+('-speed-refresh' if speed else '-relations' if relations else '')+'.json')
- if path.exists():return code,len(json.loads(path.read_text())['elements']),'cached'
+ if path.exists():
+  cached=json.loads(path.read_text())
+  if not compact or cached['elements']:return code,len(cached['elements']),'cached'
+  backup=ROOT/'master-db/backups/expansion/osm'/(code+'-relations-empty.json');backup.parent.mkdir(parents=True,exist_ok=True)
+  if not backup.exists():shutil.copyfile(path,backup)
  prefix=f'[out:json][timeout:60][maxsize:100000000];area["ISO3166-1"="{code}"][admin_level=2]->.a;'
  predicates='node(area.a)[enforcement];'+EXTRA.split(';',1)[1]
  if relations:predicates='rel(area.a)[enforcement];rel(area.a)[type~"^(average_speed|section_control)$"];way(area.a)[enforcement];way(area.a)[highway=speed_camera]'
@@ -31,6 +35,10 @@ def fetch(code,relations=False,speed=False):
  # Discovery needs IDs, original tags and explicit member roles. Versions and
  # modification metadata come from the current primary API before publication.
  query=query.replace('out meta','out body')
+ if compact:
+  if not regions:return code,0,'no validated boundary'
+  selectors=''.join('rel[type=enforcement]('+','.join(map(str,b))+');rel[enforcement]('+','.join(map(str,b))+');rel[type~"^(average_speed|section_control)$"]('+','.join(map(str,b))+');' for b in regions)
+  query='[out:json][timeout:45][maxsize:50000000];('+selectors+')->.objects;.objects out body;node(r.objects:"device");out body;node(r.objects:"from");out body;node(r.objects:"to");out body;'
  errors=[]
  for endpoint in [ENDPOINTS[2],ENDPOINTS[1],ENDPOINTS[0]]:
   try:
@@ -72,9 +80,9 @@ def acquire(countries=None,resume=False):
  return results
 
 def main():
- parser=argparse.ArgumentParser();parser.add_argument('--relations',action='store_true');parser.add_argument('--speed',action='store_true');parser.add_argument('--all-phases',action='store_true');parser.add_argument('--resume',action='store_true',help='Reuse recorded failed attempts as well as completed downloads');parser.add_argument('--countries',nargs='+',default=list(COUNTRIES));args=parser.parse_args()
+ parser=argparse.ArgumentParser();parser.add_argument('--relations',action='store_true');parser.add_argument('--speed',action='store_true');parser.add_argument('--compact-relations',action='store_true',help='Retry missing relations without expensive approximate ways');parser.add_argument('--all-phases',action='store_true');parser.add_argument('--resume',action='store_true',help='Reuse recorded failed attempts as well as completed downloads');parser.add_argument('--countries',nargs='+',default=list(COUNTRIES));args=parser.parse_args()
  if args.all_phases:return acquire(args.countries,args.resume)
- with concurrent.futures.ThreadPoolExecutor(max_workers=2) as p:results=list(p.map(lambda c:fetch(c,args.relations,args.speed),args.countries))
- report='osm-speed-acquisition.json' if args.speed else 'osm-relations-acquisition.json' if args.relations else 'osm-acquisition.json'
+ with concurrent.futures.ThreadPoolExecutor(max_workers=2) as p:results=list(p.map(lambda c:fetch(c,args.relations or args.compact_relations,args.speed,compact=args.compact_relations),args.countries))
+ report='osm-compact-relations-acquisition.json' if args.compact_relations else 'osm-speed-acquisition.json' if args.speed else 'osm-relations-acquisition.json' if args.relations else 'osm-acquisition.json'
  (ROOT/'master-db/expansion/reports'/report).write_text(json.dumps(results,indent=2)+'\n')
 if __name__=='__main__':main()

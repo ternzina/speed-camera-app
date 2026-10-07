@@ -1,0 +1,432 @@
+[
+  {
+    "code": "BE_BRUSSELS_MUNICIPAL",
+    "name": "Brussels Mobility municipal speed cameras - public subset",
+    "source_type": "official_government",
+    "source_url": "https://data.mobility.brussels/fr/info/90113b40-d5c5-42bf-ae2a-e19f5b552087/",
+    "license": "CC0-1.0",
+    "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "new_records": 14,
+    "new_published": 0
+  },
+  {
+    "code": "BE_BRUSSELS_REGIONAL",
+    "name": "Brussels Mobility regional speed/combined cameras",
+    "source_type": "official_government",
+    "source_url": "https://data.mobility.brussels/fr/info/472bf315-4669-4397-afb9-ccbcb174e664/",
+    "license": "CC0-1.0",
+    "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "new_records": 111,
+    "new_published": 0
+  },
+  {
+    "code": "CA_CALGARY_ISD",
+    "name": "Calgary Intersection Safety Cameras",
+    "source_type": "official_government",
+    "source_url": "https://www.arcgis.com/home/item.html?id=1d099dff8bc54a0c90ce9c09a3b494cc",
+    "license": "Open Government Licence - City of Calgary",
+    "license_url": "https://data.calgary.ca/stories/s/u45n-7awa/",
+    "new_records": 57,
+    "new_published": 57
+  },
+  {
+    "code": "CA_HAMILTON_RLC",
+    "name": "Red Light Cameras",
+    "source_type": "official_government",
+    "source_url": "https://www.arcgis.com/home/item.html?id=d880b4ad9b5c4e44b073d6d007e4df68",
+    "license": "Open Data Licence - Hamilton",
+    "license_url": "https://www.hamilton.ca/city-initiatives/strategies-actions/open-data-licence-terms-and-conditions",
+    "new_records": 51,
+    "new_published": 51
+  },
+  {
+    "code": "CA_KINGSTON_RLC",
+    "name": "Red Light Cameras",
+    "source_type": "official_government",
+    "source_url": "https://www.arcgis.com/home/item.html?id=a9414d8063e44327ad59dc7a625fa95b",
+    "license": "Open Data Licence - Kingston",
+    "license_url": "https://www.cityofkingston.ca/documents/10180/144997/CityofKingston_OpenDataLicense.pdf",
+    "new_records": 7,
+    "new_published": 7
+  },
+  {
+    "code": "CA_PEEL_RLC",
+    "name": "Red Light Cameras",
+    "source_type": "official_government",
+    "source_url": "https://www.arcgis.com/home/item.html?id=36dbfcb33aa2453c8de55e0a34ccfc6a",
+    "license": "Open Data Licence - Peel 1.0",
+    "license_url": "https://data.peelregion.ca/pages/license",
+    "new_records": 37,
+    "new_published": 37
+  },
+  {
+    "code": "CA_YORK_RLC",
+    "name": "York Region Red Light Camera",
+    "source_type": "official_government",
+    "source_url": "https://www.arcgis.com/home/item.html?id=a94a1fdce44f4bc391ec4dfb693e1a95",
+    "license": "York Region Open Data Licence 1.0",
+    "license_url": "https://www.arcgis.com/sharing/rest/content/items/78cc02388af248c0b7a30eda6adfade0/data",
+    "new_records": 45,
+    "new_published": 45
+  },
+  {
+    "code": "CY_NAP_CAMERAS",
+    "name": "Cyprus National Access Point traffic enforcement cameras - Elovate",
+    "source_type": "official_government",
+    "source_url": "https://www.traffic4cyprus.org.cy/en/dataset/traffic_enforcement_cameras",
+    "license": "CC-BY-4.0",
+    "license_url": "https://creativecommons.org/licenses/by/4.0/",
+    "new_records": 67,
+    "new_published": 0
+  },
+  {
+    "code": "ES_MADRID_RADARS",
+    "name": "Ayuntamiento de Madrid — fixed and average-speed radars",
+    "source_type": "official_government",
+    "source_url": "https://datos.madrid.es/dataset/300049-0-radares-fijos-moviles",
+    "license": "CC-BY-4.0",
+    "license_url": "https://creativecommons.org/licenses/by/4.0/",
+    "new_records": 33,
+    "new_published": 33
+  },
+  {
+    "code": "ES_MADRID_RLC",
+    "name": "Ayuntamiento de Madrid — active red-light cameras",
+    "source_type": "official_government",
+    "source_url": "https://datos.madrid.es/dataset/205193-0-semaforos-foto-rojo",
+    "license": "CC-BY-4.0",
+    "license_url": "https://creativecommons.org/licenses/by/4.0/",
+    "new_records": 36,
+    "new_published": 36
+  },
+  {
+    "code": "GB_LANCASHIRE_CAMERAS",
+    "name": "Speed Cameras",
+    "source_type": "official_government",
+    "source_url": "https://www.arcgis.com/home/item.html?id=c9e1e1d7dc4a460981a8a2b159a2744f",
+    "license": "OGL-UK-3.0",
+    "license_url": "https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/",
+    "new_records": 247,
+    "new_published": 247
+  },
+  {
+    "code": "LU_PCH_FIXED",
+    "name": "PCH Emplacement des radars fixes",
+    "source_type": "official_government",
+    "source_url": "https://data.public.lu/en/datasets/pch-emplacement-des-radars-fixes/",
+    "license": "CC0-1.0",
+    "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "new_records": 20,
+    "new_published": 0
+  },
+  {
+    "code": "OSM_AM",
+    "name": "OpenStreetMap contributors (AM)",
+    "source_type": "openstreetmap",
+    "source_url": "https://www.openstreetmap.org/node/10008910036",
+    "license": "ODbL-1.0",
+    "license_url": "https://opendatacommons.org/licenses/odbl/1-0/",
+    "new_records": 280,
+    "new_published": 280
+  },
+  {
+    "code": "OSM_AZ",
+    "name": "OpenStreetMap contributors (AZ)",
+    "source_type": "openstreetmap",
+    "source_url": "https://www.openstreetmap.org/node/10030209417",
+    "license": "ODbL-1.0",
+    "license_url": "https://opendatacommons.org/licenses/odbl/1-0/",
+    "new_records": 691,
+    "new_published": 691
+  },
+  {
+    "code": "OSM_BY",
+    "name": "OpenStreetMap contributors (BY)",
+    "source_type": "openstreetmap",
+    "source_url": "https://www.openstreetmap.org/node/10014146924",
+    "license": "ODbL-1.0",
+    "license_url": "https://opendatacommons.org/licenses/odbl/1-0/",
+    "new_records": 571,
+    "new_published": 569
+  },
+  {
+    "code": "OSM_CA",
+    "name": "OpenStreetMap contributors (CA)",
+    "source_type": "openstreetmap",
+    "source_url": "https://www.openstreetmap.org/node/14042216834",
+    "license": "ODbL-1.0",
+    "license_url": "https://opendatacommons.org/licenses/odbl/1-0/",
+    "new_records": 15,
+    "new_published": 1
+  },
+  {
+    "code": "OSM_CZ",
+    "name": "OpenStreetMap contributors (CZ)",
+    "source_type": "openstreetmap",
+    "source_url": "https://www.openstreetmap.org/node/10188199801",
+    "license": "ODbL-1.0",
+    "license_url": "https://opendatacommons.org/licenses/odbl/1-0/",
+    "new_records": 695,
+    "new_published": 619
+  },
+  {
+    "code": "OSM_DE",
+    "name": "OpenStreetMap contributors (DE)",
+    "source_type": "openstreetmap",
+    "source_url": "https://www.openstreetmap.org/node/12962189961",
+    "license": "ODbL-1.0",
+    "license_url": "https://opendatacommons.org/licenses/odbl/1-0/",
+    "new_records": 6,
+    "new_published": 1
+  },
+  {
+    "code": "OSM_ES",
+    "name": "OpenStreetMap contributors (ES)",
+    "source_type": "openstreetmap",
+    "source_url": "https://www.openstreetmap.org/node/301985018",
+    "license": "ODbL-1.0",
+    "license_url": "https://opendatacommons.org/licenses/odbl/1-0/",
+    "new_records": 1,
+    "new_published": 1
+  },
+  {
+    "code": "OSM_FI",
+    "name": "OpenStreetMap contributors (FI)",
+    "source_type": "openstreetmap",
+    "source_url": "https://www.openstreetmap.org/node/6668214796",
+    "license": "ODbL-1.0",
+    "license_url": "https://opendatacommons.org/licenses/odbl/1-0/",
+    "new_records": 3,
+    "new_published": 0
+  },
+  {
+    "code": "OSM_FR",
+    "name": "OpenStreetMap contributors (FR)",
+    "source_type": "openstreetmap",
+    "source_url": "https://www.openstreetmap.org/node/12140291613",
+    "license": "ODbL-1.0",
+    "license_url": "https://opendatacommons.org/licenses/odbl/1-0/",
+    "new_records": 9,
+    "new_published": 1
+  },
+  {
+    "code": "OSM_GB",
+    "name": "OpenStreetMap contributors (GB)",
+    "source_type": "openstreetmap",
+    "source_url": "https://www.openstreetmap.org/node/107853",
+    "license": "ODbL-1.0",
+    "license_url": "https://opendatacommons.org/licenses/odbl/1-0/",
+    "new_records": 101,
+    "new_published": 0
+  },
+  {
+    "code": "OSM_GE",
+    "name": "OpenStreetMap contributors (GE)",
+    "source_type": "openstreetmap",
+    "source_url": "https://www.openstreetmap.org/node/10179038077",
+    "license": "ODbL-1.0",
+    "license_url": "https://opendatacommons.org/licenses/odbl/1-0/",
+    "new_records": 209,
+    "new_published": 208
+  },
+  {
+    "code": "OSM_HU",
+    "name": "OpenStreetMap contributors (HU)",
+    "source_type": "openstreetmap",
+    "source_url": "https://www.openstreetmap.org/node/3439644731",
+    "license": "ODbL-1.0",
+    "license_url": "https://opendatacommons.org/licenses/odbl/1-0/",
+    "new_records": 5,
+    "new_published": 0
+  },
+  {
+    "code": "OSM_IT",
+    "name": "OpenStreetMap contributors (IT)",
+    "source_type": "openstreetmap",
+    "source_url": "https://www.openstreetmap.org/node/11473298609",
+    "license": "ODbL-1.0",
+    "license_url": "https://opendatacommons.org/licenses/odbl/1-0/",
+    "new_records": 25,
+    "new_published": 13
+  },
+  {
+    "code": "OSM_LU",
+    "name": "OpenStreetMap contributors (LU)",
+    "source_type": "openstreetmap",
+    "source_url": "https://www.openstreetmap.org/node/3051830538",
+    "license": "ODbL-1.0",
+    "license_url": "https://opendatacommons.org/licenses/odbl/1-0/",
+    "new_records": 1,
+    "new_published": 0
+  },
+  {
+    "code": "OSM_LV",
+    "name": "OpenStreetMap contributors (LV)",
+    "source_type": "openstreetmap",
+    "source_url": "https://www.openstreetmap.org/node/11078722490",
+    "license": "ODbL-1.0",
+    "license_url": "https://opendatacommons.org/licenses/odbl/1-0/",
+    "new_records": 21,
+    "new_published": 20
+  },
+  {
+    "code": "OSM_NO",
+    "name": "OpenStreetMap contributors (NO)",
+    "source_type": "openstreetmap",
+    "source_url": "https://www.openstreetmap.org/node/6076130423",
+    "license": "ODbL-1.0",
+    "license_url": "https://opendatacommons.org/licenses/odbl/1-0/",
+    "new_records": 1,
+    "new_published": 0
+  },
+  {
+    "code": "OSM_PL",
+    "name": "OpenStreetMap contributors (PL)",
+    "source_type": "openstreetmap",
+    "source_url": "https://www.openstreetmap.org/node/4961302190",
+    "license": "ODbL-1.0",
+    "license_url": "https://opendatacommons.org/licenses/odbl/1-0/",
+    "new_records": 2,
+    "new_published": 0
+  },
+  {
+    "code": "OSM_PT",
+    "name": "OpenStreetMap contributors (PT)",
+    "source_type": "openstreetmap",
+    "source_url": "https://www.openstreetmap.org/node/4073592293",
+    "license": "ODbL-1.0",
+    "license_url": "https://opendatacommons.org/licenses/odbl/1-0/",
+    "new_records": 2,
+    "new_published": 0
+  },
+  {
+    "code": "OSM_RU",
+    "name": "OpenStreetMap contributors (RU)",
+    "source_type": "openstreetmap",
+    "source_url": "https://www.openstreetmap.org/node/1000001249",
+    "license": "ODbL-1.0",
+    "license_url": "https://opendatacommons.org/licenses/odbl/1-0/",
+    "new_records": 10664,
+    "new_published": 10660
+  },
+  {
+    "code": "OSM_SE",
+    "name": "OpenStreetMap contributors (SE)",
+    "source_type": "openstreetmap",
+    "source_url": "https://www.openstreetmap.org/way/1235477911",
+    "license": "ODbL-1.0",
+    "license_url": "https://opendatacommons.org/licenses/odbl/1-0/",
+    "new_records": 23,
+    "new_published": 0
+  },
+  {
+    "code": "OSM_SI",
+    "name": "OpenStreetMap contributors (SI)",
+    "source_type": "openstreetmap",
+    "source_url": "https://www.openstreetmap.org/node/12108367681",
+    "license": "ODbL-1.0",
+    "license_url": "https://opendatacommons.org/licenses/odbl/1-0/",
+    "new_records": 1,
+    "new_published": 0
+  },
+  {
+    "code": "OSM_TR",
+    "name": "OpenStreetMap contributors (TR)",
+    "source_type": "openstreetmap",
+    "source_url": "https://www.openstreetmap.org/node/5126101043",
+    "license": "ODbL-1.0",
+    "license_url": "https://opendatacommons.org/licenses/odbl/1-0/",
+    "new_records": 10,
+    "new_published": 0
+  },
+  {
+    "code": "OSM_UA",
+    "name": "OpenStreetMap contributors (UA)",
+    "source_type": "openstreetmap",
+    "source_url": "https://www.openstreetmap.org/node/13901709161",
+    "license": "ODbL-1.0",
+    "license_url": "https://opendatacommons.org/licenses/odbl/1-0/",
+    "new_records": 8,
+    "new_published": 0
+  },
+  {
+    "code": "OSM_US",
+    "name": "OpenStreetMap contributors (US)",
+    "source_type": "openstreetmap",
+    "source_url": "https://www.openstreetmap.org/node/100612286",
+    "license": "ODbL-1.0",
+    "license_url": "https://opendatacommons.org/licenses/odbl/1-0/",
+    "new_records": 263,
+    "new_published": 103
+  },
+  {
+    "code": "PT_LISBON_RADARS",
+    "name": "MOB_RadaresPaineis",
+    "source_type": "official_government",
+    "source_url": "https://www.arcgis.com/home/item.html?id=d214557e8ca0406894188596d999472c",
+    "license": "CC0-1.0",
+    "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "new_records": 13,
+    "new_published": 13
+  },
+  {
+    "code": "US_BOULDER_RLC",
+    "name": "Red Light Cameras PUBLIC VIEW",
+    "source_type": "official_government",
+    "source_url": "https://www.arcgis.com/home/item.html?id=48adb3d13b8e485b88315d4766eaa254",
+    "license": "CC0-1.0",
+    "license_url": "https://bouldercolorado.gov/services/open-data",
+    "new_records": 6,
+    "new_published": 6
+  },
+  {
+    "code": "US_MONTGOMERY_RLC",
+    "name": "RedLightCameras_2024",
+    "source_type": "official_government",
+    "source_url": "https://www.arcgis.com/home/item.html?id=2d3d037dd1174102ab3a6d9a100f0c9b",
+    "license": "Montgomery County license-free open data",
+    "license_url": "https://www.montgomerycountymd.gov/DTS/dataM/index.html",
+    "new_records": 55,
+    "new_published": 55
+  },
+  {
+    "code": "US_MONTGOMERY_SPEED",
+    "name": "SpeedCameras_2024",
+    "source_type": "official_government",
+    "source_url": "https://www.arcgis.com/home/item.html?id=71702a6aebe74eea9ac6511d05748791",
+    "license": "Montgomery County license-free open data",
+    "license_url": "https://www.montgomerycountymd.gov/DTS/dataM/index.html",
+    "new_records": 455,
+    "new_published": 413
+  },
+  {
+    "code": "US_NOLA_CAMERAS",
+    "name": "New Orleans Traffic Camera",
+    "source_type": "official_government",
+    "source_url": "https://data.nola.gov/d/te2d-4txp",
+    "license": "CC0-1.0",
+    "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "new_records": 90,
+    "new_published": 0
+  },
+  {
+    "code": "US_SFMTA_RLC",
+    "name": "San Francisco SFMTA Red Light Camera Citations - recent sites",
+    "source_type": "official_government",
+    "source_url": "https://data.sf.gov/d/uzmr-g2uc",
+    "license": "PDDL-1.0",
+    "license_url": "https://opendatacommons.org/licenses/pddl/1-0/",
+    "new_records": 19,
+    "new_published": 19
+  },
+  {
+    "code": "US_TACOMA_CAMERAS",
+    "name": "Automated Enforcement Locations (Tacoma)",
+    "source_type": "official_government",
+    "source_url": "https://www.arcgis.com/home/item.html?id=ed8eb6a8c87643faa3ea1c6864301c05",
+    "license": "City of Tacoma unrestricted open data",
+    "license_url": "https://tacoma.gov/services/tacoma-open-data-maps/",
+    "new_records": 23,
+    "new_published": 23
+  }
+]

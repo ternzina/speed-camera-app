@@ -1,0 +1,674 @@
+{
+  "checked_at": "2026-10-07T07:05:18.717051+00:00",
+  "samples": 83,
+  "countries": 15,
+  "baseline_rows_compared_including_metadata": 50141,
+  "baseline_changes": 0,
+  "checks": [
+    {
+      "canonical_id": "CA_CALGARY_ISD:05271c0d-fa55-426e-ba23-f368a2cfa12a",
+      "country_code": "CA",
+      "source_code": "CA_CALGARY_ISD",
+      "source_url": "https://www.arcgis.com/home/item.html?id=1d099dff8bc54a0c90ce9c09a3b494cc",
+      "result": "passed",
+      "evidence": "Fresh government API geometry/status and stable source ID"
+    },
+    {
+      "canonical_id": "CA_CALGARY_ISD:06ae085e-2d10-4c2e-a5d9-678d8ba275e3",
+      "country_code": "CA",
+      "source_code": "CA_CALGARY_ISD",
+      "source_url": "https://www.arcgis.com/home/item.html?id=1d099dff8bc54a0c90ce9c09a3b494cc",
+      "result": "passed",
+      "evidence": "Fresh government API geometry/status and stable source ID"
+    },
+    {
+      "canonical_id": "CA_CALGARY_ISD:0f4cdedd-8bb5-4667-9299-7e8112f24d1b",
+      "country_code": "CA",
+      "source_code": "CA_CALGARY_ISD",
+      "source_url": "https://www.arcgis.com/home/item.html?id=1d099dff8bc54a0c90ce9c09a3b494cc",
+      "result": "passed",
+      "evidence": "Fresh government API geometry/status and stable source ID"
+    },
+    {
+      "canonical_id": "CA_HAMILTON_RLC:BartFruitland",
+      "country_code": "CA",
+      "source_code": "CA_HAMILTON_RLC",
+      "source_url": "https://www.arcgis.com/home/item.html?id=d880b4ad9b5c4e44b073d6d007e4df68",
+      "result": "passed",
+      "evidence": "Fresh government API geometry/status and stable source ID"
+    },
+    {
+      "canonical_id": "CA_HAMILTON_RLC:BartOttawa",
+      "country_code": "CA",
+      "source_code": "CA_HAMILTON_RLC",
+      "source_url": "https://www.arcgis.com/home/item.html?id=d880b4ad9b5c4e44b073d6d007e4df68",
+      "result": "passed",
+      "evidence": "Fresh government API geometry/status and stable source ID"
+    },
+    {
+      "canonical_id": "CA_HAMILTON_RLC:BayMainEB",
+      "country_code": "CA",
+      "source_code": "CA_HAMILTON_RLC",
+      "source_url": "https://www.arcgis.com/home/item.html?id=d880b4ad9b5c4e44b073d6d007e4df68",
+      "result": "passed",
+      "evidence": "Fresh government API geometry/status and stable source ID"
+    },
+    {
+      "canonical_id": "CA_KINGSTON_RLC:3594d21a-74b0-44c5-bc99-7fdf346e9a44",
+      "country_code": "CA",
+      "source_code": "CA_KINGSTON_RLC",
+      "source_url": "https://www.arcgis.com/home/item.html?id=a9414d8063e44327ad59dc7a625fa95b",
+      "result": "passed",
+      "evidence": "Fresh government API geometry/status and stable source ID"
+    },
+    {
+      "canonical_id": "CA_KINGSTON_RLC:476877ec-e0f0-46fa-adf7-a0c5fd28d0ad",
+      "country_code": "CA",
+      "source_code": "CA_KINGSTON_RLC",
+      "source_url": "https://www.arcgis.com/home/item.html?id=a9414d8063e44327ad59dc7a625fa95b",
+      "result": "passed",
+      "evidence": "Fresh government API geometry/status and stable source ID"
+    },
+    {
+      "canonical_id": "CA_KINGSTON_RLC:59559057-591b-4c2c-93c1-bca9e293773f",
+      "country_code": "CA",
+      "source_code": "CA_KINGSTON_RLC",
+      "source_url": "https://www.arcgis.com/home/item.html?id=a9414d8063e44327ad59dc7a625fa95b",
+      "result": "passed",
+      "evidence": "Fresh government API geometry/status and stable source ID"
+    },
+    {
+      "canonical_id": "CA_PEEL_RLC:1",
+      "country_code": "CA",
+      "source_code": "CA_PEEL_RLC",
+      "source_url": "https://www.arcgis.com/home/item.html?id=36dbfcb33aa2453c8de55e0a34ccfc6a",
+      "result": "passed",
+      "evidence": "Fresh government API geometry/status and stable source ID"
+    },
+    {
+      "canonical_id": "CA_PEEL_RLC:10",
+      "country_code": "CA",
+      "source_code": "CA_PEEL_RLC",
+      "source_url": "https://www.arcgis.com/home/item.html?id=36dbfcb33aa2453c8de55e0a34ccfc6a",
+      "result": "passed",
+      "evidence": "Fresh government API geometry/status and stable source ID"
+    },
+    {
+      "canonical_id": "CA_PEEL_RLC:11",
+      "country_code": "CA",
+      "source_code": "CA_PEEL_RLC",
+      "source_url": "https://www.arcgis.com/home/item.html?id=36dbfcb33aa2453c8de55e0a34ccfc6a",
+      "result": "passed",
+      "evidence": "Fresh government API geometry/status and stable source ID"
+    },
+    {
+      "canonical_id": "CA_YORK_RLC:3004",
+      "country_code": "CA",
+      "source_code": "CA_YORK_RLC",
+      "source_url": "https://www.arcgis.com/home/item.html?id=a94a1fdce44f4bc391ec4dfb693e1a95",
+      "result": "passed",
+      "evidence": "Fresh government API geometry/status and stable source ID"
+    },
+    {
+      "canonical_id": "CA_YORK_RLC:3006",
+      "country_code": "CA",
+      "source_code": "CA_YORK_RLC",
+      "source_url": "https://www.arcgis.com/home/item.html?id=a94a1fdce44f4bc391ec4dfb693e1a95",
+      "result": "passed",
+      "evidence": "Fresh government API geometry/status and stable source ID"
+    },
+    {
+      "canonical_id": "CA_YORK_RLC:3007",
+      "country_code": "CA",
+      "source_code": "CA_YORK_RLC",
+      "source_url": "https://www.arcgis.com/home/item.html?id=a94a1fdce44f4bc391ec4dfb693e1a95",
+      "result": "passed",
+      "evidence": "Fresh government API geometry/status and stable source ID"
+    },
+    {
+      "canonical_id": "ES_MADRID_RADARS:10",
+      "country_code": "ES",
+      "source_code": "ES_MADRID_RADARS",
+      "source_url": "https://datos.madrid.es/dataset/300049-0-radares-fijos-moviles",
+      "result": "passed",
+      "evidence": "Fresh government API geometry/status and stable source ID"
+    },
+    {
+      "canonical_id": "ES_MADRID_RADARS:11",
+      "country_code": "ES",
+      "source_code": "ES_MADRID_RADARS",
+      "source_url": "https://datos.madrid.es/dataset/300049-0-radares-fijos-moviles",
+      "result": "passed",
+      "evidence": "Fresh government API geometry/status and stable source ID"
+    },
+    {
+      "canonical_id": "ES_MADRID_RADARS:13",
+      "country_code": "ES",
+      "source_code": "ES_MADRID_RADARS",
+      "source_url": "https://datos.madrid.es/dataset/300049-0-radares-fijos-moviles",
+      "result": "passed",
+      "evidence": "Fresh government API geometry/status and stable source ID"
+    },
+    {
+      "canonical_id": "ES_MADRID_RADARS:28",
+      "country_code": "ES",
+      "source_code": "ES_MADRID_RADARS",
+      "source_url": "https://datos.madrid.es/dataset/300049-0-radares-fijos-moviles",
+      "result": "passed",
+      "evidence": "Fresh government API geometry/status and stable source ID"
+    },
+    {
+      "canonical_id": "ES_MADRID_RADARS:29",
+      "country_code": "ES",
+      "source_code": "ES_MADRID_RADARS",
+      "source_url": "https://datos.madrid.es/dataset/300049-0-radares-fijos-moviles",
+      "result": "passed",
+      "evidence": "Fresh government API geometry/status and stable source ID"
+    },
+    {
+      "canonical_id": "ES_MADRID_RADARS:30",
+      "country_code": "ES",
+      "source_code": "ES_MADRID_RADARS",
+      "source_url": "https://datos.madrid.es/dataset/300049-0-radares-fijos-moviles",
+      "result": "passed",
+      "evidence": "Fresh government API geometry/status and stable source ID"
+    },
+    {
+      "canonical_id": "ES_MADRID_RLC:109",
+      "country_code": "ES",
+      "source_code": "ES_MADRID_RLC",
+      "source_url": "https://datos.madrid.es/dataset/205193-0-semaforos-foto-rojo",
+      "result": "passed",
+      "evidence": "Fresh government API geometry/status and stable source ID"
+    },
+    {
+      "canonical_id": "ES_MADRID_RLC:1465",
+      "country_code": "ES",
+      "source_code": "ES_MADRID_RLC",
+      "source_url": "https://datos.madrid.es/dataset/205193-0-semaforos-foto-rojo",
+      "result": "passed",
+      "evidence": "Fresh government API geometry/status and stable source ID"
+    },
+    {
+      "canonical_id": "ES_MADRID_RLC:1466",
+      "country_code": "ES",
+      "source_code": "ES_MADRID_RLC",
+      "source_url": "https://datos.madrid.es/dataset/205193-0-semaforos-foto-rojo",
+      "result": "passed",
+      "evidence": "Fresh government API geometry/status and stable source ID"
+    },
+    {
+      "canonical_id": "GB_LANCASHIRE_CAMERAS:A4001",
+      "country_code": "GB",
+      "source_code": "GB_LANCASHIRE_CAMERAS",
+      "source_url": "https://www.arcgis.com/home/item.html?id=c9e1e1d7dc4a460981a8a2b159a2744f",
+      "result": "passed",
+      "evidence": "Fresh government API geometry/status and stable source ID"
+    },
+    {
+      "canonical_id": "GB_LANCASHIRE_CAMERAS:A4002",
+      "country_code": "GB",
+      "source_code": "GB_LANCASHIRE_CAMERAS",
+      "source_url": "https://www.arcgis.com/home/item.html?id=c9e1e1d7dc4a460981a8a2b159a2744f",
+      "result": "passed",
+      "evidence": "Fresh government API geometry/status and stable source ID"
+    },
+    {
+      "canonical_id": "GB_LANCASHIRE_CAMERAS:A4003",
+      "country_code": "GB",
+      "source_code": "GB_LANCASHIRE_CAMERAS",
+      "source_url": "https://www.arcgis.com/home/item.html?id=c9e1e1d7dc4a460981a8a2b159a2744f",
+      "result": "passed",
+      "evidence": "Fresh government API geometry/status and stable source ID"
+    },
+    {
+      "canonical_id": "OSM_AM:node/10008910036",
+      "country_code": "AM",
+      "source_code": "OSM_AM",
+      "source_url": "https://www.openstreetmap.org/node/10008910036",
+      "result": "passed",
+      "evidence": "Live primary OSM API tags/parent relations and coordinates"
+    },
+    {
+      "canonical_id": "OSM_AM:node/10008948394",
+      "country_code": "AM",
+      "source_code": "OSM_AM",
+      "source_url": "https://www.openstreetmap.org/node/10008948394",
+      "result": "passed",
+      "evidence": "Live primary OSM API tags/parent relations and coordinates"
+    },
+    {
+      "canonical_id": "OSM_AM:node/11073600194",
+      "country_code": "AM",
+      "source_code": "OSM_AM",
+      "source_url": "https://www.openstreetmap.org/node/11073600194",
+      "result": "passed",
+      "evidence": "Live primary OSM API tags/parent relations and coordinates"
+    },
+    {
+      "canonical_id": "OSM_AZ:node/10030209417",
+      "country_code": "AZ",
+      "source_code": "OSM_AZ",
+      "source_url": "https://www.openstreetmap.org/node/10030209417",
+      "result": "passed",
+      "evidence": "Live primary OSM API tags/parent relations and coordinates"
+    },
+    {
+      "canonical_id": "OSM_AZ:node/10030209418",
+      "country_code": "AZ",
+      "source_code": "OSM_AZ",
+      "source_url": "https://www.openstreetmap.org/node/10030209418",
+      "result": "passed",
+      "evidence": "Live primary OSM API tags/parent relations and coordinates"
+    },
+    {
+      "canonical_id": "OSM_AZ:node/10140636593",
+      "country_code": "AZ",
+      "source_code": "OSM_AZ",
+      "source_url": "https://www.openstreetmap.org/node/10140636593",
+      "result": "passed",
+      "evidence": "Live primary OSM API tags/parent relations and coordinates"
+    },
+    {
+      "canonical_id": "OSM_BY:node/10014146924",
+      "country_code": "BY",
+      "source_code": "OSM_BY",
+      "source_url": "https://www.openstreetmap.org/node/10014146924",
+      "result": "passed",
+      "evidence": "Live primary OSM API tags/parent relations and coordinates"
+    },
+    {
+      "canonical_id": "OSM_BY:node/10044370643",
+      "country_code": "BY",
+      "source_code": "OSM_BY",
+      "source_url": "https://www.openstreetmap.org/node/10044370643",
+      "result": "passed",
+      "evidence": "Live primary OSM API tags/parent relations and coordinates"
+    },
+    {
+      "canonical_id": "OSM_BY:node/10108120748",
+      "country_code": "BY",
+      "source_code": "OSM_BY",
+      "source_url": "https://www.openstreetmap.org/node/10108120748",
+      "result": "passed",
+      "evidence": "Live primary OSM API tags/parent relations and coordinates"
+    },
+    {
+      "canonical_id": "OSM_BY:relation/13851467",
+      "country_code": "BY",
+      "source_code": "OSM_BY",
+      "source_url": "https://www.openstreetmap.org/relation/13851467",
+      "result": "passed",
+      "evidence": "Live primary OSM API tags/parent relations and coordinates"
+    },
+    {
+      "canonical_id": "OSM_BY:relation/13851468",
+      "country_code": "BY",
+      "source_code": "OSM_BY",
+      "source_url": "https://www.openstreetmap.org/relation/13851468",
+      "result": "passed",
+      "evidence": "Live primary OSM API tags/parent relations and coordinates"
+    },
+    {
+      "canonical_id": "OSM_BY:relation/13852113",
+      "country_code": "BY",
+      "source_code": "OSM_BY",
+      "source_url": "https://www.openstreetmap.org/relation/13852113",
+      "result": "passed",
+      "evidence": "Live primary OSM API tags/parent relations and coordinates"
+    },
+    {
+      "canonical_id": "OSM_CZ:node/10188199801",
+      "country_code": "CZ",
+      "source_code": "OSM_CZ",
+      "source_url": "https://www.openstreetmap.org/node/10188199801",
+      "result": "passed",
+      "evidence": "Live primary OSM API tags/parent relations and coordinates"
+    },
+    {
+      "canonical_id": "OSM_CZ:node/10188312891",
+      "country_code": "CZ",
+      "source_code": "OSM_CZ",
+      "source_url": "https://www.openstreetmap.org/node/10188312891",
+      "result": "passed",
+      "evidence": "Live primary OSM API tags/parent relations and coordinates"
+    },
+    {
+      "canonical_id": "OSM_CZ:node/10188338134",
+      "country_code": "CZ",
+      "source_code": "OSM_CZ",
+      "source_url": "https://www.openstreetmap.org/node/10188338134",
+      "result": "passed",
+      "evidence": "Live primary OSM API tags/parent relations and coordinates"
+    },
+    {
+      "canonical_id": "OSM_CZ:relation/10314368",
+      "country_code": "CZ",
+      "source_code": "OSM_CZ",
+      "source_url": "https://www.openstreetmap.org/relation/10314368",
+      "result": "passed",
+      "evidence": "Live primary OSM API tags/parent relations and coordinates"
+    },
+    {
+      "canonical_id": "OSM_CZ:relation/10320673",
+      "country_code": "CZ",
+      "source_code": "OSM_CZ",
+      "source_url": "https://www.openstreetmap.org/relation/10320673",
+      "result": "passed",
+      "evidence": "Live primary OSM API tags/parent relations and coordinates"
+    },
+    {
+      "canonical_id": "OSM_CZ:relation/10320678",
+      "country_code": "CZ",
+      "source_code": "OSM_CZ",
+      "source_url": "https://www.openstreetmap.org/relation/10320678",
+      "result": "passed",
+      "evidence": "Live primary OSM API tags/parent relations and coordinates"
+    },
+    {
+      "canonical_id": "OSM_DE:node/3507323617",
+      "country_code": "DE",
+      "source_code": "OSM_DE",
+      "source_url": "https://www.openstreetmap.org/node/3507323617",
+      "result": "passed",
+      "evidence": "Live primary OSM API tags/parent relations and coordinates"
+    },
+    {
+      "canonical_id": "OSM_FR:node/12140291613",
+      "country_code": "FR",
+      "source_code": "OSM_FR",
+      "source_url": "https://www.openstreetmap.org/node/12140291613",
+      "result": "passed",
+      "evidence": "Live primary OSM API tags/parent relations and coordinates"
+    },
+    {
+      "canonical_id": "OSM_GE:node/10179038077",
+      "country_code": "GE",
+      "source_code": "OSM_GE",
+      "source_url": "https://www.openstreetmap.org/node/10179038077",
+      "result": "passed",
+      "evidence": "Live primary OSM API tags/parent relations and coordinates"
+    },
+    {
+      "canonical_id": "OSM_GE:node/10292821888",
+      "country_code": "GE",
+      "source_code": "OSM_GE",
+      "source_url": "https://www.openstreetmap.org/node/10292821888",
+      "result": "passed",
+      "evidence": "Live primary OSM API tags/parent relations and coordinates"
+    },
+    {
+      "canonical_id": "OSM_GE:node/10292821889",
+      "country_code": "GE",
+      "source_code": "OSM_GE",
+      "source_url": "https://www.openstreetmap.org/node/10292821889",
+      "result": "passed",
+      "evidence": "Live primary OSM API tags/parent relations and coordinates"
+    },
+    {
+      "canonical_id": "OSM_IT:node/11603317106",
+      "country_code": "IT",
+      "source_code": "OSM_IT",
+      "source_url": "https://www.openstreetmap.org/node/11603317106",
+      "result": "passed",
+      "evidence": "Live primary OSM API tags/parent relations and coordinates"
+    },
+    {
+      "canonical_id": "OSM_IT:node/12962319092",
+      "country_code": "IT",
+      "source_code": "OSM_IT",
+      "source_url": "https://www.openstreetmap.org/node/12962319092",
+      "result": "passed",
+      "evidence": "Live primary OSM API tags/parent relations and coordinates"
+    },
+    {
+      "canonical_id": "OSM_IT:node/12962319093",
+      "country_code": "IT",
+      "source_code": "OSM_IT",
+      "source_url": "https://www.openstreetmap.org/node/12962319093",
+      "result": "passed",
+      "evidence": "Live primary OSM API tags/parent relations and coordinates"
+    },
+    {
+      "canonical_id": "OSM_LV:node/14022917906",
+      "country_code": "LV",
+      "source_code": "OSM_LV",
+      "source_url": "https://www.openstreetmap.org/node/14022917906",
+      "result": "passed",
+      "evidence": "Live primary OSM API tags/parent relations and coordinates"
+    },
+    {
+      "canonical_id": "OSM_LV:node/6781265480",
+      "country_code": "LV",
+      "source_code": "OSM_LV",
+      "source_url": "https://www.openstreetmap.org/node/6781265480",
+      "result": "passed",
+      "evidence": "Live primary OSM API tags/parent relations and coordinates"
+    },
+    {
+      "canonical_id": "OSM_LV:node/6781265481",
+      "country_code": "LV",
+      "source_code": "OSM_LV",
+      "source_url": "https://www.openstreetmap.org/node/6781265481",
+      "result": "passed",
+      "evidence": "Live primary OSM API tags/parent relations and coordinates"
+    },
+    {
+      "canonical_id": "OSM_LV:relation/11030741",
+      "country_code": "LV",
+      "source_code": "OSM_LV",
+      "source_url": "https://www.openstreetmap.org/relation/11030741",
+      "result": "passed",
+      "evidence": "Live primary OSM API tags/parent relations and coordinates"
+    },
+    {
+      "canonical_id": "OSM_LV:relation/16145579",
+      "country_code": "LV",
+      "source_code": "OSM_LV",
+      "source_url": "https://www.openstreetmap.org/relation/16145579",
+      "result": "passed",
+      "evidence": "Live primary OSM API tags/parent relations and coordinates"
+    },
+    {
+      "canonical_id": "OSM_LV:relation/16145580",
+      "country_code": "LV",
+      "source_code": "OSM_LV",
+      "source_url": "https://www.openstreetmap.org/relation/16145580",
+      "result": "passed",
+      "evidence": "Live primary OSM API tags/parent relations and coordinates"
+    },
+    {
+      "canonical_id": "OSM_RU:node/1000001249",
+      "country_code": "RU",
+      "source_code": "OSM_RU",
+      "source_url": "https://www.openstreetmap.org/node/1000001249",
+      "result": "passed",
+      "evidence": "Live primary OSM API tags/parent relations and coordinates"
+    },
+    {
+      "canonical_id": "OSM_RU:node/10001238260",
+      "country_code": "RU",
+      "source_code": "OSM_RU",
+      "source_url": "https://www.openstreetmap.org/node/10001238260",
+      "result": "passed",
+      "evidence": "Live primary OSM API tags/parent relations and coordinates"
+    },
+    {
+      "canonical_id": "OSM_RU:node/10003916266",
+      "country_code": "RU",
+      "source_code": "OSM_RU",
+      "source_url": "https://www.openstreetmap.org/node/10003916266",
+      "result": "passed",
+      "evidence": "Live primary OSM API tags/parent relations and coordinates"
+    },
+    {
+      "canonical_id": "OSM_US:node/105531772",
+      "country_code": "US",
+      "source_code": "OSM_US",
+      "source_url": "https://www.openstreetmap.org/node/105531772",
+      "result": "passed",
+      "evidence": "Live primary OSM API tags/parent relations and coordinates"
+    },
+    {
+      "canonical_id": "OSM_US:node/105623899",
+      "country_code": "US",
+      "source_code": "OSM_US",
+      "source_url": "https://www.openstreetmap.org/node/105623899",
+      "result": "passed",
+      "evidence": "Live primary OSM API tags/parent relations and coordinates"
+    },
+    {
+      "canonical_id": "OSM_US:node/110600448",
+      "country_code": "US",
+      "source_code": "OSM_US",
+      "source_url": "https://www.openstreetmap.org/node/110600448",
+      "result": "passed",
+      "evidence": "Live primary OSM API tags/parent relations and coordinates"
+    },
+    {
+      "canonical_id": "PT_LISBON_RADARS:10ea08c4-65ae-4d44-9364-ad675400e253",
+      "country_code": "PT",
+      "source_code": "PT_LISBON_RADARS",
+      "source_url": "https://www.arcgis.com/home/item.html?id=d214557e8ca0406894188596d999472c",
+      "result": "passed",
+      "evidence": "Fresh government API geometry/status and stable source ID"
+    },
+    {
+      "canonical_id": "PT_LISBON_RADARS:289629c9-609a-47e2-99f8-714e33c7c745",
+      "country_code": "PT",
+      "source_code": "PT_LISBON_RADARS",
+      "source_url": "https://www.arcgis.com/home/item.html?id=d214557e8ca0406894188596d999472c",
+      "result": "passed",
+      "evidence": "Fresh government API geometry/status and stable source ID"
+    },
+    {
+      "canonical_id": "PT_LISBON_RADARS:2cfdbc69-1a95-4ff8-985e-949c0bc2efdf",
+      "country_code": "PT",
+      "source_code": "PT_LISBON_RADARS",
+      "source_url": "https://www.arcgis.com/home/item.html?id=d214557e8ca0406894188596d999472c",
+      "result": "passed",
+      "evidence": "Fresh government API geometry/status and stable source ID"
+    },
+    {
+      "canonical_id": "US_BOULDER_RLC:EB Baseline at 27th Way",
+      "country_code": "US",
+      "source_code": "US_BOULDER_RLC",
+      "source_url": "https://www.arcgis.com/home/item.html?id=48adb3d13b8e485b88315d4766eaa254",
+      "result": "passed",
+      "evidence": "Fresh government API geometry/status and stable source ID"
+    },
+    {
+      "canonical_id": "US_BOULDER_RLC:NB 28th at Canyon",
+      "country_code": "US",
+      "source_code": "US_BOULDER_RLC",
+      "source_url": "https://www.arcgis.com/home/item.html?id=48adb3d13b8e485b88315d4766eaa254",
+      "result": "passed",
+      "evidence": "Fresh government API geometry/status and stable source ID"
+    },
+    {
+      "canonical_id": "US_BOULDER_RLC:SB 28th at Arapahoe",
+      "country_code": "US",
+      "source_code": "US_BOULDER_RLC",
+      "source_url": "https://www.arcgis.com/home/item.html?id=48adb3d13b8e485b88315d4766eaa254",
+      "result": "passed",
+      "evidence": "Fresh government API geometry/status and stable source ID"
+    },
+    {
+      "canonical_id": "US_MONTGOMERY_RLC:6002",
+      "country_code": "US",
+      "source_code": "US_MONTGOMERY_RLC",
+      "source_url": "https://www.arcgis.com/home/item.html?id=2d3d037dd1174102ab3a6d9a100f0c9b",
+      "result": "passed",
+      "evidence": "Fresh government API geometry/status and stable source ID"
+    },
+    {
+      "canonical_id": "US_MONTGOMERY_RLC:6003",
+      "country_code": "US",
+      "source_code": "US_MONTGOMERY_RLC",
+      "source_url": "https://www.arcgis.com/home/item.html?id=2d3d037dd1174102ab3a6d9a100f0c9b",
+      "result": "passed",
+      "evidence": "Fresh government API geometry/status and stable source ID"
+    },
+    {
+      "canonical_id": "US_MONTGOMERY_RLC:6104",
+      "country_code": "US",
+      "source_code": "US_MONTGOMERY_RLC",
+      "source_url": "https://www.arcgis.com/home/item.html?id=2d3d037dd1174102ab3a6d9a100f0c9b",
+      "result": "passed",
+      "evidence": "Fresh government API geometry/status and stable source ID"
+    },
+    {
+      "canonical_id": "US_MONTGOMERY_SPEED:1001",
+      "country_code": "US",
+      "source_code": "US_MONTGOMERY_SPEED",
+      "source_url": "https://www.arcgis.com/home/item.html?id=71702a6aebe74eea9ac6511d05748791",
+      "result": "passed",
+      "evidence": "Fresh government API geometry/status and stable source ID"
+    },
+    {
+      "canonical_id": "US_MONTGOMERY_SPEED:1002",
+      "country_code": "US",
+      "source_code": "US_MONTGOMERY_SPEED",
+      "source_url": "https://www.arcgis.com/home/item.html?id=71702a6aebe74eea9ac6511d05748791",
+      "result": "passed",
+      "evidence": "Fresh government API geometry/status and stable source ID"
+    },
+    {
+      "canonical_id": "US_MONTGOMERY_SPEED:1003",
+      "country_code": "US",
+      "source_code": "US_MONTGOMERY_SPEED",
+      "source_url": "https://www.arcgis.com/home/item.html?id=71702a6aebe74eea9ac6511d05748791",
+      "result": "passed",
+      "evidence": "Fresh government API geometry/status and stable source ID"
+    },
+    {
+      "canonical_id": "US_SFMTA_RLC:19th Ave at Sloat Blvd|northbound",
+      "country_code": "US",
+      "source_code": "US_SFMTA_RLC",
+      "source_url": "https://data.sf.gov/d/uzmr-g2uc",
+      "result": "passed",
+      "evidence": "Fresh government API geometry/status and stable source ID"
+    },
+    {
+      "canonical_id": "US_SFMTA_RLC:19th Ave at Sloat Blvd|southbound",
+      "country_code": "US",
+      "source_code": "US_SFMTA_RLC",
+      "source_url": "https://data.sf.gov/d/uzmr-g2uc",
+      "result": "passed",
+      "evidence": "Fresh government API geometry/status and stable source ID"
+    },
+    {
+      "canonical_id": "US_SFMTA_RLC:4th St at Harrison St|southbound",
+      "country_code": "US",
+      "source_code": "US_SFMTA_RLC",
+      "source_url": "https://data.sf.gov/d/uzmr-g2uc",
+      "result": "passed",
+      "evidence": "Fresh government API geometry/status and stable source ID"
+    },
+    {
+      "canonical_id": "US_TACOMA_CAMERAS:1523f477-19a9-4bbc-a36f-fa3a6f347818",
+      "country_code": "US",
+      "source_code": "US_TACOMA_CAMERAS",
+      "source_url": "https://www.arcgis.com/home/item.html?id=ed8eb6a8c87643faa3ea1c6864301c05",
+      "result": "passed",
+      "evidence": "Fresh government API geometry/status and stable source ID"
+    },
+    {
+      "canonical_id": "US_TACOMA_CAMERAS:1cb0b220-5238-458c-a5bb-c475dd9d4c9a",
+      "country_code": "US",
+      "source_code": "US_TACOMA_CAMERAS",
+      "source_url": "https://www.arcgis.com/home/item.html?id=ed8eb6a8c87643faa3ea1c6864301c05",
+      "result": "passed",
+      "evidence": "Fresh government API geometry/status and stable source ID"
+    },
+    {
+      "canonical_id": "US_TACOMA_CAMERAS:204bc403-42d2-4ae8-bcfd-17f8c083f1c0",
+      "country_code": "US",
+      "source_code": "US_TACOMA_CAMERAS",
+      "source_url": "https://www.arcgis.com/home/item.html?id=ed8eb6a8c87643faa3ea1c6864301c05",
+      "result": "passed",
+      "evidence": "Fresh government API geometry/status and stable source ID"
+    }
+  ],
+  "method": "Live source and database checks; not on-road inspection"
+}

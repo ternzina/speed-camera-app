@@ -1,0 +1,6 @@
+{
+  "duplicate_observations": 35350,
+  "items_count": 35350,
+  "details_local_backup": "master-db/backups/expansion/dedupe-rounds/round15-dedupe.json.gz",
+  "detail_json_sha256": "5393986d085b307da0d5bac14dec86be70554c157c23d2b0f8563aa449ead3fe"
+}

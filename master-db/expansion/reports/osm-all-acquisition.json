@@ -1,0 +1,1046 @@
+[
+  {
+    "country": "IE",
+    "phase": "extra",
+    "elements": 0,
+    "result": "cached"
+  },
+  {
+    "country": "IE",
+    "phase": "relations",
+    "elements": 0,
+    "result": "failed"
+  },
+  {
+    "country": "IE",
+    "phase": "speed",
+    "elements": 21,
+    "result": "cached"
+  },
+  {
+    "country": "DK",
+    "phase": "extra",
+    "elements": 0,
+    "result": "cached"
+  },
+  {
+    "country": "DK",
+    "phase": "relations",
+    "elements": 2,
+    "result": "cached"
+  },
+  {
+    "country": "DK",
+    "phase": "speed",
+    "elements": 560,
+    "result": "cached"
+  },
+  {
+    "country": "IS",
+    "phase": "extra",
+    "elements": 0,
+    "result": "cached"
+  },
+  {
+    "country": "IS",
+    "phase": "relations",
+    "elements": 50,
+    "result": "cached"
+  },
+  {
+    "country": "IS",
+    "phase": "speed",
+    "elements": 17,
+    "result": "cached"
+  },
+  {
+    "country": "SK",
+    "phase": "extra",
+    "elements": 0,
+    "result": "cached"
+  },
+  {
+    "country": "SK",
+    "phase": "relations",
+    "elements": 92,
+    "result": "cached"
+  },
+  {
+    "country": "SK",
+    "phase": "speed",
+    "elements": 286,
+    "result": "cached"
+  },
+  {
+    "country": "BG",
+    "phase": "extra",
+    "elements": 0,
+    "result": "failed"
+  },
+  {
+    "country": "BG",
+    "phase": "relations",
+    "elements": 109,
+    "result": "downloaded"
+  },
+  {
+    "country": "BG",
+    "phase": "speed",
+    "elements": 114,
+    "result": "cached"
+  },
+  {
+    "country": "AL",
+    "phase": "extra",
+    "elements": 0,
+    "result": "cached"
+  },
+  {
+    "country": "AL",
+    "phase": "relations",
+    "elements": 0,
+    "result": "cached"
+  },
+  {
+    "country": "AL",
+    "phase": "speed",
+    "elements": 36,
+    "result": "cached"
+  },
+  {
+    "country": "ME",
+    "phase": "extra",
+    "elements": 0,
+    "result": "cached"
+  },
+  {
+    "country": "ME",
+    "phase": "relations",
+    "elements": 0,
+    "result": "cached"
+  },
+  {
+    "country": "ME",
+    "phase": "speed",
+    "elements": 16,
+    "result": "cached"
+  },
+  {
+    "country": "LU",
+    "phase": "extra",
+    "elements": 30,
+    "result": "cached"
+  },
+  {
+    "country": "LU",
+    "phase": "relations",
+    "elements": 206,
+    "result": "cached"
+  },
+  {
+    "country": "LU",
+    "phase": "speed",
+    "elements": 56,
+    "result": "cached"
+  },
+  {
+    "country": "LV",
+    "phase": "extra",
+    "elements": 45,
+    "result": "cached"
+  },
+  {
+    "country": "LV",
+    "phase": "relations",
+    "elements": 0,
+    "result": "cached"
+  },
+  {
+    "country": "LV",
+    "phase": "speed",
+    "elements": 279,
+    "result": "downloaded"
+  },
+  {
+    "country": "EE",
+    "phase": "extra",
+    "elements": 2,
+    "result": "cached"
+  },
+  {
+    "country": "EE",
+    "phase": "relations",
+    "elements": 0,
+    "result": "cached"
+  },
+  {
+    "country": "EE",
+    "phase": "speed",
+    "elements": 102,
+    "result": "cached"
+  },
+  {
+    "country": "MD",
+    "phase": "extra",
+    "elements": 1,
+    "result": "downloaded"
+  },
+  {
+    "country": "MD",
+    "phase": "relations",
+    "elements": 0,
+    "result": "cached"
+  },
+  {
+    "country": "MD",
+    "phase": "speed",
+    "elements": 114,
+    "result": "cached"
+  },
+  {
+    "country": "CY",
+    "phase": "extra",
+    "elements": 0,
+    "result": "cached"
+  },
+  {
+    "country": "CY",
+    "phase": "relations",
+    "elements": 24,
+    "result": "cached"
+  },
+  {
+    "country": "CY",
+    "phase": "speed",
+    "elements": 131,
+    "result": "cached"
+  },
+  {
+    "country": "MT",
+    "phase": "extra",
+    "elements": 7,
+    "result": "cached"
+  },
+  {
+    "country": "MT",
+    "phase": "relations",
+    "elements": 0,
+    "result": "cached"
+  },
+  {
+    "country": "MT",
+    "phase": "speed",
+    "elements": 21,
+    "result": "cached"
+  },
+  {
+    "country": "US",
+    "phase": "extra",
+    "elements": 845,
+    "result": "cached"
+  },
+  {
+    "country": "US",
+    "phase": "relations",
+    "elements": 1523,
+    "result": "cached"
+  },
+  {
+    "country": "US",
+    "phase": "speed",
+    "elements": 1580,
+    "result": "cached"
+  },
+  {
+    "country": "CA",
+    "phase": "extra",
+    "elements": 0,
+    "result": "failed"
+  },
+  {
+    "country": "CA",
+    "phase": "relations",
+    "elements": 1568,
+    "result": "cached"
+  },
+  {
+    "country": "CA",
+    "phase": "speed",
+    "elements": 842,
+    "result": "cached"
+  },
+  {
+    "country": "UA",
+    "phase": "extra",
+    "elements": 1,
+    "result": "cached"
+  },
+  {
+    "country": "UA",
+    "phase": "relations",
+    "elements": 861,
+    "result": "cached"
+  },
+  {
+    "country": "UA",
+    "phase": "speed",
+    "elements": 1543,
+    "result": "cached"
+  },
+  {
+    "country": "PL",
+    "phase": "extra",
+    "elements": 22,
+    "result": "cached"
+  },
+  {
+    "country": "PL",
+    "phase": "relations",
+    "elements": 0,
+    "result": "failed"
+  },
+  {
+    "country": "PL",
+    "phase": "speed",
+    "elements": 0,
+    "result": "failed"
+  },
+  {
+    "country": "FR",
+    "phase": "extra",
+    "elements": 218,
+    "result": "cached"
+  },
+  {
+    "country": "FR",
+    "phase": "relations",
+    "elements": 0,
+    "result": "failed"
+  },
+  {
+    "country": "FR",
+    "phase": "speed",
+    "elements": 0,
+    "result": "failed"
+  },
+  {
+    "country": "ES",
+    "phase": "extra",
+    "elements": 18,
+    "result": "cached"
+  },
+  {
+    "country": "ES",
+    "phase": "relations",
+    "elements": 13201,
+    "result": "downloaded"
+  },
+  {
+    "country": "ES",
+    "phase": "speed",
+    "elements": 0,
+    "result": "failed"
+  },
+  {
+    "country": "DE",
+    "phase": "extra",
+    "elements": 414,
+    "result": "cached"
+  },
+  {
+    "country": "DE",
+    "phase": "relations",
+    "elements": 0,
+    "result": "failed"
+  },
+  {
+    "country": "DE",
+    "phase": "speed",
+    "elements": 0,
+    "result": "failed"
+  },
+  {
+    "country": "GB",
+    "phase": "extra",
+    "elements": 341,
+    "result": "cached"
+  },
+  {
+    "country": "GB",
+    "phase": "relations",
+    "elements": 2837,
+    "result": "downloaded"
+  },
+  {
+    "country": "GB",
+    "phase": "speed",
+    "elements": 3445,
+    "result": "cached"
+  },
+  {
+    "country": "PT",
+    "phase": "extra",
+    "elements": 2,
+    "result": "cached"
+  },
+  {
+    "country": "PT",
+    "phase": "relations",
+    "elements": 1274,
+    "result": "cached"
+  },
+  {
+    "country": "PT",
+    "phase": "speed",
+    "elements": 538,
+    "result": "downloaded"
+  },
+  {
+    "country": "IT",
+    "phase": "extra",
+    "elements": 412,
+    "result": "cached"
+  },
+  {
+    "country": "IT",
+    "phase": "relations",
+    "elements": 0,
+    "result": "failed"
+  },
+  {
+    "country": "IT",
+    "phase": "speed",
+    "elements": 0,
+    "result": "failed"
+  },
+  {
+    "country": "AT",
+    "phase": "extra",
+    "elements": 63,
+    "result": "cached"
+  },
+  {
+    "country": "AT",
+    "phase": "relations",
+    "elements": 0,
+    "result": "failed"
+  },
+  {
+    "country": "AT",
+    "phase": "speed",
+    "elements": 2133,
+    "result": "cached"
+  },
+  {
+    "country": "CH",
+    "phase": "extra",
+    "elements": 0,
+    "result": "cached"
+  },
+  {
+    "country": "CH",
+    "phase": "relations",
+    "elements": 0,
+    "result": "failed"
+  },
+  {
+    "country": "CH",
+    "phase": "speed",
+    "elements": 1240,
+    "result": "cached"
+  },
+  {
+    "country": "BE",
+    "phase": "extra",
+    "elements": 87,
+    "result": "cached"
+  },
+  {
+    "country": "BE",
+    "phase": "relations",
+    "elements": 0,
+    "result": "failed"
+  },
+  {
+    "country": "BE",
+    "phase": "speed",
+    "elements": 1902,
+    "result": "cached"
+  },
+  {
+    "country": "NL",
+    "phase": "extra",
+    "elements": 0,
+    "result": "cached"
+  },
+  {
+    "country": "NL",
+    "phase": "relations",
+    "elements": 0,
+    "result": "failed"
+  },
+  {
+    "country": "NL",
+    "phase": "speed",
+    "elements": 0,
+    "result": "failed"
+  },
+  {
+    "country": "SE",
+    "phase": "extra",
+    "elements": 0,
+    "result": "cached"
+  },
+  {
+    "country": "SE",
+    "phase": "relations",
+    "elements": 8124,
+    "result": "downloaded"
+  },
+  {
+    "country": "SE",
+    "phase": "speed",
+    "elements": 0,
+    "result": "failed"
+  },
+  {
+    "country": "NO",
+    "phase": "extra",
+    "elements": 1,
+    "result": "cached"
+  },
+  {
+    "country": "NO",
+    "phase": "relations",
+    "elements": 0,
+    "result": "failed"
+  },
+  {
+    "country": "NO",
+    "phase": "speed",
+    "elements": 0,
+    "result": "failed"
+  },
+  {
+    "country": "FI",
+    "phase": "extra",
+    "elements": 7,
+    "result": "cached"
+  },
+  {
+    "country": "FI",
+    "phase": "relations",
+    "elements": 0,
+    "result": "failed"
+  },
+  {
+    "country": "FI",
+    "phase": "speed",
+    "elements": 0,
+    "result": "failed"
+  },
+  {
+    "country": "CZ",
+    "phase": "extra",
+    "elements": 619,
+    "result": "cached"
+  },
+  {
+    "country": "CZ",
+    "phase": "relations",
+    "elements": 4089,
+    "result": "downloaded"
+  },
+  {
+    "country": "CZ",
+    "phase": "speed",
+    "elements": 1580,
+    "result": "downloaded"
+  },
+  {
+    "country": "HU",
+    "phase": "extra",
+    "elements": 58,
+    "result": "cached"
+  },
+  {
+    "country": "HU",
+    "phase": "relations",
+    "elements": 0,
+    "result": "failed"
+  },
+  {
+    "country": "HU",
+    "phase": "speed",
+    "elements": 1061,
+    "result": "downloaded"
+  },
+  {
+    "country": "RO",
+    "phase": "extra",
+    "elements": 6,
+    "result": "cached"
+  },
+  {
+    "country": "RO",
+    "phase": "relations",
+    "elements": 2126,
+    "result": "downloaded"
+  },
+  {
+    "country": "RO",
+    "phase": "speed",
+    "elements": 678,
+    "result": "downloaded"
+  },
+  {
+    "country": "HR",
+    "phase": "extra",
+    "elements": 7,
+    "result": "cached"
+  },
+  {
+    "country": "HR",
+    "phase": "relations",
+    "elements": 1452,
+    "result": "downloaded"
+  },
+  {
+    "country": "HR",
+    "phase": "speed",
+    "elements": 0,
+    "result": "failed"
+  },
+  {
+    "country": "SI",
+    "phase": "extra",
+    "elements": 5,
+    "result": "downloaded"
+  },
+  {
+    "country": "SI",
+    "phase": "relations",
+    "elements": 292,
+    "result": "downloaded"
+  },
+  {
+    "country": "SI",
+    "phase": "speed",
+    "elements": 556,
+    "result": "downloaded"
+  },
+  {
+    "country": "RS",
+    "phase": "extra",
+    "elements": 0,
+    "result": "failed"
+  },
+  {
+    "country": "RS",
+    "phase": "relations",
+    "elements": 0,
+    "result": "failed"
+  },
+  {
+    "country": "RS",
+    "phase": "speed",
+    "elements": 0,
+    "result": "failed"
+  },
+  {
+    "country": "BA",
+    "phase": "extra",
+    "elements": 0,
+    "result": "failed"
+  },
+  {
+    "country": "BA",
+    "phase": "relations",
+    "elements": 62,
+    "result": "downloaded"
+  },
+  {
+    "country": "BA",
+    "phase": "speed",
+    "elements": 459,
+    "result": "downloaded"
+  },
+  {
+    "country": "MK",
+    "phase": "extra",
+    "elements": 0,
+    "result": "cached"
+  },
+  {
+    "country": "MK",
+    "phase": "relations",
+    "elements": 0,
+    "result": "downloaded"
+  },
+  {
+    "country": "MK",
+    "phase": "speed",
+    "elements": 157,
+    "result": "downloaded"
+  },
+  {
+    "country": "GR",
+    "phase": "extra",
+    "elements": 12,
+    "result": "downloaded"
+  },
+  {
+    "country": "GR",
+    "phase": "relations",
+    "elements": 0,
+    "result": "failed"
+  },
+  {
+    "country": "GR",
+    "phase": "speed",
+    "elements": 0,
+    "result": "failed"
+  },
+  {
+    "country": "LT",
+    "phase": "extra",
+    "elements": 12,
+    "result": "downloaded"
+  },
+  {
+    "country": "LT",
+    "phase": "relations",
+    "elements": 0,
+    "result": "failed"
+  },
+  {
+    "country": "LT",
+    "phase": "speed",
+    "elements": 0,
+    "result": "failed"
+  },
+  {
+    "country": "XK",
+    "phase": "extra",
+    "elements": 0,
+    "result": "failed"
+  },
+  {
+    "country": "XK",
+    "phase": "relations",
+    "elements": 0,
+    "result": "downloaded"
+  },
+  {
+    "country": "XK",
+    "phase": "speed",
+    "elements": 128,
+    "result": "downloaded"
+  },
+  {
+    "country": "TR",
+    "phase": "extra",
+    "elements": 43,
+    "result": "downloaded"
+  },
+  {
+    "country": "TR",
+    "phase": "relations",
+    "elements": 111,
+    "result": "downloaded"
+  },
+  {
+    "country": "TR",
+    "phase": "speed",
+    "elements": 0,
+    "result": "failed"
+  },
+  {
+    "country": "AD",
+    "phase": "extra",
+    "elements": 0,
+    "result": "downloaded"
+  },
+  {
+    "country": "AD",
+    "phase": "relations",
+    "elements": 0,
+    "result": "failed"
+  },
+  {
+    "country": "AD",
+    "phase": "speed",
+    "elements": 11,
+    "result": "downloaded"
+  },
+  {
+    "country": "LI",
+    "phase": "extra",
+    "elements": 0,
+    "result": "failed"
+  },
+  {
+    "country": "LI",
+    "phase": "relations",
+    "elements": 117,
+    "result": "downloaded"
+  },
+  {
+    "country": "LI",
+    "phase": "speed",
+    "elements": 24,
+    "result": "downloaded"
+  },
+  {
+    "country": "MC",
+    "phase": "extra",
+    "elements": 0,
+    "result": "downloaded"
+  },
+  {
+    "country": "MC",
+    "phase": "relations",
+    "elements": 34,
+    "result": "downloaded"
+  },
+  {
+    "country": "MC",
+    "phase": "speed",
+    "elements": 7,
+    "result": "downloaded"
+  },
+  {
+    "country": "SM",
+    "phase": "extra",
+    "elements": 0,
+    "result": "downloaded"
+  },
+  {
+    "country": "SM",
+    "phase": "relations",
+    "elements": 0,
+    "result": "failed"
+  },
+  {
+    "country": "SM",
+    "phase": "speed",
+    "elements": 0,
+    "result": "failed"
+  },
+  {
+    "country": "VA",
+    "phase": "extra",
+    "elements": 0,
+    "result": "failed"
+  },
+  {
+    "country": "VA",
+    "phase": "relations",
+    "elements": 0,
+    "result": "failed"
+  },
+  {
+    "country": "VA",
+    "phase": "speed",
+    "elements": 0,
+    "result": "downloaded"
+  },
+  {
+    "country": "RU",
+    "phase": "extra",
+    "elements": 0,
+    "result": "failed"
+  },
+  {
+    "country": "RU",
+    "phase": "relations",
+    "elements": 0,
+    "result": "failed"
+  },
+  {
+    "country": "RU",
+    "phase": "speed",
+    "elements": 0,
+    "result": "failed"
+  },
+  {
+    "country": "BY",
+    "phase": "extra",
+    "elements": 4198,
+    "result": "downloaded"
+  },
+  {
+    "country": "BY",
+    "phase": "relations",
+    "elements": 0,
+    "result": "failed"
+  },
+  {
+    "country": "BY",
+    "phase": "speed",
+    "elements": 918,
+    "result": "downloaded"
+  },
+  {
+    "country": "GE",
+    "phase": "extra",
+    "elements": 275,
+    "result": "downloaded"
+  },
+  {
+    "country": "GE",
+    "phase": "relations",
+    "elements": 5,
+    "result": "downloaded"
+  },
+  {
+    "country": "GE",
+    "phase": "speed",
+    "elements": 0,
+    "result": "failed"
+  },
+  {
+    "country": "AM",
+    "phase": "extra",
+    "elements": 0,
+    "result": "failed"
+  },
+  {
+    "country": "AM",
+    "phase": "relations",
+    "elements": 37,
+    "result": "downloaded"
+  },
+  {
+    "country": "AM",
+    "phase": "speed",
+    "elements": 0,
+    "result": "failed"
+  },
+  {
+    "country": "AZ",
+    "phase": "extra",
+    "elements": 0,
+    "result": "failed"
+  },
+  {
+    "country": "AZ",
+    "phase": "relations",
+    "elements": 85,
+    "result": "downloaded"
+  },
+  {
+    "country": "AZ",
+    "phase": "speed",
+    "elements": 861,
+    "result": "downloaded"
+  },
+  {
+    "country": "IM",
+    "phase": "extra",
+    "elements": 0,
+    "result": "failed"
+  },
+  {
+    "country": "IM",
+    "phase": "relations",
+    "elements": 0,
+    "result": "downloaded"
+  },
+  {
+    "country": "IM",
+    "phase": "speed",
+    "elements": 0,
+    "result": "downloaded"
+  },
+  {
+    "country": "JE",
+    "phase": "extra",
+    "elements": 0,
+    "result": "failed"
+  },
+  {
+    "country": "JE",
+    "phase": "relations",
+    "elements": 0,
+    "result": "downloaded"
+  },
+  {
+    "country": "JE",
+    "phase": "speed",
+    "elements": 0,
+    "result": "downloaded"
+  },
+  {
+    "country": "GG",
+    "phase": "extra",
+    "elements": 0,
+    "result": "downloaded"
+  },
+  {
+    "country": "GG",
+    "phase": "relations",
+    "elements": 0,
+    "result": "failed"
+  },
+  {
+    "country": "GG",
+    "phase": "speed",
+    "elements": 0,
+    "result": "failed"
+  },
+  {
+    "country": "FO",
+    "phase": "extra",
+    "elements": 0,
+    "result": "downloaded"
+  },
+  {
+    "country": "FO",
+    "phase": "relations",
+    "elements": 0,
+    "result": "failed"
+  },
+  {
+    "country": "FO",
+    "phase": "speed",
+    "elements": 0,
+    "result": "downloaded"
+  },
+  {
+    "country": "GI",
+    "phase": "extra",
+    "elements": 0,
+    "result": "downloaded"
+  },
+  {
+    "country": "GI",
+    "phase": "relations",
+    "elements": 0,
+    "result": "downloaded"
+  },
+  {
+    "country": "GI",
+    "phase": "speed",
+    "elements": 0,
+    "result": "failed"
+  },
+  {
+    "country": "AX",
+    "phase": "extra",
+    "elements": 0,
+    "result": "downloaded"
+  },
+  {
+    "country": "AX",
+    "phase": "relations",
+    "elements": 0,
+    "result": "failed"
+  },
+  {
+    "country": "AX",
+    "phase": "speed",
+    "elements": 0,
+    "result": "downloaded"
+  }
+]

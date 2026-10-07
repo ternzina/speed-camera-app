@@ -1,0 +1,26 @@
+[
+  {
+    "canonical_id": "OSM_DE:node/7341608278",
+    "reason": "Current primary OSM evidence changed or could not be confirmed; expansion-only observation withheld"
+  },
+  {
+    "canonical_id": "OSM_IT:node/2519332258",
+    "reason": "Current primary OSM evidence changed or could not be confirmed; expansion-only observation withheld"
+  },
+  {
+    "canonical_id": "OSM_RU:node/13326225100",
+    "reason": "Current primary OSM evidence changed or could not be confirmed; expansion-only observation withheld"
+  },
+  {
+    "canonical_id": "OSM_RU:node/13326286601",
+    "reason": "Current primary OSM evidence changed or could not be confirmed; expansion-only observation withheld"
+  },
+  {
+    "canonical_id": "OSM_RU:node/13326286602",
+    "reason": "Current primary OSM evidence changed or could not be confirmed; expansion-only observation withheld"
+  },
+  {
+    "canonical_id": "OSM_RU:node/13326286603",
+    "reason": "Current primary OSM evidence changed or could not be confirmed; expansion-only observation withheld"
+  }
+]

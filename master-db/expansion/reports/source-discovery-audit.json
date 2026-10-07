@@ -1,0 +1,128 @@
+{
+  "scope": "Europe including whole-country transcontinental/Caucasus partitions, USA and Canada; fixed speed, red-light, combined, and explicitly ordered average-speed sections",
+  "catalog_searches": {
+    "arcgis_multilingual_queries": 28,
+    "arcgis_distinct_initial_items": 798,
+    "socrata_initial_queries": 9,
+    "socrata_distinct_initial_items": 1181,
+    "country_arcgis_searches": 47,
+    "additional_channels": [
+      "Data.gov",
+      "data.gov.uk",
+      "data.europa.eu",
+      "national CKAN portals",
+      "government GIS/WFS",
+      "official road agencies",
+      "GitHub upstream license checks",
+      "OSM additional tags and relations",
+      "current primary OSM parent membership"
+    ]
+  },
+  "excluded_or_held_sources": [
+    {
+      "source": "Cornwall camera GIS",
+      "reason": "Explicit noncommercial and automated extraction/redistribution restrictions; excluded"
+    },
+    {
+      "source": "Essex collision/safety cameras",
+      "url": "https://data.essex.gov.uk/dataset/collision-data-and-safety-camera-locations-vd36l",
+      "reason": "Dataset-specific noncommercial license overrides generic council OGL; excluded"
+    },
+    {
+      "source": "UK DfT 2015 speed camera locations",
+      "url": "https://www.data.gov.uk/dataset/d9a46353-ed30-483e-913f-4283d232d044/speed-camera-locations",
+      "reason": "License not set and no usable download; excluded"
+    },
+    {
+      "source": "Greater Manchester camera CSV",
+      "url": "https://www.data.gov.uk/dataset/c428ea7f-af17-451c-8657-8e15621490ab/speed-camera-locations-in-greater-manchester",
+      "reason": "OGL; downloaded fixed-housing list is dated 2016 and contains addresses, not camera GPS. No invented/geocoded production pins"
+    },
+    {
+      "source": "Kent/Hertfordshire/Lincolnshire/Scotland GIS",
+      "reason": "No explicit reuse license confirmed in the inspected camera datasets; not imported"
+    },
+    {
+      "source": "Arlington Virginia GIS",
+      "url": "https://data.arlingtonva.us/",
+      "reason": "Camera datasets found; current camera-data reuse terms could not be verified from primary source. Generic county copyright and stale third-party licensing claims do not establish current permission"
+    },
+    {
+      "source": "Prince George's County speed/red-light datasets",
+      "reason": "Custom reuse terms require prominent full disclaimer and reserve termination; not treated as unrestricted data and not automatically published"
+    },
+    {
+      "source": "Connecticut work-zone camera GIS",
+      "reason": "Approximate historical work-zone locations, inactive status and unclear reuse license; excluded"
+    },
+    {
+      "source": "Suffolk old red-light service",
+      "reason": "Historical service has no usable current layer; excluded"
+    },
+    {
+      "source": "New York City violation feeds",
+      "reason": "No verified device GPS feed found; intersection/address geocoding and third-party mirror counts are not substituted for actual camera positions"
+    },
+    {
+      "source": "British Columbia 2025 ISC violations",
+      "url": "https://catalogue.data.gov.bc.ca/dataset/intersection-safety-camera-violation-tickets-by-location",
+      "reason": "OGL-BC; downloaded CSV contains municipalities/intersection names and counts but no camera GPS. No invented coordinates"
+    },
+    {
+      "source": "Brussels average-speed GIS",
+      "url": "https://data.mobility.brussels/fr/info/controletrajet/",
+      "reason": "Catalog license says internal data (Données internes), not CC0; excluded despite a publicly reachable service"
+    },
+    {
+      "source": "GitHub Open-GATSO-POI",
+      "url": "https://github.com/1e1/Open-GATSO-POI",
+      "reason": "MIT code does not license every upstream camera dataset. France source already present; other upstream license unclear"
+    },
+    {
+      "source": "Generic traffic CCTV, ALPR, weather radar and traffic count datasets",
+      "reason": "Not speed/red-light enforcement cameras; excluded"
+    }
+  ],
+  "priority_country_findings": {
+    "IE": "Garda publishes 1901 mobile enforcement zones, not 1901 installed fixed cameras; do not inflate camera count with patrol zones. Primary parent discovery completed.",
+    "DK": "Official cabinet locations and planned expansion found; future deployments are not counted as active camera GPS. Primary parent discovery completed.",
+    "IS": "Additional OSM enforcement relations and precise role nodes acquired and current primary membership checked; stale unconfirmed additions were discarded, not published.",
+    "SK": "Proposed camera rollout is not evidence of installed active cameras; broad bbox output clipped to country polygon.",
+    "BG": "BG-Toll publishes section-control maps and traffic/weather data, but an explicit reusable camera-section coordinate license was not confirmed. Primary OSM membership discovery completed.",
+    "AL": "Broad OSM speed/tag/relation passes and current membership search completed; neighboring-country nodes discarded.",
+    "ME": "Broad OSM passes and current membership search completed; CCTV/patrol locations not promoted to fixed cameras.",
+    "LU": "PCH licensed CC0 device points acquired; ambiguous device modes remain LOW. Current parent enforcement discovery completed.",
+    "LV": "Current parent membership revealed additional explicitly ordered average-speed sections; imported after deduplication and primary API verification.",
+    "EE": "Official agency cabinet totals and Tark Tee GIS reviewed; no guessed additional pins or unverified GIS license. Primary membership discovery completed.",
+    "MD": "Additional OSM predicates and current membership search completed; surveillance maps not assumed to be licensed speed-camera feeds.",
+    "CY": "Official CC-BY DATEX installed-equipment feed acquired; missing individual enforcement mode remains LOW, separate from published OSM observations.",
+    "MT": "Additional speed/enforcement queries and current membership search completed; statistical counts are not camera GPS."
+  },
+  "zero_growth_interpretation": "No additional eligible unique source objects found in the completed acquisitions; not proof that no undiscovered cameras exist.",
+  "freshness_policy": "Overpass snapshot timestamps are preserved, not assumed current. Newly publishable OSM IDs and explicit relation/device/endpoints are re-fetched through the current primary OSM API. Original 50141 records are never refreshed or changed during this expansion.",
+  "additional_verified_government_sources": [
+    {
+      "source": "Madrid radars and red-light cameras",
+      "license": "CC BY 4.0",
+      "coordinates": "Publisher GPS; average-speed endpoints are explicit",
+      "sources": [
+        "https://datos.madrid.es/dataset/300049-0-radares-fijos-moviles",
+        "https://datos.madrid.es/dataset/205193-0-semaforos-foto-rojo"
+      ]
+    },
+    {
+      "source": "San Francisco Automated Speed Enforcement Citations",
+      "license": "PDDL-1.0",
+      "stable_id": "site_id",
+      "downloaded_unique_sites": 56,
+      "result": "All 56 source identities/spatial observations already represented; no duplicate rows appended",
+      "source_url": "https://data.sf.gov/d/d5uh-bk84",
+      "license_evidence": "https://catalog.data.gov/dataset/automated-speed-enforcement-citations"
+    }
+  ],
+  "sf_portal_migration": {
+    "old": "data.sfgov.org",
+    "current": "data.sf.gov",
+    "current_metadata_verified": true
+  }
+}

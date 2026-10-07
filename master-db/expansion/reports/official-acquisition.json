@@ -1,0 +1,9 @@
+{
+  "sources": 21,
+  "failures": [
+    {
+      "source": "US_SFMTA_RLC",
+      "error": "Source URL changed; a fresh acquisition is required"
+    }
+  ]
+}

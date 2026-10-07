@@ -1,0 +1,228 @@
+{
+  "captured_at": "2026-10-07T04:38:55.024066+00:00",
+  "stored": 50141,
+  "published": 45061,
+  "countries": [
+    {
+      "country_code": "AD",
+      "stored": 11,
+      "published": 11
+    },
+    {
+      "country_code": "AL",
+      "stored": 2,
+      "published": 2
+    },
+    {
+      "country_code": "AT",
+      "stored": 1526,
+      "published": 1500
+    },
+    {
+      "country_code": "BA",
+      "stored": 246,
+      "published": 246
+    },
+    {
+      "country_code": "BE",
+      "stored": 1969,
+      "published": 1689
+    },
+    {
+      "country_code": "BG",
+      "stored": 77,
+      "published": 77
+    },
+    {
+      "country_code": "CA",
+      "stored": 1485,
+      "published": 1114
+    },
+    {
+      "country_code": "CH",
+      "stored": 728,
+      "published": 710
+    },
+    {
+      "country_code": "CY",
+      "stored": 74,
+      "published": 74
+    },
+    {
+      "country_code": "CZ",
+      "stored": 1318,
+      "published": 1318
+    },
+    {
+      "country_code": "DE",
+      "stored": 5819,
+      "published": 5793
+    },
+    {
+      "country_code": "DK",
+      "stored": 24,
+      "published": 24
+    },
+    {
+      "country_code": "EE",
+      "stored": 85,
+      "published": 85
+    },
+    {
+      "country_code": "ES",
+      "stored": 3670,
+      "published": 3213
+    },
+    {
+      "country_code": "FI",
+      "stored": 954,
+      "published": 951
+    },
+    {
+      "country_code": "FR",
+      "stored": 6654,
+      "published": 6221
+    },
+    {
+      "country_code": "GB",
+      "stored": 3627,
+      "published": 3415
+    },
+    {
+      "country_code": "GR",
+      "stored": 413,
+      "published": 411
+    },
+    {
+      "country_code": "HR",
+      "stored": 966,
+      "published": 965
+    },
+    {
+      "country_code": "HU",
+      "stored": 540,
+      "published": 540
+    },
+    {
+      "country_code": "IE",
+      "stored": 25,
+      "published": 15
+    },
+    {
+      "country_code": "IS",
+      "stored": 28,
+      "published": 20
+    },
+    {
+      "country_code": "IT",
+      "stored": 6084,
+      "published": 6010
+    },
+    {
+      "country_code": "LI",
+      "stored": 8,
+      "published": 8
+    },
+    {
+      "country_code": "LT",
+      "stored": 558,
+      "published": 370
+    },
+    {
+      "country_code": "LU",
+      "stored": 54,
+      "published": 37
+    },
+    {
+      "country_code": "LV",
+      "stored": 139,
+      "published": 135
+    },
+    {
+      "country_code": "MC",
+      "stored": 6,
+      "published": 6
+    },
+    {
+      "country_code": "MD",
+      "stored": 79,
+      "published": 79
+    },
+    {
+      "country_code": "ME",
+      "stored": 13,
+      "published": 13
+    },
+    {
+      "country_code": "MK",
+      "stored": 167,
+      "published": 164
+    },
+    {
+      "country_code": "MT",
+      "stored": 22,
+      "published": 22
+    },
+    {
+      "country_code": "NL",
+      "stored": 1024,
+      "published": 645
+    },
+    {
+      "country_code": "NO",
+      "stored": 692,
+      "published": 525
+    },
+    {
+      "country_code": "PL",
+      "stored": 2632,
+      "published": 897
+    },
+    {
+      "country_code": "PT",
+      "stored": 338,
+      "published": 328
+    },
+    {
+      "country_code": "RO",
+      "stored": 336,
+      "published": 330
+    },
+    {
+      "country_code": "RS",
+      "stored": 458,
+      "published": 426
+    },
+    {
+      "country_code": "SE",
+      "stored": 2471,
+      "published": 2471
+    },
+    {
+      "country_code": "SI",
+      "stored": 278,
+      "published": 277
+    },
+    {
+      "country_code": "SK",
+      "stored": 68,
+      "published": 68
+    },
+    {
+      "country_code": "TR",
+      "stored": 692,
+      "published": 659
+    },
+    {
+      "country_code": "UA",
+      "stored": 847,
+      "published": 426
+    },
+    {
+      "country_code": "US",
+      "stored": 2934,
+      "published": 2771
+    }
+  ],
+  "database_snapshot_sha256": "bd5b83bfd49d171b775f965b7febb2fd4e19770e3a962b443e329ecd9d11d4d0"
+}

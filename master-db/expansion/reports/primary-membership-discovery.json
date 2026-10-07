@@ -1,0 +1,71 @@
+{
+  "nodes_queried": 672,
+  "countries": [
+    {
+      "country": "AL",
+      "relations": 0,
+      "explicit_nodes": 0
+    },
+    {
+      "country": "BG",
+      "relations": 29,
+      "explicit_nodes": 60
+    },
+    {
+      "country": "CY",
+      "relations": 4,
+      "explicit_nodes": 8
+    },
+    {
+      "country": "DK",
+      "relations": 2,
+      "explicit_nodes": 0
+    },
+    {
+      "country": "EE",
+      "relations": 57,
+      "explicit_nodes": 160
+    },
+    {
+      "country": "IE",
+      "relations": 5,
+      "explicit_nodes": 20
+    },
+    {
+      "country": "IS",
+      "relations": 12,
+      "explicit_nodes": 21
+    },
+    {
+      "country": "LU",
+      "relations": 54,
+      "explicit_nodes": 89
+    },
+    {
+      "country": "LV",
+      "relations": 22,
+      "explicit_nodes": 76
+    },
+    {
+      "country": "MD",
+      "relations": 0,
+      "explicit_nodes": 0
+    },
+    {
+      "country": "ME",
+      "relations": 0,
+      "explicit_nodes": 0
+    },
+    {
+      "country": "MT",
+      "relations": 3,
+      "explicit_nodes": 6
+    },
+    {
+      "country": "SK",
+      "relations": 18,
+      "explicit_nodes": 51
+    }
+  ],
+  "failures": []
+}

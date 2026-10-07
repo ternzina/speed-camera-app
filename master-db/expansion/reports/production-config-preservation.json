@@ -1,0 +1,27 @@
+[
+  {
+    "path": "app.json",
+    "sha256": "b96dcfca65c8b979a9fa44cd520dfd30e94ebe5597e6b6e6ac40a23293af613f",
+    "unchanged": true
+  },
+  {
+    "path": "eas.json",
+    "sha256": "013b95fcfc4f1c343757173f7de6432a095ad858e3cb6b4e67c730bb47046302",
+    "unchanged": true
+  },
+  {
+    "path": "package.json",
+    "sha256": "7c559d55bc413ab05d2fc859475e95c3a87fb5c1dfbfb53171ef40b9edc8584d",
+    "unchanged": true
+  },
+  {
+    "path": "package-lock.json",
+    "sha256": "9a4a76aa0cb4d485c480ab78b4248dc8a81bf2a974a23803c3cc2bd0b2560bf0",
+    "unchanged": true
+  },
+  {
+    "path": "App.js",
+    "sha256": "1d9f9ff305c83039b10ea578c1236cdbb190e350901d4436a89ce4219c0a0d03",
+    "unchanged": true
+  }
+]
