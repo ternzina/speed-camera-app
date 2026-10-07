@@ -1,0 +1,28 @@
+{
+  "checked_at": "2026-10-07T07:17:50.372364+00:00",
+  "branch": "main",
+  "commit": "5db5ceb225250049e553bd49811cba09c012a7c3",
+  "tracked_files": 133,
+  "history_blobs_checked": 185,
+  "forbidden_files_in_head": [],
+  "secret_findings": [],
+  "excluded_actual_sensitive_files": [
+    ".env.bootstrap",
+    "@bembi26__speed-camera-prototype-direction.jks",
+    "@bembi26__speed-camera-prototype-direction_OLD_1.jks"
+  ],
+  "excluded_local_paths": [
+    ".env.bootstrap",
+    "*.jks",
+    "node_modules/",
+    ".expo/",
+    ".bootstrap-venv/",
+    "master-db/raw/",
+    "master-db/cache/",
+    "master-db/backups/",
+    "*.backup-*",
+    "*.before-*",
+    "build artifacts"
+  ],
+  "note": "Previously published small non-secret server backups were removed from the current tree; unpublished bootstrap backup commit kept only on a local branch."
+}
