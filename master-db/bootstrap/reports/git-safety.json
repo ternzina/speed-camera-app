@@ -1,11 +1,16 @@
 {
-  "checked_at": "2026-10-06T23:15:52.291683+00:00",
+  "checked_at": "2026-10-07T00:06:39.282310+00:00",
   "branch": "main",
-  "commit": "ead8cdf97291247614b742bd07188ea4d2346a67",
-  "tracked_files": 55,
-  "history_blobs_checked": 62,
+  "commit": "41745940c6e6288f8481263870d60cc5c5c56daa",
+  "tracked_files": 83,
+  "history_blobs_checked": 125,
   "forbidden_files_in_head": [],
   "secret_findings": [],
+  "excluded_actual_sensitive_files": [
+    ".env.bootstrap",
+    "@bembi26__speed-camera-prototype-direction.jks",
+    "@bembi26__speed-camera-prototype-direction_OLD_1.jks"
+  ],
   "excluded_local_paths": [
     ".env.bootstrap",
     "*.jks",
