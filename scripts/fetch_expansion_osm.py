@@ -7,9 +7,12 @@ ROOT=Path(__file__).resolve().parents[1];CACHE=ROOT/'master-db/cache/expansion/o
 NEW={'RU':'Russia','BY':'Belarus','GE':'Georgia','AM':'Armenia','AZ':'Azerbaijan','IM':'Isle of Man','JE':'Jersey','GG':'Guernsey','FO':'Faroe Islands','GI':'Gibraltar','AX':'Åland Islands'}
 COUNTRIES.update(NEW)
 EXTRA='[enforcement];node(area.a)[speed_camera];node(area.a)["traffic_signals:camera"];node(area.a)["traffic_signals:red_light_camera"];node(area.a)[red_light_camera];node(area.a)["camera:enforcement"];node(area.a)["surveillance:purpose"="traffic_enforcement"];node(area.a)["surveillance:type"="speed_camera"];node(area.a)["camera:type"~"^(speed|red_light|average_speed|section_control)$"]'
-def fetch(code,relations=False,speed=False,compact=False):
+def fetch(code,relations=False,speed=False,compact=False,refresh=False):
  path=CACHE/(code+('-speed-refresh' if speed else '-relations' if relations else '')+'.json')
- if path.exists():
+ if path.exists() and refresh:
+  import hashlib
+  backup=ROOT/'master-db/backups/source-refresh'/(path.stem+'-'+hashlib.sha256(path.read_bytes()).hexdigest()+'.json');backup.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(path,backup)
+ if path.exists() and not refresh:
   cached=json.loads(path.read_text())
   if not compact or cached['elements']:return code,len(cached['elements']),'cached'
   backup=ROOT/'master-db/backups/expansion/osm'/(code+'-relations-empty.json');backup.parent.mkdir(parents=True,exist_ok=True)
@@ -54,7 +57,7 @@ def fetch(code,relations=False,speed=False,compact=False):
    errors.append(str(e));print(code,'endpoint failed',str(e)[:100],flush=True)
    if 'Connection refused' not in str(e):time.sleep(5)
  (CACHE/(code+'.error.json')).write_text(json.dumps(errors));return code,0,'failed'
-def acquire(countries=None,resume=False):
+def acquire(countries=None,resume=False,refresh=False):
  from fetch_osm import boxes
  countries=countries or list(COUNTRIES)
  jobs=[];results=[]
@@ -70,7 +73,7 @@ def acquire(countries=None,resume=False):
   checkpoint=journal/(job[0]+'-'+job[1]+'.json')
   suffix='-relations' if job[1]=='relations' else '-speed-refresh' if job[1]=='speed' else ''
   if resume and checkpoint.exists() and json.loads(checkpoint.read_text())['result']=='failed' and not (CACHE/(job[0]+suffix+'.json')).exists():return json.loads(checkpoint.read_text())
-  code,phase=job;c,n,state=fetch(code,relations=phase=='relations',speed=phase=='speed')
+  code,phase=job;c,n,state=fetch(code,relations=phase=='relations',speed=phase=='speed',refresh=refresh)
   result={'country':c,'phase':phase,'elements':n,'result':state}
   # Each distinct phase owns its checkpoint; interrupted catalog runs resume safely.
   checkpoint.write_text(json.dumps(result))

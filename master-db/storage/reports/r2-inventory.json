@@ -1,0 +1,11 @@
+{
+  "prefix": "archive/v1/",
+  "cold_objects": 257,
+  "stored_bytes": 107559818,
+  "public_delivery_objects": 50,
+  "public_delivery_records": 59270,
+  "source_observation_records_including_history": 113890,
+  "full_candidates_r2_only": 5864,
+  "initial_raw_history_files": 1539,
+  "list_complete": true
+}

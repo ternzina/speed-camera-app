@@ -16,7 +16,7 @@ class ExpansionSafety(unittest.TestCase):
                 if query.startswith('select s.code,l.external_id'):return [('OSM_BE','node/3')]
                 raise AssertionError('Unexpected operation')
         record={'canonical_id':'new-alias','camera_sources':[{'source_code':'OSM_BE','source_id':'node/3'}]}
-        with patch.object(update_cameras,'connect',return_value=Connection()):
+        with patch('cold_storage_pipeline.enabled',return_value=False),patch.object(update_cameras,'connect',return_value=Connection()):
             with self.assertRaisesRegex(AssertionError,'existing source identity'):update_cameras.sync([record],append_only=True)
     def test_government_section_requires_explicit_start(self):
         source=dict(code='TEST',country_code='ES',name='Test',source_url='https://example.org',license='CC0',license_url='https://example.org/license',id_fields=['id'],camera_type='average_speed_section',start_latitude_field='start_lat',start_longitude_field='start_lon')
@@ -68,7 +68,7 @@ class ExpansionSafety(unittest.TestCase):
                 return [('already-present',)]
             def assert_read(self,query):
                 if not query.startswith('select canonical_id from'):raise AssertionError('Unexpected operation')
-        with patch.object(update_cameras,'connect',return_value=Connection()):
+        with patch('cold_storage_pipeline.enabled',return_value=False),patch.object(update_cameras,'connect',return_value=Connection()):
             with self.assertRaisesRegex(AssertionError,'cannot modify existing'):
                 update_cameras.sync([{'canonical_id':'already-present'}],append_only=True)
     def test_explicit_alias_preserves_original_tags(self):

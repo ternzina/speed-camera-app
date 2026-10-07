@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-10-07T07:36:09.864Z",
+  "checked_at": "2026-10-07T08:52:25.497Z",
   "delivery_url": "https://speed-camera-data.ternzina.workers.dev",
   "objects_uploaded": 50,
   "total_records": 59270,
@@ -692,8 +692,5 @@
       "encoding": "gzip",
       "result": "passed"
     }
-  ],
-  "bucket_objects_verified": 50,
-  "bucket_metadata_verified": true,
-  "unexpected_objects": []
+  ]
 }

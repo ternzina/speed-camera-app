@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-10-07T07:31:50.613278+00:00",
-  "database_fingerprint": "7b8495478fba497faf8ca9db9e800dd3",
+  "generated_at": "2026-10-07T08:51:21.070323+00:00",
+  "database_fingerprint": "7da72edb816614ca6955db1890e67d87",
   "published_records": 59270,
   "countries": 49,
   "country_checks": [
@@ -400,229 +400,229 @@
   "compression": [
     {
       "country_code": "AD",
-      "legacy_json_bytes": 10653,
+      "legacy_json_bytes": 6774,
       "compact_json_bytes": 2373,
       "gzip_bytes": 593
     },
     {
       "country_code": "AL",
-      "legacy_json_bytes": 2351,
+      "legacy_json_bytes": 1644,
       "compact_json_bytes": 624,
       "gzip_bytes": 294
     },
     {
       "country_code": "AM",
-      "legacy_json_bytes": 255725,
+      "legacy_json_bytes": 156809,
       "compact_json_bytes": 52880,
       "gzip_bytes": 6722
     },
     {
       "country_code": "AT",
-      "legacy_json_bytes": 1369079,
+      "legacy_json_bytes": 837511,
       "compact_json_bytes": 274220,
       "gzip_bytes": 34676
     },
     {
       "country_code": "AZ",
-      "legacy_json_bytes": 631053,
+      "legacy_json_bytes": 385892,
       "compact_json_bytes": 120677,
       "gzip_bytes": 13893
     },
     {
       "country_code": "BA",
-      "legacy_json_bytes": 225127,
+      "legacy_json_bytes": 137716,
       "compact_json_bytes": 45183,
       "gzip_bytes": 5933
     },
     {
       "country_code": "BE",
-      "legacy_json_bytes": 1561585,
+      "legacy_json_bytes": 958804,
       "compact_json_bytes": 323385,
       "gzip_bytes": 39561
     },
     {
       "country_code": "BG",
-      "legacy_json_bytes": 70904,
+      "legacy_json_bytes": 43682,
       "compact_json_bytes": 14403,
       "gzip_bytes": 2318
     },
     {
       "country_code": "BY",
-      "legacy_json_bytes": 521796,
+      "legacy_json_bytes": 320667,
       "compact_json_bytes": 111856,
       "gzip_bytes": 14436
     },
     {
       "country_code": "CA",
-      "legacy_json_bytes": 1263236,
+      "legacy_json_bytes": 794441,
       "compact_json_bytes": 251917,
       "gzip_bytes": 37331
     },
     {
       "country_code": "CH",
-      "legacy_json_bytes": 647493,
+      "legacy_json_bytes": 394896,
       "compact_json_bytes": 126408,
       "gzip_bytes": 16702
     },
     {
       "country_code": "CY",
-      "legacy_json_bytes": 68290,
+      "legacy_json_bytes": 41988,
       "compact_json_bytes": 13718,
       "gzip_bytes": 1617
     },
     {
       "country_code": "CZ",
-      "legacy_json_bytes": 1793893,
+      "legacy_json_bytes": 1101506,
       "compact_json_bytes": 376833,
       "gzip_bytes": 43584
     },
     {
       "country_code": "DE",
-      "legacy_json_bytes": 5278322,
+      "legacy_json_bytes": 3218671,
       "compact_json_bytes": 1069734,
       "gzip_bytes": 137755
     },
     {
       "country_code": "DK",
-      "legacy_json_bytes": 22405,
+      "legacy_json_bytes": 13956,
       "compact_json_bytes": 4821,
       "gzip_bytes": 854
     },
     {
       "country_code": "EE",
-      "legacy_json_bytes": 79168,
+      "legacy_json_bytes": 49176,
       "compact_json_bytes": 18024,
       "gzip_bytes": 2479
     },
     {
       "country_code": "ES",
-      "legacy_json_bytes": 3110708,
+      "legacy_json_bytes": 1937623,
       "compact_json_bytes": 666458,
       "gzip_bytes": 78819
     },
     {
       "country_code": "FI",
-      "legacy_json_bytes": 867137,
+      "legacy_json_bytes": 530269,
       "compact_json_bytes": 172420,
       "gzip_bytes": 20941
     },
     {
       "country_code": "FR",
-      "legacy_json_bytes": 6289749,
+      "legacy_json_bytes": 3941609,
       "compact_json_bytes": 1135124,
       "gzip_bytes": 149665
     },
     {
       "country_code": "GB",
-      "legacy_json_bytes": 3370239,
+      "legacy_json_bytes": 2069449,
       "compact_json_bytes": 677199,
       "gzip_bytes": 85848
     },
     {
       "country_code": "GE",
-      "legacy_json_bytes": 189860,
+      "legacy_json_bytes": 116470,
       "compact_json_bytes": 38153,
       "gzip_bytes": 4836
     },
     {
       "country_code": "GR",
-      "legacy_json_bytes": 375870,
+      "legacy_json_bytes": 230207,
       "compact_json_bytes": 69380,
       "gzip_bytes": 7985
     },
     {
       "country_code": "HR",
-      "legacy_json_bytes": 867860,
+      "legacy_json_bytes": 524727,
       "compact_json_bytes": 174165,
       "gzip_bytes": 22556
     },
     {
       "country_code": "HU",
-      "legacy_json_bytes": 493134,
+      "legacy_json_bytes": 301123,
       "compact_json_bytes": 98516,
       "gzip_bytes": 12438
     },
     {
       "country_code": "IE",
-      "legacy_json_bytes": 15400,
+      "legacy_json_bytes": 10015,
       "compact_json_bytes": 4146,
       "gzip_bytes": 858
     },
     {
       "country_code": "IS",
-      "legacy_json_bytes": 19162,
+      "legacy_json_bytes": 12027,
       "compact_json_bytes": 4183,
       "gzip_bytes": 767
     },
     {
       "country_code": "IT",
-      "legacy_json_bytes": 5515171,
+      "legacy_json_bytes": 3377100,
       "compact_json_bytes": 1086207,
       "gzip_bytes": 135116
     },
     {
       "country_code": "LI",
-      "legacy_json_bytes": 7779,
+      "legacy_json_bytes": 4970,
       "compact_json_bytes": 1645,
       "gzip_bytes": 445
     },
     {
       "country_code": "LT",
-      "legacy_json_bytes": 370529,
+      "legacy_json_bytes": 236701,
       "compact_json_bytes": 94274,
       "gzip_bytes": 10429
     },
     {
       "country_code": "LU",
-      "legacy_json_bytes": 35382,
+      "legacy_json_bytes": 22314,
       "compact_json_bytes": 8391,
       "gzip_bytes": 1323
     },
     {
       "country_code": "LV",
-      "legacy_json_bytes": 143891,
+      "legacy_json_bytes": 88743,
       "compact_json_bytes": 29832,
       "gzip_bytes": 3864
     },
     {
       "country_code": "MC",
-      "legacy_json_bytes": 6057,
+      "legacy_json_bytes": 3950,
       "compact_json_bytes": 1437,
       "gzip_bytes": 453
     },
     {
       "country_code": "MD",
-      "legacy_json_bytes": 72617,
+      "legacy_json_bytes": 44637,
       "compact_json_bytes": 13736,
       "gzip_bytes": 1816
     },
     {
       "country_code": "ME",
-      "legacy_json_bytes": 12377,
+      "legacy_json_bytes": 7777,
       "compact_json_bytes": 2397,
       "gzip_bytes": 566
     },
     {
       "country_code": "MK",
-      "legacy_json_bytes": 150588,
+      "legacy_json_bytes": 92269,
       "compact_json_bytes": 28586,
       "gzip_bytes": 3394
     },
     {
       "country_code": "MT",
-      "legacy_json_bytes": 20554,
+      "legacy_json_bytes": 12789,
       "compact_json_bytes": 4325,
       "gzip_bytes": 802
     },
     {
       "country_code": "NL",
-      "legacy_json_bytes": 598987,
+      "legacy_json_bytes": 370132,
       "compact_json_bytes": 130185,
       "gzip_bytes": 16216
     },
     {
       "country_code": "NO",
-      "legacy_json_bytes": 579592,
+      "legacy_json_bytes": 340116,
       "compact_json_bytes": 94003,
       "gzip_bytes": 11499
     },
@@ -634,49 +634,49 @@
     },
     {
       "country_code": "PT",
-      "legacy_json_bytes": 314507,
+      "legacy_json_bytes": 192514,
       "compact_json_bytes": 65282,
       "gzip_bytes": 8117
     },
     {
       "country_code": "RO",
-      "legacy_json_bytes": 306939,
+      "legacy_json_bytes": 188710,
       "compact_json_bytes": 69670,
       "gzip_bytes": 8358
     },
     {
       "country_code": "RS",
-      "legacy_json_bytes": 391794,
+      "legacy_json_bytes": 240015,
       "compact_json_bytes": 81129,
       "gzip_bytes": 9608
     },
     {
       "country_code": "RU",
-      "legacy_json_bytes": 9731685,
+      "legacy_json_bytes": 5923405,
       "compact_json_bytes": 1865451,
       "gzip_bytes": 226420
     },
     {
       "country_code": "SE",
-      "legacy_json_bytes": 2261980,
+      "legacy_json_bytes": 1379750,
       "compact_json_bytes": 468836,
       "gzip_bytes": 55621
     },
     {
       "country_code": "SI",
-      "legacy_json_bytes": 251211,
+      "legacy_json_bytes": 152819,
       "compact_json_bytes": 52766,
       "gzip_bytes": 7152
     },
     {
       "country_code": "SK",
-      "legacy_json_bytes": 62648,
+      "legacy_json_bytes": 38469,
       "compact_json_bytes": 12004,
       "gzip_bytes": 1949
     },
     {
       "country_code": "TR",
-      "legacy_json_bytes": 604758,
+      "legacy_json_bytes": 370210,
       "compact_json_bytes": 118491,
       "gzip_bytes": 14522
     },
@@ -688,14 +688,14 @@
     },
     {
       "country_code": "US",
-      "legacy_json_bytes": 3247210,
+      "legacy_json_bytes": 2067957,
       "compact_json_bytes": 653925,
       "gzip_bytes": 82451
     }
   ],
   "json_bytes": 10991539,
   "gzip_bytes": 1381990,
-  "legacy_json_bytes": 54531337,
+  "legacy_json_bytes": 33737881,
   "objects": 50,
   "compression_delivery": "Compact identity JSON stored in R2; Cloudflare transparently negotiates gzip/brotli over HTTP. Precompressed gzip files remain local benchmarks only."
 }

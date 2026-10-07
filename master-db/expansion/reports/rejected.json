@@ -15436,19 +15436,11 @@
     "reason": "outside validated country polygon"
   },
   {
-    "source_id": "OSM_DK:node/20392868",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/20393332",
-    "reason": "outside validated country polygon"
-  },
-  {
     "source_id": "OSM_DK:node/20393710",
     "reason": "outside validated country polygon"
   },
   {
-    "source_id": "OSM_DK:node/27370582",
+    "source_id": "OSM_DK:node/27376216",
     "reason": "outside validated country polygon"
   },
   {
@@ -15460,31 +15452,11 @@
     "reason": "outside validated country polygon"
   },
   {
-    "source_id": "OSM_DK:node/56243175",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/57731221",
-    "reason": "outside validated country polygon"
-  },
-  {
     "source_id": "OSM_DK:node/96532036",
     "reason": "outside validated country polygon"
   },
   {
-    "source_id": "OSM_DK:node/133314296",
-    "reason": "outside validated country polygon"
-  },
-  {
     "source_id": "OSM_DK:node/250885584",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/258940309",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/269683528",
     "reason": "outside validated country polygon"
   },
   {
@@ -15532,31 +15504,7 @@
     "reason": "outside validated country polygon"
   },
   {
-    "source_id": "OSM_DK:node/476029130",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/568732078",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/568736679",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/573235424",
-    "reason": "outside validated country polygon"
-  },
-  {
     "source_id": "OSM_DK:node/576437136",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/600507775",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/600507778",
     "reason": "outside validated country polygon"
   },
   {
@@ -15568,39 +15516,7 @@
     "reason": "outside validated country polygon"
   },
   {
-    "source_id": "OSM_DK:node/603062654",
-    "reason": "outside validated country polygon"
-  },
-  {
     "source_id": "OSM_DK:node/607058292",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/609366532",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/705908784",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/705910346",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/705910347",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/705910655",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/731822794",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/731822796",
     "reason": "outside validated country polygon"
   },
   {
@@ -15608,31 +15524,7 @@
     "reason": "outside validated country polygon"
   },
   {
-    "source_id": "OSM_DK:node/1177024953",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/1177024956",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/1177024961",
-    "reason": "outside validated country polygon"
-  },
-  {
     "source_id": "OSM_DK:node/1323722300",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/1410056596",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/1688105215",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/1688111591",
     "reason": "outside validated country polygon"
   },
   {
@@ -15696,31 +15588,19 @@
     "reason": "outside validated country polygon"
   },
   {
-    "source_id": "OSM_DK:node/2394980422",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/2485323774",
-    "reason": "outside validated country polygon"
-  },
-  {
     "source_id": "OSM_DK:node/2540543926",
     "reason": "outside validated country polygon"
   },
   {
-    "source_id": "OSM_DK:node/2540658228",
+    "source_id": "OSM_DK:node/2541872270",
     "reason": "outside validated country polygon"
   },
   {
-    "source_id": "OSM_DK:node/2540658242",
+    "source_id": "OSM_DK:node/2541872272",
     "reason": "outside validated country polygon"
   },
   {
     "source_id": "OSM_DK:node/2583094151",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/2994477591",
     "reason": "outside validated country polygon"
   },
   {
@@ -15732,7 +15612,7 @@
     "reason": "outside validated country polygon"
   },
   {
-    "source_id": "OSM_DK:node/3051239235",
+    "source_id": "OSM_DK:node/3039301423",
     "reason": "outside validated country polygon"
   },
   {
@@ -15757,14 +15637,6 @@
   },
   {
     "source_id": "OSM_DK:node/3678083083",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/3995508687",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/4042575043",
     "reason": "outside validated country polygon"
   },
   {
@@ -15796,22 +15668,6 @@
     "reason": "outside validated country polygon"
   },
   {
-    "source_id": "OSM_DK:node/5263390932",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/5263390933",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/5263391131",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/5263391132",
-    "reason": "outside validated country polygon"
-  },
-  {
     "source_id": "OSM_DK:node/5518706363",
     "reason": "outside validated country polygon"
   },
@@ -15829,14 +15685,6 @@
   },
   {
     "source_id": "OSM_DK:node/5518708784",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/5518708785",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/5518708786",
     "reason": "outside validated country polygon"
   },
   {
@@ -15900,10 +15748,6 @@
     "reason": "outside validated country polygon"
   },
   {
-    "source_id": "OSM_DK:node/5519352859",
-    "reason": "outside validated country polygon"
-  },
-  {
     "source_id": "OSM_DK:node/5519908623",
     "reason": "outside validated country polygon"
   },
@@ -15913,14 +15757,6 @@
   },
   {
     "source_id": "OSM_DK:node/5519908641",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/5589823581",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/5760761368",
     "reason": "outside validated country polygon"
   },
   {
@@ -15941,10 +15777,6 @@
   },
   {
     "source_id": "OSM_DK:node/6069219747",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/6077518941",
     "reason": "outside validated country polygon"
   },
   {
@@ -16032,7 +15864,7 @@
     "reason": "outside validated country polygon"
   },
   {
-    "source_id": "OSM_DK:node/7750068321",
+    "source_id": "OSM_DK:node/7593491320",
     "reason": "outside validated country polygon"
   },
   {
@@ -16072,10 +15904,6 @@
     "reason": "outside validated country polygon"
   },
   {
-    "source_id": "OSM_DK:node/8812579714",
-    "reason": "outside validated country polygon"
-  },
-  {
     "source_id": "OSM_DK:node/8812605117",
     "reason": "outside validated country polygon"
   },
@@ -16093,6 +15921,10 @@
   },
   {
     "source_id": "OSM_DK:node/8812605127",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/8812605130",
     "reason": "outside validated country polygon"
   },
   {
@@ -16208,6 +16040,646 @@
     "reason": "outside validated country polygon"
   },
   {
+    "source_id": "OSM_DK:node/9647433000",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/9647522383",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/10670461197",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/10671679005",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/10671679037",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/10671742767",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/10671810513",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/10676195920",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/11096680270",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/11096680271",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/11096700228",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/11096700229",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/11096700287",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/11096700288",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/11096700289",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/11096705813",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/11096705814",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/11096705815",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/11096705845",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/11096705846",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/11096705847",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/11096705848",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/11096705850",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/11096705851",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/11096705858",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/11096705859",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/11096705860",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/11096705861",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/11096705876",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/11096705877",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/11096705878",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/11096705879",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/11096705880",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/11096705893",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/11096705897",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/11096705898",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/11096705908",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/11096705940",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/11096705975",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/11096705980",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/11096705988",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/11096705989",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/11096705990",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/11096705991",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/11096706013",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/11096706022",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/11096706064",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/11096706078",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/11096706079",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/11096706086",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/11096706094",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/11096706095",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/11096706115",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/11096706116",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/11096706126",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/11096706127",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/11096706128",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/11096706129",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/11096706130",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/11096706131",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/11096706163",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/11096706199",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/11096706248",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/11096706249",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/11096706250",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/11096706262",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/11096706315",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/11096706316",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/11096706323",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/11096706340",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/11096706341",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/11096706379",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/11096706403",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/11096706404",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/11096706405",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/11096706406",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/11096706407",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/11096706408",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/11096706409",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/11096706410",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/11096706411",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/11096706412",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/11096706510",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/11096706511",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/11096706512",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/11096706513",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/11096706514",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/11096706515",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/11096706516",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/11096706517",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/11096706518",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/11096706519",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/11096706520",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/11096706539",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/11096706540",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/11096706541",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/11096706542",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/11096706543",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/11096706544",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/11096706580",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/11096706581",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/11096706593",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/11096706594",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/11096706595",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/11096706596",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/11096706597",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/11096706598",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/11096706599",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/11096706629",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/11096706630",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/14055925217",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/14055925218",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/8812579714",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/20392868",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/20393332",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/27370582",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/56243175",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/57731221",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/133314296",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/258940309",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/269683528",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/476029130",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/568732078",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/568736679",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/573235424",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/600507775",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/600507778",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/603062654",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/609366532",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/705908784",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/705910346",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/705910347",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/705910655",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/731822794",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/731822796",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/1177024953",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/1177024956",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/1177024961",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/1410056596",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/1688105215",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/1688111591",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/2394980422",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/2485323774",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/2540658228",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/2540658242",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/2994477591",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/3051239235",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/3995508687",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/4042575043",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/5263390932",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/5263390933",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/5263391131",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/5263391132",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/5518708785",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/5518708786",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/5519352859",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/5589823581",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/5760761368",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/6077518941",
+    "reason": "outside validated country polygon"
+  },
+  {
+    "source_id": "OSM_DK:node/7750068321",
+    "reason": "outside validated country polygon"
+  },
+  {
     "source_id": "OSM_DK:node/9293084492",
     "reason": "outside validated country polygon"
   },
@@ -16241,34 +16713,6 @@
   },
   {
     "source_id": "OSM_DK:node/9626106647",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/9647522383",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/10670461197",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/10671679005",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/10671679037",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/10671742767",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/10671810513",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/10676195920",
     "reason": "outside validated country polygon"
   },
   {
@@ -16336,14 +16780,6 @@
     "reason": "outside validated country polygon"
   },
   {
-    "source_id": "OSM_DK:node/11096680270",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/11096680271",
-    "reason": "outside validated country polygon"
-  },
-  {
     "source_id": "OSM_DK:node/11096680293",
     "reason": "outside validated country polygon"
   },
@@ -16365,14 +16801,6 @@
   },
   {
     "source_id": "OSM_DK:node/11096700227",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/11096700228",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/11096700229",
     "reason": "outside validated country polygon"
   },
   {
@@ -16472,71 +16900,7 @@
     "reason": "outside validated country polygon"
   },
   {
-    "source_id": "OSM_DK:node/11096700287",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/11096700288",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/11096700289",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/11096705813",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/11096705814",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/11096705815",
-    "reason": "outside validated country polygon"
-  },
-  {
     "source_id": "OSM_DK:node/11096705844",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/11096705845",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/11096705846",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/11096705847",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/11096705848",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/11096705850",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/11096705851",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/11096705858",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/11096705859",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/11096705860",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/11096705861",
     "reason": "outside validated country polygon"
   },
   {
@@ -16545,26 +16909,6 @@
   },
   {
     "source_id": "OSM_DK:node/11096705869",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/11096705876",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/11096705877",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/11096705878",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/11096705879",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/11096705880",
     "reason": "outside validated country polygon"
   },
   {
@@ -16588,10 +16932,6 @@
     "reason": "outside validated country polygon"
   },
   {
-    "source_id": "OSM_DK:node/11096705893",
-    "reason": "outside validated country polygon"
-  },
-  {
     "source_id": "OSM_DK:node/11096705895",
     "reason": "outside validated country polygon"
   },
@@ -16600,23 +16940,7 @@
     "reason": "outside validated country polygon"
   },
   {
-    "source_id": "OSM_DK:node/11096705897",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/11096705898",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/11096705908",
-    "reason": "outside validated country polygon"
-  },
-  {
     "source_id": "OSM_DK:node/11096705910",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/11096705940",
     "reason": "outside validated country polygon"
   },
   {
@@ -16636,15 +16960,7 @@
     "reason": "outside validated country polygon"
   },
   {
-    "source_id": "OSM_DK:node/11096705975",
-    "reason": "outside validated country polygon"
-  },
-  {
     "source_id": "OSM_DK:node/11096705979",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/11096705980",
     "reason": "outside validated country polygon"
   },
   {
@@ -16653,22 +16969,6 @@
   },
   {
     "source_id": "OSM_DK:node/11096705987",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/11096705988",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/11096705989",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/11096705990",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/11096705991",
     "reason": "outside validated country polygon"
   },
   {
@@ -16692,15 +16992,7 @@
     "reason": "outside validated country polygon"
   },
   {
-    "source_id": "OSM_DK:node/11096706013",
-    "reason": "outside validated country polygon"
-  },
-  {
     "source_id": "OSM_DK:node/11096706021",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/11096706022",
     "reason": "outside validated country polygon"
   },
   {
@@ -16756,10 +17048,6 @@
     "reason": "outside validated country polygon"
   },
   {
-    "source_id": "OSM_DK:node/11096706064",
-    "reason": "outside validated country polygon"
-  },
-  {
     "source_id": "OSM_DK:node/11096706067",
     "reason": "outside validated country polygon"
   },
@@ -16768,23 +17056,11 @@
     "reason": "outside validated country polygon"
   },
   {
-    "source_id": "OSM_DK:node/11096706078",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/11096706079",
-    "reason": "outside validated country polygon"
-  },
-  {
     "source_id": "OSM_DK:node/11096706084",
     "reason": "outside validated country polygon"
   },
   {
     "source_id": "OSM_DK:node/11096706085",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/11096706086",
     "reason": "outside validated country polygon"
   },
   {
@@ -16800,51 +17076,7 @@
     "reason": "outside validated country polygon"
   },
   {
-    "source_id": "OSM_DK:node/11096706094",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/11096706095",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/11096706115",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/11096706116",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/11096706126",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/11096706127",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/11096706128",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/11096706129",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/11096706130",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/11096706131",
-    "reason": "outside validated country polygon"
-  },
-  {
     "source_id": "OSM_DK:node/11096706145",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/11096706163",
     "reason": "outside validated country polygon"
   },
   {
@@ -16853,10 +17085,6 @@
   },
   {
     "source_id": "OSM_DK:node/11096706176",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/11096706199",
     "reason": "outside validated country polygon"
   },
   {
@@ -16880,31 +17108,7 @@
     "reason": "outside validated country polygon"
   },
   {
-    "source_id": "OSM_DK:node/11096706248",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/11096706249",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/11096706250",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/11096706262",
-    "reason": "outside validated country polygon"
-  },
-  {
     "source_id": "OSM_DK:node/11096706268",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/11096706315",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/11096706316",
     "reason": "outside validated country polygon"
   },
   {
@@ -16913,18 +17117,6 @@
   },
   {
     "source_id": "OSM_DK:node/11096706320",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/11096706323",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/11096706340",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/11096706341",
     "reason": "outside validated country polygon"
   },
   {
@@ -16980,10 +17172,6 @@
     "reason": "outside validated country polygon"
   },
   {
-    "source_id": "OSM_DK:node/11096706379",
-    "reason": "outside validated country polygon"
-  },
-  {
     "source_id": "OSM_DK:node/11096706390",
     "reason": "outside validated country polygon"
   },
@@ -17025,46 +17213,6 @@
   },
   {
     "source_id": "OSM_DK:node/11096706400",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/11096706403",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/11096706404",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/11096706405",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/11096706406",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/11096706407",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/11096706408",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/11096706409",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/11096706410",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/11096706411",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/11096706412",
     "reason": "outside validated country polygon"
   },
   {
@@ -17236,75 +17384,7 @@
     "reason": "outside validated country polygon"
   },
   {
-    "source_id": "OSM_DK:node/11096706510",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/11096706511",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/11096706512",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/11096706513",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/11096706514",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/11096706515",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/11096706516",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/11096706517",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/11096706518",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/11096706519",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/11096706520",
-    "reason": "outside validated country polygon"
-  },
-  {
     "source_id": "OSM_DK:node/11096706532",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/11096706539",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/11096706540",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/11096706541",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/11096706542",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/11096706543",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/11096706544",
     "reason": "outside validated country polygon"
   },
   {
@@ -17408,14 +17488,6 @@
     "reason": "outside validated country polygon"
   },
   {
-    "source_id": "OSM_DK:node/11096706580",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/11096706581",
-    "reason": "outside validated country polygon"
-  },
-  {
     "source_id": "OSM_DK:node/11096706583",
     "reason": "outside validated country polygon"
   },
@@ -17448,34 +17520,6 @@
     "reason": "outside validated country polygon"
   },
   {
-    "source_id": "OSM_DK:node/11096706593",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/11096706594",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/11096706595",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/11096706596",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/11096706597",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/11096706598",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/11096706599",
-    "reason": "outside validated country polygon"
-  },
-  {
     "source_id": "OSM_DK:node/11096706600",
     "reason": "outside validated country polygon"
   },
@@ -17497,14 +17541,6 @@
   },
   {
     "source_id": "OSM_DK:node/11096706618",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/11096706629",
-    "reason": "outside validated country polygon"
-  },
-  {
-    "source_id": "OSM_DK:node/11096706630",
     "reason": "outside validated country polygon"
   },
   {

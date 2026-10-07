@@ -1,0 +1,17 @@
+# Completed operational storage migration
+
+PostgreSQL storage fell from 289,699,507 to 45,692,595 bytes (244,006,912 bytes freed, about 84.2%). All 59,270 original published camera rows retain every typed operational field, and UA/PL retain the legacy metadata needed by existing clients. 49-country live delivery and all original coordinate/direction/speed/section data passed verification.
+
+PostgreSQL now has 65,229 rows in the camera operational layer: 59,270 published cameras, 5,864 compact moderation entries, 89 source references, two bounded legacy import summaries, three archive receipts and one master pointer. User reports and other application tables were preserved. No source observation table remains.
+
+Private R2 cold storage contains 257 immutable objects, 107,559,818 bytes, including full canonical/source snapshots, normalized master versions, candidates, provenance, 1,539 initial raw/history files, import observations and previous delivery-manifest recovery material. The 50 public delivery objects remain separate. Historical observation receipt counts total 113,890: 66,168 original observations plus 47,722 imported after cutover. The 5,864 complete candidates live in R2 with their compact moderation state retained in PostgreSQL. These are overlapping dataset categories, not additional camera counts.
+
+Every original table was remotely downloaded and restored to typed PostgreSQL temporary tables before cleanup. Counts, full-row SHA-256 fingerprints, small-table field equality, primary-key uniqueness and source/camera references passed. Cleanup was atomic and fingerprint-guarded. Full compaction used VACUUM FULL after the archive proof. All archival input and the Git publication branch were scanned for credentials.
+
+After cutover, all 21 licensed government feeds were fetched again and a real collection/import completed through the R2-first pipeline. It produced 35,350 duplicates and 12,372 rejected observations, all retained privately in R2, with zero new canonical cameras and zero observation rows added to PostgreSQL. Four additional source-catalog references were registered. Ireland/Denmark relation refreshes succeeded before cutover; later speed refresh attempts failed on the configured Overpass endpoints, and prior working source files were retained.
+
+The importer writes raw/normalized observations and candidate/history shards to R2, verifies bytes/counts, then atomically registers a small receipt, appends eligible new canonical cameras and advances the current-master pointer. LOW candidates stay cold. Existing canonical rows are never overwritten. Delivery retries are tracked by a compact pending flag; immutable country snapshots are verified before replacing the public manifest, and the previous manifest is archived first.
+
+Validation: 29 Python safety checks, four real rollback-only SQL guard checks, 65 app/cache checks and live application-loader checks for all 49 countries. The 1,323 pre-bootstrap source links were hydrated from the archived source catalog and validated before the completed import. Supabase security advisors reported only the existing intentional deny-by-default RLS state on import runs/staging. No App Store, Google Play or EAS OTA release was performed.
+
+Rollback order and key rotation recovery are documented in ROLLBACK.md. Machine-readable receipts, restoration proof, inventory and import results are in reports/; full working snapshots and signing credentials remain ignored inside the project.

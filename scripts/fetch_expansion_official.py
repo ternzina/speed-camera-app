@@ -18,9 +18,13 @@ def csv_rows(content,source):
         rows.append({'type':'Feature','geometry':{'type':'Point','coordinates':[float(lon.replace(',','.')),float(lat.replace(',','.'))]},'properties':p})
     return rows
 
-def download(source):
+def download(source,refresh=False):
     path=RAW/(source['code']+'.json');RAW.mkdir(parents=True,exist_ok=True)
-    if path.exists():
+    if path.exists() and refresh:
+        import hashlib,shutil
+        backup=ROOT/'master-db/backups/source-refresh'/(source['code']+'-'+hashlib.sha256(path.read_bytes()).hexdigest()+'.json')
+        backup.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(path,backup)
+    if path.exists() and not refresh:
         cached=json.loads(path.read_text())
         assert cached['source']['download_url']==source['download_url'],'Source URL changed; a fresh acquisition is required'
         if cached['source']!=source:
@@ -104,11 +108,11 @@ def records(envelope):
             if not citation or citation/1000>time.time():r['status']='candidate'
         yield r
 
-def main():
+def main(refresh=False):
     sources=json.loads(CONFIG.read_text());failures=[]
     def run(s):
         for attempt in range(3):
-            try:return download(s)
+            try:return download(s,refresh=refresh)
             except Exception as e:
                 if attempt==2:failures.append({'source':s['code'],'error':str(e)});return
                 time.sleep(2**attempt)

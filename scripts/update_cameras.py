@@ -61,6 +61,8 @@ def load_records():
     return records
 
 def recover_unsnapshotted():
+    from cold_storage_pipeline import enabled
+    if enabled():return
     """Retain old aliases/database observations after interrupted snapshot transitions."""
     known=[r['canonical_id'] for r in load_records()]
     if not known:return
@@ -139,6 +141,8 @@ def stamp(value):
     return value.astimezone(dt.timezone.utc).isoformat()
 
 def sync(records, append_only=False):
+    from cold_storage_pipeline import enabled, sync as cold_sync
+    if enabled():return cold_sync(records,append_only=append_only)
     with connect() as conn:
         before={cid:metadata for cid,metadata in conn.execute('select canonical_id,metadata from public.camera_records')} if not append_only else {cid:{} for cid, in conn.execute('select canonical_id from public.camera_records')}
         if append_only:
@@ -198,6 +202,11 @@ def main():
     if '--expand' in sys.argv:
         sys.argv.remove('--expand')
         from expand_cameras import main as expand
+        return expand()
+    from cold_storage_pipeline import enabled
+    if enabled() and '--sync-only' not in sys.argv:
+        from expand_cameras import main as expand
+        if '--normalize-only' not in sys.argv and '--acquire' not in sys.argv:sys.argv.append('--acquire')
         return expand()
     parser=argparse.ArgumentParser();parser.add_argument('--sync-only',action='store_true');parser.add_argument('--normalize-only',action='store_true')
     parser.add_argument('--resume',action='store_true',help='Reuse completed source downloads instead of refreshing')

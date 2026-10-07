@@ -1,0 +1,1 @@
+{"camera_rows_unchanged":59270,"checks":[{"blocked":true,"check":"full_payload"},{"blocked":true,"check":"low_candidate"},{"blocked":true,"check":"missing_pointer"},{"blocked":true,"check":"stale_master_pointer"}],"result":"passed"}

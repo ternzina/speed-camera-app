@@ -1,7 +1,7 @@
 // Node runtime only; private Ed25519 key never leaves ignored .env.r2-publisher.
 const fs=require('fs'),path=require('path'),crypto=require('node:crypto'),{spawnSync}=require('node:child_process');
 const root=path.resolve(__dirname,'..'),base=path.join(root,'master-db/cache/r2-migration');
-const publisher='https://speed-camera-data-publisher.ternzina.workers.dev',delivery='https://speed-camera-data.ternzina.workers.dev';
+const publisher='https://speed-camera-archive.ternzina.workers.dev',delivery='https://speed-camera-data.ternzina.workers.dev';
 const key=crypto.createPrivateKey(JSON.parse(fs.readFileSync(path.join(root,'.env.r2-publisher'))).private_key);
 const manifest=JSON.parse(fs.readFileSync(path.join(base,'manifest.json')));
 async function upload(object){
@@ -37,6 +37,8 @@ async function verify(entry,encoding){
  // Verify before exposing a new release. Mutable manifest is the only commit pointer.
  const previous=await fetch(delivery+'/production/v1/manifest.json');
  if(previous.ok)fs.writeFileSync(path.join(root,'master-db/backups/r2-migration/previous-manifest.json'),Buffer.from(await previous.arrayBuffer()));
+ const historyCheck=spawnSync(path.join(root,'.bootstrap-venv/bin/python'),[path.join(root,'scripts/archive_delivery_manifest.py')],{cwd:root,encoding:'utf8'});
+ if(historyCheck.status!==0)throw new Error('Previous manifest cold backup failed; manifest not replaced: '+historyCheck.stderr);
  uploads.push(await upload('production/v1/manifest.json'));
  const r=await fetch(delivery+'/production/v1/manifest.json',{headers:{'Cache-Control':'no-cache'}});
  if(!r.ok)throw new Error('Manifest unavailable');

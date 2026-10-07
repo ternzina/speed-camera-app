@@ -17,7 +17,7 @@ PATTERNS={
  'google_api_key':rb'\bAIza[A-Za-z0-9_-]{35}\b',
  'slack_token':rb'\bxox[baprs]-[A-Za-z0-9-]{15,}\b',
  'jwt_key_or_token':rb'\beyJ[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,}\b',
- 'credential_url':rb'https?://[^\s/:]+:[^\s/@]+@',
+ 'credential_url':rb"https?://[^\s/:\"'<>{}\[\]]+:[^\s/@\"'<>{}\[\]]+@",
 }
 EXCLUDED=re.compile(r'(^|/)(\.env[^/]*|credentials(?:\.json)?|node_modules|\.expo|\.bootstrap-venv)(/|$)|\.(?:jks|keystore|p8|p12|pfx|pem|key|mobileprovision|ipa|apk|aab)$|^master-db/(?:raw|cache|backups)/')
 def git(*args):return subprocess.check_output(['git',*args],cwd=ROOT)

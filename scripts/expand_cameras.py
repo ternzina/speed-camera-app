@@ -21,12 +21,13 @@ def actual_snapshot(exclude=None):
         return [dict(zip(FIELDS,row)) for row in conn.execute(query+' order by canonical_id',(list(exclude),) if exclude else None)]
 
 def normalize():
-    baseline=json.loads(gzip.decompress((ROOT/'master-db/backups/expansion/normalized-50141.json.gz').read_bytes()))
-    # Include records already appended by an earlier expansion pass.
-    byid={r['canonical_id']:r for r in baseline}
-    for row in actual_snapshot(exclude=byid):
-        if row['canonical_id'] in byid:continue
-        meta=row['metadata'];byid[row['canonical_id']]={**meta,'camera_sources':meta.get('provenance',[])}
+    from cold_storage_pipeline import enabled,master
+    if enabled():byid={r['canonical_id']:r for r in master()}
+    else:
+        baseline=json.loads(gzip.decompress((ROOT/'master-db/backups/expansion/normalized-50141.json.gz').read_bytes()))
+        byid={r['canonical_id']:r for r in baseline}
+        for row in actual_snapshot(exclude=byid):
+            meta=row['metadata'];byid[row['canonical_id']]={**meta,'camera_sources':meta.get('provenance',[])}
     anchors=list(byid.values());records=anchors.copy();new=[];duplicates=[];rejected=[]
     grid=collections.defaultdict(list);identities=set()
     def gridkey(r):return r['country_code'],math.floor(r['latitude']/.001),math.floor(r['longitude']/.001)
@@ -39,12 +40,17 @@ def normalize():
         if c and c!='-99':polygons[c]=shape(f['geometry'])
     ontario=shape(json.loads((ROOT/'master-db/cache/bootstrap/ontario.geojson').read_text())['features'][0]['geometry'])
     admin={f['properties'].get('iso_3166_2'):shape(f['geometry']) for f in json.loads((ROOT/'master-db/cache/bootstrap/admin1.geojson').read_text())['features'] if f['properties'].get('iso_3166_2') in ('US-NJ','CA-AB')}
+    collected=[]
     def accept(r):
+        collected.append(r)
+        r['_import_disposition']='observed'
         s=r['camera_sources'][0];identity=(s['source_code'],s['source_id']);c=r['country_code']
         if identity in identities or r['canonical_id'] in byid:
+            r['_import_disposition']='duplicate_identity'
             duplicates.append({'source_id':r['canonical_id'],'reason':'existing source identity'});return
         lat,lon=r['latitude'],r['longitude'];polygon=polygons.get(c)
         if not polygon or not polygon.covers(Point(lon,lat)):
+            r['_import_disposition']='rejected_country_polygon'
             rejected.append({'source_id':r['canonical_id'],'reason':'outside validated country polygon'});return
         if r['camera_type']=='average_speed_section' and (not polygon.covers(Point(r['end_longitude'],r['end_latitude'])) or not 50<=dist(r,{'latitude':r['end_latitude'],'longitude':r['end_longitude']})<=200000):
             r.update(confidence='LOW',status='review',review_reason='Uncertain section endpoints')
@@ -61,12 +67,14 @@ def normalize():
                     if any(x['source_code']==s['source_code'] and x['source_id']!=s['source_id'] for x in prior.get('camera_sources',[])):continue
                     if compatible(prior,r):matches.append((dist(prior,r),prior['canonical_id']))
         if matches:
+            r['_import_disposition']='duplicate_geometry'
             distance,cid=min(matches);duplicates.append({'source_id':r['canonical_id'],'canonical_id':cid,'distance_m':round(distance,3),'reason':'compatible spatial duplicate'});identities.add(identity);return
         if c in ('UA','PL'):r['status']='candidate'
         if r['confidence']=='LOW':r['status']='review'
         s['raw_payload']=clean_raw(s['raw_payload'])
         s['raw_payload_sha256']=hashlib.sha256(json.dumps(s['raw_payload'],sort_keys=True,ensure_ascii=False,separators=(',',':'),allow_nan=False).encode()).hexdigest()
         s.update({k:r.get(k) for k in ['latitude','longitude','end_latitude','end_longitude','speed_limit','direction','direction_raw']})
+        r['_import_disposition']='accepted'
         new.append(r);records.append(r);grid[key].append(r);byid[r['canonical_id']]=r;identities.add(identity)
     for path in sorted((ROOT/'master-db/raw/expansion/official').glob('*.json')):
         for r in official_records(json.loads(path.read_text())):accept(r)
@@ -97,6 +105,7 @@ def normalize():
             if r['camera_type']=='other_enforcement' and tags.get('enforcement') not in ('average_speed','section_control'):
                 r.update(confidence='LOW',status='review',review_reason='Additional enforcement tag lacks verified speed/red-light classification')
             accept(r)
+    save(ROOT/'master-db/cache/expansion/observations.json',collected)
     save(BASE/'reports/dedupe.json',{'duplicate_observations':len(duplicates),'items':duplicates})
     save(BASE/'reports/rejected.json',rejected)
     cache=ROOT/'master-db/cache/expansion/new-records.json.gz';cache.write_bytes(gzip.compress(json.dumps(new,ensure_ascii=False).encode(),mtime=0))
@@ -104,12 +113,12 @@ def normalize():
     return records,new
 
 def main():
-    parser=argparse.ArgumentParser();parser.add_argument('--normalize-only',action='store_true');parser.add_argument('--acquire',action='store_true');args=parser.parse_args()
+    parser=argparse.ArgumentParser();parser.add_argument('--normalize-only',action='store_true');parser.add_argument('--acquire',action='store_true');parser.add_argument('--resume',action='store_true');parser.add_argument('--countries',nargs='+');args=parser.parse_args()
     if args.acquire:
         from fetch_expansion_official import main as acquire_official
         from fetch_expansion_osm import acquire
-        acquire_official()
-        acquire()
+        acquire_official(refresh=not args.resume)
+        acquire(countries=args.countries,resume=args.resume,refresh=not args.resume)
     pipeline.BASE=BASE
     if not args.normalize_only:
         from refresh_expansion_primary import main as refresh_primary
@@ -118,6 +127,14 @@ def main():
     if args.normalize_only:return
     # Resume safely if a previous append partially committed.
     with pipeline.connect() as conn:existing={cid for cid, in conn.execute('select canonical_id from public.camera_records')}
+    from cold_storage_pipeline import enabled,sync as cold_sync
+    if enabled():
+        before=actual_snapshot()
+        cold_sync(new,observations=json.loads((ROOT/'master-db/cache/expansion/observations.json').read_text()),raw_paths=[p for directory in ['master-db/raw/expansion/official','master-db/cache/expansion/osm','master-db/cache/osm-api','master-db/cache/expansion/current-relations','master-db/cache/expansion/parent-memberships','master-db/backups/source-refresh'] for p in (ROOT/directory).rglob('*.json')])
+        after={r['canonical_id']:r for r in actual_snapshot()}
+        assert all(after.get(r['canonical_id'])==r for r in before),'Existing operational row changed'
+        save(BASE/'reports/baseline-preservation.json',{'baseline_records':len(before),'changed':0,'deleted':0})
+        return
     pipeline.sync([r for r in new if r['canonical_id'] not in existing],append_only=True)
     actual={r['canonical_id']:r for r in actual_snapshot()}
     original=json.loads(gzip.decompress((ROOT/'master-db/backups/expansion/baseline-50141.json.gz').read_bytes()))

@@ -126,17 +126,21 @@ Deno.serve(async (req:Request)=>{
       average_speed_sections:opp
     };
   } else {
+    const {data:sourceRows,error:sourceError}=await supabase.from("camera_sources").select("code,name,source_type,homepage_url,license_notes").eq("active",true);
+    if(sourceError)return new Response(JSON.stringify({error:sourceError.message}),{status:500,headers:{...cors,"Content-Type":"application/json"}});
+    const catalog=new Map((sourceRows||[]).map((s:any)=>[s.code,{source_code:s.code,source_name:s.name,source_type:s.source_type,source_url:s.homepage_url,license:String(s.license_notes||"").split(" | ")[0],license_url:String(s.license_notes||"").split(" | ")[1]||null}]));
+    const provenance=(x:any)=>x.metadata?.provenance||(x.metadata?.source_codes||[]).map((code:string)=>catalog.get(code)).filter(Boolean);
     const mapPoint=(x:any)=>({id:x.canonical_id,type:x.record_type,camera_type:x.camera_type,
       latitude:x.latitude,longitude:x.longitude,speed_limit:x.speed_limit,direction:x.direction_code,
       location:x.locality||x.road||x.metadata?.road_name||x.canonical_id,road:x.road,region:x.region,
-      confidence:x.confidence,last_seen_at:x.last_seen_at,provenance:x.metadata?.provenance||[]});
+      confidence:x.confidence,last_seen_at:x.last_seen_at,provenance:provenance(x)});
     const speed=data.filter(x=>x.record_type==="speed_camera").map(mapPoint);
     const red=data.filter(x=>x.record_type==="red_light").map(mapPoint);
     const checkpoints=data.filter(x=>x.record_type==="checkpoint").map(mapPoint);
     const sections=data.filter(x=>x.record_type==="average_speed_section").map(x=>({
       ...mapPoint(x),type:"average_speed_section",start:{latitude:x.latitude,longitude:x.longitude},
       end:{latitude:x.end_latitude,longitude:x.end_longitude},name:x.road||x.locality||x.canonical_id}));
-    const licenses=[...new Set(data.flatMap(x=>(x.metadata?.provenance||[]).map((p:any)=>p.license)).filter(Boolean))];
+    const licenses=[...new Set(data.flatMap(x=>provenance(x).map((p:any)=>p.license)).filter(Boolean))];
     payload={country,source:{name:"CamAlert Master DB",generated_from:"Supabase CamAlert Master DB",licenses,
       attribution:"Contains official open data and © OpenStreetMap contributors. OSM-derived data licensed under ODbL 1.0.",
       license_url:"https://www.openstreetmap.org/copyright"},generated_at:new Date().toISOString(),

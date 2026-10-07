@@ -1,0 +1,1 @@
+{"checks":{"manifest_unchanged_by_unsigned_attempts":true,"private_archive_read_denied":true,"private_gateway_public_reads_disabled":true,"public_archive_prefix_denied":true,"public_endpoint_write_denied":true,"unsigned_publication_denied":true},"result":"passed"}
