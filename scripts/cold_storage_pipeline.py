@@ -4,6 +4,7 @@ import datetime,json,subprocess
 from psycopg.types.json import Jsonb
 from r2_archive import ROOT,encode,dataset,read_dataset,archive_files,put
 from update_cameras import connect
+from source_identity import source_identity,verified_aliases
 
 def control():
  with connect() as conn:return conn.execute('select normalized_manifest from camera_bootstrap_private.storage_control where id=1').fetchone()[0]
@@ -18,12 +19,13 @@ def sync(records,append_only=True,observations=None,raw_paths=None):
  # Every observation (including duplicates/rejections) reaches immutable cold
  # history before operational data is touched. Candidates remain only in R2.
  expected=control();old=list(read_dataset(expected));byid={r['canonical_id']:r for r in old}
- existing_identity={(s['source_code'],s['source_id']) for r in old for s in r.get('camera_sources',[])}
+ existing_identity={source_identity(s) for r in old for s in r.get('camera_sources',[])}
+ existing_identity.update(verified_aliases(old))
  new=[r for r in records if r['canonical_id'] not in byid]
  assert len(new)==len({r['canonical_id'] for r in new}),'Duplicate canonical identity'
  for r in new:
-  assert not(existing_identity & {(s['source_code'],s['source_id']) for s in r.get('camera_sources',[])})
-  existing_identity.update((s['source_code'],s['source_id']) for s in r.get('camera_sources',[]))
+  assert not(existing_identity & {source_identity(s) for s in r.get('camera_sources',[])})
+  existing_identity.update(source_identity(s) for s in r.get('camera_sources',[]))
   byid[r['canonical_id']]=r
  observations=observations if observations is not None else records
  catalog={}

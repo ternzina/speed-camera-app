@@ -1,0 +1,36 @@
+{
+  "published_records": 83518,
+  "countries": 121,
+  "public_source_catalog_entries": 167,
+  "taiwan_sources": [
+    {
+      "code": "TW_TAICHUNG_FIXED",
+      "name": "Taichung City Police fixed enforcement cameras",
+      "country_code": "TW",
+      "source_url": "https://data.gov.tw/dataset/83881",
+      "license": "Open Government Data License version 1.0 | https://data.gov.tw/license"
+    },
+    {
+      "code": "TW_TAICHUNG_SECTION_REFERENCES",
+      "name": "Taichung City Police average speed section reference points",
+      "country_code": "TW",
+      "source_url": "https://data.gov.tw/dataset/172725",
+      "license": "Open Government Data License version 1.0 | https://data.gov.tw/license"
+    },
+    {
+      "code": "TW_TAICHUNG_TECH_CANDIDATES",
+      "name": "Taichung City Police technology enforcement reference candidates",
+      "country_code": "TW",
+      "source_url": "https://data.gov.tw/dataset/170673",
+      "license": "Open Government Data License version 1.0 | https://data.gov.tw/license"
+    },
+    {
+      "code": "TW_TAOYUAN_FIXED",
+      "name": "Taoyuan City Police fixed enforcement cameras",
+      "country_code": "TW",
+      "source_url": "https://data.gov.tw/dataset/25935",
+      "license": "Open Government Data License version 1.0 | https://data.gov.tw/license"
+    }
+  ],
+  "result": "passed"
+}

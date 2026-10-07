@@ -6,7 +6,7 @@ from fetch_osm import COUNTRIES,ENDPOINTS
 ROOT=Path(__file__).resolve().parents[1];CACHE=ROOT/'master-db/cache/expansion/osm';CACHE.mkdir(parents=True,exist_ok=True)
 NEW={'RU':'Russia','BY':'Belarus','GE':'Georgia','AM':'Armenia','AZ':'Azerbaijan','IM':'Isle of Man','JE':'Jersey','GG':'Guernsey','FO':'Faroe Islands','GI':'Gibraltar','AX':'Åland Islands'}
 COUNTRIES.update(NEW)
-EXTRA='[enforcement];node(area.a)[speed_camera];node(area.a)["traffic_signals:camera"];node(area.a)["traffic_signals:red_light_camera"];node(area.a)[red_light_camera];node(area.a)["camera:enforcement"];node(area.a)["surveillance:purpose"="traffic_enforcement"];node(area.a)["surveillance:type"="speed_camera"];node(area.a)["camera:type"~"^(speed|red_light|average_speed|section_control)$"]'
+EXTRA='[enforcement];node(area.a)[speed_camera];node(area.a)["traffic_signals:camera"];node(area.a)["traffic_signals:red_light_camera"];node(area.a)[red_light_camera];node(area.a)["camera:enforcement"];node(area.a)["surveillance:purpose"="traffic_enforcement"];node(area.a)["surveillance:type"="speed_camera"];node(area.a)["camera:type"~"(^|;)[ ]*(speed|speed_camera|fixed_speed|red_light|redlight|red_light_camera|average_speed|section_control)[ ]*(;|$)"]'
 def fetch(code,relations=False,speed=False,compact=False,refresh=False):
  path=CACHE/(code+('-speed-refresh' if speed else '-relations' if relations else '')+'.json')
  if path.exists() and refresh:

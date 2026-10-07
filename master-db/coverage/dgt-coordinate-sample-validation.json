@@ -1,0 +1,57 @@
+{
+  "checked_at": "2026-10-07T14:09:53.197926+00:00",
+  "source_url": "https://nap.dgt.es/es/dataset/radares-fijos-dgt",
+  "publication_time": "2025-12-18T09:56:52.406+01:00",
+  "inventory_count": 737,
+  "fixed_cabins": 690,
+  "explicit_sections": 47,
+  "independent_osm_coordinate_sample_matches_under_10m": 360,
+  "samples": [
+    {
+      "source_id": "GUID_CABINACINEMOMETRO_120001",
+      "latitude": 41.30326,
+      "longitude": -1.94488,
+      "osm_id": "node/2491235804",
+      "osm_version": null,
+      "distance_m": 7.732,
+      "road": "A-2"
+    },
+    {
+      "source_id": "GUID_CABINACINEMOMETRO_120002",
+      "latitude": 41.33214,
+      "longitude": -1.65314,
+      "osm_id": "node/992007265",
+      "osm_version": null,
+      "distance_m": 0.0,
+      "road": "A-2"
+    },
+    {
+      "source_id": "GUID_CABINACINEMOMETRO_120003",
+      "latitude": 41.48975,
+      "longitude": -1.36326,
+      "osm_id": "node/992001844",
+      "osm_version": null,
+      "distance_m": 4.626,
+      "road": "A-2"
+    },
+    {
+      "source_id": "GUID_CABINACINEMOMETRO_120005",
+      "latitude": 41.64744,
+      "longitude": -0.96506,
+      "osm_id": "node/2378266929",
+      "osm_version": null,
+      "distance_m": 9.531,
+      "road": "A-2"
+    },
+    {
+      "source_id": "GUID_CABINACINEMOMETRO_120006",
+      "latitude": 41.720303,
+      "longitude": -0.8554723,
+      "osm_id": "node/992005217",
+      "osm_version": null,
+      "distance_m": 4.806,
+      "road": "N-330"
+    }
+  ],
+  "policy": "Coordinate corroboration does not establish present active operation. All observations remain LOW candidates."
+}

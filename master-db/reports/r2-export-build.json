@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-10-07T08:51:21.070323+00:00",
-  "database_fingerprint": "7da72edb816614ca6955db1890e67d87",
-  "published_records": 59270,
-  "countries": 49,
+  "generated_at": "2026-10-07T19:19:01.427531+00:00",
+  "database_fingerprint": "0d874851a227c6069cd2ee46800015b9",
+  "published_records": 113205,
+  "countries": 122,
   "country_checks": [
     {
       "country_code": "AD",
@@ -13,11 +13,19 @@
       "result": "passed"
     },
     {
+      "country_code": "AE",
+      "supabase_published": 1122,
+      "r2_records": 1122,
+      "trip_render_records": 1122,
+      "checksum": "e446373c61375e8e9b622b71ef438b9cbf0d13e7a9775911166de2ff34014e39",
+      "result": "passed"
+    },
+    {
       "country_code": "AL",
-      "supabase_published": 2,
-      "r2_records": 2,
-      "trip_render_records": 2,
-      "checksum": "2b84b8b10c075008db1cf72ec79f26745f637542e01b74150a15091a8d137db4",
+      "supabase_published": 8,
+      "r2_records": 8,
+      "trip_render_records": 8,
+      "checksum": "293fd70aaf6d37104179b47eecc4cf653bcf307d51a77cdfa28ffc9f7521eb88",
       "result": "passed"
     },
     {
@@ -29,11 +37,35 @@
       "result": "passed"
     },
     {
+      "country_code": "AO",
+      "supabase_published": 60,
+      "r2_records": 60,
+      "trip_render_records": 60,
+      "checksum": "ac1c3b8e9917a162efabe643214e333d0b08b4f2fa1233d070ced2f774b1dae4",
+      "result": "passed"
+    },
+    {
+      "country_code": "AR",
+      "supabase_published": 1130,
+      "r2_records": 1130,
+      "trip_render_records": 1130,
+      "checksum": "7a8b86122b76324200ff7a8dee266c2e32eee9163ebde656c1b8dcade79f135d",
+      "result": "passed"
+    },
+    {
       "country_code": "AT",
-      "supabase_published": 1500,
-      "r2_records": 1500,
-      "trip_render_records": 1500,
-      "checksum": "24c93113474cac4f0401be249ddeb3f19216ed28f7796446174d25fea2d73797",
+      "supabase_published": 1501,
+      "r2_records": 1501,
+      "trip_render_records": 1501,
+      "checksum": "f3efe620d8cdea0eb5210e5ce353173eac5105cb3112a408738af63556ebfdfd",
+      "result": "passed"
+    },
+    {
+      "country_code": "AU",
+      "supabase_published": 1104,
+      "r2_records": 1104,
+      "trip_render_records": 1104,
+      "checksum": "e14a0f945912a11ceef2af6b32fe4d97a74c2709c6628a7f4969acdf58da8c26",
       "result": "passed"
     },
     {
@@ -53,6 +85,14 @@
       "result": "passed"
     },
     {
+      "country_code": "BD",
+      "supabase_published": 1,
+      "r2_records": 1,
+      "trip_render_records": 1,
+      "checksum": "3424e0af1138d130ae6155e2f2f31de5ecbffb6d93fcf475b1663f56e570d4a7",
+      "result": "passed"
+    },
+    {
       "country_code": "BE",
       "supabase_published": 1689,
       "r2_records": 1689,
@@ -69,6 +109,46 @@
       "result": "passed"
     },
     {
+      "country_code": "BH",
+      "supabase_published": 18,
+      "r2_records": 18,
+      "trip_render_records": 18,
+      "checksum": "7032528994cdd33a01f95fb5aa8201afb7bb6b1aa35afabeff964b45efde7807",
+      "result": "passed"
+    },
+    {
+      "country_code": "BN",
+      "supabase_published": 2,
+      "r2_records": 2,
+      "trip_render_records": 2,
+      "checksum": "4d81823c7c6ed6906f6c2a3c585232902b838ebe877fb19d7428e70e369be75c",
+      "result": "passed"
+    },
+    {
+      "country_code": "BO",
+      "supabase_published": 53,
+      "r2_records": 53,
+      "trip_render_records": 53,
+      "checksum": "c4c0d010fbd576457af0ae511dae4613e43c57ed67641a3f5cb962f435bbd3a8",
+      "result": "passed"
+    },
+    {
+      "country_code": "BR",
+      "supabase_published": 8928,
+      "r2_records": 8928,
+      "trip_render_records": 8928,
+      "checksum": "c3c92b8b04a59d4e906419048c0a2a7a9e519901f0bcb162011689125f14ca21",
+      "result": "passed"
+    },
+    {
+      "country_code": "BW",
+      "supabase_published": 4,
+      "r2_records": 4,
+      "trip_render_records": 4,
+      "checksum": "0f13ca4788cc32d2ee8b5abb998aea9858643b4c15fdde1ae39aceee2cbfa02e",
+      "result": "passed"
+    },
+    {
       "country_code": "BY",
       "supabase_published": 569,
       "r2_records": 569,
@@ -78,10 +158,10 @@
     },
     {
       "country_code": "CA",
-      "supabase_published": 1312,
-      "r2_records": 1312,
-      "trip_render_records": 1312,
-      "checksum": "56e491777ee5dca9f526151c85d4360356a3ef368ce247f697c58d5fa615897c",
+      "supabase_published": 1343,
+      "r2_records": 1343,
+      "trip_render_records": 1343,
+      "checksum": "d2a0049d91e187c49bf46608b5e6248b013d734b329d99e32784278e09f8c355",
       "result": "passed"
     },
     {
@@ -90,6 +170,54 @@
       "r2_records": 710,
       "trip_render_records": 710,
       "checksum": "d4cd076534b3f3a75261c35a76d958d46aa2af5ea46509c8155d01ce1d0e23ec",
+      "result": "passed"
+    },
+    {
+      "country_code": "CI",
+      "supabase_published": 23,
+      "r2_records": 23,
+      "trip_render_records": 23,
+      "checksum": "07b6becd906c6501f6e403b6a5de204d79b15970bb32ee2504e8fb90d63ef15a",
+      "result": "passed"
+    },
+    {
+      "country_code": "CL",
+      "supabase_published": 21,
+      "r2_records": 21,
+      "trip_render_records": 21,
+      "checksum": "5f931a5a430dc1a2bcafe6634a2ed423d2bd81f5837ec878e9ba6e34dd6bf716",
+      "result": "passed"
+    },
+    {
+      "country_code": "CN",
+      "supabase_published": 387,
+      "r2_records": 387,
+      "trip_render_records": 387,
+      "checksum": "92f64981cff72ae3ce0878c431f3722b776fe8cc11b8c66e8bd9c8142bd7da31",
+      "result": "passed"
+    },
+    {
+      "country_code": "CO",
+      "supabase_published": 489,
+      "r2_records": 489,
+      "trip_render_records": 489,
+      "checksum": "cc4cf54f0fccb5e422d9178738810641f896d28be1557ba0210127cf7fe2a942",
+      "result": "passed"
+    },
+    {
+      "country_code": "CR",
+      "supabase_published": 1,
+      "r2_records": 1,
+      "trip_render_records": 1,
+      "checksum": "b92004aab4e7877a46fa78701ea634c58a9ab023ea88eb150f60b4ac7d733ad1",
+      "result": "passed"
+    },
+    {
+      "country_code": "CU",
+      "supabase_published": 21,
+      "r2_records": 21,
+      "trip_render_records": 21,
+      "checksum": "aa511a82b5f75b73d1d261145540fec52baedb8916bebd445d02ad9da7b7165b",
       "result": "passed"
     },
     {
@@ -125,11 +253,35 @@
       "result": "passed"
     },
     {
+      "country_code": "DZ",
+      "supabase_published": 132,
+      "r2_records": 132,
+      "trip_render_records": 132,
+      "checksum": "fc9ad628397e5903e92dcb88f5cb1efc1a56a5630ad3e2c4e2f876caa6e6dcbe",
+      "result": "passed"
+    },
+    {
+      "country_code": "EC",
+      "supabase_published": 331,
+      "r2_records": 331,
+      "trip_render_records": 331,
+      "checksum": "81099d55199fc8e4c0adcdd377fea448fd2bd7ffbc6130781f7e3259a9e506f2",
+      "result": "passed"
+    },
+    {
       "country_code": "EE",
-      "supabase_published": 85,
-      "r2_records": 85,
-      "trip_render_records": 85,
-      "checksum": "b215fc8804065ef6d3ffc6ed63fc13c3985ee6b90a59a83f321595e1861d6ba2",
+      "supabase_published": 88,
+      "r2_records": 88,
+      "trip_render_records": 88,
+      "checksum": "3511b979022758e45c8430a707e4f03463bd301a2416b253091eec9aa16e2ea1",
+      "result": "passed"
+    },
+    {
+      "country_code": "EG",
+      "supabase_published": 588,
+      "r2_records": 588,
+      "trip_render_records": 588,
+      "checksum": "1513901973c0086249a9b36be07b3bd85fd722c4fc2b3d6120f4468bcc005634",
       "result": "passed"
     },
     {
@@ -150,18 +302,18 @@
     },
     {
       "country_code": "FR",
-      "supabase_published": 6222,
-      "r2_records": 6222,
-      "trip_render_records": 6222,
-      "checksum": "77bfcac04c1ba846c32dd14cd1d329f176a136d9098f4f9e27429e586e689e47",
+      "supabase_published": 6309,
+      "r2_records": 6309,
+      "trip_render_records": 6309,
+      "checksum": "b8a3833210169f2129e166f351e3c0664d965b2024f34dae6c776d4eba31b4ee",
       "result": "passed"
     },
     {
       "country_code": "GB",
-      "supabase_published": 3662,
-      "r2_records": 3662,
-      "trip_render_records": 3662,
-      "checksum": "9f69770a93e604703d02792f319f409d697bee228455516a77dfe8b49a69bf6b",
+      "supabase_published": 3663,
+      "r2_records": 3663,
+      "trip_render_records": 3663,
+      "checksum": "e24dfafc0d4f3cab6f1530e586e1cfeb078fae2d0dd46678efc1f9f201925fa1",
       "result": "passed"
     },
     {
@@ -181,6 +333,22 @@
       "result": "passed"
     },
     {
+      "country_code": "GT",
+      "supabase_published": 18,
+      "r2_records": 18,
+      "trip_render_records": 18,
+      "checksum": "9d1a84ae6e1e6dac4eef849d39f6626c6c6559c9e193e3525819eebdf4d7a6e9",
+      "result": "passed"
+    },
+    {
+      "country_code": "HK",
+      "supabase_published": 41,
+      "r2_records": 41,
+      "trip_render_records": 41,
+      "checksum": "427d40700fa28fb6eb31fcc944814471a0eba10a9148f19811c61da38655b4de",
+      "result": "passed"
+    },
+    {
       "country_code": "HR",
       "supabase_published": 965,
       "r2_records": 965,
@@ -197,11 +365,51 @@
       "result": "passed"
     },
     {
+      "country_code": "ID",
+      "supabase_published": 408,
+      "r2_records": 408,
+      "trip_render_records": 408,
+      "checksum": "d92d48069d5657d7456a775b52d6b68411385f6e656cd67e38ff6a8552e9c42f",
+      "result": "passed"
+    },
+    {
       "country_code": "IE",
       "supabase_published": 15,
       "r2_records": 15,
       "trip_render_records": 15,
       "checksum": "54401e0aea1d54a70b425e00e66094de869af158e604648b77a0455fd86cfc24",
+      "result": "passed"
+    },
+    {
+      "country_code": "IL",
+      "supabase_published": 148,
+      "r2_records": 148,
+      "trip_render_records": 148,
+      "checksum": "f60fb81bcd2c9ae9d23a28303b8933bb53a4d5bef70894bf9992f779e702e4ac",
+      "result": "passed"
+    },
+    {
+      "country_code": "IN",
+      "supabase_published": 426,
+      "r2_records": 426,
+      "trip_render_records": 426,
+      "checksum": "29c117c90b92ccc7a69bf3cbe26eae753a9e0c7a6cd1e619cbded3b3745f6996",
+      "result": "passed"
+    },
+    {
+      "country_code": "IQ",
+      "supabase_published": 305,
+      "r2_records": 305,
+      "trip_render_records": 305,
+      "checksum": "b468da0d5b3735ab7c107b6f6f01f0a7dc2a047a14ae14107401866490e57f98",
+      "result": "passed"
+    },
+    {
+      "country_code": "IR",
+      "supabase_published": 2709,
+      "r2_records": 2709,
+      "trip_render_records": 2709,
+      "checksum": "3eed5f7a2841b57ff7d0089b78999c6fea93a1b872139aaaf909107155d01ace",
       "result": "passed"
     },
     {
@@ -214,10 +422,82 @@
     },
     {
       "country_code": "IT",
-      "supabase_published": 6023,
-      "r2_records": 6023,
-      "trip_render_records": 6023,
-      "checksum": "521032dc0a2289b718ff69b3d98e03689f2e0f8695d228afbe0cdc3071968d19",
+      "supabase_published": 6024,
+      "r2_records": 6024,
+      "trip_render_records": 6024,
+      "checksum": "f84c0b22fe99f1839163444c5a136db83de8a8882d80ed0cd04de66fecb60ca1",
+      "result": "passed"
+    },
+    {
+      "country_code": "JO",
+      "supabase_published": 46,
+      "r2_records": 46,
+      "trip_render_records": 46,
+      "checksum": "942478b3f5932f2b2c817a7d0d5dd9e2364e0d1b294a01ce12e88e9a6dc234ea",
+      "result": "passed"
+    },
+    {
+      "country_code": "JP",
+      "supabase_published": 181,
+      "r2_records": 181,
+      "trip_render_records": 181,
+      "checksum": "048b444b5bec347957b5c6e45fd6d5b1beff3cc6b52c6f9b3e8c54b33569b194",
+      "result": "passed"
+    },
+    {
+      "country_code": "KE",
+      "supabase_published": 5,
+      "r2_records": 5,
+      "trip_render_records": 5,
+      "checksum": "9a381fdc5c3aad389ad3950261d235b2c5325eec9f72297b9b78614bb0fb7efe",
+      "result": "passed"
+    },
+    {
+      "country_code": "KG",
+      "supabase_published": 103,
+      "r2_records": 103,
+      "trip_render_records": 103,
+      "checksum": "6fd6cd313b7e8489f0b3dbc0cf24888e40375627079c61206b5bde82a64e226e",
+      "result": "passed"
+    },
+    {
+      "country_code": "KH",
+      "supabase_published": 2,
+      "r2_records": 2,
+      "trip_render_records": 2,
+      "checksum": "74cef2f210f40f1d9588608da70dcc909ff0ea44f835a463514ae46837e83009",
+      "result": "passed"
+    },
+    {
+      "country_code": "KR",
+      "supabase_published": 29418,
+      "r2_records": 29418,
+      "trip_render_records": 29418,
+      "checksum": "3ba2066d08a9c91115f29a539451478823835e8d9e86a408835543353720ec2b",
+      "result": "passed"
+    },
+    {
+      "country_code": "KW",
+      "supabase_published": 59,
+      "r2_records": 59,
+      "trip_render_records": 59,
+      "checksum": "e6e4f51d663d37758ef72fac4416bb3ce220024950c034ae479790b688f413d7",
+      "result": "passed"
+    },
+    {
+      "country_code": "KZ",
+      "supabase_published": 248,
+      "r2_records": 248,
+      "trip_render_records": 248,
+      "checksum": "5f345478d69cc261f1d22bd03f10c2f632e1f7a793ad736e58e74987495255ee",
+      "result": "passed"
+    },
+    {
+      "country_code": "LB",
+      "supabase_published": 1,
+      "r2_records": 1,
+      "trip_render_records": 1,
+      "checksum": "3b4149160133de7f425ef087a2e1311c0f5fec29f65a4390b585c16508abd0bf",
       "result": "passed"
     },
     {
@@ -226,6 +506,14 @@
       "r2_records": 8,
       "trip_render_records": 8,
       "checksum": "3b50b35ac953748c2daa4baf4cc2766a7285c32dade18f66a308e53ed113e741",
+      "result": "passed"
+    },
+    {
+      "country_code": "LK",
+      "supabase_published": 4,
+      "r2_records": 4,
+      "trip_render_records": 4,
+      "checksum": "fdd40e890702329b1ac30d4d57cd1a0005313cac853d1acb4078606d453f3d01",
       "result": "passed"
     },
     {
@@ -246,10 +534,18 @@
     },
     {
       "country_code": "LV",
-      "supabase_published": 155,
-      "r2_records": 155,
-      "trip_render_records": 155,
-      "checksum": "b2f5eb78526f485bc7c2b9c6afd13aa14e4506ac7fe0b7d129538f9e5d04932f",
+      "supabase_published": 184,
+      "r2_records": 184,
+      "trip_render_records": 184,
+      "checksum": "0cbf807954e914ec78bcd9be29e0ace74e6b43721faed547ccc5eaad770e7e1f",
+      "result": "passed"
+    },
+    {
+      "country_code": "MA",
+      "supabase_published": 127,
+      "r2_records": 127,
+      "trip_render_records": 127,
+      "checksum": "3c706a68ed0a07db530b1de15cd33496c0425e16003d4380e4526785165e6458",
       "result": "passed"
     },
     {
@@ -262,10 +558,10 @@
     },
     {
       "country_code": "MD",
-      "supabase_published": 79,
-      "r2_records": 79,
-      "trip_render_records": 79,
-      "checksum": "9dd0e3a235c04984ad202e854a116fdd50abc99d430e8b87d75158a158c2b731",
+      "supabase_published": 81,
+      "r2_records": 81,
+      "trip_render_records": 81,
+      "checksum": "eb89a3d0eafedf4e1e269f5fba92b0d228fe9501499b56194dcc7bce4841b149",
       "result": "passed"
     },
     {
@@ -285,11 +581,59 @@
       "result": "passed"
     },
     {
+      "country_code": "MM",
+      "supabase_published": 13,
+      "r2_records": 13,
+      "trip_render_records": 13,
+      "checksum": "89fe86db7c16c50d172038ef15015e567329910449e209de29836aa524748b46",
+      "result": "passed"
+    },
+    {
+      "country_code": "MN",
+      "supabase_published": 64,
+      "r2_records": 64,
+      "trip_render_records": 64,
+      "checksum": "54d58ac1165d18d546a245997b307b0065ef5057c7ad23d7e31fab619dfc83c3",
+      "result": "passed"
+    },
+    {
       "country_code": "MT",
       "supabase_published": 22,
       "r2_records": 22,
       "trip_render_records": 22,
       "checksum": "2626d7c135e17374588391d4436548336ccdf442bbc120ab71292d0e4e24ccc8",
+      "result": "passed"
+    },
+    {
+      "country_code": "MU",
+      "supabase_published": 61,
+      "r2_records": 61,
+      "trip_render_records": 61,
+      "checksum": "bf81e274177fc5d07a242a2acc771e1c1025b5f64c13b0840f654b8f4e8419a9",
+      "result": "passed"
+    },
+    {
+      "country_code": "MX",
+      "supabase_published": 131,
+      "r2_records": 131,
+      "trip_render_records": 131,
+      "checksum": "fb3e81cb620ea4006982b3bdd2ba5c6d80641319339dd8ecc04fa6c214dacb34",
+      "result": "passed"
+    },
+    {
+      "country_code": "MY",
+      "supabase_published": 73,
+      "r2_records": 73,
+      "trip_render_records": 73,
+      "checksum": "2bb763ab4b6805548f8fec644fd46eda91112a158fe62d8c6d9227b38168aa60",
+      "result": "passed"
+    },
+    {
+      "country_code": "NA",
+      "supabase_published": 1,
+      "r2_records": 1,
+      "trip_render_records": 1,
+      "checksum": "9f7afb2eb22a4af5de9d92548fb3362932265691a29374c43c32e6de6c3b66e2",
       "result": "passed"
     },
     {
@@ -309,6 +653,70 @@
       "result": "passed"
     },
     {
+      "country_code": "NP",
+      "supabase_published": 25,
+      "r2_records": 25,
+      "trip_render_records": 25,
+      "checksum": "6dad1e0d90972c73c95c2497664634470a302e66f88af6a18e28a05185a49de5",
+      "result": "passed"
+    },
+    {
+      "country_code": "NZ",
+      "supabase_published": 70,
+      "r2_records": 70,
+      "trip_render_records": 70,
+      "checksum": "9287fcf9346315c3dc86dae269d1992569d91c8438701e4a9976e1f1d21a2d71",
+      "result": "passed"
+    },
+    {
+      "country_code": "OM",
+      "supabase_published": 459,
+      "r2_records": 459,
+      "trip_render_records": 459,
+      "checksum": "6561813d5bbfaadeb1dce80595a2c808fdcabb4f58f4a06357bf1f8ebeb558cd",
+      "result": "passed"
+    },
+    {
+      "country_code": "PA",
+      "supabase_published": 16,
+      "r2_records": 16,
+      "trip_render_records": 16,
+      "checksum": "9b522cdd4e39d192dd0a49e5131dda3aca3ce1be315b7602690e9c3769181bfa",
+      "result": "passed"
+    },
+    {
+      "country_code": "PE",
+      "supabase_published": 69,
+      "r2_records": 69,
+      "trip_render_records": 69,
+      "checksum": "42c35893ed2bda02e99a2a1013f93d61a4fcdb465c39925e867a14bf97befa7f",
+      "result": "passed"
+    },
+    {
+      "country_code": "PG",
+      "supabase_published": 1,
+      "r2_records": 1,
+      "trip_render_records": 1,
+      "checksum": "4c7738bec63517657545fe6010343c84d9e245303e36e24963aa27203fa2e48c",
+      "result": "passed"
+    },
+    {
+      "country_code": "PH",
+      "supabase_published": 43,
+      "r2_records": 43,
+      "trip_render_records": 43,
+      "checksum": "b35b1d1d423397907f876f4e8a309f28cea717153dbcb13234856881d95d1e58",
+      "result": "passed"
+    },
+    {
+      "country_code": "PK",
+      "supabase_published": 1,
+      "r2_records": 1,
+      "trip_render_records": 1,
+      "checksum": "123d44b1a1f331c3448e9617251036cfd5c7b6971a6de48fdea239b46efe96b0",
+      "result": "passed"
+    },
+    {
       "country_code": "PL",
       "supabase_published": 897,
       "r2_records": 897,
@@ -317,11 +725,35 @@
       "result": "passed"
     },
     {
+      "country_code": "PS",
+      "supabase_published": 3,
+      "r2_records": 3,
+      "trip_render_records": 3,
+      "checksum": "f6c388f1b8963f81bb5ad2850e42f629ea797583b018121604abdac94f5102dc",
+      "result": "passed"
+    },
+    {
       "country_code": "PT",
       "supabase_published": 341,
       "r2_records": 341,
       "trip_render_records": 341,
       "checksum": "022dcc0eef534f21146860d9c2f2184ffdcad79cc7e8721c4fa8113a1f7d6d56",
+      "result": "passed"
+    },
+    {
+      "country_code": "PY",
+      "supabase_published": 20,
+      "r2_records": 20,
+      "trip_render_records": 20,
+      "checksum": "64c86ce0185c3a958eb630e0a8317526e603a43fe081c91287929c443e8fa210",
+      "result": "passed"
+    },
+    {
+      "country_code": "QA",
+      "supabase_published": 156,
+      "r2_records": 156,
+      "trip_render_records": 156,
+      "checksum": "25770b843bf44d15b303ae1f67cd09e7c5f008b66f586ba37832a42cb2fe4221",
       "result": "passed"
     },
     {
@@ -349,11 +781,35 @@
       "result": "passed"
     },
     {
+      "country_code": "RW",
+      "supabase_published": 6,
+      "r2_records": 6,
+      "trip_render_records": 6,
+      "checksum": "852ba09aa3b8225ab206ebb4ce24ac34699a382ce947ce5898b8d8e7c5cd6d00",
+      "result": "passed"
+    },
+    {
+      "country_code": "SA",
+      "supabase_published": 297,
+      "r2_records": 297,
+      "trip_render_records": 297,
+      "checksum": "8aee763ec827fc4ffcd9e79378dafc3658c7e54bb15b75ed5ec88c5ad6d51156",
+      "result": "passed"
+    },
+    {
       "country_code": "SE",
-      "supabase_published": 2471,
-      "r2_records": 2471,
-      "trip_render_records": 2471,
-      "checksum": "2a524d2ead2cae651fc655a2fe59dd2ff9ddc674e973ec0552343c55b4f08131",
+      "supabase_published": 2855,
+      "r2_records": 2855,
+      "trip_render_records": 2855,
+      "checksum": "9c2dc473f02986da17cac5af12575828b14fdf926b15d03c8b32f7e36588466f",
+      "result": "passed"
+    },
+    {
+      "country_code": "SG",
+      "supabase_published": 152,
+      "r2_records": 152,
+      "trip_render_records": 152,
+      "checksum": "009145657ad2a66686623ff566a656f1ec95ebc6c34bcc1d3edf1cfe42aa4a98",
       "result": "passed"
     },
     {
@@ -373,11 +829,91 @@
       "result": "passed"
     },
     {
+      "country_code": "SN",
+      "supabase_published": 5,
+      "r2_records": 5,
+      "trip_render_records": 5,
+      "checksum": "34e5fd54c6024326b32bb90abdcd0493ef4b383dac262160c321910afee15183",
+      "result": "passed"
+    },
+    {
+      "country_code": "SV",
+      "supabase_published": 81,
+      "r2_records": 81,
+      "trip_render_records": 81,
+      "checksum": "7bc0675d9ade1978426c3780835a085a42235b5883dfc4494364be74118c8320",
+      "result": "passed"
+    },
+    {
+      "country_code": "SY",
+      "supabase_published": 8,
+      "r2_records": 8,
+      "trip_render_records": 8,
+      "checksum": "6aceb4be00469e3260676a22a17ccb952ea687c8d62fd5551326db2f66a7fdc4",
+      "result": "passed"
+    },
+    {
+      "country_code": "TH",
+      "supabase_published": 23,
+      "r2_records": 23,
+      "trip_render_records": 23,
+      "checksum": "8d77df47b1dfcdd693777be290ecb36cecbc2f068cfb6be2b5ec0fa9b167d2a5",
+      "result": "passed"
+    },
+    {
+      "country_code": "TJ",
+      "supabase_published": 1,
+      "r2_records": 1,
+      "trip_render_records": 1,
+      "checksum": "43390872d07cc8ffe574a1b077cdd01a153a3d187cac02f1a2d85fc07b880535",
+      "result": "passed"
+    },
+    {
+      "country_code": "TM",
+      "supabase_published": 213,
+      "r2_records": 213,
+      "trip_render_records": 213,
+      "checksum": "5363d9b4a9ad7e64116efb77eff936b648018e6341da3680c2b8f755d07fa7d0",
+      "result": "passed"
+    },
+    {
+      "country_code": "TN",
+      "supabase_published": 16,
+      "r2_records": 16,
+      "trip_render_records": 16,
+      "checksum": "746a797f66a070700079e899382411d5dae323fa0ba342a606fec9b33d0f9124",
+      "result": "passed"
+    },
+    {
       "country_code": "TR",
       "supabase_published": 659,
       "r2_records": 659,
       "trip_render_records": 659,
       "checksum": "e60d21e21fab64f5d565837135799538dd8a67fd6307a67d56f9a7cf133afc26",
+      "result": "passed"
+    },
+    {
+      "country_code": "TT",
+      "supabase_published": 1,
+      "r2_records": 1,
+      "trip_render_records": 1,
+      "checksum": "bf34905bd1a5cef5062c9f3623d99504c35e60803defc36fe7656722350be214",
+      "result": "passed"
+    },
+    {
+      "country_code": "TW",
+      "supabase_published": 1620,
+      "r2_records": 1620,
+      "trip_render_records": 1620,
+      "checksum": "7619201fb2e69e2fe9edab60e8453f29838b9d5aaa152dad89f97fbb1a2586e8",
+      "result": "passed"
+    },
+    {
+      "country_code": "TZ",
+      "supabase_published": 1,
+      "r2_records": 1,
+      "trip_render_records": 1,
+      "checksum": "f31eaa6ccbe2a961c93e1d3745e05ac2eeeaa5a5531fd6bf09503d33689b78e6",
       "result": "passed"
     },
     {
@@ -389,11 +925,59 @@
       "result": "passed"
     },
     {
+      "country_code": "UG",
+      "supabase_published": 6,
+      "r2_records": 6,
+      "trip_render_records": 6,
+      "checksum": "3535966eb381565be5a38c6fe6fb34974e2104d0b9246454c4264a913d366bfc",
+      "result": "passed"
+    },
+    {
       "country_code": "US",
-      "supabase_published": 3390,
-      "r2_records": 3390,
-      "trip_render_records": 3390,
-      "checksum": "e6de8329036229757c9667f7f80e53ab3e730ed4180f948f3d5f74cee4d95616",
+      "supabase_published": 3588,
+      "r2_records": 3588,
+      "trip_render_records": 3588,
+      "checksum": "2be96145cdbf917d70c6198b3315303523aacbcb8658f1d6c24bc08a567abf44",
+      "result": "passed"
+    },
+    {
+      "country_code": "UY",
+      "supabase_published": 207,
+      "r2_records": 207,
+      "trip_render_records": 207,
+      "checksum": "03bddd45e340c3e453c2422c89189dc1b85284c7126999d2db78723d1f033c3f",
+      "result": "passed"
+    },
+    {
+      "country_code": "UZ",
+      "supabase_published": 443,
+      "r2_records": 443,
+      "trip_render_records": 443,
+      "checksum": "111eb3d8a486d01b1d4d24ea625df0eb18a782aa56d321468198f49198afec22",
+      "result": "passed"
+    },
+    {
+      "country_code": "VE",
+      "supabase_published": 29,
+      "r2_records": 29,
+      "trip_render_records": 29,
+      "checksum": "615c5b5e80488c16e5103bccd13c3ad75eb7fd2a41a8f259bd3211431751683f",
+      "result": "passed"
+    },
+    {
+      "country_code": "VN",
+      "supabase_published": 42,
+      "r2_records": 42,
+      "trip_render_records": 42,
+      "checksum": "0ba10012ef310b34c0701cc2eb92b8642a13e410fde9187196a952ad6b1f45fa",
+      "result": "passed"
+    },
+    {
+      "country_code": "ZA",
+      "supabase_published": 171,
+      "r2_records": 171,
+      "trip_render_records": 171,
+      "checksum": "d4786d5b0a828934c992c4407108554082db119c8ef5fa6afa2af5b144a70ec4",
       "result": "passed"
     }
   ],
@@ -405,10 +989,16 @@
       "gzip_bytes": 593
     },
     {
+      "country_code": "AE",
+      "legacy_json_bytes": 628856,
+      "compact_json_bytes": 195080,
+      "gzip_bytes": 22688
+    },
+    {
       "country_code": "AL",
-      "legacy_json_bytes": 1644,
-      "compact_json_bytes": 624,
-      "gzip_bytes": 294
+      "legacy_json_bytes": 5007,
+      "compact_json_bytes": 1662,
+      "gzip_bytes": 457
     },
     {
       "country_code": "AM",
@@ -417,10 +1007,28 @@
       "gzip_bytes": 6722
     },
     {
+      "country_code": "AO",
+      "legacy_json_bytes": 34251,
+      "compact_json_bytes": 11201,
+      "gzip_bytes": 1540
+    },
+    {
+      "country_code": "AR",
+      "legacy_json_bytes": 642022,
+      "compact_json_bytes": 218011,
+      "gzip_bytes": 27637
+    },
+    {
       "country_code": "AT",
-      "legacy_json_bytes": 837511,
-      "compact_json_bytes": 274220,
-      "gzip_bytes": 34676
+      "legacy_json_bytes": 838060,
+      "compact_json_bytes": 274378,
+      "gzip_bytes": 34705
+    },
+    {
+      "country_code": "AU",
+      "legacy_json_bytes": 625572,
+      "compact_json_bytes": 213077,
+      "gzip_bytes": 26991
     },
     {
       "country_code": "AZ",
@@ -435,6 +1043,12 @@
       "gzip_bytes": 5933
     },
     {
+      "country_code": "BD",
+      "legacy_json_bytes": 1088,
+      "compact_json_bytes": 445,
+      "gzip_bytes": 261
+    },
+    {
       "country_code": "BE",
       "legacy_json_bytes": 958804,
       "compact_json_bytes": 323385,
@@ -447,6 +1061,36 @@
       "gzip_bytes": 2318
     },
     {
+      "country_code": "BH",
+      "legacy_json_bytes": 10634,
+      "compact_json_bytes": 3592,
+      "gzip_bytes": 662
+    },
+    {
+      "country_code": "BN",
+      "legacy_json_bytes": 1645,
+      "compact_json_bytes": 606,
+      "gzip_bytes": 288
+    },
+    {
+      "country_code": "BO",
+      "legacy_json_bytes": 29588,
+      "compact_json_bytes": 10285,
+      "gzip_bytes": 1333
+    },
+    {
+      "country_code": "BR",
+      "legacy_json_bytes": 5098410,
+      "compact_json_bytes": 1633468,
+      "gzip_bytes": 184164
+    },
+    {
+      "country_code": "BW",
+      "legacy_json_bytes": 2763,
+      "compact_json_bytes": 934,
+      "gzip_bytes": 327
+    },
+    {
       "country_code": "BY",
       "legacy_json_bytes": 320667,
       "compact_json_bytes": 111856,
@@ -454,15 +1098,51 @@
     },
     {
       "country_code": "CA",
-      "legacy_json_bytes": 794441,
-      "compact_json_bytes": 251917,
-      "gzip_bytes": 37331
+      "legacy_json_bytes": 811903,
+      "compact_json_bytes": 257672,
+      "gzip_bytes": 37987
     },
     {
       "country_code": "CH",
       "legacy_json_bytes": 394896,
       "compact_json_bytes": 126408,
       "gzip_bytes": 16702
+    },
+    {
+      "country_code": "CI",
+      "legacy_json_bytes": 13440,
+      "compact_json_bytes": 4324,
+      "gzip_bytes": 849
+    },
+    {
+      "country_code": "CL",
+      "legacy_json_bytes": 12356,
+      "compact_json_bytes": 3845,
+      "gzip_bytes": 780
+    },
+    {
+      "country_code": "CN",
+      "legacy_json_bytes": 218218,
+      "compact_json_bytes": 68116,
+      "gzip_bytes": 8545
+    },
+    {
+      "country_code": "CO",
+      "legacy_json_bytes": 275608,
+      "compact_json_bytes": 85508,
+      "gzip_bytes": 9512
+    },
+    {
+      "country_code": "CR",
+      "legacy_json_bytes": 1084,
+      "compact_json_bytes": 442,
+      "gzip_bytes": 259
+    },
+    {
+      "country_code": "CU",
+      "legacy_json_bytes": 12416,
+      "compact_json_bytes": 3967,
+      "gzip_bytes": 757
     },
     {
       "country_code": "CY",
@@ -489,10 +1169,28 @@
       "gzip_bytes": 854
     },
     {
+      "country_code": "DZ",
+      "legacy_json_bytes": 73974,
+      "compact_json_bytes": 22740,
+      "gzip_bytes": 3294
+    },
+    {
+      "country_code": "EC",
+      "legacy_json_bytes": 185856,
+      "compact_json_bytes": 60105,
+      "gzip_bytes": 7203
+    },
+    {
       "country_code": "EE",
-      "legacy_json_bytes": 49176,
-      "compact_json_bytes": 18024,
-      "gzip_bytes": 2479
+      "legacy_json_bytes": 50879,
+      "compact_json_bytes": 18642,
+      "gzip_bytes": 2561
+    },
+    {
+      "country_code": "EG",
+      "legacy_json_bytes": 330422,
+      "compact_json_bytes": 108163,
+      "gzip_bytes": 11337
     },
     {
       "country_code": "ES",
@@ -508,15 +1206,15 @@
     },
     {
       "country_code": "FR",
-      "legacy_json_bytes": 3941609,
-      "compact_json_bytes": 1135124,
-      "gzip_bytes": 149665
+      "legacy_json_bytes": 3990274,
+      "compact_json_bytes": 1150504,
+      "gzip_bytes": 151787
     },
     {
       "country_code": "GB",
-      "legacy_json_bytes": 2069449,
-      "compact_json_bytes": 677199,
-      "gzip_bytes": 85848
+      "legacy_json_bytes": 2070139,
+      "compact_json_bytes": 677527,
+      "gzip_bytes": 85906
     },
     {
       "country_code": "GE",
@@ -531,6 +1229,18 @@
       "gzip_bytes": 7985
     },
     {
+      "country_code": "GT",
+      "legacy_json_bytes": 10611,
+      "compact_json_bytes": 3467,
+      "gzip_bytes": 622
+    },
+    {
+      "country_code": "HK",
+      "legacy_json_bytes": 23529,
+      "compact_json_bytes": 7586,
+      "gzip_bytes": 1245
+    },
+    {
       "country_code": "HR",
       "legacy_json_bytes": 524727,
       "compact_json_bytes": 174165,
@@ -543,10 +1253,40 @@
       "gzip_bytes": 12438
     },
     {
+      "country_code": "ID",
+      "legacy_json_bytes": 228883,
+      "compact_json_bytes": 84635,
+      "gzip_bytes": 7393
+    },
+    {
       "country_code": "IE",
       "legacy_json_bytes": 10015,
       "compact_json_bytes": 4146,
       "gzip_bytes": 858
+    },
+    {
+      "country_code": "IL",
+      "legacy_json_bytes": 83920,
+      "compact_json_bytes": 25222,
+      "gzip_bytes": 3287
+    },
+    {
+      "country_code": "IN",
+      "legacy_json_bytes": 239704,
+      "compact_json_bytes": 75936,
+      "gzip_bytes": 9251
+    },
+    {
+      "country_code": "IQ",
+      "legacy_json_bytes": 181759,
+      "compact_json_bytes": 70236,
+      "gzip_bytes": 6913
+    },
+    {
+      "country_code": "IR",
+      "legacy_json_bytes": 1560508,
+      "compact_json_bytes": 535101,
+      "gzip_bytes": 55581
     },
     {
       "country_code": "IS",
@@ -556,15 +1296,75 @@
     },
     {
       "country_code": "IT",
-      "legacy_json_bytes": 3377100,
-      "compact_json_bytes": 1086207,
-      "gzip_bytes": 135116
+      "legacy_json_bytes": 3377653,
+      "compact_json_bytes": 1086365,
+      "gzip_bytes": 135140
+    },
+    {
+      "country_code": "JO",
+      "legacy_json_bytes": 26473,
+      "compact_json_bytes": 9673,
+      "gzip_bytes": 1329
+    },
+    {
+      "country_code": "JP",
+      "legacy_json_bytes": 102229,
+      "compact_json_bytes": 30761,
+      "gzip_bytes": 4404
+    },
+    {
+      "country_code": "KE",
+      "legacy_json_bytes": 3338,
+      "compact_json_bytes": 1175,
+      "gzip_bytes": 391
+    },
+    {
+      "country_code": "KG",
+      "legacy_json_bytes": 58265,
+      "compact_json_bytes": 17891,
+      "gzip_bytes": 2300
+    },
+    {
+      "country_code": "KH",
+      "legacy_json_bytes": 1648,
+      "compact_json_bytes": 645,
+      "gzip_bytes": 313
+    },
+    {
+      "country_code": "KR",
+      "legacy_json_bytes": 22307527,
+      "compact_json_bytes": 6480783,
+      "gzip_bytes": 535540
+    },
+    {
+      "country_code": "KW",
+      "legacy_json_bytes": 33656,
+      "compact_json_bytes": 11077,
+      "gzip_bytes": 1430
+    },
+    {
+      "country_code": "KZ",
+      "legacy_json_bytes": 139828,
+      "compact_json_bytes": 43549,
+      "gzip_bytes": 5669
+    },
+    {
+      "country_code": "LB",
+      "legacy_json_bytes": 1080,
+      "compact_json_bytes": 439,
+      "gzip_bytes": 258
     },
     {
       "country_code": "LI",
       "legacy_json_bytes": 4970,
       "compact_json_bytes": 1645,
       "gzip_bytes": 445
+    },
+    {
+      "country_code": "LK",
+      "legacy_json_bytes": 2788,
+      "compact_json_bytes": 967,
+      "gzip_bytes": 356
     },
     {
       "country_code": "LT",
@@ -580,9 +1380,15 @@
     },
     {
       "country_code": "LV",
-      "legacy_json_bytes": 88743,
-      "compact_json_bytes": 29832,
-      "gzip_bytes": 3864
+      "legacy_json_bytes": 104968,
+      "compact_json_bytes": 34602,
+      "gzip_bytes": 4471
+    },
+    {
+      "country_code": "MA",
+      "legacy_json_bytes": 71634,
+      "compact_json_bytes": 22504,
+      "gzip_bytes": 3009
     },
     {
       "country_code": "MC",
@@ -592,9 +1398,9 @@
     },
     {
       "country_code": "MD",
-      "legacy_json_bytes": 44637,
-      "compact_json_bytes": 13736,
-      "gzip_bytes": 1816
+      "legacy_json_bytes": 45759,
+      "compact_json_bytes": 14066,
+      "gzip_bytes": 1851
     },
     {
       "country_code": "ME",
@@ -609,10 +1415,46 @@
       "gzip_bytes": 3394
     },
     {
+      "country_code": "MM",
+      "legacy_json_bytes": 7879,
+      "compact_json_bytes": 2682,
+      "gzip_bytes": 532
+    },
+    {
+      "country_code": "MN",
+      "legacy_json_bytes": 36583,
+      "compact_json_bytes": 12732,
+      "gzip_bytes": 1575
+    },
+    {
       "country_code": "MT",
       "legacy_json_bytes": 12789,
       "compact_json_bytes": 4325,
       "gzip_bytes": 802
+    },
+    {
+      "country_code": "MU",
+      "legacy_json_bytes": 34873,
+      "compact_json_bytes": 12406,
+      "gzip_bytes": 1705
+    },
+    {
+      "country_code": "MX",
+      "legacy_json_bytes": 74396,
+      "compact_json_bytes": 24181,
+      "gzip_bytes": 3218
+    },
+    {
+      "country_code": "MY",
+      "legacy_json_bytes": 42153,
+      "compact_json_bytes": 15118,
+      "gzip_bytes": 2480
+    },
+    {
+      "country_code": "NA",
+      "legacy_json_bytes": 1086,
+      "compact_json_bytes": 456,
+      "gzip_bytes": 272
     },
     {
       "country_code": "NL",
@@ -627,16 +1469,82 @@
       "gzip_bytes": 11499
     },
     {
+      "country_code": "NP",
+      "legacy_json_bytes": 14594,
+      "compact_json_bytes": 5232,
+      "gzip_bytes": 784
+    },
+    {
+      "country_code": "NZ",
+      "legacy_json_bytes": 39805,
+      "compact_json_bytes": 12971,
+      "gzip_bytes": 1919
+    },
+    {
+      "country_code": "OM",
+      "legacy_json_bytes": 258067,
+      "compact_json_bytes": 76795,
+      "gzip_bytes": 9031
+    },
+    {
+      "country_code": "PA",
+      "legacy_json_bytes": 9514,
+      "compact_json_bytes": 3065,
+      "gzip_bytes": 643
+    },
+    {
+      "country_code": "PE",
+      "legacy_json_bytes": 39620,
+      "compact_json_bytes": 13875,
+      "gzip_bytes": 1885
+    },
+    {
+      "country_code": "PG",
+      "legacy_json_bytes": 1087,
+      "compact_json_bytes": 462,
+      "gzip_bytes": 271
+    },
+    {
+      "country_code": "PH",
+      "legacy_json_bytes": 24700,
+      "compact_json_bytes": 8171,
+      "gzip_bytes": 1250
+    },
+    {
+      "country_code": "PK",
+      "legacy_json_bytes": 1088,
+      "compact_json_bytes": 445,
+      "gzip_bytes": 261
+    },
+    {
       "country_code": "PL",
       "legacy_json_bytes": 358882,
       "compact_json_bytes": 184184,
       "gzip_bytes": 26389
     },
     {
+      "country_code": "PS",
+      "legacy_json_bytes": 2200,
+      "compact_json_bytes": 767,
+      "gzip_bytes": 312
+    },
+    {
       "country_code": "PT",
       "legacy_json_bytes": 192514,
       "compact_json_bytes": 65282,
       "gzip_bytes": 8117
+    },
+    {
+      "country_code": "PY",
+      "legacy_json_bytes": 11822,
+      "compact_json_bytes": 4134,
+      "gzip_bytes": 764
+    },
+    {
+      "country_code": "QA",
+      "legacy_json_bytes": 88059,
+      "compact_json_bytes": 26903,
+      "gzip_bytes": 3320
     },
     {
       "country_code": "RO",
@@ -657,10 +1565,28 @@
       "gzip_bytes": 226420
     },
     {
+      "country_code": "RW",
+      "legacy_json_bytes": 3884,
+      "compact_json_bytes": 1309,
+      "gzip_bytes": 423
+    },
+    {
+      "country_code": "SA",
+      "legacy_json_bytes": 167484,
+      "compact_json_bytes": 55037,
+      "gzip_bytes": 6388
+    },
+    {
       "country_code": "SE",
-      "legacy_json_bytes": 1379750,
-      "compact_json_bytes": 468836,
-      "gzip_bytes": 55621
+      "legacy_json_bytes": 1602790,
+      "compact_json_bytes": 525978,
+      "gzip_bytes": 61491
+    },
+    {
+      "country_code": "SG",
+      "legacy_json_bytes": 85710,
+      "compact_json_bytes": 27422,
+      "gzip_bytes": 3567
     },
     {
       "country_code": "SI",
@@ -675,10 +1601,70 @@
       "gzip_bytes": 1949
     },
     {
+      "country_code": "SN",
+      "legacy_json_bytes": 3329,
+      "compact_json_bytes": 1099,
+      "gzip_bytes": 345
+    },
+    {
+      "country_code": "SV",
+      "legacy_json_bytes": 46191,
+      "compact_json_bytes": 16220,
+      "gzip_bytes": 2011
+    },
+    {
+      "country_code": "SY",
+      "legacy_json_bytes": 5005,
+      "compact_json_bytes": 1720,
+      "gzip_bytes": 450
+    },
+    {
+      "country_code": "TH",
+      "legacy_json_bytes": 13486,
+      "compact_json_bytes": 4288,
+      "gzip_bytes": 850
+    },
+    {
+      "country_code": "TJ",
+      "legacy_json_bytes": 1086,
+      "compact_json_bytes": 480,
+      "gzip_bytes": 278
+    },
+    {
+      "country_code": "TM",
+      "legacy_json_bytes": 123297,
+      "compact_json_bytes": 44275,
+      "gzip_bytes": 4162
+    },
+    {
+      "country_code": "TN",
+      "legacy_json_bytes": 9451,
+      "compact_json_bytes": 2982,
+      "gzip_bytes": 652
+    },
+    {
       "country_code": "TR",
       "legacy_json_bytes": 370210,
       "compact_json_bytes": 118491,
       "gzip_bytes": 14522
+    },
+    {
+      "country_code": "TT",
+      "legacy_json_bytes": 1085,
+      "compact_json_bytes": 462,
+      "gzip_bytes": 266
+    },
+    {
+      "country_code": "TW",
+      "legacy_json_bytes": 962022,
+      "compact_json_bytes": 319989,
+      "gzip_bytes": 43146
+    },
+    {
+      "country_code": "TZ",
+      "legacy_json_bytes": 1081,
+      "compact_json_bytes": 451,
+      "gzip_bytes": 272
     },
     {
       "country_code": "UA",
@@ -687,15 +1673,51 @@
       "gzip_bytes": 12019
     },
     {
+      "country_code": "UG",
+      "legacy_json_bytes": 3885,
+      "compact_json_bytes": 1252,
+      "gzip_bytes": 368
+    },
+    {
       "country_code": "US",
-      "legacy_json_bytes": 2067957,
-      "compact_json_bytes": 653925,
-      "gzip_bytes": 82451
+      "legacy_json_bytes": 2179487,
+      "compact_json_bytes": 690272,
+      "gzip_bytes": 87015
+    },
+    {
+      "country_code": "UY",
+      "legacy_json_bytes": 116955,
+      "compact_json_bytes": 38084,
+      "gzip_bytes": 4676
+    },
+    {
+      "country_code": "UZ",
+      "legacy_json_bytes": 248534,
+      "compact_json_bytes": 84216,
+      "gzip_bytes": 10311
+    },
+    {
+      "country_code": "VE",
+      "legacy_json_bytes": 16841,
+      "compact_json_bytes": 5576,
+      "gzip_bytes": 845
+    },
+    {
+      "country_code": "VN",
+      "legacy_json_bytes": 24109,
+      "compact_json_bytes": 8297,
+      "gzip_bytes": 1088
+    },
+    {
+      "country_code": "ZA",
+      "legacy_json_bytes": 96338,
+      "compact_json_bytes": 30418,
+      "gzip_bytes": 3936
     }
   ],
-  "json_bytes": 10991539,
-  "gzip_bytes": 1381990,
-  "legacy_json_bytes": 33737881,
-  "objects": 50,
+  "json_bytes": 22043091,
+  "gzip_bytes": 2458174,
+  "legacy_json_bytes": 70055665,
+  "objects": 123,
   "compression_delivery": "Compact identity JSON stored in R2; Cloudflare transparently negotiates gzip/brotli over HTTP. Precompressed gzip files remain local benchmarks only."
 }

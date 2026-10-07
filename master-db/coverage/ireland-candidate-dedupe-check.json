@@ -1,0 +1,96 @@
+{
+  "official_new_canonical": 9,
+  "country_full_records": 102,
+  "checks": [
+    {
+      "canonical_id": "IE_GARDA_STATIC:Crumlin Road, Dolphins Barn|Dublin 12|Dublin",
+      "nearest_other_id": "OSM_IE:node/13024708249",
+      "distance_m": 10.152,
+      "camera_type": "fixed_speed",
+      "nearest_type": "fixed_speed",
+      "confidence": "HIGH",
+      "nearest_confidence": "MEDIUM",
+      "nearest_status": "active"
+    },
+    {
+      "canonical_id": "IE_GARDA_STATIC:N13|Killyverry|Donegal",
+      "nearest_other_id": "OSM_IE:node/12875237542",
+      "distance_m": 8.305,
+      "camera_type": "fixed_speed",
+      "nearest_type": "fixed_speed",
+      "confidence": "HIGH",
+      "nearest_confidence": "MEDIUM",
+      "nearest_status": "active"
+    },
+    {
+      "canonical_id": "IE_GARDA_STATIC:N17|Ballinsmaula|Mayo",
+      "nearest_other_id": "OSM_IE:node/12875259075",
+      "distance_m": 10.211,
+      "camera_type": "fixed_speed",
+      "nearest_type": "fixed_speed",
+      "confidence": "HIGH",
+      "nearest_confidence": "MEDIUM",
+      "nearest_status": "active"
+    },
+    {
+      "canonical_id": "IE_GARDA_STATIC:N22|Farnanes|Cork",
+      "nearest_other_id": "OSM_IE:node/12802132002",
+      "distance_m": 20.907,
+      "camera_type": "fixed_speed",
+      "nearest_type": "fixed_speed",
+      "confidence": "HIGH",
+      "nearest_confidence": "MEDIUM",
+      "nearest_status": "active"
+    },
+    {
+      "canonical_id": "IE_GARDA_STATIC:N25|Ballynamona|Kilkenny",
+      "nearest_other_id": "OSM_IE:node/12872834296",
+      "distance_m": 10.822,
+      "camera_type": "fixed_speed",
+      "nearest_type": "fixed_speed",
+      "confidence": "HIGH",
+      "nearest_confidence": "MEDIUM",
+      "nearest_status": "active"
+    },
+    {
+      "canonical_id": "IE_GARDA_STATIC:N59|Aubwee|Galway",
+      "nearest_other_id": "OSM_IE:node/2100377610",
+      "distance_m": 8.779,
+      "camera_type": "fixed_speed",
+      "nearest_type": "fixed_speed",
+      "confidence": "HIGH",
+      "nearest_confidence": "MEDIUM",
+      "nearest_status": "active"
+    },
+    {
+      "canonical_id": "IE_GARDA_STATIC:N69|Ballyhomin|Limerick",
+      "nearest_other_id": "OSM_IE:node/12875193852",
+      "distance_m": 7.0,
+      "camera_type": "fixed_speed",
+      "nearest_type": "fixed_speed",
+      "confidence": "HIGH",
+      "nearest_confidence": "MEDIUM",
+      "nearest_status": "active"
+    },
+    {
+      "canonical_id": "IE_GARDA_STATIC:N80|Graiguenaspiddoge|Carlow",
+      "nearest_other_id": "OSM_IE:node/12850878458",
+      "distance_m": 13.72,
+      "camera_type": "fixed_speed",
+      "nearest_type": "fixed_speed",
+      "confidence": "HIGH",
+      "nearest_confidence": "MEDIUM",
+      "nearest_status": "active"
+    },
+    {
+      "canonical_id": "IE_GARDA_STATIC:R772|Gorey|Wexford",
+      "nearest_other_id": "OSM_IE:node/12802114505",
+      "distance_m": 8.765,
+      "camera_type": "fixed_speed",
+      "nearest_type": "fixed_speed",
+      "confidence": "HIGH",
+      "nearest_confidence": "MEDIUM",
+      "nearest_status": "active"
+    }
+  ]
+}

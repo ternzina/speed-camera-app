@@ -1,0 +1,34 @@
+{
+  "source": "AU_SA_DIT_SAFETY",
+  "raw_records": 173,
+  "unique_source_ids": 173,
+  "samples": [
+    {
+      "site_no": "606",
+      "validation_url": "https://api.openstreetmap.org/api/0.6/node/9099329204",
+      "distance_metres": 23.651
+    },
+    {
+      "site_no": "146",
+      "validation_url": "https://api.openstreetmap.org/api/0.6/node/2144003621",
+      "distance_metres": 16.584
+    },
+    {
+      "site_no": "127",
+      "validation_url": "https://api.openstreetmap.org/api/0.6/node/8654190746",
+      "distance_metres": 22.402
+    },
+    {
+      "site_no": "159",
+      "validation_url": "https://api.openstreetmap.org/api/0.6/node/9066798067",
+      "distance_metres": 31.125
+    },
+    {
+      "site_no": "200",
+      "validation_url": "https://api.openstreetmap.org/api/0.6/node/11530003956",
+      "distance_metres": 34.315
+    }
+  ],
+  "catalogue_positional_accuracy_metres": 100,
+  "policy": "LOW only. Catalog positions represent sites, not guaranteed precise device poles. Some nearby site points correspond to already known equipment; deduplicate conservatively against published and candidates. No current-operation or full capability inferred."
+}

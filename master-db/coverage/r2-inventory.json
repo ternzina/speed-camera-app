@@ -1,0 +1,16 @@
+{
+  "measured_at": "2026-10-07T19:22:11.860Z",
+  "bucket": "speed-camera-data",
+  "includes_retained_history": true,
+  "pagination_verified": true,
+  "private": {
+    "objects": 7325,
+    "size_bytes": 41959356108,
+    "pages": 8
+  },
+  "public": {
+    "objects": 162,
+    "size_bytes": 45273877,
+    "pages": 1
+  }
+}

@@ -1,0 +1,1428 @@
+{
+  "checked_at": "2026-10-07T16:26:55.395555+00:00",
+  "code_dictionary_download_bytes": 2664887,
+  "code_dictionary_url": "https://www.data.go.kr/bbs/rcr/selectRecsroom.do?originId=PDS_0000000001252",
+  "code_policy": {
+    "01": "fixed speed",
+    "01+02": "combined",
+    "02": "red light",
+    "03": "excluded bus lane/other passage control",
+    "04": "excluded parking",
+    "99": "excluded other",
+    "route_direction": "up/down/both route labels; no guessed degree bearings",
+    "section_points": "LOW, no paired geometry inferred"
+  },
+  "count_checks": {
+    "current_typed_devices": 29663,
+    "excluded_non_speed_signal_or_unknown_type": 13000,
+    "low_candidates": 1004,
+    "missing_or_ambiguous_source_identity": 3,
+    "parsed_records": 30667,
+    "provider_licenses_checked": 126,
+    "raw_records": 43764,
+    "server_count": 43764,
+    "unrestricted_provider_licenses": 126,
+    "unverified_provider_license": 94
+  },
+  "independent_current_primary_osm_samples": [
+    {
+      "agency": "경찰청",
+      "camera_type": "fixed_speed",
+      "current_primary_distance_m": 18.178,
+      "distance_m": 18.178,
+      "latitude": 37.5602593,
+      "longitude": 126.6372819,
+      "osm_node_id": 9144083685,
+      "osm_version": 2,
+      "primary_tags": {
+        "highway": "speed_camera",
+        "maxspeed": "50"
+      },
+      "source_id": "1320000|인천광역시|서구|G5991"
+    },
+    {
+      "agency": "경찰청",
+      "camera_type": "red_light",
+      "current_primary_distance_m": 27.617,
+      "distance_m": 27.617,
+      "latitude": 35.1552955,
+      "longitude": 126.7922585,
+      "osm_node_id": 9306210131,
+      "osm_version": 2,
+      "primary_tags": {
+        "camera:type": "panning",
+        "direction": "355",
+        "highway": "speed_camera",
+        "maxspeed": "30",
+        "surveillance": "maxspeed"
+      },
+      "source_id": "1320000|광주광역시|광산구|G6160"
+    },
+    {
+      "agency": "경찰청",
+      "camera_type": "red_light",
+      "current_primary_distance_m": 26.457,
+      "distance_m": 26.457,
+      "latitude": 35.1255001,
+      "longitude": 126.8690555,
+      "osm_node_id": 6327031552,
+      "osm_version": 4,
+      "primary_tags": {
+        "direction": "70",
+        "highway": "speed_camera",
+        "maxspeed": "60"
+      },
+      "source_id": "1320000|광주광역시|서구|F9273"
+    },
+    {
+      "agency": "경찰청",
+      "camera_type": "red_light",
+      "current_primary_distance_m": 6.069,
+      "distance_m": 6.069,
+      "latitude": 34.8887596,
+      "longitude": 128.6088901,
+      "osm_node_id": 9419776464,
+      "osm_version": 1,
+      "primary_tags": {
+        "highway": "speed_camera"
+      },
+      "source_id": "1320000|경상남도|거제시|F9240"
+    },
+    {
+      "agency": "경찰청",
+      "camera_type": "fixed_speed",
+      "current_primary_distance_m": 2.447,
+      "distance_m": 2.447,
+      "latitude": 37.9757251,
+      "longitude": 126.9042639,
+      "osm_node_id": 8308433742,
+      "osm_version": 1,
+      "primary_tags": {
+        "direction": "15",
+        "highway": "speed_camera",
+        "maxspeed": "80"
+      },
+      "source_id": "1320000|경기도|파주시|F9103"
+    }
+  ],
+  "license_url": "https://www.data.go.kr/ugs/selectPortalPolicyView.do",
+  "policy": "Current dated explicit speed/signal devices MEDIUM under existing policy; stale/missing/future date and incomplete section endpoints LOW. Unknown agency permissions or ambiguous source IDs excluded. Raw original pages and all permissions archived privately.",
+  "private_source_archive": {
+    "publication_pending_deduplication": false,
+    "raw_file_count": 320,
+    "raw_total_bytes": 61686538,
+    "receipt": {
+      "key": "archive/v1/manifests/c754a6a9b5f55435bb9c03806d58c2053a55662074e8be85d5e63aec710423e6.json",
+      "sha256": "c754a6a9b5f55435bb9c03806d58c2053a55662074e8be85d5e63aec710423e6",
+      "size_bytes": 801
+    },
+    "verified_observations": 30667
+  },
+  "provider_license_results": [
+    {
+      "identity": "uddi:3ee96f26-2354-4797-b183-dd30e7ae9973",
+      "name": "경상남도 사천시",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:429cbe3d-473b-4692-bfe5-c72875c92066",
+      "name": "인천광역시",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:34d10ad7-bd93-4b4e-9843-face056df399",
+      "name": "인천광역시 미추홀구",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:ccc6fb86-c7aa-4778-b5a2-d5587665ad12",
+      "name": "경상남도 거창군",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:37dc9804-eecc-41b8-9de7-ed086a2dcb6a",
+      "name": "경기도 여주시",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:88d9a6e6-464c-46cf-9a04-b7a2ed194d40",
+      "name": "강원특별자치도 정선군",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:37325181-e2b6-4f32-89f8-c06cca73170f",
+      "name": "서울특별시 서대문구",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:29931038-b786-439b-a065-8fbfd8706e33_202002271812",
+      "name": "인천광역시 남동구",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:89b4eaba-98e2-4c0c-9be4-bc14047e0c5d",
+      "name": "충청남도 천안시",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:49d026e6-3fe5-4628-b938-fee8ba852d0e",
+      "name": "충청남도 서천군",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:135267bc-c260-4dfa-a775-8d4f5f83f481",
+      "name": "경상남도 진주시",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:44935db8-dee6-4bc0-b47e-d0f0a8fb928c",
+      "name": "경기도 화성시",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:d92185cc-d246-476d-a22d-cbb5e6deed2a",
+      "name": "서울특별시 마포구",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:fbdffd41-a049-4f73-874b-e0837d8d04bb",
+      "name": "서울특별시 강남구",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:b2dbedc6-1e2e-482f-8156-82a284d10590",
+      "name": "전남광주통합특별시 광양시",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:a4182079-0d23-47f4-91d7-84109b08813f",
+      "name": "서울특별시 중랑구",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:d2e58728-6b9f-4f34-895f-fda4210e8791_201909111124",
+      "name": "경기도 부천시",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:2df7bb50-9f60-46f2-904d-d8f5ffa405bc_202003310931",
+      "name": "경기도 안성시",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:10f3e44e-3329-4288-9373-c39eab4a9a75",
+      "name": "경상북도 청송군",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:6df21353-f65d-487e-a855-bffdd55c2fcb",
+      "name": "전남광주통합특별시 구례군",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:e92e95dd-1f6b-41e4-9aaf-d9fd6cb3d3ad_201909242256",
+      "name": "경상북도 영덕군",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:4e72d24a-a680-4edc-bff5-f55f25cbb98f",
+      "name": "경상북도 문경시",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:b64c329f-1efb-4b29-9af6-b87486ea652e",
+      "name": "경기도 고양시",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:e3e8c6ff-fb52-403d-8c3a-802c8594a9a3",
+      "name": "경상북도 김천시",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:f8ea55b9-36ff-47f2-8a2c-a1e774d441bb",
+      "name": "전남광주통합특별시 화순군",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:c9d5e7c2-e2d2-4dbb-a648-94ce5504a467_201911011539",
+      "name": "경기도 양주시",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:db9a4cab-311e-46b7-a5ce-ddd5f62d3d79_201909181111",
+      "name": "경기도 광명시",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:f9050bbc-973e-4125-951d-ccf5780799ee",
+      "name": "전남광주통합특별시 광산구",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:4f0ab46b-305c-40be-b8ef-a4bab3ecd4ee",
+      "name": "전북특별자치도 진안군",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:4671e9f1-9585-4543-92d3-e1a21d0ee639",
+      "name": "경기도 의정부시",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:95ea3f4f-cec1-44ba-9783-bfa02781b684_202004141001",
+      "name": "전북특별자치도 완주군",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:35388f52-fa92-44d3-afd7-a91aa2e0e2ca_202003041014",
+      "name": "전북특별자치도 익산시",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:e678bd21-b427-44de-8729-da9d861e0725",
+      "name": "서울특별시 광진구",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:955b80f4-359e-422d-a2ea-847ac58a6316",
+      "name": "전남광주통합특별시 장성군",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:c43116b9-74e8-4d59-b2b2-e084dd0713a3",
+      "name": "경상남도 밀양시",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:a04bd520-27d7-435f-98eb-fa4f1b917087_201909110955",
+      "name": "경상북도 경산시",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:33ce20ee-d44a-4af1-9598-bf3c92dc85ef",
+      "name": "경상남도 합천군",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:2a667332-9093-4927-89c5-d1f22091775c_201909191536",
+      "name": "전남광주통합특별시 해남군",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:df0f9cc7-793d-4dec-bf50-9b27c7b42a4f",
+      "name": "전남광주통합특별시 강진군",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:eefe9ec9-7dcb-487c-8895-bbe1b4218584",
+      "name": "경상남도 의령군",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:23ad2b07-7da2-4664-afbd-f74b543dd498",
+      "name": "경기도 남양주시",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:fe05a891-21fc-46b4-b0f4-e59e57294871_201906191257",
+      "name": "강원특별자치도 태백시",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:bdbf19ce-6513-44bb-9b28-c3fae4b145cf_202002241630",
+      "name": "경기도 동두천시",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:6e58a790-c4ce-4338-977c-a191b63083dd",
+      "name": "서울특별시 종로구",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:c68deccc-d0c1-41fd-841e-a1d44dff7dd3",
+      "name": "경상남도 통영시",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:ca1cd233-817c-4d6b-90e5-c554c811e3d4",
+      "name": "충청북도 옥천군",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:3b509eda-47cc-4e68-846b-aafeba1ac6b7",
+      "name": "경기도 하남시",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:5feff8fd-e729-4139-8c42-add99b78ba6d",
+      "name": "부산광역시 서구",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:d8f503de-741f-4276-b9bb-9b576a9fa8e2",
+      "name": "부산광역시 사상구",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:28ece19e-ff16-4eda-b392-a5b3ff3a7c83_202003081153",
+      "name": "전북특별자치도 부안군",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:9cca1b93-9144-4651-85bf-86df30d8a801",
+      "name": "경기도 파주시",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:3771c12d-32d5-4934-9bca-c38bd8a2330a",
+      "name": "대전광역시 유성구",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:668ad816-c3da-4830-b188-c56194ba4ed0_201912311456",
+      "name": "경상북도 포항시",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:704e4138-b9f5-4a2c-9a5c-82bae529b61d",
+      "name": "경상북도 영주시",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:dd113fd2-4d4e-4cb0-917e-b0b6d7bc3bcc",
+      "name": "경기도 과천시",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:cfb9117c-b95d-4050-bf7d-bcbcb2be9b3c_201909281222",
+      "name": "대전광역시 대덕구",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:54b34f82-7b8e-4e87-8977-dcef2c8e08c8_202003051610",
+      "name": "경상북도 예천군",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:805ee0a6-aed7-4958-9e94-b4c2ec0dd584",
+      "name": "충청북도 충주시",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:d94064d9-c51f-4979-90ef-f92369ace1d7",
+      "name": "충청남도 보령시",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:a4e42555-10e3-402a-bd20-f2d0bf54b7b6_201906071127",
+      "name": "충청남도 청양군",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:6ce40405-8bc0-4a59-b7c7-b888b46384a2",
+      "name": "강원특별자치도 춘천시",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:b5ecedec-0510-47ce-b217-ae791b6ab361",
+      "name": "서울특별시 성북구",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:b618b0bd-34af-4373-af53-fe74dcf8b043",
+      "name": "서울특별시 동대문구",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:77b69c07-c29a-4b84-b4b4-e10a35c6e315",
+      "name": "대구광역시 중구",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:2a1c7465-09df-45ad-9fe5-8a7f29a148cd",
+      "name": "경상북도 청도군",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:ec048bf0-3d76-4f10-9e92-e2d20ad7a6e6",
+      "name": "충청남도 서산시",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:be17a104-b186-4d8a-9df8-823755cc7ebf",
+      "name": "경상남도 함양군",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:0add3db7-ffc5-4c2d-ac3e-aefe35156a79",
+      "name": "부산광역시 연제구",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:8738cc69-c29e-4ae7-8185-cd8b4292c4dc_201907241303",
+      "name": "서울특별시 은평구",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:5263772e-9729-4693-aec8-d77ffaf960ac_202002251921",
+      "name": "대전광역시 동구",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:3f893de8-e78b-416b-b7df-c8090035f386",
+      "name": "경기도 안양시",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:4c05d529-b2de-43cc-a219-d9b78fc76746_202003241331",
+      "name": "경기도 성남시",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:4d522deb-a21f-4d8e-8b9c-83481db3a7c6",
+      "name": "강원특별자치도 강릉시",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:be52ec9a-0fcc-4abe-8b3c-864fb2b5bd5a_202003241347",
+      "name": "대구광역시 남구",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:b73353ef-1bd5-45c0-9234-e912058f5bc0_201906291445",
+      "name": "서울특별시 관악구",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:133cca43-d198-415c-834f-b7b9e0f60c7a",
+      "name": "전북특별자치도 장수군",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:387b4aa5-726c-49c5-9b79-b518e5fad107",
+      "name": "인천광역시 제물포구",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:006c7159-a1b5-41d1-add2-d13c197ead65",
+      "name": "경상남도 양산시",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:fe6bb1e8-c302-4c83-a2d0-ae092d10bd68_201912240954",
+      "name": "경기도 구리시",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:6e85983e-b90c-44cc-b41f-96b16da17ede_202003171612",
+      "name": "서울특별시 금천구",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:439f4f48-1a25-4c54-bd31-f96721b38723",
+      "name": "경기도 안산시",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:38348295-8c44-479f-8898-9619583067e5_201909271038",
+      "name": "서울특별시 강북구",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:1748998a-eb07-492b-9af2-c2afb8d6b894",
+      "name": "부산광역시 해운대구",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:2c364ac0-c66b-4096-9b88-85d0c33305b3_201909261621",
+      "name": "충청남도 예산군",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:4d5c38d6-5eec-4ddd-b0c8-af5ef040adf5",
+      "name": "인천광역시 연수구",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:d869d3d3-9867-49dc-8ccb-db58c52e2ab8",
+      "name": "전북특별자치도 군산시",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:d0078808-aa93-4fbd-afb4-efcf2f010339_201908231046",
+      "name": "부산광역시",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:fc29c556-0a36-4013-9576-9d8bad5c49af_202003172130",
+      "name": "울산광역시 울주군",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:e24b243a-d434-4533-94e8-baccdac4952b",
+      "name": "충청남도 금산군",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:46342743-80d7-4a05-97fa-a69fe7f982cf",
+      "name": "충청북도 제천시",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:c253398f-0942-44b6-92ea-a7d0b054baab",
+      "name": "충청남도 당진시",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:355594b4-d399-4bdd-af52-e9fb6d96e37f_202003091655",
+      "name": "강원특별자치도 동해시",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:b7a9135b-fb42-4fd9-b449-d33c02adb942",
+      "name": "경상남도 거제시",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:d6bbf324-ae05-4abc-bc2c-ce2acef9e264",
+      "name": "경상남도 김해시",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:946bb95b-5b25-4faf-893b-f379749b141b_202003262022",
+      "name": "경기도 광주시",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:7ae1faa0-fc27-4771-bafb-e96c99acd14d",
+      "name": "경찰청",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:0f3af894-ddc0-4fd5-8ee2-c7c027bafad2_201909221659",
+      "name": "부산광역시 강서구",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:c09ec7eb-f1d7-409e-a240-e1466c86a53a",
+      "name": "경기도 군포시",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:61923a8b-3217-4918-8f77-abc49d0b894e",
+      "name": "강원특별자치도 인제군",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:86033ca1-baae-43b7-8806-877f9c063b8b_202003101553",
+      "name": "경기도 수원시",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:99138acd-5ece-464b-a39f-fb9d7a2dbd90",
+      "name": "충청북도 괴산군",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:e6e7815f-9a0e-4e89-afae-a52d6a32e6fb_202001081649",
+      "name": "경상북도 구미시",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:56c878b0-463f-4dc8-bff4-d12dc2564e35",
+      "name": "전남광주통합특별시 영광군",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:09dc2ccb-433c-4e42-b034-91013d51ffd5",
+      "name": "경상남도 창원시",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:0440b9cd-678a-4f4f-8184-aa91a5c7594c",
+      "name": "경상남도 남해군",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:f6b43ae4-f65e-4fc9-91f4-c2a0eaf8f423_202003171759",
+      "name": "대구광역시 달서구",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:371a4019-8807-4238-8585-dfcff34aa74c",
+      "name": "전북특별자치도 남원시",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:3446aba0-8970-4666-8837-acedb4467169_202003041555",
+      "name": "경기도 이천시",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:59f3a6fb-a37d-4233-aa03-9299b6276b91",
+      "name": "인천광역시 영종구",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:494160f6-1a5f-42a1-8b12-85e3fb24a34d_201906101151",
+      "name": "경상북도 상주시",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:e8d32943-c8e9-49df-86d6-a83ae5318b3e_201909271036",
+      "name": "경상북도 울진군",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:3b154e7d-ab6a-41ba-86ed-9499c493d664",
+      "name": "경기도 평택시",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:b49b8074-f611-4a2e-9790-832169eedab7",
+      "name": "강원특별자치도 양구군",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:f0bc43b5-0288-4ab6-87d9-ac63f24aa2d1_202003201413",
+      "name": "부산광역시 남구",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:b3016414-cacd-4d38-92d3-d7ddaa6c9254",
+      "name": "인천광역시 계양구",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:9d8703f1-2f0f-4df1-9229-de3aac208a0a",
+      "name": "강원특별자치도 양양군",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:bffb5f54-cd8a-4aa7-be8c-a9d6785074b0",
+      "name": "경기도 포천시",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:8080ee2c-5187-4ce3-b4d3-81e575ad4389",
+      "name": "경상북도 성주군",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:972966e3-130b-4b47-98bd-9e939882a45d",
+      "name": "충청남도 아산시",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:abc14b05-a9a5-42e9-bda1-a88f7e665f15",
+      "name": "충청남도 태안군",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:fef04d87-ce82-4ba8-bc63-b9f85a8ff816",
+      "name": "전북특별자치도 전주시",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:04d2f045-41ae-457e-b36f-c00ea8be0ded",
+      "name": "전남광주통합특별시 곡성군",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:18b290ac-5abd-4be1-8b29-e1c5d606603b",
+      "name": "충청북도 영동군",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:06f55a5a-0e98-439d-b12d-e35144730aaf_201911291448",
+      "name": "서울특별시 강동구",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:40297af0-cc0b-40fa-b668-a2613191a0a0",
+      "name": "대전광역시",
+      "unrestricted": true
+    },
+    {
+      "identity": "uddi:b2f180e3-7f25-4e2b-a1a8-8eff3350f23f",
+      "name": "전남광주통합특별시 고흥군",
+      "unrestricted": true
+    }
+  ],
+  "sample_scope": "Five current distinct device positions verify GPS plausibility; official primary standard defines capabilities. OSM samples are not used to guess red-light capability.",
+  "source_url": "https://www.data.go.kr/data/15028200/standard.do",
+  "verified_import": {
+    "canonical_source_records": {
+      "HK_TD_RLC": {
+        "private_candidate": 206
+      },
+      "HK_TD_SEC_HOUSING": {
+        "private_candidate": 141
+      },
+      "KR_DATA_GO_STANDARD": {
+        "private_candidate": 1342,
+        "published": 28730
+      }
+    },
+    "import_receipt": {
+      "key": "archive/v1/manifests/708efe4c486e073500343445e0d12010104edae95b17f111240b316d18759f3b.json",
+      "sha256": "708efe4c486e073500343445e0d12010104edae95b17f111240b316d18759f3b",
+      "size_bytes": 60281
+    },
+    "publication_delivery_verified": true,
+    "source_observation_dispositions": {
+      "HK_TD_RLC": {
+        "accepted": 206,
+        "rejected_country_polygon": 24
+      },
+      "HK_TD_SEC_HOUSING": {
+        "accepted": 141,
+        "duplicate_geometry": 5,
+        "rejected_country_polygon": 18
+      },
+      "KR_DATA_GO_STANDARD": {
+        "accepted": 30072,
+        "rejected_country_polygon": 595
+      }
+    },
+    "verified_at": "2026-10-07T17:16:48.262891+00:00"
+  },
+  "selected_permission_field_verification": {
+    "pages": 126,
+    "unrestricted": 126,
+    "method": "Exact normalized text from the single labeled permission value, not a page-wide substring",
+    "results": [
+      {
+        "file": "uddi_2df7bb50-9f60-46f2-904d-d8f5ffa405bc_202003310931.html",
+        "sha256": "da0b4b69ce94da884f9dee97ba10cf3356d79af9cc897a551f87d729ea5c14f8",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_3ee96f26-2354-4797-b183-dd30e7ae9973.html",
+        "sha256": "84f03534fa6095cc1ccf57a52f4fcc6199e47e3c7f8e3b6ca8a9f05cfa626ea1",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_61923a8b-3217-4918-8f77-abc49d0b894e.html",
+        "sha256": "01b89698fd66ff87a49d4427344356706c4ed1d1d818c374b65b604153cfeb58",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_77b69c07-c29a-4b84-b4b4-e10a35c6e315.html",
+        "sha256": "d0f12c9d97a3fe9f7b99cccc83130effac1579148b148cbe8ccb3029857e118d",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_6df21353-f65d-487e-a855-bffdd55c2fcb.html",
+        "sha256": "2001fedb45313378923e16d112a38aaad1ae287d9936d50a0cd9e36d820f47dd",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_006c7159-a1b5-41d1-add2-d13c197ead65.html",
+        "sha256": "beafdcc0a5dad149b73a3ca86b901356ea8d58fff058f37039a0f3c36fd86617",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_9d8703f1-2f0f-4df1-9229-de3aac208a0a.html",
+        "sha256": "48d801b1f92f94d15202085aa255827107f492de239025194fbc3c73bef48e83",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_2a1c7465-09df-45ad-9fe5-8a7f29a148cd.html",
+        "sha256": "69ca511b2b61b16af1077d2d8867bc78e82bd41d3e226de12fa272a53505e038",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_e92e95dd-1f6b-41e4-9aaf-d9fd6cb3d3ad_201909242256.html",
+        "sha256": "7f0d975b142b7825dd70a04760bd22719c79f79395b2960c0a0e278eca7b08d8",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_bdbf19ce-6513-44bb-9b28-c3fae4b145cf_202002241630.html",
+        "sha256": "9c2a702705269218b36e1f45b6ce2d1c1cee7ad1f2f173f5a8a4850728fc0172",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_fef04d87-ce82-4ba8-bc63-b9f85a8ff816.html",
+        "sha256": "075941efc39c00b4caf53dd12c7ee6517a16ee36791a5cd3f62227eec9133333",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_3b154e7d-ab6a-41ba-86ed-9499c493d664.html",
+        "sha256": "51d2b8d29f55deb25ea4cc156a67cf3cc24dea46eaf7dab1f18a881b9b1f753c",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_eefe9ec9-7dcb-487c-8895-bbe1b4218584.html",
+        "sha256": "ccede34f4bb4c6dbcd13ca8641812ca3c96b3de66d78f4e27963090dae65dd49",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_439f4f48-1a25-4c54-bd31-f96721b38723.html",
+        "sha256": "8fff15c9af1650378dae9d63d475be8ec1838688cf1e3cbbc5b5676d421e3b03",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_494160f6-1a5f-42a1-8b12-85e3fb24a34d_201906101151.html",
+        "sha256": "a940464b957f71e482b0a8e56ce5d1dc92f6c5aa1b62a92d07b068aa70b16d3f",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_b5ecedec-0510-47ce-b217-ae791b6ab361.html",
+        "sha256": "bbb7ee033ca9fbe5cdabbeadf5688dec1dca4f787adeaa3f824c8bec4be9e803",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_89b4eaba-98e2-4c0c-9be4-bc14047e0c5d.html",
+        "sha256": "bda2d92f14afb8d2f979db413a3869a8d0a9f8abc4164006fbbb26c1486969d3",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_e6e7815f-9a0e-4e89-afae-a52d6a32e6fb_202001081649.html",
+        "sha256": "20a476cf3c78405cb5000761e7099d97f8a12cd897993cf3d9db5d1a93bb652a",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_fe6bb1e8-c302-4c83-a2d0-ae092d10bd68_201912240954.html",
+        "sha256": "e9cdcad75b77e9cd495c688fcb77bc56d319d8da2ab9cec0c548eb6ba52ddad7",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_d92185cc-d246-476d-a22d-cbb5e6deed2a.html",
+        "sha256": "2edfd63e1a4cce238792cc729b4d50e41e656485c4cca91b9ebc0e6543652646",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_3446aba0-8970-4666-8837-acedb4467169_202003041555.html",
+        "sha256": "bfd98438e2a1628e5ffa66939f73ea09aebc5ab6dbfc0aeafe89cd5bc9dee2d3",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_fe05a891-21fc-46b4-b0f4-e59e57294871_201906191257.html",
+        "sha256": "9d3d6486e6981634a9c00cf3e7fa89c35342a1457809948f6c00cbd0c92f3a3e",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_4d522deb-a21f-4d8e-8b9c-83481db3a7c6.html",
+        "sha256": "094003ea7e790d5db87a7e87e290f71b24be4f1f55a02e6255a845555554455e",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_a4182079-0d23-47f4-91d7-84109b08813f.html",
+        "sha256": "a91e2b4ba695a8055d626c713c4055337fed389003e1382764b77861e024974e",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_972966e3-130b-4b47-98bd-9e939882a45d.html",
+        "sha256": "2794da3ad4051cb865298bd01e7d16222b4ca997697cb3ae33a8685a4c85e7e3",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_6e58a790-c4ce-4338-977c-a191b63083dd.html",
+        "sha256": "18c999d9ed8a9a89fa9f73c2f359fae16d647ad6bfa8eeb17f1f0eb6ed228047",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_f8ea55b9-36ff-47f2-8a2c-a1e774d441bb.html",
+        "sha256": "bb68c1c41b274849ad6ca92826c8203385819d11085c8c7e45acaeefda2b57e4",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_33ce20ee-d44a-4af1-9598-bf3c92dc85ef.html",
+        "sha256": "4210230da474431429c8ee08b2020c1e66ba68d614c86afd6858fee7ac77f3e3",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_955b80f4-359e-422d-a2ea-847ac58a6316.html",
+        "sha256": "453c9b79da74e80b3f6cc2193a65a5935e68776868dacee0746135e0b58c880f",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_0f3af894-ddc0-4fd5-8ee2-c7c027bafad2_201909221659.html",
+        "sha256": "ff8608cf0ec721c7c7757c4da4f5d2703c8eca622905fac53def2bc9d47678f4",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_56c878b0-463f-4dc8-bff4-d12dc2564e35.html",
+        "sha256": "34aade74ae67d6c5c3b58bb5ec9740113ecc785f6be68fd0ab94eccc41d9ef74",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_429cbe3d-473b-4692-bfe5-c72875c92066.html",
+        "sha256": "ff62fdc78108b05b83264b2167eb1b647b48e5308adf72660601cca5567ee81f",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_b49b8074-f611-4a2e-9790-832169eedab7.html",
+        "sha256": "dd6146eef94d5f83bf1e225f226aac5bc3e40a35e7c1597d1ecb6c6574307ec2",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_d8f503de-741f-4276-b9bb-9b576a9fa8e2.html",
+        "sha256": "efae46ac6ffa2ae54d6d018f780e9ca4c2c37524a5ce7a0971b78c266e8b600f",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_59f3a6fb-a37d-4233-aa03-9299b6276b91.html",
+        "sha256": "6ea6ecac1c5deebb57331e50f2235a9bbb390bb97d4adcc00a631f71ec43e52c",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_f0bc43b5-0288-4ab6-87d9-ac63f24aa2d1_202003201413.html",
+        "sha256": "abf354e7b9fa4e7ebb37223c9f986c581d1cb835a2f0cc1684703ddef3723fca",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_29931038-b786-439b-a065-8fbfd8706e33_202002271812.html",
+        "sha256": "05d1aeb96d596654862fb47541adbc546bcc1cb3cbda4003028bcb54844b678e",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_be17a104-b186-4d8a-9df8-823755cc7ebf.html",
+        "sha256": "922e0347b7fdcaff490073718229866acbad942ca5997b4de216dbe603176c93",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_0440b9cd-678a-4f4f-8184-aa91a5c7594c.html",
+        "sha256": "775c4f620d2eed61639f51a2dec2bc3ba0caa54847707cf7bfb7008003eb8fbf",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_4f0ab46b-305c-40be-b8ef-a4bab3ecd4ee.html",
+        "sha256": "595ebeb11290d6a805ab3bd2ba32a2c05433de36d85646b3e32a4808b5176097",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_b3016414-cacd-4d38-92d3-d7ddaa6c9254.html",
+        "sha256": "7cfe8422df992dfaefa23250948b9905b2d3c58c353f7281506029755ce4b3de",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_a4e42555-10e3-402a-bd20-f2d0bf54b7b6_201906071127.html",
+        "sha256": "97b5be6af1e3c3a5d8e66683746b3f64c9c3e11344f0d32dcc86ff76c3e8e490",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_04d2f045-41ae-457e-b36f-c00ea8be0ded.html",
+        "sha256": "b8f4a44b26fa738850ef9018d643a601629886272255345e3ff1928dfde5b9bf",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_49d026e6-3fe5-4628-b938-fee8ba852d0e.html",
+        "sha256": "79a63cf94285fe659207c7b6c20c635e99241b6ca83c6ee388120b78d9263125",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_2c364ac0-c66b-4096-9b88-85d0c33305b3_201909261621.html",
+        "sha256": "a97bfb5a0b8342509098fa2fc37b4fd4bbcae7247a68a69e0d0cbcbb1dd83462",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_4c05d529-b2de-43cc-a219-d9b78fc76746_202003241331.html",
+        "sha256": "669f7e99f099980533fbf3046e24fb18ebdb44d97e5e9ff0ef13b34efb091abd",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_1748998a-eb07-492b-9af2-c2afb8d6b894.html",
+        "sha256": "f50a92e5069f8c4d21a007c53974731c155d4e7ec23b5da3c7c58ad321c2b283",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_09dc2ccb-433c-4e42-b034-91013d51ffd5.html",
+        "sha256": "24fbeda1c6dbde605ac4b9cfe72d4b332a3cf174afc4aef688c23d51e2a108c2",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_db9a4cab-311e-46b7-a5ce-ddd5f62d3d79_201909181111.html",
+        "sha256": "04ce2cab480b390642966dbf7fce425b5fdc328b4526d001805c19a6f7341d34",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_28ece19e-ff16-4eda-b392-a5b3ff3a7c83_202003081153.html",
+        "sha256": "361c4c73bbf9cdedd4cfa360d22acdbe51b998b470d01d324278db56f80d9d2d",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_b64c329f-1efb-4b29-9af6-b87486ea652e.html",
+        "sha256": "370ccd98661df9716b8d7cced46f3bf52a67609869953c0785d62030ba222157",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_2a667332-9093-4927-89c5-d1f22091775c_201909191536.html",
+        "sha256": "3a22e0374415aa93375dbc73e5c275ccd1998b5a74632d759fc77f0fd5e17429",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_35388f52-fa92-44d3-afd7-a91aa2e0e2ca_202003041014.html",
+        "sha256": "3b15ad369b74167ff3ddbf05661fa4c7c5c2d322e32e876aa3e02cc93800c2c8",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_f9050bbc-973e-4125-951d-ccf5780799ee.html",
+        "sha256": "5b318bff3b95be2c1cdbfa26001613a0125e3e5d9b7efdf14de01b06752dbb1f",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_37dc9804-eecc-41b8-9de7-ed086a2dcb6a.html",
+        "sha256": "6569a5e0d2e94ac3fce5056e04550c2e778819c58542bc51011e597dab80ab8b",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_c253398f-0942-44b6-92ea-a7d0b054baab.html",
+        "sha256": "8642a2649e904c809d358b05b0ebeead06c86a6c33e78d145308af38265b9da7",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_3771c12d-32d5-4934-9bca-c38bd8a2330a.html",
+        "sha256": "375aae5626e769a8ec836fd16fcc9fcba8f5565e08aa9e5663eff851fb12c1d1",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_b7a9135b-fb42-4fd9-b449-d33c02adb942.html",
+        "sha256": "7cfdfcde31fddcbaec366f3038866f83c54b0b5de7c509b7e15114516369b226",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_355594b4-d399-4bdd-af52-e9fb6d96e37f_202003091655.html",
+        "sha256": "b06a8c44d9c64364d283320643988f9cee3251a70f037391f0dcbbcf952f3b5a",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_ec048bf0-3d76-4f10-9e92-e2d20ad7a6e6.html",
+        "sha256": "ad48ad880b927d7faae01502c8ec3b53d2bd5a8f696b65d58ead999bec6f6f18",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_c9d5e7c2-e2d2-4dbb-a648-94ce5504a467_201911011539.html",
+        "sha256": "a902a77bc3000e35ed9119cf6801592269f2a9b1017e9375c15b54a84db26e77",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_c68deccc-d0c1-41fd-841e-a1d44dff7dd3.html",
+        "sha256": "bb34cd32885a11f1905e5a0de7dcc2abf59ce311995fe0e9469e3b57ccc76250",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_abc14b05-a9a5-42e9-bda1-a88f7e665f15.html",
+        "sha256": "00f405060fa64da656a68938a2ceca66b27f97a5bd9297fa5d1263e6f8c4f9f1",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_34d10ad7-bd93-4b4e-9843-face056df399.html",
+        "sha256": "7c9665fcf587b7894fa00e7144b4b2fc302d4a744eb2a766798ddc656275385f",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_e24b243a-d434-4533-94e8-baccdac4952b.html",
+        "sha256": "c29e03562617433714274078ef82080b49bfd6605cb3d6be124450d31065f83a",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_4d5c38d6-5eec-4ddd-b0c8-af5ef040adf5.html",
+        "sha256": "8cdd6d844d8088f9c6cfa41786c4491386bfc6d8a82706a1e9f29a3f06073b3c",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_b73353ef-1bd5-45c0-9234-e912058f5bc0_201906291445.html",
+        "sha256": "574d13d2274631457fbbd9f1bf68d0244cf3bb66411fc950ce6a392a8d09bb2f",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_6e85983e-b90c-44cc-b41f-96b16da17ede_202003171612.html",
+        "sha256": "eba24affa2f031130230a4461d9ce274deb903571b1a5d3d13f8a0cfea45e2eb",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_37325181-e2b6-4f32-89f8-c06cca73170f.html",
+        "sha256": "7b8b877aa932c68f8ddab491eef121c3547558c1a0cbd13f7fcbe0c059e75eed",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_4671e9f1-9585-4543-92d3-e1a21d0ee639.html",
+        "sha256": "5971793446a91ee6b4568030ce5e06bf7907456a40a538ef115de772703068c7",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_dd113fd2-4d4e-4cb0-917e-b0b6d7bc3bcc.html",
+        "sha256": "b8ee1827ff8ac1b04349ca035acc76b7abdc78dccac7809634f7a51e225448ad",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_bffb5f54-cd8a-4aa7-be8c-a9d6785074b0.html",
+        "sha256": "c6c4840a7acea0aacd9ef0a801dca372e3ab20905b9c50711473d1d801b6cc9b",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_135267bc-c260-4dfa-a775-8d4f5f83f481.html",
+        "sha256": "aa05475169b812a51a5a9cec62786e4b682b6f82f256a9dd709e43b6e1e0aa7d",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_23ad2b07-7da2-4664-afbd-f74b543dd498.html",
+        "sha256": "0018287eacc22706f41277b53f791c7f2a85c0708d0639f56059974e5957adf8",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_8080ee2c-5187-4ce3-b4d3-81e575ad4389.html",
+        "sha256": "0cd7ee33b8f30ac0d0835fe9f5400fe997c2f99e207bb04d9eb573d7cc440b42",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_8738cc69-c29e-4ae7-8185-cd8b4292c4dc_201907241303.html",
+        "sha256": "ed267caeb45a2b427e2ac25652029f1d2a26b25a1bd43eb18e2b42a62cff6593",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_5feff8fd-e729-4139-8c42-add99b78ba6d.html",
+        "sha256": "4ae17d06722ff874b0fa010c80617eade92e39a0528a01f9615d61efca8a4035",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_86033ca1-baae-43b7-8806-877f9c063b8b_202003101553.html",
+        "sha256": "079fdc831c3fad0619d58c7a85464599ff2e4490a77e8ad4a28c00baedc777c2",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_d6bbf324-ae05-4abc-bc2c-ce2acef9e264.html",
+        "sha256": "5bbf6d6ec20b4ef46afd7a63f3a8a20171a4c5534a4d53716a3b7b9b9a70da69",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_06f55a5a-0e98-439d-b12d-e35144730aaf_201911291448.html",
+        "sha256": "d00ce98cb57ed72e5746aff11a3a98f278476483808dec84e17aa98099800ccb",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_10f3e44e-3329-4288-9373-c39eab4a9a75.html",
+        "sha256": "20395fff34cbf69058cc954ecbbcc04c8559b3e3e4de6b4b96100f54708958bf",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_18b290ac-5abd-4be1-8b29-e1c5d606603b.html",
+        "sha256": "59dab99e12625f2ce8d1958d78ea7522ce199ebc9ebf469923223b84e3bdab88",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_668ad816-c3da-4830-b188-c56194ba4ed0_201912311456.html",
+        "sha256": "8d56d9a7b631919bd6b33f404443b94a1d9be3f0d9eb6903adc7c6485141aa62",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_805ee0a6-aed7-4958-9e94-b4c2ec0dd584.html",
+        "sha256": "b24abbe2b000b97114cd26495bd9d2a771afeeffe92796746511fa71f9f59fc7",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_46342743-80d7-4a05-97fa-a69fe7f982cf.html",
+        "sha256": "7b53fdd3450d3b82dd99d60b7f4620f6d7218e840a853a87bc877512d14c0bd1",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_99138acd-5ece-464b-a39f-fb9d7a2dbd90.html",
+        "sha256": "d33af40e53c5832043624c3c322758f1c9156d0b07fcc5d0005f0f9ef6b467cb",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_c43116b9-74e8-4d59-b2b2-e084dd0713a3.html",
+        "sha256": "76d75698568aefa1232ac739289310c8c58c83697807a22491ce0ea2054491cf",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_88d9a6e6-464c-46cf-9a04-b7a2ed194d40.html",
+        "sha256": "f6f95b0b453d3219e9a4dd23e17fa74d809df712da45a4ef32d87ebff626798b",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_ca1cd233-817c-4d6b-90e5-c554c811e3d4.html",
+        "sha256": "3b27735f3d6102c2dc84cf7971acce1d7d71c217db8142360ec97a746907e731",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_fc29c556-0a36-4013-9576-9d8bad5c49af_202003172130.html",
+        "sha256": "2646a76c8db43d9c3b970c54036ce351ff7cb6b61e6056919c0d31ced0398bce",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_e3e8c6ff-fb52-403d-8c3a-802c8594a9a3.html",
+        "sha256": "b5af82feccb73d3ea3b79a7d4284e37f4e1717985eaad6875cce7cb55e989de4",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_3f893de8-e78b-416b-b7df-c8090035f386.html",
+        "sha256": "7ad2b2dbcb5b39b4c2bfd7a5a4491e2ca7083d29723adf5f0caf3a2d22f01c3f",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_387b4aa5-726c-49c5-9b79-b518e5fad107.html",
+        "sha256": "f7a689157a48ce0201166d3a7dbc72c16515d7a053216e2067a8602c3fba361a",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_cfb9117c-b95d-4050-bf7d-bcbcb2be9b3c_201909281222.html",
+        "sha256": "d104bf099c3748c85d752a6f17f9d186e4e620df0ea9f8e4ab9b800090bef571",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_f6b43ae4-f65e-4fc9-91f4-c2a0eaf8f423_202003171759.html",
+        "sha256": "8c09db95449b3816df7d4367e3aeec89ac273cbf458ef2ece9702d89720066bd",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_0add3db7-ffc5-4c2d-ac3e-aefe35156a79.html",
+        "sha256": "2b2e50b0d4b6620df0d61699b097ba303ea42dd7459f539da0e6c7f63e4166a1",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_44935db8-dee6-4bc0-b47e-d0f0a8fb928c.html",
+        "sha256": "1081a839d846043e0d6c45a7535495ae87fbe4b796e0ebc72283a440bf1826f6",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_b2f180e3-7f25-4e2b-a1a8-8eff3350f23f.html",
+        "sha256": "aff075b985f220c6295c12ae8e76a9842b7952bb1e6d7667186af68e8cc91342",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_c09ec7eb-f1d7-409e-a240-e1466c86a53a.html",
+        "sha256": "70b3fe7365e2907dd2adb3b174b314307690a7dea01ef6da108b4b1d6285f700",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_40297af0-cc0b-40fa-b668-a2613191a0a0.html",
+        "sha256": "00e01e587914d3835ccf57517a76061ab20d222e3519437b1f2493853c5bf9e4",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_fbdffd41-a049-4f73-874b-e0837d8d04bb.html",
+        "sha256": "05d3c7598ad87394f3252d9c3295d4800598d838f3d5f7805b47fdb257dba42d",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_b2dbedc6-1e2e-482f-8156-82a284d10590.html",
+        "sha256": "a8cb047f098541a7547f53285ee07871b0e299aae189b2a21c26bd6f09454085",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_946bb95b-5b25-4faf-893b-f379749b141b_202003262022.html",
+        "sha256": "88ec78999fd84213eb99d6d2152c519e447abdf25917e2f8f00dd172dea1a56f",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_5263772e-9729-4693-aec8-d77ffaf960ac_202002251921.html",
+        "sha256": "a6c798d5fd43d3dd24eae8b78eaa38b42ef4b5d0d3b558599c84447546ea2982",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_a04bd520-27d7-435f-98eb-fa4f1b917087_201909110955.html",
+        "sha256": "3d17fff899e2f6528a10004c8795fb35eb37842b13d68e65f552be84b9af0433",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_3b509eda-47cc-4e68-846b-aafeba1ac6b7.html",
+        "sha256": "ac59ef29f34a2f748d14c381345f202f9b80b5d30d07fd96114fb3f29509bf8e",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_df0f9cc7-793d-4dec-bf50-9b27c7b42a4f.html",
+        "sha256": "f6e4d9dc18bc5c5d1b568c21f7983154131bddbc33c2ac941ef5f33990fb4099",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_38348295-8c44-479f-8898-9619583067e5_201909271038.html",
+        "sha256": "2a3e9274d2c8772d99f3cfddbeba30b2fe0d6c8fc4c29ec6fc523fcdab395437",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_d869d3d3-9867-49dc-8ccb-db58c52e2ab8.html",
+        "sha256": "0dc79f7c538b9c79ebc1dc16ce28f5bc149840f3de0f11dc92318e3870da5b30",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_4e72d24a-a680-4edc-bff5-f55f25cbb98f.html",
+        "sha256": "f0853473eef134f7107ae692404c80f643b16bd4021d0eb58ca009c0b4880fdc",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_7ae1faa0-fc27-4771-bafb-e96c99acd14d.html",
+        "sha256": "5b88664b43b6f677470659256d6098d715f9e33ccce7ecc6afbbd17addef09a0",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_54b34f82-7b8e-4e87-8977-dcef2c8e08c8_202003051610.html",
+        "sha256": "5ec5dda88efb6c76e25e31f0a109c0adc3c2bd015c437bc6d028ef094b67f422",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_be52ec9a-0fcc-4abe-8b3c-864fb2b5bd5a_202003241347.html",
+        "sha256": "0ca7d77e0b5856a8cc37d81cfc686a6b334f6595526cf9750d496cab1c13991f",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_9cca1b93-9144-4651-85bf-86df30d8a801.html",
+        "sha256": "a6e1ce8ee8429df56a9f75c324ccc7b519577ada993611a6167e6f0b1bc23706",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_704e4138-b9f5-4a2c-9a5c-82bae529b61d.html",
+        "sha256": "b3db3e24367738ffd46152955ec0a34172422a32c8e4abfc4382fea070e76fc1",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_d94064d9-c51f-4979-90ef-f92369ace1d7.html",
+        "sha256": "73486f075659959d7575bbd84f5e6c8b3d46d2a1d6aa84e1be140196b90a98a9",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_d2e58728-6b9f-4f34-895f-fda4210e8791_201909111124.html",
+        "sha256": "508faedf2b8759626d128e03329d24f3a67598016294188263e5c961d4044561",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_371a4019-8807-4238-8585-dfcff34aa74c.html",
+        "sha256": "669b2fe40c8da8e685328f34d7be26b79d856296d3e06de8636a60c9568ab801",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_133cca43-d198-415c-834f-b7b9e0f60c7a.html",
+        "sha256": "2d10781c9c9c66371dc3523b1ae78b30266dbcb90c54016177af408b427f9b78",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_e8d32943-c8e9-49df-86d6-a83ae5318b3e_201909271036.html",
+        "sha256": "d3535fffb0eb922d34a033867462682a471a4c27493c9ca904e7799585e4f45d",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_b618b0bd-34af-4373-af53-fe74dcf8b043.html",
+        "sha256": "9dc405712557ae752c47471996f45d9d04fe99e6c9f94e0993264bc8af0f2ee7",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_6ce40405-8bc0-4a59-b7c7-b888b46384a2.html",
+        "sha256": "5059f43548296c61b127b6c9d883d30662cd7699e637a5b6f97ec0d6746b5b39",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_e678bd21-b427-44de-8729-da9d861e0725.html",
+        "sha256": "2d96fb7388ab35e772c49544233ed170a7779b63467412dffd015df647a33148",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_95ea3f4f-cec1-44ba-9783-bfa02781b684_202004141001.html",
+        "sha256": "1fb0c5660b522e8612adb6d463502a2842514058a8bb738dd68829f09383d895",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_ccc6fb86-c7aa-4778-b5a2-d5587665ad12.html",
+        "sha256": "1aa08bbd7585138dea823a7f11e244f518b0a82ded7af66f90910549862478f2",
+        "permission_label": "이용허락범위 제한 없음"
+      },
+      {
+        "file": "uddi_d0078808-aa93-4fbd-afb4-efcf2f010339_201908231046.html",
+        "sha256": "5939dfb130ead067aa74a58e663c6b0b97982ad1fe28537847e44051ffc10710",
+        "permission_label": "이용허락범위 제한 없음"
+      }
+    ]
+  }
+}

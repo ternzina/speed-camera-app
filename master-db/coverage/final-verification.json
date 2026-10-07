@@ -1,0 +1,35 @@
+{
+  "checked_at": "2026-10-07T19:23:42.661440+00:00",
+  "completed_rounds": 12,
+  "all_registered_extract_regions_verified": 145,
+  "last_pass_new_canonical": 59,
+  "last_pass_new_published": 39,
+  "last_pass_duplicate_observations": 128419,
+  "last_pass_rejected_observations": 1656,
+  "diminishing_returns": "Final regional pass adds 59 canonical IDs from 130134 observations; broader catalog pass found no additional qualified unprocessed coordinate feed. Failed or licensing-ineligible sources remain documented, not treated as empty coverage.",
+  "python_unit_tests": {
+    "passed": 99,
+    "log": "master-db/cache/coverage-stage/python-tests-permission-final.log"
+  },
+  "node_archive_worker_delivery_tests": "passed",
+  "app_smoke": "passed",
+  "actual_production_loader": {
+    "result": "passed",
+    "countries": 122,
+    "published_records": 113205
+  },
+  "baseline_full_records_unchanged": 65134,
+  "full_new_published_proximity_audit": {
+    "ambiguous_new_published_rows": 0,
+    "by_country": {},
+    "by_source_namespace": {},
+    "checked_at": "2026-10-07T19:20:21.048871+00:00",
+    "new_published_rows_checked": 53935,
+    "note": "Only new stage additions are candidates for correction; protected baseline rows are never modified. Distinct source device IDs and opposing bearings remain separate.",
+    "samples": []
+  },
+  "low_published": 0,
+  "mass_observations_postgres": 0,
+  "protected_production_configs_unchanged": true,
+  "store_or_ota_release": false
+}

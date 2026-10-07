@@ -21,12 +21,16 @@ export default {
   const prior=await env.CAMERA_DATA.head(key);
   if(prior&&!mutableManifest){if(prior.size!==size||prior.customMetadata?.sha256!==digest)return new Response('Immutable conflict',{status:409});return Response.json({key,sha256:digest,size,existing:true});}
   if(!request.body)return new Response('Missing body',{status:400});
-  const reader=request.body.getReader(),chunks=[];let length=0;
-  while(true){const {done,value}=await reader.read();if(done)break;length+=value.length;if(length>size){await reader.cancel();return new Response('Too large',{status:413});}chunks.push(value);}
-  if(length!==size)return new Response('Length mismatch',{status:400});
-  const data=new Uint8Array(length);let offset=0;for(const chunk of chunks){data.set(chunk,offset);offset+=chunk.length;}
-  const actual=await crypto.subtle.digest('SHA-256',data);if(hex(actual)!==digest)return new Response('Checksum mismatch',{status:400});
-  await env.CAMERA_DATA.put(key,data,{...(mutableManifest?{}:{onlyIf:{etagDoesNotMatch:'*'}}),httpMetadata:{contentType:publicWrite?'application/json':'application/octet-stream',cacheControl:publicWrite?(mutableManifest?'public, max-age=60':'public, max-age=31536000, immutable'):'private, no-store'},customMetadata:{sha256:digest},sha256:actual});
+  // Preserve the HTTP body's known length and let R2 verify SHA-256 before commit.
+  // Buffering and hashing multi-MB payloads here exhausts the Worker's CPU budget.
+  const expected=Uint8Array.from(digest.match(/../g),v=>parseInt(v,16));
+  const stored=await env.CAMERA_DATA.put(key,request.body,{...(mutableManifest?{}:{onlyIf:{etagDoesNotMatch:'*'}}),httpMetadata:{contentType:publicWrite?'application/json':'application/octet-stream',cacheControl:publicWrite?(mutableManifest?'public, max-age=60':'public, max-age=31536000, immutable'):'private, no-store'},customMetadata:{sha256:digest},sha256:expected.buffer});
+  if(!stored){
+   const raced=await env.CAMERA_DATA.head(key);
+   if(raced?.size===size&&raced.customMetadata?.sha256===digest)return Response.json({key,sha256:digest,size,existing:true});
+   return new Response('Immutable conflict',{status:409});
+  }
+  if(stored.size!==size||hex(stored.checksums.sha256)!==digest)throw new Error('R2 integrity assertion failed');
   return Response.json({key,sha256:digest,size});
  }
 };

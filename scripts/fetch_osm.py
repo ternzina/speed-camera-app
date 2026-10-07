@@ -15,6 +15,9 @@ CACHE = ROOT / 'master-db/cache/bootstrap/osm'
 COUNTRIES = dict(zip(
     'UA PL FR ES DE GB IE PT IT AT CH BE NL LU DK SE NO FI IS CZ SK HU RO BG HR SI RS BA ME MK AL GR LT LV EE MD CY MT XK TR AD LI MC SM VA US CA'.split(),
     ['Ukraine','Poland','France','Spain','Germany','United Kingdom','Ireland','Portugal','Italy','Austria','Switzerland','Belgium','Netherlands','Luxembourg','Denmark','Sweden','Norway','Finland','Iceland','Czech Republic','Slovakia','Hungary','Romania','Bulgaria','Croatia','Slovenia','Serbia','Bosnia and Herzegovina','Montenegro','North Macedonia','Albania','Greece','Lithuania','Latvia','Estonia','Moldova','Cyprus','Malta','Kosovo','Turkey','Andorra','Liechtenstein','Monaco','San Marino','Vatican City','USA','Canada']))
+COUNTRIES.update({'BR':'Brazil','AU':'Australia','NZ':'New Zealand','JP':'Japan','ZA':'South Africa','KR':'South Korea','CL':'Chile','AR':'Argentina'})
+COUNTRIES.update({'IR': 'Iran', 'AE': 'United Arab Emirates', 'OM': 'Oman', 'UZ': 'Uzbekistan', 'IN': 'India', 'ID': 'Indonesia', 'CN': 'China', 'IQ': 'Iraq', 'SA': 'Saudi Arabia', 'KZ': 'Kazakhstan', 'TM': 'Turkmenistan', 'SG': 'Singapore', 'QA': 'Qatar', 'IL': 'Israel', 'KG': 'Kyrgyzstan', 'MY': 'Malaysia', 'MN': 'Mongolia', 'KW': 'Kuwait', 'TH': 'Thailand', 'JO': 'Jordan', 'VN': 'Vietnam', 'PH': 'Philippines', 'NP': 'Nepal', 'BH': 'Bahrain', 'MM': 'Myanmar', 'SY': 'Syria', 'LK': 'Sri Lanka', 'KH': 'Cambodia', 'BN': 'Brunei', 'BD': 'Bangladesh', 'LB': 'Lebanon', 'PK': 'Pakistan', 'TJ': 'Tajikistan', 'CO': 'Colombia', 'EC': 'Ecuador', 'UY': 'Uruguay', 'PE': 'Peru', 'BO': 'Bolivia', 'VE': 'Venezuela', 'PY': 'Paraguay', 'MX': 'Mexico', 'SV': 'El Salvador', 'CU': 'Cuba', 'GT': 'Guatemala', 'PA': 'Panama', 'CR': 'Costa Rica', 'TT': 'Trinidad and Tobago', 'EG': 'Egypt', 'DZ': 'Algeria', 'MA': 'Morocco', 'MU': 'Mauritius', 'AO': 'Angola', 'CI': 'Ivory Coast', 'TN': 'Tunisia', 'RW': 'Rwanda', 'UG': 'Uganda', 'KE': 'Kenya', 'SN': 'Senegal', 'BW': 'Botswana', 'NA': 'Namibia', 'TZ': 'United Republic of Tanzania', 'PG': 'Papua New Guinea', 'PS': 'Palestine'})
+COUNTRIES.update({'TW':'Taiwan','HK':'Hong Kong'})
 COUNTRIES.update({'RU':'Russia','BY':'Belarus','GE':'Georgia','AM':'Armenia','AZ':'Azerbaijan'})
 ENDPOINTS = ['https://lambert.openstreetmap.de/api/interpreter', 'https://overpass.private.coffee/api/interpreter', 'https://overpass-api.de/api/interpreter']
 
@@ -30,7 +33,7 @@ def boxes(code):
     data=json.loads((CACHE.parent/'countries.geojson').read_text())
     for f in data['features']:
         props=f['properties']
-        named={'France':'FR','Norway':'NO','Kosovo':'XK'}.get(props['name'])
+        named={'France':'FR','Norway':'NO','Kosovo':'XK','Taiwan':'TW'}.get(props['name'])
         if props.get('ISO3166-1-Alpha-2')==code or named==code:
             west,south,east,north=shape(f['geometry']).bounds
             return [(south-.01,west-.01,north+.01,east+.01)]

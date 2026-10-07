@@ -1,418 +1,2047 @@
 [
   {
+    "city_field": "MUN",
     "code": "CA_PEEL_RLC",
     "country_code": "CA",
-    "name": "Red Light Cameras",
-    "source_url": "https://www.arcgis.com/home/item.html?id=36dbfcb33aa2453c8de55e0a34ccfc6a",
     "download_url": "https://services6.arcgis.com/ONZht79c8QWuX759/arcgis/rest/services/Red_Light_Cameras/FeatureServer/0",
     "format": "arcgis",
-    "license": "Open Data Licence - Peel 1.0",
-    "license_url": "https://data.peelregion.ca/pages/license",
     "id_fields": [
       "CAMERA_NUM"
     ],
+    "license": "Open Data Licence - Peel 1.0",
+    "license_url": "https://data.peelregion.ca/pages/license",
+    "name": "Red Light Cameras",
     "road_field": "NAME",
-    "city_field": "MUN"
+    "source_url": "https://www.arcgis.com/home/item.html?id=36dbfcb33aa2453c8de55e0a34ccfc6a"
   },
   {
+    "city": "Hamilton",
     "code": "CA_HAMILTON_RLC",
     "country_code": "CA",
-    "name": "Red Light Cameras",
-    "source_url": "https://www.arcgis.com/home/item.html?id=d880b4ad9b5c4e44b073d6d007e4df68",
+    "direction_field": "COMMENTS",
     "download_url": "https://services.arcgis.com/rYz782eMbySr2srL/arcgis/rest/services/Red_Light_Cameras/FeatureServer/3",
     "format": "arcgis",
-    "license": "Open Data Licence - Hamilton",
-    "license_url": "https://www.hamilton.ca/city-initiatives/strategies-actions/open-data-licence-terms-and-conditions",
     "id_fields": [
       "CAMERA_ID"
     ],
-    "direction_field": "COMMENTS",
+    "license": "Open Data Licence - Hamilton",
+    "license_url": "https://www.hamilton.ca/city-initiatives/strategies-actions/open-data-licence-terms-and-conditions",
+    "name": "Red Light Cameras",
     "road_field": "LOCATION",
-    "city": "Hamilton"
+    "source_url": "https://www.arcgis.com/home/item.html?id=d880b4ad9b5c4e44b073d6d007e4df68"
   },
   {
+    "city": "Kingston",
     "code": "CA_KINGSTON_RLC",
     "country_code": "CA",
-    "name": "Red Light Cameras",
-    "source_url": "https://www.arcgis.com/home/item.html?id=a9414d8063e44327ad59dc7a625fa95b",
     "download_url": "https://services1.arcgis.com/5GRYvurYYUwAecLQ/arcgis/rest/services/Red_Light_Camera_(Hosted)/FeatureServer/0",
     "format": "arcgis",
-    "license": "Open Data Licence - Kingston",
-    "license_url": "https://www.cityofkingston.ca/documents/10180/144997/CityofKingston_OpenDataLicense.pdf",
     "id_fields": [
       "GLOBALID"
     ],
+    "license": "Open Data Licence - Kingston",
+    "license_url": "https://www.cityofkingston.ca/documents/10180/144997/CityofKingston_OpenDataLicense.pdf",
+    "name": "Red Light Cameras",
     "road_field": "ROADWAY",
-    "city": "Kingston"
+    "source_url": "https://www.arcgis.com/home/item.html?id=a9414d8063e44327ad59dc7a625fa95b"
   },
   {
+    "city": "Ottawa",
     "code": "CA_OTTAWA_RLC",
     "country_code": "CA",
-    "name": "Red Light Camera Locations",
-    "source_url": "https://www.arcgis.com/home/item.html?id=adf1e7bd0338404196dc0d552aa6c79b",
+    "direction_field": "CAMERA_FACING",
     "download_url": "https://services.arcgis.com/G6F8XLCl5KtAlZ2G/arcgis/rest/services/Red_Light_Camera_Locations/FeatureServer/0",
     "format": "arcgis",
-    "license": "Open Data Licence - Ottawa 2.0",
-    "license_url": "https://ottawa.ca/en/city-hall/get-know-your-city/open-data#open-data-licence-version-2-0",
     "id_fields": [
       "location_desc",
       "CAMERA_FACING"
     ],
-    "direction_field": "CAMERA_FACING",
+    "license": "Open Data Licence - Ottawa 2.0",
+    "license_url": "https://ottawa.ca/en/city-hall/get-know-your-city/open-data#open-data-licence-version-2-0",
+    "name": "Red Light Camera Locations",
     "road_field": "location_desc",
-    "city": "Ottawa"
+    "source_url": "https://www.arcgis.com/home/item.html?id=adf1e7bd0338404196dc0d552aa6c79b"
   },
   {
+    "camera_type": "fixed_speed",
     "code": "GB_LANCASHIRE_CAMERAS",
     "country_code": "GB",
-    "name": "Speed Cameras",
-    "source_url": "https://www.arcgis.com/home/item.html?id=c9e1e1d7dc4a460981a8a2b159a2744f",
     "download_url": "https://services-eu1.arcgis.com/9MmxkLJT84uEwsJx/arcgis/rest/services/Speed_Cameras/FeatureServer/0",
     "format": "arcgis",
-    "license": "OGL-UK-3.0",
-    "license_url": "https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/",
     "id_fields": [
       "CAMERA_REF"
     ],
-    "camera_type": "fixed_speed",
+    "license": "OGL-UK-3.0",
+    "license_url": "https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/",
+    "mph": true,
+    "name": "Speed Cameras",
+    "road_field": "LOCATION",
+    "source_url": "https://www.arcgis.com/home/item.html?id=c9e1e1d7dc4a460981a8a2b159a2744f",
+    "speed_field": "SPEED_LIMI",
     "type_field": "TYPE_OF_CA",
     "types": {
-      "Speed": "fixed_speed",
       "Red Light": "red_light",
-      "Red light": "red_light"
-    },
-    "speed_field": "SPEED_LIMI",
-    "mph": true,
-    "road_field": "LOCATION"
+      "Red light": "red_light",
+      "Speed": "fixed_speed"
+    }
   },
   {
+    "camera_type": "fixed_speed",
+    "city": "Lisbon",
     "code": "PT_LISBON_RADARS",
     "country_code": "PT",
-    "name": "MOB_RadaresPaineis",
-    "source_url": "https://www.arcgis.com/home/item.html?id=d214557e8ca0406894188596d999472c",
     "download_url": "https://services.arcgis.com/1dSrzEWVQn5kHHyK/arcgis/rest/services/MOB_RadaresPaineis/FeatureServer/0",
-    "format": "arcgis",
-    "license": "CC0-1.0",
-    "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
-    "id_fields": [
-      "GlobalID"
-    ],
-    "camera_type": "fixed_speed",
     "filter": {
       "REFNAME": "radar"
     },
-    "city": "Lisbon"
-  },
-  {
-    "code": "US_TACOMA_CAMERAS",
-    "country_code": "US",
-    "name": "Automated Enforcement Locations (Tacoma)",
-    "source_url": "https://www.arcgis.com/home/item.html?id=ed8eb6a8c87643faa3ea1c6864301c05",
-    "download_url": "https://services3.arcgis.com/SCwJH1pD8WSn5T5y/arcgis/rest/services/AutomatedEnforcementLocations_Tacoma/FeatureServer/0",
     "format": "arcgis",
-    "license": "City of Tacoma unrestricted open data",
-    "license_url": "https://tacoma.gov/services/tacoma-open-data-maps/",
-    "id_fields": [
-      "globalid"
-    ],
-    "type_field": "cameratype",
-    "types": {
-      "Speed": "fixed_speed",
-      "Red Light": "red_light",
-      "School Zone": "fixed_speed",
-      "School": "fixed_speed",
-      "School Zones": "fixed_speed"
-    },
-    "speed_field": "speed_limit",
-    "direction_field": "direction_of_travel",
-    "road_field": "address",
-    "city": "Tacoma"
-  },
-  {
-    "code": "US_BOULDER_RLC",
-    "country_code": "US",
-    "name": "Red Light Cameras PUBLIC VIEW",
-    "source_url": "https://www.arcgis.com/home/item.html?id=48adb3d13b8e485b88315d4766eaa254",
-    "download_url": "https://services.arcgis.com/ePKBjXrBZ2vEEgWd/arcgis/rest/services/Red_Light_Cameras_PUBLIC_VIEW/FeatureServer/0",
-    "format": "arcgis",
-    "license": "CC0-1.0",
-    "license_url": "https://bouldercolorado.gov/services/open-data",
-    "id_fields": [
-      "Location"
-    ],
-    "road_field": "Location",
-    "city": "Boulder"
-  },
-  {
-    "code": "US_MONTGOMERY_RLC",
-    "country_code": "US",
-    "name": "RedLightCameras_2024",
-    "source_url": "https://www.arcgis.com/home/item.html?id=2d3d037dd1174102ab3a6d9a100f0c9b",
-    "download_url": "https://services2.arcgis.com/gEFt9c3jUfWMXCEP/arcgis/rest/services/RedLightCameras_2024/FeatureServer/0",
-    "format": "arcgis",
-    "license": "Montgomery County license-free open data",
-    "license_url": "https://www.montgomerycountymd.gov/DTS/dataM/index.html",
-    "id_fields": [
-      "LocationsCode"
-    ],
-    "camera_type": "red_light",
-    "mph": true,
-    "road_field": "LocationsDescription",
-    "speed_field": "SpeedLImit",
-    "retired_fields": [
-      "DeactivationDate"
-    ]
-  },
-  {
-    "code": "US_MONTGOMERY_SPEED",
-    "country_code": "US",
-    "name": "SpeedCameras_2024",
-    "source_url": "https://www.arcgis.com/home/item.html?id=71702a6aebe74eea9ac6511d05748791",
-    "download_url": "https://services2.arcgis.com/gEFt9c3jUfWMXCEP/arcgis/rest/services/SpeedCameras_2024/FeatureServer/1",
-    "format": "arcgis",
-    "license": "Montgomery County license-free open data",
-    "license_url": "https://www.montgomerycountymd.gov/DTS/dataM/index.html",
-    "id_fields": [
-      "SiteNum"
-    ],
-    "camera_type": "fixed_speed",
-    "mph": true,
-    "road_field": "Street_Name",
-    "speed_field": "Speed_limit",
-    "active_field": "ActiveYN"
-  },
-  {
-    "code": "LU_PCH_FIXED",
-    "country_code": "LU",
-    "name": "PCH Emplacement des radars fixes",
-    "source_url": "https://data.public.lu/en/datasets/pch-emplacement-des-radars-fixes/",
-    "download_url": "https://data.geoportail.lu/radar",
-    "format": "geojson",
-    "license": "CC0-1.0",
-    "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
-    "id_fields": [
-      "ID"
-    ],
-    "camera_type": "other_enforcement",
-    "road_field": "TRANCON",
-    "candidate_reason": "GeoJSON omits individual speed/red-light/combined equipment classification.",
-    "possible_camera_types": [
-      "fixed_speed",
-      "red_light",
-      "speed_and_red_light"
-    ]
-  },
-  {
-    "code": "US_NOLA_CAMERAS",
-    "country_code": "US",
-    "name": "New Orleans Traffic Camera",
-    "source_url": "https://data.nola.gov/d/te2d-4txp",
-    "download_url": "https://data.nola.gov/resource/te2d-4txp.json?$limit=50000",
-    "format": "json",
-    "license": "CC0-1.0",
-    "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
-    "id_fields": [
-      "camid"
-    ],
-    "camera_type": "fixed_speed",
-    "type_field": "function",
-    "types": {
-      "TFS": "fixed_speed",
-      "TF": "fixed_speed",
-      "RL": "red_light",
-      "RLS": "speed_and_red_light",
-      "RLC": "red_light",
-      "FS": "fixed_speed"
-    },
-    "geometry_field": "the_geom",
-    "direction_field": "dir",
-    "road_field": "camloc",
-    "candidate_reason": "Publisher explicitly warns this dataset may be inaccurate; last data update November 2024. Needs current DPW confirmation."
-  },
-  {
-    "code": "CA_YORK_RLC",
-    "country_code": "CA",
-    "name": "York Region Red Light Camera",
-    "source_url": "https://www.arcgis.com/home/item.html?id=a94a1fdce44f4bc391ec4dfb693e1a95",
-    "download_url": "https://ww8.yorkmaps.ca/arcgis/rest/services/OpenData/Traffic/MapServer/1",
-    "format": "arcgis",
-    "license": "York Region Open Data Licence 1.0",
-    "license_url": "https://www.arcgis.com/sharing/rest/content/items/78cc02388af248c0b7a30eda6adfade0/data",
-    "id_fields": [
-      "AssetID"
-    ],
-    "active_field": "LIFECYCLESTATUS",
-    "road_field": "LOCATIONDESC",
-    "city_field": "MUNICIPALITY"
-  },
-  {
-    "code": "CA_CALGARY_ISD",
-    "country_code": "CA",
-    "name": "Calgary Intersection Safety Cameras",
-    "source_url": "https://www.arcgis.com/home/item.html?id=1d099dff8bc54a0c90ce9c09a3b494cc",
-    "download_url": "https://services1.arcgis.com/AVP60cs0Q9PEA8rH/arcgis/rest/services/IntersectionSafetyCameras_Public/FeatureServer/0",
-    "format": "arcgis",
-    "license": "Open Government Licence - City of Calgary",
-    "license_url": "https://data.calgary.ca/stories/s/u45n-7awa/",
     "id_fields": [
       "GlobalID"
     ],
-    "camera_type": "red_light",
-    "road_field": "Description",
-    "direction_text_field": "Description",
-    "direction_pattern": "Direction: (\\w+)",
-    "city": "Calgary"
+    "license": "CC0-1.0",
+    "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "name": "MOB_RadaresPaineis",
+    "source_url": "https://www.arcgis.com/home/item.html?id=d214557e8ca0406894188596d999472c"
   },
   {
-    "code": "CY_NAP_CAMERAS",
-    "country_code": "CY",
-    "name": "Cyprus National Access Point traffic enforcement cameras - Elovate",
-    "source_url": "https://www.traffic4cyprus.org.cy/en/dataset/traffic_enforcement_cameras",
-    "download_url": "https://fixcyprus.cy/gnosis/open/api/nap/datasets/traffic_enforcement_cameras/",
-    "format": "datex",
-    "license": "CC-BY-4.0",
-    "license_url": "https://creativecommons.org/licenses/by/4.0/",
+    "city": "Tacoma",
+    "code": "US_TACOMA_CAMERAS",
+    "country_code": "US",
+    "direction_field": "direction_of_travel",
+    "download_url": "https://services3.arcgis.com/SCwJH1pD8WSn5T5y/arcgis/rest/services/AutomatedEnforcementLocations_Tacoma/FeatureServer/0",
+    "format": "arcgis",
     "id_fields": [
-      "id"
+      "globalid"
     ],
+    "license": "City of Tacoma unrestricted open data",
+    "license_url": "https://tacoma.gov/services/tacoma-open-data-maps/",
+    "name": "Automated Enforcement Locations (Tacoma)",
+    "road_field": "address",
+    "source_url": "https://www.arcgis.com/home/item.html?id=ed8eb6a8c87643faa3ea1c6864301c05",
+    "speed_field": "speed_limit",
+    "type_field": "cameratype",
+    "types": {
+      "Red Light": "red_light",
+      "School": "fixed_speed",
+      "School Zone": "fixed_speed",
+      "School Zones": "fixed_speed",
+      "Speed": "fixed_speed"
+    }
+  },
+  {
+    "city": "Boulder",
+    "code": "US_BOULDER_RLC",
+    "country_code": "US",
+    "download_url": "https://services.arcgis.com/ePKBjXrBZ2vEEgWd/arcgis/rest/services/Red_Light_Cameras_PUBLIC_VIEW/FeatureServer/0",
+    "format": "arcgis",
+    "id_fields": [
+      "Location"
+    ],
+    "license": "CC0-1.0",
+    "license_url": "https://bouldercolorado.gov/services/open-data",
+    "name": "Red Light Cameras PUBLIC VIEW",
+    "road_field": "Location",
+    "source_url": "https://www.arcgis.com/home/item.html?id=48adb3d13b8e485b88315d4766eaa254"
+  },
+  {
+    "camera_type": "red_light",
+    "code": "US_MONTGOMERY_RLC",
+    "country_code": "US",
+    "download_url": "https://services2.arcgis.com/gEFt9c3jUfWMXCEP/arcgis/rest/services/RedLightCameras_2024/FeatureServer/0",
+    "format": "arcgis",
+    "id_fields": [
+      "LocationsCode"
+    ],
+    "license": "Montgomery County license-free open data",
+    "license_url": "https://www.montgomerycountymd.gov/DTS/dataM/index.html",
+    "mph": true,
+    "name": "RedLightCameras_2024",
+    "retired_fields": [
+      "DeactivationDate"
+    ],
+    "road_field": "LocationsDescription",
+    "source_url": "https://www.arcgis.com/home/item.html?id=2d3d037dd1174102ab3a6d9a100f0c9b",
+    "speed_field": "SpeedLImit"
+  },
+  {
+    "active_field": "ActiveYN",
+    "camera_type": "fixed_speed",
+    "code": "US_MONTGOMERY_SPEED",
+    "country_code": "US",
+    "download_url": "https://services2.arcgis.com/gEFt9c3jUfWMXCEP/arcgis/rest/services/SpeedCameras_2024/FeatureServer/1",
+    "format": "arcgis",
+    "id_fields": [
+      "SiteNum"
+    ],
+    "license": "Montgomery County license-free open data",
+    "license_url": "https://www.montgomerycountymd.gov/DTS/dataM/index.html",
+    "mph": true,
+    "name": "SpeedCameras_2024",
+    "road_field": "Street_Name",
+    "source_url": "https://www.arcgis.com/home/item.html?id=71702a6aebe74eea9ac6511d05748791",
+    "speed_field": "Speed_limit"
+  },
+  {
     "camera_type": "other_enforcement",
-    "road_field": "name",
+    "candidate_reason": "GeoJSON omits individual speed/red-light/combined equipment classification.",
+    "code": "LU_PCH_FIXED",
+    "country_code": "LU",
+    "download_url": "https://data.geoportail.lu/radar",
+    "format": "geojson",
+    "id_fields": [
+      "ID"
+    ],
+    "license": "CC0-1.0",
+    "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "name": "PCH Emplacement des radars fixes",
     "possible_camera_types": [
       "fixed_speed",
       "red_light",
       "speed_and_red_light"
     ],
-    "candidate_reason": "DATEX feed verifies installed enforcement equipment but omits per-device speed/red-light classification."
+    "road_field": "TRANCON",
+    "source_url": "https://data.public.lu/en/datasets/pch-emplacement-des-radars-fixes/"
   },
   {
+    "camera_type": "fixed_speed",
+    "candidate_reason": "Publisher explicitly warns this dataset may be inaccurate; last data update November 2024. Needs current DPW confirmation.",
+    "code": "US_NOLA_CAMERAS",
+    "country_code": "US",
+    "direction_field": "dir",
+    "download_url": "https://data.nola.gov/resource/te2d-4txp.json?$limit=50000",
+    "format": "json",
+    "geometry_field": "the_geom",
+    "id_fields": [
+      "camid"
+    ],
+    "license": "CC0-1.0",
+    "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "name": "New Orleans Traffic Camera",
+    "road_field": "camloc",
+    "source_url": "https://data.nola.gov/d/te2d-4txp",
+    "type_field": "function",
+    "types": {
+      "FS": "fixed_speed",
+      "RL": "red_light",
+      "RLC": "red_light",
+      "RLS": "speed_and_red_light",
+      "TF": "fixed_speed",
+      "TFS": "fixed_speed"
+    }
+  },
+  {
+    "active_field": "LIFECYCLESTATUS",
+    "city_field": "MUNICIPALITY",
+    "code": "CA_YORK_RLC",
+    "country_code": "CA",
+    "download_url": "https://ww8.yorkmaps.ca/arcgis/rest/services/OpenData/Traffic/MapServer/1",
+    "format": "arcgis",
+    "id_fields": [
+      "AssetID"
+    ],
+    "license": "York Region Open Data Licence 1.0",
+    "license_url": "https://www.arcgis.com/sharing/rest/content/items/78cc02388af248c0b7a30eda6adfade0/data",
+    "name": "York Region Red Light Camera",
+    "road_field": "LOCATIONDESC",
+    "source_url": "https://www.arcgis.com/home/item.html?id=a94a1fdce44f4bc391ec4dfb693e1a95"
+  },
+  {
+    "camera_type": "red_light",
+    "city": "Calgary",
+    "code": "CA_CALGARY_ISD",
+    "country_code": "CA",
+    "direction_pattern": "Direction: (\\w+)",
+    "direction_text_field": "Description",
+    "download_url": "https://services1.arcgis.com/AVP60cs0Q9PEA8rH/arcgis/rest/services/IntersectionSafetyCameras_Public/FeatureServer/0",
+    "format": "arcgis",
+    "id_fields": [
+      "GlobalID"
+    ],
+    "license": "Open Government Licence - City of Calgary",
+    "license_url": "https://data.calgary.ca/stories/s/u45n-7awa/",
+    "name": "Calgary Intersection Safety Cameras",
+    "road_field": "Description",
+    "source_url": "https://www.arcgis.com/home/item.html?id=1d099dff8bc54a0c90ce9c09a3b494cc"
+  },
+  {
+    "camera_type": "other_enforcement",
+    "candidate_reason": "DATEX feed verifies installed enforcement equipment but omits per-device speed/red-light classification.",
+    "code": "CY_NAP_CAMERAS",
+    "country_code": "CY",
+    "download_url": "https://fixcyprus.cy/gnosis/open/api/nap/datasets/traffic_enforcement_cameras/",
+    "format": "datex",
+    "id_fields": [
+      "id"
+    ],
+    "license": "CC-BY-4.0",
+    "license_url": "https://creativecommons.org/licenses/by/4.0/",
+    "name": "Cyprus National Access Point traffic enforcement cameras - Elovate",
+    "possible_camera_types": [
+      "fixed_speed",
+      "red_light",
+      "speed_and_red_light"
+    ],
+    "road_field": "name",
+    "source_url": "https://www.traffic4cyprus.org.cy/en/dataset/traffic_enforcement_cameras"
+  },
+  {
+    "camera_type": "red_light",
+    "city": "San Francisco",
     "code": "US_SFMTA_RLC",
     "country_code": "US",
-    "name": "San Francisco SFMTA Red Light Camera Citations - recent sites",
-    "source_url": "https://data.sf.gov/d/uzmr-g2uc",
+    "direction_field": "directions_enforced",
     "download_url": "https://data.sf.gov/resource/uzmr-g2uc.json?%24select=intersection%2Cdirections_enforced%2Cpoint%2Cmax%28month%29+as+latest_month%2Csum%28count%29+as+citations&%24where=month%3E%3D%272025-10-07T00%3A00%3A00%27&%24group=intersection%2Cdirections_enforced%2Cpoint&%24limit=1000",
     "format": "json",
-    "license": "PDDL-1.0",
-    "license_url": "https://opendatacommons.org/licenses/pddl/1-0/",
+    "geometry_field": "point",
     "id_fields": [
       "intersection",
       "directions_enforced"
     ],
-    "camera_type": "red_light",
-    "geometry_field": "point",
-    "direction_field": "directions_enforced",
+    "license": "PDDL-1.0",
+    "license_url": "https://opendatacommons.org/licenses/pddl/1-0/",
+    "name": "San Francisco SFMTA Red Light Camera Citations - recent sites",
     "road_field": "intersection",
-    "city": "San Francisco"
+    "source_url": "https://data.sf.gov/d/uzmr-g2uc"
   },
   {
+    "active_field": "active",
+    "camera_type": "other_enforcement",
+    "candidate_reason": "Publisher supplies coded radar_type but current official code dictionary is empty; individual fixed-speed vs combined type is not guessed.",
+    "city_field": "mu_fr",
     "code": "BE_BRUSSELS_REGIONAL",
+    "count_url": "https://data.mobility.brussels/geoserver/bm_security/wfs?service=wfs&version=1.1.0&request=GetFeature&typeName=bm_security:speedcameras&resultType=hits",
     "country_code": "BE",
-    "name": "Brussels Mobility regional speed/combined cameras",
-    "source_url": "https://data.mobility.brussels/fr/info/472bf315-4669-4397-afb9-ccbcb174e664/",
+    "direction_field": "direction_fr",
     "download_url": "https://data.mobility.brussels/geoserver/bm_security/wfs?service=wfs&version=1.1.0&request=GetFeature&typeName=bm_security:speedcameras&outputFormat=json&srsName=EPSG:4326",
     "format": "geojson",
-    "license": "CC0-1.0",
-    "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
     "id_fields": [
       "rid"
     ],
-    "camera_type": "other_enforcement",
-    "road_field": "street_fr",
-    "city_field": "mu_fr",
-    "direction_field": "direction_fr",
-    "active_field": "active",
+    "license": "CC0-1.0",
+    "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "name": "Brussels Mobility regional speed/combined cameras",
     "possible_camera_types": [
       "fixed_speed",
       "speed_and_red_light"
     ],
-    "candidate_reason": "Publisher supplies coded radar_type but current official code dictionary is empty; individual fixed-speed vs combined type is not guessed.",
-    "count_url": "https://data.mobility.brussels/geoserver/bm_security/wfs?service=wfs&version=1.1.0&request=GetFeature&typeName=bm_security:speedcameras&resultType=hits"
+    "road_field": "street_fr",
+    "source_url": "https://data.mobility.brussels/fr/info/472bf315-4669-4397-afb9-ccbcb174e664/"
   },
   {
+    "camera_type": "fixed_speed",
+    "candidate_reason": "Publicly downloadable subset has geometry/feature ID only; current operational status is not specified. Restricted service data is not accessed.",
     "code": "BE_BRUSSELS_MUNICIPAL",
-    "country_code": "BE",
-    "name": "Brussels Mobility municipal speed cameras - public subset",
-    "source_url": "https://data.mobility.brussels/fr/info/90113b40-d5c5-42bf-ae2a-e19f5b552087/",
-    "download_url": "https://data.mobility.brussels/geoserver/bm_security/wfs?service=wfs&version=1.1.0&request=GetFeature&typeName=bm_security:speedcameras_municipal&outputFormat=json&srsName=EPSG:4326",
     "count_url": "https://data.mobility.brussels/geoserver/bm_security/wfs?service=wfs&version=1.1.0&request=GetFeature&typeName=bm_security:speedcameras_municipal&resultType=hits",
+    "country_code": "BE",
+    "download_url": "https://data.mobility.brussels/geoserver/bm_security/wfs?service=wfs&version=1.1.0&request=GetFeature&typeName=bm_security:speedcameras_municipal&outputFormat=json&srsName=EPSG:4326",
     "format": "geojson",
-    "license": "CC0-1.0",
-    "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
     "id_fields": [
       "gid"
     ],
-    "camera_type": "fixed_speed",
-    "candidate_reason": "Publicly downloadable subset has geometry/feature ID only; current operational status is not specified. Restricted service data is not accessed."
+    "license": "CC0-1.0",
+    "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "name": "Brussels Mobility municipal speed cameras - public subset",
+    "source_url": "https://data.mobility.brussels/fr/info/90113b40-d5c5-42bf-ae2a-e19f5b552087/"
   },
   {
+    "city": "Madrid",
     "code": "ES_MADRID_RADARS",
     "country_code": "ES",
-    "name": "Ayuntamiento de Madrid — fixed and average-speed radars",
-    "source_url": "https://datos.madrid.es/dataset/300049-0-radares-fijos-moviles",
-    "download_url": "https://datos.madrid.es/dataset/300049-0-radares-fijos-moviles/resource/300049-1-radares-fijos-moviles-csv/download/300049-1-radares-fijos-moviles-csv.csv",
-    "format": "csv",
     "delimiter": ";",
-    "city": "Madrid",
-    "license": "CC-BY-4.0",
-    "license_url": "https://creativecommons.org/licenses/by/4.0/",
+    "direction_field": "Sentido",
+    "download_url": "https://datos.madrid.es/dataset/300049-0-radares-fijos-moviles/resource/300049-1-radares-fijos-moviles-csv/download/300049-1-radares-fijos-moviles-csv.csv",
     "encoding": "utf-8-sig",
+    "format": "csv",
     "id_fields": [
       "Nº RADAR"
     ],
     "latitude_field": "Latitud",
+    "license": "CC-BY-4.0",
+    "license_url": "https://creativecommons.org/licenses/by/4.0/",
     "longitude_field": "Longitud",
+    "name": "Ayuntamiento de Madrid — fixed and average-speed radars",
+    "road_field": "Ubicacion",
+    "source_url": "https://datos.madrid.es/dataset/300049-0-radares-fijos-moviles",
+    "speed_field": "Velocidad límite",
+    "start_latitude_field": "Latitud inicio tramo",
+    "start_longitude_field": "Longitud inicio tramo",
     "type_field": "Tipo",
     "types": {
       "Fijo": "fixed_speed",
       "Radar de tramo": "average_speed_section"
-    },
-    "start_latitude_field": "Latitud inicio tramo",
-    "start_longitude_field": "Longitud inicio tramo",
-    "direction_field": "Sentido",
-    "road_field": "Ubicacion",
-    "speed_field": "Velocidad límite"
+    }
   },
   {
+    "activation_date_field": "fecha_denuncia",
+    "active_field": "activo",
+    "camera_type": "red_light",
+    "city": "Madrid",
     "code": "ES_MADRID_RLC",
     "country_code": "ES",
-    "name": "Ayuntamiento de Madrid — active red-light cameras",
-    "source_url": "https://datos.madrid.es/dataset/205193-0-semaforos-foto-rojo",
-    "download_url": "https://datos.madrid.es/dataset/205193-0-semaforos-foto-rojo/resource/205193-1-semaforos-foto-rojo-csv/download/205193-1-semaforos-foto-rojo-csv.csv",
-    "format": "csv",
     "delimiter": ";",
-    "city": "Madrid",
-    "license": "CC-BY-4.0",
-    "license_url": "https://creativecommons.org/licenses/by/4.0/",
+    "download_url": "https://datos.madrid.es/dataset/205193-0-semaforos-foto-rojo/resource/205193-1-semaforos-foto-rojo-csv/download/205193-1-semaforos-foto-rojo-csv.csv",
     "encoding": "cp1252",
+    "format": "csv",
     "id_fields": [
       "id"
     ],
     "latitude_field": "latitud",
+    "license": "CC-BY-4.0",
+    "license_url": "https://creativecommons.org/licenses/by/4.0/",
     "longitude_field": "longitud",
-    "camera_type": "red_light",
-    "active_field": "activo",
+    "name": "Ayuntamiento de Madrid — active red-light cameras",
     "road_field": "nombre",
-    "activation_date_field": "fecha_denuncia",
-    "source_snapshot_date": "2025-12-09; catalog last updated 2026-09-09"
+    "source_snapshot_date": "2025-12-09; catalog last updated 2026-09-09",
+    "source_url": "https://datos.madrid.es/dataset/205193-0-semaforos-foto-rojo"
   },
   {
+    "camera_type": "fixed_speed",
+    "city": "San Francisco",
     "code": "US_SFMTA_SPEED",
     "country_code": "US",
-    "name": "San Francisco SFMTA Automated Speed Enforcement - recent camera sites",
-    "source_url": "https://data.sf.gov/d/d5uh-bk84",
+    "direction_pattern": "^(NB|SB|EB|WB)\\b",
+    "direction_text_field": "location",
     "download_url": "https://data.sf.gov/resource/d5uh-bk84.json?%24select=site_id%2Clocation%2Cenforcement_type%2Cposted_speed%2Cpoint%2Cmax%28date%29+as+latest_date%2Csum%28issued_citations%29+as+citations&%24where=date%3E%3D%272025-10-07T00%3A00%3A00%27+AND+enforcement_type%3D%27FIXED+SPEED%27&%24group=site_id%2Clocation%2Cenforcement_type%2Cposted_speed%2Cpoint&%24limit=1000",
     "format": "json",
-    "license": "PDDL-1.0",
-    "license_url": "https://opendatacommons.org/licenses/pddl/1-0/",
+    "geometry_field": "point",
     "id_fields": [
       "site_id"
     ],
-    "camera_type": "fixed_speed",
-    "geometry_field": "point",
-    "direction_pattern": "^(NB|SB|EB|WB)\\b",
-    "direction_text_field": "location",
-    "road_field": "location",
-    "speed_field": "posted_speed",
+    "license": "PDDL-1.0",
+    "license_url": "https://opendatacommons.org/licenses/pddl/1-0/",
     "mph": true,
-    "city": "San Francisco"
+    "name": "San Francisco SFMTA Automated Speed Enforcement - recent camera sites",
+    "road_field": "location",
+    "source_url": "https://data.sf.gov/d/d5uh-bk84",
+    "speed_field": "posted_speed"
+  },
+  {
+    "camera_type": "fixed_speed",
+    "certificate_expiry_field": "VALIDADE DO CERTIFICADO",
+    "city_field": "MUNICÍPIO",
+    "code": "BR_PRF_FIXED",
+    "country_code": "BR",
+    "direction_field": "SENTIDO",
+    "download_url": "https://script.google.com/macros/s/AKfycbwnuoKDXO_3-d5hp-FSLBDRxZQhsC-WHTPIEKthAUNEDA6xsWH6EWZiE6HDz2vDZQOS2g/exec",
+    "filter": {
+      "ESTADO": "ATIVO",
+      "IMAGENS": "GERANDO"
+    },
+    "format": "json",
+    "id_fields": [
+      "CONCESSIONÁRIA",
+      "IDENTIFICADOR"
+    ],
+    "latitude_field": "LATITUDE",
+    "license": "PRF Brazilian Government Open Data — unrestricted reuse",
+    "license_url": "https://www.gov.br/prf/pt-br/acesso-a-informacao/dados-abertos",
+    "longitude_field": "LONGITUDE",
+    "name": "Polícia Rodoviária Federal — active fixed enforcement equipment",
+    "road_field": "BR",
+    "rows_field": "records",
+    "source_url": "https://www.gov.br/prf/pt-br/assuntos/fiscalizacao-de-velocidade/radares-fixos",
+    "speed_field": "VELOCIDADE LEVE"
+  },
+  {
+    "active_field": "Status",
+    "camera_type": "other_enforcement",
+    "candidate_reason": "Official point layer has no device classification; approximate location and annual update require current precise equipment confirmation.",
+    "city": "Lethbridge",
+    "code": "CA_LETHBRIDGE_ISD",
+    "country_code": "CA",
+    "download_url": "https://gis.lethbridge.ca/gisopendata/rest/services/OpenData/odl_intersectionsafetydevices/MapServer/0",
+    "format": "arcgis",
+    "id_fields": [
+      "AssetID"
+    ],
+    "license": "City of Lethbridge Open Data License 1.0",
+    "license_url": "https://opendata.lethbridge.ca/pages/open-data-license",
+    "name": "City of Lethbridge — Intersection Safety Devices",
+    "source_url": "https://www.arcgis.com/home/item.html?id=e5ae62b2a8cc44eb8c0a7ca652ee3d38"
+  },
+  {
+    "city": "Taichung",
+    "code": "TW_TAICHUNG_FIXED",
+    "country_code": "TW",
+    "delimiter": ",",
+    "direction_field": "拍攝方向",
+    "download_url": "https://newdatacenter.taichung.gov.tw/api/v1/no-auth/resource.download?rid=2f64bc33-243b-4b97-9089-a5f3ed1d9298",
+    "enforcement_terms": {
+      "field": "取締項目",
+      "red_light": [
+        "闖紅燈"
+      ],
+      "speed": [
+        "超速"
+      ]
+    },
+    "format": "csv",
+    "id_fields": [
+      "設備編號"
+    ],
+    "latitude_field": "座標緯度",
+    "license": "Open Government Data License version 1.0",
+    "license_url": "https://data.gov.tw/license",
+    "longitude_field": "座標經度",
+    "name": "Taichung City Police fixed enforcement cameras",
+    "road_field": "設置地點",
+    "source_url": "https://data.gov.tw/dataset/83881",
+    "speed_field": "速限"
+  },
+  {
+    "city": "Taoyuan",
+    "code": "TW_TAOYUAN_FIXED",
+    "country_code": "TW",
+    "delimiter": ",",
+    "direction_field": "拍攝方向",
+    "download_url": "https://opendata.tycg.gov.tw/api/dataset/ecd45ee5-4489-436b-bd08-7d4e4111c4a4/resource/6aa72aaf-d703-4a9e-acd7-24c17e934dc3/download",
+    "encoding": "big5",
+    "enforcement_terms": {
+      "field": "取締項目",
+      "red_light": [
+        "闖紅燈"
+      ],
+      "speed": [
+        "超速"
+      ]
+    },
+    "format": "csv",
+    "id_fields": [
+      "設備編號"
+    ],
+    "latitude_field": "座標緯度",
+    "license": "Open Government Data License version 1.0",
+    "license_url": "https://data.gov.tw/license",
+    "longitude_field": "座標經度",
+    "name": "Taoyuan City Police fixed enforcement cameras",
+    "road_field": "設置地點_路口或路段",
+    "source_url": "https://data.gov.tw/dataset/25935",
+    "speed_field": "速限"
+  },
+  {
+    "camera_type": "average_speed_section",
+    "city": "Taichung",
+    "code": "TW_TAICHUNG_SECTION_REFERENCES",
+    "country_code": "TW",
+    "delimiter": ",",
+    "download_url": "https://newdatacenter.taichung.gov.tw/api/v1/no-auth/resource.download?rid=e968989a-bfb2-4b6c-8bd0-1b1af3c54745",
+    "format": "csv",
+    "id_fields": [
+      "編號"
+    ],
+    "latitude_field": "緯度",
+    "license": "Open Government Data License version 1.0",
+    "license_url": "https://data.gov.tw/license",
+    "longitude_field": "經度",
+    "name": "Taichung City Police average speed section reference points",
+    "road_field": "設置地點_範圍",
+    "section_endpoint_reason": "Official section reference point; both endpoint coordinates unavailable; no section invented",
+    "section_point_possible_types": [],
+    "source_url": "https://data.gov.tw/dataset/172725"
+  },
+  {
+    "camera_type": "other_enforcement",
+    "candidate_reason": "Source coordinate labels inverted (cross-checked against section reference feed); inconsistent enforcement/address fields require review",
+    "city": "Taichung",
+    "code": "TW_TAICHUNG_TECH_CANDIDATES",
+    "country_code": "TW",
+    "delimiter": ",",
+    "download_url": "https://newdatacenter.taichung.gov.tw/api/v1/no-auth/resource.download?rid=b3f58c63-53b3-4c01-8203-2a7afa08bb13",
+    "format": "csv",
+    "id_fields": [
+      "編號"
+    ],
+    "latitude_field": "經度",
+    "license": "Open Government Data License version 1.0",
+    "license_url": "https://data.gov.tw/license",
+    "longitude_field": "緯度",
+    "name": "Taichung City Police technology enforcement reference candidates",
+    "skip_invalid_coordinates": true,
+    "source_url": "https://data.gov.tw/dataset/170673"
+  },
+  {
+    "city": "Taipei",
+    "code": "TW_TAIPEI_FIXED",
+    "country_code": "TW",
+    "delimiter": ",",
+    "direction_field": "拍攝方向",
+    "download_url": "https://data.taipei/api/dataset/745b8808-061f-4f5b-9a62-da1590c049a9/resource/5012e8ba-5ace-4821-8482-ee07c147fd0a/download",
+    "encoding": "big5",
+    "enforcement_terms": {
+      "field": "功能",
+      "red_light": [
+        "闖紅燈"
+      ],
+      "section": [
+        "區間測速"
+      ],
+      "section_field": "功能",
+      "speed": [
+        "測速"
+      ]
+    },
+    "format": "csv",
+    "id_fields": [
+      "編號"
+    ],
+    "latitude_field": "緯度",
+    "license": "Open Government Data License version 1.0",
+    "license_url": "https://data.gov.tw/license",
+    "longitude_field": "經度",
+    "name": "Taipei City Police fixed enforcement cameras",
+    "road_field": "設置路段",
+    "section_endpoint_reason": "Official section reference lacks both endpoint coordinates and explicit endpoint role",
+    "section_point_possible_types": [],
+    "source_url": "https://data.gov.tw/dataset/130111",
+    "speed_field": "速限-速度限制"
+  },
+  {
+    "city_field": "cityname",
+    "code": "TW_NEWTAIPEI_TAMSUI_FIXED",
+    "country_code": "TW",
+    "delimiter": ",",
+    "direction_field": "direct",
+    "download_url": "https://data.ntpc.gov.tw/api/datasets/c89a80db-05f6-4720-96ab-6a9a0fafe164/csv/file",
+    "enforcement_terms": {
+      "field": "violation types",
+      "red_light": [
+        "闖紅燈"
+      ],
+      "speed": [
+        "超速"
+      ]
+    },
+    "format": "csv",
+    "id_fields": [
+      "address",
+      "direct",
+      "longitude",
+      "latitude"
+    ],
+    "latitude_field": "latitude",
+    "license": "Open Government Data License version 1.0",
+    "license_url": "https://data.gov.tw/license",
+    "longitude_field": "longitude",
+    "name": "New Taipei City Police Tamsui fixed enforcement cameras",
+    "road_field": "address",
+    "source_url": "https://data.gov.tw/dataset/146361",
+    "speed_field": "limit"
+  },
+  {
+    "city_field": "縣市",
+    "code": "TW_CHANGHUA_FIXED_TECH",
+    "country_code": "TW",
+    "delimiter": ",",
+    "direction_field": "拍攝方向",
+    "download_url": "https://www.chpb.gov.tw/opendata/deJgXKJjLESCdBNje_-bYA/csv",
+    "enforcement_terms": {
+      "field": "取締項目",
+      "red_light": [
+        "闖紅燈"
+      ],
+      "speed": [
+        "超速"
+      ]
+    },
+    "format": "csv",
+    "id_fields": [
+      "設備編號"
+    ],
+    "latitude_field": "座標緯度",
+    "license": "Open Government Data License version 1.0",
+    "license_url": "https://data.gov.tw/license",
+    "longitude_field": "座標經度",
+    "name": "Changhua County Police fixed technology enforcement cameras",
+    "road_field": "設置地點",
+    "source_url": "https://data.gov.tw/dataset/172905",
+    "speed_ambiguity_fields": [
+      "備註"
+    ],
+    "speed_field": "速限"
+  },
+  {
+    "camera_type": "other_enforcement",
+    "candidate_reason": "NPA confirms fixed devices with mixed speed/red-light functions counted by facing direction; CSV omits capability; no type inferred",
+    "city_field": "CityName",
+    "code": "TW_NPA_FIXED_UNTYPED",
+    "country_code": "TW",
+    "delimiter": ",",
+    "direction_field": "direct",
+    "download_url": "https://opdadm.moi.gov.tw/api/v1/no-auth/resource/api/dataset/EA5E6FCD-B82D-43B7-A5CF-E9893253187E/resource/8C659346-0EDE-49E0-916C-BCD140A86F6D/download",
+    "format": "csv",
+    "id_fields": [
+      "CityName",
+      "RegionName",
+      "Address",
+      "direct",
+      "Longitude",
+      "Latitude"
+    ],
+    "latitude_field": "Latitude",
+    "license": "Open Government Data License version 1.0",
+    "license_url": "https://data.gov.tw/license",
+    "longitude_field": "Longitude",
+    "name": "Taiwan National Police Agency fixed enforcement points (capability unresolved)",
+    "possible_camera_types": [
+      "fixed_speed",
+      "red_light",
+      "speed_and_red_light"
+    ],
+    "road_field": "Address",
+    "skip_invalid_coordinates": true,
+    "source_url": "https://data.gov.tw/dataset/7320",
+    "speed_field": "limit"
+  },
+  {
+    "city_field": "縣市",
+    "code": "TW_CHANGHUA_FIXED",
+    "country_code": "TW",
+    "delimiter": ",",
+    "direction_field": "拍攝方向",
+    "download_url": "https://www.chpb.gov.tw/opendata/2XvPDK8t9UC1v65F7FQ4Kw/csv",
+    "enforcement_terms": {
+      "field": "取締項目",
+      "red_light": [
+        "闖紅燈"
+      ],
+      "speed": [
+        "超速"
+      ]
+    },
+    "format": "csv",
+    "id_fields": [
+      "設備編號"
+    ],
+    "latitude_field": "座標緯度",
+    "license": "Open Government Data License version 1.0",
+    "license_url": "https://data.gov.tw/license",
+    "longitude_field": "座標經度",
+    "name": "Changhua County Police fixed violation cameras",
+    "road_field": "設置地點",
+    "source_url": "https://data.gov.tw/dataset/27969",
+    "speed_ambiguity_fields": [
+      "備註"
+    ],
+    "speed_field": "速限"
+  },
+  {
+    "camera_type": "average_speed_section",
+    "city_field": "縣市",
+    "code": "TW_CHANGHUA_SECTION_REFERENCES",
+    "country_code": "TW",
+    "delimiter": ",",
+    "direction_field": "拍攝方向",
+    "download_url": "https://www.chpb.gov.tw/opendata/iIqaLCWmEU-cNkBdBB-CAQ/csv",
+    "format": "csv",
+    "id_fields": [
+      "設備編號"
+    ],
+    "latitude_field": "座標緯度",
+    "license": "Open Government Data License version 1.0",
+    "license_url": "https://data.gov.tw/license",
+    "longitude_field": "座標經度",
+    "name": "Changhua County Police average speed section reference",
+    "road_field": "設置地點",
+    "section_endpoint_reason": "Only one official section reference coordinate, no start/end roles; section geometry is not invented",
+    "section_point_possible_types": [],
+    "source_url": "https://data.gov.tw/dataset/178161",
+    "speed_ambiguity_fields": [
+      "備註"
+    ],
+    "speed_field": "速限"
+  },
+  {
+    "city": "Yunlin",
+    "code": "TW_YUNLIN_FIXED",
+    "coordinate_label_verification": "master-db/coverage/taiwan-coordinate-label-verification.json",
+    "country_code": "TW",
+    "delimiter": ",",
+    "direction_field": "direct",
+    "download_url": "https://ws.yunlin.gov.tw/001/Upload/539/opendata/0/2492/0f3f7782-6a19-490b-817b-2b075cce6bc7.csv",
+    "enforcement_terms": {
+      "field": "ban",
+      "red_light": [
+        "闖紅燈"
+      ],
+      "speed": [
+        "超速"
+      ]
+    },
+    "format": "csv",
+    "id_fields": [
+      "project"
+    ],
+    "latitude_field": "Longitude",
+    "license": "Open Government Data License version 1.0",
+    "license_url": "https://data.gov.tw/license",
+    "longitude_field": "Latitude",
+    "name": "Yunlin County Police fixed enforcement cameras August 2026",
+    "road_field": "Address",
+    "skip_invalid_coordinates": true,
+    "source_url": "https://data.gov.tw/dataset/178358",
+    "speed_ambiguity_fields": [
+      "Remark"
+    ],
+    "speed_field": "limit"
+  },
+  {
+    "city": "Yunlin",
+    "code": "TW_YUNLIN_FIXED_TECH",
+    "coordinate_label_verification": "master-db/coverage/taiwan-coordinate-label-verification.json",
+    "country_code": "TW",
+    "delimiter": ",",
+    "direction_field": "direct",
+    "download_url": "https://ws.yunlin.gov.tw/001/Upload/539/opendata/0/2491/be1537c9-659a-46a6-940b-0b89e2c594fa.csv",
+    "enforcement_terms": {
+      "field": "ban",
+      "red_light": [
+        "闖紅燈"
+      ],
+      "speed": [
+        "超速"
+      ]
+    },
+    "format": "csv",
+    "id_fields": [
+      "project"
+    ],
+    "latitude_field": "Longitude",
+    "license": "Open Government Data License version 1.0",
+    "license_url": "https://data.gov.tw/license",
+    "longitude_field": "Latitude",
+    "name": "Yunlin County Police fixed technology enforcement August 2026",
+    "road_field": "Address",
+    "skip_invalid_coordinates": true,
+    "source_url": "https://data.gov.tw/dataset/178357",
+    "speed_ambiguity_fields": [
+      "Remark"
+    ],
+    "speed_field": "limit"
+  },
+  {
+    "city_field": "cityname",
+    "code": "TW_NEWTAIPEI_0B997A50",
+    "country_code": "TW",
+    "delimiter": ",",
+    "direction_field": "direct",
+    "download_url": "https://data.ntpc.gov.tw/api/datasets/0b997a50-a4a2-45c8-a313-e8a92488c4dc/csv/file",
+    "enforcement_terms": {
+      "field": "violation types",
+      "red_light": [
+        "闖紅燈"
+      ],
+      "speed": [
+        "超速"
+      ]
+    },
+    "format": "csv",
+    "id_fields": [
+      "address",
+      "direct",
+      "longitude",
+      "latitude"
+    ],
+    "latitude_field": "latitude",
+    "license": "Open Government Data License version 1.0",
+    "license_url": "https://data.gov.tw/license",
+    "longitude_field": "longitude",
+    "name": "New Taipei City Police fixed enforcement: 三峽區",
+    "road_field": "address",
+    "source_url": "https://data.ntpc.gov.tw/datasets/0b997a50-a4a2-45c8-a313-e8a92488c4dc",
+    "speed_field": "limit"
+  },
+  {
+    "city_field": "cityname",
+    "code": "TW_NEWTAIPEI_C1DF03E3",
+    "country_code": "TW",
+    "delimiter": ",",
+    "direction_field": "direct",
+    "download_url": "https://data.ntpc.gov.tw/api/datasets/c1df03e3-7931-4520-8129-4fb308af803a/csv/file",
+    "enforcement_terms": {
+      "field": "violation types",
+      "red_light": [
+        "闖紅燈"
+      ],
+      "speed": [
+        "超速"
+      ]
+    },
+    "format": "csv",
+    "id_fields": [
+      "address",
+      "direct",
+      "longitude",
+      "latitude"
+    ],
+    "latitude_field": "latitude",
+    "license": "Open Government Data License version 1.0",
+    "license_url": "https://data.gov.tw/license",
+    "longitude_field": "longitude",
+    "name": "New Taipei City Police fixed enforcement: 三重區",
+    "road_field": "address",
+    "source_url": "https://data.ntpc.gov.tw/datasets/c1df03e3-7931-4520-8129-4fb308af803a",
+    "speed_field": "limit"
+  },
+  {
+    "city_field": "cityname",
+    "code": "TW_NEWTAIPEI_2C44E1A6",
+    "country_code": "TW",
+    "delimiter": ",",
+    "direction_field": "direct",
+    "download_url": "https://data.ntpc.gov.tw/api/datasets/2c44e1a6-8bba-4499-9402-5e7014f10aa6/csv/file",
+    "enforcement_terms": {
+      "field": "violation types",
+      "red_light": [
+        "闖紅燈"
+      ],
+      "speed": [
+        "超速"
+      ]
+    },
+    "format": "csv",
+    "id_fields": [
+      "address",
+      "direct",
+      "longitude",
+      "latitude"
+    ],
+    "latitude_field": "latitude",
+    "license": "Open Government Data License version 1.0",
+    "license_url": "https://data.gov.tw/license",
+    "longitude_field": "longitude",
+    "name": "New Taipei City Police fixed enforcement: 中和區",
+    "road_field": "address",
+    "source_url": "https://data.ntpc.gov.tw/datasets/2c44e1a6-8bba-4499-9402-5e7014f10aa6",
+    "speed_field": "limit"
+  },
+  {
+    "city_field": "cityname",
+    "code": "TW_NEWTAIPEI_F85D869F",
+    "country_code": "TW",
+    "delimiter": ",",
+    "direction_field": "direct",
+    "download_url": "https://data.ntpc.gov.tw/api/datasets/f85d869f-cd78-4b9f-9a10-6745c244f4ff/csv/file",
+    "enforcement_terms": {
+      "field": "violation types",
+      "red_light": [
+        "闖紅燈"
+      ],
+      "speed": [
+        "超速"
+      ]
+    },
+    "format": "csv",
+    "id_fields": [
+      "address",
+      "direct",
+      "longitude",
+      "latitude"
+    ],
+    "latitude_field": "latitude",
+    "license": "Open Government Data License version 1.0",
+    "license_url": "https://data.gov.tw/license",
+    "longitude_field": "longitude",
+    "name": "New Taipei City Police fixed enforcement: 五股區",
+    "road_field": "address",
+    "source_url": "https://data.ntpc.gov.tw/datasets/f85d869f-cd78-4b9f-9a10-6745c244f4ff",
+    "speed_field": "limit"
+  },
+  {
+    "city_field": "cityname",
+    "code": "TW_NEWTAIPEI_A7A7F57E",
+    "country_code": "TW",
+    "delimiter": ",",
+    "direction_field": "direct",
+    "download_url": "https://data.ntpc.gov.tw/api/datasets/a7a7f57e-2c74-4c27-a8c7-0152fdf094f8/csv/file",
+    "enforcement_terms": {
+      "field": "violation types",
+      "red_light": [
+        "闖紅燈"
+      ],
+      "speed": [
+        "超速"
+      ]
+    },
+    "format": "csv",
+    "id_fields": [
+      "address",
+      "direct",
+      "longitude",
+      "latitude"
+    ],
+    "latitude_field": "latitude",
+    "license": "Open Government Data License version 1.0",
+    "license_url": "https://data.gov.tw/license",
+    "longitude_field": "longitude",
+    "name": "New Taipei City Police fixed enforcement: 八里區",
+    "road_field": "address",
+    "source_url": "https://data.ntpc.gov.tw/datasets/a7a7f57e-2c74-4c27-a8c7-0152fdf094f8",
+    "speed_field": "limit"
+  },
+  {
+    "city_field": "cityname",
+    "code": "TW_NEWTAIPEI_2A4F4679",
+    "country_code": "TW",
+    "delimiter": ",",
+    "direction_field": "direct",
+    "download_url": "https://data.ntpc.gov.tw/api/datasets/2a4f4679-c5ea-4669-aa71-560a90659765/csv/file",
+    "enforcement_terms": {
+      "field": "violation types",
+      "red_light": [
+        "闖紅燈"
+      ],
+      "speed": [
+        "超速"
+      ]
+    },
+    "format": "csv",
+    "id_fields": [
+      "address",
+      "direct",
+      "longitude",
+      "latitude"
+    ],
+    "latitude_field": "latitude",
+    "license": "Open Government Data License version 1.0",
+    "license_url": "https://data.gov.tw/license",
+    "longitude_field": "longitude",
+    "name": "New Taipei City Police fixed enforcement: 土城區",
+    "road_field": "address",
+    "source_url": "https://data.ntpc.gov.tw/datasets/2a4f4679-c5ea-4669-aa71-560a90659765",
+    "speed_field": "limit"
+  },
+  {
+    "city_field": "cityname",
+    "code": "TW_NEWTAIPEI_4439DA2E",
+    "country_code": "TW",
+    "delimiter": ",",
+    "direction_field": "direct",
+    "download_url": "https://data.ntpc.gov.tw/api/datasets/4439da2e-cf04-4443-b4cf-7d3f2b9bf61e/csv/file",
+    "enforcement_terms": {
+      "field": "violation types",
+      "red_light": [
+        "闖紅燈"
+      ],
+      "speed": [
+        "超速"
+      ]
+    },
+    "format": "csv",
+    "id_fields": [
+      "address",
+      "direct",
+      "longitude",
+      "latitude"
+    ],
+    "latitude_field": "latitude",
+    "license": "Open Government Data License version 1.0",
+    "license_url": "https://data.gov.tw/license",
+    "longitude_field": "longitude",
+    "name": "New Taipei City Police fixed enforcement: 坪林區",
+    "road_field": "address",
+    "source_url": "https://data.ntpc.gov.tw/datasets/4439da2e-cf04-4443-b4cf-7d3f2b9bf61e",
+    "speed_field": "limit"
+  },
+  {
+    "city_field": "cityname",
+    "code": "TW_NEWTAIPEI_1292F42F",
+    "country_code": "TW",
+    "delimiter": ",",
+    "direction_field": "direct",
+    "download_url": "https://data.ntpc.gov.tw/api/datasets/1292f42f-dbae-4374-94cb-055d24e6d031/csv/file",
+    "enforcement_terms": {
+      "field": "violation types",
+      "red_light": [
+        "闖紅燈"
+      ],
+      "speed": [
+        "超速"
+      ]
+    },
+    "format": "csv",
+    "id_fields": [
+      "address",
+      "direct",
+      "longitude",
+      "latitude"
+    ],
+    "latitude_field": "latitude",
+    "license": "Open Government Data License version 1.0",
+    "license_url": "https://data.gov.tw/license",
+    "longitude_field": "longitude",
+    "name": "New Taipei City Police fixed enforcement: 平溪區",
+    "road_field": "address",
+    "source_url": "https://data.ntpc.gov.tw/datasets/1292f42f-dbae-4374-94cb-055d24e6d031",
+    "speed_field": "limit"
+  },
+  {
+    "city_field": "cityname",
+    "code": "TW_NEWTAIPEI_CFF8E05C",
+    "country_code": "TW",
+    "delimiter": ",",
+    "direction_field": "direct",
+    "download_url": "https://data.ntpc.gov.tw/api/datasets/cff8e05c-7466-46fa-8969-447dca31f87a/csv/file",
+    "enforcement_terms": {
+      "field": "violation types",
+      "red_light": [
+        "闖紅燈"
+      ],
+      "speed": [
+        "超速"
+      ]
+    },
+    "format": "csv",
+    "id_fields": [
+      "address",
+      "direct",
+      "longitude",
+      "latitude"
+    ],
+    "latitude_field": "latitude",
+    "license": "Open Government Data License version 1.0",
+    "license_url": "https://data.gov.tw/license",
+    "longitude_field": "longitude",
+    "name": "New Taipei City Police fixed enforcement: 新店區",
+    "road_field": "address",
+    "source_url": "https://data.ntpc.gov.tw/datasets/cff8e05c-7466-46fa-8969-447dca31f87a",
+    "speed_field": "limit"
+  },
+  {
+    "city_field": "cityname",
+    "code": "TW_NEWTAIPEI_683C1B0F",
+    "country_code": "TW",
+    "delimiter": ",",
+    "direction_field": "direct",
+    "download_url": "https://data.ntpc.gov.tw/api/datasets/683c1b0f-507e-4c7d-a652-6e858d38455b/csv/file",
+    "enforcement_terms": {
+      "field": "violation types",
+      "red_light": [
+        "闖紅燈"
+      ],
+      "speed": [
+        "超速"
+      ]
+    },
+    "format": "csv",
+    "id_fields": [
+      "address",
+      "direct",
+      "longitude",
+      "latitude"
+    ],
+    "latitude_field": "latitude",
+    "license": "Open Government Data License version 1.0",
+    "license_url": "https://data.gov.tw/license",
+    "longitude_field": "longitude",
+    "name": "New Taipei City Police fixed enforcement: 新莊區",
+    "road_field": "address",
+    "source_url": "https://data.ntpc.gov.tw/datasets/683c1b0f-507e-4c7d-a652-6e858d38455b",
+    "speed_field": "limit"
+  },
+  {
+    "city_field": "cityname",
+    "code": "TW_NEWTAIPEI_B5B30B9A",
+    "country_code": "TW",
+    "delimiter": ",",
+    "direction_field": "direct",
+    "download_url": "https://data.ntpc.gov.tw/api/datasets/b5b30b9a-be57-4c7b-bd10-abaf04adcf21/csv/file",
+    "enforcement_terms": {
+      "field": "violation types",
+      "red_light": [
+        "闖紅燈"
+      ],
+      "speed": [
+        "超速"
+      ]
+    },
+    "format": "csv",
+    "id_fields": [
+      "address",
+      "direct",
+      "longitude",
+      "latitude"
+    ],
+    "latitude_field": "latitude",
+    "license": "Open Government Data License version 1.0",
+    "license_url": "https://data.gov.tw/license",
+    "longitude_field": "longitude",
+    "name": "New Taipei City Police fixed enforcement: 板橋區",
+    "road_field": "address",
+    "source_url": "https://data.ntpc.gov.tw/datasets/b5b30b9a-be57-4c7b-bd10-abaf04adcf21",
+    "speed_field": "limit"
+  },
+  {
+    "city_field": "cityname",
+    "code": "TW_NEWTAIPEI_11825B40",
+    "country_code": "TW",
+    "delimiter": ",",
+    "direction_field": "direct",
+    "download_url": "https://data.ntpc.gov.tw/api/datasets/11825b40-7ccd-4175-bfce-d4bea66ac3ae/csv/file",
+    "enforcement_terms": {
+      "field": "violation types",
+      "red_light": [
+        "闖紅燈"
+      ],
+      "speed": [
+        "超速"
+      ]
+    },
+    "format": "csv",
+    "id_fields": [
+      "address",
+      "direct",
+      "longitude",
+      "latitude"
+    ],
+    "latitude_field": "latitude",
+    "license": "Open Government Data License version 1.0",
+    "license_url": "https://data.gov.tw/license",
+    "longitude_field": "longitude",
+    "name": "New Taipei City Police fixed enforcement: 林口區",
+    "road_field": "address",
+    "source_url": "https://data.ntpc.gov.tw/datasets/11825b40-7ccd-4175-bfce-d4bea66ac3ae",
+    "speed_field": "limit"
+  },
+  {
+    "city_field": "cityname",
+    "code": "TW_NEWTAIPEI_9111E1D1",
+    "country_code": "TW",
+    "delimiter": ",",
+    "direction_field": "direct",
+    "download_url": "https://data.ntpc.gov.tw/api/datasets/9111e1d1-1985-4c56-9de8-d29cb1b41dd6/csv/file",
+    "enforcement_terms": {
+      "field": "violation types",
+      "red_light": [
+        "闖紅燈"
+      ],
+      "speed": [
+        "超速"
+      ]
+    },
+    "format": "csv",
+    "id_fields": [
+      "address",
+      "direct",
+      "longitude",
+      "latitude"
+    ],
+    "latitude_field": "latitude",
+    "license": "Open Government Data License version 1.0",
+    "license_url": "https://data.gov.tw/license",
+    "longitude_field": "longitude",
+    "name": "New Taipei City Police fixed enforcement: 樹林區",
+    "road_field": "address",
+    "source_url": "https://data.ntpc.gov.tw/datasets/9111e1d1-1985-4c56-9de8-d29cb1b41dd6",
+    "speed_field": "limit"
+  },
+  {
+    "city_field": "cityname",
+    "code": "TW_NEWTAIPEI_364737F4",
+    "country_code": "TW",
+    "delimiter": ",",
+    "direction_field": "direct",
+    "download_url": "https://data.ntpc.gov.tw/api/datasets/364737f4-4ed9-4fed-8600-646a36d39331/csv/file",
+    "enforcement_terms": {
+      "field": "violation types",
+      "red_light": [
+        "闖紅燈"
+      ],
+      "speed": [
+        "超速"
+      ]
+    },
+    "format": "csv",
+    "id_fields": [
+      "address",
+      "direct",
+      "longitude",
+      "latitude"
+    ],
+    "latitude_field": "latitude",
+    "license": "Open Government Data License version 1.0",
+    "license_url": "https://data.gov.tw/license",
+    "longitude_field": "longitude",
+    "name": "New Taipei City Police fixed enforcement: 永和區",
+    "road_field": "address",
+    "source_url": "https://data.ntpc.gov.tw/datasets/364737f4-4ed9-4fed-8600-646a36d39331",
+    "speed_field": "limit"
+  },
+  {
+    "city_field": "cityname",
+    "code": "TW_NEWTAIPEI_54288733",
+    "country_code": "TW",
+    "delimiter": ",",
+    "direction_field": "direct",
+    "download_url": "https://data.ntpc.gov.tw/api/datasets/54288733-8649-4902-a467-6a231fa7bc41/csv/file",
+    "enforcement_terms": {
+      "field": "violation types",
+      "red_light": [
+        "闖紅燈"
+      ],
+      "speed": [
+        "超速"
+      ]
+    },
+    "format": "csv",
+    "id_fields": [
+      "address",
+      "direct",
+      "longitude",
+      "latitude"
+    ],
+    "latitude_field": "latitude",
+    "license": "Open Government Data License version 1.0",
+    "license_url": "https://data.gov.tw/license",
+    "longitude_field": "longitude",
+    "name": "New Taipei City Police fixed enforcement: 汐止區",
+    "road_field": "address",
+    "source_url": "https://data.ntpc.gov.tw/datasets/54288733-8649-4902-a467-6a231fa7bc41",
+    "speed_field": "limit"
+  },
+  {
+    "city_field": "cityname",
+    "code": "TW_NEWTAIPEI_73B75683",
+    "country_code": "TW",
+    "delimiter": ",",
+    "direction_field": "direct",
+    "download_url": "https://data.ntpc.gov.tw/api/datasets/73b75683-d045-4ea2-bb13-c71edaaea8cb/csv/file",
+    "enforcement_terms": {
+      "field": "violation types",
+      "red_light": [
+        "闖紅燈"
+      ],
+      "speed": [
+        "超速"
+      ]
+    },
+    "format": "csv",
+    "id_fields": [
+      "address",
+      "direct",
+      "longitude",
+      "latitude"
+    ],
+    "latitude_field": "latitude",
+    "license": "Open Government Data License version 1.0",
+    "license_url": "https://data.gov.tw/license",
+    "longitude_field": "longitude",
+    "name": "New Taipei City Police fixed enforcement: 泰山區",
+    "road_field": "address",
+    "source_url": "https://data.ntpc.gov.tw/datasets/73b75683-d045-4ea2-bb13-c71edaaea8cb",
+    "speed_field": "limit"
+  },
+  {
+    "city_field": "cityname",
+    "code": "TW_NEWTAIPEI_126074CC",
+    "country_code": "TW",
+    "delimiter": ",",
+    "direction_field": "direct",
+    "download_url": "https://data.ntpc.gov.tw/api/datasets/126074cc-2091-4c0f-8fc5-a16bc530eb30/csv/file",
+    "enforcement_terms": {
+      "field": "violation types",
+      "red_light": [
+        "闖紅燈"
+      ],
+      "speed": [
+        "超速"
+      ]
+    },
+    "format": "csv",
+    "id_fields": [
+      "address",
+      "direct",
+      "longitude",
+      "latitude"
+    ],
+    "latitude_field": "latitude",
+    "license": "Open Government Data License version 1.0",
+    "license_url": "https://data.gov.tw/license",
+    "longitude_field": "longitude",
+    "name": "New Taipei City Police fixed enforcement: 深坑區",
+    "road_field": "address",
+    "source_url": "https://data.ntpc.gov.tw/datasets/126074cc-2091-4c0f-8fc5-a16bc530eb30",
+    "speed_field": "limit"
+  },
+  {
+    "city_field": "cityname",
+    "code": "TW_NEWTAIPEI_051AC91B",
+    "country_code": "TW",
+    "delimiter": ",",
+    "direction_field": "direct",
+    "download_url": "https://data.ntpc.gov.tw/api/datasets/051ac91b-ad10-46d0-9da6-c8691317a6af/csv/file",
+    "enforcement_terms": {
+      "field": "violation types",
+      "red_light": [
+        "闖紅燈"
+      ],
+      "speed": [
+        "超速"
+      ]
+    },
+    "format": "csv",
+    "id_fields": [
+      "address",
+      "direct",
+      "longitude",
+      "latitude"
+    ],
+    "latitude_field": "latitude",
+    "license": "Open Government Data License version 1.0",
+    "license_url": "https://data.gov.tw/license",
+    "longitude_field": "longitude",
+    "name": "New Taipei City Police fixed enforcement: 瑞芳區",
+    "road_field": "address",
+    "source_url": "https://data.ntpc.gov.tw/datasets/051ac91b-ad10-46d0-9da6-c8691317a6af",
+    "speed_field": "limit"
+  },
+  {
+    "city_field": "cityname",
+    "code": "TW_NEWTAIPEI_501B36C1",
+    "country_code": "TW",
+    "delimiter": ",",
+    "direction_field": "direct",
+    "download_url": "https://data.ntpc.gov.tw/api/datasets/501b36c1-0ae9-4e40-92a4-3d57b557f8d7/csv/file",
+    "enforcement_terms": {
+      "field": "violation types",
+      "red_light": [
+        "闖紅燈"
+      ],
+      "speed": [
+        "超速"
+      ]
+    },
+    "format": "csv",
+    "id_fields": [
+      "address",
+      "direct",
+      "longitude",
+      "latitude"
+    ],
+    "latitude_field": "latitude",
+    "license": "Open Government Data License version 1.0",
+    "license_url": "https://data.gov.tw/license",
+    "longitude_field": "longitude",
+    "name": "New Taipei City Police fixed enforcement: 石碇區",
+    "road_field": "address",
+    "source_url": "https://data.ntpc.gov.tw/datasets/501b36c1-0ae9-4e40-92a4-3d57b557f8d7",
+    "speed_field": "limit"
+  },
+  {
+    "city_field": "cityname",
+    "code": "TW_NEWTAIPEI_A2D5BA96",
+    "country_code": "TW",
+    "delimiter": ",",
+    "direction_field": "direct",
+    "download_url": "https://data.ntpc.gov.tw/api/datasets/a2d5ba96-fc07-48ac-9f8c-92967502ca48/csv/file",
+    "enforcement_terms": {
+      "field": "violation types",
+      "red_light": [
+        "闖紅燈"
+      ],
+      "speed": [
+        "超速"
+      ]
+    },
+    "format": "csv",
+    "id_fields": [
+      "address",
+      "direct",
+      "longitude",
+      "latitude"
+    ],
+    "latitude_field": "latitude",
+    "license": "Open Government Data License version 1.0",
+    "license_url": "https://data.gov.tw/license",
+    "longitude_field": "longitude",
+    "name": "New Taipei City Police fixed enforcement: 石門區",
+    "road_field": "address",
+    "source_url": "https://data.ntpc.gov.tw/datasets/a2d5ba96-fc07-48ac-9f8c-92967502ca48",
+    "speed_field": "limit"
+  },
+  {
+    "city_field": "cityname",
+    "code": "TW_NEWTAIPEI_54FB654A",
+    "country_code": "TW",
+    "delimiter": ",",
+    "direction_field": "direct",
+    "download_url": "https://data.ntpc.gov.tw/api/datasets/54fb654a-1090-4050-ab74-94afd08f60b5/csv/file",
+    "enforcement_terms": {
+      "field": "violation types",
+      "red_light": [
+        "闖紅燈"
+      ],
+      "speed": [
+        "超速"
+      ]
+    },
+    "format": "csv",
+    "id_fields": [
+      "address",
+      "direct",
+      "longitude",
+      "latitude"
+    ],
+    "latitude_field": "latitude",
+    "license": "Open Government Data License version 1.0",
+    "license_url": "https://data.gov.tw/license",
+    "longitude_field": "longitude",
+    "name": "New Taipei City Police fixed enforcement: 萬里區",
+    "road_field": "address",
+    "source_url": "https://data.ntpc.gov.tw/datasets/54fb654a-1090-4050-ab74-94afd08f60b5",
+    "speed_field": "limit"
+  },
+  {
+    "city_field": "cityname",
+    "code": "TW_NEWTAIPEI_466D7354",
+    "country_code": "TW",
+    "delimiter": ",",
+    "direction_field": "direct",
+    "download_url": "https://data.ntpc.gov.tw/api/datasets/466d7354-4ccf-44e5-aeaf-bea948b79079/csv/file",
+    "enforcement_terms": {
+      "field": "violation types",
+      "red_light": [
+        "闖紅燈"
+      ],
+      "speed": [
+        "超速"
+      ]
+    },
+    "format": "csv",
+    "id_fields": [
+      "address",
+      "direct",
+      "longitude",
+      "latitude"
+    ],
+    "latitude_field": "latitude",
+    "license": "Open Government Data License version 1.0",
+    "license_url": "https://data.gov.tw/license",
+    "longitude_field": "longitude",
+    "name": "New Taipei City Police fixed enforcement: 蘆洲區",
+    "road_field": "address",
+    "source_url": "https://data.ntpc.gov.tw/datasets/466d7354-4ccf-44e5-aeaf-bea948b79079",
+    "speed_field": "limit"
+  },
+  {
+    "city_field": "cityname",
+    "code": "TW_NEWTAIPEI_B15B6F51",
+    "country_code": "TW",
+    "delimiter": ",",
+    "direction_field": "direct",
+    "download_url": "https://data.ntpc.gov.tw/api/datasets/b15b6f51-3332-4c5c-a050-770480fd9494/csv/file",
+    "enforcement_terms": {
+      "field": "violation types",
+      "red_light": [
+        "闖紅燈"
+      ],
+      "speed": [
+        "超速"
+      ]
+    },
+    "format": "csv",
+    "id_fields": [
+      "address",
+      "direct",
+      "longitude",
+      "latitude"
+    ],
+    "latitude_field": "latitude",
+    "license": "Open Government Data License version 1.0",
+    "license_url": "https://data.gov.tw/license",
+    "longitude_field": "longitude",
+    "name": "New Taipei City Police fixed enforcement: 貢寮區",
+    "road_field": "address",
+    "source_url": "https://data.ntpc.gov.tw/datasets/b15b6f51-3332-4c5c-a050-770480fd9494",
+    "speed_field": "limit"
+  },
+  {
+    "city_field": "cityname",
+    "code": "TW_NEWTAIPEI_0BA4DD89",
+    "country_code": "TW",
+    "delimiter": ",",
+    "direction_field": "direct",
+    "download_url": "https://data.ntpc.gov.tw/api/datasets/0ba4dd89-0146-485d-80ec-42fc29db4559/csv/file",
+    "enforcement_terms": {
+      "field": "violation types",
+      "red_light": [
+        "闖紅燈"
+      ],
+      "speed": [
+        "超速"
+      ]
+    },
+    "format": "csv",
+    "id_fields": [
+      "address",
+      "direct",
+      "longitude",
+      "latitude"
+    ],
+    "latitude_field": "latitude",
+    "license": "Open Government Data License version 1.0",
+    "license_url": "https://data.gov.tw/license",
+    "longitude_field": "longitude",
+    "name": "New Taipei City Police fixed enforcement: 金山區",
+    "road_field": "address",
+    "source_url": "https://data.ntpc.gov.tw/datasets/0ba4dd89-0146-485d-80ec-42fc29db4559",
+    "speed_field": "limit"
+  },
+  {
+    "city_field": "cityname",
+    "code": "TW_NEWTAIPEI_589AAABF",
+    "country_code": "TW",
+    "delimiter": ",",
+    "direction_field": "direct",
+    "download_url": "https://data.ntpc.gov.tw/api/datasets/589aaabf-457d-43a1-96fd-f9fd48a9e362/csv/file",
+    "enforcement_terms": {
+      "field": "violation types",
+      "red_light": [
+        "闖紅燈"
+      ],
+      "speed": [
+        "超速"
+      ]
+    },
+    "format": "csv",
+    "id_fields": [
+      "address",
+      "direct",
+      "longitude",
+      "latitude"
+    ],
+    "latitude_field": "latitude",
+    "license": "Open Government Data License version 1.0",
+    "license_url": "https://data.gov.tw/license",
+    "longitude_field": "longitude",
+    "name": "New Taipei City Police fixed enforcement: 雙溪區",
+    "road_field": "address",
+    "source_url": "https://data.ntpc.gov.tw/datasets/589aaabf-457d-43a1-96fd-f9fd48a9e362",
+    "speed_field": "limit"
+  },
+  {
+    "city_field": "cityname",
+    "code": "TW_NEWTAIPEI_B9D5D48A",
+    "country_code": "TW",
+    "delimiter": ",",
+    "direction_field": "direct",
+    "download_url": "https://data.ntpc.gov.tw/api/datasets/b9d5d48a-7412-471b-bd4e-ff54999510fe/csv/file",
+    "enforcement_terms": {
+      "field": "violation types",
+      "red_light": [
+        "闖紅燈"
+      ],
+      "speed": [
+        "超速"
+      ]
+    },
+    "format": "csv",
+    "id_fields": [
+      "address",
+      "direct",
+      "longitude",
+      "latitude"
+    ],
+    "latitude_field": "latitude",
+    "license": "Open Government Data License version 1.0",
+    "license_url": "https://data.gov.tw/license",
+    "longitude_field": "longitude",
+    "name": "New Taipei City Police fixed enforcement: 鶯歌區",
+    "road_field": "address",
+    "source_url": "https://data.ntpc.gov.tw/datasets/b9d5d48a-7412-471b-bd4e-ff54999510fe",
+    "speed_field": "limit"
+  },
+  {
+    "camera_type": "other_enforcement",
+    "candidate_reason": "Citywide fixed enforcement CSV omits capability, unlike district feeds; new unmatched points require review",
+    "city_field": "cityname",
+    "code": "TW_NEWTAIPEI_FIXED_UNTYPED",
+    "country_code": "TW",
+    "delimiter": ",",
+    "direction_field": "direct",
+    "download_url": "https://data.ntpc.gov.tw/api/datasets/99f3ff6e-0352-4399-a726-775ab765a1dc/csv/file",
+    "format": "csv",
+    "id_fields": [
+      "seqno",
+      "address",
+      "direct",
+      "longitude",
+      "latitude"
+    ],
+    "latitude_field": "latitude",
+    "license": "Open Government Data License version 1.0",
+    "license_url": "https://data.gov.tw/license",
+    "longitude_field": "longitude",
+    "name": "New Taipei City Police citywide fixed points (capability unresolved)",
+    "possible_camera_types": [
+      "fixed_speed",
+      "red_light",
+      "speed_and_red_light"
+    ],
+    "road_field": "address",
+    "source_url": "https://data.ntpc.gov.tw/datasets/99f3ff6e-0352-4399-a726-775ab765a1dc",
+    "speed_field": "limit"
+  },
+  {
+    "camera_type": "fixed_speed",
+    "city_field": "LOCATION",
+    "code": "MU_MDPA_FIXED",
+    "country_code": "MU",
+    "delimiter": ",",
+    "download_url": "https://data.govmu.org/dataset/5e05d30e-2424-400d-9b35-8a34b01fe982/resource/1e587d7a-73dd-4c49-9632-9f004a8a9b1a/download/fixspeedcams.csv",
+    "format": "csv",
+    "id_fields": [
+      "NAME",
+      "ROAD"
+    ],
+    "latitude_field": "Latitude",
+    "license": "CC-BY-SA-4.0",
+    "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "longitude_field": "Longitude",
+    "name": "Mauritius Digital Promotion Agency fixed speed cameras",
+    "region_field": "REGION",
+    "road_field": "ROAD",
+    "source_url": "https://data.govmu.org/dataset/location-fixed-speed-cameras",
+    "candidate_reason": "Official static snapshot last updated September 2024; current operation has not been independently established"
+  },
+  {
+    "camera_type": "red_light",
+    "candidate_reason": "Explicit 2017 data coverage despite 2025 catalog update; current device operation and capability require verification",
+    "code": "SG_SPF_RED_HISTORICAL",
+    "country_code": "SG",
+    "direction_field": "DIRECTION",
+    "download_url": "https://api-open.data.gov.sg/v1/public/api/datasets/d_5f140c79c9dbee0bbb07c753afd788d8/poll-download",
+    "format": "data_gov_sg",
+    "id_fields": [
+      "ID"
+    ],
+    "license": "Singapore Open Data Licence",
+    "license_url": "https://data.gov.sg/open-data-licence",
+    "name": "Singapore Police Force Red Light Cameras, February 2017",
+    "payload_format": "geojson",
+    "road_field": "ROAD_NAME",
+    "source_url": "https://data.gov.sg/datasets/d_5f140c79c9dbee0bbb07c753afd788d8/view"
+  },
+  {
+    "candidate_reason": "Explicit 2019 coverage; current fixed-device operation requires verification; mobile deployment sites excluded",
+    "code": "SG_SPF_SPEED_HISTORICAL",
+    "country_code": "SG",
+    "delimiter": ",",
+    "download_url": "https://api-open.data.gov.sg/v1/public/api/datasets/d_983804de2bc016f53e44031d85d1ec8a/poll-download",
+    "format": "data_gov_sg",
+    "id_fields": [
+      "type_of_speed_camera",
+      "location"
+    ],
+    "latitude_field": "location_latitude",
+    "license": "Singapore Open Data Licence",
+    "license_url": "https://data.gov.sg/open-data-licence",
+    "longitude_field": "location_longitude",
+    "name": "Singapore Police Force speed cameras, 2019",
+    "payload_format": "csv",
+    "road_field": "location",
+    "source_url": "https://data.gov.sg/datasets/d_983804de2bc016f53e44031d85d1ec8a/view",
+    "type_field": "type_of_speed_camera",
+    "types": {
+      "Fixed Speed Camera": "fixed_speed"
+    }
+  },
+  {
+    "code": "SE_TRV_CC0_MIRROR",
+    "country_code": "SE",
+    "name": "Trafikverket fixed ATK cameras via Fartkameran.se CC0 dataset",
+    "source_type": "licensed_open_data",
+    "source_url": "https://fartkameran.se/kameror/",
+    "upstream_source_url": "https://geo-netinfo.trafikverket.se/mapservice/wms.axd/NetInfo",
+    "download_url": "https://fartkameran.se/data/kameror-karta.json",
+    "format": "compact_columns",
+    "columns": [
+      "id",
+      "namn",
+      "kommun",
+      "kommunslug",
+      "slug",
+      "vag",
+      "grans",
+      "lanskod",
+      "lat",
+      "lon",
+      "monterad",
+      "riktning"
+    ],
+    "max_snapshot_age_days": 90,
+    "id_fields": [
+      "id"
+    ],
+    "latitude_field": "lat",
+    "longitude_field": "lon",
+    "camera_type": "fixed_speed",
+    "city_field": "kommun",
+    "license": "CC0-1.0",
+    "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "validation_report": "master-db/coverage/sweden-independent-sample-validation.json",
+    "unvalidated_fields": [
+      "vag",
+      "grans",
+      "riktning"
+    ],
+    "note": "Only actual fixed-device IDs and coordinates are imported from the CC0 mirror. Road speed and photographic compass labels are omitted pending direct validation. Five current primary WMS samples validate stable identities, validity intervals and coordinates within 10m.",
+    "activation_date_field": "monterad"
+  },
+  {
+    "code": "AU_ACT_FIXED",
+    "country_code": "AU",
+    "name": "Access Canberra ACT fixed road safety camera locations",
+    "source_url": "https://www.data.act.gov.au/Transport/Traffic-speed-camera-locations/426s-vdu4",
+    "download_url": "https://www.data.act.gov.au/resource/426s-vdu4.json?$limit=50000",
+    "count_json_url": "https://www.data.act.gov.au/resource/426s-vdu4.json?$select=count(*)",
+    "format": "json",
+    "id_fields": [
+      "camera_location_code"
+    ],
+    "latitude_field": "latitude",
+    "longitude_field": "longitude",
+    "type_field": "camera_type",
+    "types": {
+      "FIXED ONLY SPEED CAMERA": "fixed_speed",
+      "RED LIGHT AND SPEED CAMERA": "speed_and_red_light",
+      "POINT TO POINT CAMERA": "average_speed_section"
+    },
+    "road_field": "location_description",
+    "retired_fields": [
+      "decommissioned_camera_date"
+    ],
+    "section_point_possible_types": [],
+    "section_endpoint_reason": "Official point-to-point device coordinate has no explicit paired endpoint or role; section is not invented",
+    "license": "CC-BY-4.0",
+    "license_url": "https://creativecommons.org/licenses/by/4.0/",
+    "city": "Canberra"
+  },
+  {
+    "code": "IE_GARDA_STATIC",
+    "country_code": "IE",
+    "name": "An Garda Síochána current nine operational static safety camera pages",
+    "source_url": "https://www.garda.ie/en/roads-policing/safety-cameras-save-lives/static-safety-camera-detection/static-safety-camera-detection.html",
+    "download_url": "https://www.garda.ie/en/roads-policing/safety-cameras-save-lives/static-safety-camera-detection/static-safety-camera-detection.html",
+    "download_urls": [
+      "https://www.garda.ie/!U7ALGL",
+      "https://www.garda.ie/!99HRU8",
+      "https://www.garda.ie/!F0YMMX",
+      "https://www.garda.ie/!MQPGA0",
+      "https://www.garda.ie/!3E198V",
+      "https://www.garda.ie/!A2ICK7",
+      "https://www.garda.ie/en/about-us/our-departments/office-of-corporate-communications/news-media/news-archive/static-safety-camera-operational-on-the-n80-from-friday-23-may-2025.html",
+      "https://www.garda.ie/!CSMQCU",
+      "https://www.garda.ie/!KP0C6K"
+    ],
+    "format": "garda_static_html",
+    "expected_rows": 9,
+    "id_fields": [
+      "Location",
+      "Name",
+      "County"
+    ],
+    "latitude_field": "Latitude",
+    "longitude_field": "Longitude",
+    "road_field": "Location",
+    "city_field": "Name",
+    "camera_type": "fixed_speed",
+    "license": "Irish PSI licence (CC-BY-4.0)",
+    "license_url": "https://www.garda.ie/en/re-use-of-information/"
+  },
+  {
+    "code": "IE_GARDA_AVERAGE",
+    "country_code": "IE",
+    "name": "An Garda Síochána N3 N5 N2 average safety camera device coordinates",
+    "source_url": "https://www.garda.ie/en/roads-policing/safety-cameras-save-lives/average-safety-camera-detection/average-safety-camera-detection.html",
+    "download_url": "https://www.garda.ie/en/roads-policing/safety-cameras-save-lives/average-safety-camera-detection/average-safety-camera-detection.html",
+    "download_urls": [
+      "https://www.garda.ie/en/roads-policing/safety-cameras-save-lives/average-safety-camera-detection/n3-cavan.html",
+      "https://www.garda.ie/en/roads-policing/safety-cameras-save-lives/average-safety-camera-detection/n5-mayo.html",
+      "https://www.garda.ie/en/roads-policing/safety-cameras-save-lives/average-safety-camera-detection/n2-meath.html"
+    ],
+    "format": "garda_static_html",
+    "expected_rows": 6,
+    "id_fields": [
+      "Location",
+      "Name",
+      "County"
+    ],
+    "latitude_field": "Latitude",
+    "longitude_field": "Longitude",
+    "road_field": "Location",
+    "city_field": "Name",
+    "camera_type": "other_enforcement",
+    "license": "Irish PSI licence (CC-BY-4.0)",
+    "license_url": "https://www.garda.ie/en/re-use-of-information/",
+    "candidate_reason": "Official paired average-speed device locations do not identify directional entry/exit roles. Preserve individual endpoints as LOW candidates; no directional section invented."
+  },
+  {
+    "code": "AU_VIC_FIXED",
+    "country_code": "AU",
+    "name": "Victoria Department of Justice fixed road safety camera network",
+    "source_url": "https://discover.data.vic.gov.au/dataset/road-safety-camera-network-fixed-camera-locations",
+    "download_url": "https://a83890f7a31dea14e1ae83c6f0afacca.sdp4.elastic.sdp.vic.gov.au/sdp_data_pipelines_scl/_search?size=1000&track_total_hits=true",
+    "format": "elasticsearch",
+    "id_fields": [
+      "camera_id"
+    ],
+    "latitude_field": "latitude",
+    "longitude_field": "longitude",
+    "camera_type": "other_enforcement",
+    "road_field": "offence_location",
+    "city_field": "suburb",
+    "license": "CC-BY-4.0",
+    "license_url": "https://creativecommons.org/licenses/by/4.0/",
+    "candidate_reason": "Official current fixed camera index does not identify speed/red-light capabilities per device. Intersection classification is not enforcement capability; point-to-point rows have no explicit paired endpoints. Keep LOW pending device-specific evidence."
+  },
+  {
+    "code": "ES_DGT_INVENTORY",
+    "country_code": "ES",
+    "name": "DGT DATEX II fixed radar cabins and average speed sections inventory",
+    "source_url": "https://nap.dgt.es/es/dataset/radares-fijos-dgt",
+    "download_url": "https://infocar.dgt.es/datex2/dgt/PredefinedLocationsPublication/radares/content.xml",
+    "format": "dgt_datex_locations",
+    "id_fields": [
+      "id"
+    ],
+    "type_field": "camera_type",
+    "types": {
+      "fixed_speed": "fixed_speed",
+      "average_speed_section": "average_speed_section"
+    },
+    "start_latitude_field": "start_lat",
+    "start_longitude_field": "start_lon",
+    "road_field": "road",
+    "license": "CC-BY",
+    "license_url": "https://opendefinition.org/licenses/cc-by/",
+    "candidate_reason": "Retrieved official inventory is dated 2025-12-18. Fixed entries identify radar cabins rather than independently confirmed active devices; present operation of this snapshot is not verified. Preserve as LOW candidates; explicit section endpoints retained."
+  },
+  {
+    "code": "UA_NPU_CURRENT",
+    "country_code": "UA",
+    "name": "National Police of Ukraine automatic speed enforcement camera locations",
+    "source_url": "https://data.gov.ua/dataset/b7b6349c-d109-45e7-af37-b73310f73cf5",
+    "download_url": "https://data.gov.ua/dataset/b7b6349c-d109-45e7-af37-b73310f73cf5/resource/0bebdf82-5f03-4915-8147-d43134f83c6b/download/cameras_10.csv",
+    "format": "csv",
+    "delimiter": ",",
+    "expected_rows": 424,
+    "expected_raw_rows": 426,
+    "skip_invalid_coordinates": true,
+    "id_fields": [
+      "inventoryNumber"
+    ],
+    "latitude_field": "lat",
+    "longitude_field": "lon",
+    "camera_type": "fixed_speed",
+    "filter": {
+      "isSpeedRecognition": "TRUE"
+    },
+    "null_values": [
+      "null"
+    ],
+    "direction_field": "cameraDirection",
+    "road_field": "addressThoroughfare",
+    "city_field": "addressPostName",
+    "license": "CC-BY-4.0",
+    "license_url": "https://creativecommons.org/licenses/by/4.0/",
+    "snapshot_updated_at": "2026-10-07T10:05:07.306551"
+  },
+  {
+    "code": "AU_SA_DIT_SAFETY",
+    "country_code": "AU",
+    "name": "Department for Infrastructure and Transport South Australia Safety Cameras (Traffic Signals RS/PP subset)",
+    "source_url": "https://location.sa.gov.au/lms/Reports/ReportMetadata.aspx?p_no=821&pu=y",
+    "download_url": "https://dpti.geohub.sa.gov.au/server/rest/services/RoadAsset/SafetyCameras/FeatureServer/0",
+    "format": "arcgis",
+    "id_fields": [
+      "ts_no"
+    ],
+    "type_field": "site_type",
+    "types": {
+      "RS": "other_enforcement",
+      "PP": "other_enforcement"
+    },
+    "road_field": "ts_desc",
+    "license": "AusGOAL CC BY (Attribution)",
+    "license_url": "https://location.sa.gov.au/lms/Reports/ReportMetadata.aspx?p_no=821&pu=y",
+    "candidate_reason": "Primary Traffic Signals catalog explicitly states positional accuracy sites +/-100 metres, unknown update date. RS identifies red-light safety sites but precise device and speed capability are unresolved; PP does not provide directional entry/exit geometry. LOW review only."
+  },
+  {
+    "country_code": "HK",
+    "license": "DATA.GOV.HK Terms of Use v1.2",
+    "license_url": "https://data.gov.hk/en/terms-and-conditions",
+    "format": "kmz_points",
+    "road_field": "SITE_DESC_ENG",
+    "null_values": [
+      ""
+    ],
+    "source_type": "official_government",
+    "publication_date": "2026-07-01",
+    "code": "HK_TD_RLC",
+    "name": "© Government of the Hong Kong SAR / Transport Department / DATA.GOV.HK — installed red-light sites",
+    "source_url": "https://data.gov.hk/en-data/dataset/hk-td-tis_25-junctions-with-rlc",
+    "download_url": "https://www.td.gov.hk/datagovhk_td/junctions-with-rlc/resources/junctions_with_rlc.kmz",
+    "verification_csv_url": "https://www.td.gov.hk/datagovhk_td/junctions-with-rlc/resources/junctions_with_rlc.csv",
+    "id_fields": [
+      "RLC_ID"
+    ],
+    "expected_rows": 230,
+    "camera_type": "red_light",
+    "candidate_reason": "Official directional enforcement site is precise, but current device placement has not been independently verified."
+  },
+  {
+    "country_code": "HK",
+    "license": "DATA.GOV.HK Terms of Use v1.2",
+    "license_url": "https://data.gov.hk/en/terms-and-conditions",
+    "format": "kmz_points",
+    "road_field": "SITE_DESC_ENG",
+    "null_values": [
+      ""
+    ],
+    "source_type": "official_government",
+    "publication_date": "2026-07-01",
+    "code": "HK_TD_SEC_HOUSING",
+    "name": "© Government of the Hong Kong SAR / Transport Department / DATA.GOV.HK — speed enforcement housings",
+    "source_url": "https://data.gov.hk/en-data/dataset/hk-td-tis_26-locations-of-sec",
+    "download_url": "https://www.td.gov.hk/datagovhk_td/locations-of-sec/resources/locations_of_sec.kmz",
+    "id_fields": [
+      "SEC_ID"
+    ],
+    "expected_rows": 164,
+    "camera_type": "fixed_speed",
+    "candidate_reason": "Camera housing inventory does not establish a currently installed device; equipment may rotate among housings."
+  },
+  {
+    "code": "KR_DATA_GO_STANDARD",
+    "country_code": "KR",
+    "name": "Republic of Korea National Police and local governments / DATA.GO.KR fixed traffic enforcement standard",
+    "source_url": "https://www.data.go.kr/data/15028200/standard.do",
+    "download_url": "https://www.data.go.kr/download/standard.json",
+    "format": "korea_standard",
+    "expected_raw_rows": 43764,
+    "expected_providers": 126,
+    "id_fields": [
+      "_coverage_id"
+    ],
+    "type_field": "_coverage_type",
+    "types": {
+      "fixed_speed": "fixed_speed",
+      "red_light": "red_light",
+      "speed_and_red_light": "speed_and_red_light",
+      "other_enforcement": "other_enforcement"
+    },
+    "road_field": "ROAD_ROUTE_NM",
+    "city_field": "SIGNGU_NM",
+    "speed_field": "LMTT_VE",
+    "direction_field": "_coverage_direction",
+    "confidence_override": "MEDIUM",
+    "review_reason_field": "_coverage_review_reason",
+    "reference_date_field": "REFERENCE_DATE",
+    "license": "DATA.GO.KR unrestricted reuse — individually verified supplying agency permissions",
+    "license_url": "https://www.data.go.kr/ugs/selectPortalPolicyView.do",
+    "source_type": "official_government",
+    "null_values": [
+      ""
+    ]
   }
 ]

@@ -1,9 +1,9 @@
 {
-  "checked_at": "2026-10-07T08:49:33.564021+00:00",
-  "required_nodes": 13646,
-  "required_relations": 0,
+  "checked_at": "2026-10-07T19:15:00.687700+00:00",
+  "required_nodes": 59,
+  "required_relations": 1,
   "failures": [],
-  "deleted_nodes": 2,
+  "deleted_nodes": 0,
   "deleted_relations": 0,
-  "scope": "Only expansion objects and their explicit relation endpoints; original 50141 untouched"
+  "scope": "Only stage-new objects and their explicit relation endpoints; all stage-baseline records protected"
 }

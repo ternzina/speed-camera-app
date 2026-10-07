@@ -1,0 +1,62 @@
+{
+  "source": "https://data.gov.tw/dataset/178358",
+  "independent_reference": "https://data.gov.tw/dataset/7320",
+  "inversion_confirmed_for_all_numeric_rows": true,
+  "verified_sample": [
+    {
+      "municipal_id": "A01",
+      "municipal_latitude_from_Longitude_field": 23.583764,
+      "municipal_longitude_from_Latitude_field": 120.299399,
+      "national_latitude": "23.583763",
+      "national_longitude": "120.2994",
+      "distance_m": 0.151,
+      "matching_address": "北港鎮台19線公路與145線道路口(北辰派出所前)"
+    },
+    {
+      "municipal_id": "A02",
+      "municipal_latitude_from_Longitude_field": 23.655033,
+      "municipal_longitude_from_Latitude_field": 120.288958,
+      "national_latitude": "23.655033",
+      "national_longitude": "120.288956",
+      "distance_m": 0.204,
+      "matching_address": "元長鄉160縣道15K+650m處"
+    },
+    {
+      "municipal_id": "A03",
+      "municipal_latitude_from_Longitude_field": 23.722674,
+      "municipal_longitude_from_Latitude_field": 120.583296,
+      "national_latitude": "23.722673",
+      "national_longitude": "120.5833",
+      "distance_m": 0.423,
+      "matching_address": "斗六市台3線公路247k+450m處(榴中派出所前)"
+    },
+    {
+      "municipal_id": "A04",
+      "municipal_latitude_from_Longitude_field": 23.742592,
+      "municipal_longitude_from_Latitude_field": 120.494443,
+      "national_latitude": "23.742592",
+      "national_longitude": "120.494446",
+      "distance_m": 0.306,
+      "matching_address": "台1線公路235k+592m處"
+    },
+    {
+      "municipal_id": "A05",
+      "municipal_latitude_from_Longitude_field": 23.691449,
+      "municipal_longitude_from_Latitude_field": 120.508235,
+      "national_latitude": "23.691448",
+      "national_longitude": "120.50823",
+      "distance_m": 0.523,
+      "matching_address": "台1丁線公路與久安路口"
+    },
+    {
+      "municipal_id": "A06",
+      "municipal_latitude_from_Longitude_field": 23.706822,
+      "municipal_longitude_from_Latitude_field": 120.351364,
+      "national_latitude": "23.706821",
+      "national_longitude": "120.351364",
+      "distance_m": 0.111,
+      "matching_address": "土庫鎮158甲縣道14k+70m處 (馬光國小後門)"
+    }
+  ],
+  "interpretation": "Published municipal Longitude/Latitude header labels inverted; explicit numeric values preserved, adapter maps actual WGS84 fields using independently matched NPA coordinates"
+}

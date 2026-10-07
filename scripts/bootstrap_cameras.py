@@ -178,11 +178,12 @@ def osm_records(data,code,primary_nodes=None,primary_relations=None):
     source=dict(code='OSM_'+code,country_code=code,name='OpenStreetMap contributors ('+code+')',source_type='openstreetmap',
                 license='ODbL-1.0',license_url='https://opendatacommons.org/licenses/odbl/1-0/',
                 source_url='https://www.openstreetmap.org/copyright',retrieved_at=retrieved)
-    # Recursive skel results duplicate nodes; retain the richer meta version.
+    # Prefer the latest object version across overlapping regional snapshots;
+    # richness breaks ties with recursive skeleton results only.
     elements={}
     for e in data['elements']:
         key=(e['type'],e['id'])
-        if key not in elements or len(e)>len(elements[key]):elements[key]=e
+        if key not in elements or (e.get('version',0),len(e))>(elements[key].get('version',0),len(elements[key])):elements[key]=e
     for key,e in list(elements.items()):
         current=((primary_nodes or {}) if e['type']=='node' else (primary_relations or {}) if e['type']=='relation' else {}).get(e['id'])
         if current and (current.get('visible') is False or current.get('version',0)>=e.get('version',0)):elements[key]=current
@@ -226,12 +227,14 @@ def osm_records(data,code,primary_nodes=None,primary_relations=None):
         enforcement=tags.get('enforcement','')
         alias=tags.get('camera:enforcement') or tags.get('camera:type')
         if not enforcement:
-            if alias in ('speed','red_light','average_speed','section_control'):enforcement=alias
+            alias_modes={'speed':'speed','speed_camera':'speed','fixed_speed':'speed','maxspeed':'speed','red_light':'red_light','redlight':'red_light','red_light_camera':'red_light','average_speed':'average_speed','section_control':'section_control'}
+            alias_parts=[mode.strip() for mode in (alias or '').split(';')]
+            if alias and any(mode in alias_modes for mode in alias_parts):enforcement=';'.join(alias_modes.get(mode,mode) for mode in alias_parts)
             elif tags.get('traffic_signals:red_light_camera')=='yes' or tags.get('red_light_camera')=='yes':enforcement='red_light'
             elif tags.get('speed_camera')=='yes' or tags.get('surveillance:type')=='speed_camera':enforcement='speed'
         if not coords or (tags.get('highway')!='speed_camera' and key not in device_tags and not enforcement):continue
         if e['type']=='relation' and (tags.get('type') in ('enforcement','average_speed','section_control') or (not tags.get('type') and enforcement)):continue # devices emitted once; sections separately
-        modes=set(enforcement.split(';'));is_red=bool(modes & {'red_light','redlight','red_light_camera','traffic_signals','traffic_lights'}) or 'red' in enforcement
+        modes={mode.strip() for mode in enforcement.split(';')};is_red=bool(modes & {'red_light','redlight','red_light_camera','traffic_signals','traffic_lights'}) or 'red' in enforcement
         is_speed=tags.get('highway')=='speed_camera' or bool(modes & {'speed','maxspeed','speed_camera'})
         if modes & {'average_speed','section_control'}:
             typ='other_enforcement' # unresolved endpoint roles are not invented

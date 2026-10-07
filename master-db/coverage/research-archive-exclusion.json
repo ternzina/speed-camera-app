@@ -1,0 +1,8 @@
+{
+  "matched_field": "admin.datex.API_key",
+  "review": "Public locale string includes a translated human word; Angular renders this as a field label through its translate pipe, not credential data",
+  "translation_sha256": "d8bcbd67bd184a2a1748562cb527e60fb6648f44505e48bad7289caf81109fff",
+  "primary_url": "https://tarktee.transpordiamet.ee/assets/i18n/en.json",
+  "camera_inputs_unchanged": true,
+  "scanner_exceptions_added": false
+}

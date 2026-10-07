@@ -22,6 +22,8 @@ PATTERNS={
 EXCLUDED=re.compile(r'(^|/)(\.env[^/]*|credentials(?:\.json)?|node_modules|\.expo|\.bootstrap-venv)(/|$)|\.(?:jks|keystore|p8|p12|pfx|pem|key|mobileprovision|ipa|apk|aab)$|^master-db/(?:raw|cache|backups)/')
 def git(*args):return subprocess.check_output(['git',*args],cwd=ROOT)
 def main():
+    import argparse
+    parser=argparse.ArgumentParser();parser.add_argument('--output',default='master-db/bootstrap/reports/git-safety.json');parser.add_argument('--include-index',action='store_true');args=parser.parse_args()
     head=git('rev-parse','HEAD').decode().strip()
     files=git('ls-tree','-r','--name-only',head).decode().splitlines()
     forbidden=[p for p in files if EXCLUDED.search(p)]
@@ -35,14 +37,23 @@ def main():
         checked.add(sha);data=git('cat-file','blob',sha)
         for kind,pattern in PATTERNS.items():
             if re.search(pattern,data):findings.append({'path':name,'finding':kind,'blob':sha})
+    index_files=[];index_findings=[];index_forbidden=[]
+    if args.include_index:
+        for entry in git('ls-files','--stage','-z').split(b'\0'):
+            if not entry:continue
+            metadata,name=entry.split(b'\t',1);mode,sha,stage=metadata.split();name=name.decode();index_files.append(name)
+            if stage!=b'0':raise SystemExit('STOP: unresolved index entries')
+            if EXCLUDED.search(name):index_forbidden.append(name)
+            data=git('cat-file','blob',sha.decode())
+            for kind,pattern in PATTERNS.items():
+                if re.search(pattern,data):index_findings.append({'path':name,'finding':kind,'blob':sha.decode()})
     report={'checked_at':dt.datetime.now(dt.timezone.utc).isoformat(),'branch':'main','commit':head,
             'tracked_files':len(files),'history_blobs_checked':len(checked),'forbidden_files_in_head':forbidden,
             'secret_findings':findings,'excluded_actual_sensitive_files':sorted(str(p.relative_to(ROOT)) for pattern in ('.env*','*.jks','*.keystore','credentials.json') for p in ROOT.glob(pattern) if p.is_file()),'excluded_local_paths':['.env.bootstrap','*.jks','node_modules/','.expo/','.bootstrap-venv/',
              'master-db/raw/','master-db/cache/','master-db/backups/','*.backup-*','*.before-*','build artifacts'],
             'note':'Previously published small non-secret server backups were removed from the current tree; unpublished bootstrap backup commit kept only on a local branch.'}
-    import argparse
-    parser=argparse.ArgumentParser();parser.add_argument('--output',default='master-db/bootstrap/reports/git-safety.json');args=parser.parse_args()
+    if args.include_index:report.update(index_files_checked=len(index_files),forbidden_files_in_index=index_forbidden,index_secret_findings=index_findings)
     target=ROOT/args.output;target.parent.mkdir(parents=True,exist_ok=True);target.write_text(json.dumps(report,indent=2)+'\n')
-    print(json.dumps({'tracked_files':len(files),'history_blobs_checked':len(checked),'forbidden_files':forbidden,'secret_findings':findings}))
-    if forbidden or findings:raise SystemExit('STOP: publication safety findings require review')
+    print(json.dumps({'tracked_files':len(files),'history_blobs_checked':len(checked),'forbidden_files':forbidden,'secret_findings':findings,'index_files_checked':len(index_files),'index_forbidden':index_forbidden,'index_secret_findings':index_findings}))
+    if forbidden or findings or index_forbidden or index_findings:raise SystemExit('STOP: publication safety findings require review')
 if __name__=='__main__':main()

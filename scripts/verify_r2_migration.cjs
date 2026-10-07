@@ -4,7 +4,8 @@ const root=path.resolve(__dirname,'..'),base=path.join(root,'master-db/cache/r2-
 function plain(file){const module={exports:{}};vm.runInNewContext(babel.transformSync(fs.readFileSync(path.join(root,file),'utf8'),{configFile:false,babelrc:false,plugins:['@babel/plugin-transform-modules-commonjs']}).code,{module,exports:module.exports,require:name=>plain(name.replace(/^\.\//,'')+'.js'),AbortController,setTimeout,clearTimeout,Uint8Array,Uint32Array,DataView,Set,Date,fetch});return module.exports;}
 const delivery=plain('camera-delivery.js'),engine=plain('poland-engine.js');
 (async()=>{
- const manifest=delivery.validateManifest(await (await fetch(delivery.CAMERA_DELIVERY_URL+'/production/v1/manifest.json')).json()),checks=[],compression=[];
+ const manifestText=await (await fetch(delivery.CAMERA_DELIVERY_URL+'/production/v1/manifest.json')).text();
+ const manifest=delivery.validateManifest(JSON.parse(manifestText)),checks=[],compression=[];
  let hasDirection=0,withoutDirection=0,red=0,sections=0,speeds=0,combined=0;
  for(const entry of manifest.countries){
   const result=await delivery.refreshCountryDelivery({country:entry.country_code});assert.equal(result.source,'r2');
@@ -30,10 +31,16 @@ const delivery=plain('camera-delivery.js'),engine=plain('poland-engine.js');
   console.log('App production delivery verified',entry.country_code,entry.record_count);
  }
  const plEntry=manifest.countries.find(e=>e.country_code==='PL'),pl=delivery.verifyCountryExport(fs.readFileSync(path.join(base,'objects',plEntry.path),'utf8'),plEntry),section=pl.average_speed_sections[0];assert.equal(engine.detectAverageSpeedSection(pl,section.end.latitude,section.end.longitude,0,section.id).state,'ending');
- const publisher='https://speed-camera-data-publisher.ternzina.workers.dev/production/v1/manifest.json';assert.ok([401,404].includes((await fetch(publisher,{method:'PUT',body:'{}'})).status));
+ const publisher='https://speed-camera-data-publisher.ternzina.workers.dev/production/v1/manifest.json';let retiredPublisher;
+ try {const response=await fetch(publisher,{method:'HEAD'});assert.ok([401,404].includes(response.status));retiredPublisher='HTTP '+response.status;}
+ catch(error){if(error.cause?.code!=='ENOTFOUND')throw error;retiredPublisher='DNS absent';}
+ // Byte-identical payload makes this denial probe harmless if misconfigured.
+ assert.equal((await fetch('https://speed-camera-archive.ternzina.workers.dev/production/v1/manifest.json',{method:'PUT',body:manifestText})).status,401);
+ // The active private backend must independently reject unsigned reads.
+ assert.equal((await fetch('https://speed-camera-archive.ternzina.workers.dev/archive/v1/manifests/'+ '0'.repeat(64)+'.json',{method:'HEAD'})).status,401);
  assert.equal((await fetch(delivery.CAMERA_DELIVERY_URL+'/production/v1/manifest.json',{method:'PUT',body:'{}'})).status,405);
  const options=await fetch(delivery.CAMERA_DELIVERY_URL+'/production/v1/manifest.json',{method:'OPTIONS'});assert.equal(options.status,204);assert.equal(options.headers.get('Access-Control-Allow-Origin'),'*');
  const entry=manifest.countries.find(e=>e.country_code==='US'),head=await fetch(entry.url,{method:'HEAD'});assert.equal(head.status,200);assert.equal(head.headers.get('X-Content-SHA256'),entry.checksum);const conditional=await fetch(entry.url,{headers:{'If-None-Match':head.headers.get('ETag')}});assert.equal(conditional.status,304);
- const report={checked_at:new Date().toISOString(),countries:checks.length,published_records:manifest.total_records,checks,has_direction:hasDirection,without_direction:withoutDirection,speed_limits:speeds,red_light_render_sites:red,average_sections:sections,combined,polish_section_ending:true,cors:true,head:true,conditional_304:true,unsigned_upload_denied:true,public_write_denied:true,compression,compression_totals:compression.reduce((n,x)=>({json_bytes:n.json_bytes+x.json_bytes,gzip_bytes:n.gzip_bytes+x.gzip_bytes,brotli_quality6_bytes:n.brotli_quality6_bytes+x.brotli_quality6_bytes}),{json_bytes:0,gzip_bytes:0,brotli_quality6_bytes:0}),result:'passed'};
+ const report={checked_at:new Date().toISOString(),countries:checks.length,published_records:manifest.total_records,checks,has_direction:hasDirection,without_direction:withoutDirection,speed_limits:speeds,red_light_render_sites:red,average_sections:sections,combined,polish_section_ending:true,cors:true,head:true,conditional_304:true,unsigned_upload_denied:true,unsigned_archive_read_denied:true,retired_publisher:retiredPublisher,public_write_denied:true,compression,compression_totals:compression.reduce((n,x)=>({json_bytes:n.json_bytes+x.json_bytes,gzip_bytes:n.gzip_bytes+x.gzip_bytes,brotli_quality6_bytes:n.brotli_quality6_bytes+x.brotli_quality6_bytes}),{json_bytes:0,gzip_bytes:0,brotli_quality6_bytes:0}),result:'passed'};
  fs.writeFileSync(path.join(root,'master-db/reports/r2-live-app-verification.json'),JSON.stringify(report,null,2)+'\n');console.log('Verified',report.countries,report.published_records,report.compression_totals);
 })().catch(e=>{console.error(e);process.exitCode=1});

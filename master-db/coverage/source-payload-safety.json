@@ -1,0 +1,6 @@
+{
+  "checked_at": "2026-10-07T17:06:45.175694+00:00",
+  "source_files_checked": 2638,
+  "findings": 0,
+  "redaction": "One third-party expired signed S3 URL removed from ArcGIS descriptive metadata. Original local-only ignored catalog quarantine is excluded from archive inputs. No production source geometry or IDs changed."
+}

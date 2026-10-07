@@ -1,0 +1,47 @@
+{
+  "policy": "Historical Singapore (2017/2019) and Mauritius (2024) snapshots remain LOW candidates until current operation is established. Short-lived public S3 URL query credentials are excluded from metadata and archive.",
+  "sources": [
+    {
+      "download_url": "https://data.govmu.org/dataset/5e05d30e-2424-400d-9b35-8a34b01fe982/resource/1e587d7a-73dd-4c49-9632-9f004a8a9b1a/download/fixspeedcams.csv",
+      "license": "CC-BY-SA-4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "normalized_rows": 61,
+      "raw_rows": 61,
+      "sample_source_ids": [
+        "Radar 11|A10-01",
+        "Radar 25|A10-02",
+        "Radar 45|A10-03"
+      ],
+      "source_code": "MU_MDPA_FIXED",
+      "source_url": "https://data.govmu.org/dataset/location-fixed-speed-cameras"
+    },
+    {
+      "download_url": "https://api-open.data.gov.sg/v1/public/api/datasets/d_5f140c79c9dbee0bbb07c753afd788d8/poll-download",
+      "license": "Singapore Open Data Licence",
+      "license_url": "https://data.gov.sg/open-data-licence",
+      "normalized_rows": 240,
+      "raw_rows": 240,
+      "sample_source_ids": [
+        "127",
+        "128",
+        "129"
+      ],
+      "source_code": "SG_SPF_RED_HISTORICAL",
+      "source_url": "https://data.gov.sg/datasets/d_5f140c79c9dbee0bbb07c753afd788d8/view"
+    },
+    {
+      "download_url": "https://api-open.data.gov.sg/v1/public/api/datasets/d_983804de2bc016f53e44031d85d1ec8a/poll-download",
+      "license": "Singapore Open Data Licence",
+      "license_url": "https://data.gov.sg/open-data-licence",
+      "normalized_rows": 33,
+      "raw_rows": 91,
+      "sample_source_ids": [
+        "Fixed Speed Camera|Ayer Rajah Expressway towards City",
+        "Fixed Speed Camera|Ayer Rajah Expressway towards Jurong",
+        "Fixed Speed Camera|Boon Lay Way towards Commonwealth Avenue West"
+      ],
+      "source_code": "SG_SPF_SPEED_HISTORICAL",
+      "source_url": "https://data.gov.sg/datasets/d_983804de2bc016f53e44031d85d1ec8a/view"
+    }
+  ]
+}

@@ -1,3 +1,4 @@
 requests==2.32.5
 shapely==2.1.2
 psycopg[binary]==3.2.13
+osmium==4.2.0

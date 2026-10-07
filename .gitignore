@@ -22,7 +22,7 @@ credentials/
 dist/
 build/
 web-build/
-coverage/
+/coverage/
 *.apk
 *.aab
 *.ipa

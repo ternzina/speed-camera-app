@@ -1,0 +1,15 @@
+{
+  "verified": true,
+  "raw_bytes": 8000000,
+  "compressed_bytes": 7993866,
+  "ref": {
+    "key": "archive/v1/files/6609be1d745086aea7e775c783d91578d0df6d3cbdb367f39c9b23dffab97c34.bin.gz",
+    "sha256": "6609be1d745086aea7e775c783d91578d0df6d3cbdb367f39c9b23dffab97c34",
+    "size_bytes": 7993866
+  },
+  "rollback_worker_version": "aa8474e6-1275-48a9-bfca-e4b42e9a44fb",
+  "deployment_id": "fc0a806fbd73473197c139f85333b884",
+  "streaming_native_sha256": true,
+  "live_checksum_mismatch_status": 500,
+  "live_checksum_mismatch_not_stored": true
+}

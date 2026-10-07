@@ -33,13 +33,25 @@ class ColdStorageSafety(unittest.TestCase):
   with patch.object(archive,'get',side_effect=[json.dumps(manifest).encode(),compressed]):
    with self.assertRaises(AssertionError):list(archive.read_dataset(ref))
  def test_archive_failure_prevents_operational_write(self):
-  with patch.object(cold,'control',return_value='old'),patch.object(cold,'read_dataset',return_value=[]),patch.object(cold,'dataset',side_effect=RuntimeError('R2 unavailable')),patch.object(cold,'connect') as database:
+  with patch.object(cold,'verified_aliases',return_value={}),patch.object(cold,'control',return_value='old'),patch.object(cold,'read_dataset',return_value=[]),patch.object(cold,'dataset',side_effect=RuntimeError('R2 unavailable')),patch.object(cold,'connect') as database:
    with self.assertRaises(RuntimeError):cold.sync([])
    database.assert_not_called()
  def test_existing_source_identity_cannot_be_reassigned(self):
   old={'canonical_id':'old','camera_sources':[{'source_code':'A','source_id':'1'}]}
   new={'canonical_id':'new','camera_sources':[{'source_code':'A','source_id':'1'}]}
-  with patch.object(cold,'control',return_value='old'),patch.object(cold,'read_dataset',return_value=[old]),patch.object(cold,'dataset') as objects:
+  with patch.object(cold,'verified_aliases',return_value={}),patch.object(cold,'control',return_value='old'),patch.object(cold,'read_dataset',return_value=[old]),patch.object(cold,'dataset') as objects:
    with self.assertRaises(AssertionError):cold.sync([new])
    objects.assert_not_called()
+ def test_same_osm_object_cannot_be_reassigned_across_country_partitions(self):
+  old={'canonical_id':'old','camera_sources':[{'source_type':'openstreetmap','source_code':'OSM_IE','source_id':'node/1'}]}
+  new={'canonical_id':'new','camera_sources':[{'source_type':'openstreetmap','source_code':'OSM_GB','source_id':'node/1'}]}
+  with patch.object(cold,'verified_aliases',return_value={}),patch.object(cold,'control',return_value='old'),patch.object(cold,'read_dataset',return_value=[old]),patch.object(cold,'dataset') as objects,patch.object(cold,'connect') as database:
+   with self.assertRaises(AssertionError):cold.sync([new])
+   objects.assert_not_called();database.assert_not_called()
+ def test_verified_alias_cannot_be_published_as_another_canonical(self):
+  old={'canonical_id':'existing','camera_sources':[{'source_code':'A','source_id':'1'}]}
+  new={'canonical_id':'alias','camera_sources':[{'source_code':'B','source_id':'2'}]}
+  with patch.object(cold,'verified_aliases',return_value={('B','2'):'existing'}),patch.object(cold,'control',return_value='old'),patch.object(cold,'read_dataset',return_value=[old]),patch.object(cold,'dataset') as objects,patch.object(cold,'connect') as database:
+   with self.assertRaises(AssertionError):cold.sync([new])
+   objects.assert_not_called();database.assert_not_called()
 if __name__=='__main__':unittest.main()

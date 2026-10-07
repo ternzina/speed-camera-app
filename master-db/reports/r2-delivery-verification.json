@@ -1,10 +1,10 @@
 {
-  "checked_at": "2026-10-07T08:52:25.497Z",
+  "checked_at": "2026-10-07T19:21:25.995Z",
   "delivery_url": "https://speed-camera-data.ternzina.workers.dev",
-  "objects_uploaded": 50,
-  "total_records": 59270,
-  "countries": 49,
-  "total_stored_bytes": 11023295,
+  "objects_uploaded": 123,
+  "total_records": 113205,
+  "countries": 122,
+  "total_stored_bytes": 22173600,
   "checks": [
     {
       "country_code": "AD",
@@ -21,16 +21,30 @@
       "result": "passed"
     },
     {
+      "country_code": "AE",
+      "record_count": 1122,
+      "checksum": "e446373c61375e8e9b622b71ef438b9cbf0d13e7a9775911166de2ff34014e39",
+      "encoding": "identity",
+      "result": "passed"
+    },
+    {
+      "country_code": "AE",
+      "record_count": 1122,
+      "checksum": "e446373c61375e8e9b622b71ef438b9cbf0d13e7a9775911166de2ff34014e39",
+      "encoding": "gzip",
+      "result": "passed"
+    },
+    {
       "country_code": "AL",
-      "record_count": 2,
-      "checksum": "2b84b8b10c075008db1cf72ec79f26745f637542e01b74150a15091a8d137db4",
+      "record_count": 8,
+      "checksum": "293fd70aaf6d37104179b47eecc4cf653bcf307d51a77cdfa28ffc9f7521eb88",
       "encoding": "identity",
       "result": "passed"
     },
     {
       "country_code": "AL",
-      "record_count": 2,
-      "checksum": "2b84b8b10c075008db1cf72ec79f26745f637542e01b74150a15091a8d137db4",
+      "record_count": 8,
+      "checksum": "293fd70aaf6d37104179b47eecc4cf653bcf307d51a77cdfa28ffc9f7521eb88",
       "encoding": "gzip",
       "result": "passed"
     },
@@ -49,16 +63,58 @@
       "result": "passed"
     },
     {
+      "country_code": "AO",
+      "record_count": 60,
+      "checksum": "ac1c3b8e9917a162efabe643214e333d0b08b4f2fa1233d070ced2f774b1dae4",
+      "encoding": "identity",
+      "result": "passed"
+    },
+    {
+      "country_code": "AO",
+      "record_count": 60,
+      "checksum": "ac1c3b8e9917a162efabe643214e333d0b08b4f2fa1233d070ced2f774b1dae4",
+      "encoding": "gzip",
+      "result": "passed"
+    },
+    {
+      "country_code": "AR",
+      "record_count": 1130,
+      "checksum": "7a8b86122b76324200ff7a8dee266c2e32eee9163ebde656c1b8dcade79f135d",
+      "encoding": "identity",
+      "result": "passed"
+    },
+    {
+      "country_code": "AR",
+      "record_count": 1130,
+      "checksum": "7a8b86122b76324200ff7a8dee266c2e32eee9163ebde656c1b8dcade79f135d",
+      "encoding": "gzip",
+      "result": "passed"
+    },
+    {
       "country_code": "AT",
-      "record_count": 1500,
-      "checksum": "24c93113474cac4f0401be249ddeb3f19216ed28f7796446174d25fea2d73797",
+      "record_count": 1501,
+      "checksum": "f3efe620d8cdea0eb5210e5ce353173eac5105cb3112a408738af63556ebfdfd",
       "encoding": "identity",
       "result": "passed"
     },
     {
       "country_code": "AT",
-      "record_count": 1500,
-      "checksum": "24c93113474cac4f0401be249ddeb3f19216ed28f7796446174d25fea2d73797",
+      "record_count": 1501,
+      "checksum": "f3efe620d8cdea0eb5210e5ce353173eac5105cb3112a408738af63556ebfdfd",
+      "encoding": "gzip",
+      "result": "passed"
+    },
+    {
+      "country_code": "AU",
+      "record_count": 1104,
+      "checksum": "e14a0f945912a11ceef2af6b32fe4d97a74c2709c6628a7f4969acdf58da8c26",
+      "encoding": "identity",
+      "result": "passed"
+    },
+    {
+      "country_code": "AU",
+      "record_count": 1104,
+      "checksum": "e14a0f945912a11ceef2af6b32fe4d97a74c2709c6628a7f4969acdf58da8c26",
       "encoding": "gzip",
       "result": "passed"
     },
@@ -91,6 +147,20 @@
       "result": "passed"
     },
     {
+      "country_code": "BD",
+      "record_count": 1,
+      "checksum": "3424e0af1138d130ae6155e2f2f31de5ecbffb6d93fcf475b1663f56e570d4a7",
+      "encoding": "identity",
+      "result": "passed"
+    },
+    {
+      "country_code": "BD",
+      "record_count": 1,
+      "checksum": "3424e0af1138d130ae6155e2f2f31de5ecbffb6d93fcf475b1663f56e570d4a7",
+      "encoding": "gzip",
+      "result": "passed"
+    },
+    {
       "country_code": "BE",
       "record_count": 1689,
       "checksum": "8a51e0baff6a7931fdabe2e94fdfe9657e44c1c765843a60b4ba865e60ef77fe",
@@ -119,6 +189,76 @@
       "result": "passed"
     },
     {
+      "country_code": "BH",
+      "record_count": 18,
+      "checksum": "7032528994cdd33a01f95fb5aa8201afb7bb6b1aa35afabeff964b45efde7807",
+      "encoding": "identity",
+      "result": "passed"
+    },
+    {
+      "country_code": "BH",
+      "record_count": 18,
+      "checksum": "7032528994cdd33a01f95fb5aa8201afb7bb6b1aa35afabeff964b45efde7807",
+      "encoding": "gzip",
+      "result": "passed"
+    },
+    {
+      "country_code": "BN",
+      "record_count": 2,
+      "checksum": "4d81823c7c6ed6906f6c2a3c585232902b838ebe877fb19d7428e70e369be75c",
+      "encoding": "identity",
+      "result": "passed"
+    },
+    {
+      "country_code": "BN",
+      "record_count": 2,
+      "checksum": "4d81823c7c6ed6906f6c2a3c585232902b838ebe877fb19d7428e70e369be75c",
+      "encoding": "gzip",
+      "result": "passed"
+    },
+    {
+      "country_code": "BO",
+      "record_count": 53,
+      "checksum": "c4c0d010fbd576457af0ae511dae4613e43c57ed67641a3f5cb962f435bbd3a8",
+      "encoding": "identity",
+      "result": "passed"
+    },
+    {
+      "country_code": "BO",
+      "record_count": 53,
+      "checksum": "c4c0d010fbd576457af0ae511dae4613e43c57ed67641a3f5cb962f435bbd3a8",
+      "encoding": "gzip",
+      "result": "passed"
+    },
+    {
+      "country_code": "BR",
+      "record_count": 8928,
+      "checksum": "c3c92b8b04a59d4e906419048c0a2a7a9e519901f0bcb162011689125f14ca21",
+      "encoding": "identity",
+      "result": "passed"
+    },
+    {
+      "country_code": "BR",
+      "record_count": 8928,
+      "checksum": "c3c92b8b04a59d4e906419048c0a2a7a9e519901f0bcb162011689125f14ca21",
+      "encoding": "gzip",
+      "result": "passed"
+    },
+    {
+      "country_code": "BW",
+      "record_count": 4,
+      "checksum": "0f13ca4788cc32d2ee8b5abb998aea9858643b4c15fdde1ae39aceee2cbfa02e",
+      "encoding": "identity",
+      "result": "passed"
+    },
+    {
+      "country_code": "BW",
+      "record_count": 4,
+      "checksum": "0f13ca4788cc32d2ee8b5abb998aea9858643b4c15fdde1ae39aceee2cbfa02e",
+      "encoding": "gzip",
+      "result": "passed"
+    },
+    {
       "country_code": "BY",
       "record_count": 569,
       "checksum": "eb8c13bbdb4c7b38bbc6561817af8a55615c000777d4f763c33aef8d9bb658bb",
@@ -134,15 +274,15 @@
     },
     {
       "country_code": "CA",
-      "record_count": 1312,
-      "checksum": "56e491777ee5dca9f526151c85d4360356a3ef368ce247f697c58d5fa615897c",
+      "record_count": 1343,
+      "checksum": "d2a0049d91e187c49bf46608b5e6248b013d734b329d99e32784278e09f8c355",
       "encoding": "identity",
       "result": "passed"
     },
     {
       "country_code": "CA",
-      "record_count": 1312,
-      "checksum": "56e491777ee5dca9f526151c85d4360356a3ef368ce247f697c58d5fa615897c",
+      "record_count": 1343,
+      "checksum": "d2a0049d91e187c49bf46608b5e6248b013d734b329d99e32784278e09f8c355",
       "encoding": "gzip",
       "result": "passed"
     },
@@ -157,6 +297,90 @@
       "country_code": "CH",
       "record_count": 710,
       "checksum": "d4cd076534b3f3a75261c35a76d958d46aa2af5ea46509c8155d01ce1d0e23ec",
+      "encoding": "gzip",
+      "result": "passed"
+    },
+    {
+      "country_code": "CI",
+      "record_count": 23,
+      "checksum": "07b6becd906c6501f6e403b6a5de204d79b15970bb32ee2504e8fb90d63ef15a",
+      "encoding": "identity",
+      "result": "passed"
+    },
+    {
+      "country_code": "CI",
+      "record_count": 23,
+      "checksum": "07b6becd906c6501f6e403b6a5de204d79b15970bb32ee2504e8fb90d63ef15a",
+      "encoding": "gzip",
+      "result": "passed"
+    },
+    {
+      "country_code": "CL",
+      "record_count": 21,
+      "checksum": "5f931a5a430dc1a2bcafe6634a2ed423d2bd81f5837ec878e9ba6e34dd6bf716",
+      "encoding": "identity",
+      "result": "passed"
+    },
+    {
+      "country_code": "CL",
+      "record_count": 21,
+      "checksum": "5f931a5a430dc1a2bcafe6634a2ed423d2bd81f5837ec878e9ba6e34dd6bf716",
+      "encoding": "gzip",
+      "result": "passed"
+    },
+    {
+      "country_code": "CN",
+      "record_count": 387,
+      "checksum": "92f64981cff72ae3ce0878c431f3722b776fe8cc11b8c66e8bd9c8142bd7da31",
+      "encoding": "identity",
+      "result": "passed"
+    },
+    {
+      "country_code": "CN",
+      "record_count": 387,
+      "checksum": "92f64981cff72ae3ce0878c431f3722b776fe8cc11b8c66e8bd9c8142bd7da31",
+      "encoding": "gzip",
+      "result": "passed"
+    },
+    {
+      "country_code": "CO",
+      "record_count": 489,
+      "checksum": "cc4cf54f0fccb5e422d9178738810641f896d28be1557ba0210127cf7fe2a942",
+      "encoding": "identity",
+      "result": "passed"
+    },
+    {
+      "country_code": "CO",
+      "record_count": 489,
+      "checksum": "cc4cf54f0fccb5e422d9178738810641f896d28be1557ba0210127cf7fe2a942",
+      "encoding": "gzip",
+      "result": "passed"
+    },
+    {
+      "country_code": "CR",
+      "record_count": 1,
+      "checksum": "b92004aab4e7877a46fa78701ea634c58a9ab023ea88eb150f60b4ac7d733ad1",
+      "encoding": "identity",
+      "result": "passed"
+    },
+    {
+      "country_code": "CR",
+      "record_count": 1,
+      "checksum": "b92004aab4e7877a46fa78701ea634c58a9ab023ea88eb150f60b4ac7d733ad1",
+      "encoding": "gzip",
+      "result": "passed"
+    },
+    {
+      "country_code": "CU",
+      "record_count": 21,
+      "checksum": "aa511a82b5f75b73d1d261145540fec52baedb8916bebd445d02ad9da7b7165b",
+      "encoding": "identity",
+      "result": "passed"
+    },
+    {
+      "country_code": "CU",
+      "record_count": 21,
+      "checksum": "aa511a82b5f75b73d1d261145540fec52baedb8916bebd445d02ad9da7b7165b",
       "encoding": "gzip",
       "result": "passed"
     },
@@ -217,16 +441,58 @@
       "result": "passed"
     },
     {
+      "country_code": "DZ",
+      "record_count": 132,
+      "checksum": "fc9ad628397e5903e92dcb88f5cb1efc1a56a5630ad3e2c4e2f876caa6e6dcbe",
+      "encoding": "identity",
+      "result": "passed"
+    },
+    {
+      "country_code": "DZ",
+      "record_count": 132,
+      "checksum": "fc9ad628397e5903e92dcb88f5cb1efc1a56a5630ad3e2c4e2f876caa6e6dcbe",
+      "encoding": "gzip",
+      "result": "passed"
+    },
+    {
+      "country_code": "EC",
+      "record_count": 331,
+      "checksum": "81099d55199fc8e4c0adcdd377fea448fd2bd7ffbc6130781f7e3259a9e506f2",
+      "encoding": "identity",
+      "result": "passed"
+    },
+    {
+      "country_code": "EC",
+      "record_count": 331,
+      "checksum": "81099d55199fc8e4c0adcdd377fea448fd2bd7ffbc6130781f7e3259a9e506f2",
+      "encoding": "gzip",
+      "result": "passed"
+    },
+    {
       "country_code": "EE",
-      "record_count": 85,
-      "checksum": "b215fc8804065ef6d3ffc6ed63fc13c3985ee6b90a59a83f321595e1861d6ba2",
+      "record_count": 88,
+      "checksum": "3511b979022758e45c8430a707e4f03463bd301a2416b253091eec9aa16e2ea1",
       "encoding": "identity",
       "result": "passed"
     },
     {
       "country_code": "EE",
-      "record_count": 85,
-      "checksum": "b215fc8804065ef6d3ffc6ed63fc13c3985ee6b90a59a83f321595e1861d6ba2",
+      "record_count": 88,
+      "checksum": "3511b979022758e45c8430a707e4f03463bd301a2416b253091eec9aa16e2ea1",
+      "encoding": "gzip",
+      "result": "passed"
+    },
+    {
+      "country_code": "EG",
+      "record_count": 588,
+      "checksum": "1513901973c0086249a9b36be07b3bd85fd722c4fc2b3d6120f4468bcc005634",
+      "encoding": "identity",
+      "result": "passed"
+    },
+    {
+      "country_code": "EG",
+      "record_count": 588,
+      "checksum": "1513901973c0086249a9b36be07b3bd85fd722c4fc2b3d6120f4468bcc005634",
       "encoding": "gzip",
       "result": "passed"
     },
@@ -260,29 +526,29 @@
     },
     {
       "country_code": "FR",
-      "record_count": 6222,
-      "checksum": "77bfcac04c1ba846c32dd14cd1d329f176a136d9098f4f9e27429e586e689e47",
+      "record_count": 6309,
+      "checksum": "b8a3833210169f2129e166f351e3c0664d965b2024f34dae6c776d4eba31b4ee",
       "encoding": "identity",
       "result": "passed"
     },
     {
       "country_code": "FR",
-      "record_count": 6222,
-      "checksum": "77bfcac04c1ba846c32dd14cd1d329f176a136d9098f4f9e27429e586e689e47",
+      "record_count": 6309,
+      "checksum": "b8a3833210169f2129e166f351e3c0664d965b2024f34dae6c776d4eba31b4ee",
       "encoding": "gzip",
       "result": "passed"
     },
     {
       "country_code": "GB",
-      "record_count": 3662,
-      "checksum": "9f69770a93e604703d02792f319f409d697bee228455516a77dfe8b49a69bf6b",
+      "record_count": 3663,
+      "checksum": "e24dfafc0d4f3cab6f1530e586e1cfeb078fae2d0dd46678efc1f9f201925fa1",
       "encoding": "identity",
       "result": "passed"
     },
     {
       "country_code": "GB",
-      "record_count": 3662,
-      "checksum": "9f69770a93e604703d02792f319f409d697bee228455516a77dfe8b49a69bf6b",
+      "record_count": 3663,
+      "checksum": "e24dfafc0d4f3cab6f1530e586e1cfeb078fae2d0dd46678efc1f9f201925fa1",
       "encoding": "gzip",
       "result": "passed"
     },
@@ -315,6 +581,34 @@
       "result": "passed"
     },
     {
+      "country_code": "GT",
+      "record_count": 18,
+      "checksum": "9d1a84ae6e1e6dac4eef849d39f6626c6c6559c9e193e3525819eebdf4d7a6e9",
+      "encoding": "identity",
+      "result": "passed"
+    },
+    {
+      "country_code": "GT",
+      "record_count": 18,
+      "checksum": "9d1a84ae6e1e6dac4eef849d39f6626c6c6559c9e193e3525819eebdf4d7a6e9",
+      "encoding": "gzip",
+      "result": "passed"
+    },
+    {
+      "country_code": "HK",
+      "record_count": 41,
+      "checksum": "427d40700fa28fb6eb31fcc944814471a0eba10a9148f19811c61da38655b4de",
+      "encoding": "identity",
+      "result": "passed"
+    },
+    {
+      "country_code": "HK",
+      "record_count": 41,
+      "checksum": "427d40700fa28fb6eb31fcc944814471a0eba10a9148f19811c61da38655b4de",
+      "encoding": "gzip",
+      "result": "passed"
+    },
+    {
       "country_code": "HR",
       "record_count": 965,
       "checksum": "77b08bbddad1b80df93c5fe3ecaac0b50570f0726bc3d2a79ac9a7cfc8b1c830",
@@ -343,6 +637,20 @@
       "result": "passed"
     },
     {
+      "country_code": "ID",
+      "record_count": 408,
+      "checksum": "d92d48069d5657d7456a775b52d6b68411385f6e656cd67e38ff6a8552e9c42f",
+      "encoding": "identity",
+      "result": "passed"
+    },
+    {
+      "country_code": "ID",
+      "record_count": 408,
+      "checksum": "d92d48069d5657d7456a775b52d6b68411385f6e656cd67e38ff6a8552e9c42f",
+      "encoding": "gzip",
+      "result": "passed"
+    },
+    {
       "country_code": "IE",
       "record_count": 15,
       "checksum": "54401e0aea1d54a70b425e00e66094de869af158e604648b77a0455fd86cfc24",
@@ -353,6 +661,62 @@
       "country_code": "IE",
       "record_count": 15,
       "checksum": "54401e0aea1d54a70b425e00e66094de869af158e604648b77a0455fd86cfc24",
+      "encoding": "gzip",
+      "result": "passed"
+    },
+    {
+      "country_code": "IL",
+      "record_count": 148,
+      "checksum": "f60fb81bcd2c9ae9d23a28303b8933bb53a4d5bef70894bf9992f779e702e4ac",
+      "encoding": "identity",
+      "result": "passed"
+    },
+    {
+      "country_code": "IL",
+      "record_count": 148,
+      "checksum": "f60fb81bcd2c9ae9d23a28303b8933bb53a4d5bef70894bf9992f779e702e4ac",
+      "encoding": "gzip",
+      "result": "passed"
+    },
+    {
+      "country_code": "IN",
+      "record_count": 426,
+      "checksum": "29c117c90b92ccc7a69bf3cbe26eae753a9e0c7a6cd1e619cbded3b3745f6996",
+      "encoding": "identity",
+      "result": "passed"
+    },
+    {
+      "country_code": "IN",
+      "record_count": 426,
+      "checksum": "29c117c90b92ccc7a69bf3cbe26eae753a9e0c7a6cd1e619cbded3b3745f6996",
+      "encoding": "gzip",
+      "result": "passed"
+    },
+    {
+      "country_code": "IQ",
+      "record_count": 305,
+      "checksum": "b468da0d5b3735ab7c107b6f6f01f0a7dc2a047a14ae14107401866490e57f98",
+      "encoding": "identity",
+      "result": "passed"
+    },
+    {
+      "country_code": "IQ",
+      "record_count": 305,
+      "checksum": "b468da0d5b3735ab7c107b6f6f01f0a7dc2a047a14ae14107401866490e57f98",
+      "encoding": "gzip",
+      "result": "passed"
+    },
+    {
+      "country_code": "IR",
+      "record_count": 2709,
+      "checksum": "3eed5f7a2841b57ff7d0089b78999c6fea93a1b872139aaaf909107155d01ace",
+      "encoding": "identity",
+      "result": "passed"
+    },
+    {
+      "country_code": "IR",
+      "record_count": 2709,
+      "checksum": "3eed5f7a2841b57ff7d0089b78999c6fea93a1b872139aaaf909107155d01ace",
       "encoding": "gzip",
       "result": "passed"
     },
@@ -372,15 +736,141 @@
     },
     {
       "country_code": "IT",
-      "record_count": 6023,
-      "checksum": "521032dc0a2289b718ff69b3d98e03689f2e0f8695d228afbe0cdc3071968d19",
+      "record_count": 6024,
+      "checksum": "f84c0b22fe99f1839163444c5a136db83de8a8882d80ed0cd04de66fecb60ca1",
       "encoding": "identity",
       "result": "passed"
     },
     {
       "country_code": "IT",
-      "record_count": 6023,
-      "checksum": "521032dc0a2289b718ff69b3d98e03689f2e0f8695d228afbe0cdc3071968d19",
+      "record_count": 6024,
+      "checksum": "f84c0b22fe99f1839163444c5a136db83de8a8882d80ed0cd04de66fecb60ca1",
+      "encoding": "gzip",
+      "result": "passed"
+    },
+    {
+      "country_code": "JO",
+      "record_count": 46,
+      "checksum": "942478b3f5932f2b2c817a7d0d5dd9e2364e0d1b294a01ce12e88e9a6dc234ea",
+      "encoding": "identity",
+      "result": "passed"
+    },
+    {
+      "country_code": "JO",
+      "record_count": 46,
+      "checksum": "942478b3f5932f2b2c817a7d0d5dd9e2364e0d1b294a01ce12e88e9a6dc234ea",
+      "encoding": "gzip",
+      "result": "passed"
+    },
+    {
+      "country_code": "JP",
+      "record_count": 181,
+      "checksum": "048b444b5bec347957b5c6e45fd6d5b1beff3cc6b52c6f9b3e8c54b33569b194",
+      "encoding": "identity",
+      "result": "passed"
+    },
+    {
+      "country_code": "JP",
+      "record_count": 181,
+      "checksum": "048b444b5bec347957b5c6e45fd6d5b1beff3cc6b52c6f9b3e8c54b33569b194",
+      "encoding": "gzip",
+      "result": "passed"
+    },
+    {
+      "country_code": "KE",
+      "record_count": 5,
+      "checksum": "9a381fdc5c3aad389ad3950261d235b2c5325eec9f72297b9b78614bb0fb7efe",
+      "encoding": "identity",
+      "result": "passed"
+    },
+    {
+      "country_code": "KE",
+      "record_count": 5,
+      "checksum": "9a381fdc5c3aad389ad3950261d235b2c5325eec9f72297b9b78614bb0fb7efe",
+      "encoding": "gzip",
+      "result": "passed"
+    },
+    {
+      "country_code": "KG",
+      "record_count": 103,
+      "checksum": "6fd6cd313b7e8489f0b3dbc0cf24888e40375627079c61206b5bde82a64e226e",
+      "encoding": "identity",
+      "result": "passed"
+    },
+    {
+      "country_code": "KG",
+      "record_count": 103,
+      "checksum": "6fd6cd313b7e8489f0b3dbc0cf24888e40375627079c61206b5bde82a64e226e",
+      "encoding": "gzip",
+      "result": "passed"
+    },
+    {
+      "country_code": "KH",
+      "record_count": 2,
+      "checksum": "74cef2f210f40f1d9588608da70dcc909ff0ea44f835a463514ae46837e83009",
+      "encoding": "identity",
+      "result": "passed"
+    },
+    {
+      "country_code": "KH",
+      "record_count": 2,
+      "checksum": "74cef2f210f40f1d9588608da70dcc909ff0ea44f835a463514ae46837e83009",
+      "encoding": "gzip",
+      "result": "passed"
+    },
+    {
+      "country_code": "KR",
+      "record_count": 29418,
+      "checksum": "3ba2066d08a9c91115f29a539451478823835e8d9e86a408835543353720ec2b",
+      "encoding": "identity",
+      "result": "passed"
+    },
+    {
+      "country_code": "KR",
+      "record_count": 29418,
+      "checksum": "3ba2066d08a9c91115f29a539451478823835e8d9e86a408835543353720ec2b",
+      "encoding": "gzip",
+      "result": "passed"
+    },
+    {
+      "country_code": "KW",
+      "record_count": 59,
+      "checksum": "e6e4f51d663d37758ef72fac4416bb3ce220024950c034ae479790b688f413d7",
+      "encoding": "identity",
+      "result": "passed"
+    },
+    {
+      "country_code": "KW",
+      "record_count": 59,
+      "checksum": "e6e4f51d663d37758ef72fac4416bb3ce220024950c034ae479790b688f413d7",
+      "encoding": "gzip",
+      "result": "passed"
+    },
+    {
+      "country_code": "KZ",
+      "record_count": 248,
+      "checksum": "5f345478d69cc261f1d22bd03f10c2f632e1f7a793ad736e58e74987495255ee",
+      "encoding": "identity",
+      "result": "passed"
+    },
+    {
+      "country_code": "KZ",
+      "record_count": 248,
+      "checksum": "5f345478d69cc261f1d22bd03f10c2f632e1f7a793ad736e58e74987495255ee",
+      "encoding": "gzip",
+      "result": "passed"
+    },
+    {
+      "country_code": "LB",
+      "record_count": 1,
+      "checksum": "3b4149160133de7f425ef087a2e1311c0f5fec29f65a4390b585c16508abd0bf",
+      "encoding": "identity",
+      "result": "passed"
+    },
+    {
+      "country_code": "LB",
+      "record_count": 1,
+      "checksum": "3b4149160133de7f425ef087a2e1311c0f5fec29f65a4390b585c16508abd0bf",
       "encoding": "gzip",
       "result": "passed"
     },
@@ -395,6 +885,20 @@
       "country_code": "LI",
       "record_count": 8,
       "checksum": "3b50b35ac953748c2daa4baf4cc2766a7285c32dade18f66a308e53ed113e741",
+      "encoding": "gzip",
+      "result": "passed"
+    },
+    {
+      "country_code": "LK",
+      "record_count": 4,
+      "checksum": "fdd40e890702329b1ac30d4d57cd1a0005313cac853d1acb4078606d453f3d01",
+      "encoding": "identity",
+      "result": "passed"
+    },
+    {
+      "country_code": "LK",
+      "record_count": 4,
+      "checksum": "fdd40e890702329b1ac30d4d57cd1a0005313cac853d1acb4078606d453f3d01",
       "encoding": "gzip",
       "result": "passed"
     },
@@ -428,15 +932,29 @@
     },
     {
       "country_code": "LV",
-      "record_count": 155,
-      "checksum": "b2f5eb78526f485bc7c2b9c6afd13aa14e4506ac7fe0b7d129538f9e5d04932f",
+      "record_count": 184,
+      "checksum": "0cbf807954e914ec78bcd9be29e0ace74e6b43721faed547ccc5eaad770e7e1f",
       "encoding": "identity",
       "result": "passed"
     },
     {
       "country_code": "LV",
-      "record_count": 155,
-      "checksum": "b2f5eb78526f485bc7c2b9c6afd13aa14e4506ac7fe0b7d129538f9e5d04932f",
+      "record_count": 184,
+      "checksum": "0cbf807954e914ec78bcd9be29e0ace74e6b43721faed547ccc5eaad770e7e1f",
+      "encoding": "gzip",
+      "result": "passed"
+    },
+    {
+      "country_code": "MA",
+      "record_count": 127,
+      "checksum": "3c706a68ed0a07db530b1de15cd33496c0425e16003d4380e4526785165e6458",
+      "encoding": "identity",
+      "result": "passed"
+    },
+    {
+      "country_code": "MA",
+      "record_count": 127,
+      "checksum": "3c706a68ed0a07db530b1de15cd33496c0425e16003d4380e4526785165e6458",
       "encoding": "gzip",
       "result": "passed"
     },
@@ -456,15 +974,15 @@
     },
     {
       "country_code": "MD",
-      "record_count": 79,
-      "checksum": "9dd0e3a235c04984ad202e854a116fdd50abc99d430e8b87d75158a158c2b731",
+      "record_count": 81,
+      "checksum": "eb89a3d0eafedf4e1e269f5fba92b0d228fe9501499b56194dcc7bce4841b149",
       "encoding": "identity",
       "result": "passed"
     },
     {
       "country_code": "MD",
-      "record_count": 79,
-      "checksum": "9dd0e3a235c04984ad202e854a116fdd50abc99d430e8b87d75158a158c2b731",
+      "record_count": 81,
+      "checksum": "eb89a3d0eafedf4e1e269f5fba92b0d228fe9501499b56194dcc7bce4841b149",
       "encoding": "gzip",
       "result": "passed"
     },
@@ -497,6 +1015,34 @@
       "result": "passed"
     },
     {
+      "country_code": "MM",
+      "record_count": 13,
+      "checksum": "89fe86db7c16c50d172038ef15015e567329910449e209de29836aa524748b46",
+      "encoding": "identity",
+      "result": "passed"
+    },
+    {
+      "country_code": "MM",
+      "record_count": 13,
+      "checksum": "89fe86db7c16c50d172038ef15015e567329910449e209de29836aa524748b46",
+      "encoding": "gzip",
+      "result": "passed"
+    },
+    {
+      "country_code": "MN",
+      "record_count": 64,
+      "checksum": "54d58ac1165d18d546a245997b307b0065ef5057c7ad23d7e31fab619dfc83c3",
+      "encoding": "identity",
+      "result": "passed"
+    },
+    {
+      "country_code": "MN",
+      "record_count": 64,
+      "checksum": "54d58ac1165d18d546a245997b307b0065ef5057c7ad23d7e31fab619dfc83c3",
+      "encoding": "gzip",
+      "result": "passed"
+    },
+    {
       "country_code": "MT",
       "record_count": 22,
       "checksum": "2626d7c135e17374588391d4436548336ccdf442bbc120ab71292d0e4e24ccc8",
@@ -507,6 +1053,62 @@
       "country_code": "MT",
       "record_count": 22,
       "checksum": "2626d7c135e17374588391d4436548336ccdf442bbc120ab71292d0e4e24ccc8",
+      "encoding": "gzip",
+      "result": "passed"
+    },
+    {
+      "country_code": "MU",
+      "record_count": 61,
+      "checksum": "bf81e274177fc5d07a242a2acc771e1c1025b5f64c13b0840f654b8f4e8419a9",
+      "encoding": "identity",
+      "result": "passed"
+    },
+    {
+      "country_code": "MU",
+      "record_count": 61,
+      "checksum": "bf81e274177fc5d07a242a2acc771e1c1025b5f64c13b0840f654b8f4e8419a9",
+      "encoding": "gzip",
+      "result": "passed"
+    },
+    {
+      "country_code": "MX",
+      "record_count": 131,
+      "checksum": "fb3e81cb620ea4006982b3bdd2ba5c6d80641319339dd8ecc04fa6c214dacb34",
+      "encoding": "identity",
+      "result": "passed"
+    },
+    {
+      "country_code": "MX",
+      "record_count": 131,
+      "checksum": "fb3e81cb620ea4006982b3bdd2ba5c6d80641319339dd8ecc04fa6c214dacb34",
+      "encoding": "gzip",
+      "result": "passed"
+    },
+    {
+      "country_code": "MY",
+      "record_count": 73,
+      "checksum": "2bb763ab4b6805548f8fec644fd46eda91112a158fe62d8c6d9227b38168aa60",
+      "encoding": "identity",
+      "result": "passed"
+    },
+    {
+      "country_code": "MY",
+      "record_count": 73,
+      "checksum": "2bb763ab4b6805548f8fec644fd46eda91112a158fe62d8c6d9227b38168aa60",
+      "encoding": "gzip",
+      "result": "passed"
+    },
+    {
+      "country_code": "NA",
+      "record_count": 1,
+      "checksum": "9f7afb2eb22a4af5de9d92548fb3362932265691a29374c43c32e6de6c3b66e2",
+      "encoding": "identity",
+      "result": "passed"
+    },
+    {
+      "country_code": "NA",
+      "record_count": 1,
+      "checksum": "9f7afb2eb22a4af5de9d92548fb3362932265691a29374c43c32e6de6c3b66e2",
       "encoding": "gzip",
       "result": "passed"
     },
@@ -539,6 +1141,118 @@
       "result": "passed"
     },
     {
+      "country_code": "NP",
+      "record_count": 25,
+      "checksum": "6dad1e0d90972c73c95c2497664634470a302e66f88af6a18e28a05185a49de5",
+      "encoding": "identity",
+      "result": "passed"
+    },
+    {
+      "country_code": "NP",
+      "record_count": 25,
+      "checksum": "6dad1e0d90972c73c95c2497664634470a302e66f88af6a18e28a05185a49de5",
+      "encoding": "gzip",
+      "result": "passed"
+    },
+    {
+      "country_code": "NZ",
+      "record_count": 70,
+      "checksum": "9287fcf9346315c3dc86dae269d1992569d91c8438701e4a9976e1f1d21a2d71",
+      "encoding": "identity",
+      "result": "passed"
+    },
+    {
+      "country_code": "NZ",
+      "record_count": 70,
+      "checksum": "9287fcf9346315c3dc86dae269d1992569d91c8438701e4a9976e1f1d21a2d71",
+      "encoding": "gzip",
+      "result": "passed"
+    },
+    {
+      "country_code": "OM",
+      "record_count": 459,
+      "checksum": "6561813d5bbfaadeb1dce80595a2c808fdcabb4f58f4a06357bf1f8ebeb558cd",
+      "encoding": "identity",
+      "result": "passed"
+    },
+    {
+      "country_code": "OM",
+      "record_count": 459,
+      "checksum": "6561813d5bbfaadeb1dce80595a2c808fdcabb4f58f4a06357bf1f8ebeb558cd",
+      "encoding": "gzip",
+      "result": "passed"
+    },
+    {
+      "country_code": "PA",
+      "record_count": 16,
+      "checksum": "9b522cdd4e39d192dd0a49e5131dda3aca3ce1be315b7602690e9c3769181bfa",
+      "encoding": "identity",
+      "result": "passed"
+    },
+    {
+      "country_code": "PA",
+      "record_count": 16,
+      "checksum": "9b522cdd4e39d192dd0a49e5131dda3aca3ce1be315b7602690e9c3769181bfa",
+      "encoding": "gzip",
+      "result": "passed"
+    },
+    {
+      "country_code": "PE",
+      "record_count": 69,
+      "checksum": "42c35893ed2bda02e99a2a1013f93d61a4fcdb465c39925e867a14bf97befa7f",
+      "encoding": "identity",
+      "result": "passed"
+    },
+    {
+      "country_code": "PE",
+      "record_count": 69,
+      "checksum": "42c35893ed2bda02e99a2a1013f93d61a4fcdb465c39925e867a14bf97befa7f",
+      "encoding": "gzip",
+      "result": "passed"
+    },
+    {
+      "country_code": "PG",
+      "record_count": 1,
+      "checksum": "4c7738bec63517657545fe6010343c84d9e245303e36e24963aa27203fa2e48c",
+      "encoding": "identity",
+      "result": "passed"
+    },
+    {
+      "country_code": "PG",
+      "record_count": 1,
+      "checksum": "4c7738bec63517657545fe6010343c84d9e245303e36e24963aa27203fa2e48c",
+      "encoding": "gzip",
+      "result": "passed"
+    },
+    {
+      "country_code": "PH",
+      "record_count": 43,
+      "checksum": "b35b1d1d423397907f876f4e8a309f28cea717153dbcb13234856881d95d1e58",
+      "encoding": "identity",
+      "result": "passed"
+    },
+    {
+      "country_code": "PH",
+      "record_count": 43,
+      "checksum": "b35b1d1d423397907f876f4e8a309f28cea717153dbcb13234856881d95d1e58",
+      "encoding": "gzip",
+      "result": "passed"
+    },
+    {
+      "country_code": "PK",
+      "record_count": 1,
+      "checksum": "123d44b1a1f331c3448e9617251036cfd5c7b6971a6de48fdea239b46efe96b0",
+      "encoding": "identity",
+      "result": "passed"
+    },
+    {
+      "country_code": "PK",
+      "record_count": 1,
+      "checksum": "123d44b1a1f331c3448e9617251036cfd5c7b6971a6de48fdea239b46efe96b0",
+      "encoding": "gzip",
+      "result": "passed"
+    },
+    {
       "country_code": "PL",
       "record_count": 897,
       "checksum": "827b6eb852a7d5daccc3d4dcc51352dfe10b210ccea9656d6ee5377abe89b80c",
@@ -553,6 +1267,20 @@
       "result": "passed"
     },
     {
+      "country_code": "PS",
+      "record_count": 3,
+      "checksum": "f6c388f1b8963f81bb5ad2850e42f629ea797583b018121604abdac94f5102dc",
+      "encoding": "identity",
+      "result": "passed"
+    },
+    {
+      "country_code": "PS",
+      "record_count": 3,
+      "checksum": "f6c388f1b8963f81bb5ad2850e42f629ea797583b018121604abdac94f5102dc",
+      "encoding": "gzip",
+      "result": "passed"
+    },
+    {
       "country_code": "PT",
       "record_count": 341,
       "checksum": "022dcc0eef534f21146860d9c2f2184ffdcad79cc7e8721c4fa8113a1f7d6d56",
@@ -563,6 +1291,34 @@
       "country_code": "PT",
       "record_count": 341,
       "checksum": "022dcc0eef534f21146860d9c2f2184ffdcad79cc7e8721c4fa8113a1f7d6d56",
+      "encoding": "gzip",
+      "result": "passed"
+    },
+    {
+      "country_code": "PY",
+      "record_count": 20,
+      "checksum": "64c86ce0185c3a958eb630e0a8317526e603a43fe081c91287929c443e8fa210",
+      "encoding": "identity",
+      "result": "passed"
+    },
+    {
+      "country_code": "PY",
+      "record_count": 20,
+      "checksum": "64c86ce0185c3a958eb630e0a8317526e603a43fe081c91287929c443e8fa210",
+      "encoding": "gzip",
+      "result": "passed"
+    },
+    {
+      "country_code": "QA",
+      "record_count": 156,
+      "checksum": "25770b843bf44d15b303ae1f67cd09e7c5f008b66f586ba37832a42cb2fe4221",
+      "encoding": "identity",
+      "result": "passed"
+    },
+    {
+      "country_code": "QA",
+      "record_count": 156,
+      "checksum": "25770b843bf44d15b303ae1f67cd09e7c5f008b66f586ba37832a42cb2fe4221",
       "encoding": "gzip",
       "result": "passed"
     },
@@ -609,16 +1365,58 @@
       "result": "passed"
     },
     {
+      "country_code": "RW",
+      "record_count": 6,
+      "checksum": "852ba09aa3b8225ab206ebb4ce24ac34699a382ce947ce5898b8d8e7c5cd6d00",
+      "encoding": "identity",
+      "result": "passed"
+    },
+    {
+      "country_code": "RW",
+      "record_count": 6,
+      "checksum": "852ba09aa3b8225ab206ebb4ce24ac34699a382ce947ce5898b8d8e7c5cd6d00",
+      "encoding": "gzip",
+      "result": "passed"
+    },
+    {
+      "country_code": "SA",
+      "record_count": 297,
+      "checksum": "8aee763ec827fc4ffcd9e79378dafc3658c7e54bb15b75ed5ec88c5ad6d51156",
+      "encoding": "identity",
+      "result": "passed"
+    },
+    {
+      "country_code": "SA",
+      "record_count": 297,
+      "checksum": "8aee763ec827fc4ffcd9e79378dafc3658c7e54bb15b75ed5ec88c5ad6d51156",
+      "encoding": "gzip",
+      "result": "passed"
+    },
+    {
       "country_code": "SE",
-      "record_count": 2471,
-      "checksum": "2a524d2ead2cae651fc655a2fe59dd2ff9ddc674e973ec0552343c55b4f08131",
+      "record_count": 2855,
+      "checksum": "9c2dc473f02986da17cac5af12575828b14fdf926b15d03c8b32f7e36588466f",
       "encoding": "identity",
       "result": "passed"
     },
     {
       "country_code": "SE",
-      "record_count": 2471,
-      "checksum": "2a524d2ead2cae651fc655a2fe59dd2ff9ddc674e973ec0552343c55b4f08131",
+      "record_count": 2855,
+      "checksum": "9c2dc473f02986da17cac5af12575828b14fdf926b15d03c8b32f7e36588466f",
+      "encoding": "gzip",
+      "result": "passed"
+    },
+    {
+      "country_code": "SG",
+      "record_count": 152,
+      "checksum": "009145657ad2a66686623ff566a656f1ec95ebc6c34bcc1d3edf1cfe42aa4a98",
+      "encoding": "identity",
+      "result": "passed"
+    },
+    {
+      "country_code": "SG",
+      "record_count": 152,
+      "checksum": "009145657ad2a66686623ff566a656f1ec95ebc6c34bcc1d3edf1cfe42aa4a98",
       "encoding": "gzip",
       "result": "passed"
     },
@@ -651,6 +1449,104 @@
       "result": "passed"
     },
     {
+      "country_code": "SN",
+      "record_count": 5,
+      "checksum": "34e5fd54c6024326b32bb90abdcd0493ef4b383dac262160c321910afee15183",
+      "encoding": "identity",
+      "result": "passed"
+    },
+    {
+      "country_code": "SN",
+      "record_count": 5,
+      "checksum": "34e5fd54c6024326b32bb90abdcd0493ef4b383dac262160c321910afee15183",
+      "encoding": "gzip",
+      "result": "passed"
+    },
+    {
+      "country_code": "SV",
+      "record_count": 81,
+      "checksum": "7bc0675d9ade1978426c3780835a085a42235b5883dfc4494364be74118c8320",
+      "encoding": "identity",
+      "result": "passed"
+    },
+    {
+      "country_code": "SV",
+      "record_count": 81,
+      "checksum": "7bc0675d9ade1978426c3780835a085a42235b5883dfc4494364be74118c8320",
+      "encoding": "gzip",
+      "result": "passed"
+    },
+    {
+      "country_code": "SY",
+      "record_count": 8,
+      "checksum": "6aceb4be00469e3260676a22a17ccb952ea687c8d62fd5551326db2f66a7fdc4",
+      "encoding": "identity",
+      "result": "passed"
+    },
+    {
+      "country_code": "SY",
+      "record_count": 8,
+      "checksum": "6aceb4be00469e3260676a22a17ccb952ea687c8d62fd5551326db2f66a7fdc4",
+      "encoding": "gzip",
+      "result": "passed"
+    },
+    {
+      "country_code": "TH",
+      "record_count": 23,
+      "checksum": "8d77df47b1dfcdd693777be290ecb36cecbc2f068cfb6be2b5ec0fa9b167d2a5",
+      "encoding": "identity",
+      "result": "passed"
+    },
+    {
+      "country_code": "TH",
+      "record_count": 23,
+      "checksum": "8d77df47b1dfcdd693777be290ecb36cecbc2f068cfb6be2b5ec0fa9b167d2a5",
+      "encoding": "gzip",
+      "result": "passed"
+    },
+    {
+      "country_code": "TJ",
+      "record_count": 1,
+      "checksum": "43390872d07cc8ffe574a1b077cdd01a153a3d187cac02f1a2d85fc07b880535",
+      "encoding": "identity",
+      "result": "passed"
+    },
+    {
+      "country_code": "TJ",
+      "record_count": 1,
+      "checksum": "43390872d07cc8ffe574a1b077cdd01a153a3d187cac02f1a2d85fc07b880535",
+      "encoding": "gzip",
+      "result": "passed"
+    },
+    {
+      "country_code": "TM",
+      "record_count": 213,
+      "checksum": "5363d9b4a9ad7e64116efb77eff936b648018e6341da3680c2b8f755d07fa7d0",
+      "encoding": "identity",
+      "result": "passed"
+    },
+    {
+      "country_code": "TM",
+      "record_count": 213,
+      "checksum": "5363d9b4a9ad7e64116efb77eff936b648018e6341da3680c2b8f755d07fa7d0",
+      "encoding": "gzip",
+      "result": "passed"
+    },
+    {
+      "country_code": "TN",
+      "record_count": 16,
+      "checksum": "746a797f66a070700079e899382411d5dae323fa0ba342a606fec9b33d0f9124",
+      "encoding": "identity",
+      "result": "passed"
+    },
+    {
+      "country_code": "TN",
+      "record_count": 16,
+      "checksum": "746a797f66a070700079e899382411d5dae323fa0ba342a606fec9b33d0f9124",
+      "encoding": "gzip",
+      "result": "passed"
+    },
+    {
       "country_code": "TR",
       "record_count": 659,
       "checksum": "e60d21e21fab64f5d565837135799538dd8a67fd6307a67d56f9a7cf133afc26",
@@ -661,6 +1557,48 @@
       "country_code": "TR",
       "record_count": 659,
       "checksum": "e60d21e21fab64f5d565837135799538dd8a67fd6307a67d56f9a7cf133afc26",
+      "encoding": "gzip",
+      "result": "passed"
+    },
+    {
+      "country_code": "TT",
+      "record_count": 1,
+      "checksum": "bf34905bd1a5cef5062c9f3623d99504c35e60803defc36fe7656722350be214",
+      "encoding": "identity",
+      "result": "passed"
+    },
+    {
+      "country_code": "TT",
+      "record_count": 1,
+      "checksum": "bf34905bd1a5cef5062c9f3623d99504c35e60803defc36fe7656722350be214",
+      "encoding": "gzip",
+      "result": "passed"
+    },
+    {
+      "country_code": "TW",
+      "record_count": 1620,
+      "checksum": "7619201fb2e69e2fe9edab60e8453f29838b9d5aaa152dad89f97fbb1a2586e8",
+      "encoding": "identity",
+      "result": "passed"
+    },
+    {
+      "country_code": "TW",
+      "record_count": 1620,
+      "checksum": "7619201fb2e69e2fe9edab60e8453f29838b9d5aaa152dad89f97fbb1a2586e8",
+      "encoding": "gzip",
+      "result": "passed"
+    },
+    {
+      "country_code": "TZ",
+      "record_count": 1,
+      "checksum": "f31eaa6ccbe2a961c93e1d3745e05ac2eeeaa5a5531fd6bf09503d33689b78e6",
+      "encoding": "identity",
+      "result": "passed"
+    },
+    {
+      "country_code": "TZ",
+      "record_count": 1,
+      "checksum": "f31eaa6ccbe2a961c93e1d3745e05ac2eeeaa5a5531fd6bf09503d33689b78e6",
       "encoding": "gzip",
       "result": "passed"
     },
@@ -679,16 +1617,100 @@
       "result": "passed"
     },
     {
+      "country_code": "UG",
+      "record_count": 6,
+      "checksum": "3535966eb381565be5a38c6fe6fb34974e2104d0b9246454c4264a913d366bfc",
+      "encoding": "identity",
+      "result": "passed"
+    },
+    {
+      "country_code": "UG",
+      "record_count": 6,
+      "checksum": "3535966eb381565be5a38c6fe6fb34974e2104d0b9246454c4264a913d366bfc",
+      "encoding": "gzip",
+      "result": "passed"
+    },
+    {
       "country_code": "US",
-      "record_count": 3390,
-      "checksum": "e6de8329036229757c9667f7f80e53ab3e730ed4180f948f3d5f74cee4d95616",
+      "record_count": 3588,
+      "checksum": "2be96145cdbf917d70c6198b3315303523aacbcb8658f1d6c24bc08a567abf44",
       "encoding": "identity",
       "result": "passed"
     },
     {
       "country_code": "US",
-      "record_count": 3390,
-      "checksum": "e6de8329036229757c9667f7f80e53ab3e730ed4180f948f3d5f74cee4d95616",
+      "record_count": 3588,
+      "checksum": "2be96145cdbf917d70c6198b3315303523aacbcb8658f1d6c24bc08a567abf44",
+      "encoding": "gzip",
+      "result": "passed"
+    },
+    {
+      "country_code": "UY",
+      "record_count": 207,
+      "checksum": "03bddd45e340c3e453c2422c89189dc1b85284c7126999d2db78723d1f033c3f",
+      "encoding": "identity",
+      "result": "passed"
+    },
+    {
+      "country_code": "UY",
+      "record_count": 207,
+      "checksum": "03bddd45e340c3e453c2422c89189dc1b85284c7126999d2db78723d1f033c3f",
+      "encoding": "gzip",
+      "result": "passed"
+    },
+    {
+      "country_code": "UZ",
+      "record_count": 443,
+      "checksum": "111eb3d8a486d01b1d4d24ea625df0eb18a782aa56d321468198f49198afec22",
+      "encoding": "identity",
+      "result": "passed"
+    },
+    {
+      "country_code": "UZ",
+      "record_count": 443,
+      "checksum": "111eb3d8a486d01b1d4d24ea625df0eb18a782aa56d321468198f49198afec22",
+      "encoding": "gzip",
+      "result": "passed"
+    },
+    {
+      "country_code": "VE",
+      "record_count": 29,
+      "checksum": "615c5b5e80488c16e5103bccd13c3ad75eb7fd2a41a8f259bd3211431751683f",
+      "encoding": "identity",
+      "result": "passed"
+    },
+    {
+      "country_code": "VE",
+      "record_count": 29,
+      "checksum": "615c5b5e80488c16e5103bccd13c3ad75eb7fd2a41a8f259bd3211431751683f",
+      "encoding": "gzip",
+      "result": "passed"
+    },
+    {
+      "country_code": "VN",
+      "record_count": 42,
+      "checksum": "0ba10012ef310b34c0701cc2eb92b8642a13e410fde9187196a952ad6b1f45fa",
+      "encoding": "identity",
+      "result": "passed"
+    },
+    {
+      "country_code": "VN",
+      "record_count": 42,
+      "checksum": "0ba10012ef310b34c0701cc2eb92b8642a13e410fde9187196a952ad6b1f45fa",
+      "encoding": "gzip",
+      "result": "passed"
+    },
+    {
+      "country_code": "ZA",
+      "record_count": 171,
+      "checksum": "d4786d5b0a828934c992c4407108554082db119c8ef5fa6afa2af5b144a70ec4",
+      "encoding": "identity",
+      "result": "passed"
+    },
+    {
+      "country_code": "ZA",
+      "record_count": 171,
+      "checksum": "d4786d5b0a828934c992c4407108554082db119c8ef5fa6afa2af5b144a70ec4",
       "encoding": "gzip",
       "result": "passed"
     }

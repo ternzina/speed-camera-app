@@ -1,0 +1,14 @@
+{
+  "verified": true,
+  "bytes": 3200000,
+  "sha256": "209292c1d22778c50a1e77e367ca36f0f98937326f7ec2fa70b3f4bf56eeb9fe",
+  "manifest": {
+    "key": "archive/v1/manifests/3791377124d74fceaf93d062e5cb7ac39b8142bfdff9c2d57bf6d76a6e8cf190.json",
+    "sha256": "3791377124d74fceaf93d062e5cb7ac39b8142bfdff9c2d57bf6d76a6e8cf190",
+    "size_bytes": 1232
+  },
+  "ordered_ranges": 4,
+  "bounded_workers": 4,
+  "actual_readback_and_full_restore": true,
+  "elapsed_seconds": 3.401
+}

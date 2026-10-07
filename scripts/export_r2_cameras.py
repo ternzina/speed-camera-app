@@ -33,7 +33,11 @@ def build():
         versions={r[0]:r[1].isoformat() for r in c.execute("select country_code,max(updated_at) from public.camera_records where active and confidence in ('high','medium') group by country_code")}
         red=[dict(zip(('canonical_id','latitude','longitude','road','locality','metadata'),r)) for r in c.execute("select canonical_id,latitude,longitude,road,locality,metadata from public.camera_records where country_code='PL' and active and confidence in ('high','medium') and record_type='red_light' order by id")]
         fingerprint=c.execute("select md5(string_agg(md5(row_to_json(r)::text),'' order by id)) from public.camera_records r").fetchone()[0]
+        # Public attribution accompanies exports; no private archive pointers,
+        # credentials or source payloads are included in this compact catalog.
+        sources=[dict(zip(('code','name','country_code','source_url','license'),r)) for r in c.execute('select code,name,country_code,homepage_url,license_notes from public.camera_sources order by code')]
     manifest={'schema_version':1,'generated_at':dt.datetime.now(dt.timezone.utc).isoformat(),'countries':[],'total_records':sum(x['total'] for x in coverage),'attribution':'Contains official open data and © OpenStreetMap contributors. OSM-derived data: ODbL 1.0.','license_url':'https://www.openstreetmap.org/copyright'}
+    manifest['sources']=sources
     comparisons=[];compression=[]
     for entry in coverage:
         code=entry['country_code'];original=fetch(code)

@@ -77,12 +77,20 @@ def main():
     from expand_cameras import normalize
     _,pending=normalize()
     first=json.loads(gzip.decompress((ROOT/'master-db/backups/expansion/round1-new-records.json.gz').read_bytes()))
+    stage_baseline=ROOT/'master-db/coverage/baseline.json'
+    if stage_baseline.exists():
+        from r2_archive import read_dataset
+        baseline=json.loads(stage_baseline.read_text())
+        protected={r['canonical_id'] for r in read_dataset(baseline['master_manifest'])}
+        # This expansion protects every record present at its start, including
+        # earlier expansion rows. Changed evidence remains in cold observations.
+        first=[r for r in first if r['canonical_id'] not in protected]
     node_ids,relation_ids=required(first+pending)
     versions=required_versions(first+pending)
     nodes,relations=primary_maps();failures=[]
     for kind,ids,mapping in [('relation',relation_ids,relations),('node',node_ids,nodes)]:
         if kind=='node':
-            for rel in relations.values():
+            for rel in (relations.get(rid,{}) for rid in relation_ids):
                 ids.update(m['ref'] for m in rel.get('members',[]) if m['type']=='node' and m.get('role') in ('device','from','to'))
         needed=sorted(i for i in ids if mapping.get(i,{}).get('_observed_at','')<START or (mapping.get(i,{}).get('visible') is not False and mapping.get(i,{}).get('version',0)<versions[kind].get(i,0)))
         print('Current primary',kind,'required',len(ids),'fetch',len(needed),flush=True)
@@ -93,12 +101,22 @@ def main():
                 mapping.update({e['id']:{**e,'_observed_at':now} for e in current})
                 print(kind,min(offset+len(batch),len(needed)),'/',len(needed),flush=True)
             except Exception as exc:failures.append({'kind':kind,'ids':batch,'error_type':type(exc).__name__})
-    save(ROOT/'master-db/expansion/reports/primary-refresh.json',{'checked_at':datetime.datetime.now(datetime.timezone.utc).isoformat(),'required_nodes':len(node_ids),'required_relations':len(relation_ids),'failures':failures,'deleted_nodes':sum(nodes.get(i,{}).get('visible') is False for i in node_ids),'deleted_relations':sum(relations.get(i,{}).get('visible') is False for i in relation_ids),'scope':'Only expansion objects and their explicit relation endpoints; original 50141 untouched'})
+    save(ROOT/'master-db/expansion/reports/primary-refresh.json',{'checked_at':datetime.datetime.now(datetime.timezone.utc).isoformat(),'required_nodes':len(node_ids),'required_relations':len(relation_ids),'failures':failures,'deleted_nodes':sum(nodes.get(i,{}).get('visible') is False for i in node_ids),'deleted_relations':sum(relations.get(i,{}).get('visible') is False for i in relation_ids),'scope':'Only stage-new objects and their explicit relation endpoints; all stage-baseline records protected'})
     from bootstrap_cameras import osm_records,clean_raw
     import update_cameras as pipeline
     holds=[]
-    with pipeline.connect() as conn:
-        active_ids={cid for cid, in conn.execute('select canonical_id from public.camera_records where active')}
+    active_ids=set()
+    # Coverage protects all earlier rows; when no earlier additions remain
+    # eligible for review, avoid an unrelated full production-index read.
+    if first:
+        for attempt in range(3):
+            try:
+                with pipeline.connect() as conn:
+                    active_ids={cid for cid, in conn.execute('select canonical_id from public.camera_records where active and canonical_id=any(%s)',([r['canonical_id'] for r in first],))}
+                break
+            except pipeline.psycopg.OperationalError:
+                if attempt==2:raise
+                time.sleep(2**attempt)
     for old in first:
         source=old['camera_sources'][0]
         if source['source_type']!='openstreetmap' or old['status']!='active' or old['canonical_id'] not in active_ids:continue

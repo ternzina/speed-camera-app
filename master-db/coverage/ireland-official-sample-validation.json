@@ -1,0 +1,77 @@
+{
+  "checked_at": "2026-10-07T14:14:38.869395+00:00",
+  "source_url": "https://www.garda.ie/en/roads-policing/safety-cameras-save-lives/static-safety-camera-detection/static-safety-camera-detection.html",
+  "license_url": "https://www.garda.ie/en/re-use-of-information/",
+  "acquired_count": 9,
+  "independent_osm_samples_under_50m": [
+    {
+      "source_id": "N17|Ballinsmaula|Mayo",
+      "latitude": 53.739452445736674,
+      "longitude": -8.970491179526576,
+      "osm_id": "node/12875259075",
+      "distance_m": 10.211
+    },
+    {
+      "source_id": "N59|Aubwee|Galway",
+      "latitude": 53.31058157266826,
+      "longitude": -9.143031644206676,
+      "osm_id": "node/2100377610",
+      "distance_m": 8.779
+    },
+    {
+      "source_id": "N13|Killyverry|Donegal",
+      "latitude": 54.987728,
+      "longitude": -7.552781,
+      "osm_id": "node/12875237542",
+      "distance_m": 8.305
+    },
+    {
+      "source_id": "N69|Ballyhomin|Limerick",
+      "latitude": 52.604016,
+      "longitude": -8.93986,
+      "osm_id": "node/12875193852",
+      "distance_m": 7.0
+    },
+    {
+      "source_id": "R772|Gorey|Wexford",
+      "latitude": 52.6992475,
+      "longitude": -6.2673252,
+      "osm_id": "node/12802114505",
+      "distance_m": 8.765
+    },
+    {
+      "source_id": "N22|Farnanes|Cork",
+      "latitude": 51.8576523,
+      "longitude": -8.8026222,
+      "osm_id": "node/12802132002",
+      "distance_m": 20.907
+    },
+    {
+      "source_id": "N80|Graiguenaspiddoge|Carlow",
+      "latitude": 52.768055581114,
+      "longitude": -6.856167791944444,
+      "osm_id": "node/12850878458",
+      "distance_m": 13.72
+    },
+    {
+      "source_id": "N25|Ballynamona|Kilkenny",
+      "latitude": 52.33695974416667,
+      "longitude": -7.055131681944444,
+      "osm_id": "node/12872834296",
+      "distance_m": 10.822
+    },
+    {
+      "source_id": "Crumlin Road, Dolphins Barn|Dublin 12|Dublin",
+      "latitude": 53.331872,
+      "longitude": -6.294081,
+      "osm_id": "node/13024708249",
+      "distance_m": 10.152
+    }
+  ],
+  "coordinate_source_exception": {
+    "location": "N80 Carlow",
+    "incorrect_publisher_page": "https://www.garda.ie/en/roads-policing/safety-cameras-save-lives/static-safety-camera-detection/n80-carlow.html",
+    "used_primary_press_release": "https://www.garda.ie/en/about-us/our-departments/office-of-corporate-communications/news-media/news-archive/static-safety-camera-operational-on-the-n80-from-friday-23-may-2025.html",
+    "reason": "Current table has positive longitude outside Ireland. Correct sign is explicit in the official activation release; no inferred correction."
+  }
+}

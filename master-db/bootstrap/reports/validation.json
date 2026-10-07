@@ -1,16 +1,16 @@
 {
-  "checked_at": "2026-10-07T08:47:59.944076+00:00",
-  "record_count": 65134,
-  "countries": 49,
+  "checked_at": "2026-10-07T17:07:45.413358+00:00",
+  "record_count": 124105,
+  "countries": 122,
   "camera_types": {
-    "fixed_speed": 52826,
-    "red_light": 4123,
-    "average_speed_section": 1610,
-    "other_enforcement": 4656,
-    "speed_and_red_light": 1919
+    "speed_and_red_light": 2624,
+    "fixed_speed": 90217,
+    "other_enforcement": 6803,
+    "red_light": 22806,
+    "average_speed_section": 1655
   },
   "baseline_records_preserved": 1323,
-  "source_records": 66168,
+  "source_records": 125139,
   "invalid_coordinates": 0,
   "duplicate_canonical_ids": 0,
   "duplicate_source_ids": 0,

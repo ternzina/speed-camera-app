@@ -1,0 +1,50 @@
+{
+  "source": "https://fartkameran.se/data/kameror-karta.json",
+  "primary_url": "https://geo-netinfo.trafikverket.se/mapservice/wms.axd/NetInfo",
+  "mirror_updated_at": "2026-10-06",
+  "sample_count": 5,
+  "results": [
+    {
+      "source_id": "02001050",
+      "name": "Sågbäcksvägen",
+      "distance_m": 7.1,
+      "primary_feature_id": "ATK_Matplats.3259.4518",
+      "primary_valid_from": 20060420,
+      "primary_valid_to": 99991231
+    },
+    {
+      "source_id": "05015050",
+      "name": "Gummetorp",
+      "distance_m": 9.547,
+      "primary_feature_id": "ATK_Matplats.2186.2026",
+      "primary_valid_from": 20191122,
+      "primary_valid_to": 99991231
+    },
+    {
+      "source_id": "14019090",
+      "name": "Svensby",
+      "distance_m": 5.902,
+      "primary_feature_id": "ATK_Matplats.2186.3821",
+      "primary_valid_from": 20061019,
+      "primary_valid_to": 99991231
+    },
+    {
+      "source_id": "20036010",
+      "name": "Öje norrgående",
+      "distance_m": 5.312,
+      "primary_feature_id": "ATK_Matplats.4332.4488",
+      "primary_valid_from": 20210908,
+      "primary_valid_to": 99991231
+    },
+    {
+      "source_id": "25045060",
+      "name": "Kalix västgående",
+      "distance_m": 0.366,
+      "primary_feature_id": "ATK_Matplats.4332.5993",
+      "primary_valid_from": 20260922,
+      "primary_valid_to": 99991231
+    }
+  ],
+  "policy": "CC0 coordinates and fixed-device identity only; unvalidated road speeds and compass labels not imported",
+  "checked_at": "2026-10-07T13:56:43.413221+00:00"
+}

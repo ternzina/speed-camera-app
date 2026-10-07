@@ -1,0 +1,1047 @@
+{
+  "all_candidates_only_r2": 10959,
+  "baseline_records_unchanged": 65134,
+  "canonical_master_after": 124164,
+  "canonical_master_before": 65134,
+  "canonical_unique_added": 59030,
+  "countries_after": 122,
+  "countries_before": 49,
+  "country_growth": [
+    {
+      "after": 11,
+      "before": 11,
+      "canonical_added": 0,
+      "country": "AD",
+      "published_added": 0
+    },
+    {
+      "after": 1122,
+      "before": 0,
+      "canonical_added": 1122,
+      "country": "AE",
+      "published_added": 1122
+    },
+    {
+      "after": 8,
+      "before": 2,
+      "canonical_added": 6,
+      "country": "AL",
+      "published_added": 6
+    },
+    {
+      "after": 280,
+      "before": 280,
+      "canonical_added": 0,
+      "country": "AM",
+      "published_added": 0
+    },
+    {
+      "after": 60,
+      "before": 0,
+      "canonical_added": 60,
+      "country": "AO",
+      "published_added": 60
+    },
+    {
+      "after": 1130,
+      "before": 0,
+      "canonical_added": 1130,
+      "country": "AR",
+      "published_added": 1130
+    },
+    {
+      "after": 1501,
+      "before": 1500,
+      "canonical_added": 1,
+      "country": "AT",
+      "published_added": 1
+    },
+    {
+      "after": 1104,
+      "before": 0,
+      "canonical_added": 1626,
+      "country": "AU",
+      "published_added": 1104
+    },
+    {
+      "after": 691,
+      "before": 691,
+      "canonical_added": 0,
+      "country": "AZ",
+      "published_added": 0
+    },
+    {
+      "after": 246,
+      "before": 246,
+      "canonical_added": 0,
+      "country": "BA",
+      "published_added": 0
+    },
+    {
+      "after": 1,
+      "before": 0,
+      "canonical_added": 1,
+      "country": "BD",
+      "published_added": 1
+    },
+    {
+      "after": 1689,
+      "before": 1689,
+      "canonical_added": 3,
+      "country": "BE",
+      "published_added": 0
+    },
+    {
+      "after": 77,
+      "before": 77,
+      "canonical_added": 0,
+      "country": "BG",
+      "published_added": 0
+    },
+    {
+      "after": 18,
+      "before": 0,
+      "canonical_added": 18,
+      "country": "BH",
+      "published_added": 18
+    },
+    {
+      "after": 2,
+      "before": 0,
+      "canonical_added": 2,
+      "country": "BN",
+      "published_added": 2
+    },
+    {
+      "after": 53,
+      "before": 0,
+      "canonical_added": 53,
+      "country": "BO",
+      "published_added": 53
+    },
+    {
+      "after": 8928,
+      "before": 0,
+      "canonical_added": 9073,
+      "country": "BR",
+      "published_added": 8928
+    },
+    {
+      "after": 4,
+      "before": 0,
+      "canonical_added": 4,
+      "country": "BW",
+      "published_added": 4
+    },
+    {
+      "after": 569,
+      "before": 569,
+      "canonical_added": 0,
+      "country": "BY",
+      "published_added": 0
+    },
+    {
+      "after": 1343,
+      "before": 1312,
+      "canonical_added": 37,
+      "country": "CA",
+      "published_added": 31
+    },
+    {
+      "after": 710,
+      "before": 710,
+      "canonical_added": 0,
+      "country": "CH",
+      "published_added": 0
+    },
+    {
+      "after": 23,
+      "before": 0,
+      "canonical_added": 23,
+      "country": "CI",
+      "published_added": 23
+    },
+    {
+      "after": 21,
+      "before": 0,
+      "canonical_added": 21,
+      "country": "CL",
+      "published_added": 21
+    },
+    {
+      "after": 387,
+      "before": 0,
+      "canonical_added": 387,
+      "country": "CN",
+      "published_added": 387
+    },
+    {
+      "after": 489,
+      "before": 0,
+      "canonical_added": 489,
+      "country": "CO",
+      "published_added": 489
+    },
+    {
+      "after": 1,
+      "before": 0,
+      "canonical_added": 1,
+      "country": "CR",
+      "published_added": 1
+    },
+    {
+      "after": 21,
+      "before": 0,
+      "canonical_added": 21,
+      "country": "CU",
+      "published_added": 21
+    },
+    {
+      "after": 74,
+      "before": 74,
+      "canonical_added": 0,
+      "country": "CY",
+      "published_added": 0
+    },
+    {
+      "after": 1937,
+      "before": 1937,
+      "canonical_added": 0,
+      "country": "CZ",
+      "published_added": 0
+    },
+    {
+      "after": 5794,
+      "before": 5794,
+      "canonical_added": 1,
+      "country": "DE",
+      "published_added": 0
+    },
+    {
+      "after": 24,
+      "before": 24,
+      "canonical_added": 0,
+      "country": "DK",
+      "published_added": 0
+    },
+    {
+      "after": 132,
+      "before": 0,
+      "canonical_added": 132,
+      "country": "DZ",
+      "published_added": 132
+    },
+    {
+      "after": 331,
+      "before": 0,
+      "canonical_added": 331,
+      "country": "EC",
+      "published_added": 331
+    },
+    {
+      "after": 88,
+      "before": 85,
+      "canonical_added": 3,
+      "country": "EE",
+      "published_added": 3
+    },
+    {
+      "after": 588,
+      "before": 0,
+      "canonical_added": 588,
+      "country": "EG",
+      "published_added": 588
+    },
+    {
+      "after": 3283,
+      "before": 3283,
+      "canonical_added": 44,
+      "country": "ES",
+      "published_added": 0
+    },
+    {
+      "after": 951,
+      "before": 951,
+      "canonical_added": 0,
+      "country": "FI",
+      "published_added": 0
+    },
+    {
+      "after": 6309,
+      "before": 6222,
+      "canonical_added": 93,
+      "country": "FR",
+      "published_added": 87
+    },
+    {
+      "after": 3663,
+      "before": 3662,
+      "canonical_added": 2,
+      "country": "GB",
+      "published_added": 1
+    },
+    {
+      "after": 208,
+      "before": 208,
+      "canonical_added": 0,
+      "country": "GE",
+      "published_added": 0
+    },
+    {
+      "after": 411,
+      "before": 411,
+      "canonical_added": 0,
+      "country": "GR",
+      "published_added": 0
+    },
+    {
+      "after": 18,
+      "before": 0,
+      "canonical_added": 18,
+      "country": "GT",
+      "published_added": 18
+    },
+    {
+      "after": 41,
+      "before": 0,
+      "canonical_added": 388,
+      "country": "HK",
+      "published_added": 41
+    },
+    {
+      "after": 965,
+      "before": 965,
+      "canonical_added": 0,
+      "country": "HR",
+      "published_added": 0
+    },
+    {
+      "after": 540,
+      "before": 540,
+      "canonical_added": 0,
+      "country": "HU",
+      "published_added": 0
+    },
+    {
+      "after": 408,
+      "before": 0,
+      "canonical_added": 408,
+      "country": "ID",
+      "published_added": 408
+    },
+    {
+      "after": 15,
+      "before": 15,
+      "canonical_added": 68,
+      "country": "IE",
+      "published_added": 0
+    },
+    {
+      "after": 148,
+      "before": 0,
+      "canonical_added": 148,
+      "country": "IL",
+      "published_added": 148
+    },
+    {
+      "after": 426,
+      "before": 0,
+      "canonical_added": 426,
+      "country": "IN",
+      "published_added": 426
+    },
+    {
+      "after": 305,
+      "before": 0,
+      "canonical_added": 305,
+      "country": "IQ",
+      "published_added": 305
+    },
+    {
+      "after": 2709,
+      "before": 0,
+      "canonical_added": 2710,
+      "country": "IR",
+      "published_added": 2709
+    },
+    {
+      "after": 20,
+      "before": 20,
+      "canonical_added": 0,
+      "country": "IS",
+      "published_added": 0
+    },
+    {
+      "after": 6024,
+      "before": 6023,
+      "canonical_added": 35,
+      "country": "IT",
+      "published_added": 1
+    },
+    {
+      "after": 46,
+      "before": 0,
+      "canonical_added": 46,
+      "country": "JO",
+      "published_added": 46
+    },
+    {
+      "after": 181,
+      "before": 0,
+      "canonical_added": 181,
+      "country": "JP",
+      "published_added": 181
+    },
+    {
+      "after": 5,
+      "before": 0,
+      "canonical_added": 5,
+      "country": "KE",
+      "published_added": 5
+    },
+    {
+      "after": 103,
+      "before": 0,
+      "canonical_added": 103,
+      "country": "KG",
+      "published_added": 103
+    },
+    {
+      "after": 2,
+      "before": 0,
+      "canonical_added": 2,
+      "country": "KH",
+      "published_added": 2
+    },
+    {
+      "after": 29418,
+      "before": 0,
+      "canonical_added": 30760,
+      "country": "KR",
+      "published_added": 29418
+    },
+    {
+      "after": 59,
+      "before": 0,
+      "canonical_added": 59,
+      "country": "KW",
+      "published_added": 59
+    },
+    {
+      "after": 248,
+      "before": 0,
+      "canonical_added": 248,
+      "country": "KZ",
+      "published_added": 248
+    },
+    {
+      "after": 1,
+      "before": 0,
+      "canonical_added": 1,
+      "country": "LB",
+      "published_added": 1
+    },
+    {
+      "after": 8,
+      "before": 8,
+      "canonical_added": 0,
+      "country": "LI",
+      "published_added": 0
+    },
+    {
+      "after": 4,
+      "before": 0,
+      "canonical_added": 4,
+      "country": "LK",
+      "published_added": 4
+    },
+    {
+      "after": 370,
+      "before": 370,
+      "canonical_added": 0,
+      "country": "LT",
+      "published_added": 0
+    },
+    {
+      "after": 37,
+      "before": 37,
+      "canonical_added": 0,
+      "country": "LU",
+      "published_added": 0
+    },
+    {
+      "after": 184,
+      "before": 155,
+      "canonical_added": 29,
+      "country": "LV",
+      "published_added": 29
+    },
+    {
+      "after": 127,
+      "before": 0,
+      "canonical_added": 127,
+      "country": "MA",
+      "published_added": 127
+    },
+    {
+      "after": 6,
+      "before": 6,
+      "canonical_added": 0,
+      "country": "MC",
+      "published_added": 0
+    },
+    {
+      "after": 81,
+      "before": 79,
+      "canonical_added": 2,
+      "country": "MD",
+      "published_added": 2
+    },
+    {
+      "after": 13,
+      "before": 13,
+      "canonical_added": 0,
+      "country": "ME",
+      "published_added": 0
+    },
+    {
+      "after": 164,
+      "before": 164,
+      "canonical_added": 0,
+      "country": "MK",
+      "published_added": 0
+    },
+    {
+      "after": 13,
+      "before": 0,
+      "canonical_added": 13,
+      "country": "MM",
+      "published_added": 13
+    },
+    {
+      "after": 64,
+      "before": 0,
+      "canonical_added": 64,
+      "country": "MN",
+      "published_added": 64
+    },
+    {
+      "after": 22,
+      "before": 22,
+      "canonical_added": 0,
+      "country": "MT",
+      "published_added": 0
+    },
+    {
+      "after": 61,
+      "before": 0,
+      "canonical_added": 122,
+      "country": "MU",
+      "published_added": 61
+    },
+    {
+      "after": 131,
+      "before": 0,
+      "canonical_added": 131,
+      "country": "MX",
+      "published_added": 131
+    },
+    {
+      "after": 73,
+      "before": 0,
+      "canonical_added": 73,
+      "country": "MY",
+      "published_added": 73
+    },
+    {
+      "after": 1,
+      "before": 0,
+      "canonical_added": 1,
+      "country": "NA",
+      "published_added": 1
+    },
+    {
+      "after": 645,
+      "before": 645,
+      "canonical_added": 0,
+      "country": "NL",
+      "published_added": 0
+    },
+    {
+      "after": 525,
+      "before": 525,
+      "canonical_added": 0,
+      "country": "NO",
+      "published_added": 0
+    },
+    {
+      "after": 25,
+      "before": 0,
+      "canonical_added": 25,
+      "country": "NP",
+      "published_added": 25
+    },
+    {
+      "after": 70,
+      "before": 0,
+      "canonical_added": 77,
+      "country": "NZ",
+      "published_added": 70
+    },
+    {
+      "after": 459,
+      "before": 0,
+      "canonical_added": 459,
+      "country": "OM",
+      "published_added": 459
+    },
+    {
+      "after": 16,
+      "before": 0,
+      "canonical_added": 16,
+      "country": "PA",
+      "published_added": 16
+    },
+    {
+      "after": 69,
+      "before": 0,
+      "canonical_added": 69,
+      "country": "PE",
+      "published_added": 69
+    },
+    {
+      "after": 1,
+      "before": 0,
+      "canonical_added": 1,
+      "country": "PG",
+      "published_added": 1
+    },
+    {
+      "after": 43,
+      "before": 0,
+      "canonical_added": 43,
+      "country": "PH",
+      "published_added": 43
+    },
+    {
+      "after": 1,
+      "before": 0,
+      "canonical_added": 1,
+      "country": "PK",
+      "published_added": 1
+    },
+    {
+      "after": 897,
+      "before": 897,
+      "canonical_added": 0,
+      "country": "PL",
+      "published_added": 0
+    },
+    {
+      "after": 3,
+      "before": 0,
+      "canonical_added": 3,
+      "country": "PS",
+      "published_added": 3
+    },
+    {
+      "after": 341,
+      "before": 341,
+      "canonical_added": 0,
+      "country": "PT",
+      "published_added": 0
+    },
+    {
+      "after": 20,
+      "before": 0,
+      "canonical_added": 20,
+      "country": "PY",
+      "published_added": 20
+    },
+    {
+      "after": 156,
+      "before": 0,
+      "canonical_added": 156,
+      "country": "QA",
+      "published_added": 156
+    },
+    {
+      "after": 330,
+      "before": 330,
+      "canonical_added": 0,
+      "country": "RO",
+      "published_added": 0
+    },
+    {
+      "after": 426,
+      "before": 426,
+      "canonical_added": 0,
+      "country": "RS",
+      "published_added": 0
+    },
+    {
+      "after": 10660,
+      "before": 10660,
+      "canonical_added": 0,
+      "country": "RU",
+      "published_added": 0
+    },
+    {
+      "after": 6,
+      "before": 0,
+      "canonical_added": 6,
+      "country": "RW",
+      "published_added": 6
+    },
+    {
+      "after": 297,
+      "before": 0,
+      "canonical_added": 297,
+      "country": "SA",
+      "published_added": 297
+    },
+    {
+      "after": 2855,
+      "before": 2471,
+      "canonical_added": 1038,
+      "country": "SE",
+      "published_added": 384
+    },
+    {
+      "after": 152,
+      "before": 0,
+      "canonical_added": 405,
+      "country": "SG",
+      "published_added": 152
+    },
+    {
+      "after": 277,
+      "before": 277,
+      "canonical_added": 0,
+      "country": "SI",
+      "published_added": 0
+    },
+    {
+      "after": 68,
+      "before": 68,
+      "canonical_added": 2,
+      "country": "SK",
+      "published_added": 0
+    },
+    {
+      "after": 5,
+      "before": 0,
+      "canonical_added": 5,
+      "country": "SN",
+      "published_added": 5
+    },
+    {
+      "after": 81,
+      "before": 0,
+      "canonical_added": 81,
+      "country": "SV",
+      "published_added": 81
+    },
+    {
+      "after": 8,
+      "before": 0,
+      "canonical_added": 8,
+      "country": "SY",
+      "published_added": 8
+    },
+    {
+      "after": 23,
+      "before": 0,
+      "canonical_added": 23,
+      "country": "TH",
+      "published_added": 23
+    },
+    {
+      "after": 1,
+      "before": 0,
+      "canonical_added": 1,
+      "country": "TJ",
+      "published_added": 1
+    },
+    {
+      "after": 213,
+      "before": 0,
+      "canonical_added": 213,
+      "country": "TM",
+      "published_added": 213
+    },
+    {
+      "after": 16,
+      "before": 0,
+      "canonical_added": 16,
+      "country": "TN",
+      "published_added": 16
+    },
+    {
+      "after": 659,
+      "before": 659,
+      "canonical_added": 0,
+      "country": "TR",
+      "published_added": 0
+    },
+    {
+      "after": 1,
+      "before": 0,
+      "canonical_added": 1,
+      "country": "TT",
+      "published_added": 1
+    },
+    {
+      "after": 1620,
+      "before": 0,
+      "canonical_added": 3192,
+      "country": "TW",
+      "published_added": 1620
+    },
+    {
+      "after": 1,
+      "before": 0,
+      "canonical_added": 1,
+      "country": "TZ",
+      "published_added": 1
+    },
+    {
+      "after": 426,
+      "before": 426,
+      "canonical_added": 18,
+      "country": "UA",
+      "published_added": 0
+    },
+    {
+      "after": 6,
+      "before": 0,
+      "canonical_added": 6,
+      "country": "UG",
+      "published_added": 6
+    },
+    {
+      "after": 3588,
+      "before": 3390,
+      "canonical_added": 206,
+      "country": "US",
+      "published_added": 198
+    },
+    {
+      "after": 207,
+      "before": 0,
+      "canonical_added": 207,
+      "country": "UY",
+      "published_added": 207
+    },
+    {
+      "after": 443,
+      "before": 0,
+      "canonical_added": 443,
+      "country": "UZ",
+      "published_added": 443
+    },
+    {
+      "after": 29,
+      "before": 0,
+      "canonical_added": 29,
+      "country": "VE",
+      "published_added": 29
+    },
+    {
+      "after": 42,
+      "before": 0,
+      "canonical_added": 42,
+      "country": "VN",
+      "published_added": 42
+    },
+    {
+      "after": 171,
+      "before": 0,
+      "canonical_added": 171,
+      "country": "ZA",
+      "published_added": 171
+    }
+  ],
+  "database_MB_per_10000_published": 7.079,
+  "database_bytes_after": 83875507,
+  "database_bytes_before": 45692595,
+  "duplicate_count_scope": "Observation pass totals include repeated batches and corrective verification snapshots. Novel source identity outcomes count each non-baseline identity once; acceptance takes precedence only while that source identity remains in the current canonical master. Retired verified aliases count as duplicates.",
+  "low_published": 0,
+  "measured_at": "2026-10-07T19:22:31.430901+00:00",
+  "new_candidates_only_r2": 5095,
+  "new_countries": [
+    "AE",
+    "AO",
+    "AR",
+    "AU",
+    "BD",
+    "BH",
+    "BN",
+    "BO",
+    "BR",
+    "BW",
+    "CI",
+    "CL",
+    "CN",
+    "CO",
+    "CR",
+    "CU",
+    "DZ",
+    "EC",
+    "EG",
+    "GT",
+    "HK",
+    "ID",
+    "IL",
+    "IN",
+    "IQ",
+    "IR",
+    "JO",
+    "JP",
+    "KE",
+    "KG",
+    "KH",
+    "KR",
+    "KW",
+    "KZ",
+    "LB",
+    "LK",
+    "MA",
+    "MM",
+    "MN",
+    "MU",
+    "MX",
+    "MY",
+    "NA",
+    "NP",
+    "NZ",
+    "OM",
+    "PA",
+    "PE",
+    "PG",
+    "PH",
+    "PK",
+    "PS",
+    "PY",
+    "QA",
+    "RW",
+    "SA",
+    "SG",
+    "SN",
+    "SV",
+    "SY",
+    "TH",
+    "TJ",
+    "TM",
+    "TN",
+    "TT",
+    "TW",
+    "TZ",
+    "UG",
+    "UY",
+    "UZ",
+    "VE",
+    "VN",
+    "ZA"
+  ],
+  "new_low_unpublished": 5048,
+  "new_observation_source_identities": 63410,
+  "new_source_duplicate_identities_discarded": 3467,
+  "new_source_identity_outcomes": {
+    "accepted": 58895,
+    "duplicate_geometry": 3467,
+    "rejected_country_polygon": 1048
+  },
+  "observation_identity_scope": "OSM object IDs are global across country/region partitions; government source IDs retain their dataset namespace",
+  "observation_pass_dispositions": {
+    "accepted": 59039,
+    "duplicate_geometry": 16347,
+    "duplicate_identity": 816069,
+    "rejected_country_polygon": 105185,
+    "retrospective_review": 885
+  },
+  "observation_rows_archived_across_batches": 997525,
+  "postgres_mass_observations": 0,
+  "published_added": 53935,
+  "published_after": 113205,
+  "published_before": 59270,
+  "r2_storage": {
+    "measured_at": "2026-10-07T19:22:11.860Z",
+    "bucket": "speed-camera-data",
+    "includes_retained_history": true,
+    "pagination_verified": true,
+    "private": {
+      "objects": 7325,
+      "size_bytes": 41959356108,
+      "pages": 8
+    },
+    "public": {
+      "objects": 162,
+      "size_bytes": 45273877,
+      "pages": 1
+    }
+  },
+  "receipts": [
+    {
+      "receipt": "archive/v1/manifests/75ac72e6ffdcc3f4e5af36a801a95b339cea0258f278ed1abf94ad3d6ff17459.json",
+      "verified_observations": 60174
+    },
+    {
+      "receipt": "archive/v1/manifests/69038db53566704eee065aa88f04cd00093de28ee959ae59c94636c7d0ffb816.json",
+      "verified_observations": 71706
+    },
+    {
+      "receipt": "archive/v1/manifests/00f34d070b1a7409069356c9a1cffa70b964347ceaafb47e31747dad3598a076.json",
+      "verified_observations": 71813
+    },
+    {
+      "receipt": "archive/v1/manifests/cb42cefab0f6590124a43a553a979ae531b269b28e46003a2f5baf625a104c14.json",
+      "verified_observations": 71979
+    },
+    {
+      "receipt": "archive/v1/manifests/6bc1b06edc3f928b51da949608667ca08895d1b65579378d1ce3b44ff4709e40.json",
+      "verified_observations": 72433
+    },
+    {
+      "receipt": "archive/v1/manifests/1446491b5bddf45de26f733df67cc33a04bd5005bea33ec66b2454ada228c3f4.json",
+      "verified_observations": 73625
+    },
+    {
+      "receipt": "archive/v1/manifests/a9feeaa79d39aec0db221eb1a37c56a55839b9d6923ac3feb3b62f1fd332562e.json",
+      "verified_observations": 74880
+    },
+    {
+      "receipt": "archive/v1/manifests/aec030d8a367c9031295f6817b1670fb739453a278e0054d119204ece9be18c6.json",
+      "verified_observations": 78587
+    },
+    {
+      "receipt": "archive/v1/manifests/6e39a398e00350cd7235af7982c9676257f01f09d2cfdd9d50adebf3354a0075.json",
+      "verified_observations": 81841
+    },
+    {
+      "receipt": "archive/v1/manifests/f8b4f2aadbec43e89dfbe479b8b681895d33f8ff7a354d7efdcdedb03da7be5e.json",
+      "verified_observations": 84650
+    },
+    {
+      "receipt": "archive/v1/manifests/708efe4c486e073500343445e0d12010104edae95b17f111240b316d18759f3b.json",
+      "verified_observations": 124809
+    },
+    {
+      "receipt": "archive/v1/manifests/270dec1b1196721cc2c33ecb50d8fcbc3cacce8975d67537824093cee23feda8.json",
+      "verified_observations": 130134
+    },
+    {
+      "receipt": "archive/v1/manifests/a5248f65c9149c980b5f440caa69c37dab3acbff51419d1bf04e964e2f53ef8b.json",
+      "verified_observations": 33
+    },
+    {
+      "receipt": "archive/v1/manifests/029ceb4ace7e64fb91cb43cb4ab43fda05a3c784cce2d97d5b0578b1986e277b.json",
+      "verified_observations": 861
+    }
+  ],
+  "retired_verified_source_aliases": 9,
+  "retrospectively_held_new_records": 885,
+  "unique_camera_count_scope": "Canonical IDs after deduplication, including unpublished review candidates; uncertain candidates are not a claim of confirmed distinct physical devices.",
+  "unique_duplicate_source_identities_discarded": 117839,
+  "unique_observation_source_identities_processed": 119462
+}

@@ -1,0 +1,292 @@
+{
+  "primary_catalog": "https://data.ntpc.gov.tw/api/v1/openapi/units/1250000",
+  "discovered_districts": 26,
+  "processed": [
+    {
+      "code": "TW_NEWTAIPEI_0B997A50",
+      "source_url": "https://data.ntpc.gov.tw/datasets/0b997a50-a4a2-45c8-a313-e8a92488c4dc",
+      "license_url": "https://data.gov.tw/license",
+      "license_page_sha256": "8acd6c0c2e62900d9ec6479f2bc39a57ffc5210a932f21605d28580798cf6d83",
+      "raw_records": 13,
+      "types": {
+        "fixed_speed": 11,
+        "speed_and_red_light": 1,
+        "other_enforcement": 1
+      }
+    },
+    {
+      "code": "TW_NEWTAIPEI_C1DF03E3",
+      "source_url": "https://data.ntpc.gov.tw/datasets/c1df03e3-7931-4520-8129-4fb308af803a",
+      "license_url": "https://data.gov.tw/license",
+      "license_page_sha256": "2292e3b5ea35f1bc2f5cef54d48857529b373624d07bbd4ce1eeda93dc784d88",
+      "raw_records": 12,
+      "types": {
+        "fixed_speed": 11,
+        "speed_and_red_light": 1
+      }
+    },
+    {
+      "code": "TW_NEWTAIPEI_2C44E1A6",
+      "source_url": "https://data.ntpc.gov.tw/datasets/2c44e1a6-8bba-4499-9402-5e7014f10aa6",
+      "license_url": "https://data.gov.tw/license",
+      "license_page_sha256": "0a72b4bf4c70909283cc27f354aad5b8498955cd0738f43448bafba09a8408c7",
+      "raw_records": 5,
+      "types": {
+        "fixed_speed": 3,
+        "other_enforcement": 2
+      }
+    },
+    {
+      "code": "TW_NEWTAIPEI_F85D869F",
+      "source_url": "https://data.ntpc.gov.tw/datasets/f85d869f-cd78-4b9f-9a10-6745c244f4ff",
+      "license_url": "https://data.gov.tw/license",
+      "license_page_sha256": "17ce982cc0ee53ec5977bad567d853a06250247e1aea9011e79c94867ea1705b",
+      "raw_records": 7,
+      "types": {
+        "fixed_speed": 6,
+        "speed_and_red_light": 1
+      }
+    },
+    {
+      "code": "TW_NEWTAIPEI_A7A7F57E",
+      "source_url": "https://data.ntpc.gov.tw/datasets/a7a7f57e-2c74-4c27-a8c7-0152fdf094f8",
+      "license_url": "https://data.gov.tw/license",
+      "license_page_sha256": "c5fd2224ae5e2d72c5c87e896ea49bb59dbd64a7a42034097f5a07f9b2feb9bd",
+      "raw_records": 10,
+      "types": {
+        "speed_and_red_light": 5,
+        "fixed_speed": 4,
+        "other_enforcement": 1
+      }
+    },
+    {
+      "code": "TW_NEWTAIPEI_2A4F4679",
+      "source_url": "https://data.ntpc.gov.tw/datasets/2a4f4679-c5ea-4669-aa71-560a90659765",
+      "license_url": "https://data.gov.tw/license",
+      "license_page_sha256": "c70a3b8fe60b976eb8d6e651b47676ea162152b2696dfb6aaf418fd7dc248c3e",
+      "raw_records": 9,
+      "types": {
+        "speed_and_red_light": 4,
+        "red_light": 1,
+        "fixed_speed": 4
+      }
+    },
+    {
+      "code": "TW_NEWTAIPEI_4439DA2E",
+      "source_url": "https://data.ntpc.gov.tw/datasets/4439da2e-cf04-4443-b4cf-7d3f2b9bf61e",
+      "license_url": "https://data.gov.tw/license",
+      "license_page_sha256": "a67e5bbfafe55ae89a78d1070837b8e53d607573ab9cd85321cf59fe73d94c9a",
+      "raw_records": 5,
+      "types": {
+        "fixed_speed": 3,
+        "other_enforcement": 2
+      }
+    },
+    {
+      "code": "TW_NEWTAIPEI_1292F42F",
+      "source_url": "https://data.ntpc.gov.tw/datasets/1292f42f-dbae-4374-94cb-055d24e6d031",
+      "license_url": "https://data.gov.tw/license",
+      "license_page_sha256": "8d2925a64993a1e0edc9a276239ad2b0b81c86eb051eb060056ae23b37189e66",
+      "raw_records": 2,
+      "types": {
+        "fixed_speed": 2
+      }
+    },
+    {
+      "code": "TW_NEWTAIPEI_CFF8E05C",
+      "source_url": "https://data.ntpc.gov.tw/datasets/cff8e05c-7466-46fa-8969-447dca31f87a",
+      "license_url": "https://data.gov.tw/license",
+      "license_page_sha256": "f852aec3401eb9f825b3684653d04612a68fd8ca24c983caa409db637e95b195",
+      "raw_records": 12,
+      "types": {
+        "fixed_speed": 6,
+        "red_light": 1,
+        "speed_and_red_light": 4,
+        "other_enforcement": 1
+      }
+    },
+    {
+      "code": "TW_NEWTAIPEI_683C1B0F",
+      "source_url": "https://data.ntpc.gov.tw/datasets/683c1b0f-507e-4c7d-a652-6e858d38455b",
+      "license_url": "https://data.gov.tw/license",
+      "license_page_sha256": "9545731a0c25221094cdef071e5f8799089ed119feb9775ab92ac9fd94c90082",
+      "raw_records": 12,
+      "types": {
+        "fixed_speed": 9,
+        "red_light": 1,
+        "other_enforcement": 2
+      }
+    },
+    {
+      "code": "TW_NEWTAIPEI_B5B30B9A",
+      "source_url": "https://data.ntpc.gov.tw/datasets/b5b30b9a-be57-4c7b-bd10-abaf04adcf21",
+      "license_url": "https://data.gov.tw/license",
+      "license_page_sha256": "05b118ec2f2d5c16bdef3c17da186e9feeb84dfc953959dc5dd32a64b8e808ea",
+      "raw_records": 12,
+      "types": {
+        "fixed_speed": 11,
+        "speed_and_red_light": 1
+      }
+    },
+    {
+      "code": "TW_NEWTAIPEI_11825B40",
+      "source_url": "https://data.ntpc.gov.tw/datasets/11825b40-7ccd-4175-bfce-d4bea66ac3ae",
+      "license_url": "https://data.gov.tw/license",
+      "license_page_sha256": "3dbea4805b642ea5321850e70e6fc353279c7d601c01c0dd0a794a3c4cc46756",
+      "raw_records": 13,
+      "types": {
+        "fixed_speed": 10,
+        "speed_and_red_light": 3
+      }
+    },
+    {
+      "code": "TW_NEWTAIPEI_9111E1D1",
+      "source_url": "https://data.ntpc.gov.tw/datasets/9111e1d1-1985-4c56-9de8-d29cb1b41dd6",
+      "license_url": "https://data.gov.tw/license",
+      "license_page_sha256": "10d8c9d88d65d00881eb893c3ccab64f698d32137f540c8c5fcab164a362bf7d",
+      "raw_records": 8,
+      "types": {
+        "fixed_speed": 4,
+        "speed_and_red_light": 4
+      }
+    },
+    {
+      "code": "TW_NEWTAIPEI_364737F4",
+      "source_url": "https://data.ntpc.gov.tw/datasets/364737f4-4ed9-4fed-8600-646a36d39331",
+      "license_url": "https://data.gov.tw/license",
+      "license_page_sha256": "46c93fc3caf218922239fdce5a9ffd37f193a2814ed7d1e901143ed1c0e3ec44",
+      "raw_records": 2,
+      "types": {
+        "fixed_speed": 2
+      }
+    },
+    {
+      "code": "TW_NEWTAIPEI_54288733",
+      "source_url": "https://data.ntpc.gov.tw/datasets/54288733-8649-4902-a467-6a231fa7bc41",
+      "license_url": "https://data.gov.tw/license",
+      "license_page_sha256": "c6cdeac004accbe8841cfe5eb1fb7d2a20b7789c52993542fdac2281349bb9db",
+      "raw_records": 4,
+      "types": {
+        "speed_and_red_light": 1,
+        "fixed_speed": 3
+      }
+    },
+    {
+      "code": "TW_NEWTAIPEI_73B75683",
+      "source_url": "https://data.ntpc.gov.tw/datasets/73b75683-d045-4ea2-bb13-c71edaaea8cb",
+      "license_url": "https://data.gov.tw/license",
+      "license_page_sha256": "33d7992bd6daacc653d854a244f246883748e35172b2249f236b38f878ed7343",
+      "raw_records": 4,
+      "types": {
+        "fixed_speed": 4
+      }
+    },
+    {
+      "code": "TW_NEWTAIPEI_126074CC",
+      "source_url": "https://data.ntpc.gov.tw/datasets/126074cc-2091-4c0f-8fc5-a16bc530eb30",
+      "license_url": "https://data.gov.tw/license",
+      "license_page_sha256": "ff53faaada99ea4e9c32fbdb2ce0891073d31559149d3e46430b26179e36069f",
+      "raw_records": 6,
+      "types": {
+        "fixed_speed": 3,
+        "speed_and_red_light": 2,
+        "red_light": 1
+      }
+    },
+    {
+      "code": "TW_NEWTAIPEI_051AC91B",
+      "source_url": "https://data.ntpc.gov.tw/datasets/051ac91b-ad10-46d0-9da6-c8691317a6af",
+      "license_url": "https://data.gov.tw/license",
+      "license_page_sha256": "bcb51d608853d190506e36a8e4c59a6766c360b9d443492afca4384098c87909",
+      "raw_records": 9,
+      "types": {
+        "fixed_speed": 6,
+        "speed_and_red_light": 1,
+        "other_enforcement": 2
+      }
+    },
+    {
+      "code": "TW_NEWTAIPEI_501B36C1",
+      "source_url": "https://data.ntpc.gov.tw/datasets/501b36c1-0ae9-4e40-92a4-3d57b557f8d7",
+      "license_url": "https://data.gov.tw/license",
+      "license_page_sha256": "550909485faf139ec2c798997393896f945272fc4a4204c790e6b2ae81836ed0",
+      "raw_records": 8,
+      "types": {
+        "fixed_speed": 7,
+        "other_enforcement": 1
+      }
+    },
+    {
+      "code": "TW_NEWTAIPEI_A2D5BA96",
+      "source_url": "https://data.ntpc.gov.tw/datasets/a2d5ba96-fc07-48ac-9f8c-92967502ca48",
+      "license_url": "https://data.gov.tw/license",
+      "license_page_sha256": "b6690a7ac1f505dd6c2d5391aa7388dfcc7ac9eafa08f55addee95a5f5cdbd74",
+      "raw_records": 3,
+      "types": {
+        "fixed_speed": 3
+      }
+    },
+    {
+      "code": "TW_NEWTAIPEI_54FB654A",
+      "source_url": "https://data.ntpc.gov.tw/datasets/54fb654a-1090-4050-ab74-94afd08f60b5",
+      "license_url": "https://data.gov.tw/license",
+      "license_page_sha256": "14bf5f61a44ce79d11a12589eda8981b4be06d60da3d5d2d21fbb4cc20b92b1b",
+      "raw_records": 5,
+      "types": {
+        "fixed_speed": 4,
+        "red_light": 1
+      }
+    },
+    {
+      "code": "TW_NEWTAIPEI_466D7354",
+      "source_url": "https://data.ntpc.gov.tw/datasets/466d7354-4ccf-44e5-aeaf-bea948b79079",
+      "license_url": "https://data.gov.tw/license",
+      "license_page_sha256": "8affdac62302f06f27e7a13c2136ae3d8924719c18c337e504339d4ddaaeb30c",
+      "raw_records": 1,
+      "types": {
+        "speed_and_red_light": 1
+      }
+    },
+    {
+      "code": "TW_NEWTAIPEI_B15B6F51",
+      "source_url": "https://data.ntpc.gov.tw/datasets/b15b6f51-3332-4c5c-a050-770480fd9494",
+      "license_url": "https://data.gov.tw/license",
+      "license_page_sha256": "e2de8511abb48bc3eb461390782e00a1c18100bb01aacec4172047db14b3b3c8",
+      "raw_records": 7,
+      "types": {
+        "fixed_speed": 5,
+        "other_enforcement": 2
+      }
+    },
+    {
+      "code": "TW_NEWTAIPEI_0BA4DD89",
+      "source_url": "https://data.ntpc.gov.tw/datasets/0ba4dd89-0146-485d-80ec-42fc29db4559",
+      "license_url": "https://data.gov.tw/license",
+      "license_page_sha256": "b2c045e7db214ad4bb1322b52e5af751c2ccec10668bf727d5a6dbadb7021855",
+      "raw_records": 3,
+      "types": {
+        "fixed_speed": 3
+      }
+    },
+    {
+      "code": "TW_NEWTAIPEI_589AAABF",
+      "source_url": "https://data.ntpc.gov.tw/datasets/589aaabf-457d-43a1-96fd-f9fd48a9e362",
+      "license_url": "https://data.gov.tw/license",
+      "license_page_sha256": "c0c654dc24cd0ca77a05b9107b1c96416da4cd288c09db97fe5cb249904582ad",
+      "raw_records": 4,
+      "types": {
+        "fixed_speed": 4
+      }
+    },
+    {
+      "code": "TW_NEWTAIPEI_B9D5D48A",
+      "source_url": "https://data.ntpc.gov.tw/datasets/b9d5d48a-7412-471b-bd4e-ff54999510fe",
+      "license_url": "https://data.gov.tw/license",
+      "license_page_sha256": "6c40673aa7c1c799d312a69aa8b6c7810666f7a8540622f0b42685870b577be0",
+      "raw_records": 7,
+      "types": {
+        "fixed_speed": 7
+      }
+    }
+  ]
+}

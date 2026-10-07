@@ -1,0 +1,1274 @@
+{
+  "stage": "R2-first coverage expansion, October 2026",
+  "catalog_search": {
+    "US_states": 50,
+    "Canada_provinces_and_municipal_queries": 18,
+    "distinct_ArcGIS_items": 136,
+    "original_metadata": "private R2 acquisition snapshots; local ignored master-db/raw/coverage-stage/discovery"
+  },
+  "processed": [
+    {
+      "source": "Brazil PRF active fixed equipment",
+      "url": "https://www.gov.br/prf/pt-br/assuntos/fiscalizacao-de-velocidade/radares-fixos",
+      "license": "Brazilian Government open data unrestricted reuse",
+      "license_url": "https://www.gov.br/prf/pt-br/acesso-a-informacao/dados-abertos",
+      "raw_records": 1589,
+      "normalized_active_or_expired_certificate_records": 700,
+      "policy": "Only active equipment generating images; expired/missing certificates remain candidates"
+    },
+    {
+      "source": "Lethbridge Intersection Safety Devices",
+      "url": "https://gis.lethbridge.ca/gisopendata/rest/services/OpenData/odl_intersectionsafetydevices/MapServer/0",
+      "license": "City of Lethbridge Open Data Licence 1.0",
+      "license_url": "https://opendata.lethbridge.ca/pages/open-data-license",
+      "raw_records": 5,
+      "policy": "Unknown camera type and operating status => LOW candidates only"
+    },
+    {
+      "source": "Geofabrik daily OSM regional extracts",
+      "url": "https://download.geofabrik.de/index-v1.json",
+      "license": "ODbL-1.0",
+      "policy": "All source objects with original IDs/versions/tags and explicit relation member geometry archived; primary OSM revalidation before publication"
+    },
+    {
+      "source": "Additional country OSM speed-node seeds: BR AU NZ JP ZA KR CL AR",
+      "url": "https://www.openstreetmap.org/copyright",
+      "license": "ODbL-1.0",
+      "policy": "Seeds are identifiers; actual current node geometry/type verified against primary API"
+    },
+    {
+      "source": "Additional licensed OSM identifier partitions",
+      "countries_file": "additional-seed-countries.json",
+      "license": "ODbL-1.0",
+      "source_url": "https://speedcams.world/downloads",
+      "primary_verification": "https://api.openstreetmap.org/api/0.6/nodes",
+      "policy": "Downloaded IDs only; all geometry, tags, type and version independently read from current OSM API; canonical country validated with independent polygons"
+    },
+    {
+      "source": "Taichung City Police fixed enforcement cameras",
+      "code": "TW_TAICHUNG_FIXED",
+      "url": "https://data.gov.tw/dataset/83881",
+      "download_url": "https://newdatacenter.taichung.gov.tw/api/v1/no-auth/resource.download?rid=2f64bc33-243b-4b97-9089-a5f3ed1d9298",
+      "license": "Open Government Data License version 1.0",
+      "license_url": "https://data.gov.tw/license",
+      "policy": "Explicit enforcement modes and actual GPS; unresolved photographic directions retained verbatim; dedupe before publication"
+    },
+    {
+      "source": "Taoyuan City Police fixed enforcement cameras",
+      "code": "TW_TAOYUAN_FIXED",
+      "url": "https://data.gov.tw/dataset/25935",
+      "download_url": "https://opendata.tycg.gov.tw/api/dataset/ecd45ee5-4489-436b-bd08-7d4e4111c4a4/resource/6aa72aaf-d703-4a9e-acd7-24c17e934dc3/download",
+      "license": "Open Government Data License version 1.0",
+      "license_url": "https://data.gov.tw/license",
+      "policy": "Explicit enforcement modes and actual GPS; unresolved photographic directions retained verbatim; dedupe before publication"
+    },
+    {
+      "source": "Taichung City Police average speed section reference points",
+      "code": "TW_TAICHUNG_SECTION_REFERENCES",
+      "url": "https://data.gov.tw/dataset/172725",
+      "download_url": "https://newdatacenter.taichung.gov.tw/api/v1/no-auth/resource.download?rid=e968989a-bfb2-4b6c-8bd0-1b1af3c54745",
+      "license": "Open Government Data License version 1.0",
+      "license_url": "https://data.gov.tw/license",
+      "policy": "Official section reference point; both endpoint coordinates unavailable; no section invented"
+    },
+    {
+      "source": "Taichung City Police technology enforcement reference candidates",
+      "code": "TW_TAICHUNG_TECH_CANDIDATES",
+      "url": "https://data.gov.tw/dataset/170673",
+      "download_url": "https://newdatacenter.taichung.gov.tw/api/v1/no-auth/resource.download?rid=b3f58c63-53b3-4c01-8203-2a7afa08bb13",
+      "license": "Open Government Data License version 1.0",
+      "license_url": "https://data.gov.tw/license",
+      "policy": "Source coordinate labels inverted (cross-checked against section reference feed); inconsistent enforcement/address fields require review"
+    },
+    {
+      "source": "Taipei City Police fixed enforcement cameras",
+      "code": "TW_TAIPEI_FIXED",
+      "url": "https://data.gov.tw/dataset/130111",
+      "download_url": "https://data.taipei/api/dataset/745b8808-061f-4f5b-9a62-da1590c049a9/resource/5012e8ba-5ace-4821-8482-ee07c147fd0a/download",
+      "license": "Open Government Data License version 1.0",
+      "license_url": "https://data.gov.tw/license",
+      "raw_records": 143,
+      "parsed_coordinates": 143,
+      "parse_report": {
+        "raw_records": 143,
+        "missing_coordinates": 0,
+        "invalid_coordinates": 0,
+        "parsed_records": 143
+      },
+      "policy": "Official section reference lacks both endpoint coordinates and explicit endpoint role"
+    },
+    {
+      "source": "New Taipei City Police Tamsui fixed enforcement cameras",
+      "code": "TW_NEWTAIPEI_TAMSUI_FIXED",
+      "url": "https://data.gov.tw/dataset/146361",
+      "download_url": "https://data.ntpc.gov.tw/api/datasets/c89a80db-05f6-4720-96ab-6a9a0fafe164/csv/file",
+      "license": "Open Government Data License version 1.0",
+      "license_url": "https://data.gov.tw/license",
+      "raw_records": 7,
+      "parsed_coordinates": 7,
+      "parse_report": {
+        "raw_records": 7,
+        "missing_coordinates": 0,
+        "invalid_coordinates": 0,
+        "parsed_records": 7
+      },
+      "policy": "Explicit municipal enforcement fields, original GPS, directions preserved verbatim, conditional speed limits suppressed; conservative dedupe and review guards"
+    },
+    {
+      "source": "Changhua County Police fixed technology enforcement cameras",
+      "code": "TW_CHANGHUA_FIXED_TECH",
+      "url": "https://data.gov.tw/dataset/172905",
+      "download_url": "https://www.chpb.gov.tw/opendata/deJgXKJjLESCdBNje_-bYA/csv",
+      "license": "Open Government Data License version 1.0",
+      "license_url": "https://data.gov.tw/license",
+      "raw_records": 57,
+      "parsed_coordinates": 57,
+      "parse_report": {
+        "raw_records": 57,
+        "missing_coordinates": 0,
+        "invalid_coordinates": 0,
+        "parsed_records": 57
+      },
+      "policy": "Explicit municipal enforcement fields, original GPS, directions preserved verbatim, conditional speed limits suppressed; conservative dedupe and review guards"
+    },
+    {
+      "source": "Taiwan National Police Agency fixed enforcement points (capability unresolved)",
+      "code": "TW_NPA_FIXED_UNTYPED",
+      "url": "https://data.gov.tw/dataset/7320",
+      "download_url": "https://opdadm.moi.gov.tw/api/v1/no-auth/resource/api/dataset/EA5E6FCD-B82D-43B7-A5CF-E9893253187E/resource/8C659346-0EDE-49E0-916C-BCD140A86F6D/download",
+      "license": "Open Government Data License version 1.0",
+      "license_url": "https://data.gov.tw/license",
+      "raw_records": 1896,
+      "parsed_coordinates": 1895,
+      "parse_report": {
+        "raw_records": 1896,
+        "missing_coordinates": 0,
+        "invalid_coordinates": 1,
+        "parsed_records": 1895
+      },
+      "policy": "NPA confirms fixed devices with mixed speed/red-light functions counted by facing direction; CSV omits capability; no type inferred"
+    },
+    {
+      "source": "Changhua County Police fixed violation cameras",
+      "code": "TW_CHANGHUA_FIXED",
+      "url": "https://data.gov.tw/dataset/27969",
+      "download_url": "https://www.chpb.gov.tw/opendata/2XvPDK8t9UC1v65F7FQ4Kw/csv",
+      "license": "Open Government Data License version 1.0",
+      "license_url": "https://data.gov.tw/license",
+      "raw_records": 58,
+      "parsed_coordinates": 58,
+      "parse_report": {
+        "raw_records": 58,
+        "missing_coordinates": 0,
+        "invalid_coordinates": 0,
+        "parsed_records": 58
+      },
+      "policy": "Explicit municipal enforcement fields, original GPS, directions preserved verbatim, conditional speed limits suppressed; conservative dedupe and review guards"
+    },
+    {
+      "source": "Changhua County Police average speed section reference",
+      "code": "TW_CHANGHUA_SECTION_REFERENCES",
+      "url": "https://data.gov.tw/dataset/178161",
+      "download_url": "https://www.chpb.gov.tw/opendata/iIqaLCWmEU-cNkBdBB-CAQ/csv",
+      "license": "Open Government Data License version 1.0",
+      "license_url": "https://data.gov.tw/license",
+      "raw_records": 1,
+      "parsed_coordinates": 1,
+      "parse_report": {
+        "raw_records": 1,
+        "missing_coordinates": 0,
+        "invalid_coordinates": 0,
+        "parsed_records": 1
+      },
+      "policy": "Only one official section reference coordinate, no start/end roles; section geometry is not invented"
+    },
+    {
+      "source": "Yunlin County Police fixed enforcement cameras August 2026",
+      "code": "TW_YUNLIN_FIXED",
+      "url": "https://data.gov.tw/dataset/178358",
+      "download_url": "https://ws.yunlin.gov.tw/001/Upload/539/opendata/0/2492/0f3f7782-6a19-490b-817b-2b075cce6bc7.csv",
+      "license": "Open Government Data License version 1.0",
+      "license_url": "https://data.gov.tw/license",
+      "raw_records": 97,
+      "parsed_coordinates": 96,
+      "policy": "Inverted coordinate labels confirmed with independent national GPS samples under one metre; actual row enforcement capability explicit, documentary header excluded; no direction inferred",
+      "coordinate_verification": "taiwan-coordinate-label-verification.json"
+    },
+    {
+      "source": "Yunlin County Police fixed technology enforcement August 2026",
+      "code": "TW_YUNLIN_FIXED_TECH",
+      "url": "https://data.gov.tw/dataset/178357",
+      "download_url": "https://ws.yunlin.gov.tw/001/Upload/539/opendata/0/2491/be1537c9-659a-46a6-940b-0b89e2c594fa.csv",
+      "license": "Open Government Data License version 1.0",
+      "license_url": "https://data.gov.tw/license",
+      "raw_records": 23,
+      "parsed_coordinates": 22,
+      "policy": "Inverted coordinate labels confirmed with independent national GPS samples under one metre; actual row enforcement capability explicit, documentary header excluded; no direction inferred",
+      "coordinate_verification": "taiwan-coordinate-label-verification.json"
+    },
+    {
+      "source": "New Taipei City Police fixed enforcement: 三峽區",
+      "code": "TW_NEWTAIPEI_0B997A50",
+      "url": "https://data.ntpc.gov.tw/datasets/0b997a50-a4a2-45c8-a313-e8a92488c4dc",
+      "download_url": "https://data.ntpc.gov.tw/api/datasets/0b997a50-a4a2-45c8-a313-e8a92488c4dc/csv/file",
+      "license": "Open Government Data License version 1.0",
+      "license_url": "https://data.gov.tw/license",
+      "raw_records": 13,
+      "license_page_sha256": "8acd6c0c2e62900d9ec6479f2bc39a57ffc5210a932f21605d28580798cf6d83",
+      "policy": "Explicit district field capability; blank capability remains LOW; exact source GPS and original direction retained; full-file CSV acquisition, conservative dedupe"
+    },
+    {
+      "source": "New Taipei City Police fixed enforcement: 三重區",
+      "code": "TW_NEWTAIPEI_C1DF03E3",
+      "url": "https://data.ntpc.gov.tw/datasets/c1df03e3-7931-4520-8129-4fb308af803a",
+      "download_url": "https://data.ntpc.gov.tw/api/datasets/c1df03e3-7931-4520-8129-4fb308af803a/csv/file",
+      "license": "Open Government Data License version 1.0",
+      "license_url": "https://data.gov.tw/license",
+      "raw_records": 12,
+      "license_page_sha256": "2292e3b5ea35f1bc2f5cef54d48857529b373624d07bbd4ce1eeda93dc784d88",
+      "policy": "Explicit district field capability; blank capability remains LOW; exact source GPS and original direction retained; full-file CSV acquisition, conservative dedupe"
+    },
+    {
+      "source": "New Taipei City Police fixed enforcement: 中和區",
+      "code": "TW_NEWTAIPEI_2C44E1A6",
+      "url": "https://data.ntpc.gov.tw/datasets/2c44e1a6-8bba-4499-9402-5e7014f10aa6",
+      "download_url": "https://data.ntpc.gov.tw/api/datasets/2c44e1a6-8bba-4499-9402-5e7014f10aa6/csv/file",
+      "license": "Open Government Data License version 1.0",
+      "license_url": "https://data.gov.tw/license",
+      "raw_records": 5,
+      "license_page_sha256": "0a72b4bf4c70909283cc27f354aad5b8498955cd0738f43448bafba09a8408c7",
+      "policy": "Explicit district field capability; blank capability remains LOW; exact source GPS and original direction retained; full-file CSV acquisition, conservative dedupe"
+    },
+    {
+      "source": "New Taipei City Police fixed enforcement: 五股區",
+      "code": "TW_NEWTAIPEI_F85D869F",
+      "url": "https://data.ntpc.gov.tw/datasets/f85d869f-cd78-4b9f-9a10-6745c244f4ff",
+      "download_url": "https://data.ntpc.gov.tw/api/datasets/f85d869f-cd78-4b9f-9a10-6745c244f4ff/csv/file",
+      "license": "Open Government Data License version 1.0",
+      "license_url": "https://data.gov.tw/license",
+      "raw_records": 7,
+      "license_page_sha256": "17ce982cc0ee53ec5977bad567d853a06250247e1aea9011e79c94867ea1705b",
+      "policy": "Explicit district field capability; blank capability remains LOW; exact source GPS and original direction retained; full-file CSV acquisition, conservative dedupe"
+    },
+    {
+      "source": "New Taipei City Police fixed enforcement: 八里區",
+      "code": "TW_NEWTAIPEI_A7A7F57E",
+      "url": "https://data.ntpc.gov.tw/datasets/a7a7f57e-2c74-4c27-a8c7-0152fdf094f8",
+      "download_url": "https://data.ntpc.gov.tw/api/datasets/a7a7f57e-2c74-4c27-a8c7-0152fdf094f8/csv/file",
+      "license": "Open Government Data License version 1.0",
+      "license_url": "https://data.gov.tw/license",
+      "raw_records": 10,
+      "license_page_sha256": "c5fd2224ae5e2d72c5c87e896ea49bb59dbd64a7a42034097f5a07f9b2feb9bd",
+      "policy": "Explicit district field capability; blank capability remains LOW; exact source GPS and original direction retained; full-file CSV acquisition, conservative dedupe"
+    },
+    {
+      "source": "New Taipei City Police fixed enforcement: 土城區",
+      "code": "TW_NEWTAIPEI_2A4F4679",
+      "url": "https://data.ntpc.gov.tw/datasets/2a4f4679-c5ea-4669-aa71-560a90659765",
+      "download_url": "https://data.ntpc.gov.tw/api/datasets/2a4f4679-c5ea-4669-aa71-560a90659765/csv/file",
+      "license": "Open Government Data License version 1.0",
+      "license_url": "https://data.gov.tw/license",
+      "raw_records": 9,
+      "license_page_sha256": "c70a3b8fe60b976eb8d6e651b47676ea162152b2696dfb6aaf418fd7dc248c3e",
+      "policy": "Explicit district field capability; blank capability remains LOW; exact source GPS and original direction retained; full-file CSV acquisition, conservative dedupe"
+    },
+    {
+      "source": "New Taipei City Police fixed enforcement: 坪林區",
+      "code": "TW_NEWTAIPEI_4439DA2E",
+      "url": "https://data.ntpc.gov.tw/datasets/4439da2e-cf04-4443-b4cf-7d3f2b9bf61e",
+      "download_url": "https://data.ntpc.gov.tw/api/datasets/4439da2e-cf04-4443-b4cf-7d3f2b9bf61e/csv/file",
+      "license": "Open Government Data License version 1.0",
+      "license_url": "https://data.gov.tw/license",
+      "raw_records": 5,
+      "license_page_sha256": "a67e5bbfafe55ae89a78d1070837b8e53d607573ab9cd85321cf59fe73d94c9a",
+      "policy": "Explicit district field capability; blank capability remains LOW; exact source GPS and original direction retained; full-file CSV acquisition, conservative dedupe"
+    },
+    {
+      "source": "New Taipei City Police fixed enforcement: 平溪區",
+      "code": "TW_NEWTAIPEI_1292F42F",
+      "url": "https://data.ntpc.gov.tw/datasets/1292f42f-dbae-4374-94cb-055d24e6d031",
+      "download_url": "https://data.ntpc.gov.tw/api/datasets/1292f42f-dbae-4374-94cb-055d24e6d031/csv/file",
+      "license": "Open Government Data License version 1.0",
+      "license_url": "https://data.gov.tw/license",
+      "raw_records": 2,
+      "license_page_sha256": "8d2925a64993a1e0edc9a276239ad2b0b81c86eb051eb060056ae23b37189e66",
+      "policy": "Explicit district field capability; blank capability remains LOW; exact source GPS and original direction retained; full-file CSV acquisition, conservative dedupe"
+    },
+    {
+      "source": "New Taipei City Police fixed enforcement: 新店區",
+      "code": "TW_NEWTAIPEI_CFF8E05C",
+      "url": "https://data.ntpc.gov.tw/datasets/cff8e05c-7466-46fa-8969-447dca31f87a",
+      "download_url": "https://data.ntpc.gov.tw/api/datasets/cff8e05c-7466-46fa-8969-447dca31f87a/csv/file",
+      "license": "Open Government Data License version 1.0",
+      "license_url": "https://data.gov.tw/license",
+      "raw_records": 12,
+      "license_page_sha256": "f852aec3401eb9f825b3684653d04612a68fd8ca24c983caa409db637e95b195",
+      "policy": "Explicit district field capability; blank capability remains LOW; exact source GPS and original direction retained; full-file CSV acquisition, conservative dedupe"
+    },
+    {
+      "source": "New Taipei City Police fixed enforcement: 新莊區",
+      "code": "TW_NEWTAIPEI_683C1B0F",
+      "url": "https://data.ntpc.gov.tw/datasets/683c1b0f-507e-4c7d-a652-6e858d38455b",
+      "download_url": "https://data.ntpc.gov.tw/api/datasets/683c1b0f-507e-4c7d-a652-6e858d38455b/csv/file",
+      "license": "Open Government Data License version 1.0",
+      "license_url": "https://data.gov.tw/license",
+      "raw_records": 12,
+      "license_page_sha256": "9545731a0c25221094cdef071e5f8799089ed119feb9775ab92ac9fd94c90082",
+      "policy": "Explicit district field capability; blank capability remains LOW; exact source GPS and original direction retained; full-file CSV acquisition, conservative dedupe"
+    },
+    {
+      "source": "New Taipei City Police fixed enforcement: 板橋區",
+      "code": "TW_NEWTAIPEI_B5B30B9A",
+      "url": "https://data.ntpc.gov.tw/datasets/b5b30b9a-be57-4c7b-bd10-abaf04adcf21",
+      "download_url": "https://data.ntpc.gov.tw/api/datasets/b5b30b9a-be57-4c7b-bd10-abaf04adcf21/csv/file",
+      "license": "Open Government Data License version 1.0",
+      "license_url": "https://data.gov.tw/license",
+      "raw_records": 12,
+      "license_page_sha256": "05b118ec2f2d5c16bdef3c17da186e9feeb84dfc953959dc5dd32a64b8e808ea",
+      "policy": "Explicit district field capability; blank capability remains LOW; exact source GPS and original direction retained; full-file CSV acquisition, conservative dedupe"
+    },
+    {
+      "source": "New Taipei City Police fixed enforcement: 林口區",
+      "code": "TW_NEWTAIPEI_11825B40",
+      "url": "https://data.ntpc.gov.tw/datasets/11825b40-7ccd-4175-bfce-d4bea66ac3ae",
+      "download_url": "https://data.ntpc.gov.tw/api/datasets/11825b40-7ccd-4175-bfce-d4bea66ac3ae/csv/file",
+      "license": "Open Government Data License version 1.0",
+      "license_url": "https://data.gov.tw/license",
+      "raw_records": 13,
+      "license_page_sha256": "3dbea4805b642ea5321850e70e6fc353279c7d601c01c0dd0a794a3c4cc46756",
+      "policy": "Explicit district field capability; blank capability remains LOW; exact source GPS and original direction retained; full-file CSV acquisition, conservative dedupe"
+    },
+    {
+      "source": "New Taipei City Police fixed enforcement: 樹林區",
+      "code": "TW_NEWTAIPEI_9111E1D1",
+      "url": "https://data.ntpc.gov.tw/datasets/9111e1d1-1985-4c56-9de8-d29cb1b41dd6",
+      "download_url": "https://data.ntpc.gov.tw/api/datasets/9111e1d1-1985-4c56-9de8-d29cb1b41dd6/csv/file",
+      "license": "Open Government Data License version 1.0",
+      "license_url": "https://data.gov.tw/license",
+      "raw_records": 8,
+      "license_page_sha256": "10d8c9d88d65d00881eb893c3ccab64f698d32137f540c8c5fcab164a362bf7d",
+      "policy": "Explicit district field capability; blank capability remains LOW; exact source GPS and original direction retained; full-file CSV acquisition, conservative dedupe"
+    },
+    {
+      "source": "New Taipei City Police fixed enforcement: 永和區",
+      "code": "TW_NEWTAIPEI_364737F4",
+      "url": "https://data.ntpc.gov.tw/datasets/364737f4-4ed9-4fed-8600-646a36d39331",
+      "download_url": "https://data.ntpc.gov.tw/api/datasets/364737f4-4ed9-4fed-8600-646a36d39331/csv/file",
+      "license": "Open Government Data License version 1.0",
+      "license_url": "https://data.gov.tw/license",
+      "raw_records": 2,
+      "license_page_sha256": "46c93fc3caf218922239fdce5a9ffd37f193a2814ed7d1e901143ed1c0e3ec44",
+      "policy": "Explicit district field capability; blank capability remains LOW; exact source GPS and original direction retained; full-file CSV acquisition, conservative dedupe"
+    },
+    {
+      "source": "New Taipei City Police fixed enforcement: 汐止區",
+      "code": "TW_NEWTAIPEI_54288733",
+      "url": "https://data.ntpc.gov.tw/datasets/54288733-8649-4902-a467-6a231fa7bc41",
+      "download_url": "https://data.ntpc.gov.tw/api/datasets/54288733-8649-4902-a467-6a231fa7bc41/csv/file",
+      "license": "Open Government Data License version 1.0",
+      "license_url": "https://data.gov.tw/license",
+      "raw_records": 4,
+      "license_page_sha256": "c6cdeac004accbe8841cfe5eb1fb7d2a20b7789c52993542fdac2281349bb9db",
+      "policy": "Explicit district field capability; blank capability remains LOW; exact source GPS and original direction retained; full-file CSV acquisition, conservative dedupe"
+    },
+    {
+      "source": "New Taipei City Police fixed enforcement: 泰山區",
+      "code": "TW_NEWTAIPEI_73B75683",
+      "url": "https://data.ntpc.gov.tw/datasets/73b75683-d045-4ea2-bb13-c71edaaea8cb",
+      "download_url": "https://data.ntpc.gov.tw/api/datasets/73b75683-d045-4ea2-bb13-c71edaaea8cb/csv/file",
+      "license": "Open Government Data License version 1.0",
+      "license_url": "https://data.gov.tw/license",
+      "raw_records": 4,
+      "license_page_sha256": "33d7992bd6daacc653d854a244f246883748e35172b2249f236b38f878ed7343",
+      "policy": "Explicit district field capability; blank capability remains LOW; exact source GPS and original direction retained; full-file CSV acquisition, conservative dedupe"
+    },
+    {
+      "source": "New Taipei City Police fixed enforcement: 深坑區",
+      "code": "TW_NEWTAIPEI_126074CC",
+      "url": "https://data.ntpc.gov.tw/datasets/126074cc-2091-4c0f-8fc5-a16bc530eb30",
+      "download_url": "https://data.ntpc.gov.tw/api/datasets/126074cc-2091-4c0f-8fc5-a16bc530eb30/csv/file",
+      "license": "Open Government Data License version 1.0",
+      "license_url": "https://data.gov.tw/license",
+      "raw_records": 6,
+      "license_page_sha256": "ff53faaada99ea4e9c32fbdb2ce0891073d31559149d3e46430b26179e36069f",
+      "policy": "Explicit district field capability; blank capability remains LOW; exact source GPS and original direction retained; full-file CSV acquisition, conservative dedupe"
+    },
+    {
+      "source": "New Taipei City Police fixed enforcement: 瑞芳區",
+      "code": "TW_NEWTAIPEI_051AC91B",
+      "url": "https://data.ntpc.gov.tw/datasets/051ac91b-ad10-46d0-9da6-c8691317a6af",
+      "download_url": "https://data.ntpc.gov.tw/api/datasets/051ac91b-ad10-46d0-9da6-c8691317a6af/csv/file",
+      "license": "Open Government Data License version 1.0",
+      "license_url": "https://data.gov.tw/license",
+      "raw_records": 9,
+      "license_page_sha256": "bcb51d608853d190506e36a8e4c59a6766c360b9d443492afca4384098c87909",
+      "policy": "Explicit district field capability; blank capability remains LOW; exact source GPS and original direction retained; full-file CSV acquisition, conservative dedupe"
+    },
+    {
+      "source": "New Taipei City Police fixed enforcement: 石碇區",
+      "code": "TW_NEWTAIPEI_501B36C1",
+      "url": "https://data.ntpc.gov.tw/datasets/501b36c1-0ae9-4e40-92a4-3d57b557f8d7",
+      "download_url": "https://data.ntpc.gov.tw/api/datasets/501b36c1-0ae9-4e40-92a4-3d57b557f8d7/csv/file",
+      "license": "Open Government Data License version 1.0",
+      "license_url": "https://data.gov.tw/license",
+      "raw_records": 8,
+      "license_page_sha256": "550909485faf139ec2c798997393896f945272fc4a4204c790e6b2ae81836ed0",
+      "policy": "Explicit district field capability; blank capability remains LOW; exact source GPS and original direction retained; full-file CSV acquisition, conservative dedupe"
+    },
+    {
+      "source": "New Taipei City Police fixed enforcement: 石門區",
+      "code": "TW_NEWTAIPEI_A2D5BA96",
+      "url": "https://data.ntpc.gov.tw/datasets/a2d5ba96-fc07-48ac-9f8c-92967502ca48",
+      "download_url": "https://data.ntpc.gov.tw/api/datasets/a2d5ba96-fc07-48ac-9f8c-92967502ca48/csv/file",
+      "license": "Open Government Data License version 1.0",
+      "license_url": "https://data.gov.tw/license",
+      "raw_records": 3,
+      "license_page_sha256": "b6690a7ac1f505dd6c2d5391aa7388dfcc7ac9eafa08f55addee95a5f5cdbd74",
+      "policy": "Explicit district field capability; blank capability remains LOW; exact source GPS and original direction retained; full-file CSV acquisition, conservative dedupe"
+    },
+    {
+      "source": "New Taipei City Police fixed enforcement: 萬里區",
+      "code": "TW_NEWTAIPEI_54FB654A",
+      "url": "https://data.ntpc.gov.tw/datasets/54fb654a-1090-4050-ab74-94afd08f60b5",
+      "download_url": "https://data.ntpc.gov.tw/api/datasets/54fb654a-1090-4050-ab74-94afd08f60b5/csv/file",
+      "license": "Open Government Data License version 1.0",
+      "license_url": "https://data.gov.tw/license",
+      "raw_records": 5,
+      "license_page_sha256": "14bf5f61a44ce79d11a12589eda8981b4be06d60da3d5d2d21fbb4cc20b92b1b",
+      "policy": "Explicit district field capability; blank capability remains LOW; exact source GPS and original direction retained; full-file CSV acquisition, conservative dedupe"
+    },
+    {
+      "source": "New Taipei City Police fixed enforcement: 蘆洲區",
+      "code": "TW_NEWTAIPEI_466D7354",
+      "url": "https://data.ntpc.gov.tw/datasets/466d7354-4ccf-44e5-aeaf-bea948b79079",
+      "download_url": "https://data.ntpc.gov.tw/api/datasets/466d7354-4ccf-44e5-aeaf-bea948b79079/csv/file",
+      "license": "Open Government Data License version 1.0",
+      "license_url": "https://data.gov.tw/license",
+      "raw_records": 1,
+      "license_page_sha256": "8affdac62302f06f27e7a13c2136ae3d8924719c18c337e504339d4ddaaeb30c",
+      "policy": "Explicit district field capability; blank capability remains LOW; exact source GPS and original direction retained; full-file CSV acquisition, conservative dedupe"
+    },
+    {
+      "source": "New Taipei City Police fixed enforcement: 貢寮區",
+      "code": "TW_NEWTAIPEI_B15B6F51",
+      "url": "https://data.ntpc.gov.tw/datasets/b15b6f51-3332-4c5c-a050-770480fd9494",
+      "download_url": "https://data.ntpc.gov.tw/api/datasets/b15b6f51-3332-4c5c-a050-770480fd9494/csv/file",
+      "license": "Open Government Data License version 1.0",
+      "license_url": "https://data.gov.tw/license",
+      "raw_records": 7,
+      "license_page_sha256": "e2de8511abb48bc3eb461390782e00a1c18100bb01aacec4172047db14b3b3c8",
+      "policy": "Explicit district field capability; blank capability remains LOW; exact source GPS and original direction retained; full-file CSV acquisition, conservative dedupe"
+    },
+    {
+      "source": "New Taipei City Police fixed enforcement: 金山區",
+      "code": "TW_NEWTAIPEI_0BA4DD89",
+      "url": "https://data.ntpc.gov.tw/datasets/0ba4dd89-0146-485d-80ec-42fc29db4559",
+      "download_url": "https://data.ntpc.gov.tw/api/datasets/0ba4dd89-0146-485d-80ec-42fc29db4559/csv/file",
+      "license": "Open Government Data License version 1.0",
+      "license_url": "https://data.gov.tw/license",
+      "raw_records": 3,
+      "license_page_sha256": "b2c045e7db214ad4bb1322b52e5af751c2ccec10668bf727d5a6dbadb7021855",
+      "policy": "Explicit district field capability; blank capability remains LOW; exact source GPS and original direction retained; full-file CSV acquisition, conservative dedupe"
+    },
+    {
+      "source": "New Taipei City Police fixed enforcement: 雙溪區",
+      "code": "TW_NEWTAIPEI_589AAABF",
+      "url": "https://data.ntpc.gov.tw/datasets/589aaabf-457d-43a1-96fd-f9fd48a9e362",
+      "download_url": "https://data.ntpc.gov.tw/api/datasets/589aaabf-457d-43a1-96fd-f9fd48a9e362/csv/file",
+      "license": "Open Government Data License version 1.0",
+      "license_url": "https://data.gov.tw/license",
+      "raw_records": 4,
+      "license_page_sha256": "c0c654dc24cd0ca77a05b9107b1c96416da4cd288c09db97fe5cb249904582ad",
+      "policy": "Explicit district field capability; blank capability remains LOW; exact source GPS and original direction retained; full-file CSV acquisition, conservative dedupe"
+    },
+    {
+      "source": "New Taipei City Police fixed enforcement: 鶯歌區",
+      "code": "TW_NEWTAIPEI_B9D5D48A",
+      "url": "https://data.ntpc.gov.tw/datasets/b9d5d48a-7412-471b-bd4e-ff54999510fe",
+      "download_url": "https://data.ntpc.gov.tw/api/datasets/b9d5d48a-7412-471b-bd4e-ff54999510fe/csv/file",
+      "license": "Open Government Data License version 1.0",
+      "license_url": "https://data.gov.tw/license",
+      "raw_records": 7,
+      "license_page_sha256": "6c40673aa7c1c799d312a69aa8b6c7810666f7a8540622f0b42685870b577be0",
+      "policy": "Explicit district field capability; blank capability remains LOW; exact source GPS and original direction retained; full-file CSV acquisition, conservative dedupe"
+    },
+    {
+      "source": "Mauritius Digital Promotion Agency fixed speed cameras",
+      "code": "MU_MDPA_FIXED",
+      "source_url": "https://data.govmu.org/dataset/location-fixed-speed-cameras",
+      "download_url": "https://data.govmu.org/dataset/5e05d30e-2424-400d-9b35-8a34b01fe982/resource/1e587d7a-73dd-4c49-9632-9f004a8a9b1a/download/fixspeedcams.csv",
+      "license": "CC-BY-SA-4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "policy": "Official static snapshot last updated September 2024; current operation has not been independently established; generic mobile zones excluded, no type/speed activation inferred"
+    },
+    {
+      "source": "Singapore Police Force Red Light Cameras, February 2017",
+      "code": "SG_SPF_RED_HISTORICAL",
+      "source_url": "https://data.gov.sg/datasets/d_5f140c79c9dbee0bbb07c753afd788d8/view",
+      "download_url": "https://api-open.data.gov.sg/v1/public/api/datasets/d_5f140c79c9dbee0bbb07c753afd788d8/poll-download",
+      "license": "Singapore Open Data Licence",
+      "license_url": "https://data.gov.sg/open-data-licence",
+      "policy": "Explicit 2017 data coverage despite 2025 catalog update; current device operation and capability require verification; generic mobile zones excluded, no type/speed activation inferred"
+    },
+    {
+      "source": "Singapore Police Force speed cameras, 2019",
+      "code": "SG_SPF_SPEED_HISTORICAL",
+      "source_url": "https://data.gov.sg/datasets/d_983804de2bc016f53e44031d85d1ec8a/view",
+      "download_url": "https://api-open.data.gov.sg/v1/public/api/datasets/d_983804de2bc016f53e44031d85d1ec8a/poll-download",
+      "license": "Singapore Open Data Licence",
+      "license_url": "https://data.gov.sg/open-data-licence",
+      "policy": "Explicit 2019 coverage; current fixed-device operation requires verification; mobile deployment sites excluded; generic mobile zones excluded, no type/speed activation inferred"
+    },
+    {
+      "source": "Trafikverket fixed ATK cameras via Fartkameran.se CC0 dataset",
+      "code": "SE_TRV_CC0_MIRROR",
+      "source_url": "https://fartkameran.se/kameror/",
+      "download_url": "https://fartkameran.se/data/kameror-karta.json",
+      "license": "CC0-1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "raw_records": 2795,
+      "policy": "Only actual fixed-device IDs and coordinates are imported from the CC0 mirror. Road speed and photographic compass labels are omitted pending direct validation. Five current primary WMS samples validate stable identities, validity intervals and coordinates within 10m.",
+      "validation_report": "master-db/coverage/sweden-independent-sample-validation.json"
+    },
+    {
+      "source": "Access Canberra ACT fixed road safety camera locations",
+      "code": "AU_ACT_FIXED",
+      "source_url": "https://www.data.act.gov.au/Transport/Traffic-speed-camera-locations/426s-vdu4",
+      "download_url": "https://www.data.act.gov.au/resource/426s-vdu4.json?$limit=50000",
+      "license": "CC-BY-4.0",
+      "license_url": "https://creativecommons.org/licenses/by/4.0/",
+      "raw_records": 1263,
+      "normalized_device_observations": 30,
+      "policy": "Mobile sites and rows without an enforcement type excluded. Retired devices remain candidates. Point-to-point references without explicit endpoint roles/pairs remain LOW; no endpoints guessed."
+    },
+    {
+      "code": "IE_GARDA_STATIC",
+      "source": "An Garda Síochána current nine operational static safety camera pages",
+      "source_url": "https://www.garda.ie/en/roads-policing/safety-cameras-save-lives/static-safety-camera-detection/static-safety-camera-detection.html",
+      "license": "Irish PSI licence (CC-BY-4.0)",
+      "license_url": "https://www.garda.ie/en/re-use-of-information/",
+      "raw_records": 9,
+      "policy": "Actual official device coordinates and current static camera activation index; no mobile zones, no geocoding. Previous license uncertainty resolved by Garda PSI statement and Irish government standard PSI licence."
+    },
+    {
+      "code": "IE_GARDA_AVERAGE",
+      "source": "An Garda Síochána N3 N5 N2 average safety camera device coordinates",
+      "source_url": "https://www.garda.ie/en/roads-policing/safety-cameras-save-lives/average-safety-camera-detection/average-safety-camera-detection.html",
+      "license": "Irish PSI licence (CC-BY-4.0)",
+      "license_url": "https://www.garda.ie/en/re-use-of-information/",
+      "raw_records": 6,
+      "policy": "Official paired average-speed device locations do not identify directional entry/exit roles. Preserve individual endpoints as LOW candidates; no directional section invented."
+    },
+    {
+      "source": "Victoria Department of Justice fixed road safety camera network",
+      "code": "AU_VIC_FIXED",
+      "source_url": "https://discover.data.vic.gov.au/dataset/road-safety-camera-network-fixed-camera-locations",
+      "download_url": "https://a83890f7a31dea14e1ae83c6f0afacca.sdp4.elastic.sdp.vic.gov.au/sdp_data_pipelines_scl/_search?size=1000&track_total_hits=true",
+      "license": "CC-BY-4.0",
+      "license_url": "https://creativecommons.org/licenses/by/4.0/",
+      "raw_records": 328,
+      "normalized_device_observations": 328,
+      "policy": "Official current fixed camera index does not identify speed/red-light capabilities per device. Intersection classification is not enforcement capability; point-to-point rows have no explicit paired endpoints. Keep LOW pending device-specific evidence.",
+      "primary_type_evidence": [
+        "https://www.vic.gov.au/fixed-speed-cameras",
+        "https://www.vic.gov.au/red-light-cameras"
+      ]
+    },
+    {
+      "code": "ES_DGT_INVENTORY",
+      "source": "DGT DATEX II fixed radar cabins and average speed sections inventory",
+      "source_url": "https://nap.dgt.es/es/dataset/radares-fijos-dgt",
+      "download_url": "https://infocar.dgt.es/datex2/dgt/PredefinedLocationsPublication/radares/content.xml",
+      "license": "CC-BY",
+      "license_url": "https://opendefinition.org/licenses/cc-by/",
+      "raw_records": 737,
+      "policy": "Retrieved official inventory is dated 2025-12-18. Fixed entries identify radar cabins rather than independently confirmed active devices; present operation of this snapshot is not verified. Preserve as LOW candidates; explicit section endpoints retained."
+    },
+    {
+      "code": "UA_NPU_CURRENT",
+      "source": "National Police of Ukraine automatic speed enforcement camera locations",
+      "source_url": "https://data.gov.ua/dataset/b7b6349c-d109-45e7-af37-b73310f73cf5",
+      "license": "CC-BY-4.0",
+      "license_url": "https://creativecommons.org/licenses/by/4.0/",
+      "raw_records": 426,
+      "parsed_records": 424,
+      "invalid_coordinate_rows": 2,
+      "snapshot_updated_at": "2026-10-07T10:05:07.306551",
+      "independent_sample_report": "master-db/coverage/ukraine-independent-sample-validation.json",
+      "policy": "Current government speed-recognition devices with exact published coordinates. Five current primary OSM checks; prior canonical records never replaced. No inferred red-light capability or compass headings."
+    },
+    {
+      "code": "AU_SA_DIT_SAFETY",
+      "source": "Department for Infrastructure and Transport South Australia Safety Cameras (Traffic Signals RS/PP subset)",
+      "source_url": "https://location.sa.gov.au/lms/Reports/ReportMetadata.aspx?p_no=821&pu=y",
+      "license": "AusGOAL CC BY (Attribution)",
+      "license_url": "https://location.sa.gov.au/lms/Reports/ReportMetadata.aspx?p_no=821&pu=y",
+      "raw_records": 173,
+      "enforcement_records": 173,
+      "license_evidence": "Primary Location SA catalog indexed metadata explicitly AusGOAL CC BY (Attribution), dataset 821. Actual service description viewer.locsa.TrafficSignals and eight attribute names match that catalog. Direct catalog retrieval returned 403; no bypass used. Service is anonymously public and linked by speedcameras.sa.gov.au official fixed-camera map.",
+      "policy": "Primary Traffic Signals catalog explicitly states positional accuracy sites +/-100 metres, unknown update date. RS identifies red-light safety sites but precise device and speed capability are unresolved; PP does not provide directional entry/exit geometry. LOW review only."
+    },
+    {
+      "source": "Republic of Korea National Police and local governments / DATA.GO.KR fixed traffic enforcement standard",
+      "url": "https://www.data.go.kr/data/15028200/standard.do",
+      "license": "DATA.GO.KR unrestricted reuse — individually verified supplying agency permissions",
+      "raw_records": 43764,
+      "normalized_records": 30667,
+      "policy": "Current dated explicit speed/signal devices MEDIUM under existing policy; stale/missing/future date and incomplete section endpoints LOW. Unknown agency permissions or ambiguous source IDs excluded. Raw original pages and all permissions archived privately."
+    }
+  ],
+  "held_or_excluded": [
+    {
+      "source": "Arlington speed/red-light, Kent, Hamden, Lakeland, Osceola, Albany GA, Coral Gables",
+      "reason": "Government ownership/access alone does not establish commercial redistribution permission; explicit license not verified"
+    },
+    {
+      "source": "Des Moines historical citation locations",
+      "reason": "All rights reserved / historical citation dataset"
+    },
+    {
+      "source": "Bellevue and Cornwall",
+      "reason": "Explicit commercial-use restrictions"
+    },
+    {
+      "source": "Lethbridge photo radar deployment zones",
+      "reason": "69 road deployment zones are not precise fixed-camera devices"
+    },
+    {
+      "source": "St Albert licensed camera point layer",
+      "reason": "Live query returned zero features"
+    },
+    {
+      "source": "Ireland Garda mobile safety camera zones",
+      "url": "https://www.garda.ie/en/roads-policing/safety-cameras-save-lives/mobile-safety-camera-detection/",
+      "reason": "Mobile zones are not fixed cameras; redistribution permission not established"
+    },
+    {
+      "source": "Ireland Dublin/Fingal traffic CCTV and VAS signs; Finland Digitraffic traffic/weather cameras; Winnipeg TMC",
+      "reason": "Traffic observation or speed feedback infrastructure, not established enforcement cameras"
+    },
+    {
+      "source": "SpeedCams.us bulk database",
+      "url": "https://speedcams.us/terms/",
+      "reason": "Terms require bulk-use permission; only primary source references researched, no bulk import"
+    },
+    {
+      "source": "GitHub Open-GATSO-POI / velox",
+      "reason": "Code license does not license independent upstream data; known OSM/France upstream already represented"
+    },
+    {
+      "source": "GitHub OpenCCTV / proprietary navigation radar extracts / ALPR surveillance repositories",
+      "reason": "Unknown dataset license, stale or wrong camera purpose; no import"
+    },
+    {
+      "source": "Estonia TarkTee enforcement point layers",
+      "url": "https://tarktee.transpordiamet.ee/tarktee/rest/services/tram/edit_features/MapServer/1",
+      "reason": "Precise government feed found; explicit dataset reuse license not verified"
+    },
+    {
+      "source": "NSW speed/red-light CSV",
+      "url": "https://data.nsw.gov.au/data/dataset/2-nsw-speed-cameras",
+      "reason": "Licensed but resource access returned 403; published static resources are old"
+    },
+    {
+      "source": "Brazil DNIT July 2026",
+      "url": "https://servicos.dnit.gov.br/dadosabertos/dataset/controle-de-velocidade",
+      "reason": "Download connection timeout; official data dictionary describes road/km without coordinates; no geocoded publication"
+    },
+    {
+      "source": "Recife March 2026 enforcement GPS CSV",
+      "url": "https://dados.recife.pe.gov.br/en_AU/dataset/equipamentos-de-monitoramento-e-fiscalizacao-de-transito/resource/36c2b47b-f439-4895-8b65-3f3dda36a4a7",
+      "license": "ODbL-1.0",
+      "reason": "DNS failure and TLS-verified resolved endpoint connection refused; eligible feed remains acquisition failure, not imported"
+    },
+    {
+      "source": "British Columbia ISC violation tickets by location 2025",
+      "url": "https://catalogue.data.gov.bc.ca/dataset/intersection-safety-camera-violation-tickets-by-location",
+      "license": "Open Government Licence - British Columbia",
+      "reason": "Current official locations/tickets validated, but CSV has intersection names and no coordinates; no guessed/geocoded fixed-camera publication"
+    },
+    {
+      "source": "Estonia TarkTee speed_cameras/MapServer/0 recheck",
+      "url": "https://tarktee.transpordiamet.ee/tarktee/rest/services/speed_cameras/MapServer/0",
+      "reason": "Public enforcement layer exists but dedicated explicit dataset reuse rights not established. Current app terms describe registered DATEX II gateway, not this ArcGIS dataset; not extended by assumption.",
+      "primary_terms": "https://tarktee.transpordiamet.ee/assets/i18n/en.json"
+    },
+    {
+      "source": "kaohsiung-lingya",
+      "url": "https://openapi.kcg.gov.tw/Api/Service/Get/06c2080c-8532-43b6-93bf-8e4bee4e7365",
+      "reason": "HTTPSConnectionPool(host='openapi.kcg.gov.tw', port=443): Max retries exceeded with url: /Api/Service/Get/06c2080c-8532-43b6-93bf-8e4bee4e7365 (Caused by ConnectTimeoutError(<HTTPSConnection(host='openapi.kcg.gov.tw', port=443) at 0x1067e3610>, 'Connection to openapi.kcg.gov.tw timed out. (connect timeout=45)'))"
+    },
+    {
+      "source": "chiayi-fixed",
+      "url": "https://ws-tm.cyhg.gov.tw/001/Upload/1330/relfile/13620/248277/939333b3-dff4-4b72-b18a-d14f5983455f.csv",
+      "reason": "HTTPSConnectionPool(host='210.69.166.109', port=None): Max retries exceeded with url: /001/Upload/1330/relfile/13620/248277/939333b3-dff4-4b72-b18a-d14f5983455f.csv (Caused by ConnectTimeoutError(<HTTPSConnection(host='210.69.166.109', port=443) at 0x107235a90>, 'Connection to 210.69.166.109 timed out. (connect timeout=45)'))"
+    },
+    {
+      "source": "chiayi-tech",
+      "url": "https://ws-tm.cyhg.gov.tw/001/Upload/1330/relfile/13620/256051/72fa2fcd-f665-4191-b429-7950274c54d2.csv",
+      "reason": "HTTPSConnectionPool(host='210.69.166.109', port=None): Max retries exceeded with url: /001/Upload/1330/relfile/13620/256051/72fa2fcd-f665-4191-b429-7950274c54d2.csv (Caused by ConnectTimeoutError(<HTTPSConnection(host='210.69.166.109', port=443) at 0x107235810>, 'Connection to 210.69.166.109 timed out. (connect timeout=45)'))"
+    },
+    {
+      "source": "Latvian NAP Riga/Jurmala traffic enforcement device datasets",
+      "metadata_urls": [
+        "https://transportdata.gov.lv/lv/api/v1/metadata/data/0913fb10-55d2-4131-90af-1c8567ded8d1",
+        "https://transportdata.gov.lv/lv/api/v1/metadata/data/d0448120-baaa-4a13-bc9f-615591bf7114"
+      ],
+      "licence_observed": "Creative Commons CC Zero",
+      "formats": [
+        "DATEX II3.4 XML",
+        "GeoJSON"
+      ],
+      "checked_at": "2026-10-07T14:24:57.962717+00:00",
+      "reason": "Public metadata is available and permits CC0 reuse, but marks main files private and getwithpost. The official frontend requires authentication for dataset download. No private file URL or authentication bypass used; no rows imported. Per-device speed/red-light capabilities also require inspection once legitimate data access exists."
+    },
+    {
+      "source": "Transport for Greater Manchester fixed housing CSV",
+      "source_url": "https://www.data.gov.uk/dataset/c428ea7f-af17-451c-8657-8e15621490ab/speed-camera-locations-in-greater-manchester",
+      "download_url": "https://odata.tfgm.com/opendata/downloads/Speed_Camera_Locations_GM_Fixed.csv",
+      "license": "UK Open Government Licence",
+      "checked_at": "2026-10-07T14:32:51.790034+00:00",
+      "reason": "Actual downloaded CSV heading is 08/02/2016. Contains district/type/address/speed only, no coordinates; no precise device point can be verified without invented geocoding. No imported rows.",
+      "source_archive": {
+        "key": "archive/v1/manifests/cf112abc972e670326bf69f2cf83b10fd314b8023ce809160e0e415d62cab44a.json",
+        "sha256": "cf112abc972e670326bf69f2cf83b10fd314b8023ce809160e0e415d62cab44a",
+        "size_bytes": 480
+      }
+    },
+    {
+      "source": "Police Scotland current Safety Camera Locations map",
+      "url": "https://www.safetycameras.gov.scot/cameras/safety-camera-locations/",
+      "license_url": "https://www.safetycameras.gov.scot/disclaimer/",
+      "decision": "Primary copyright terms permit private/non-commercial download only and require written permission for other use; no data acquisition/import. Separate Scottish Government OGL statistics catalog contains no data links and describes aggregate collisions/offences, not a licensed GPS device inventory. No OGL inferred from government ownership.",
+      "separate_statistics_catalog": "https://www.data.gov.uk/dataset/bde01b5f-471e-4763-8841-8a83280864ff/key_scottish_safety_camera_programme_statistics"
+    },
+    {
+      "source": "SrednaBG Bulgaria average-speed merged dataset / BG TOLL My Maps / TollTracker",
+      "url": "https://github.com/demosten-com/SrednaBG",
+      "upstream_evidence": [
+        "https://raw.githubusercontent.com/demosten-com/SrednaBG/main/scrapers/src/bgtoll_scraper.py",
+        "https://raw.githubusercontent.com/demosten-com/SrednaBG/main/scrapers/src/kml_scraper.py",
+        "https://raw.githubusercontent.com/demosten-com/SrednaBG/main/scrapers/src/tolltracker_fetcher.py",
+        "https://tolltracker.eu/de/terms-of-service"
+      ],
+      "decision": "MIT applies to scraper code; merged data uses external BG TOLL Google My Maps and proprietary TollTracker coordinates without a verified dataset reuse licence. Official FAQ provides chainages, not GPS. No inherited MIT data licence, no borrowed Mapbox token, no default speed/heading assumptions and no import. Independently acquired Bulgarian ODbL snapshot already includes 117 nodes and 31 enforcement relations, with no explicit average_speed relation tags."
+    },
+    {
+      "source": "Howard County current red-light and rotating speed programs",
+      "metadata_urls": [
+        "https://www.howardcountymd.gov/police/red-light-camera-program",
+        "https://www.howardcountymd.gov/police/speed-camera-program"
+      ],
+      "reason": "Current official pages describe 29 red-light sites at 21 intersections and rotating mobile speed units. Address-only listings do not identify precise device GPS; no fabricated geocoding or mobile-site fixed-camera import."
+    },
+    {
+      "source": "Baltimore County highway enforcement GIS additional recheck",
+      "metadata_urls": [
+        "https://opendata.baltimorecountymd.gov/pages/data-license",
+        "https://bcgis.baltimorecountymd.gov/arcgis/rest/services/Highways/Highways/MapServer/90",
+        "https://bcgisdata.baltimorecountymd.gov/arcgis/rest/services/Highways/Highways/MapServer/91"
+      ],
+      "reason": "Official open-data portal license inspected. Dedicated enforcement layers absent from returned 16-item county camera/highways catalog; both official GIS hosts timed out. No payload imported and no assumption that a portal-wide license covers an unlisted service."
+    },
+    {
+      "source": "Italy national catalog — Messina violations",
+      "url": "https://www.dati.gov.it/node/view-dataset/dataset?id=799dd40b-1a97-43b5-a6e0-63b421449838",
+      "reason": "Primary CC-BY-4.0 catalog describes vehicle/check/penalty statistics, not device GPS; excluded."
+    },
+    {
+      "source": "Palermo municipal autovelox XML",
+      "url": "https://opendata.comune.palermo.it/js/server/uploads/dataset/xml/VIS_DATASET_AUTOVELOX01.xml",
+      "reason": "Licensed CC-BY-4.0 original acquired; 2013–2020 schedule descriptions and mobile enforcement, no coordinate fields. No geocoding or publication.",
+      "original_rows": 924
+    },
+    {
+      "source": "Riccione current public-domain municipal device documentation",
+      "url": "https://www.comune.riccione.rn.it/it/documenti_pubblici/documentazione-relativa-ai-dispositivi-di-controllo-automatico-delle-violazioni",
+      "reason": "August 2026 page identifies one fixed site and four red-light intersections using addresses/km and external Google maps. No explicit publisher GPS in the document; no guessed pole positions or Google geocoding."
+    },
+    {
+      "source": "Firenze/Toscana FIPILI repeat attempt",
+      "url": "https://dati.toscana.it/dataset/autovelox-fipili-citta-metropolitana-di-firenze/resource/6c7e756c-0ed8-456f-acbf-242a8898dff4",
+      "reason": "New primary portal attempt returns403. Earlier legacy source timeout retained; access restrictions not bypassed."
+    },
+    {
+      "source": "Winnipeg Traffic Signal Inventory — Cameras Detail",
+      "url": "https://data.winnipeg.ca/resource/42pk-2u2c.json",
+      "license": "Open Government Licence - Canada",
+      "reason": "Primary dataset explicitly describes TMC traffic monitoring cameras; camera_type counts inspected. Not speed/signal enforcement. Police describe 49 intersection safety cameras separately; no corresponding licensed explicit device GPS feed found in public enforcement catalog search.",
+      "camera_type_counts": [
+        {
+          "camera_type": "Fixed",
+          "count": "6"
+        },
+        {
+          "camera_type": "PTZ",
+          "count": "155"
+        }
+      ]
+    },
+    {
+      "id": "68c2110773c740c88f20a212007a5db5",
+      "source": "Highways_Assets_Safety Camera view",
+      "url": "https://services-eu1.arcgis.com/WZPLjyOOFu4PQ3GJ/arcgis/rest/services/Highways_Assets_Safety_Camera_view/FeatureServer",
+      "reason": "Primary service has empty rights; no publisher reuse grant established"
+    },
+    {
+      "id": "d23db5da905b43798391379c0bd2f4a2",
+      "source": "Essex Safety Cameras Public View",
+      "url": "https://services-eu1.arcgis.com/48zF6lPtAjyLTDSU/arcgis/rest/services/Essex_Safety_Cameras_Public_View/FeatureServer",
+      "reason": "Essex primary open-data catalog explicitly Non-Commercial; excluded"
+    },
+    {
+      "id": "b3732583a6b448dd9627644549267399",
+      "source": "Safety cameras",
+      "url": "https://maps2.bristol.gov.uk/server2/rest/services/ext/ll_transport/MapServer/34",
+      "reason": "Bristol primary connection timeout and no explicit redistribution rights"
+    },
+    {
+      "id": "3633cd5886644ccdb09db302ad21d359",
+      "source": "Safety Camera Sites - dormant - edited",
+      "url": "https://maps.gov.scot/server/rest/services/ScotGov/SafetyCameras/MapServer/11",
+      "reason": "Scottish Government legacy service404, dormant2021; current police map noncommercial rights"
+    },
+    {
+      "id": "c371e2b06f1746c8a9d7309ca4ad6b6d",
+      "source": "Safety Cameras",
+      "url": "https://gis.hertfordshire.gov.uk/webmaps/rest/services/public/communitypartnership/MapServer/0",
+      "reason": "Hertfordshire primary accessible but empty copyright/rights; no explicit reuse grant"
+    }
+  ],
+  "coverage_limit": "Zero gain is not evidence of complete real-world coverage. License/transport failures and bounded-disk skips remain explicit. Existing canonical rows are preserved.",
+  "additional_searches": [
+    {
+      "source": "Data.gov speed/red-light camera catalogs",
+      "url": "https://catalog.data.gov/?q=speed+cameras",
+      "result": "Relevant location feeds overlap already processed Chicago/DDOT; citation counts and unrelated remote-sensing cameras excluded"
+    },
+    {
+      "source": "Palermo municipal autovelox JSON",
+      "url": "https://opendata.comune.palermo.it/opendata-dataset.php?dataset=311",
+      "license": "CC BY 4.0",
+      "result": "Downloaded and inspected: historical 2013 mobile enforcement schedules, street labels, no GPS coordinates; excluded from canonical fixed-camera publication"
+    },
+    {
+      "source": "Primary Geofabrik regional index",
+      "url": "https://download.geofabrik.de/index-v1.json",
+      "license": "ODbL-1.0",
+      "result": "Registered 64 additional regional extracts for Germany, metropolitan France, Italy, Spain, Great Britain, Poland and Ukraine; all source URLs taken from verified index"
+    },
+    {
+      "source": "Brussels Mobility regional and municipal enforcement WFS",
+      "url": "https://data.mobility.brussels/info/472bf315-4669-4397-afb9-ccbcb174e664",
+      "license": "CC0-1.0",
+      "result": "Rechecked exact source registry and downloaded samples: already processed before stage baseline, 132 regional and 15 municipal objects; empty official numeric codelist and unspecified municipal operating status preserve existing candidate policy, no invented new source count"
+    },
+    {
+      "source": "Firenze FIPILI shapefile and Geoserver",
+      "url": "https://dati.cittametropolitana.fi.it/dataset/autovelox-fipili-citta-metropolitana-di-firenze",
+      "license": "Creative Commons Attribution",
+      "result": "2012 source metadata; catalog API, direct published ZIP and WFS connection timeouts. Acquisition unavailable; no coordinates guessed"
+    },
+    {
+      "source": "Lufop current licensing and public Europe CSV download",
+      "url": "https://lufop.net/en/lufop-api-access-the-most-complete-free-speed-camera-database/",
+      "license": "ODbL-1.0 (current primary page, September 25, 2026)",
+      "result": "Current license is explicit ODbL, unlike older secondary references; bulk page requires registered forum account and direct public download returns HTTP403. No API credentials available; no purchase/account creation or access restrictions bypassed"
+    },
+    {
+      "checked_at": "2026-10-07T11:36:22.439360+00:00",
+      "queries": [
+        "speed safety cameras school ArcGIS FeatureServer",
+        "school-zone camera open-data locations CSV",
+        "Quebec radar photo current GeoJSON license",
+        "Ireland static and average safety cameras current official locations",
+        "GitHub speed-camera dataset license",
+        "CC0 enforcement-camera data"
+      ],
+      "results": [
+        {
+          "source": "Québec MTQ current WFS/CSV/GeoJSON",
+          "url": "https://www.donneesquebec.ca/recherche/fr/dataset/radar-photo",
+          "decision": "CC-BY-4.0 official source already registered as QUEBEC_MTQ and represented before baseline; includes mobile territorial zones that must not become fixed devices"
+        },
+        {
+          "source": "Garda static cameras",
+          "url": "https://www.garda.ie/en/roads-policing/safety-cameras-save-lives/static-safety-camera-detection/static-safety-camera-detection.html",
+          "decision": "Current official list names nine fixed sites, with activation dates through August 2025. No licensed bulk GPS payload established; no road-name geocoding or mobile-zone publication"
+        },
+        {
+          "source": "Tacoma current automated enforcement",
+          "url": "https://tacoma.gov/government/departments/public-works/transportation/automated-enforcement/",
+          "decision": "Official feed already registered US_TACOMA_CAMERAS; current page independently confirms speed, school-zone and red-light approaches. Not a new dataset"
+        },
+        {
+          "source": "Baltimore ATVES current map",
+          "url": "https://www.arcgis.com/home/item.html?id=b2716697e13a4825b6df1470045b0631",
+          "decision": "Already represented official fixed, red-light and portable feeds; no duplicate source registration"
+        },
+        {
+          "source": "France Ministry bulk CSV",
+          "url": "https://www.data.gouv.fr/datasets/liste-des-radars-fixes-en-france",
+          "decision": "Open Licence 2.0, latest December 2025 snapshot already represented; one-point average-speed entries must not invent endpoints"
+        },
+        {
+          "source": "mrx23dot/speedcameras",
+          "url": "https://github.com/mrx23dot/speedcameras",
+          "decision": "No explicit dataset license or verifiable upstream evidence; not imported"
+        },
+        {
+          "source": "mretallack/MediaNavToolkit",
+          "url": "https://github.com/mretallack/MediaNavToolkit",
+          "decision": "Parser/reverse-engineering code does not establish reuse rights for proprietary navigation camera payloads; not imported"
+        },
+        {
+          "source": "1e1/Open-GATSO-POI",
+          "url": "https://github.com/1e1/Open-GATSO-POI",
+          "decision": "MIT code combines upstream France/Lufop. France already represented; Lufop bulk still unavailable under existing access. No inferred MIT data license"
+        },
+        {
+          "source": "Phaeilo downloader gist",
+          "url": "https://gist.github.com/Phaeilo/31f36ac50679aa9aca113621f87b2688",
+          "decision": "CC0 downloader code does not establish license for upstream camera SQLite databases; not imported"
+        },
+        {
+          "source": "Seattle police CCTV",
+          "url": "https://catalog.data.gov/dataset/cctv-camera-locations",
+          "decision": "General surveillance rather than enforcement; excluded"
+        }
+      ]
+    },
+    {
+      "checked_at": "2026-10-07T11:41:37.526642+00:00",
+      "source": "HeiGIT ohsome OSM filtered extraction",
+      "documentation": "https://docs.ohsome.org/ohsome-api/v2/reference/api.html",
+      "result": "Current v2 metadata is reachable and current, but documented extraction returns HTTP401 Authorization field missing. No API credential exists for this source. Legacy v1 metadata ends July 27, 2026 and GET extraction returns HTTP403. No extracted observations obtained; existing verified Geofabrik fallback continues."
+    },
+    {
+      "checked_at": "2026-10-07T11:42:32.036766+00:00",
+      "source": "Additional VK Maps public Overpass instance",
+      "url": "https://maps.mail.ru/osm/tools/overpass/api/interpreter",
+      "policy_url": "https://wiki.openstreetmap.org/wiki/Overpass_API",
+      "result": "Current OSM project public-instance table lists this additional global endpoint. Small licensed enforcement probe fails with ConnectionError before any payload is received; same ordinary TLS-verified request without custom headers also fails. No observations obtained, no empty-coverage inference."
+    },
+    {
+      "source": "Taiwan additional official national and municipal catalogs",
+      "catalog_ids": [
+        7320,
+        13940,
+        130111,
+        146361,
+        173211,
+        128438,
+        172174
+      ],
+      "outcome": "National, highway, Taipei and New Taipei payloads failed verified TLS; Hsinchu timed out; Yilan catalog HTTP 500; Miaoli metadata lacks GPS. No TLS bypass, invented coordinates or observations."
+    },
+    {
+      "source": "Further Taiwan municipal official catalogs",
+      "catalog_ids": [
+        38357,
+        178734,
+        172905,
+        177297
+      ],
+      "outcome": "Nantou licensed CSV failed verified TLS. Latest Taitung catalog contains three public URLs concatenated in one link; separately requested all three, each connection timed out. Changhua licensed CSV exhausted verified transport attempts. Hualien linked 3-page police PDF inspected: road kilometre/address and section chainages but no GPS; not geocoded or imported.",
+      "policy": "No inferred camera poles/endpoints, no TLS bypass; unavailable sources do not count as observations."
+    },
+    {
+      "source": "DC Automated Safety Camera current official catalog recheck",
+      "url": "https://catalog.data.gov/dataset/automated-safety-camera-asc-locations-and-violations-tracker",
+      "license": "CC-BY-4.0",
+      "outcome": "DDOT_DC licensed dataset already downloaded in baseline on 2026-10-06, 327 raw records. Rediscovery of dashboard is not a new source or new observations."
+    },
+    {
+      "source": "Texas DOT red-light camera operational authority",
+      "url": "https://www.txdot.gov/safety/traffic-signs-signals/red-light-cameras.html",
+      "outcome": "State prohibition includes grandfathered pre-2019 contract exceptions. New OSM-only Texas red-light or combined records remain LOW review without current official operation evidence; existing master/index never modified."
+    },
+    {
+      "checked_at": "2026-10-07T14:19:00Z",
+      "sources": [
+        {
+          "source": "NZTA current safety camera list",
+          "source_url": "https://nzta.govt.nz/travelling-on-our-roads/safety-cameras/about-safety-cameras/fixed-safety-camera-locations",
+          "result": "Primary index provides dated camera coordinates, but programmatic retrieval returned a 212-byte non-dataset response and dataset-specific reusable licence could not be established. No imported rows."
+        },
+        {
+          "source": "Surrey UK safety camera GIS",
+          "source_url": "https://sccmaps.surreycc.gov.uk/webmaps/rest/services/Surrey_Interactive_Map/RoadsTransport_SafetyCameras/MapServer",
+          "result": "Queryable government point layer discovered, but copyright SCC alone does not establish dataset reuse rights; no import."
+        },
+        {
+          "source": "UK DfT Speed Camera Locations catalogue",
+          "source_url": "https://www.data.gov.uk/dataset/d9a46353-ed30-483e-913f-4283d232d044/speed-camera-locations",
+          "result": "2015 metadata, no licence set and no data links; excluded."
+        },
+        {
+          "source": "Fingal Radar Speed Signs",
+          "source_url": "https://data.gov.ie/en_GB/dataset/radar-speed-signs-locations-fcc2",
+          "result": "CC-BY-4.0 signs explicitly collect no enforcement data; excluded from camera inventory."
+        },
+        {
+          "source": "France Radars automatiques community mirror",
+          "source_url": "https://www.data.gouv.fr/datasets/radars-automatiques",
+          "result": "Open Licence 2.0 but payload dates to2018. Newer December2025 Ministry inventory already in protected baseline; no weaker replacement."
+        }
+      ],
+      "garda_licensing_resolution": {
+        "source_url": "https://www.garda.ie/en/re-use-of-information/",
+        "licence_standard_url": "https://circulars.gov.ie/pdf/circular/per/2016/12.pdf",
+        "policy": "Garda explicitly permits reuse under latest Irish PSI licence. Irish official standard adopts CC-BY4.0. Nine static devices and six average-device points acquired; no geocoding or invented directional roles."
+      }
+    },
+    {
+      "checked_at": "2026-10-07T14:32:51.790451+00:00",
+      "source": "Denmark official fixed camera coverage cross-check",
+      "source_url": "https://www.vejdirektoratet.dk/faq-svar/hvor-staar-staerekasserne",
+      "outcome": "Current authority states 11 sites, nine monitoring both directions and two one direction. Existing 24 published records are not by themselves evidence of missing hundreds of fixed cameras. NDW traffic measurement and Reykjavik mobile speed survey layers are traffic observation, not established enforcement devices; excluded."
+    },
+    {
+      "checked_at": "2026-10-07T14:43:47.081285+00:00",
+      "countries": [
+        "MD",
+        "MT",
+        "AL",
+        "ME",
+        "CY"
+      ],
+      "scope": "Additional targeted national open-data/geoportal and enforcement-type search",
+      "outcome": "No additional reusable precise-device dataset surfaced in this targeted indexed pass. Montenegro August 2026 police announcement describes relocatable TrueCam 2 deployment, without fixed coordinates. Border webcams, road counters and Albania Street View imagery are not speed/red-light enforcement devices. Cyprus road-observation digitization describes traffic CCTV/counters, not automatic enforcement. Malta procurement notices and Moldova FOI request listings do not establish reusable current device coordinates. Existing region extracts are already privately archived; no absence-of-cameras claim is inferred.",
+      "sources": [
+        "https://www.gov.me/clanak/saobracajna-policija-uvodi-novi-sistem-radarske-kontrole-prekoracenja-brzine-bice-evidentirana-bez-zaustavljanja-vozila-radari-tesko-uocljivi-za-vozace",
+        "https://data.gov.me/sr/dataset/lokacije-brojaca-2025",
+        "https://data.gov.cy/el/node/29",
+        "https://asig.gov.al/publikohet-realizimi-i-fotografimit-360o-te-gjeoreferencuar-te-tunelit-te-llogarase/"
+      ]
+    },
+    {
+      "scope": "Canada municipal and smaller US city follow-up",
+      "checked": [
+        "https://traffic.ottawa.ca/en/opendata",
+        "https://traffic.ottawa.ca/en/parking-roads-and-travel/road-safety/enforcement/red-light-cameras",
+        "https://www.winnipeg.ca/police/services/traffic/photo-enforcement",
+        "https://www.saskatoon.ca/moving-around/driving-roadways/driving/photo-speed-enforcement",
+        "https://www.arcgis.com/sharing/rest/search"
+      ],
+      "outcome": "Ottawa and York licensed location feeds already represented. Winnipeg Socrata camera/red-light/photo-enforcement catalog queries returned no matching public dataset; official program count alone supplies no licensed precise coordinates. Cedar Rapids enforcement/photo ArcGIS catalog query returned seven non-enforcement items; security/CCTV and ALPR are excluded. These bounded searches do not establish absence of additional cameras."
+    },
+    {
+      "checked_at": "2026-10-07T16:06:26.274581+00:00",
+      "scope": "Global ArcGIS enforcement catalog, independent of state/city names",
+      "query": "(\"speed camera\" OR \"red light camera\" OR \"automated enforcement\") (Feature Service OR Map Service)",
+      "matching_items": 223,
+      "pages": 3,
+      "pagination_complete": true,
+      "previously_registered_licensed_feeds": [
+        "Washington DC",
+        "Tacoma",
+        "Peel",
+        "York",
+        "Kingston",
+        "Hamilton",
+        "Lancashire",
+        "Lisbon"
+      ],
+      "new_primary_sources": [
+        "HK_TD_RLC",
+        "HK_TD_SEC_HOUSING"
+      ],
+      "note": "Historical Suffolk 2015 feed and unlicensed mirrors do not establish current operation. Enforcement violation statistics and traffic observation cameras are excluded."
+    },
+    {
+      "checked_at": "2026-10-07T16:31:44.664638+00:00",
+      "search": "Italian national autovelox catalog plus current municipal documentation",
+      "new_eligible_coordinate_datasets": 0,
+      "decisions": "Published licensing inspected, original Palermo XML acquired; statistical/mobile/address-only sources excluded."
+    },
+    {
+      "checked_at": "2026-10-07T16:32:24.074775+00:00",
+      "search": "Expanded global ArcGIS enforcement vocabulary",
+      "query": "(\"photo enforcement\" OR \"photo radar\" OR \"intersection safety\" OR \"safety camera\" OR \"enforcement camera\" OR \"section control\" OR \"redlight\") (type:\"Feature Service\" OR type:\"Map Service\")",
+      "items": 519,
+      "pages": 6,
+      "pagination_complete": true,
+      "items_new_relative_to_previous_global_and_state_catalogs": 455,
+      "new_title_camera_radar_enforcement_safety_hits": 104,
+      "new_qualified_unprocessed_coordinate_feeds": 0,
+      "decisions": [
+        {
+          "id": "1bd1907efbe6410ab308c99bdb607f82",
+          "source": "Speed Safety Cameras",
+          "url": "https://services1.arcgis.com/EYzEZbDhXZjURPbP/arcgis/rest/services/Speed_Safety_Cameras/FeatureServer",
+          "reason": "Bellevue permissions already held; disclaimer is not open redistribution rights"
+        },
+        {
+          "id": "68c2110773c740c88f20a212007a5db5",
+          "source": "Highways_Assets_Safety Camera view",
+          "url": "https://services-eu1.arcgis.com/WZPLjyOOFu4PQ3GJ/arcgis/rest/services/Highways_Assets_Safety_Camera_view/FeatureServer",
+          "reason": "Primary service has empty rights; no publisher reuse grant established"
+        },
+        {
+          "id": "0205a08b3c4f423ab8809896ae410263",
+          "source": "Digital Speed Enforcement Cameras 2",
+          "url": "https://services9.arcgis.com/DMJSyGYAFwNjyN6I/arcgis/rest/services/SingaporePoliceForceDigitalSpeedEnforcementCamerasSHP/FeatureServer",
+          "reason": "Singapore digital feed already represented by licensed primary DATA.GOV.SG source"
+        },
+        {
+          "id": "edba31e6a7de48d1a1249b25ffd370b8",
+          "source": "Digital Speed Enforcement Cameras",
+          "url": "https://services9.arcgis.com/DMJSyGYAFwNjyN6I/arcgis/rest/services/SingaporePoliceForceDigitalSpeedEnforcementCamerasSHP/FeatureServer",
+          "reason": "Singapore digital feed already represented by licensed primary DATA.GOV.SG source"
+        },
+        {
+          "id": "34fec6acf2ff4df59ab183515153202b",
+          "source": "Street safety cameras",
+          "url": "https://services1.arcgis.com/cNVyNtjGVZybOQWZ/arcgis/rest/services/CCTV_Locations/FeatureServer",
+          "reason": "City safety CCTV, no verified speed/signal enforcement classification"
+        },
+        {
+          "id": "f3879db110b84473b4e3d669157c6a39",
+          "source": "Automatic Traffic Safety Cameras (ATSC) - (ACTIVE)",
+          "url": "https://services.arcgis.com/ZOyb2t4B0UYuYNYH/arcgis/rest/services/Automatic_Traffic_Safety_Cameras_(ATSC)_view/FeatureServer",
+          "reason": "Same active Seattle primary item is already in baseline registry"
+        },
+        {
+          "id": "d23db5da905b43798391379c0bd2f4a2",
+          "source": "Essex Safety Cameras Public View",
+          "url": "https://services-eu1.arcgis.com/48zF6lPtAjyLTDSU/arcgis/rest/services/Essex_Safety_Cameras_Public_View/FeatureServer",
+          "reason": "Essex primary open-data catalog explicitly Non-Commercial; excluded"
+        },
+        {
+          "id": "c49886e668e6496b94dbb2b770fd0e9b",
+          "source": "Essex Safety Cameras Public View",
+          "url": "https://services9.arcgis.com/2YYldcvahRdcVBRi/arcgis/rest/services/Essex_Safety_Cameras_Public_View/FeatureServer",
+          "reason": "Service499 Token Required; no authentication bypass"
+        },
+        {
+          "id": "0ffb8dafe3d245acbd5cc25361d1b32c",
+          "source": "Automated Speed Enforcement Cameras",
+          "url": "https://ww8.yorkmaps.ca/arcgis/rest/services/OpenData/Traffic/MapServer/3",
+          "reason": "York restricted partner/user license and retired Ontario speed enforcement"
+        },
+        {
+          "id": "264c6cd5121b41b0a0b86dfb0839b6b0",
+          "source": "Speed Enforcement Cameras in Hong Kong",
+          "url": "https://services3.arcgis.com/6j1KwZfY2fZrfNMR/arcgis/rest/services/Locations_of_Speed_Enforcement_Camera_housing_in_Hong_Kong/FeatureServer",
+          "reason": "HK government July2026 originals already acquired; do not use weaker ESRI reference mirror"
+        },
+        {
+          "id": "fa32814b9e2242e3b2ec2b592ac9b3c1",
+          "source": "Safety cameras",
+          "url": "https://map.cornwall.gov.uk/arcgis/rest/services/CCmap/MapServer/18",
+          "reason": "Cornwall view-only license already excluded"
+        },
+        {
+          "id": "f264e031aff54e6fb3f534cbed14c764",
+          "source": "Average speed safety cameras",
+          "url": "https://map.cornwall.gov.uk/arcgis/rest/services/CCmap/MapServer/110",
+          "reason": "Cornwall view-only license already excluded"
+        },
+        {
+          "id": "1ef25dfd5da94524acdc09b6d34a9998",
+          "source": "road_safety_camera_network_data_v3",
+          "url": "https://services-ap1.arcgis.com/AohjtnA5kaWn7ZGY/arcgis/rest/services/road_safety_camera_network_data_v3/FeatureServer",
+          "reason": "Service499 Token Required; Victoria primary licensed search snapshot already acquired"
+        },
+        {
+          "id": "324e799552ff4b2198139423488cbad1",
+          "source": "CMS data set _ road_safety_camera_network_certificate 1 May 2023",
+          "url": "https://services-ap1.arcgis.com/AohjtnA5kaWn7ZGY/arcgis/rest/services/CMS_data_set___road_safety_camera_network_certificate_1_May_2023/FeatureServer",
+          "reason": "Legacy2023 certificate mirror; primary licensed Victoria snapshot already acquired"
+        },
+        {
+          "id": "8bcdd0c8a45d4455984e1b145866d52d",
+          "source": "road_safety_camera_network_data_Old",
+          "url": "https://services-ap1.arcgis.com/AohjtnA5kaWn7ZGY/arcgis/rest/services/road_safety_camera_network_data/FeatureServer",
+          "reason": "Old Victoria mirror; primary licensed current snapshot already acquired"
+        },
+        {
+          "id": "b3732583a6b448dd9627644549267399",
+          "source": "Safety cameras",
+          "url": "https://maps2.bristol.gov.uk/server2/rest/services/ext/ll_transport/MapServer/34",
+          "reason": "Bristol primary connection timeout and no explicit redistribution rights"
+        },
+        {
+          "id": "bf8c0b7cba2140c3a26e4019587fc8ad",
+          "source": "Photo Radar Zones_WFL1",
+          "url": "https://services.arcgis.com/USaXRc3mZF0nhsUu/arcgis/rest/services/Photo_Radar_Zones_WFL1/FeatureServer",
+          "reason": "Mobile photo-radar zones, no fixed device points established"
+        },
+        {
+          "id": "6f2ca1b545844065b719483d562d553e",
+          "source": "Photo Enforcement Mobile Locations ",
+          "url": "https://services1.arcgis.com/fyyY0cNXvmUWvX1x/arcgis/rest/services/Automated_Traffic_Enforcement_Sites/FeatureServer",
+          "reason": "St Albert mobile zones, not fixed equipment; prior primary device endpoint returned0"
+        },
+        {
+          "id": "95c7e00bb03d444491ed38bc2b1f6827",
+          "source": "Photo Enforcement Intersection Safety Device Camera Locations ",
+          "url": "https://services1.arcgis.com/fyyY0cNXvmUWvX1x/arcgis/rest/services/Intersection_Safety_Cameras/FeatureServer",
+          "reason": "St Albert primary device endpoint already independently acquired empty"
+        },
+        {
+          "id": "3633cd5886644ccdb09db302ad21d359",
+          "source": "Safety Camera Sites - dormant - edited",
+          "url": "https://maps.gov.scot/server/rest/services/ScotGov/SafetyCameras/MapServer/11",
+          "reason": "Scottish Government legacy service404, dormant2021; current police map noncommercial rights"
+        },
+        {
+          "id": "2c0af29f657b4bd9b6f9eca1cc181d1f",
+          "source": "Enforced Safety Camera Sites",
+          "url": "https://maps.gov.scot/server/rest/services/ScotGov/SafetyCameras/MapServer/11",
+          "reason": "Same unavailable Scottish legacy service404; no usable verified current snapshot"
+        },
+        {
+          "id": "c371e2b06f1746c8a9d7309ca4ad6b6d",
+          "source": "Safety Cameras",
+          "url": "https://gis.hertfordshire.gov.uk/webmaps/rest/services/public/communitypartnership/MapServer/0",
+          "reason": "Hertfordshire primary accessible but empty copyright/rights; no explicit reuse grant"
+        },
+        {
+          "id": "447b949b62fc4b2db9807fa636657ed3",
+          "source": "City of Gold Coast Safety Camera Network",
+          "url": "https://services.arcgis.com/3vStCH7NDoBOZ5zn/arcgis/rest/services/CCTV_Safe_City_Cameras/FeatureServer",
+          "reason": "Licensed Gold Coast community safety CCTV, not speed/signal enforcement"
+        },
+        {
+          "id": "32f5b0191409406790d77d833fbe0077",
+          "source": "Nassau_County_Safety_Camera_Locations_WFL1",
+          "url": "https://services5.arcgis.com/FzTPKY034xlj4pXF/arcgis/rest/services/Nassau_County_Safety_Camera_Locations_WFL1/FeatureServer",
+          "reason": "Nassau vendor dataset no explicit reuse rights"
+        },
+        {
+          "id": "1dec4609900549939aa1e0730f9b0a39",
+          "source": "Logan City Council Safety Van Deployment Locations",
+          "url": "https://services5.arcgis.com/ZUCWDRj8F77Xo351/arcgis/rest/services/Logan_City_Council_Safety_Van_Deployment_Locations/FeatureServer",
+          "reason": "Logan safety van deployments, no fixed speed devices"
+        }
+      ],
+      "other_items": "Engineering/lighting/collision/survey projects, generic ALPR/CCTV, academic mirrors, site-selection studies or unlicensed datasets; metadata originals retained privately."
+    }
+  ],
+  "resolved_transport_issues": [
+    {
+      "updated_at": "2026-10-07T13:02:35.413566+00:00",
+      "sources": [
+        "TW_TAIPEI_FIXED",
+        "TW_NEWTAIPEI_TAMSUI_FIXED",
+        "TW_CHANGHUA_FIXED_TECH",
+        "TW_CHANGHUA_FIXED",
+        "TW_CHANGHUA_SECTION_REFERENCES",
+        "TW_NPA_FIXED_UNTYPED"
+      ],
+      "initial_error": "Python strict X509 Missing Subject Key Identifier",
+      "resolution": "Normal macOS system TLS certificate/hostname/expiry validation for unauthenticated HTTPS public GET; no insecure flag. Exact HTTP bytes now acquired. Earlier transport failures are historical attempts, not current unavailability.",
+      "national_classification_primary": "https://www.npa.gov.tw/ch/app/news/view?id=2136&module=headnews&serno=c3a3bfd2-8c10-4c35-be7d-08788d643e92",
+      "remaining_denied_sources": {
+        "Nantou": "HTTP403",
+        "national_highway_TGOS": "HTTP403"
+      },
+      "untouched_original_sources": true
+    }
+  ]
+}
