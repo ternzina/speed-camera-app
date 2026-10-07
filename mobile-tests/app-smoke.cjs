@@ -12,7 +12,7 @@ assert.ok(section);assert.equal(engine.detectAverageSpeedSection(realPL,section.
 let stateOverrides={},stateIndex=0;const React={createElement:(type,props,...children)=>({type,props,children}),useState:value=>{const i=stateIndex++;return [i in stateOverrides?stateOverrides[i]:value,next=>{const previous=i in stateOverrides?stateOverrides[i]:value;stateOverrides[i]=typeof next==='function'?next(previous):next}]},useRef:value=>({current:value}),useMemo:fn=>fn(),useEffect:()=>{}};
 const noop=()=>{};const native={StyleSheet:{create:v=>v},Alert:{alert:noop},Vibration:{vibrate:noop},Linking:{openURL:noop}};
 for(const x of ['SafeAreaView','View','Text','Pressable','ScrollView','Modal','TextInput','Switch'])native[x]=x;
-const stubs={'react':React,'react-native':native,'expo-location':{},'expo-speech':{stop:noop},'expo-task-manager':{defineTask:noop},'expo-notifications':{setNotificationHandler:noop},'expo-haptics':{},'@react-native-async-storage/async-storage':{},'react-native-maps':{default:'MapView',Marker:'Marker',Circle:'Circle'},'expo-status-bar':{StatusBar:'StatusBar'}};
+const stubs={'./product-ui':{Icon:'Icon',CameraMap:'CameraMap'},'react':React,'react-native':native,'expo-location':{},'expo-speech':{stop:noop},'expo-task-manager':{defineTask:noop},'expo-notifications':{setNotificationHandler:noop},'expo-haptics':{},'@react-native-async-storage/async-storage':{},'react-native-maps':{default:'MapView',Marker:'Marker',Circle:'Circle'},'expo-status-bar':{StatusBar:'StatusBar'}};
 const moduleApp={exports:{}};const code=babel.transformSync(fs.readFileSync(path.join(root,'App.js'),'utf8'),{configFile:false,babelrc:false,plugins:['@babel/plugin-transform-react-jsx','@babel/plugin-transform-modules-commonjs']}).code;
 vm.runInNewContext(code,{module:moduleApp,exports:moduleApp.exports,require:name=>name in stubs?stubs[name]:name.endsWith('.json')?JSON.parse(fs.readFileSync(path.join(root,name))):plain(name.slice(2)+'.js'),Set,Date,console,setInterval,clearInterval});
 for(const country of ['ua','pl','de','fr','us','ca','ru','by','ge','am','az']){stateIndex=0;stateOverrides={0:{country,language:'en',smartDistance:true,cityDistance:500,roadDistance:800,highwayDistance:1000,fastDistance:1500}};assert.ok(moduleApp.exports.default());}
@@ -30,6 +30,13 @@ const omanCheckbox=checkboxes.find(n=>n.props.accessibilityLabel.includes('Ом�
 omanCheckbox.props.onPress();assert.deepEqual(stateOverrides[15],['OM']);assert.equal(stateOverrides[0].country,'de');
 const omanRadio=nodes(settingsTree).find(n=>n.props?.accessibilityRole==='radio'&&n.props.accessibilityLabel.includes('Оман'));
 omanRadio.props.onPress();assert.equal(stateOverrides[0].country,'om');
+
+for(const [type,label] of [['speed_camera','Камера скорости'],['mobile_control','Мобильный контроль'],['red_light_camera','Камера красного света'],['average_speed_start','Контроль средней скорости']]){
+ stateIndex=0;stateOverrides={0:{country:'ua',language:'ru',voice:true},21:'add'};const sheet=moduleApp.exports.default();
+ const choice=nodes(sheet).find(n=>n.props?.accessibilityRole==='button'&&n.children?.some(c=>c?.children?.includes(label)));
+ assert.ok(choice,'report option '+type);choice.props.onPress();assert.equal(stateOverrides[23],type);assert.equal(stateOverrides[21],'new');
+}
+stateIndex=0;stateOverrides={0:{country:'ua',language:'ru',voice:true}};const idle=nodes(moduleApp.exports.default());assert.equal(idle.filter(n=>n.type==='Text'&&n.children.includes('Готовы к поездке')).length,1);assert.ok(idle.some(n=>n.children?.includes('Страны')));
 
 console.log('App smoke passed: 11 country renders, remote feed precedence, opposing direction and real Polish section ending.');
 (async()=>{

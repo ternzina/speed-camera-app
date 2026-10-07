@@ -10,9 +10,11 @@
     "test:geography": "node mobile-tests/geography-ui.cjs",
     "test:offline-warning": "node mobile-tests/offline-warning.cjs",
     "test:driver": "node mobile-tests/driver-engine.cjs",
-    "test:country-quality": "node mobile-tests/country-quality.cjs"
+    "test:country-quality": "node mobile-tests/country-quality.cjs",
+    "test:product": "node mobile-tests/product-presentation.cjs"
   },
   "dependencies": {
+    "@expo/vector-icons": "^15.0.2",
     "@react-native-async-storage/async-storage": "2.2.0",
     "expo": "~57.0.9",
     "expo-haptics": "~57.0.3",

@@ -44,6 +44,13 @@ import {
   bearingBetween,
 } from "./driver-engine";
 import { DRIVER_COPY, drivingLabel } from "./driver-copy";
+import { Icon, CameraMap } from "./product-ui";
+import {
+  PRODUCT_COPY,
+  CONTROL_ICONS,
+  datasetDate,
+} from "./product-presentation";
+import { usableCameraRecordCount } from "./driver-engine";
 
 const BACKGROUND_LOCATION_TASK = "camera-background-location-v060";
 const MIN_MOVING_SPEED_KMH = 8;
@@ -1167,18 +1174,51 @@ export default function App() {
   const closeStage = shownDistance <= Math.max(250, (speedKmh / 3.6) * 12);
   const nearStage =
     shownDistance <= warningDistances(speedKmh, settings).second;
+  const pcopy = PRODUCT_COPY[settings.language] || PRODUCT_COPY.ru;
+  const mapPoints = useMemo(() => {
+    const hidden = new Set(hiddenIds.map(String));
+    return drivingPoints(activePLData).filter((p) => !hidden.has(String(p.id)));
+  }, [activePLData, hiddenIds]);
+  const datasetCount = useMemo(
+    () => usableCameraRecordCount(activePLData),
+    [activePLData],
+  );
+  const publishedDate = activePLData?.generated_at || activePLData?.updated_at;
+  async function locateOnMap() {
+    try {
+      const permission = await Location.requestForegroundPermissionsAsync();
+      if (permission.status !== "granted") return null;
+      const result = await Location.getCurrentPositionAsync({
+        accuracy: Location.Accuracy.High,
+      });
+      const position = {
+        latitude: result.coords.latitude,
+        longitude: result.coords.longitude,
+      };
+      setCoords(position);
+      return position;
+    } catch {
+      Alert.alert(pcopy.locationError);
+      return null;
+    }
+  }
   const nav = [
-    ["drive", "◉", dcopy.drive],
-    ["map", "⌖", t.map],
-    ["offline", "↓", dcopy.offline],
-    ["settings", "⚙", dcopy.settings],
+    ["drive", "navigation", dcopy.drive],
+    ["map", "map", t.map],
+    ["offline", "globe", pcopy.countries],
+    ["settings", "settings", dcopy.settings],
   ];
 
   return (
     <SafeAreaView style={s.safe}>
       <StatusBar style="dark" />
       <ScrollView
-        contentContainerStyle={[s.container, { flexGrow: 1 }]}
+        scrollEnabled={tab !== "map"}
+        contentContainerStyle={[
+          s.container,
+          { flexGrow: 1 },
+          tab === "map" && { flex: 1, padding: 12, paddingBottom: 12 },
+        ]}
         showsVerticalScrollIndicator={false}
       >
         <View style={s.topBar}>
@@ -1194,28 +1234,42 @@ export default function App() {
           <Text style={s.countryPill}>
             {countryLabel(selectedCountry, settings.language)}
           </Text>
+          <Pressable
+            accessibilityRole="button"
+            accessibilityLabel={dcopy.settings}
+            onPress={() => setTab("settings")}
+            style={s.headerSettings}
+          >
+            <Icon name="settings" />
+          </Pressable>
         </View>
 
         {tab === "drive" && (
           <View style={s.driver}>
-            <Text style={s.protection}>
-              {active
-                ? coords
-                  ? heading != null && speedKmh >= MIN_MOVING_SPEED_KMH
-                    ? dcopy.active
-                    : dcopy.heading
-                  : dcopy.gps
-                : dcopy.idle}
-            </Text>
             <View style={s.speedPanel}>
-              <Text
-                adjustsFontSizeToFit
-                numberOfLines={1}
-                style={[s.heroSpeed, overLimit && s.speedOver]}
+              <View
+                style={[
+                  s.speedRing,
+                  (shownCam || averageTrip) && s.speedRingCompact,
+                  overLimit && { borderColor: "#edb5ad" },
+                ]}
               >
-                {speedKmh}
-              </Text>
-              <Text style={s.speedUnit}>{dcopy.unit}</Text>
+                <Text
+                  adjustsFontSizeToFit
+                  numberOfLines={1}
+                  style={[
+                    s.heroSpeed,
+                    (shownCam || averageTrip) && {
+                      fontSize: 72,
+                      lineHeight: 86,
+                    },
+                    overLimit && s.speedOver,
+                  ]}
+                >
+                  {speedKmh}
+                </Text>
+                <Text style={s.speedUnit}>{dcopy.unit}</Text>
+              </View>
               {(averageTrip?.section?.speed_limit || shownCam?.speed_limit) >
                 0 && (
                 <View style={s.driverLimit}>
@@ -1260,13 +1314,10 @@ export default function App() {
                   overLimit && s.driverAlertOver,
                 ]}
               >
-                <Text style={s.alertIcon}>
-                  {shownCam.type === "red_light_camera"
-                    ? "🚦"
-                    : shownCam.type === "mobile_control"
-                      ? "👮"
-                      : "📷"}
-                </Text>
+                <Icon
+                  name={CONTROL_ICONS[shownCam.type] || "camera"}
+                  size={28}
+                />
                 <Text style={s.alertTitle}>
                   {drivingLabel(shownCam, dcopy)}
                 </Text>
@@ -1293,8 +1344,58 @@ export default function App() {
                       ? dcopy.heading
                       : dcopy.idle}
                 </Text>
+                <View style={s.statusLines}>
+                  <View style={s.statusLine}>
+                    <Icon name="map-pin" size={15} />
+                    <Text style={s.statusText}>
+                      {coords
+                        ? active
+                          ? pcopy.gps
+                          : pcopy.gpsReady
+                        : pcopy.gpsWaiting}
+                    </Text>
+                  </View>
+                  <View style={s.statusLine}>
+                    <Icon
+                      name={settings.voice ? "volume-2" : "volume-x"}
+                      size={15}
+                    />
+                    <Text style={s.statusText}>
+                      {settings.voice ? pcopy.voiceOn : pcopy.voiceOff}
+                    </Text>
+                  </View>
+                  <View style={s.statusLine}>
+                    <Icon
+                      name={
+                        remoteFeeds[selectedCountry]
+                          ? "check-circle"
+                          : "download"
+                      }
+                      size={15}
+                    />
+                    <Text style={s.statusText}>
+                      {remoteFeeds[selectedCountry]
+                        ? pcopy.loaded
+                        : pcopy.notLoaded}
+                    </Text>
+                  </View>
+                </View>
               </View>
             )}
+            <View style={s.datasetMini}>
+              <View style={s.datasetBadge}>
+                <Icon name="database" />
+              </View>
+              <View style={{ flex: 1 }}>
+                <Text style={s.datasetCount}>
+                  {datasetCount.toLocaleString(settings.language)}{" "}
+                  {pcopy.cameraCount}
+                </Text>
+                <Text style={s.datasetDate}>
+                  {datasetDate(publishedDate, settings.language, pcopy)}
+                </Text>
+              </View>
+            </View>
             <View style={s.tripActions}>
               <Pressable
                 accessibilityRole="button"
@@ -1309,59 +1410,28 @@ export default function App() {
               </Pressable>
               <Pressable
                 accessibilityRole="button"
-                accessibilityLabel={dcopy.add}
+                accessibilityLabel={pcopy.report}
                 onPress={() => setModal("add")}
                 style={s.addButton}
               >
-                <Text style={s.addGlyph}>＋</Text>
+                <Icon name="plus" color="#215db5" size={20} />
+                <Text style={s.reportButtonText}>{pcopy.report}</Text>
               </Pressable>
             </View>
           </View>
         )}
 
-        {tab === "map" &&
-          (coords ? (
-            <MapView
-              style={s.map}
-              initialRegion={{
-                latitude: coords.latitude,
-                longitude: coords.longitude,
-                latitudeDelta: 0.18,
-                longitudeDelta: 0.18,
-              }}
-              showsUserLocation
-              followsUserLocation
-            >
-              {nearbyList()
-                .slice(0, 50)
-                .map((cam) => (
-                  <Marker
-                    key={String(cam.id)}
-                    coordinate={{
-                      latitude: cam.latitude,
-                      longitude: cam.longitude,
-                    }}
-                    title={cam.location || cam.region}
-                    description={
-                      cam.speed_limit != null
-                        ? `${cam.speed_limit} км/ч`
-                        : undefined
-                    }
-                  />
-                ))}
-              <Circle
-                center={{
-                  latitude: coords.latitude,
-                  longitude: coords.longitude,
-                }}
-                radius={currentThreshold}
-              />
-            </MapView>
-          ) : (
-            <Text style={s.empty}>
-              Включи поездку, чтобы открыть карту вокруг тебя.
-            </Text>
-          ))}
+        {tab === "map" && (
+          <CameraMap
+            points={mapPoints}
+            coords={coords}
+            copy={pcopy}
+            driverCopy={dcopy}
+            language={settings.language}
+            onLocate={locateOnMap}
+            onReport={() => setModal("add")}
+          />
+        )}
 
         {tab === "nearby" && (
           <View style={s.list}>
@@ -1587,8 +1657,19 @@ export default function App() {
             onPress={() => setTab(key)}
             style={[s.navItem, tab === key && s.navActive]}
           >
-            <Text style={s.navIcon}>{icon}</Text>
-            <Text style={s.navLabel}>{label}</Text>
+            <Icon
+              name={icon}
+              size={20}
+              color={tab === key ? "#215db5" : "#8292a2"}
+            />
+            <Text
+              style={[
+                s.navLabel,
+                tab === key && { color: "#215db5", fontWeight: "700" },
+              ]}
+            >
+              {label}
+            </Text>
           </Pressable>
         ))}
       </View>
@@ -1620,11 +1701,13 @@ export default function App() {
       >
         <View style={s.modalShade}>
           <View style={s.modalCard}>
-            <Text style={s.modalTitle}>{dcopy.add}</Text>
+            <View style={s.sheetHandle} />
+            <Text style={s.sheetTitle}>{pcopy.noticed}</Text>
             {[
-              ["speed_camera", "📷", dcopy.camera],
-              ["mobile_control", "👮", dcopy.mobile],
-              ["red_light_camera", "🚦", dcopy.red],
+              ["speed_camera", "camera", dcopy.camera],
+              ["mobile_control", "shield", dcopy.mobile],
+              ["red_light_camera", "stop-circle", dcopy.red],
+              ["average_speed_start", "activity", dcopy.average],
             ].map(([type, icon, label]) => (
               <Pressable
                 key={type}
@@ -1635,17 +1718,22 @@ export default function App() {
                 }}
                 style={s.reportChoice}
               >
-                <Text style={s.reportChoiceText}>
-                  {icon} {label}
-                </Text>
+                <View style={s.choiceIcon}>
+                  <Icon name={icon} size={21} />
+                </View>
+                <Text style={s.reportChoiceText}>{label}</Text>
+                <Icon name="chevron-right" size={17} color="#a0adba" />
               </Pressable>
             ))}
             {shownCam && (
-              <Pressable onPress={() => setModal("removed")} style={s.cancel}>
+              <Pressable
+                onPress={() => setModal("removed")}
+                style={s.sheetCancel}
+              >
                 <Text>{t.removed}</Text>
               </Pressable>
             )}
-            <Pressable onPress={() => setModal(null)} style={s.cancel}>
+            <Pressable onPress={() => setModal(null)} style={s.sheetCancel}>
               <Text>{t.cancel}</Text>
             </Pressable>
           </View>
@@ -1660,6 +1748,9 @@ export default function App() {
         <View style={s.modalShade}>
           <View style={s.modalCard}>
             <Text style={s.modalTitle}>{t.reportTitle}</Text>
+            <Text style={s.modalText}>
+              {drivingLabel({ type: reportType }, dcopy)}
+            </Text>
             <Text style={s.modalText}>
               {coords ? dcopy.position : dcopy.noPosition}
             </Text>
@@ -1781,6 +1872,81 @@ function DistanceRow({ label, value, setValue }) {
 }
 
 const s = StyleSheet.create({
+  headerSettings: {
+    width: 44,
+    height: 44,
+    borderRadius: 15,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  speedRingCompact: {
+    width: 180,
+    height: 180,
+    borderRadius: 90,
+    borderWidth: 8,
+  },
+  speedRing: {
+    width: 224,
+    height: 224,
+    borderRadius: 112,
+    borderWidth: 11,
+    borderColor: "#dce8f7",
+    backgroundColor: "#f9fbfe",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  statusLines: { marginTop: 14, gap: 9 },
+  statusLine: { flexDirection: "row", alignItems: "center", gap: 9 },
+  statusText: { fontSize: 13, color: "#587365" },
+  datasetMini: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 12,
+    backgroundColor: "#fff",
+    borderRadius: 20,
+    padding: 16,
+  },
+  datasetBadge: {
+    width: 42,
+    height: 42,
+    borderRadius: 14,
+    backgroundColor: "#eef3fa",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  datasetCount: { fontSize: 15, fontWeight: "700", color: "#253c50" },
+  datasetDate: { fontSize: 12, color: "#8090a0", marginTop: 4 },
+  reportButtonText: { fontSize: 13, fontWeight: "700", color: "#215db5" },
+  sheetHandle: {
+    width: 38,
+    height: 4,
+    borderRadius: 2,
+    backgroundColor: "#d6dee7",
+    alignSelf: "center",
+    marginBottom: 12,
+  },
+  sheetTitle: {
+    fontSize: 23,
+    fontWeight: "700",
+    color: "#152535",
+    marginBottom: 8,
+  },
+  choiceIcon: {
+    width: 40,
+    height: 40,
+    borderRadius: 13,
+    backgroundColor: "#eef3fa",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  sheetCancel: {
+    alignItems: "center",
+    padding: 16,
+    borderRadius: 16,
+    backgroundColor: "#eff3f7",
+    marginTop: 4,
+  },
   topBar: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -1797,7 +1963,7 @@ const s = StyleSheet.create({
     padding: 10,
     borderRadius: 18,
   },
-  driver: { flex: 1, justifyContent: "space-between", gap: 20 },
+  driver: { flex: 1, justifyContent: "space-between", gap: 16 },
   protection: {
     fontSize: 14,
     fontWeight: "600",
@@ -1806,8 +1972,8 @@ const s = StyleSheet.create({
   },
   speedPanel: { alignItems: "center", paddingVertical: 12 },
   heroSpeed: {
-    fontSize: 116,
-    lineHeight: 130,
+    fontSize: 88,
+    lineHeight: 100,
     fontWeight: "800",
     fontVariant: ["tabular-nums"],
     color: "#152535",
@@ -1878,13 +2044,7 @@ const s = StyleSheet.create({
     color: "#152535",
     textAlign: "center",
   },
-  clearCard: { padding: 24, borderRadius: 26, backgroundColor: "#e5f2ec" },
-  clearTitle: {
-    fontSize: 20,
-    fontWeight: "600",
-    color: "#37725c",
-    textAlign: "center",
-  },
+
   tripActions: { flexDirection: "row", gap: 12, marginTop: 8 },
   tripButton: {
     flex: 1,
@@ -1897,23 +2057,9 @@ const s = StyleSheet.create({
   },
   tripStop: { backgroundColor: "#e7edf3" },
   tripButtonText: { color: "#fff", fontSize: 18, fontWeight: "700" },
-  addButton: {
-    width: 64,
-    minHeight: 64,
-    backgroundColor: "#152535",
-    borderRadius: 22,
-    alignItems: "center",
-    justifyContent: "center",
-  },
+
   addGlyph: { fontSize: 36, color: "#fff" },
-  reportChoice: {
-    padding: 20,
-    minHeight: 64,
-    borderRadius: 18,
-    backgroundColor: "#edf2f7",
-    marginVertical: 6,
-  },
-  reportChoiceText: { fontSize: 22, fontWeight: "600" },
+
   savedLabel: {
     color: "#267653",
     fontSize: 14,
@@ -1950,7 +2096,7 @@ const s = StyleSheet.create({
   },
   navActive: { backgroundColor: "#eef0f3" },
   navIcon: { fontSize: 17 },
-  navLabel: { fontSize: 9, marginTop: 1 },
+
   title: { fontSize: 30, fontWeight: "800", marginTop: 8 },
   subtitle: { fontSize: 14, opacity: 0.55 },
   card: {
@@ -2140,6 +2286,40 @@ const s = StyleSheet.create({
   },
   coverageLine: { fontSize: 14, fontWeight: "650" },
   note: { fontSize: 12, lineHeight: 18, opacity: 0.55 },
+  addButton: {
+    minWidth: 104,
+    minHeight: 60,
+    borderRadius: 20,
+    backgroundColor: "#e5eefb",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 4,
+    padding: 12,
+  },
+  reportChoice: {
+    minHeight: 62,
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 12,
+    paddingVertical: 9,
+    paddingHorizontal: 4,
+    borderBottomWidth: 1,
+    borderBottomColor: "#edf1f5",
+  },
+  reportChoiceText: {
+    fontSize: 17,
+    fontWeight: "600",
+    color: "#253c50",
+    flex: 1,
+  },
+  navLabel: { fontSize: 11, marginTop: 5, color: "#8292a2" },
+  clearCard: { padding: 20, borderRadius: 24, backgroundColor: "#e9f3ef" },
+  clearTitle: {
+    fontSize: 18,
+    fontWeight: "700",
+    color: "#37725c",
+    textAlign: "left",
+  },
 });
 function AboutLink({ label, url }) {
   return (
