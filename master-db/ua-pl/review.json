@@ -1,0 +1,99 @@
+{
+  "prepared_at": "2026-10-07T20:22:26.322305+00:00",
+  "scope": [
+    "UA",
+    "PL"
+  ],
+  "candidates_before": {
+    "PL": 1737,
+    "UA": 447
+  },
+  "reason_counts_overlapping": {
+    "PL": {
+      "verified_duplicate": 259,
+      "missing_direction": 1572,
+      "missing_source_validation": 1737,
+      "duplicate_suspicion": 744,
+      "incomplete_metadata": 693,
+      "LOW_confidence": 447,
+      "conflicting_metadata": 7,
+      "conflicting_coordinates": 0,
+      "missing_current_primary_coordinates": 0
+    },
+    "UA": {
+      "duplicate_suspicion": 337,
+      "missing_direction": 414,
+      "missing_source_validation": 446,
+      "incomplete_metadata": 69,
+      "verified_duplicate": 1,
+      "LOW_confidence": 11,
+      "conflicting_metadata": 8,
+      "conflicting_coordinates": 0,
+      "missing_current_primary_coordinates": 1
+    }
+  },
+  "primary_osm_refresh": {
+    "node": {
+      "requested": 1942,
+      "returned": 1942
+    },
+    "relation": {
+      "requested": 235,
+      "returned": 235
+    },
+    "way": {
+      "requested": 6,
+      "returned": 6
+    }
+  },
+  "promotions": {
+    "PL": 3,
+    "UA": 1
+  },
+  "verified_duplicates": {
+    "PL": 259,
+    "UA": 1
+  },
+  "promoted_ids": [
+    "PL_CANARD_CURRENT:313150",
+    "OSM_PL:node/2388884760",
+    "PL_CANARD_CURRENT:315970",
+    "UA_NPU_CURRENT:370"
+  ],
+  "official_map_counts": {
+    "UA_MVS": 400,
+    "PL_fixed": 498,
+    "PL_red_light_devices": 169,
+    "PL_average_physical_sections": 137
+  },
+  "opp_direction_audit": {
+    "official_physical_sections": 137,
+    "published_direction_variants": 224,
+    "missing_variants": []
+  },
+  "notes": [
+    "Reason groups overlap; missing bearing alone does not establish a new device or require invented direction.",
+    "Ukraine current NPU inventory numbers are not the legacy Patrol sequence; all dedupe uses geography/equipment.",
+    "CANARD coordinates and technical/current legalisation details verified; two-way section variants remain intact."
+  ],
+  "additional_source_decisions": [
+    {
+      "source": "NPU linked Patrol CSV",
+      "rows": 380,
+      "decision": "Historical subset with malformed rows; original bytes preserved, no additional publication inferred"
+    },
+    {
+      "source": "GITD/CANARD full public device details",
+      "records": 804,
+      "decision": "All 498 fixed,169 red-light and137 section details processed; three missing fixed devices qualify"
+    },
+    {
+      "source": "Municipal/regional road sources, Data.gov.ua, Dane.gov.pl, official installation news",
+      "decision": "No additional suitable current coordinate feed found. Announcements and road segments alone are not geocoded into published cameras."
+    },
+    {
+      "source": "OSM non-enforcement equipment",
+      "decision": "CCTV/ALPR/toll equipment remains private; operator alone does not establish enforcement capability."
+    }
+  ]
+}

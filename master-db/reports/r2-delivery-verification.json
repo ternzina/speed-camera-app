@@ -1,10 +1,10 @@
 {
-  "checked_at": "2026-10-07T19:21:25.995Z",
+  "checked_at": "2026-10-07T20:29:43.728Z",
   "delivery_url": "https://speed-camera-data.ternzina.workers.dev",
   "objects_uploaded": 123,
-  "total_records": 113205,
+  "total_records": 113209,
   "countries": 122,
-  "total_stored_bytes": 22173600,
+  "total_stored_bytes": 22174815,
   "checks": [
     {
       "country_code": "AD",
@@ -1254,15 +1254,15 @@
     },
     {
       "country_code": "PL",
-      "record_count": 897,
-      "checksum": "827b6eb852a7d5daccc3d4dcc51352dfe10b210ccea9656d6ee5377abe89b80c",
+      "record_count": 900,
+      "checksum": "87b4e9cd9cc15f0325bbb658d50d151d4e13c88a68e37a87fac87bf612bc2f2f",
       "encoding": "identity",
       "result": "passed"
     },
     {
       "country_code": "PL",
-      "record_count": 897,
-      "checksum": "827b6eb852a7d5daccc3d4dcc51352dfe10b210ccea9656d6ee5377abe89b80c",
+      "record_count": 900,
+      "checksum": "87b4e9cd9cc15f0325bbb658d50d151d4e13c88a68e37a87fac87bf612bc2f2f",
       "encoding": "gzip",
       "result": "passed"
     },
@@ -1604,15 +1604,15 @@
     },
     {
       "country_code": "UA",
-      "record_count": 426,
-      "checksum": "0721eed637940471ceef596a69148e714a272214ea2498f04a8a24d08a547fe2",
+      "record_count": 427,
+      "checksum": "e47f25045679545b03493ad600839791b55e02f1ba5575c52ed38e29aa2f0b54",
       "encoding": "identity",
       "result": "passed"
     },
     {
       "country_code": "UA",
-      "record_count": 426,
-      "checksum": "0721eed637940471ceef596a69148e714a272214ea2498f04a8a24d08a547fe2",
+      "record_count": 427,
+      "checksum": "e47f25045679545b03493ad600839791b55e02f1ba5575c52ed38e29aa2f0b54",
       "encoding": "gzip",
       "result": "passed"
     },

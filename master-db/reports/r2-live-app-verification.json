@@ -1,7 +1,7 @@
 {
-  "checked_at": "2026-10-07T19:23:10.099Z",
+  "checked_at": "2026-10-07T20:30:57.223Z",
   "countries": 122,
-  "published_records": 113205,
+  "published_records": 113209,
   "checks": [
     {
       "country_code": "AD",
@@ -628,7 +628,7 @@
     },
     {
       "country_code": "PL",
-      "records": 897,
+      "records": 900,
       "app_records_preserved": true,
       "alias_checksum": true,
       "result": "passed"
@@ -803,7 +803,7 @@
     },
     {
       "country_code": "UA",
-      "records": 426,
+      "records": 427,
       "app_records_preserved": true,
       "alias_checksum": true,
       "result": "passed"
@@ -859,8 +859,8 @@
     }
   ],
   "has_direction": 20758,
-  "without_direction": 92346,
-  "speed_limits": 83684,
+  "without_direction": 92350,
+  "speed_limits": 83688,
   "red_light_render_sites": 23556,
   "average_sections": 1336,
   "combined": 0,
@@ -1409,9 +1409,9 @@
     },
     {
       "country_code": "PL",
-      "json_bytes": 184184,
-      "gzip_bytes": 26389,
-      "brotli_quality6_bytes": 24543
+      "json_bytes": 184896,
+      "gzip_bytes": 26583,
+      "brotli_quality6_bytes": 24737
     },
     {
       "country_code": "PS",
@@ -1559,9 +1559,9 @@
     },
     {
       "country_code": "UA",
-      "json_bytes": 77983,
-      "gzip_bytes": 12019,
-      "brotli_quality6_bytes": 10965
+      "json_bytes": 78216,
+      "gzip_bytes": 12105,
+      "brotli_quality6_bytes": 11063
     },
     {
       "country_code": "UG",
@@ -1607,9 +1607,9 @@
     }
   ],
   "compression_totals": {
-    "json_bytes": 22043091,
-    "gzip_bytes": 2458174,
-    "brotli_quality6_bytes": 2324600
+    "json_bytes": 22044036,
+    "gzip_bytes": 2458454,
+    "brotli_quality6_bytes": 2324892
   },
   "result": "passed"
 }

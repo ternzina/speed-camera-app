@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-10-07T19:19:01.427531+00:00",
-  "database_fingerprint": "0d874851a227c6069cd2ee46800015b9",
-  "published_records": 113205,
+  "generated_at": "2026-10-07T20:27:47.799272+00:00",
+  "database_fingerprint": "2affd361668b53b1d205be6112d1f0eb",
+  "published_records": 113209,
   "countries": 122,
   "country_checks": [
     {
@@ -718,10 +718,10 @@
     },
     {
       "country_code": "PL",
-      "supabase_published": 897,
-      "r2_records": 897,
-      "trip_render_records": 796,
-      "checksum": "827b6eb852a7d5daccc3d4dcc51352dfe10b210ccea9656d6ee5377abe89b80c",
+      "supabase_published": 900,
+      "r2_records": 900,
+      "trip_render_records": 799,
+      "checksum": "87b4e9cd9cc15f0325bbb658d50d151d4e13c88a68e37a87fac87bf612bc2f2f",
       "result": "passed"
     },
     {
@@ -918,10 +918,10 @@
     },
     {
       "country_code": "UA",
-      "supabase_published": 426,
-      "r2_records": 426,
-      "trip_render_records": 426,
-      "checksum": "0721eed637940471ceef596a69148e714a272214ea2498f04a8a24d08a547fe2",
+      "supabase_published": 427,
+      "r2_records": 427,
+      "trip_render_records": 427,
+      "checksum": "e47f25045679545b03493ad600839791b55e02f1ba5575c52ed38e29aa2f0b54",
       "result": "passed"
     },
     {
@@ -1518,9 +1518,9 @@
     },
     {
       "country_code": "PL",
-      "legacy_json_bytes": 358882,
-      "compact_json_bytes": 184184,
-      "gzip_bytes": 26389
+      "legacy_json_bytes": 360092,
+      "compact_json_bytes": 184896,
+      "gzip_bytes": 26583
     },
     {
       "country_code": "PS",
@@ -1668,9 +1668,9 @@
     },
     {
       "country_code": "UA",
-      "legacy_json_bytes": 86000,
-      "compact_json_bytes": 77983,
-      "gzip_bytes": 12019
+      "legacy_json_bytes": 86402,
+      "compact_json_bytes": 78216,
+      "gzip_bytes": 12105
     },
     {
       "country_code": "UG",
@@ -1715,9 +1715,9 @@
       "gzip_bytes": 3936
     }
   ],
-  "json_bytes": 22043091,
-  "gzip_bytes": 2458174,
-  "legacy_json_bytes": 70055665,
+  "json_bytes": 22044036,
+  "gzip_bytes": 2458454,
+  "legacy_json_bytes": 70057277,
   "objects": 123,
   "compression_delivery": "Compact identity JSON stored in R2; Cloudflare transparently negotiates gzip/brotli over HTTP. Precompressed gzip files remain local benchmarks only."
 }

@@ -8,7 +8,7 @@ for(const s of ['', 'abc','Камера на дороге 🚗','\ud800','a'.rep
 delivery.validateManifest(manifest);
 const feeds={};
 for(const e of manifest.countries){const text=fs.readFileSync(path.join(base,'objects',e.path),'utf8');feeds[e.country_code]=delivery.verifyCountryExport(text,e);checks++;assert.throws(()=>delivery.verifyCountryExport(text+' ',e));}
-assert.equal(feeds.PL.red_light_cameras.length,68);assert.equal(feeds.PL.average_speed_sections.length,224);assert.equal(feeds.UA.cameras.length,426);
+assert.equal(feeds.PL.red_light_cameras.length,68);assert.equal(feeds.PL.average_speed_sections.length,224);assert.ok(feeds.UA.cameras.length>=426);const confirmedUA=feeds.UA.cameras.find(p=>p.id==='UA_NPU_CURRENT:370');assert.ok(confirmedUA);assert.equal(confirmedUA.latitude,48.734109);assert.equal(confirmedUA.longitude,30.157576);assert.equal(confirmedUA.speed_limit,50);
 function response(text,ok=true){return {ok,headers:{get:()=>null},text:async()=>text};}
 (async()=>{
  const entry=manifest.countries.find(e=>e.country_code==='FR');let calls=[];

@@ -1,0 +1,64 @@
+{
+  "countries": [
+    {
+      "country": "PL",
+      "published": 900,
+      "with_direction": 731,
+      "with_speed_limit": 731,
+      "average_speed_sections": 224,
+      "remaining_candidates": 1477,
+      "remaining_LOW": 447
+    },
+    {
+      "country": "UA",
+      "published": 427,
+      "with_direction": 0,
+      "with_speed_limit": 427,
+      "average_speed_sections": 0,
+      "remaining_candidates": 445,
+      "remaining_LOW": 11
+    }
+  ],
+  "database_bytes_after": 83883699,
+  "delivery_pending": false,
+  "other_country_exports_unchanged": 120,
+  "new_officially_confirmed": 4,
+  "new_OSM_plus_independent": 2,
+  "duplicate_candidates_retired": {
+    "UA": 1,
+    "PL": 259
+  },
+  "direction_count_scope": "Published operational rows with numeric or explicitly named direction; named chainage is not invented compass bearing.",
+  "candidate_scope": "Unpublished current canonical records; retired verified duplicate records remain in immutable R2 history.",
+  "measured_at": "2026-10-07T20:34:44.384205+00:00",
+  "published_before": {
+    "UA": 426,
+    "PL": 897
+  },
+  "private_r2_before": {
+    "objects": 7325,
+    "size_bytes": 41959356108
+  },
+  "private_r2_after": {
+    "measured_at": "2026-10-07T20:34:16.352Z",
+    "objects": 7384,
+    "size_bytes": 41988730539,
+    "pages": 8
+  },
+  "database_bytes_before": 83875507,
+  "observations_archived": 3368,
+  "original_operational_rows_preserved": 113205,
+  "python_tests_passed": 101,
+  "node_tests": "passed",
+  "offline_compatibility": "passed",
+  "actual_live_loader": "passed",
+  "store_or_ota_release": false,
+  "rollback": {
+    "receipt": {
+      "key": "archive/v1/manifests/41466f764706d805269ed9216e399a54f1fed35cc120510c65f67cfff001bbc5.json",
+      "sha256": "41466f764706d805269ed9216e399a54f1fed35cc120510c65f67cfff001bbc5",
+      "size_bytes": 2687
+    },
+    "procedure": "Pause scoped writers; verify receipt, archived baseline files and old master; remove only exact hash-matched four new operational IDs; restore previous master pointer, archived alias file and public manifest. Retain all private source/history objects. Existing operational rows must still match archived fingerprint."
+  }
+}

@@ -11,10 +11,15 @@ def control():
 def master():return list(read_dataset(control()))
 def enabled():
  with connect() as conn:return conn.execute("select to_regclass('camera_bootstrap_private.storage_control') is not null").fetchone()[0]
-def published(r):return r.get('status') in ('active','missing_source') and str(r.get('confidence','')).lower() in ('high','medium') and r['country_code'] not in ('UA','PL')
+def published(r):return r.get('status') in ('active','missing_source') and str(r.get('confidence','')).lower() in ('high','medium') and (r['country_code'] not in ('UA','PL') or r.get('publication_review')=='ua_pl_official_v1')
 def compact(r,key):
  sources=r.get('camera_sources',[])
- return {k:r.get(k) for k in ['canonical_id','country_code','camera_type','latitude','longitude','end_latitude','end_longitude','speed_limit','direction','direction_raw','road_ref','road_name','city','region','confidence','status','first_seen_at','last_seen_at','updated_at']}|{'archive_ref':key,'source_codes':sorted({s['source_code'] for s in sources}),'source_count':len(sources)}
+ result={k:r.get(k) for k in ['canonical_id','country_code','camera_type','latitude','longitude','end_latitude','end_longitude','speed_limit','direction','direction_raw','road_ref','road_name','city','region','confidence','status','first_seen_at','last_seen_at','updated_at']}|{'archive_ref':key,'source_codes':sorted({s['source_code'] for s in sources}),'source_count':len(sources)}
+ if r.get('publication_review')=='ua_pl_official_v1':
+  assert r['country_code'] in ('UA','PL')
+  result['publication_review']=r['publication_review']
+  result['delivery']={k:v for k,v in {'id':r['canonical_id'],'type':'speed_camera' if r['camera_type']=='fixed_speed' else r['camera_type'],'camera_type':r['camera_type'],'latitude':r['latitude'],'longitude':r['longitude'],'speed_limit':r.get('speed_limit'),'direction':r.get('direction'),'location':r.get('road_name') or r.get('city'),'road':r.get('road_ref'),'road_index':r.get('road_ref'),'region':r.get('region')}.items() if v is not None}
+ return result
 def sync(records,append_only=True,observations=None,raw_paths=None):
  # Every observation (including duplicates/rejections) reaches immutable cold
  # history before operational data is touched. Candidates remain only in R2.

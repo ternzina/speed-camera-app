@@ -1,0 +1,9 @@
+{
+  "database_bytes": 83875507,
+  "private_r2": {
+    "measured_at": "2026-10-07T20:12:07.292Z",
+    "objects": 7325,
+    "size_bytes": 41959356108,
+    "pages": 8
+  }
+}
