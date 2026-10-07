@@ -12,6 +12,7 @@ import {
   Switch,
   Vibration,
   Linking,
+  Appearance,
 } from "react-native";
 import * as Location from "expo-location";
 import * as Speech from "expo-speech";
@@ -48,6 +49,25 @@ import {
   filterCountries,
   filterHistory,
 } from "./reference-presentation";
+import {
+  HeroLanding,
+  FullWarning,
+  PremiumTrip,
+  CountryDetails,
+  Filters,
+  TypeIcon,
+} from "./premium-ui";
+import {
+  PREMIUM_COPY,
+  FILTER_TYPES,
+  displayType,
+  localBytes,
+  trackStep,
+  displayDistance,
+  displaySpeed,
+} from "./premium-presentation";
+import { themeStyles } from "./premium-theme";
+import { progressFetch } from "./download-progress";
 import { Icon, CameraMap } from "./product-ui";
 import {
   PRODUCT_COPY,
@@ -628,6 +648,8 @@ export default function App() {
     hiddenIds,
     feed: activePLData,
     country: selectedCountry,
+    active,
+    backgroundEnabled,
   };
   const dcopy = DRIVER_COPY[settings.language] || DRIVER_COPY.ru;
 
@@ -705,6 +727,14 @@ export default function App() {
         feeds: remoteFeedsRef.current,
         versions: countryVersionsRef.current,
         countries: countryCoverageRef.current,
+        fetcher: progressFetch(
+          fetch,
+          setDownloadProgress,
+          country,
+          countryCoverageRef.current.find(
+            (item) => item.country_code === country,
+          )?.size_bytes,
+        ),
       });
       countryCoverageRef.current = result.countries;
       setCountryCoverage(result.countries);
@@ -797,7 +827,7 @@ export default function App() {
       <View
         key={code}
         style={[
-          s.dataCard,
+          s.dataCard, {padding:10, gap:4, marginBottom:6},
           selectedCountry === code && {
             borderColor: "#2685e3",
             borderWidth: 1,
@@ -814,7 +844,7 @@ export default function App() {
               country: code.toLowerCase(),
             }))
           }
-          style={{ flex: 1, paddingVertical: 6 }}
+          style={{ flex: 1, paddingVertical: 2 }}
         >
           <Text style={[s.dataLabel, { fontSize: 16 }]}>{item.label}</Text>
           <Text style={s.note}>
@@ -824,12 +854,13 @@ export default function App() {
               ? `${(bytes / 1000000).toLocaleString(settings.language, { maximumFractionDigits: 1 })} МБ`
               : dcopy.sizeUnknown}
           </Text>
-          {saved && <Text style={s.savedLabel}>{dcopy.saved}</Text>}
-          {saved && updated && (
-            <Text style={s.note}>
-              {new Date(updated).toDateString() === new Date().toDateString()
+          {saved && (
+            <Text style={[s.savedLabel, {fontSize:11, marginTop:0}]}>
+              {dcopy.saved}{updated ? " · " : ""}
+              {updated && (
+              new Date(updated).toDateString() === new Date().toDateString()
                 ? dcopy.today
-                : `${dcopy.updated} ${new Date(updated).toLocaleDateString(settings.language)}`}
+                : new Date(updated).toLocaleDateString(settings.language))}
             </Text>
           )}
           {!!update && <Text style={s.note}>{offlineText.update}</Text>}
@@ -851,7 +882,10 @@ export default function App() {
             accessibilityRole="button"
             disabled={downloading}
             accessibilityLabel={`${update ? dcopy.update : dcopy.download}: ${item.label}`}
-            onPress={() => refreshRemoteData(false, code)}
+            onPress={() => {
+              setCountryDetail(item);
+              downloadOne(code);
+            }}
             style={s.countryDownload}
           >
             <Icon
@@ -877,6 +911,8 @@ export default function App() {
             s.lang,
             {
               flex: 0,
+              backgroundColor:"transparent",
+              paddingVertical:0,
               width: 44,
               minWidth: 44,
               minHeight: 44,
@@ -956,6 +992,10 @@ export default function App() {
       saveHistory({
         id: `${Date.now()}-${cam.id}`,
         cameraId: cam.id,
+        country: currentSettings.country?.toUpperCase(),
+        road:
+          cam.road_index || cam.road_name || cam.location || cam.region || "",
+        type: cam.type,
         when: new Date().toISOString(),
         distance: cam.distance,
         speed: kmh,
@@ -996,6 +1036,11 @@ export default function App() {
                 : null;
         gpsPrevious.current = position;
         setCoords({ latitude, longitude });
+        setTripFix({
+          position,
+          time: pos.timestamp || Date.now(),
+          accuracy: pos.coords.accuracy,
+        });
         setSpeedKmh(kmh);
         setHeading(h);
 
@@ -1068,6 +1113,7 @@ export default function App() {
     gpsPrevious.current = null;
     averageOverspeedSpoken.current = null;
     bgLastAlert = null;
+    setTripFix(null);
     setActive(true);
   }
 
@@ -1231,6 +1277,211 @@ export default function App() {
   const [historyPeriod, setHistoryPeriod] = useState(30);
   const [viewportHeight, setViewportHeight] = useState(650);
   const [headerHeight, setHeaderHeight] = useState(44);
+  const [premiumPrefs, setPremiumPrefs] = useState({
+    started: false,
+    filters: {},
+    showLimits: true,
+    units: "metric",
+    theme: "system",
+  });
+  const [premiumReady, setPremiumReady] = useState(false);
+  const [downloadProgress, setDownloadProgress] = useState(null);
+  const [tripFix, setTripFix] = useState(null);
+  const [trail, setTrail] = useState([]);
+  const [tripStats, setTripStats] = useState([]);
+  const trackPrevious = useRef(null);
+  const tripSession = useRef(null);
+  const tripStatsRef = useRef([]);
+  const mainScroll = useRef(null);
+  useEffect(() => {mainScroll.current?.scrollTo?.({y:0, animated:false});}, [tab, countryFilter]);
+  const [systemTheme, setSystemTheme] = useState(
+    Appearance?.getColorScheme?.() || "light",
+  );
+  useEffect(() => {
+    const subscription = Appearance?.addChangeListener?.((event) =>
+      setSystemTheme(event.colorScheme || "light"),
+    );
+    return () => subscription?.remove();
+  }, []);
+  const dark =
+    premiumPrefs.theme === "dark" ||
+    (premiumPrefs.theme === "system" && systemTheme === "dark");
+  const fullWarning =
+    tab === "drive" &&
+    active &&
+    shownCam &&
+    danger &&
+    (overLimit || nearStage) &&
+    !averageTrip;
+  const s = useMemo(
+    () => {
+      const themed = themeStyles(baseStyles, dark || fullWarning);
+      return tab !== "settings" ? themed : { ...themed,
+        settingsCard: {...themed.settingsCard, gap: 6},
+        dataCard: {...themed.dataCard, marginBottom: 0, padding: 12},
+        dataLabel: {...themed.dataLabel, fontSize: 14},
+        lang: {...themed.lang, padding: 8},
+      };
+    },
+    [dark, fullWarning, tab],
+  );
+  const qcopy = PREMIUM_COPY[settings.language] || PREMIUM_COPY.ru;
+  const displayMapPoints = useMemo(
+    () =>
+      mapPoints.filter(
+        (point) => premiumPrefs.filters[displayType(point)] !== false,
+      ),
+    [mapPoints, premiumPrefs.filters],
+  );
+  const occupiedBytes = useMemo(
+    () =>
+      Object.values(remoteFeeds).reduce(
+        (sum, feed) => sum + localBytes(feed),
+        0,
+      ),
+    [remoteFeeds],
+  );
+  const periodTrips = filterHistory(
+    tripStats.map((item) => ({ ...item, when: item.started })),
+    historyPeriod,
+  );
+  const recordedMetres = periodTrips.reduce(
+    (sum, item) => sum + item.metres,
+    0,
+  );
+  const visitedCountries = new Set(periodTrips.map((item) => item.country));
+  useEffect(() => {
+    (async () => {
+      try {
+        const saved = await AsyncStorage.getItem("camera_ui_premium_v1");
+        if (saved)
+          setPremiumPrefs((previous) => ({
+            ...previous,
+            ...JSON.parse(saved),
+          }));
+        const trips = await AsyncStorage.getItem("camera_ui_trips_v1");
+        if (trips) {
+          tripStatsRef.current = JSON.parse(trips);
+          setTripStats(tripStatsRef.current);
+        }
+      } catch {
+      } finally {
+        setPremiumReady(true);
+      }
+    })();
+  }, []);
+  useEffect(() => {
+    if (premiumReady)
+      AsyncStorage.setItem(
+        "camera_ui_premium_v1",
+        JSON.stringify(premiumPrefs),
+      ).catch(() => {});
+  }, [premiumReady, premiumPrefs]);
+  useEffect(() => {
+    if (!active) {
+      trackPrevious.current = null;
+      tripSession.current = null;
+      setTrail([]);
+      return;
+    }
+    if (!tripFix) return;
+    const step = trackStep(
+      trackPrevious.current,
+      tripFix.position,
+      tripFix.time,
+      tripFix.accuracy,
+    );
+    trackPrevious.current = step.point;
+    if (!step.point) return;
+    if (!tripSession.current)
+      tripSession.current = {
+        id: String(tripFix.time),
+        started: new Date(tripFix.time).toISOString(),
+        country: selectedCountry,
+        metres: 0,
+      };
+    tripSession.current = {
+      ...tripSession.current,
+      metres: tripSession.current.metres + step.metres,
+    };
+    if (step.metres > 0 || !trail.length)
+      setTrail((previous) => [...previous, tripFix.position].slice(-400));
+    const trips = [
+      tripSession.current,
+      ...tripStatsRef.current.filter(
+        (item) => item.id !== tripSession.current.id,
+      ),
+    ].slice(0, 100);
+    tripStatsRef.current = trips;
+    setTripStats(trips);
+    AsyncStorage.setItem("camera_ui_trips_v1", JSON.stringify(trips)).catch(
+      () => {},
+    );
+  }, [active, tripFix]);
+  async function downloadOne(code) {
+    setDownloading(true);
+    setDownloadProgress({
+      country: code,
+      loaded: 0,
+      total:
+        countryCoverageRef.current.find((item) => item.country_code === code)
+          ?.size_bytes || null,
+      phase: "download",
+      seconds: 0,
+    });
+    try {
+      const success = await refreshRemoteData(true, code);
+      setDownloadStatus(success ? offlineText.done : offlineText.failed);
+      setDownloadProgress((previous) =>
+        previous ? { ...previous, phase: success ? "saved" : "failed" } : null,
+      );
+    } catch {
+      setDownloadStatus(offlineText.failed);
+      setDownloadProgress(previous => previous ? {...previous, phase:"failed"} : null);
+    } finally {
+      setDownloading(false);
+    }
+  }
+  function removeSelected() {
+    const codes = downloadSelection.filter(
+      (code) => remoteFeedsRef.current[code],
+    );
+    if (!codes.length || active || backgroundEnabled || downloading) return;
+    Alert.alert(qcopy.confirmRemove, qcopy.removeHint, [
+      { text: t.cancel, style: "cancel" },
+      {
+        text: qcopy.remove,
+        style: "destructive",
+        onPress: () => {
+          const run = async () => {
+            if (drivingRef.current.active || drivingRef.current.backgroundEnabled) return;
+            const feeds = { ...remoteFeedsRef.current },
+              versions = { ...countryVersionsRef.current };
+            for (const code of codes) {
+              delete feeds[code];
+              delete versions[code];
+            }
+            await saveCameraCache(AsyncStorage, REMOTE_CACHE_KEY, {
+              feeds,
+              countries: countryCoverageRef.current,
+              cov: coverage,
+              stamp: lastDataUpdate,
+              countryVersions: versions,
+            });
+            remoteFeedsRef.current = feeds;
+            countryVersionsRef.current = versions;
+            bgCameraFeeds = feeds;
+            setRemoteFeeds(feeds);
+            setDownloadSelection([]);
+          };
+          deliveryQueue.current = deliveryQueue.current
+            .catch(() => {})
+            .then(run)
+            .catch(() => Alert.alert(offlineText.failed));
+        },
+      },
+    ]);
+  }
   const ui = REFERENCE_COPY[settings.language] || REFERENCE_COPY.ru;
   const visibleHistory = filterHistory(history, historyPeriod);
   const listedCountries = filterCountries(
@@ -1256,10 +1507,38 @@ export default function App() {
     ["settings", "settings", dcopy.settings],
   ];
 
+  const navigationBar = (
+      <View style={s.nav}>
+        {nav.map(([key, icon, label]) => (
+          <Pressable
+            key={key}
+            accessibilityRole="tab"
+            accessibilityState={{ selected: tab === key }}
+            onPress={() => {setCountryDetail(null); setTab(key);}}
+            style={[s.navItem, tab === key && s.navActive]}
+          >
+            <Icon
+              name={icon}
+              size={20}
+              color={tab === key ? "#007aff" : "#8292a2"}
+            />
+            <Text
+              style={[
+                s.navLabel,
+                tab === key && { color: "#007aff", fontWeight: "700" },
+              ]}
+            >
+              {label}
+            </Text>
+          </Pressable>
+        ))}
+      </View>
+  );
   return (
     <SafeAreaView style={s.safe}>
-      <StatusBar style="dark" />
+      <StatusBar style={dark || fullWarning ? "light" : "dark"} />
       <ScrollView
+        ref={mainScroll}
         style={{ flex: 1 }}
         onLayout={(event) => setViewportHeight(event.nativeEvent.layout.height)}
         scrollEnabled={tab !== "map"}
@@ -1267,42 +1546,113 @@ export default function App() {
           s.container,
           { flexGrow: 1 },
           tab === "map" && { flex: 1, padding: 12, paddingBottom: 12 },
+          fullWarning && { padding: 0, gap: 0 },
         ]}
         showsVerticalScrollIndicator={false}
       >
-        <View
-          style={s.topBar}
-          onLayout={(event) => setHeaderHeight(event.nativeEvent.layout.height)}
-        >
-          <Text
-            style={[s.brand, { flex: 1 }, tab === "drive" && { fontSize: 26 }]}
+        {!fullWarning && (
+          <View
+            style={s.topBar}
+            onLayout={(event) =>
+              setHeaderHeight(event.nativeEvent.layout.height)
+            }
           >
-            {tab === "drive"
-              ? "CamAlert"
-              : tab === "offline"
-                ? pcopy.countries
-                : tab === "settings"
-                  ? dcopy.settings
-                  : tab === "history"
-                    ? t.history
-                    : t.map}
-          </Text>
-          {["drive", "map"].includes(tab) && (
-            <Text style={s.countryPill}>
-              {countryLabel(selectedCountry, settings.language)}
+            <Text
+              style={[
+                s.brand,
+                { flex: 1 },
+                tab === "drive" && { fontSize: 26 },
+              ]}
+            >
+              {tab === "drive"
+                ? "CamAlert"
+                : tab === "offline"
+                  ? pcopy.countries
+                  : tab === "settings"
+                    ? dcopy.settings
+                    : tab === "history"
+                      ? t.history
+                      : t.map}
             </Text>
-          )}
-          <Pressable
-            accessibilityRole="button"
-            accessibilityLabel={dcopy.settings}
-            onPress={() => setTab("settings")}
-            style={s.headerSettings}
-          >
-            <Icon name="settings" />
-          </Pressable>
-        </View>
+            {["drive", "map"].includes(tab) && (
+              <Text style={s.countryPill}>
+                {countryLabel(selectedCountry, settings.language)}
+              </Text>
+            )}
+            <Pressable
+              accessibilityRole="button"
+              accessibilityLabel={tab === "map" ? qcopy.filters : dcopy.settings}
+              onPress={() =>
+                tab === "map" ? setModal("filters") : setTab("settings")
+              }
+              style={s.headerSettings}
+            >
+              <Icon name={tab === "map" ? "sliders" : "settings"} />
+            </Pressable>
+          </View>
+        )}
 
-        {tab === "drive" && (
+        {tab === "drive" &&
+          active &&
+          (shownCam && danger && (overLimit || nearStage) && !averageTrip ? (
+            <FullWarning
+              height={viewportHeight}
+              dark={dark}
+              camera={shownCam}
+              speed={speedKmh}
+              distance={shownDistance}
+              heading={heading}
+              copy={qcopy}
+              driverCopy={dcopy}
+              voice={settings.voice}
+              units={premiumPrefs.units}
+              onVoice={() =>
+                setSettings((previous) => ({
+                  ...previous,
+                  voice: !previous.voice,
+                }))
+              }
+              onReport={() => setModal("add")}
+              onStop={stopTracking}
+              stopLabel={t.stop}
+              reportLabel={pcopy.report}
+            />
+          ) : (
+            <PremiumTrip
+              dark={dark}
+              camera={shownCam}
+              distance={shownDistance}
+              points={displayMapPoints}
+              coords={coords}
+              heading={heading}
+              speed={speedKmh}
+              limit={drivingLimit}
+              copy={qcopy}
+              driverCopy={dcopy}
+              mapCopy={pcopy}
+              language={settings.language}
+              country={countryLabel(selectedCountry, settings.language)}
+              gps={coords ? pcopy.gps : pcopy.gpsWaiting}
+              voice={settings.voice}
+              onVoice={() =>
+                setSettings((previous) => ({
+                  ...previous,
+                  voice: !previous.voice,
+                }))
+              }
+              onLocate={locateOnMap}
+              onReport={() => setModal("add")}
+              onStop={stopTracking}
+              stopLabel={t.stop}
+              reportLabel={pcopy.report}
+              height={viewportHeight - headerHeight - 58}
+              units={premiumPrefs.units}
+              showLimits={premiumPrefs.showLimits}
+              trail={trail}
+              averageTrip={averageTrip}
+            />
+          ))}
+        {tab === "drive" && !active && (
           <View style={s.driver}>
             <View style={s.speedPanel}>
               <View
@@ -1495,14 +1845,29 @@ export default function App() {
         {tab === "map" && (
           <CameraMap
             height={Math.max(240, viewportHeight - headerHeight - 58)}
-            points={mapPoints}
+            units={premiumPrefs.units}
+            unitsCopy={qcopy}
+            points={displayMapPoints}
+            trail={trail}
+            voice={settings.voice}
+            onVoice={() =>
+              setSettings((previous) => ({
+                ...previous,
+                voice: !previous.voice,
+              }))
+            }
             coords={coords}
             copy={pcopy}
             driverCopy={dcopy}
             language={settings.language}
             warning={
               shownCam
-                ? { camera: shownCam, distance: shownDistance, over: overLimit }
+                ? {
+                    camera: shownCam,
+                    distance: shownDistance,
+                    over: overLimit,
+                    limitHidden: !premiumPrefs.showLimits,
+                  }
                 : null
             }
             onLocate={locateOnMap}
@@ -1566,30 +1931,57 @@ export default function App() {
             </View>
             <View style={s.row}>
               <View style={s.stat}>
+                <Text style={s.listSub}>{qcopy.kilometres} · {premiumPrefs.units === "imperial" ? qcopy.miles : qcopy.km}</Text>
+                <Text style={s.summaryNumber}>
+                  {(
+                    recordedMetres /
+                    (premiumPrefs.units === "imperial" ? 1609.344 : 1000)
+                  ).toLocaleString(settings.language, {
+                    maximumFractionDigits: 1,
+                  })}
+                </Text>
+              </View>
+              <View style={s.stat}>
                 <Text style={s.listSub}>{ui.alerts}</Text>
                 <Text style={s.summaryNumber}>{visibleHistory.length}</Text>
               </View>
               <View style={s.stat}>
-                <Text style={s.listSub}>{ui.savedCountries}</Text>
-                <Text style={s.summaryNumber}>
-                  {countryLists.downloaded.length}
-                </Text>
+                <Text style={s.listSub}>{qcopy.countries}</Text>
+                <Text style={s.summaryNumber}>{visitedCountries.size}</Text>
               </View>
             </View>
             <Text style={s.sectionTitle}>{ui.recent}</Text>
             {visibleHistory.map((h) => (
               <View key={h.id} style={s.listItem}>
                 <View style={s.timelineIcon}>
-                  <Icon name="camera" color="#007aff" />
+                  <TypeIcon
+                    type={displayType({ type: h.type || "speed_camera" })}
+                  />
                 </View>
                 <View style={{ flex: 1 }}>
-                  <Text style={s.listTitle}>{h.location || dcopy.camera}</Text>
+                  <Text style={s.listTitle}>
+                    {h.road || h.location || dcopy.camera}
+                  </Text>
                   <Text style={s.listSub}>
-                    {new Date(h.when).toLocaleString(settings.language)} ·{" "}
-                    {h.speed} {dcopy.unit}
+                    {new Date(h.when).toLocaleTimeString(settings.language, {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    })}{" "}
+                    · {displaySpeed(h.speed, premiumPrefs.units)}{" "}
+                    {premiumPrefs.units === "imperial" ? qcopy.mph : dcopy.unit}
+                    {h.country
+                      ? ` · ${countryLabel(h.country, settings.language)}`
+                      : ""}
+                    {Number.isFinite(h.distance)
+                      ? ` · ${displayDistance(h.distance, premiumPrefs.units, qcopy)}`
+                      : ""}
                   </Text>
                 </View>
-                {h.limit > 0 && <Text style={s.historyLimit}>{h.limit}</Text>}
+                {h.limit > 0 && (
+                  <Text style={s.historyLimit}>
+                    {displaySpeed(h.limit, premiumPrefs.units)}
+                  </Text>
+                )}
               </View>
             ))}
             {!visibleHistory.length && (
@@ -1646,14 +2038,14 @@ export default function App() {
               !["UA", "PL"].includes(selectedCountry) && (
                 <Text style={s.note}>{offlineText.empty}</Text>
               )}
-            <Text style={s.note}>{ui.countryHint}</Text>
+
             <View>
               <Text style={s.sectionTitle}>{offlineText.downloaded}</Text>
               {!listedCountries.downloaded.length && (
                 <Text style={s.note}>{offlineText.none}</Text>
               )}
               {listedCountries.downloaded.map(renderCountryRow)}
-              {countryFilter !== "downloaded" && (
+              {countryFilter !== "downloaded" && (countryFilter !== "all" || countrySearch) && (
                 <Text style={s.sectionTitle}>
                   {countryFilter === "popular"
                     ? ui.popular
@@ -1661,7 +2053,31 @@ export default function App() {
                   ({listedCountries.available.length})
                 </Text>
               )}
-              {listedCountries.available.map(renderCountryRow)}
+              {countryFilter === "all" && !countrySearch && (
+                <>
+                  <Text style={s.sectionTitle}>{ui.popular}</Text>
+                  {listedCountries.available
+                    .filter((item) =>
+                      ["UA", "PL", "DE", "FR", "US", "CA"].includes(
+                        item.country_code,
+                      ),
+                    )
+                    .map(renderCountryRow)}
+                  <Text style={s.sectionTitle}>
+                    {ui.all} ({countryLists.visible.length})
+                  </Text>
+                </>
+              )}
+              {listedCountries.available
+                .filter(
+                  (item) =>
+                    countryFilter !== "all" ||
+                    countrySearch ||
+                    !["UA", "PL", "DE", "FR", "US", "CA"].includes(
+                      item.country_code,
+                    ),
+                )
+                .map(renderCountryRow)}
               {!!countrySearch &&
                 !listedCountries.downloaded.length &&
                 !listedCountries.available.length && (
@@ -1680,7 +2096,7 @@ export default function App() {
                   </Text>
                 </Pressable>
               )}
-            <Pressable
+            {!!downloadSelection.length && <Pressable
               disabled={downloading || !downloadSelection.length}
               onPress={downloadCountries}
               style={[
@@ -1691,7 +2107,54 @@ export default function App() {
               <Text style={s.smallButtonText}>
                 {offlineText.download} ({downloadSelection.length})
               </Text>
-            </Pressable>
+            </Pressable>}
+            {countryFilter === "downloaded" && (
+              <View style={s.settingsCard}>
+                <View style={s.dataCard}>
+                  <Icon name="hard-drive" color="#007aff" />
+                  <View style={{ flex: 1 }}>
+                    <Text style={s.dataLabel}>{qcopy.storage}</Text>
+                    <Text style={s.note}>
+                      {(occupiedBytes / 1e6).toLocaleString(settings.language, {
+                        maximumFractionDigits: 2,
+                      })}{" "}
+                      MB · {countryLists.downloaded.length}
+                    </Text>
+                  </View>
+                </View>
+                <Pressable
+                  accessibilityRole="button"
+                  disabled={
+                    active ||
+                    backgroundEnabled ||
+                    downloading ||
+                    !downloadSelection.some((code) => remoteFeeds[code])
+                  }
+                  onPress={removeSelected}
+                  style={[
+                    s.sheetCancel,
+                    {
+                      backgroundColor:
+                        downloadSelection.some((code) => remoteFeeds[code]) &&
+                        !active &&
+                        !backgroundEnabled
+                          ? "#ffe8e5"
+                          : "#e8ecf2",
+                    },
+                  ]}
+                >
+                  <Text
+                    style={{
+                      color: downloadSelection.some((code) => remoteFeeds[code])
+                        ? "#d92d20"
+                        : "#98a2b3",
+                    }}
+                  >
+                    {qcopy.remove}
+                  </Text>
+                </Pressable>
+              </View>
+            )}
             <View style={s.offlineNotice}>
               <Icon name="wifi-off" color="#007aff" />
               <Text style={[s.note, { flex: 1 }]}>
@@ -1716,6 +2179,78 @@ export default function App() {
                 <Text style={s.listSub}>{ui.driverAssistant}</Text>
               </View>
             </View>
+            <Text style={s.sectionTitle}>{qcopy.app}</Text>
+            <Pressable
+              accessibilityRole="button"
+              onPress={() => setModal("filters")}
+              style={s.dataCard}
+            >
+              <Icon name="sliders" color="#007aff" />
+              <Text style={[s.dataLabel, { flex: 1 }]}>{qcopy.filters}</Text>
+              <Icon name="chevron-right" />
+            </Pressable>
+            <View style={s.dataCard}>
+              <Icon name="compass" color="#007aff" />
+              <Text style={[s.dataLabel, { flex: 1, fontSize: 14 }]}>
+                {qcopy.units}
+              </Text>
+              {["metric", "imperial"].map((unit) => (
+                <Pressable
+                  key={unit}
+                  onPress={() =>
+                    setPremiumPrefs((previous) => ({
+                      ...previous,
+                      units: unit,
+                    }))
+                  }
+                  style={[
+                    s.lang,
+                    { flex: 0 },
+                    premiumPrefs.units === unit && s.langActive,
+                  ]}
+                >
+                  <Text style={{color:dark?"#fff":"#101828"}}>{unit === "metric" ? dcopy.unit : qcopy.mph}</Text>
+                </Pressable>
+              ))}
+            </View>
+            <View style={s.dataCard}>
+              <Icon name="sun" color="#007aff" />
+              <Text style={[s.dataLabel, { flex: 1 }]}>{qcopy.theme}</Text>
+              <View style={s.row}>
+                {[
+                  ["system", qcopy.system],
+                  ["light", qcopy.light],
+                  ["dark", qcopy.dark],
+                ].map(([theme, label]) => (
+                  <Pressable
+                    key={theme}
+                    onPress={() =>
+                      setPremiumPrefs((previous) => ({ ...previous, theme }))
+                    }
+                    style={[
+                      s.lang,
+                      { flex: 0 },
+                      premiumPrefs.theme === theme && s.langActive,
+                    ]}
+                  >
+                    <Text
+                      style={{ color: dark ? "#fff" : "#101828", fontSize: 11 }}
+                    >
+                      {label}
+                    </Text>
+                  </Pressable>
+                ))}
+              </View>
+            </View>
+            <Pressable
+              onPress={() =>
+                setPremiumPrefs((previous) => ({ ...previous, started: false }))
+              }
+              style={s.dataCard}
+            >
+              <Icon name="image" color="#007aff" />
+              <Text style={s.dataLabel}>{qcopy.intro}</Text>
+            </Pressable>
             <Text style={s.sectionTitle}>{ui.driving}</Text>
             <Pressable onPress={() => setTab("offline")} style={s.dataCard}>
               <Icon name="download-cloud" color="#007aff" />
@@ -1774,18 +2309,21 @@ export default function App() {
               ))}
             </View>
             <SettingSwitch
+              styles={s}
               icon="volume-2"
               label={t.voiceLabel}
               value={settings.voice}
               onChange={(v) => setSettings({ ...settings, voice: v })}
             />
             <SettingSwitch
+              styles={s}
               icon="smartphone"
               label={t.vibrationLabel}
               value={settings.vibration}
               onChange={(v) => setSettings({ ...settings, vibration: v })}
             />
             <SettingSwitch
+              styles={s}
               icon="navigation"
               label={t.smartDistanceLabel}
               value={settings.smartDistance}
@@ -1801,6 +2339,7 @@ export default function App() {
                   [t.band4, "fastDistance"],
                 ].map(([label, key]) => (
                   <DistanceRow
+                    styles={s}
                     key={key}
                     label={label}
                     value={settings[key]}
@@ -1840,138 +2379,98 @@ export default function App() {
             </View>
 
             <Text style={s.sectionTitle}>{t.about}</Text>
-            <AboutLink label={t.privacy} url={URLS.privacy} />
-            <AboutLink label={t.safety} url={URLS.safety} />
-            <AboutLink label={t.sources} url={URLS.sources} />
-            <AboutLink label={t.reportHelp} url={URLS.reportHelp} />
-            <AboutLink label={t.support} url={URLS.support} />
-            <AboutLink label={t.terms} url={URLS.terms} />
-            <AboutLink label={t.website} url={URLS.home} />
+            <AboutLink styles={s} label={t.privacy} url={URLS.privacy} />
+            <AboutLink styles={s} label={t.safety} url={URLS.safety} />
+            <AboutLink styles={s} label={t.sources} url={URLS.sources} />
+            <AboutLink styles={s} label={t.reportHelp} url={URLS.reportHelp} />
+            <AboutLink styles={s} label={t.support} url={URLS.support} />
+            <AboutLink styles={s} label={t.terms} url={URLS.terms} />
+            <AboutLink styles={s} label={t.website} url={URLS.home} />
           </View>
         )}
       </ScrollView>
-      <View style={s.nav}>
-        {nav.map(([key, icon, label]) => (
-          <Pressable
-            key={key}
-            accessibilityRole="tab"
-            accessibilityState={{ selected: tab === key }}
-            onPress={() => setTab(key)}
-            style={[s.navItem, tab === key && s.navActive]}
-          >
-            <Icon
-              name={icon}
-              size={20}
-              color={tab === key ? "#007aff" : "#8292a2"}
-            />
-            <Text
-              style={[
-                s.navLabel,
-                tab === key && { color: "#007aff", fontWeight: "700" },
-              ]}
-            >
-              {label}
-            </Text>
-          </Pressable>
-        ))}
-      </View>
+      {navigationBar}
 
       <Modal
         visible={!!countryDetail}
         animationType="slide"
         onRequestClose={() => setCountryDetail(null)}
       >
-        <SafeAreaView style={s.safe}>
-          <ScrollView contentContainerStyle={s.container}>
-            <Pressable
-              accessibilityRole="button"
-              onPress={() => setCountryDetail(null)}
-              style={s.detailBack}
-            >
-              <Icon name="chevron-left" color="#007aff" />
-              <Text style={{ color: "#007aff", fontSize: 17 }}>
-                {pcopy.countries}
-              </Text>
-            </Pressable>
-            <View style={s.detailHero}>
-              <Text style={s.detailFlag}>
-                {countryDetail?.label?.split(" ")[0]}
-              </Text>
-              <Text style={s.detailName}>
-                {countryDetail?.label?.split(" ").slice(1).join(" ")}
-              </Text>
-              <Text style={s.summaryNumber}>
-                {countryDetail?.publishedCount?.toLocaleString(
-                  settings.language,
-                )}
-              </Text>
-              <Text style={s.listSub}>{ui.published}</Text>
-            </View>
-            <Pressable
-              accessibilityRole="button"
-              disabled={downloading}
-              onPress={() =>
-                countryDetail &&
-                refreshRemoteData(false, countryDetail.country_code)
-              }
-              style={[
-                s.tripButton,
-                { flex: 0, opacity: downloading ? 0.6 : 1 },
-              ]}
-            >
-              <Text style={s.tripButtonText}>
-                {downloading
-                  ? offlineText.busy
-                  : detailFeed
-                    ? dcopy.update
-                    : dcopy.download}
-              </Text>
-            </Pressable>
-            {detailFeed && (
-              <View style={s.offlineNotice}>
-                <Icon name="check-circle" color="#007aff" />
-                <Text style={s.dataLabel}>{dcopy.saved}</Text>
-              </View>
-            )}
-            {!!downloadStatus && (
-              <Text accessibilityLiveRegion="polite" style={s.note}>
-                {downloadStatus}
-              </Text>
-            )}
-            <View style={s.settingsCard}>
-              <View style={s.settingRow}>
-                <Text>{ui.fileSize}</Text>
-                <Text>
-                  {detailSize
-                    ? `${(detailSize / 1000000).toLocaleString(settings.language, { maximumFractionDigits: 1 })} MB`
-                    : dcopy.sizeUnknown}
-                </Text>
-              </View>
-              <View style={s.settingRow}>
-                <Text>{pcopy.updated}</Text>
-                <Text style={[s.note, { maxWidth: "58%", textAlign: "right" }]}>
-                  {datasetDate(
-                    detailFeed?.generated_at || detailFeed?.updated_at,
-                    settings.language,
-                    pcopy,
-                  )}
-                </Text>
-              </View>
-            </View>
-            <View style={s.offlineNotice}>
-              <Icon name="wifi-off" color="#007aff" />
-              <Text style={[s.note, { flex: 1 }]}>
-                {offlineText.explanation}
-              </Text>
-            </View>
-          </ScrollView>
-          <Pressable
-            onPress={() => setCountryDetail(null)}
-            style={s.sheetCancel}
-          >
-            <Text>{t.close || ui.close}</Text>
-          </Pressable>
-        </SafeAreaView>
+        <CountryDetails
+          dark={dark}
+          footer={navigationBar}
+          entry={countryDetail}
+          feed={detailFeed}
+          copy={{...qcopy, failed: offlineText.failed}}
+          ui={{ ...pcopy, fileSize: ui.fileSize }}
+          driverCopy={dcopy}
+          language={settings.language}
+          version={(
+            detailFeed?.generated_at ||
+            detailFeed?.updated_at ||
+            countryDetail?.updated_at
+          )?.slice(0, 10)}
+          size={detailSize}
+          date={datasetDate(
+            detailFeed?.generated_at ||
+              detailFeed?.updated_at ||
+              countryDetail?.updated_at,
+            settings.language,
+            pcopy,
+          )}
+          busy={downloading}
+          progress={
+            downloadProgress?.country === countryDetail?.country_code
+              ? downloadProgress
+              : null
+          }
+          onDownload={() =>
+            countryDetail && downloadOne(countryDetail.country_code)
+          }
+          onClose={() => setCountryDetail(null)}
+        />
+      </Modal>
+      <Modal
+        visible={modal === "filters"}
+        animationType="slide"
+        onRequestClose={() => setModal(null)}
+      >
+        <Filters
+          dark={dark}
+          copy={qcopy}
+          driverCopy={dcopy}
+          filters={premiumPrefs.filters}
+          onFilters={(filters) =>
+            setPremiumPrefs((previous) => ({ ...previous, filters }))
+          }
+          voice={settings.voice}
+          onVoice={(voice) =>
+            setSettings((previous) => ({ ...previous, voice }))
+          }
+          vibration={settings.vibration}
+          onVibration={(vibration) =>
+            setSettings((previous) => ({ ...previous, vibration }))
+          }
+          showLimits={premiumPrefs.showLimits}
+          onLimits={(showLimits) =>
+            setPremiumPrefs((previous) => ({ ...previous, showLimits }))
+          }
+          onClose={() => setModal(null)}
+        />
+      </Modal>
+      <Modal
+        visible={premiumReady && !premiumPrefs.started}
+        animationType="fade"
+        onRequestClose={() =>
+          setPremiumPrefs((previous) => ({ ...previous, started: true }))
+        }
+      >
+        <HeroLanding
+          copy={qcopy}
+          onStart={() =>
+            setPremiumPrefs((previous) => ({ ...previous, started: true }))
+          }
+        />
       </Modal>
       <Modal
         visible={modal === "territories"}
@@ -2139,7 +2638,8 @@ function cameraTypeLabel(cam, language = "ru") {
   return (labels[language] || labels.ru)[type] || type;
 }
 
-function SettingSwitch({ label, value, onChange, icon }) {
+function SettingSwitch({ label, value, onChange, icon, styles }) {
+  const s = styles || baseStyles;
   return (
     <View style={s.settingRow}>
       {icon && <Icon name={icon} color="#007aff" size={20} />}
@@ -2152,7 +2652,8 @@ function SettingSwitch({ label, value, onChange, icon }) {
     </View>
   );
 }
-function DistanceRow({ label, value, setValue }) {
+function DistanceRow({ label, value, setValue, styles }) {
+  const s = styles || baseStyles;
   return (
     <View style={s.settingRow}>
       <Text style={s.settingLabel}>{label}</Text>
@@ -2175,7 +2676,7 @@ function DistanceRow({ label, value, setValue }) {
   );
 }
 
-const s = StyleSheet.create({
+const baseStyles = StyleSheet.create({
   headerSettings: {
     width: 44,
     height: 44,
@@ -2256,7 +2757,7 @@ const s = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     gap: 12,
-    marginBottom: 20,
+    marginBottom: 8,
     flexWrap: "wrap",
   },
   brand: { fontSize: 32, fontWeight: "800", color: "#101828" },
@@ -2609,7 +3110,7 @@ const s = StyleSheet.create({
     gap: 10,
   },
   listTitle: { fontSize: 15, fontWeight: "700" },
-  listSub: { fontSize: 12, opacity: 0.55, marginTop: 3 },
+  listSub: { fontSize: 12, color: "#667085", marginTop: 3 },
   listDistance: { fontWeight: "800" },
   settingsCard: {
     backgroundColor: "transparent",
@@ -2617,7 +3118,7 @@ const s = StyleSheet.create({
     padding: 0,
     gap: 12,
   },
-  sectionTitle: { fontSize: 18, fontWeight: "800", marginTop: 6 },
+  sectionTitle: { fontSize: 18, fontWeight: "800", marginTop: 6, color: "#101828" },
   settingRow: {
     gap: 12,
     backgroundColor: "#fff",
@@ -2649,7 +3150,7 @@ const s = StyleSheet.create({
     borderRadius: 12,
     alignItems: "center",
   },
-  langActive: { backgroundColor: "#cfd7ff" },
+  langActive: { backgroundColor: "#eaf3ff" },
   aboutRow: {
     backgroundColor: "#fff",
     borderRadius: 14,
@@ -2741,7 +3242,8 @@ const s = StyleSheet.create({
     textAlign: "left",
   },
 });
-function AboutLink({ label, url }) {
+function AboutLink({ label, url, styles }) {
+  const s = styles || baseStyles;
   return (
     <Pressable onPress={() => Linking.openURL(url)} style={s.aboutRow}>
       <Icon name="info" color="#007aff" size={18} />

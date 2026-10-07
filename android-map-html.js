@@ -14,7 +14,7 @@ export function androidMapHTML(region) {
   map.attributionControl.setPrefix(false);
   L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom:19, attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>'}).addTo(map);
   const dots = L.layerGroup().addTo(map);
-  let user;
+  let user,route=null;
   function setRegion(r) {
     map.fitBounds([[r.latitude-r.latitudeDelta/2,r.longitude-r.longitudeDelta/2],[r.latitude+r.latitudeDelta/2,r.longitude+r.longitudeDelta/2]], {animate:false});
   }
@@ -34,6 +34,9 @@ export function androidMapHTML(region) {
         const title=document.createElement('span');title.textContent=p.title;dot.bindTooltip(title);
         dot.on('click',()=>send({type:'marker',id:p.id}));
       });
+      if(route)map.removeLayer(route);
+      route=null;
+      if(data.trail?.length>1)route=L.polyline(data.trail.map(p=>[p.latitude,p.longitude]),{color:"#007aff",weight:5}).addTo(map);
       if(user)map.removeLayer(user);
       if(data.coords)user=L.marker([data.coords.latitude,data.coords.longitude],{interactive:false,icon:L.divIcon({html:'<div class="user-dot"></div>',iconSize:[20,20],iconAnchor:[10,10],className:''})}).addTo(map);
     },

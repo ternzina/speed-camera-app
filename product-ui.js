@@ -3,6 +3,7 @@ import { View, Text, Pressable, StyleSheet } from "react-native";
 import MapView, { Marker } from "./map-surface";
 import Feather from "@expo/vector-icons/Feather";
 import { distanceBetween } from "./driver-engine";
+import { displayDistance, displaySpeed } from "./premium-presentation";
 import { drivingLabel } from "./driver-copy";
 
 import { CONTROL_ICONS, mapClusters } from "./product-presentation";
@@ -18,6 +19,11 @@ export function Icon({ name, size = 20, color = "#46617a" }) {
 }
 export function CameraMap({
   height,
+  units = "metric",
+  unitsCopy,
+  trail,
+  voice,
+  onVoice,
   points,
   coords,
   copy,
@@ -75,6 +81,7 @@ export function CameraMap({
         style={StyleSheet.absoluteFill}
         initialRegion={region}
         userCoordinate={coords}
+        trail={trail}
         onRegionChangeComplete={setRegion}
         showsUserLocation
         showsCompass={false}
@@ -139,9 +146,13 @@ export function CameraMap({
               {drivingLabel(warning.camera, driverCopy)}
             </Text>
             <Text style={m.warningDistance}>
-              {warning.distance} {driverCopy.meters}
-              {warning.camera.speed_limit > 0
-                ? ` · ${driverCopy.limit} ${warning.camera.speed_limit}`
+              {displayDistance(
+                warning.distance,
+                units,
+                unitsCopy || driverCopy,
+              )}
+              {warning.camera.speed_limit > 0 && !warning.limitHidden
+                ? ` · ${driverCopy.limit} ${displaySpeed(warning.camera.speed_limit, units)}`
                 : ""}
             </Text>
           </View>
@@ -158,23 +169,25 @@ export function CameraMap({
           accessibilityLabel={copy.locate}
           disabled={locating}
           onPress={locate}
-          style={m.control}
+          style={[m.control, onVoice && {width:44,height:44}]}
         >
           <Icon name={locating ? "clock" : "navigation"} />
         </Pressable>
-        <Pressable
-          accessibilityRole="button"
-          accessibilityLabel={copy.nearby}
-          onPress={nearby}
-          style={m.control}
-        >
-          <Icon name="crosshair" />
-        </Pressable>
+        {onVoice && (
+          <Pressable
+            accessibilityRole="button"
+            accessibilityLabel={copy.voiceOn}
+            onPress={onVoice}
+            style={[m.control, onVoice && {width:44,height:44}]}
+          >
+            <Icon name={voice ? "volume-2" : "volume-x"} color="#007aff" />
+          </Pressable>
+        )}
         <Pressable
           accessibilityRole="button"
           accessibilityLabel={copy.report}
           onPress={onReport}
-          style={m.control}
+          style={[m.control, onVoice && {width:44,height:44}]}
         >
           <Icon name="plus" />
         </Pressable>
@@ -197,9 +210,11 @@ export function CameraMap({
           <Text style={m.title}>
             {coords
               ? nearest && nearest.distance <= 5000
-                ? nearest.distance < 1000
-                  ? `${Math.round(nearest.distance)} ${driverCopy.meters}`
-                  : `${(nearest.distance / 1000).toLocaleString(language, { maximumFractionDigits: 1 })} ${driverCopy.km}`
+                ? displayDistance(
+                    nearest.distance,
+                    units,
+                    unitsCopy || driverCopy,
+                  )
                 : copy.calm
               : copy.enableGPS}
           </Text>
@@ -207,6 +222,14 @@ export function CameraMap({
             <Text style={m.detail}>{drivingLabel(nearest, driverCopy)}</Text>
           )}
         </View>
+        <Pressable
+          accessibilityRole="button"
+          accessibilityLabel={copy.nearby}
+          onPress={nearby}
+          style={[m.control, onVoice && {width:44,height:44}]}
+        >
+          <Icon name="crosshair" color="#007aff" />
+        </Pressable>
       </View>
     </View>
   );
@@ -279,7 +302,7 @@ const m = StyleSheet.create({
     padding: 12,
   },
   hintText: { fontSize: 12, color: "#46617a", flex: 1 },
-  controls: { position: "absolute", right: 16, top: 128, gap: 10 },
+  controls: { position: "absolute", right: 16, top: 108, gap: 8 },
   control: {
     width: 48,
     height: 48,

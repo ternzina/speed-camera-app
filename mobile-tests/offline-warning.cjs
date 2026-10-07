@@ -88,7 +88,7 @@ function loadBackgroundTask(storage, notifications, settings, feeds) {
     useEffect: () => {},
   };
   const noop = () => {};
-  const stubs = {'./product-ui':{Icon:'Icon',CameraMap:'CameraMap'},
+  const stubs = {'./premium-ui':{HeroLanding:'HeroLanding',FullWarning:'FullWarning',PremiumTrip:'PremiumTrip',CountryDetails:'CountryDetails',Filters:'Filters',TypeIcon:'TypeIcon'},'./product-ui':{Icon:'Icon',CameraMap:'CameraMap'},
     react: React,
     "react-native": {
       StyleSheet: { create: (v) => v },

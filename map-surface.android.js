@@ -6,7 +6,14 @@ export function Marker() {
   return null;
 }
 export default React.forwardRef(function MapSurface(
-  { initialRegion, onRegionChangeComplete, userCoordinate, children, style },
+  {
+    initialRegion,
+    onRegionChangeComplete,
+    userCoordinate,
+    trail,
+    children,
+    style,
+  },
   ref,
 ) {
   const web = useRef(null),
@@ -29,6 +36,7 @@ export default React.forwardRef(function MapSurface(
     if (ready)
       invoke("update", {
         coords: userCoordinate,
+        trail: trail || [],
         markers: markers.map((m) => ({
           id: String(m.key),
           ...m.props.coordinate,
@@ -37,7 +45,7 @@ export default React.forwardRef(function MapSurface(
           icon: m.props.mapIcon,
         })),
       });
-  }, [ready, children, userCoordinate]);
+  }, [ready, children, userCoordinate, trail]);
   function message(event) {
     let data;
     try {
