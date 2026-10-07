@@ -1,0 +1,245 @@
+[
+  {
+    "schema_name": "public",
+    "table_name": "camera_source_links",
+    "column_name": "raw_payload",
+    "rows": 66168,
+    "stored_value_bytes": 76217186,
+    "logical_json_bytes": 75407647,
+    "max_json_bytes": 6037
+  },
+  {
+    "schema_name": "public",
+    "table_name": "camera_records",
+    "column_name": "metadata",
+    "rows": 65134,
+    "stored_value_bytes": 75635044,
+    "logical_json_bytes": 73956375,
+    "max_json_bytes": 2134
+  },
+  {
+    "schema_name": "camera_backup_20261007",
+    "table_name": "camera_records",
+    "column_name": "metadata",
+    "rows": 1323,
+    "stored_value_bytes": 574672,
+    "logical_json_bytes": 524483,
+    "max_json_bytes": 827
+  },
+  {
+    "schema_name": "camera_backup_20261007",
+    "table_name": "camera_source_links",
+    "column_name": "raw_payload",
+    "rows": 1323,
+    "stored_value_bytes": 574672,
+    "logical_json_bytes": 524483,
+    "max_json_bytes": 827
+  },
+  {
+    "schema_name": "camera_backup_20261007",
+    "table_name": "camera_import_runs",
+    "column_name": "report",
+    "rows": 2,
+    "stored_value_bytes": 205,
+    "logical_json_bytes": 152,
+    "max_json_bytes": 130
+  },
+  {
+    "schema_name": "public",
+    "table_name": "camera_import_runs",
+    "column_name": "report",
+    "rows": 2,
+    "stored_value_bytes": 205,
+    "logical_json_bytes": 152,
+    "max_json_bytes": 130
+  },
+  {
+    "schema_name": "auth",
+    "table_name": "mfa_factors",
+    "column_name": "web_authn_credential",
+    "rows": 0,
+    "stored_value_bytes": 0,
+    "logical_json_bytes": 0,
+    "max_json_bytes": 0
+  },
+  {
+    "schema_name": "auth",
+    "table_name": "mfa_factors",
+    "column_name": "last_webauthn_challenge_data",
+    "rows": 0,
+    "stored_value_bytes": 0,
+    "logical_json_bytes": 0,
+    "max_json_bytes": 0
+  },
+  {
+    "schema_name": "auth",
+    "table_name": "custom_oauth_providers",
+    "column_name": "attribute_mapping",
+    "rows": 0,
+    "stored_value_bytes": 0,
+    "logical_json_bytes": 0,
+    "max_json_bytes": 0
+  },
+  {
+    "schema_name": "auth",
+    "table_name": "custom_oauth_providers",
+    "column_name": "authorization_params",
+    "rows": 0,
+    "stored_value_bytes": 0,
+    "logical_json_bytes": 0,
+    "max_json_bytes": 0
+  },
+  {
+    "schema_name": "auth",
+    "table_name": "custom_oauth_providers",
+    "column_name": "cached_discovery",
+    "rows": 0,
+    "stored_value_bytes": 0,
+    "logical_json_bytes": 0,
+    "max_json_bytes": 0
+  },
+  {
+    "schema_name": "auth",
+    "table_name": "webauthn_credentials",
+    "column_name": "transports",
+    "rows": 0,
+    "stored_value_bytes": 0,
+    "logical_json_bytes": 0,
+    "max_json_bytes": 0
+  },
+  {
+    "schema_name": "auth",
+    "table_name": "webauthn_challenges",
+    "column_name": "session_data",
+    "rows": 0,
+    "stored_value_bytes": 0,
+    "logical_json_bytes": 0,
+    "max_json_bytes": 0
+  },
+  {
+    "schema_name": "auth",
+    "table_name": "saml_providers",
+    "column_name": "attribute_mapping",
+    "rows": 0,
+    "stored_value_bytes": 0,
+    "logical_json_bytes": 0,
+    "max_json_bytes": 0
+  },
+  {
+    "schema_name": "storage",
+    "table_name": "s3_multipart_uploads",
+    "column_name": "user_metadata",
+    "rows": 0,
+    "stored_value_bytes": 0,
+    "logical_json_bytes": 0,
+    "max_json_bytes": 0
+  },
+  {
+    "schema_name": "storage",
+    "table_name": "s3_multipart_uploads",
+    "column_name": "metadata",
+    "rows": 0,
+    "stored_value_bytes": 0,
+    "logical_json_bytes": 0,
+    "max_json_bytes": 0
+  },
+  {
+    "schema_name": "storage",
+    "table_name": "vector_indexes",
+    "column_name": "metadata_configuration",
+    "rows": 0,
+    "stored_value_bytes": 0,
+    "logical_json_bytes": 0,
+    "max_json_bytes": 0
+  },
+  {
+    "schema_name": "storage",
+    "table_name": "buckets",
+    "column_name": "lifecycle_configuration",
+    "rows": 0,
+    "stored_value_bytes": 0,
+    "logical_json_bytes": 0,
+    "max_json_bytes": 0
+  },
+  {
+    "schema_name": "storage",
+    "table_name": "objects",
+    "column_name": "metadata",
+    "rows": 0,
+    "stored_value_bytes": 0,
+    "logical_json_bytes": 0,
+    "max_json_bytes": 0
+  },
+  {
+    "schema_name": "storage",
+    "table_name": "objects",
+    "column_name": "user_metadata",
+    "rows": 0,
+    "stored_value_bytes": 0,
+    "logical_json_bytes": 0,
+    "max_json_bytes": 0
+  },
+  {
+    "schema_name": "realtime",
+    "table_name": "subscription",
+    "column_name": "claims",
+    "rows": 0,
+    "stored_value_bytes": 0,
+    "logical_json_bytes": 0,
+    "max_json_bytes": 0
+  },
+  {
+    "schema_name": "auth",
+    "table_name": "scim_users",
+    "column_name": "resource",
+    "rows": 0,
+    "stored_value_bytes": 0,
+    "logical_json_bytes": 0,
+    "max_json_bytes": 0
+  },
+  {
+    "schema_name": "auth",
+    "table_name": "users",
+    "column_name": "raw_app_meta_data",
+    "rows": 0,
+    "stored_value_bytes": 0,
+    "logical_json_bytes": 0,
+    "max_json_bytes": 0
+  },
+  {
+    "schema_name": "auth",
+    "table_name": "users",
+    "column_name": "raw_user_meta_data",
+    "rows": 0,
+    "stored_value_bytes": 0,
+    "logical_json_bytes": 0,
+    "max_json_bytes": 0
+  },
+  {
+    "schema_name": "auth",
+    "table_name": "audit_log_entries",
+    "column_name": "payload",
+    "rows": 0,
+    "stored_value_bytes": 0,
+    "logical_json_bytes": 0,
+    "max_json_bytes": 0
+  },
+  {
+    "schema_name": "auth",
+    "table_name": "identities",
+    "column_name": "identity_data",
+    "rows": 0,
+    "stored_value_bytes": 0,
+    "logical_json_bytes": 0,
+    "max_json_bytes": 0
+  },
+  {
+    "schema_name": "auth",
+    "table_name": "mfa_challenges",
+    "column_name": "web_authn_session_data",
+    "rows": 0,
+    "stored_value_bytes": 0,
+    "logical_json_bytes": 0,
+    "max_json_bytes": 0
+  }
+]

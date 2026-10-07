@@ -1,0 +1,664 @@
+{
+  "checked_at": "2026-10-07T07:40:11.952Z",
+  "countries": 49,
+  "published_records": 59270,
+  "checks": [
+    {
+      "country_code": "AD",
+      "records": 11,
+      "app_records_preserved": true,
+      "alias_checksum": true,
+      "result": "passed"
+    },
+    {
+      "country_code": "AL",
+      "records": 2,
+      "app_records_preserved": true,
+      "alias_checksum": true,
+      "result": "passed"
+    },
+    {
+      "country_code": "AM",
+      "records": 280,
+      "app_records_preserved": true,
+      "alias_checksum": true,
+      "result": "passed"
+    },
+    {
+      "country_code": "AT",
+      "records": 1500,
+      "app_records_preserved": true,
+      "alias_checksum": true,
+      "result": "passed"
+    },
+    {
+      "country_code": "AZ",
+      "records": 691,
+      "app_records_preserved": true,
+      "alias_checksum": true,
+      "result": "passed"
+    },
+    {
+      "country_code": "BA",
+      "records": 246,
+      "app_records_preserved": true,
+      "alias_checksum": true,
+      "result": "passed"
+    },
+    {
+      "country_code": "BE",
+      "records": 1689,
+      "app_records_preserved": true,
+      "alias_checksum": true,
+      "result": "passed"
+    },
+    {
+      "country_code": "BG",
+      "records": 77,
+      "app_records_preserved": true,
+      "alias_checksum": true,
+      "result": "passed"
+    },
+    {
+      "country_code": "BY",
+      "records": 569,
+      "app_records_preserved": true,
+      "alias_checksum": true,
+      "result": "passed"
+    },
+    {
+      "country_code": "CA",
+      "records": 1312,
+      "app_records_preserved": true,
+      "alias_checksum": true,
+      "result": "passed"
+    },
+    {
+      "country_code": "CH",
+      "records": 710,
+      "app_records_preserved": true,
+      "alias_checksum": true,
+      "result": "passed"
+    },
+    {
+      "country_code": "CY",
+      "records": 74,
+      "app_records_preserved": true,
+      "alias_checksum": true,
+      "result": "passed"
+    },
+    {
+      "country_code": "CZ",
+      "records": 1937,
+      "app_records_preserved": true,
+      "alias_checksum": true,
+      "result": "passed"
+    },
+    {
+      "country_code": "DE",
+      "records": 5794,
+      "app_records_preserved": true,
+      "alias_checksum": true,
+      "result": "passed"
+    },
+    {
+      "country_code": "DK",
+      "records": 24,
+      "app_records_preserved": true,
+      "alias_checksum": true,
+      "result": "passed"
+    },
+    {
+      "country_code": "EE",
+      "records": 85,
+      "app_records_preserved": true,
+      "alias_checksum": true,
+      "result": "passed"
+    },
+    {
+      "country_code": "ES",
+      "records": 3283,
+      "app_records_preserved": true,
+      "alias_checksum": true,
+      "result": "passed"
+    },
+    {
+      "country_code": "FI",
+      "records": 951,
+      "app_records_preserved": true,
+      "alias_checksum": true,
+      "result": "passed"
+    },
+    {
+      "country_code": "FR",
+      "records": 6222,
+      "app_records_preserved": true,
+      "alias_checksum": true,
+      "result": "passed"
+    },
+    {
+      "country_code": "GB",
+      "records": 3662,
+      "app_records_preserved": true,
+      "alias_checksum": true,
+      "result": "passed"
+    },
+    {
+      "country_code": "GE",
+      "records": 208,
+      "app_records_preserved": true,
+      "alias_checksum": true,
+      "result": "passed"
+    },
+    {
+      "country_code": "GR",
+      "records": 411,
+      "app_records_preserved": true,
+      "alias_checksum": true,
+      "result": "passed"
+    },
+    {
+      "country_code": "HR",
+      "records": 965,
+      "app_records_preserved": true,
+      "alias_checksum": true,
+      "result": "passed"
+    },
+    {
+      "country_code": "HU",
+      "records": 540,
+      "app_records_preserved": true,
+      "alias_checksum": true,
+      "result": "passed"
+    },
+    {
+      "country_code": "IE",
+      "records": 15,
+      "app_records_preserved": true,
+      "alias_checksum": true,
+      "result": "passed"
+    },
+    {
+      "country_code": "IS",
+      "records": 20,
+      "app_records_preserved": true,
+      "alias_checksum": true,
+      "result": "passed"
+    },
+    {
+      "country_code": "IT",
+      "records": 6023,
+      "app_records_preserved": true,
+      "alias_checksum": true,
+      "result": "passed"
+    },
+    {
+      "country_code": "LI",
+      "records": 8,
+      "app_records_preserved": true,
+      "alias_checksum": true,
+      "result": "passed"
+    },
+    {
+      "country_code": "LT",
+      "records": 370,
+      "app_records_preserved": true,
+      "alias_checksum": true,
+      "result": "passed"
+    },
+    {
+      "country_code": "LU",
+      "records": 37,
+      "app_records_preserved": true,
+      "alias_checksum": true,
+      "result": "passed"
+    },
+    {
+      "country_code": "LV",
+      "records": 155,
+      "app_records_preserved": true,
+      "alias_checksum": true,
+      "result": "passed"
+    },
+    {
+      "country_code": "MC",
+      "records": 6,
+      "app_records_preserved": true,
+      "alias_checksum": true,
+      "result": "passed"
+    },
+    {
+      "country_code": "MD",
+      "records": 79,
+      "app_records_preserved": true,
+      "alias_checksum": true,
+      "result": "passed"
+    },
+    {
+      "country_code": "ME",
+      "records": 13,
+      "app_records_preserved": true,
+      "alias_checksum": true,
+      "result": "passed"
+    },
+    {
+      "country_code": "MK",
+      "records": 164,
+      "app_records_preserved": true,
+      "alias_checksum": true,
+      "result": "passed"
+    },
+    {
+      "country_code": "MT",
+      "records": 22,
+      "app_records_preserved": true,
+      "alias_checksum": true,
+      "result": "passed"
+    },
+    {
+      "country_code": "NL",
+      "records": 645,
+      "app_records_preserved": true,
+      "alias_checksum": true,
+      "result": "passed"
+    },
+    {
+      "country_code": "NO",
+      "records": 525,
+      "app_records_preserved": true,
+      "alias_checksum": true,
+      "result": "passed"
+    },
+    {
+      "country_code": "PL",
+      "records": 897,
+      "app_records_preserved": true,
+      "alias_checksum": true,
+      "result": "passed"
+    },
+    {
+      "country_code": "PT",
+      "records": 341,
+      "app_records_preserved": true,
+      "alias_checksum": true,
+      "result": "passed"
+    },
+    {
+      "country_code": "RO",
+      "records": 330,
+      "app_records_preserved": true,
+      "alias_checksum": true,
+      "result": "passed"
+    },
+    {
+      "country_code": "RS",
+      "records": 426,
+      "app_records_preserved": true,
+      "alias_checksum": true,
+      "result": "passed"
+    },
+    {
+      "country_code": "RU",
+      "records": 10660,
+      "app_records_preserved": true,
+      "alias_checksum": true,
+      "result": "passed"
+    },
+    {
+      "country_code": "SE",
+      "records": 2471,
+      "app_records_preserved": true,
+      "alias_checksum": true,
+      "result": "passed"
+    },
+    {
+      "country_code": "SI",
+      "records": 277,
+      "app_records_preserved": true,
+      "alias_checksum": true,
+      "result": "passed"
+    },
+    {
+      "country_code": "SK",
+      "records": 68,
+      "app_records_preserved": true,
+      "alias_checksum": true,
+      "result": "passed"
+    },
+    {
+      "country_code": "TR",
+      "records": 659,
+      "app_records_preserved": true,
+      "alias_checksum": true,
+      "result": "passed"
+    },
+    {
+      "country_code": "UA",
+      "records": 426,
+      "app_records_preserved": true,
+      "alias_checksum": true,
+      "result": "passed"
+    },
+    {
+      "country_code": "US",
+      "records": 3390,
+      "app_records_preserved": true,
+      "alias_checksum": true,
+      "result": "passed"
+    }
+  ],
+  "has_direction": 16116,
+  "without_direction": 43053,
+  "speed_limits": 36927,
+  "red_light_render_sites": 5429,
+  "average_sections": 1335,
+  "combined": 0,
+  "polish_section_ending": true,
+  "cors": true,
+  "head": true,
+  "conditional_304": true,
+  "unsigned_upload_denied": true,
+  "public_write_denied": true,
+  "compression": [
+    {
+      "country_code": "AD",
+      "json_bytes": 2373,
+      "gzip_bytes": 593,
+      "brotli_quality6_bytes": 521
+    },
+    {
+      "country_code": "AL",
+      "json_bytes": 624,
+      "gzip_bytes": 294,
+      "brotli_quality6_bytes": 245
+    },
+    {
+      "country_code": "AM",
+      "json_bytes": 52880,
+      "gzip_bytes": 6722,
+      "brotli_quality6_bytes": 6182
+    },
+    {
+      "country_code": "AT",
+      "json_bytes": 274220,
+      "gzip_bytes": 34676,
+      "brotli_quality6_bytes": 33265
+    },
+    {
+      "country_code": "AZ",
+      "json_bytes": 120677,
+      "gzip_bytes": 13893,
+      "brotli_quality6_bytes": 12813
+    },
+    {
+      "country_code": "BA",
+      "json_bytes": 45183,
+      "gzip_bytes": 5933,
+      "brotli_quality6_bytes": 5495
+    },
+    {
+      "country_code": "BE",
+      "json_bytes": 323385,
+      "gzip_bytes": 39561,
+      "brotli_quality6_bytes": 37357
+    },
+    {
+      "country_code": "BG",
+      "json_bytes": 14403,
+      "gzip_bytes": 2318,
+      "brotli_quality6_bytes": 2064
+    },
+    {
+      "country_code": "BY",
+      "json_bytes": 111856,
+      "gzip_bytes": 14436,
+      "brotli_quality6_bytes": 13567
+    },
+    {
+      "country_code": "CA",
+      "json_bytes": 251917,
+      "gzip_bytes": 37331,
+      "brotli_quality6_bytes": 35396
+    },
+    {
+      "country_code": "CH",
+      "json_bytes": 126408,
+      "gzip_bytes": 16702,
+      "brotli_quality6_bytes": 15788
+    },
+    {
+      "country_code": "CY",
+      "json_bytes": 13718,
+      "gzip_bytes": 1617,
+      "brotli_quality6_bytes": 1386
+    },
+    {
+      "country_code": "CZ",
+      "json_bytes": 376833,
+      "gzip_bytes": 43584,
+      "brotli_quality6_bytes": 41009
+    },
+    {
+      "country_code": "DE",
+      "json_bytes": 1069734,
+      "gzip_bytes": 137755,
+      "brotli_quality6_bytes": 130078
+    },
+    {
+      "country_code": "DK",
+      "json_bytes": 4821,
+      "gzip_bytes": 854,
+      "brotli_quality6_bytes": 727
+    },
+    {
+      "country_code": "EE",
+      "json_bytes": 18024,
+      "gzip_bytes": 2479,
+      "brotli_quality6_bytes": 2284
+    },
+    {
+      "country_code": "ES",
+      "json_bytes": 666458,
+      "gzip_bytes": 78819,
+      "brotli_quality6_bytes": 76084
+    },
+    {
+      "country_code": "FI",
+      "json_bytes": 172420,
+      "gzip_bytes": 20941,
+      "brotli_quality6_bytes": 19683
+    },
+    {
+      "country_code": "FR",
+      "json_bytes": 1135124,
+      "gzip_bytes": 149665,
+      "brotli_quality6_bytes": 137730
+    },
+    {
+      "country_code": "GB",
+      "json_bytes": 677199,
+      "gzip_bytes": 85848,
+      "brotli_quality6_bytes": 82796
+    },
+    {
+      "country_code": "GE",
+      "json_bytes": 38153,
+      "gzip_bytes": 4836,
+      "brotli_quality6_bytes": 4314
+    },
+    {
+      "country_code": "GR",
+      "json_bytes": 69380,
+      "gzip_bytes": 7985,
+      "brotli_quality6_bytes": 7191
+    },
+    {
+      "country_code": "HR",
+      "json_bytes": 174165,
+      "gzip_bytes": 22556,
+      "brotli_quality6_bytes": 20993
+    },
+    {
+      "country_code": "HU",
+      "json_bytes": 98516,
+      "gzip_bytes": 12438,
+      "brotli_quality6_bytes": 11799
+    },
+    {
+      "country_code": "IE",
+      "json_bytes": 4146,
+      "gzip_bytes": 858,
+      "brotli_quality6_bytes": 773
+    },
+    {
+      "country_code": "IS",
+      "json_bytes": 4183,
+      "gzip_bytes": 767,
+      "brotli_quality6_bytes": 671
+    },
+    {
+      "country_code": "IT",
+      "json_bytes": 1086207,
+      "gzip_bytes": 135116,
+      "brotli_quality6_bytes": 126382
+    },
+    {
+      "country_code": "LI",
+      "json_bytes": 1645,
+      "gzip_bytes": 445,
+      "brotli_quality6_bytes": 382
+    },
+    {
+      "country_code": "LT",
+      "json_bytes": 94274,
+      "gzip_bytes": 10429,
+      "brotli_quality6_bytes": 9224
+    },
+    {
+      "country_code": "LU",
+      "json_bytes": 8391,
+      "gzip_bytes": 1323,
+      "brotli_quality6_bytes": 1159
+    },
+    {
+      "country_code": "LV",
+      "json_bytes": 29832,
+      "gzip_bytes": 3864,
+      "brotli_quality6_bytes": 3506
+    },
+    {
+      "country_code": "MC",
+      "json_bytes": 1437,
+      "gzip_bytes": 453,
+      "brotli_quality6_bytes": 392
+    },
+    {
+      "country_code": "MD",
+      "json_bytes": 13736,
+      "gzip_bytes": 1816,
+      "brotli_quality6_bytes": 1568
+    },
+    {
+      "country_code": "ME",
+      "json_bytes": 2397,
+      "gzip_bytes": 566,
+      "brotli_quality6_bytes": 490
+    },
+    {
+      "country_code": "MK",
+      "json_bytes": 28586,
+      "gzip_bytes": 3394,
+      "brotli_quality6_bytes": 3023
+    },
+    {
+      "country_code": "MT",
+      "json_bytes": 4325,
+      "gzip_bytes": 802,
+      "brotli_quality6_bytes": 714
+    },
+    {
+      "country_code": "NL",
+      "json_bytes": 130185,
+      "gzip_bytes": 16216,
+      "brotli_quality6_bytes": 15049
+    },
+    {
+      "country_code": "NO",
+      "json_bytes": 94003,
+      "gzip_bytes": 11499,
+      "brotli_quality6_bytes": 10591
+    },
+    {
+      "country_code": "PL",
+      "json_bytes": 184184,
+      "gzip_bytes": 26389,
+      "brotli_quality6_bytes": 24543
+    },
+    {
+      "country_code": "PT",
+      "json_bytes": 65282,
+      "gzip_bytes": 8117,
+      "brotli_quality6_bytes": 7546
+    },
+    {
+      "country_code": "RO",
+      "json_bytes": 69670,
+      "gzip_bytes": 8358,
+      "brotli_quality6_bytes": 8015
+    },
+    {
+      "country_code": "RS",
+      "json_bytes": 81129,
+      "gzip_bytes": 9608,
+      "brotli_quality6_bytes": 8798
+    },
+    {
+      "country_code": "RU",
+      "json_bytes": 1865451,
+      "gzip_bytes": 226420,
+      "brotli_quality6_bytes": 212560
+    },
+    {
+      "country_code": "SE",
+      "json_bytes": 468836,
+      "gzip_bytes": 55621,
+      "brotli_quality6_bytes": 52208
+    },
+    {
+      "country_code": "SI",
+      "json_bytes": 52766,
+      "gzip_bytes": 7152,
+      "brotli_quality6_bytes": 6472
+    },
+    {
+      "country_code": "SK",
+      "json_bytes": 12004,
+      "gzip_bytes": 1949,
+      "brotli_quality6_bytes": 1723
+    },
+    {
+      "country_code": "TR",
+      "json_bytes": 118491,
+      "gzip_bytes": 14522,
+      "brotli_quality6_bytes": 13345
+    },
+    {
+      "country_code": "UA",
+      "json_bytes": 77983,
+      "gzip_bytes": 12019,
+      "brotli_quality6_bytes": 10965
+    },
+    {
+      "country_code": "US",
+      "json_bytes": 653925,
+      "gzip_bytes": 82451,
+      "brotli_quality6_bytes": 78528
+    }
+  ],
+  "compression_totals": {
+    "json_bytes": 10991539,
+    "gzip_bytes": 1381990,
+    "brotli_quality6_bytes": 1297394
+  },
+  "result": "passed"
+}

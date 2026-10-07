@@ -1,0 +1,14 @@
+{
+  "checked_at": "2026-10-07T07:44:13.946Z",
+  "checks": 65,
+  "all_country_checks": 49,
+  "sha256_known_vectors": 5,
+  "polish_devices_preserved": 169,
+  "polish_physical_sites_rendered": 68,
+  "offline_retention": true,
+  "interrupted_write_preserves_cache": true,
+  "corruption_isolated": true,
+  "manifest_only_current_country": true,
+  "checksum_mismatch_falls_back": true,
+  "result": "passed"
+}

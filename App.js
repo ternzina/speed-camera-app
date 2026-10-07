@@ -17,6 +17,7 @@ import plData from "./cameras-pl.json";
 import { nearestPolandPoint, detectAverageSpeedSection, averageSectionSpeech } from "./poland-engine";
 import { cameraPoints, countryFeed, loadCameraCache, saveCameraCache } from "./camera-data";
 import { COUNTRY_NAMES } from "./countries";
+import { refreshCountryDelivery } from "./camera-delivery";
 
 const BACKGROUND_LOCATION_TASK = "camera-background-location-v060";
 const MIN_MOVING_SPEED_KMH = 8;
@@ -26,7 +27,6 @@ const SETTINGS_KEY = "camera_settings_v060";
 const REPORTS_KEY = "camera_reports_v060";
 const HIDDEN_KEY = "camera_hidden_v060";
 
-const CAMERA_API_URL = "https://ydgzsdlwnurychkbgsmn.supabase.co/functions/v1/camera-export";
 const REPORT_API_URL = "https://camera.21wek.com/api/report.php";
 const REMOTE_CACHE_KEY = "camera_remote_cache_v081";
 
@@ -267,6 +267,7 @@ export default function App() {
   const [remoteFeeds,setRemoteFeeds]=useState({});
   const [countryCoverage,setCountryCoverage]=useState([]);
   const remoteFeedsRef=useRef({});
+  const countryVersionsRef=useRef({});
   const selectedCountry=String(settings.country||"ua").toUpperCase();
   const activeUAData=countryFeed(remoteFeeds,"UA",data,plData);
   const activePLData=countryFeed(remoteFeeds,selectedCountry==="UA"?"PL":selectedCountry,data,plData);
@@ -299,7 +300,7 @@ export default function App() {
         const saved = await loadCameraCache(AsyncStorage,REMOTE_CACHE_KEY);
         if (saved) {
           const feeds=saved.feeds||{UA:saved.ua,PL:saved.pl};
-          remoteFeedsRef.current=feeds;bgCameraFeeds=feeds;setRemoteFeeds(feeds);
+          remoteFeedsRef.current=feeds;countryVersionsRef.current=saved.countryVersions||{};bgCameraFeeds=feeds;setRemoteFeeds(feeds);
           setCountryCoverage(saved.countries||[]);setCoverage(saved.cov||null);setLastDataUpdate(saved.stamp||null);
         }
         await refreshRemoteData(true);
@@ -328,24 +329,20 @@ export default function App() {
 
   async function refreshRemoteData(silent=false,country=selectedCountry) {
     try {
-      const codes=[...new Set(["UA","PL",country])];
-      const [responses,covRes] = await Promise.all([
-        Promise.all(codes.map(code=>fetch(`${CAMERA_API_URL}?country=${encodeURIComponent(code)}`, { cache: "no-store" }))),
-        fetch(`${CAMERA_API_URL}?country=coverage`, { cache: "no-store" }),
-      ]);
-      if (responses.some(res=>!res.ok)) throw new Error("remote data unavailable");
-      const payloads=await Promise.all(responses.map(res=>res.json()));
-      const feeds={...remoteFeedsRef.current};
-      codes.forEach((code,index)=>{feeds[code]=payloads[index];});
-      const countries=covRes.ok?(await covRes.json()).countries||[]:countryCoverage;
+      const result=await refreshCountryDelivery({country,feeds:remoteFeedsRef.current,versions:countryVersionsRef.current,countries:countryCoverage});
+      if (!result.feed || result.source==='offline' || result.source==='bundled') return false;
+      const feeds={...remoteFeedsRef.current,[country]:result.feed};
+      const countryVersions={...countryVersionsRef.current};
+      if(result.version)countryVersions[country]=result.version;else delete countryVersions[country];
+      const countries=result.countries;
+      const coverageFor=code=>countries.find(entry=>entry.country_code===code);
       const ua=feeds.UA,pl=feeds.PL;
-      /* Legacy export shapes are kept by the existing endpoint. */
-      const cov={UA:{speed_cameras:ua.count??ua.cameras?.length??0},PL:pl.counts||{}};
-      remoteFeedsRef.current=feeds;bgCameraFeeds=feeds;
+      const cov={UA:{speed_cameras:ua?.count??ua?.cameras?.length??coverageFor('UA')?.speed_cameras??0},PL:pl?.counts||coverageFor('PL')||{}};
+      remoteFeedsRef.current=feeds;countryVersionsRef.current=countryVersions;bgCameraFeeds=feeds;
       setRemoteFeeds(feeds);setCountryCoverage(countries);setCoverage(cov);
       const stamp = new Date().toISOString();
       setLastDataUpdate(stamp);
-      await saveCameraCache(AsyncStorage,REMOTE_CACHE_KEY,{feeds,countries,cov,stamp},country).catch(()=>{});
+      await saveCameraCache(AsyncStorage,REMOTE_CACHE_KEY,{feeds,countries,cov,stamp,countryVersions},country).catch(()=>{});
       if (!silent) Alert.alert(t.updated);
       return true;
 

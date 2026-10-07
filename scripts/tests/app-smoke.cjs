@@ -1,6 +1,6 @@
 const fs=require('fs'),path=require('path'),vm=require('vm'),assert=require('assert'),babel=require('@babel/core');
 const root=path.resolve(__dirname,'../..');
-function plain(file){const module={exports:{}};vm.runInNewContext(babel.transformSync(fs.readFileSync(path.join(root,file),'utf8'),{configFile:false,babelrc:false,plugins:['@babel/plugin-transform-modules-commonjs']}).code,{module,exports:module.exports});return module.exports;}
+function plain(file){const module={exports:{}};vm.runInNewContext(babel.transformSync(fs.readFileSync(path.join(root,file),'utf8'),{configFile:false,babelrc:false,plugins:['@babel/plugin-transform-modules-commonjs']}).code,{module,exports:module.exports,require:name=>plain(name.replace(/^\.\//,'')+'.js'),AbortController,setTimeout,clearTimeout,Uint8Array,Uint32Array,DataView,Set});return module.exports;}
 const engine=plain('poland-engine.js'),feeds=plain('camera-data.js');
 const feed={speed_cameras:[{id:'opposite',latitude:50.001,longitude:4,direction:180},{id:'ahead',latitude:50.002,longitude:4,direction:0}],red_light_cameras:[],checkpoints:[],average_speed_sections:[]};
 assert.equal(engine.nearestPolandPoint(feed,50,4,0).id,'ahead');
@@ -21,9 +21,9 @@ console.log('App smoke passed: 10 country renders, remote feed precedence, oppos
  const values=new Map();const storage={getItem:async k=>values.get(k)||null,setItem:async(k,v)=>{assert.ok(Buffer.byteLength(v)<1000000,'chunk must fit Android cursor window');values.set(k,v)},removeItem:async k=>values.delete(k)};
  const large={...feed,speed_cameras:Array.from({length:16000},(_,i)=>({...feed.speed_cameras[1],id:String(i),location:'Камера на дороге',provenance:[{source_url:'https://example.org/'+('x'.repeat(500))}]}))};
  await feeds.saveCameraCache(storage,'cache',{feeds:{UA:{cameras:[]},PL:feed,FR:large,US:feed},countries:[],stamp:'test'},'FR');
- const loaded=await feeds.loadCameraCache(storage,'cache');assert.equal(loaded.feeds.FR.speed_cameras.length,16000);assert.equal(loaded.feeds.FR.speed_cameras[0].provenance,undefined);assert.equal(loaded.feeds.US,undefined);
- await feeds.saveCameraCache(storage,'cache',{feeds:{UA:{cameras:[]},PL:feed,US:feed},countries:[],stamp:'next'},'US');assert.equal((await feeds.loadCameraCache(storage,'cache')).feeds.FR,undefined);
- assert.equal([...values.keys()].filter(k=>k.includes(':FR:')).length,0);
+ const loaded=await feeds.loadCameraCache(storage,'cache');assert.equal(loaded.feeds.FR.speed_cameras.length,16000);assert.equal(loaded.feeds.FR.speed_cameras[0].provenance,undefined);assert.equal(loaded.feeds.US.speed_cameras.length,2);
+ await feeds.saveCameraCache(storage,'cache',{feeds:{...loaded.feeds,US:feed},countries:[],stamp:'next'},'US');assert.equal((await feeds.loadCameraCache(storage,'cache')).feeds.FR.speed_cameras.length,16000);
+ assert.ok([...values.keys()].some(k=>k.includes(':FR:')));
  await storage.setItem('legacy',JSON.stringify({feeds:{PL:feed},stamp:'old'}));assert.equal((await feeds.loadCameraCache(storage,'legacy')).stamp,'old');
- console.log('Cache smoke passed: 16000 cameras without truncation in bounded chunks, country eviction, legacy cache compatibility.');
+ console.log('Cache smoke passed: 16000 cameras without truncation in bounded chunks, offline country retention, legacy cache compatibility.');
 })().catch(error=>{console.error(error);process.exitCode=1});

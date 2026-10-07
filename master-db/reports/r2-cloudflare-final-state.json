@@ -1,0 +1,11 @@
+{
+  "publisher_exists": false,
+  "delivery": {
+    "enabled": true,
+    "previews_enabled": false
+  },
+  "objects": 50,
+  "total_bytes": 11023295,
+  "unexpected_objects": [],
+  "incorrect_metadata": []
+}

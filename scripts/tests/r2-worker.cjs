@@ -1,0 +1,22 @@
+const assert=require('node:assert/strict'),path=require('node:path'),{pathToFileURL}=require('node:url'),crypto=require('node:crypto'),fs=require('node:fs');
+(async()=>{
+ const root=path.resolve(__dirname,'../..'),publicWorker=(await import(pathToFileURL(path.join(root,'cloudflare/camera-data/worker.mjs')))).default,publisher=(await import(pathToFileURL(path.join(root,'cloudflare/camera-data/publisher.mjs')))).default;
+ const body=Buffer.from('{"schema_version":1}'),digest=crypto.createHash('sha256').update(body).digest('hex'),objectKey='production/v1/countries/US/'+digest+'.json';
+ const objects=new Map(),cached=new Map();globalThis.caches={default:{match:async request=>cached.get(request.url)?.clone(),put:async(request,response)=>cached.set(request.url,response.clone())}};
+ const bucket={put:async(key,value,options)=>objects.set(key,{value:Buffer.from(value),options}),get:async key=>{const o=objects.get(key);return o?{body:new ReadableStream({start(c){c.enqueue(o.value);c.close();}}),size:o.value.length,httpEtag:'"abc123"',customMetadata:o.options?.customMetadata||{},writeHttpMetadata:h=>h.set('Content-Type','application/json'),json:async()=>JSON.parse(o.value)}:null;}};
+ const pair=crypto.generateKeyPairSync('ed25519'),env={CAMERA_DATA:bucket,PUBLISH_PUBLIC_KEY:Buffer.from(pair.publicKey.export({format:'jwk'}).x,'base64url').toString('base64')};
+ const request=(key,data,age=0)=>{const time=String(Math.floor(Date.now()/1000)-age),sha=crypto.createHash('sha256').update(data).digest('hex'),signature=crypto.sign(null,Buffer.from(['PUT',key,time,sha,String(data.length)].join('\n')),pair.privateKey).toString('base64');return new Request('https://publisher/'+key,{method:'PUT',body:data,headers:{'Content-Length':String(data.length),'X-Publish-Time':time,'X-Publish-Digest':sha,'X-Publish-Signature':signature}});};
+ assert.equal((await publisher.fetch(new Request('https://publisher/'+objectKey,{method:'PUT',body:'{}'}),env)).status,401);
+ assert.equal((await publisher.fetch(request(objectKey,body,180),env)).status,401);
+ assert.equal((await publisher.fetch(request('private/secret.json',body),env)).status,404);
+ assert.equal((await publisher.fetch(request(objectKey,Buffer.from('{}')),env)).status,400);
+ const tampered=request(objectKey,body);tampered.headers.set('X-Publish-Digest','0'.repeat(64));assert.equal((await publisher.fetch(tampered,env)).status,401);
+ assert.equal((await publisher.fetch(request(objectKey,body),env)).status,200);assert.equal(objects.get(objectKey).options.customMetadata.sha256,digest);
+ const ctx={waitUntil:p=>p};
+ let result=await publicWorker.fetch(new Request('https://delivery/'+objectKey),env,ctx);assert.equal(await result.text(),body.toString());assert.equal(result.headers.get('X-Content-SHA256'),digest);
+ result=await publicWorker.fetch(new Request('https://delivery/'+objectKey,{headers:{'If-None-Match':'W/"abc123"'}}),env,ctx);assert.equal(result.status,304);
+ result=await publicWorker.fetch(new Request('https://delivery/'+objectKey,{method:'HEAD'}),env,ctx);assert.equal(await result.text(),'');
+ assert.equal((await publicWorker.fetch(new Request('https://delivery/private/secrets'),env,ctx)).status,404);
+ assert.equal((await publicWorker.fetch(new Request('https://delivery/'+objectKey,{method:'PUT',body:'{}'}),env,ctx)).status,405);
+ const report={checked_at:new Date().toISOString(),checks:11,ed25519_authentication:true,expired_signature_denied:true,tampering_denied:true,immutable_digest_enforced:true,public_read_only:true,weak_etag_304:true,head:true,result:'passed'};fs.writeFileSync(path.join(root,'master-db/reports/r2-worker-tests.json'),JSON.stringify(report,null,2)+'\n');console.log(report);
+})().catch(e=>{console.error(e);process.exitCode=1});

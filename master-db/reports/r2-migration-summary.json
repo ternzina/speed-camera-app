@@ -1,0 +1,80 @@
+{
+  "checked_at": "2026-10-07T07:43:42.908102+00:00",
+  "database_before_bytes": 289699507,
+  "database_after_bytes": 289699507,
+  "database_bytes_saved": 0,
+  "database_records": 65134,
+  "published_records": 59270,
+  "canonical_fingerprint_before_and_after": "7b8495478fba497faf8ca9db9e800dd3",
+  "countries": 49,
+  "r2_objects": 50,
+  "r2_stored_bytes": 11023295,
+  "temporary_publisher_deleted": true,
+  "database_objects_deleted_or_archived": [],
+  "store_submission": false,
+  "eas_ota_release": false,
+  "config_and_warning_engine_preservation": [
+    {
+      "file": "app.json",
+      "sha256": "b96dcfca65c8b979a9fa44cd520dfd30e94ebe5597e6b6e6ac40a23293af613f",
+      "unchanged": true
+    },
+    {
+      "file": "eas.json",
+      "sha256": "013b95fcfc4f1c343757173f7de6432a095ad858e3cb6b4e67c730bb47046302",
+      "unchanged": true
+    },
+    {
+      "file": "package.json",
+      "sha256": "7c559d55bc413ab05d2fc859475e95c3a87fb5c1dfbfb53171ef40b9edc8584d",
+      "unchanged": true
+    },
+    {
+      "file": "package-lock.json",
+      "sha256": "9a4a76aa0cb4d485c480ab78b4248dc8a81bf2a974a23803c3cc2bd0b2560bf0",
+      "unchanged": true
+    },
+    {
+      "file": "countries.js",
+      "sha256": "e2d87e1d9b126f2f61f98da345b9b602443336a652b8bf1c204015c32245f565",
+      "unchanged": true
+    },
+    {
+      "file": "cameras.json",
+      "sha256": "b57bea2a7e454575cbbc20425367eb0a8f20ad540038fbaccb1a325d8c0732fe",
+      "unchanged": true
+    },
+    {
+      "file": "cameras-pl.json",
+      "sha256": "7c9574041e86bda2a10685e7445455de7b2026744bf6395f962d581d74ea0280",
+      "unchanged": true
+    },
+    {
+      "file": "poland-engine.js",
+      "sha256": "e7c5dae72ccafc7b93da661bdd9b81f9fa31e3d88da0959f76cbd2e96ce82156",
+      "unchanged": true
+    },
+    {
+      "file": "supabase/functions/camera-export/index.ts",
+      "sha256": "96c5729bd0b2b1438ed2ac806afa342535c2f4ae8f309cd322b85a895e0c0460",
+      "unchanged": true
+    }
+  ],
+  "native_js_exports": {
+    "ios": "passed, Hermes 704 modules",
+    "android": "passed, Hermes 704 modules"
+  },
+  "tests": {
+    "delivery": 65,
+    "worker": 11,
+    "python": 22,
+    "live_country_loaders": 49,
+    "app_smoke_country_renders": 10,
+    "cache_camera_test": 16000
+  },
+  "limitations": [
+    "No physical iOS/Android road test or store release was performed. Native JS/Hermes exports and controlled loader/cache/engine tests passed.",
+    "R2 exports are static releases; future authorized DB imports require a fresh export/publication run.",
+    "Supabase storage savings are zero because no generated export tables existed; operational canonical and provenance data were retained."
+  ]
+}
