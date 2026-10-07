@@ -27,3 +27,13 @@ Both road images are new project assets. Feather glyphs and system-rendered flag
 The blue route is the actual foreground GPS trail, not destination turn-by-turn routing. History mileage is measured foreground movement with jitter/jump/gap rejection, not a complete background odometer. Map-type filters affect presentation only, leaving warnings active; voice/vibration toggles use the existing settings. Imperial units affect display; speech/engine remain metric. Existing background GPS configuration and manual distance controls remain accessible, making Settings longer than the illustrative reference.
 
 Offline camera datasets, direction, speed limits and warning calculation stay local. Basemap tiles still need network unless previously cached by the map provider; this UI does not claim downloadable offline road maps. A physical-phone airplane-mode acceptance test and physical Android visual review remain outstanding. No builds were submitted to App Store Connect or Google Play.
+
+## Phone feedback fixes — 2026-10-08
+
+- Reproduced Accessibility XXXL text size and dark appearance on iPhone 17 Pro, Expo Go.
+- Compact GPS prompt (no duplicated country caption), explicit dismiss button, location action on both GPS controls. Denied access offers Settings; position acquisition stops waiting after 12 seconds and reports failure.
+- Fixed-height two-line history labels align all values; shorter localized distance caption. Driving UI text scales up to 1.35, tab captions up to 1 to avoid broken navigation at extreme system sizes.
+- Explicit text colours across legacy screen styles, readable secondary colours in dark mode, white text on blue buttons remains white. Regression renders cover all five main tabs.
+- Introduction revision 2 shows the bundled road image once again without deleting existing settings or country cache. The night image remains reserved for urgent driving warnings.
+- Native screenshots: build/ui-fixes/start-large-text.png, history-dark-large-text.png, map-dark-large-text.png. Native dismiss action verified (prompt absent from accessibility tree after tap).
+- Passed app-smoke (including dark-mode screens and history alignment), map-ui (locate/centre/dismiss), premium-ui, driver-engine, android-map and offline-warning (six countries, zero network requests). Physical phone acceptance still pending.

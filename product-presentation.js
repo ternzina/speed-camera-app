@@ -26,9 +26,10 @@ export const PRODUCT_COPY = {
     nearest: "Ближайшая камера",
     noCameras: "Рядом нет камер",
     calm: "Можно ехать спокойно",
-    enableGPS: "Нажмите «Моё местоположение»",
+    enableGPS: "Где вы сейчас?",
     mapHint: "Камеры выбранной страны",
     locationError: "Не удалось определить местоположение",
+    locationPermission: "Разрешите доступ к геолокации в настройках телефона.", close:"Закрыть",
   },
   uk: {
     countries: "Країни",
@@ -50,9 +51,10 @@ export const PRODUCT_COPY = {
     nearest: "Найближча камера",
     noCameras: "Поруч немає камер",
     calm: "Можна їхати спокійно",
-    enableGPS: "Натисніть «Моє місцеположення»",
+    enableGPS: "Де ви зараз?",
     mapHint: "Камери вибраної країни",
     locationError: "Не вдалося визначити місцеположення",
+    locationPermission: "Дозвольте геолокацію в налаштуваннях телефона.", close:"Закрити",
   },
   en: {
     countries: "Countries",
@@ -74,9 +76,10 @@ export const PRODUCT_COPY = {
     nearest: "Nearest camera",
     noCameras: "No cameras nearby",
     calm: "All clear nearby",
-    enableGPS: "Tap “My location”",
+    enableGPS: "Where are you?",
     mapHint: "Cameras in your selected country",
     locationError: "Could not find your location",
+    locationPermission: "Allow location access in your phone settings.", close:"Close",
   },
   pl: {
     countries: "Kraje",
@@ -98,9 +101,10 @@ export const PRODUCT_COPY = {
     nearest: "Najbliższa kamera",
     noCameras: "Brak kamer w pobliżu",
     calm: "W pobliżu spokojnie",
-    enableGPS: "Dotknij „Moja lokalizacja”",
+    enableGPS: "Gdzie jesteś?",
     mapHint: "Kamery wybranego kraju",
     locationError: "Nie udało się ustalić lokalizacji",
+    locationPermission: "Zezwól na lokalizację w ustawieniach telefonu.", close:"Zamknij",
   },
 };
 export function datasetDate(value, language, copy) {

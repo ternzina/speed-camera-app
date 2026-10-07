@@ -846,8 +846,8 @@ export default function App() {
           }
           style={{ flex: 1, paddingVertical: 2 }}
         >
-          <Text style={[s.dataLabel, { fontSize: 16 }]}>{item.label}</Text>
-          <Text style={s.note}>
+          <Text maxFontSizeMultiplier={1.35} style={[s.dataLabel, { fontSize: 16 }]}>{item.label}</Text>
+          <Text maxFontSizeMultiplier={1.35} style={s.note}>
             {item.publishedCount.toLocaleString(settings.language)}{" "}
             {offlineText.cameras} ·{" "}
             {bytes
@@ -855,7 +855,7 @@ export default function App() {
               : dcopy.sizeUnknown}
           </Text>
           {saved && (
-            <Text style={[s.savedLabel, {fontSize:11, marginTop:0}]}>
+            <Text maxFontSizeMultiplier={1.35} style={[s.savedLabel, {fontSize:11, marginTop:0}]}>
               {dcopy.saved}{updated ? " · " : ""}
               {updated && (
               new Date(updated).toDateString() === new Date().toDateString()
@@ -863,7 +863,7 @@ export default function App() {
                 : new Date(updated).toLocaleDateString(settings.language))}
             </Text>
           )}
-          {!!update && <Text style={s.note}>{offlineText.update}</Text>}
+          {!!update && <Text maxFontSizeMultiplier={1.35} style={s.note}>{offlineText.update}</Text>}
         </Pressable>
         <Pressable
           accessibilityRole="button"
@@ -1254,12 +1254,23 @@ export default function App() {
   );
   const publishedDate = activePLData?.generated_at || activePLData?.updated_at;
   async function locateOnMap() {
+    let timeout;
     try {
-      const permission = await Location.requestForegroundPermissionsAsync();
-      if (permission.status !== "granted") return null;
-      const result = await Location.getCurrentPositionAsync({
-        accuracy: Location.Accuracy.High,
-      });
+      const result = await Promise.race([
+        (async () => {
+          const permission = await Location.requestForegroundPermissionsAsync();
+          if (permission.status !== "granted") {
+            Alert.alert(pcopy.locationError, pcopy.locationPermission, [
+              {text:t.cancel, style:"cancel"},
+              {text:dcopy.settings, onPress:() => Linking.openSettings()},
+            ]);
+            return null;
+          }
+          return Location.getCurrentPositionAsync({accuracy: Location.Accuracy.High});
+        })(),
+        new Promise((_, reject) => {timeout=setTimeout(() => reject(new Error("GPS timeout")), 12000);}),
+      ]);
+      if (!result) return null;
       const position = {
         latitude: result.coords.latitude,
         longitude: result.coords.longitude,
@@ -1269,6 +1280,8 @@ export default function App() {
     } catch {
       Alert.alert(pcopy.locationError);
       return null;
+    } finally {
+      clearTimeout(timeout);
     }
   }
   const [countrySearch, setCountrySearch] = useState("");
@@ -1358,6 +1371,7 @@ export default function App() {
           setPremiumPrefs((previous) => ({
             ...previous,
             ...JSON.parse(saved),
+            started: JSON.parse(saved).introRevision === 2 && JSON.parse(saved).started,
           }));
         const trips = await AsyncStorage.getItem("camera_ui_trips_v1");
         if (trips) {
@@ -1522,7 +1536,7 @@ export default function App() {
               size={20}
               color={tab === key ? "#007aff" : "#8292a2"}
             />
-            <Text
+            <Text maxFontSizeMultiplier={1} numberOfLines={1}
               style={[
                 s.navLabel,
                 tab === key && { color: "#007aff", fontWeight: "700" },
@@ -1557,7 +1571,7 @@ export default function App() {
               setHeaderHeight(event.nativeEvent.layout.height)
             }
           >
-            <Text
+            <Text maxFontSizeMultiplier={1.35}
               style={[
                 s.brand,
                 { flex: 1 },
@@ -1575,7 +1589,7 @@ export default function App() {
                       : t.map}
             </Text>
             {["drive", "map"].includes(tab) && (
-              <Text style={s.countryPill}>
+              <Text maxFontSizeMultiplier={1.35} style={s.countryPill}>
                 {countryLabel(selectedCountry, settings.language)}
               </Text>
             )}
@@ -1662,7 +1676,7 @@ export default function App() {
                   overLimit && { borderColor: "#edb5ad" },
                 ]}
               >
-                <Text
+                <Text maxFontSizeMultiplier={1.35}
                   adjustsFontSizeToFit
                   numberOfLines={1}
                   style={[
@@ -1676,13 +1690,13 @@ export default function App() {
                 >
                   {speedKmh}
                 </Text>
-                <Text style={s.speedUnit}>{dcopy.unit}</Text>
+                <Text maxFontSizeMultiplier={1.35} style={s.speedUnit}>{dcopy.unit}</Text>
               </View>
               {(averageTrip?.section?.speed_limit || shownCam?.speed_limit) >
                 0 && (
                 <View style={s.driverLimit}>
-                  <Text style={s.limitCaption}>{dcopy.limit}</Text>
-                  <Text style={s.driverLimitNumber}>
+                  <Text maxFontSizeMultiplier={1.35} style={s.limitCaption}>{dcopy.limit}</Text>
+                  <Text maxFontSizeMultiplier={1.35} style={s.driverLimitNumber}>
                     {averageTrip?.section?.speed_limit || shownCam.speed_limit}
                   </Text>
                 </View>
@@ -1697,12 +1711,12 @@ export default function App() {
                     s.driverAlertOver,
                 ]}
               >
-                <Text style={s.alertTitle}>{dcopy.average}</Text>
-                <Text style={s.averageNumber}>
+                <Text maxFontSizeMultiplier={1.35} style={s.alertTitle}>{dcopy.average}</Text>
+                <Text maxFontSizeMultiplier={1.35} style={s.averageNumber}>
                   {dcopy.averageValue}: {Math.round(averageTrip.average)}{" "}
                   {dcopy.unit}
                 </Text>
-                <Text style={s.alertDetail}>
+                <Text maxFontSizeMultiplier={1.35} style={s.alertDetail}>
                   {dcopy.limit} {averageTrip.section.speed_limit || "—"} ·{" "}
                   {dcopy.remaining} ≈{" "}
                   {(averageTrip.remaining / 1000).toLocaleString(
@@ -1737,13 +1751,13 @@ export default function App() {
                     color={overLimit ? "#f04438" : "#007aff"}
                   />
                 </View>
-                <Text style={s.alertTitle}>
+                <Text maxFontSizeMultiplier={1.35} style={s.alertTitle}>
                   {drivingLabel(shownCam, dcopy)}
                 </Text>
-                <Text style={s.alertDistance}>
+                <Text maxFontSizeMultiplier={1.35} style={s.alertDistance}>
                   {shownDistance} {dcopy.meters}
                 </Text>
-                <Text style={s.alertDetail}>
+                <Text maxFontSizeMultiplier={1.35} style={s.alertDetail}>
                   {overLimit
                     ? dcopy.slow
                     : shownCam.speed_limit
@@ -1753,7 +1767,7 @@ export default function App() {
               </View>
             ) : (
               <View style={s.clearCard}>
-                <Text style={s.clearTitle}>
+                <Text maxFontSizeMultiplier={1.35} style={s.clearTitle}>
                   {active &&
                   coords &&
                   heading != null &&
@@ -1766,7 +1780,7 @@ export default function App() {
                 <View style={s.statusLines}>
                   <View style={s.statusLine}>
                     <Icon name="map-pin" size={15} />
-                    <Text style={s.statusText}>
+                    <Text maxFontSizeMultiplier={1.35} style={s.statusText}>
                       {coords
                         ? active
                           ? pcopy.gps
@@ -1779,7 +1793,7 @@ export default function App() {
                       name={settings.voice ? "volume-2" : "volume-x"}
                       size={15}
                     />
-                    <Text style={s.statusText}>
+                    <Text maxFontSizeMultiplier={1.35} style={s.statusText}>
                       {settings.voice ? pcopy.voiceOn : pcopy.voiceOff}
                     </Text>
                   </View>
@@ -1792,7 +1806,7 @@ export default function App() {
                       }
                       size={15}
                     />
-                    <Text style={s.statusText}>
+                    <Text maxFontSizeMultiplier={1.35} style={s.statusText}>
                       {remoteFeeds[selectedCountry]
                         ? pcopy.loaded
                         : pcopy.notLoaded}
@@ -1807,11 +1821,11 @@ export default function App() {
                   <Icon name="database" />
                 </View>
                 <View style={{ flex: 1 }}>
-                  <Text style={s.datasetCount}>
+                  <Text maxFontSizeMultiplier={1.35} style={s.datasetCount}>
                     {datasetCount.toLocaleString(settings.language)}{" "}
                     {pcopy.cameraCount}
                   </Text>
-                  <Text style={s.datasetDate}>
+                  <Text maxFontSizeMultiplier={1.35} style={s.datasetDate}>
                     {datasetDate(publishedDate, settings.language, pcopy)}
                   </Text>
                 </View>
@@ -1823,7 +1837,7 @@ export default function App() {
                 onPress={active ? stopTracking : startTracking}
                 style={[s.tripButton, active && s.tripStop]}
               >
-                <Text
+                <Text maxFontSizeMultiplier={1.35}
                   style={[s.tripButtonText, active && { color: "#101828" }]}
                 >
                   {active ? t.stop : t.start}
@@ -1836,7 +1850,7 @@ export default function App() {
                 style={s.addButton}
               >
                 <Icon name="plus" color="#007aff" size={20} />
-                <Text style={s.reportButtonText}>{pcopy.report}</Text>
+                <Text maxFontSizeMultiplier={1.35} style={s.reportButtonText}>{pcopy.report}</Text>
               </Pressable>
             </View>
           </View>
@@ -1880,27 +1894,27 @@ export default function App() {
             {nearbyList().map((cam) => (
               <View key={String(cam.id)} style={s.listItem}>
                 <View style={{ flex: 1 }}>
-                  <Text style={s.listTitle}>
+                  <Text maxFontSizeMultiplier={1.35} style={s.listTitle}>
                     {cam.location ||
                       cam.road_index ||
                       cam.region ||
                       drivingLabel(cam, dcopy)}
                   </Text>
-                  <Text style={s.listSub}>
+                  <Text maxFontSizeMultiplier={1.35} style={s.listSub}>
                     {cam.region}
                     {cam.speed_limit != null
                       ? ` · ${cam.speed_limit} км/ч`
                       : ""}
                   </Text>
                 </View>
-                <Text style={s.listDistance}>
+                <Text maxFontSizeMultiplier={1.35} style={s.listDistance}>
                   {cam.distance >= 1000
                     ? `${(cam.distance / 1000).toFixed(1)} км`
                     : `${cam.distance} м`}
                 </Text>
               </View>
             ))}
-            {!coords && <Text style={s.empty}>Сначала включи поездку.</Text>}
+            {!coords && <Text maxFontSizeMultiplier={1.35} style={s.empty}>Сначала включи поездку.</Text>}
           </View>
         )}
 
@@ -1918,7 +1932,7 @@ export default function App() {
                     historyPeriod === days && s.segmentActive,
                   ]}
                 >
-                  <Text
+                  <Text maxFontSizeMultiplier={1.35}
                     style={[
                       s.segmentText,
                       historyPeriod === days && s.segmentTextActive,
@@ -1931,8 +1945,8 @@ export default function App() {
             </View>
             <View style={s.row}>
               <View style={s.stat}>
-                <Text style={s.listSub}>{qcopy.kilometres} · {premiumPrefs.units === "imperial" ? qcopy.miles : qcopy.km}</Text>
-                <Text style={s.summaryNumber}>
+                <Text maxFontSizeMultiplier={1.35} numberOfLines={2} adjustsFontSizeToFit minimumFontScale={0.8} style={s.statLabel}>{qcopy.historyDistance} · {premiumPrefs.units === "imperial" ? qcopy.miles : qcopy.km}</Text>
+                <Text maxFontSizeMultiplier={1.35} style={s.summaryNumber}>
                   {(
                     recordedMetres /
                     (premiumPrefs.units === "imperial" ? 1609.344 : 1000)
@@ -1942,15 +1956,15 @@ export default function App() {
                 </Text>
               </View>
               <View style={s.stat}>
-                <Text style={s.listSub}>{ui.alerts}</Text>
-                <Text style={s.summaryNumber}>{visibleHistory.length}</Text>
+                <Text maxFontSizeMultiplier={1.35} numberOfLines={2} adjustsFontSizeToFit minimumFontScale={0.8} style={s.statLabel}>{ui.alerts}</Text>
+                <Text maxFontSizeMultiplier={1.35} style={s.summaryNumber}>{visibleHistory.length}</Text>
               </View>
               <View style={s.stat}>
-                <Text style={s.listSub}>{qcopy.countries}</Text>
-                <Text style={s.summaryNumber}>{visitedCountries.size}</Text>
+                <Text maxFontSizeMultiplier={1.35} numberOfLines={2} adjustsFontSizeToFit minimumFontScale={0.8} style={s.statLabel}>{qcopy.countries}</Text>
+                <Text maxFontSizeMultiplier={1.35} style={s.summaryNumber}>{visitedCountries.size}</Text>
               </View>
             </View>
-            <Text style={s.sectionTitle}>{ui.recent}</Text>
+            <Text maxFontSizeMultiplier={1.35} style={s.sectionTitle}>{ui.recent}</Text>
             {visibleHistory.map((h) => (
               <View key={h.id} style={s.listItem}>
                 <View style={s.timelineIcon}>
@@ -1959,10 +1973,10 @@ export default function App() {
                   />
                 </View>
                 <View style={{ flex: 1 }}>
-                  <Text style={s.listTitle}>
+                  <Text maxFontSizeMultiplier={1.35} style={s.listTitle}>
                     {h.road || h.location || dcopy.camera}
                   </Text>
-                  <Text style={s.listSub}>
+                  <Text maxFontSizeMultiplier={1.35} style={s.listSub}>
                     {new Date(h.when).toLocaleTimeString(settings.language, {
                       hour: "2-digit",
                       minute: "2-digit",
@@ -1978,7 +1992,7 @@ export default function App() {
                   </Text>
                 </View>
                 {h.limit > 0 && (
-                  <Text style={s.historyLimit}>
+                  <Text maxFontSizeMultiplier={1.35} style={s.historyLimit}>
                     {displaySpeed(h.limit, premiumPrefs.units)}
                   </Text>
                 )}
@@ -1987,8 +2001,8 @@ export default function App() {
             {!visibleHistory.length && (
               <View style={s.emptyCard}>
                 <Icon name="clock" size={32} color="#007aff" />
-                <Text style={s.sectionTitle}>{ui.noHistory}</Text>
-                <Text style={s.emptyCopy}>{ui.historyHint}</Text>
+                <Text maxFontSizeMultiplier={1.35} style={s.sectionTitle}>{ui.noHistory}</Text>
+                <Text maxFontSizeMultiplier={1.35} style={s.emptyCopy}>{ui.historyHint}</Text>
               </View>
             )}
           </View>
@@ -2023,7 +2037,7 @@ export default function App() {
                     countryFilter === key && s.segmentActive,
                   ]}
                 >
-                  <Text
+                  <Text maxFontSizeMultiplier={1.35}
                     style={[
                       s.segmentText,
                       countryFilter === key && s.segmentTextActive,
@@ -2036,17 +2050,17 @@ export default function App() {
             </View>
             {!remoteFeeds[selectedCountry] &&
               !["UA", "PL"].includes(selectedCountry) && (
-                <Text style={s.note}>{offlineText.empty}</Text>
+                <Text maxFontSizeMultiplier={1.35} style={s.note}>{offlineText.empty}</Text>
               )}
 
             <View>
-              <Text style={s.sectionTitle}>{offlineText.downloaded}</Text>
+              <Text maxFontSizeMultiplier={1.35} style={s.sectionTitle}>{offlineText.downloaded}</Text>
               {!listedCountries.downloaded.length && (
-                <Text style={s.note}>{offlineText.none}</Text>
+                <Text maxFontSizeMultiplier={1.35} style={s.note}>{offlineText.none}</Text>
               )}
               {listedCountries.downloaded.map(renderCountryRow)}
               {countryFilter !== "downloaded" && (countryFilter !== "all" || countrySearch) && (
-                <Text style={s.sectionTitle}>
+                <Text maxFontSizeMultiplier={1.35} style={s.sectionTitle}>
                   {countryFilter === "popular"
                     ? ui.popular
                     : offlineText.available}{" "}
@@ -2055,7 +2069,7 @@ export default function App() {
               )}
               {countryFilter === "all" && !countrySearch && (
                 <>
-                  <Text style={s.sectionTitle}>{ui.popular}</Text>
+                  <Text maxFontSizeMultiplier={1.35} style={s.sectionTitle}>{ui.popular}</Text>
                   {listedCountries.available
                     .filter((item) =>
                       ["UA", "PL", "DE", "FR", "US", "CA"].includes(
@@ -2063,7 +2077,7 @@ export default function App() {
                       ),
                     )
                     .map(renderCountryRow)}
-                  <Text style={s.sectionTitle}>
+                  <Text maxFontSizeMultiplier={1.35} style={s.sectionTitle}>
                     {ui.all} ({countryLists.visible.length})
                   </Text>
                 </>
@@ -2081,7 +2095,7 @@ export default function App() {
               {!!countrySearch &&
                 !listedCountries.downloaded.length &&
                 !listedCountries.available.length && (
-                  <Text style={s.empty}>{ui.noResults}</Text>
+                  <Text maxFontSizeMultiplier={1.35} style={s.empty}>{ui.noResults}</Text>
                 )}
             </View>
             {countryFilter !== "downloaded" &&
@@ -2090,7 +2104,7 @@ export default function App() {
                   onPress={() => setModal("territories")}
                   style={s.smallButton}
                 >
-                  <Text style={s.smallButtonText}>
+                  <Text maxFontSizeMultiplier={1.35} style={s.smallButtonText}>
                     {offlineText.territories} ({countryLists.territories.length}
                     )
                   </Text>
@@ -2104,7 +2118,7 @@ export default function App() {
                 { opacity: downloading || !downloadSelection.length ? 0.5 : 1 },
               ]}
             >
-              <Text style={s.smallButtonText}>
+              <Text maxFontSizeMultiplier={1.35} style={s.smallButtonText}>
                 {offlineText.download} ({downloadSelection.length})
               </Text>
             </Pressable>}
@@ -2113,8 +2127,8 @@ export default function App() {
                 <View style={s.dataCard}>
                   <Icon name="hard-drive" color="#007aff" />
                   <View style={{ flex: 1 }}>
-                    <Text style={s.dataLabel}>{qcopy.storage}</Text>
-                    <Text style={s.note}>
+                    <Text maxFontSizeMultiplier={1.35} style={s.dataLabel}>{qcopy.storage}</Text>
+                    <Text maxFontSizeMultiplier={1.35} style={s.note}>
                       {(occupiedBytes / 1e6).toLocaleString(settings.language, {
                         maximumFractionDigits: 2,
                       })}{" "}
@@ -2143,7 +2157,7 @@ export default function App() {
                     },
                   ]}
                 >
-                  <Text
+                  <Text maxFontSizeMultiplier={1.35}
                     style={{
                       color: downloadSelection.some((code) => remoteFeeds[code])
                         ? "#d92d20"
@@ -2157,12 +2171,12 @@ export default function App() {
             )}
             <View style={s.offlineNotice}>
               <Icon name="wifi-off" color="#007aff" />
-              <Text style={[s.note, { flex: 1 }]}>
+              <Text maxFontSizeMultiplier={1.35} style={[s.note, { flex: 1 }]}>
                 {offlineText.explanation}
               </Text>
             </View>
             {!!downloadStatus && (
-              <Text accessibilityLiveRegion="polite" style={s.note}>
+              <Text maxFontSizeMultiplier={1.35} accessibilityLiveRegion="polite" style={s.note}>
                 {downloadStatus}
               </Text>
             )}
@@ -2175,23 +2189,23 @@ export default function App() {
                 <Icon name="shield" color="#007aff" size={26} />
               </View>
               <View>
-                <Text style={s.dataLabel}>CamAlert</Text>
-                <Text style={s.listSub}>{ui.driverAssistant}</Text>
+                <Text maxFontSizeMultiplier={1.35} style={s.dataLabel}>CamAlert</Text>
+                <Text maxFontSizeMultiplier={1.35} style={s.listSub}>{ui.driverAssistant}</Text>
               </View>
             </View>
-            <Text style={s.sectionTitle}>{qcopy.app}</Text>
+            <Text maxFontSizeMultiplier={1.35} style={s.sectionTitle}>{qcopy.app}</Text>
             <Pressable
               accessibilityRole="button"
               onPress={() => setModal("filters")}
               style={s.dataCard}
             >
               <Icon name="sliders" color="#007aff" />
-              <Text style={[s.dataLabel, { flex: 1 }]}>{qcopy.filters}</Text>
+              <Text maxFontSizeMultiplier={1.35} style={[s.dataLabel, { flex: 1 }]}>{qcopy.filters}</Text>
               <Icon name="chevron-right" />
             </Pressable>
             <View style={s.dataCard}>
               <Icon name="compass" color="#007aff" />
-              <Text style={[s.dataLabel, { flex: 1, fontSize: 14 }]}>
+              <Text maxFontSizeMultiplier={1.35} style={[s.dataLabel, { flex: 1, fontSize: 14 }]}>
                 {qcopy.units}
               </Text>
               {["metric", "imperial"].map((unit) => (
@@ -2209,13 +2223,13 @@ export default function App() {
                     premiumPrefs.units === unit && s.langActive,
                   ]}
                 >
-                  <Text style={{color:dark?"#fff":"#101828"}}>{unit === "metric" ? dcopy.unit : qcopy.mph}</Text>
+                  <Text maxFontSizeMultiplier={1.35} style={{color:dark?"#fff":"#101828"}}>{unit === "metric" ? dcopy.unit : qcopy.mph}</Text>
                 </Pressable>
               ))}
             </View>
             <View style={s.dataCard}>
               <Icon name="sun" color="#007aff" />
-              <Text style={[s.dataLabel, { flex: 1 }]}>{qcopy.theme}</Text>
+              <Text maxFontSizeMultiplier={1.35} style={[s.dataLabel, { flex: 1 }]}>{qcopy.theme}</Text>
               <View style={s.row}>
                 {[
                   ["system", qcopy.system],
@@ -2233,7 +2247,7 @@ export default function App() {
                       premiumPrefs.theme === theme && s.langActive,
                     ]}
                   >
-                    <Text
+                    <Text maxFontSizeMultiplier={1.35}
                       style={{ color: dark ? "#fff" : "#101828", fontSize: 11 }}
                     >
                       {label}
@@ -2249,33 +2263,33 @@ export default function App() {
               style={s.dataCard}
             >
               <Icon name="image" color="#007aff" />
-              <Text style={s.dataLabel}>{qcopy.intro}</Text>
+              <Text maxFontSizeMultiplier={1.35} style={s.dataLabel}>{qcopy.intro}</Text>
             </Pressable>
-            <Text style={s.sectionTitle}>{ui.driving}</Text>
+            <Text maxFontSizeMultiplier={1.35} style={s.sectionTitle}>{ui.driving}</Text>
             <Pressable onPress={() => setTab("offline")} style={s.dataCard}>
               <Icon name="download-cloud" color="#007aff" />
-              <Text style={[s.dataLabel, { flex: 1, fontSize: 16 }]}>
+              <Text maxFontSizeMultiplier={1.35} style={[s.dataLabel, { flex: 1, fontSize: 16 }]}>
                 {dcopy.offline}
               </Text>
               <Icon name="chevron-right" size={18} />
             </Pressable>
             <Pressable onPress={() => setTab("nearby")} style={s.dataCard}>
               <Icon name="map-pin" color="#007aff" />
-              <Text style={[s.dataLabel, { flex: 1, fontSize: 16 }]}>
+              <Text maxFontSizeMultiplier={1.35} style={[s.dataLabel, { flex: 1, fontSize: 16 }]}>
                 {t.nearby}
               </Text>
               <Icon name="chevron-right" size={18} />
             </Pressable>
             <Pressable onPress={() => setTab("history")} style={s.dataCard}>
               <Icon name="clock" color="#007aff" />
-              <Text style={[s.dataLabel, { flex: 1, fontSize: 16 }]}>
+              <Text maxFontSizeMultiplier={1.35} style={[s.dataLabel, { flex: 1, fontSize: 16 }]}>
                 {t.history}
               </Text>
               <Icon name="chevron-right" size={18} />
             </Pressable>
             <View style={s.backgroundCard}>
               <Icon name="moon" color="#007aff" />
-              <Text style={[s.dataLabel, { flex: 1, fontSize: 14 }]}>
+              <Text maxFontSizeMultiplier={1.35} style={[s.dataLabel, { flex: 1, fontSize: 14 }]}>
                 {dcopy.background}
               </Text>
               <Switch
@@ -2287,7 +2301,7 @@ export default function App() {
                 }
               />
             </View>
-            <Text style={s.sectionTitle}>{t.languageLabel}</Text>
+            <Text maxFontSizeMultiplier={1.35} style={s.sectionTitle}>{t.languageLabel}</Text>
             <View style={s.row}>
               {["ru", "uk", "en", "pl"].map((l) => (
                 <Pressable
@@ -2295,7 +2309,7 @@ export default function App() {
                   onPress={() => setSettings({ ...settings, language: l })}
                   style={[s.lang, settings.language === l && s.langActive]}
                 >
-                  <Text>
+                  <Text maxFontSizeMultiplier={1.35} style={s.defaultText}>
                     {
                       {
                         ru: "Русский",
@@ -2331,7 +2345,7 @@ export default function App() {
             />
             {!settings.smartDistance && (
               <>
-                <Text style={s.sectionTitle}>{t.distancesLabel}</Text>
+                <Text maxFontSizeMultiplier={1.35} style={s.sectionTitle}>{t.distancesLabel}</Text>
                 {[
                   [t.band1, "cityDistance"],
                   [t.band2, "roadDistance"],
@@ -2348,11 +2362,11 @@ export default function App() {
                 ))}
               </>
             )}
-            <Text style={s.sectionTitle}>{t.dataUpdate}</Text>
+            <Text maxFontSizeMultiplier={1.35} style={s.sectionTitle}>{t.dataUpdate}</Text>
             <View style={s.dataCard}>
               <View style={{ flex: 1 }}>
-                <Text style={s.dataLabel}>{t.lastUpdate}</Text>
-                <Text style={s.dataValue}>
+                <Text maxFontSizeMultiplier={1.35} style={s.dataLabel}>{t.lastUpdate}</Text>
+                <Text maxFontSizeMultiplier={1.35} style={s.dataValue}>
                   {lastDataUpdate
                     ? new Date(lastDataUpdate).toLocaleString()
                     : "—"}
@@ -2362,7 +2376,7 @@ export default function App() {
                 onPress={() => refreshRemoteData(false)}
                 style={s.smallButton}
               >
-                <Text style={s.smallButtonText}>{t.updateNow}</Text>
+                <Text maxFontSizeMultiplier={1.35} style={s.smallButtonText}>{t.updateNow}</Text>
               </Pressable>
             </View>
 
@@ -2372,13 +2386,13 @@ export default function App() {
                   Linking.openURL("https://www.openstreetmap.org/copyright")
                 }
               >
-                <Text style={s.coverageLine}>
+                <Text maxFontSizeMultiplier={1.35} style={s.coverageLine}>
                   © OpenStreetMap contributors · ODbL 1.0
                 </Text>
               </Pressable>
             </View>
 
-            <Text style={s.sectionTitle}>{t.about}</Text>
+            <Text maxFontSizeMultiplier={1.35} style={s.sectionTitle}>{t.about}</Text>
             <AboutLink styles={s} label={t.privacy} url={URLS.privacy} />
             <AboutLink styles={s} label={t.safety} url={URLS.safety} />
             <AboutLink styles={s} label={t.sources} url={URLS.sources} />
@@ -2462,13 +2476,13 @@ export default function App() {
         visible={premiumReady && !premiumPrefs.started}
         animationType="fade"
         onRequestClose={() =>
-          setPremiumPrefs((previous) => ({ ...previous, started: true }))
+          setPremiumPrefs((previous) => ({ ...previous, started: true, introRevision: 2 }))
         }
       >
         <HeroLanding
           copy={qcopy}
           onStart={() =>
-            setPremiumPrefs((previous) => ({ ...previous, started: true }))
+            setPremiumPrefs((previous) => ({ ...previous, started: true, introRevision: 2 }))
           }
         />
       </Modal>
@@ -2480,12 +2494,12 @@ export default function App() {
       >
         <View style={s.modalShade}>
           <View style={s.modalCard}>
-            <Text style={s.modalTitle}>{offlineText.territories}</Text>
+            <Text maxFontSizeMultiplier={1.35} style={s.modalTitle}>{offlineText.territories}</Text>
             <ScrollView style={{ maxHeight: 360 }}>
               {countryLists.territories.map(renderCountryRow)}
             </ScrollView>
             <Pressable onPress={() => setModal(null)} style={s.smallButton}>
-              <Text style={s.smallButtonText}>✓</Text>
+              <Text maxFontSizeMultiplier={1.35} style={s.smallButtonText}>✓</Text>
             </Pressable>
           </View>
         </View>
@@ -2500,7 +2514,7 @@ export default function App() {
         <View style={s.modalShade}>
           <View style={s.modalCard}>
             <View style={s.sheetHandle} />
-            <Text style={s.sheetTitle}>{pcopy.noticed}</Text>
+            <Text maxFontSizeMultiplier={1.35} style={s.sheetTitle}>{pcopy.noticed}</Text>
             {[
               ["speed_camera", "camera", dcopy.camera],
               ["mobile_control", "shield", dcopy.mobile],
@@ -2519,7 +2533,7 @@ export default function App() {
                 <View style={s.choiceIcon}>
                   <Icon name={icon} size={21} />
                 </View>
-                <Text style={s.reportChoiceText}>{label}</Text>
+                <Text maxFontSizeMultiplier={1.35} style={s.reportChoiceText}>{label}</Text>
                 <Icon name="chevron-right" size={17} color="#a0adba" />
               </Pressable>
             ))}
@@ -2528,11 +2542,11 @@ export default function App() {
                 onPress={() => setModal("removed")}
                 style={s.sheetCancel}
               >
-                <Text>{t.removed}</Text>
+                <Text maxFontSizeMultiplier={1.35} style={s.defaultText}>{t.removed}</Text>
               </Pressable>
             )}
             <Pressable onPress={() => setModal(null)} style={s.sheetCancel}>
-              <Text>{t.cancel}</Text>
+              <Text maxFontSizeMultiplier={1.35} style={s.defaultText}>{t.cancel}</Text>
             </Pressable>
           </View>
         </View>
@@ -2545,11 +2559,11 @@ export default function App() {
       >
         <View style={s.modalShade}>
           <View style={s.modalCard}>
-            <Text style={s.modalTitle}>{t.reportTitle}</Text>
-            <Text style={s.modalText}>
+            <Text maxFontSizeMultiplier={1.35} style={s.modalTitle}>{t.reportTitle}</Text>
+            <Text maxFontSizeMultiplier={1.35} style={s.modalText}>
               {drivingLabel({ type: reportType }, dcopy)}
             </Text>
-            <Text style={s.modalText}>
+            <Text maxFontSizeMultiplier={1.35} style={s.modalText}>
               {coords ? dcopy.position : dcopy.noPosition}
             </Text>
             <TextInput
@@ -2560,10 +2574,10 @@ export default function App() {
               multiline
             />
             <Pressable onPress={reportNewCamera} style={s.button}>
-              <Text style={s.buttonText}>{t.send}</Text>
+              <Text maxFontSizeMultiplier={1.35} style={s.buttonText}>{t.send}</Text>
             </Pressable>
             <Pressable onPress={() => setModal(null)} style={s.cancel}>
-              <Text>{t.cancel}</Text>
+              <Text maxFontSizeMultiplier={1.35} style={s.defaultText}>{t.cancel}</Text>
             </Pressable>
           </View>
         </View>
@@ -2572,18 +2586,18 @@ export default function App() {
       <Modal visible={modal === "removed"} transparent animationType="slide">
         <View style={s.modalShade}>
           <View style={s.modalCard}>
-            <Text style={s.modalTitle}>{t.removedTitle}</Text>
-            <Text style={s.modalText}>
+            <Text maxFontSizeMultiplier={1.35} style={s.modalTitle}>{t.removedTitle}</Text>
+            <Text maxFontSizeMultiplier={1.35} style={s.modalText}>
               {shownCam?.location || shownCam?.region}
             </Text>
             <Pressable
               onPress={() => reportRemovedCamera(shownCam)}
               style={[s.button, s.stop]}
             >
-              <Text style={s.buttonText}>{t.removed}</Text>
+              <Text maxFontSizeMultiplier={1.35} style={s.buttonText}>{t.removed}</Text>
             </Pressable>
             <Pressable onPress={() => setModal(null)} style={s.cancel}>
-              <Text>{t.cancel}</Text>
+              <Text maxFontSizeMultiplier={1.35} style={s.defaultText}>{t.cancel}</Text>
             </Pressable>
           </View>
         </View>
@@ -2643,7 +2657,7 @@ function SettingSwitch({ label, value, onChange, icon, styles }) {
   return (
     <View style={s.settingRow}>
       {icon && <Icon name={icon} color="#007aff" size={20} />}
-      <Text style={s.settingLabel}>{label}</Text>
+      <Text maxFontSizeMultiplier={1.35} style={s.settingLabel}>{label}</Text>
       <Switch
         trackColor={{ true: "#007aff" }}
         value={value}
@@ -2656,20 +2670,20 @@ function DistanceRow({ label, value, setValue, styles }) {
   const s = styles || baseStyles;
   return (
     <View style={s.settingRow}>
-      <Text style={s.settingLabel}>{label}</Text>
+      <Text maxFontSizeMultiplier={1.35} style={s.settingLabel}>{label}</Text>
       <View style={s.stepper}>
         <Pressable
           onPress={() => setValue(Math.max(200, value - 100))}
           style={s.stepBtn}
         >
-          <Text>−</Text>
+          <Text maxFontSizeMultiplier={1.35} style={s.defaultText}>−</Text>
         </Pressable>
-        <Text style={s.stepValue}>{value} м</Text>
+        <Text maxFontSizeMultiplier={1.35} style={s.stepValue}>{value} м</Text>
         <Pressable
           onPress={() => setValue(Math.min(3000, value + 100))}
           style={s.stepBtn}
         >
-          <Text>＋</Text>
+          <Text maxFontSizeMultiplier={1.35} style={s.defaultText}>＋</Text>
         </Pressable>
       </View>
     </View>
@@ -2677,6 +2691,7 @@ function DistanceRow({ label, value, setValue, styles }) {
 }
 
 const baseStyles = StyleSheet.create({
+  defaultText: {color:"#101828"},
   headerSettings: {
     width: 44,
     height: 44,
@@ -2839,7 +2854,7 @@ const baseStyles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  alertIcon: { fontSize: 30 },
+  alertIcon: {color: "#101828",  fontSize: 30 },
   alertTitle: {
     fontSize: 20,
     fontWeight: "700",
@@ -2969,7 +2984,7 @@ const baseStyles = StyleSheet.create({
     color: "#101828",
     marginTop: 5,
   },
-  historyLimit: {
+  historyLimit: {color: "#101828",
     borderWidth: 2,
     borderColor: "#f04438",
     borderRadius: 24,
@@ -2992,7 +3007,7 @@ const baseStyles = StyleSheet.create({
   },
   detailBack: { flexDirection: "row", alignItems: "center", minHeight: 44 },
   detailHero: { alignItems: "center", paddingVertical: 24, gap: 10 },
-  detailFlag: { fontSize: 64 },
+  detailFlag: {color: "#101828",  fontSize: 64 },
   detailName: {
     fontSize: 34,
     fontWeight: "800",
@@ -3007,10 +3022,10 @@ const baseStyles = StyleSheet.create({
     borderRadius: 13,
   },
   navActive: { backgroundColor: "#eaf3ff" },
-  navIcon: { fontSize: 17 },
+  navIcon: {color: "#101828",  fontSize: 17 },
 
-  title: { fontSize: 30, fontWeight: "800", marginTop: 8 },
-  subtitle: { fontSize: 14, opacity: 0.55 },
+  title: {color: "#101828",  fontSize: 30, fontWeight: "800", marginTop: 8 },
+  subtitle: {color: "#101828",  fontSize: 14, opacity: 0.55 },
   card: {
     backgroundColor: "#fff",
     borderRadius: 24,
@@ -3019,18 +3034,18 @@ const baseStyles = StyleSheet.create({
     borderColor: "transparent",
   },
   cardDanger: { borderColor: "#ff8a00" },
-  label: { fontSize: 14, opacity: 0.55 },
-  distance: { fontSize: 48, fontWeight: "900", marginTop: 4 },
-  place: { fontSize: 18, fontWeight: "700", marginTop: 8 },
-  region: { fontSize: 14, opacity: 0.55, marginTop: 3 },
+  label: {color: "#101828",  fontSize: 14, opacity: 0.55 },
+  distance: {color: "#101828",  fontSize: 48, fontWeight: "900", marginTop: 4 },
+  place: {color: "#101828",  fontSize: 18, fontWeight: "700", marginTop: 8 },
+  region: {color: "#101828",  fontSize: 14, opacity: 0.55, marginTop: 3 },
   warningBox: {
     marginTop: 14,
     padding: 13,
     borderRadius: 14,
     backgroundColor: "#fff2df",
   },
-  warningText: { fontSize: 18, fontWeight: "800" },
-  warningSub: { fontSize: 12, opacity: 0.6 },
+  warningText: {color: "#101828",  fontSize: 18, fontWeight: "800" },
+  warningSub: {color: "#101828",  fontSize: 12, opacity: 0.6 },
   limitRow: {
     flexDirection: "row",
     alignItems: "center",
@@ -3046,15 +3061,16 @@ const baseStyles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  limitText: { fontSize: 24, fontWeight: "900" },
-  small: { fontSize: 13, opacity: 0.55 },
-  value: { fontSize: 18, fontWeight: "700" },
-  empty: { fontSize: 17, opacity: 0.6, paddingVertical: 20 },
+  limitText: {color: "#101828",  fontSize: 24, fontWeight: "900" },
+  small: {color: "#101828",  fontSize: 13, opacity: 0.55 },
+  value: {color: "#101828",  fontSize: 18, fontWeight: "700" },
+  empty: {color: "#101828",  fontSize: 17, opacity: 0.6, paddingVertical: 20 },
   row: { flexDirection: "row", gap: 8, flexWrap: "wrap" },
-  stat: { flex: 1, backgroundColor: "#fff", borderRadius: 20, padding: 18 },
-  statValue: { fontSize: 38, fontWeight: "900" },
-  heading: { fontSize: 14, fontWeight: "800", marginTop: 8, lineHeight: 18 },
-  unit: { fontSize: 12, opacity: 0.55 },
+  stat: { flex: 1, backgroundColor: "#fff", borderRadius: 20, padding: 12 },
+  statLabel: {fontSize:12, lineHeight:17, height:48, color:"#667085"},
+  statValue: {color: "#101828",  fontSize: 38, fontWeight: "900" },
+  heading: {color: "#101828",  fontSize: 14, fontWeight: "800", marginTop: 8, lineHeight: 18 },
+  unit: {color: "#101828",  fontSize: 12, opacity: 0.55 },
   backgroundCard: {
     backgroundColor: "#fff",
     borderRadius: 20,
@@ -3063,8 +3079,8 @@ const baseStyles = StyleSheet.create({
     alignItems: "center",
     gap: 12,
   },
-  backgroundTitle: { fontSize: 17, fontWeight: "800" },
-  backgroundText: { fontSize: 12, opacity: 0.55 },
+  backgroundTitle: {color: "#101828",  fontSize: 17, fontWeight: "800" },
+  backgroundText: {color: "#101828",  fontSize: 12, opacity: 0.55 },
   smallButton: {
     backgroundColor: "#007aff",
     paddingVertical: 10,
@@ -3089,7 +3105,7 @@ const baseStyles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#ddd",
   },
-  actionText: { fontWeight: "700", fontSize: 13 },
+  actionText: {color: "#101828",  fontWeight: "700", fontSize: 13 },
   testButton: {
     backgroundColor: "#fff",
     borderRadius: 16,
@@ -3098,7 +3114,7 @@ const baseStyles = StyleSheet.create({
     borderWidth: 2,
     borderColor: "#111",
   },
-  testButtonText: { fontWeight: "800" },
+  testButtonText: {color: "#101828",  fontWeight: "800" },
   map: { height: 560, borderRadius: 22, overflow: "hidden" },
   list: { gap: 10 },
   listItem: {
@@ -3109,9 +3125,9 @@ const baseStyles = StyleSheet.create({
     alignItems: "center",
     gap: 10,
   },
-  listTitle: { fontSize: 15, fontWeight: "700" },
+  listTitle: {color: "#101828",  fontSize: 15, fontWeight: "700" },
   listSub: { fontSize: 12, color: "#667085", marginTop: 3 },
-  listDistance: { fontWeight: "800" },
+  listDistance: {color: "#101828",  fontWeight: "800" },
   settingsCard: {
     backgroundColor: "transparent",
     borderRadius: 22,
@@ -3132,7 +3148,7 @@ const baseStyles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: "#eee",
   },
-  settingLabel: { fontSize: 14, flex: 1 },
+  settingLabel: {color: "#101828",  fontSize: 14, flex: 1 },
   stepper: { flexDirection: "row", alignItems: "center", gap: 8 },
   stepBtn: {
     width: 34,
@@ -3142,7 +3158,7 @@ const baseStyles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  stepValue: { minWidth: 58, textAlign: "center", fontWeight: "700" },
+  stepValue: {color: "#101828",  minWidth: 58, textAlign: "center", fontWeight: "700" },
   lang: {
     flex: 1,
     padding: 12,
@@ -3162,8 +3178,8 @@ const baseStyles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: "#eee",
   },
-  aboutLabel: { fontSize: 15 },
-  chev: { fontSize: 24, opacity: 0.35 },
+  aboutLabel: {color: "#101828",  fontSize: 15 },
+  chev: {color: "#101828",  fontSize: 24, opacity: 0.35 },
   modalShade: {
     flex: 1,
     backgroundColor: "rgba(0,0,0,.45)",
@@ -3176,7 +3192,7 @@ const baseStyles = StyleSheet.create({
     borderTopRightRadius: 26,
     gap: 14,
   },
-  modalTitle: { fontSize: 23, fontWeight: "800" },
+  modalTitle: {color: "#101828",  fontSize: 23, fontWeight: "800" },
   modalText: { opacity: 0.6 },
   input: {
     minHeight: 90,
@@ -3187,7 +3203,7 @@ const baseStyles = StyleSheet.create({
     textAlignVertical: "top",
   },
   cancel: { alignItems: "center", padding: 12 },
-  typeLabel: { fontSize: 12, fontWeight: "700", opacity: 0.5, marginTop: 5 },
+  typeLabel: {color: "#101828",  fontSize: 12, fontWeight: "700", opacity: 0.5, marginTop: 5 },
   dataCard: {
     backgroundColor: "#fff",
     borderRadius: 18,
@@ -3198,15 +3214,15 @@ const baseStyles = StyleSheet.create({
     gap: 12,
   },
   dataLabel: { fontSize: 17, fontWeight: "700", color: "#182230" },
-  dataValue: { fontSize: 13, fontWeight: "700", marginTop: 3 },
+  dataValue: {color: "#101828",  fontSize: 13, fontWeight: "700", marginTop: 3 },
   coverageCard: {
     backgroundColor: "#f3f4f6",
     borderRadius: 14,
     padding: 14,
     gap: 8,
   },
-  coverageLine: { fontSize: 14, fontWeight: "650" },
-  note: { fontSize: 12, lineHeight: 18, opacity: 0.55 },
+  coverageLine: {color: "#101828",  fontSize: 14, fontWeight: "650" },
+  note: {color: "#101828",  fontSize: 12, lineHeight: 18, opacity: 0.55 },
   addButton: {
     minWidth: 104,
     minHeight: 60,
@@ -3247,8 +3263,8 @@ function AboutLink({ label, url, styles }) {
   return (
     <Pressable onPress={() => Linking.openURL(url)} style={s.aboutRow}>
       <Icon name="info" color="#007aff" size={18} />
-      <Text style={[s.aboutLabel, { flex: 1, marginLeft: 12 }]}>{label}</Text>
-      <Text style={s.chev}>›</Text>
+      <Text maxFontSizeMultiplier={1.35} style={[s.aboutLabel, { flex: 1, marginLeft: 12 }]}>{label}</Text>
+      <Text maxFontSizeMultiplier={1.35} style={s.chev}>›</Text>
     </Pressable>
   );
 }

@@ -15,6 +15,10 @@ const replacements = {
   "#f3f4f6": "#263244",
   "#eee": "#263244",
   "#eef3fa": "#263244",
+  "#596579": "#a4b0c0",
+  "#42586b": "#c5d2e0",
+  "#587365": "#9ed4b8",
+  "#467566": "#9ed4b8",
 };
 export function themeStyles(styles, dark) {
   if (!dark) return styles;
@@ -26,7 +30,9 @@ export function themeStyles(styles, dark) {
         : Object.fromEntries(
             Object.entries(style).map(([property, value]) => [
               property,
-              typeof value === "string"
+              property === "color" && ["#fff", "#ffffff"].includes(value?.toLowerCase?.())
+                ? value
+                : typeof value === "string"
                 ? replacements[value.toLowerCase()] || value
                 : value,
             ]),

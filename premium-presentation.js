@@ -55,6 +55,7 @@ export const PREMIUM_COPY = {
     vibration: "Вибрация",
     noMetric: "Нет данных",
     kilometres: "Путь в приложении",
+    historyDistance: "Путь",
     countries: "Страны",
     mapOnly:
       "Типы фильтруют карту. Предупреждения о камерах остаются активными.",
@@ -109,6 +110,7 @@ export const PREMIUM_COPY = {
     vibration: "Вібрація",
     noMetric: "Немає даних",
     kilometres: "Шлях у застосунку",
+    historyDistance: "Шлях",
     countries: "Країни",
     mapOnly:
       "Типи фільтрують карту. Попередження про камери залишаються активними.",
@@ -163,6 +165,7 @@ export const PREMIUM_COPY = {
     vibration: "Vibration",
     noMetric: "Unavailable",
     kilometres: "Distance in app",
+    historyDistance: "Distance",
     countries: "Countries",
     mapOnly: "Types filter the map. Camera warnings stay active.",
     intro: "Welcome screen",
@@ -216,6 +219,7 @@ export const PREMIUM_COPY = {
     vibration: "Wibracje",
     noMetric: "Brak danych",
     kilometres: "Dystans w aplikacji",
+    historyDistance: "Dystans",
     countries: "Kraje",
     mapOnly: "Typy filtrują mapę. Ostrzeżenia pozostają aktywne.",
     intro: "Ekran startowy",

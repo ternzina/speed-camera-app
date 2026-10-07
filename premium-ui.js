@@ -59,8 +59,8 @@ export function HeroLanding({ copy, onStart }) {
         <View style={p.heroContent}>
           <View style={p.heroTitle}>
             <Image source={APP_ICON} style={p.appIcon} />
-            <Text style={p.heroName}>{copy.title}</Text>
-            <Text style={p.heroSubtitle}>{copy.subtitle}</Text>
+            <Text maxFontSizeMultiplier={1.35} style={p.heroName}>{copy.title}</Text>
+            <Text maxFontSizeMultiplier={1.35} style={p.heroSubtitle}>{copy.subtitle}</Text>
           </View>
           <View style={p.heroBottom}>
             {[
@@ -71,7 +71,7 @@ export function HeroLanding({ copy, onStart }) {
             ].map(([icon, label]) => (
               <View key={icon} style={p.feature}>
                 <Icon name={icon} color="#fff" size={22} />
-                <Text style={p.featureText}>{label}</Text>
+                <Text maxFontSizeMultiplier={1.35} style={p.featureText}>{label}</Text>
               </View>
             ))}
             <Pressable
@@ -79,7 +79,7 @@ export function HeroLanding({ copy, onStart }) {
               onPress={onStart}
               style={p.blueButton}
             >
-              <Text style={p.buttonText}>{copy.start}</Text>
+              <Text maxFontSizeMultiplier={1.35} style={p.buttonText}>{copy.start}</Text>
             </Pressable>
           </View>
         </View>
@@ -133,12 +133,12 @@ export function FullWarning({
       <View style={p.warningTop}>
         {limit > 0 && (
           <View style={p.limit}>
-            <Text style={p.limitNumber}>{displaySpeed(limit, units)}</Text>
+            <Text maxFontSizeMultiplier={1.35} style={p.limitNumber}>{displaySpeed(limit, units)}</Text>
           </View>
         )}
         <View>
-          <Text style={p.warningSpeed}>{displaySpeed(speed, units)}</Text>
-          <Text style={p.white}>
+          <Text maxFontSizeMultiplier={1.35} style={p.warningSpeed}>{displaySpeed(speed, units)}</Text>
+          <Text maxFontSizeMultiplier={1.35} style={p.white}>
             {units === "imperial" ? copy.mph : driverCopy.unit}
           </Text>
         </View>
@@ -176,20 +176,20 @@ export function FullWarning({
             />
           </View>
         </View>
-        <Text style={p.warningCaption}>{copy.ahead}</Text>
-        <Text style={p.warningDistance}>
+        <Text maxFontSizeMultiplier={1.35} style={p.warningCaption}>{copy.ahead}</Text>
+        <Text maxFontSizeMultiplier={1.35} style={p.warningDistance}>
           {displayDistance(distance, units, copy)}
         </Text>
-        <Text style={p.warningType}>{drivingLabel(camera, driverCopy)}</Text>
-        {over && <Text style={p.slow}>{driverCopy.slow}</Text>}
-        <Text numberOfLines={2} style={p.roadName}>
+        <Text maxFontSizeMultiplier={1.35} style={p.warningType}>{drivingLabel(camera, driverCopy)}</Text>
+        {over && <Text maxFontSizeMultiplier={1.35} style={p.slow}>{driverCopy.slow}</Text>}
+        <Text maxFontSizeMultiplier={1.35} numberOfLines={2} style={p.roadName}>
           {camera.road_index ||
             camera.road_name ||
             camera.location ||
             camera.region ||
             ""}
         </Text>
-        <Text style={p.direction}>
+        <Text maxFontSizeMultiplier={1.35} style={p.direction}>
           {copy.direction}
           {Number.isFinite(heading) ? ` · ${Math.round(heading)}°` : ""}
         </Text>
@@ -200,7 +200,7 @@ export function FullWarning({
           onPress={onStop}
           style={p.darkControl}
         >
-          <Text style={p.white}>{stopLabel}</Text>
+          <Text maxFontSizeMultiplier={1.35} style={p.white}>{stopLabel}</Text>
         </Pressable>
         <Pressable
           accessibilityRole="button"
@@ -208,7 +208,7 @@ export function FullWarning({
           style={[p.blueButton, { flex: 1, marginTop: 0 }]}
         >
           <Icon name="plus" color="#fff" />
-          <Text style={p.buttonText}>{reportLabel}</Text>
+          <Text maxFontSizeMultiplier={1.35} style={p.buttonText}>{reportLabel}</Text>
         </Pressable>
       </View>
     </ImageBackground>
@@ -248,7 +248,7 @@ export function PremiumTrip({
       <View style={p.driveTop}>
         {showLimits && limit > 0 ? (
           <View style={[p.limit, { width: 72, height: 72, borderRadius: 36 }]}>
-            <Text style={[p.limitNumber, { fontSize: 30 }]}>
+            <Text maxFontSizeMultiplier={1.35} style={[p.limitNumber, { fontSize: 30 }]}>
               {displaySpeed(limit, units)}
             </Text>
           </View>
@@ -258,16 +258,16 @@ export function PremiumTrip({
           </View>
         )}
         <View style={{ flex: 1 }}>
-          <Text style={p.driveSpeed}>{displaySpeed(speed, units)}</Text>
-          <Text style={p.muted}>
+          <Text maxFontSizeMultiplier={1.35} style={p.driveSpeed}>{displaySpeed(speed, units)}</Text>
+          <Text maxFontSizeMultiplier={1.35} style={p.muted}>
             {units === "imperial" ? copy.mph : driverCopy.unit}
           </Text>
         </View>
         <View style={{ alignItems: "flex-end", gap: 6 }}>
-          <Text style={p.country}>{country}</Text>
-          <Text style={p.gps}>{gps}</Text>
+          <Text maxFontSizeMultiplier={1.35} style={p.country}>{country}</Text>
+          <Text maxFontSizeMultiplier={1.35} style={p.gps}>{gps}</Text>
           {Number.isFinite(heading) && (
-            <Text style={p.muted}>{Math.round(heading)}°</Text>
+            <Text maxFontSizeMultiplier={1.35} style={p.muted}>{Math.round(heading)}°</Text>
           )}
         </View>
       </View>
@@ -300,8 +300,8 @@ export function PremiumTrip({
         <View style={p.averageCard}>
           <TypeIcon type="average_speed" />
           <View>
-            <Text style={p.rowTitle}>{copy.average}</Text>
-            <Text>
+            <Text maxFontSizeMultiplier={1.35} style={p.rowTitle}>{copy.average}</Text>
+            <Text maxFontSizeMultiplier={1.35}>
               {displaySpeed(averageTrip.average, units)}{" "}
               {units === "imperial" ? copy.mph : driverCopy.unit} ·{" "}
               {displayDistance(averageTrip.remaining, units, copy)}
@@ -314,14 +314,14 @@ export function PremiumTrip({
           onPress={onStop}
           style={[p.darkControl, { backgroundColor: "#e8ecf2" }]}
         >
-          <Text>{stopLabel}</Text>
+          <Text maxFontSizeMultiplier={1.35}>{stopLabel}</Text>
         </Pressable>
         <Pressable
           onPress={onReport}
           style={[p.blueButton, { flex: 1, marginTop: 0 }]}
         >
           <Icon name="plus" color="#fff" />
-          <Text style={p.buttonText}>{reportLabel}</Text>
+          <Text maxFontSizeMultiplier={1.35} style={p.buttonText}>{reportLabel}</Text>
         </Pressable>
       </View>
     </View>
@@ -367,11 +367,11 @@ export function CountryDetails({
       <ScrollView contentContainerStyle={p.detailContent}>
         <Pressable accessibilityRole="button" onPress={onClose} style={p.back}>
           <Icon name="chevron-left" color="#007aff" />
-          <Text style={p.blue}>{ui.countries}</Text>
+          <Text maxFontSizeMultiplier={1.35} style={p.blue}>{ui.countries}</Text>
         </Pressable>
         <View style={p.flagHero}>
-          <Text style={p.flag}>{entry?.label?.split(" ")[0]}</Text>
-          <Text style={p.countryName}>
+          <Text maxFontSizeMultiplier={1.35} style={p.flag}>{entry?.label?.split(" ")[0]}</Text>
+          <Text maxFontSizeMultiplier={1.35} style={p.countryName}>
             {entry?.label?.split(" ").slice(1).join(" ")}
           </Text>
         </View>
@@ -382,22 +382,22 @@ export function CountryDetails({
             [copy.candidates, metrics.candidates],
           ].map(([label, value]) => (
             <View key={label} style={p.metric}>
-              <Text style={p.metricValue}>
+              <Text maxFontSizeMultiplier={1.35} style={p.metricValue}>
                 {value == null ? "—" : value.toLocaleString(language)}
               </Text>
-              <Text style={p.metricLabel}>{label}</Text>
+              <Text maxFontSizeMultiplier={1.35} style={p.metricLabel}>{label}</Text>
             </View>
           ))}
         </View>
         {(metrics.found == null || metrics.candidates == null) && (
-          <Text style={p.unavailable}>
+          <Text maxFontSizeMultiplier={1.35} style={p.unavailable}>
             {copy.noMetric}: {copy.found.toLowerCase()},{" "}
             {copy.candidates.toLowerCase()}
           </Text>
         )}
         {busy && progress ? (
           <View style={p.downloadCard}>
-            <Text style={p.rowTitle}>
+            <Text maxFontSizeMultiplier={1.35} style={p.rowTitle}>
               {progress.phase === "verify" ? copy.checking : copy.loading}
             </Text>
             <View style={p.progressRow}>
@@ -409,11 +409,11 @@ export function CountryDetails({
                   ]}
                 />
               </View>
-              <Text style={p.rowTitle}>
+              <Text maxFontSizeMultiplier={1.35} style={p.rowTitle}>
                 {ratio == null ? "…" : `${Math.floor(ratio * 100)}%`}
               </Text>
             </View>
-            <Text style={p.muted}>
+            <Text maxFontSizeMultiplier={1.35} style={p.muted}>
               {(progress.loaded / 1e6).toLocaleString(language, {
                 maximumFractionDigits: 2,
               })}{" "}
@@ -435,13 +435,13 @@ export function CountryDetails({
               name={feed ? "check-circle" : "download-cloud"}
               color={feed ? "#007aff" : "#fff"}
             />
-            <Text style={[p.buttonText, feed && { color: "#007aff" }]}>
+            <Text maxFontSizeMultiplier={1.35} style={[p.buttonText, feed && { color: "#007aff" }]}>
               {feed ? copy.offline : copy.download}
             </Text>
             {feed && <Icon name="refresh-cw" color="#007aff" size={18} />}
           </Pressable>
         )}
-        {progress?.phase === "failed" && <Text accessibilityLiveRegion="polite" style={{color:"#d92d20"}}>{copy.failed}</Text>}
+        {progress?.phase === "failed" && <Text maxFontSizeMultiplier={1.35} accessibilityLiveRegion="polite" style={{color:"#d92d20"}}>{copy.failed}</Text>}
         <View style={p.whiteCard}>
           {[
             [
@@ -461,24 +461,24 @@ export function CountryDetails({
           ].map(([label, value, icon]) => (
             <View style={p.detailRow} key={label}>
               <Icon name={icon} size={18} />
-              <Text style={p.detailLabel}>{label}</Text>
-              <Text style={p.detailValue}>{value}</Text>
+              <Text maxFontSizeMultiplier={1.35} style={p.detailLabel}>{label}</Text>
+              <Text maxFontSizeMultiplier={1.35} style={p.detailValue}>{value}</Text>
             </View>
           ))}
         </View>
         <View style={p.whiteCard}>
-          <Text style={p.section}>{copy.types}</Text>
+          <Text maxFontSizeMultiplier={1.35} style={p.section}>{copy.types}</Text>
           {FILTER_TYPES.map((type) => (
             <View key={type} style={p.detailRow}>
               <TypeIcon type={type} />
-              <Text style={p.detailLabel}>{labels[type] || copy.other}</Text>
-              <Text style={p.detailValue}>{counts?.[type] ?? "—"}</Text>
+              <Text maxFontSizeMultiplier={1.35} style={p.detailLabel}>{labels[type] || copy.other}</Text>
+              <Text maxFontSizeMultiplier={1.35} style={p.detailValue}>{counts?.[type] ?? "—"}</Text>
             </View>
           ))}
         </View>
         <View style={p.downloadCard}>
           <Icon name="wifi-off" color="#007aff" />
-          <Text style={p.muted}>{driverCopy.maps}</Text>
+          <Text maxFontSizeMultiplier={1.35} style={p.muted}>{driverCopy.maps}</Text>
         </View>
       </ScrollView>
       {footer}
@@ -512,7 +512,7 @@ export function Filters({
     <SafeAreaView style={p.detailSafe}>
       <ScrollView contentContainerStyle={p.detailContent}>
         <View style={p.sheetHeader}>
-          <Text style={p.sheetTitle}>{copy.filters}</Text>
+          <Text maxFontSizeMultiplier={1.35} style={p.sheetTitle}>{copy.filters}</Text>
           <Pressable
             accessibilityRole="button"
             onPress={onClose}
@@ -525,7 +525,7 @@ export function Filters({
           {FILTER_TYPES.map((type) => (
             <View key={type} style={p.filterRow}>
               <TypeIcon type={type} />
-              <Text style={p.detailLabel}>{labels[type]}</Text>
+              <Text maxFontSizeMultiplier={1.35} style={p.detailLabel}>{labels[type]}</Text>
               <Switch
                 accessibilityLabel={labels[type]}
                 trackColor={{ true: "#007aff" }}
@@ -535,7 +535,7 @@ export function Filters({
             </View>
           ))}
         </View>
-        <Text style={p.muted}>{copy.mapOnly}</Text>
+        <Text maxFontSizeMultiplier={1.35} style={p.muted}>{copy.mapOnly}</Text>
         <View style={p.whiteCard}>
           {[
             [copy.limits, showLimits, onLimits, "eye"],
@@ -544,7 +544,7 @@ export function Filters({
           ].map(([label, value, onValueChange, icon]) => (
             <View key={label} style={p.filterRow}>
               <Icon name={icon} color="#007aff" />
-              <Text style={p.detailLabel}>{label}</Text>
+              <Text maxFontSizeMultiplier={1.35} style={p.detailLabel}>{label}</Text>
               <Switch
                 accessibilityLabel={label}
                 value={value}
@@ -556,7 +556,7 @@ export function Filters({
         </View>
         <Pressable onPress={onClose} style={p.blueButton}>
           <Icon name="check" color="#fff" />
-          <Text style={p.buttonText}>{copy.save || "Сохранить"}</Text>
+          <Text maxFontSizeMultiplier={1.35} style={p.buttonText}>{copy.save || "Сохранить"}</Text>
         </Pressable>
       </ScrollView>
     </SafeAreaView>
@@ -706,7 +706,7 @@ const premiumStyles = StyleSheet.create({
   back: { flexDirection: "row", alignItems: "center", minHeight: 44 },
   blue: { color: "#007aff", fontSize: 17 },
   flagHero: { alignItems: "center", gap: 6, paddingVertical: 4 },
-  flag: { fontSize: 54 },
+  flag: {color: "#101828",  fontSize: 54 },
   countryName: {
     fontSize: 32,
     fontWeight: "800",
@@ -734,7 +734,7 @@ const premiumStyles = StyleSheet.create({
     maxWidth: "48%",
     textAlign: "right",
   },
-  section: { fontSize: 18, fontWeight: "800", marginBottom: 10 },
+  section: {color: "#101828",  fontSize: 18, fontWeight: "800", marginBottom: 10 },
   rowTitle: { fontSize: 16, fontWeight: "700", color: "#101828" },
   downloadCard: {
     padding: 18,
@@ -756,7 +756,7 @@ const premiumStyles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
   },
-  sheetTitle: { fontSize: 28, fontWeight: "800" },
+  sheetTitle: {color: "#101828",  fontSize: 28, fontWeight: "800" },
   close: {
     width: 44,
     height: 44,

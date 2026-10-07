@@ -9,12 +9,12 @@ assert.equal(feeds.countryFeed({FR:feed},'fr',{},{}),feed);assert.equal(feeds.ca
 assert.equal(feeds.cameraPoints(feeds.countryFeed({},'fr',{},{})).length,0);
 const realPL=JSON.parse(fs.readFileSync(path.join(root,'cameras-pl.json')));const section=realPL.average_speed_sections.find(x=>!x._example_only);
 assert.ok(section);assert.equal(engine.detectAverageSpeedSection(realPL,section.end.latitude,section.end.longitude,0,section.id).state,'ending');
-let stateOverrides={},stateIndex=0;const React={createElement:(type,props,...children)=>({type,props,children}),useState:value=>{const i=stateIndex++;return [i in stateOverrides?stateOverrides[i]:value,next=>{const previous=i in stateOverrides?stateOverrides[i]:value;stateOverrides[i]=typeof next==='function'?next(previous):next}]},useRef:value=>({current:value}),useMemo:fn=>fn(),useEffect:()=>{}};
-const noop=()=>{};const native={StyleSheet:{create:v=>v},Alert:{alert:noop},Vibration:{vibrate:noop},Linking:{openURL:noop}};
+let stateOverrides={},stateIndex=0;const stateInitials=[];const React={createElement:(type,props,...children)=>({type,props,children}),useState:value=>{const i=stateIndex++;stateInitials[i]=value;return [i in stateOverrides?stateOverrides[i]:value,next=>{const previous=i in stateOverrides?stateOverrides[i]:value;stateOverrides[i]=typeof next==='function'?next(previous):next}]},useRef:value=>({current:value}),useMemo:fn=>fn(),useEffect:()=>{}};
+let gpsPermission,gpsPosition;let timerImplementation=setTimeout;const noop=()=>{};const native={StyleSheet:{create:v=>v},Alert:{alert:noop},Vibration:{vibrate:noop},Linking:{openURL:noop}};
 for(const x of ['SafeAreaView','View','Text','Pressable','ScrollView','Modal','TextInput','Switch'])native[x]=x;
-const stubs={'./premium-ui':{HeroLanding:'HeroLanding',FullWarning:'FullWarning',PremiumTrip:'PremiumTrip',CountryDetails:'CountryDetails',Filters:'Filters',TypeIcon:'TypeIcon'},'./product-ui':{Icon:'Icon',CameraMap:'CameraMap'},'react':React,'react-native':native,'expo-location':{},'expo-speech':{stop:noop},'expo-task-manager':{defineTask:noop},'expo-notifications':{setNotificationHandler:noop},'expo-haptics':{},'@react-native-async-storage/async-storage':{},'react-native-maps':{default:'MapView',Marker:'Marker',Circle:'Circle'},'expo-status-bar':{StatusBar:'StatusBar'}};
+const stubs={'./premium-ui':{HeroLanding:'HeroLanding',FullWarning:'FullWarning',PremiumTrip:'PremiumTrip',CountryDetails:'CountryDetails',Filters:'Filters',TypeIcon:'TypeIcon'},'./product-ui':{Icon:'Icon',CameraMap:'CameraMap'},'react':React,'react-native':native,'expo-location':{Accuracy:{High:4},requestForegroundPermissionsAsync:()=>gpsPermission(),getCurrentPositionAsync:()=>gpsPosition()},'expo-speech':{stop:noop},'expo-task-manager':{defineTask:noop},'expo-notifications':{setNotificationHandler:noop},'expo-haptics':{},'@react-native-async-storage/async-storage':{},'react-native-maps':{default:'MapView',Marker:'Marker',Circle:'Circle'},'expo-status-bar':{StatusBar:'StatusBar'}};
 const moduleApp={exports:{}};const code=babel.transformSync(fs.readFileSync(path.join(root,'App.js'),'utf8'),{configFile:false,babelrc:false,plugins:['@babel/plugin-transform-react-jsx','@babel/plugin-transform-modules-commonjs']}).code;
-vm.runInNewContext(code,{module:moduleApp,exports:moduleApp.exports,require:name=>name in stubs?stubs[name]:name.endsWith('.json')?JSON.parse(fs.readFileSync(path.join(root,name))):plain(name.slice(2)+'.js'),Set,Date,console,setInterval,clearInterval});
+vm.runInNewContext(code,{module:moduleApp,exports:moduleApp.exports,require:name=>name in stubs?stubs[name]:name.endsWith('.json')?JSON.parse(fs.readFileSync(path.join(root,name))):plain(name.slice(2)+'.js'),Set,Date,console,setInterval,clearInterval,setTimeout:(fn,ms)=>timerImplementation(fn,ms),clearTimeout});
 for(const country of ['ua','pl','de','fr','us','ca','ru','by','ge','am','az']){stateIndex=0;stateOverrides={0:{country,language:'en',smartDistance:true,cityDistance:500,roadDistance:800,highwayDistance:1000,fastDistance:1500}};assert.ok(moduleApp.exports.default());}
 stateIndex=0;stateOverrides={0:{country:'de',language:'ru'},12:{PL:feed},13:[{country_code:'DE',record_count:5794},{country_code:'PL',record_count:897},{country_code:'OM',record_count:459},{country_code:'PA',record_count:16},{country_code:'TW',record_count:875},{country_code:'CA',geography_level:'province',province_code:'ON',name:'Ontario',record_count:500}],20:'offline'};
 const settingsTree=moduleApp.exports.default();
@@ -39,8 +39,38 @@ for(const [type,label] of [['speed_camera','Камера скорости'],['mo
 }
 stateIndex=0;stateOverrides={0:{country:'ua',language:'ru',voice:true}};const idle=nodes(moduleApp.exports.default());assert.equal(idle.filter(n=>n.type==='Text'&&n.children.includes('Готовы к поездке')).length,1);assert.ok(idle.some(n=>n.children?.includes('Страны')));
 
+// Exercise actual dark-mode render styles on every main screen, including empty history.
+const premiumSlot=stateInitials.findIndex(x=>x && x.theme==='system' && 'started' in x);
+assert.ok(premiumSlot>=0);
+for(const tab of ['drive','map','offline','history','settings']){
+ stateIndex=0;stateOverrides={0:{country:'ua',language:'ru',voice:true},20:tab,[premiumSlot]:{started:true,theme:'dark',units:'metric',filters:{},showLimits:true}};
+ const tree=nodes(moduleApp.exports.default());
+ const flatten=x=>Object.assign({},...([x].flat(Infinity).filter(Boolean)));
+ for(const node of tree.filter(n=>n.type==='Text')){
+  const style=flatten(node.props.style);
+  assert.notEqual(style.color,'#101828',`dark text on ${tab}: ${node.children}`);
+  assert.ok(node.props.maxFontSizeMultiplier<=1.35, 'compact UI limits destructive text scaling');
+ }
+ if(tab==='history'){
+  const labels=tree.filter(n=>n.type==='Text' && flatten(n.props.style).height===48);
+  assert.equal(labels.length,3);assert(labels.every(n=>n.props.numberOfLines===2));
+ }
+}
 console.log('App smoke passed: 11 country renders, remote feed precedence, opposing direction and real Polish section ending.');
 (async()=>{
+ // Map GPS: success, denied permission, and hung permission request all resolve cleanly.
+ stateIndex=0;stateOverrides={0:{country:'ua',language:'ru'},20:'map'};
+ const gps=nodes(moduleApp.exports.default()).find(n=>n.type==='CameraMap').props.onLocate;
+ gpsPermission=async()=>({status:'granted'});
+ gpsPosition=async()=>({coords:{latitude:50,longitude:30}});
+ const position=await gps();assert.equal(position.latitude,50);
+ let alerts=0;native.Alert.alert=()=>alerts++;
+ gpsPermission=async()=>({status:'denied'});
+ assert.equal(await gps(),null);assert.equal(alerts,1);
+ gpsPermission=()=>new Promise(()=>{});
+ timerImplementation=fn=>setTimeout(fn,0);
+ assert.equal(await gps(),null);assert.equal(alerts,2);
+ timerImplementation=setTimeout;
  const values=new Map();const storage={getItem:async k=>values.get(k)||null,setItem:async(k,v)=>{assert.ok(Buffer.byteLength(v)<1000000,'chunk must fit Android cursor window');values.set(k,v)},removeItem:async k=>values.delete(k)};
  const large={...feed,speed_cameras:Array.from({length:16000},(_,i)=>({...feed.speed_cameras[1],id:String(i),location:'Камера на дороге',provenance:[{source_url:'https://example.org/'+('x'.repeat(500))}]}))};
  await feeds.saveCameraCache(storage,'cache',{feeds:{UA:{cameras:[]},PL:feed,FR:large,US:feed},countries:[],stamp:'test'},'FR');

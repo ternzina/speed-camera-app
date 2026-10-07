@@ -40,6 +40,7 @@ export function CameraMap({
     longitudeDelta: 0.12,
   });
   const [locating, setLocating] = useState(false);
+  const [dismissedGPSHint, setDismissedGPSHint] = useState(false);
   const map = useRef(null);
   const clusters = useMemo(() => mapClusters(points, region), [points, region]);
   const nearest = useMemo(
@@ -112,7 +113,7 @@ export function CameraMap({
           >
             <View style={[m.pin, cluster.items.length > 1 && m.cluster]}>
               {cluster.items.length > 1 ? (
-                <Text style={m.clusterNumber}>{cluster.items.length}</Text>
+                <Text maxFontSizeMultiplier={1.35} style={m.clusterNumber}>{cluster.items.length}</Text>
               ) : (
                 <Icon
                   name={CONTROL_ICONS[cluster.items[0].type] || "camera"}
@@ -142,10 +143,10 @@ export function CameraMap({
             />
           </View>
           <View style={{ flex: 1 }}>
-            <Text style={m.warningTitle}>
+            <Text maxFontSizeMultiplier={1.35} style={m.warningTitle}>
               {drivingLabel(warning.camera, driverCopy)}
             </Text>
-            <Text style={m.warningDistance}>
+            <Text maxFontSizeMultiplier={1.35} style={m.warningDistance}>
               {displayDistance(
                 warning.distance,
                 units,
@@ -160,7 +161,7 @@ export function CameraMap({
       ) : (
         <View style={m.hint}>
           <Icon name="layers" size={15} />
-          <Text style={m.hintText}>{copy.mapHint}</Text>
+          <Text maxFontSizeMultiplier={1.35} style={m.hintText}>{copy.mapHint}</Text>
         </View>
       )}
       <View style={m.controls}>
@@ -192,22 +193,22 @@ export function CameraMap({
           <Icon name="plus" />
         </Pressable>
       </View>
-      <View style={m.bottom}>
-        <View style={m.bottomIcon}>
+      {(coords || !dismissedGPSHint) && <View style={m.bottom}>
+        {coords && <View style={m.bottomIcon}>
           <Icon
             name={nearest ? CONTROL_ICONS[nearest.type] || "camera" : "map-pin"}
             size={24}
           />
-        </View>
+        </View>}
         <View style={{ flex: 1 }}>
-          <Text style={m.caption}>
+          {coords && <Text maxFontSizeMultiplier={1.35} style={m.caption}>
             {coords
               ? nearest && nearest.distance <= 5000
                 ? copy.nearest
                 : copy.noCameras
               : copy.mapHint}
-          </Text>
-          <Text style={m.title}>
+          </Text>}
+          <Text maxFontSizeMultiplier={1.35} numberOfLines={2} style={[m.title, !coords && {fontSize:16}]}>
             {coords
               ? nearest && nearest.distance <= 5000
                 ? displayDistance(
@@ -219,18 +220,19 @@ export function CameraMap({
               : copy.enableGPS}
           </Text>
           {nearest && nearest.distance <= 5000 && (
-            <Text style={m.detail}>{drivingLabel(nearest, driverCopy)}</Text>
+            <Text maxFontSizeMultiplier={1.35} style={m.detail}>{drivingLabel(nearest, driverCopy)}</Text>
           )}
         </View>
         <Pressable
           accessibilityRole="button"
-          accessibilityLabel={copy.nearby}
-          onPress={nearby}
+          accessibilityLabel={coords ? copy.nearby : copy.locate}
+          onPress={coords ? nearby : locate}
           style={[m.control, onVoice && {width:44,height:44}]}
         >
           <Icon name="crosshair" color="#007aff" />
         </Pressable>
-      </View>
+        {!coords && <Pressable accessibilityRole="button" accessibilityLabel={copy.close} onPress={() => setDismissedGPSHint(true)} style={m.dismiss}><Icon name="x" size={18}/></Pressable>}
+      </View>}
     </View>
   );
 }
@@ -319,12 +321,13 @@ const m = StyleSheet.create({
     left: 16,
     right: 16,
     backgroundColor: "#fff",
-    padding: 18,
+    padding: 12,
     borderRadius: 22,
     flexDirection: "row",
-    gap: 14,
+    gap: 10,
     alignItems: "center",
   },
+  dismiss: {width:28, height:44, alignItems:"center", justifyContent:"center"},
   bottomIcon: {
     width: 48,
     height: 48,
