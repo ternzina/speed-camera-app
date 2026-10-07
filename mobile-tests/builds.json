@@ -69,10 +69,12 @@
     "artifact": "https://expo.dev/artifacts/eas/CJPBpyoMUpBR9aHxtNUX8KjnPpZhUyp85R9Ulhg-XXI.aab"
   },
   "googlePlaySubmission": {
-    "status": "BLOCKED_BY_ACCOUNT_ACCESS",
+    "status": "WAITING_FOR_BUILD",
     "track": "internal",
     "package": "com.camera21wek",
     "submissionPerformed": false,
-    "reason": "Current Google Play Console account HerLight exposes only com.herlight.app; Create app is disabled and requires permission. No EAS Google Play submission service-account key configured."
+    "consoleAppId": "4973206564233406869",
+    "releaseDraftUrl": "https://play.google.com/console/u/0/developers/8497998036565797248/app/4973206564233406869/tracks/4701629391442996966/releases/2/prepare",
+    "reason": "Correct Dolphin/Anty profile has full access. Existing v0.8.2 (3) confirmed in internal and closed testing. Update draft saved; waiting for Android build 5."
   }
 }
