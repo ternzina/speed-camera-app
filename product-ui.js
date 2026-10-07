@@ -1,6 +1,6 @@
 import React, { useMemo, useRef, useState } from "react";
 import { View, Text, Pressable, StyleSheet } from "react-native";
-import MapView, { Marker } from "react-native-maps";
+import MapView, { Marker } from "./map-surface";
 import Feather from "@expo/vector-icons/Feather";
 import { distanceBetween } from "./driver-engine";
 import { drivingLabel } from "./driver-copy";
@@ -72,6 +72,7 @@ export function CameraMap({
         ref={map}
         style={StyleSheet.absoluteFill}
         initialRegion={region}
+        userCoordinate={coords}
         onRegionChangeComplete={setRegion}
         showsUserLocation
         showsCompass={false}
@@ -81,6 +82,8 @@ export function CameraMap({
           <Marker
             key={cluster.id}
             coordinate={cluster}
+            clusterCount={cluster.items.length}
+            mapIcon={CONTROL_ICONS[cluster.items[0].type] || "camera"}
             title={
               cluster.items.length > 1
                 ? `${copy.nearby}: ${cluster.items.length}`

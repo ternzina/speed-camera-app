@@ -34,3 +34,11 @@ No driver-engine.js, camera-data.js, camera-delivery.js, country registry, colle
 - mobile-tests/offline-warning-verification.json — refreshed test evidence.
 - mobile-tests/product-presentation.cjs — functional local map grouping tests.
 - mobile-tests/PRODUCT-UI.md — this report.
+
+## Android release map fix (1.0.0 / versionCode 6)
+
+Android native manifests did not contain a Google Maps API key. Before testing upload, the Android map surface was changed to embedded Leaflet 1.9.4 in React Native WebView, with OpenStreetMap tiles and attribution. iOS retains Apple Maps. The adapter forwards camera clusters, marker presses, viewport updates, location centering and nearby-fit actions to the existing screen. Camera source/cache/warning modules are unchanged.
+
+Leaflet JS and CSS are bundled in `map-vendor/leaflet-assets.js` with BSD-2-Clause license; no CDN scripts are required. Tiles require internet and are not offline map downloads. Local markers and the local warning engine do not depend on tile retrieval.
+
+`npm run test:android-map` verifies the native-to-map message bridge, local assets, fit/location commands and malformed-message rejection. Embedded renderer was visually checked in a browser with public test coordinates and camera/cluster icons. Mobile/driver/product/six-country offline-warning checks passed. Native Android physical-device acceptance remains for testers.

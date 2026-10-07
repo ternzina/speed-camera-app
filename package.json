@@ -11,7 +11,8 @@
     "test:offline-warning": "node mobile-tests/offline-warning.cjs",
     "test:driver": "node mobile-tests/driver-engine.cjs",
     "test:country-quality": "node mobile-tests/country-quality.cjs",
-    "test:product": "node mobile-tests/product-presentation.cjs"
+    "test:product": "node mobile-tests/product-presentation.cjs",
+    "test:android-map": "node mobile-tests/android-map.cjs"
   },
   "dependencies": {
     "@expo/vector-icons": "^15.0.2",
@@ -26,6 +27,10 @@
     "expo-task-manager": "~57.0.21",
     "react": "^19.2.3",
     "react-native": "^0.86.3",
-    "react-native-maps": "1.27.2"
+    "react-native-maps": "1.27.2",
+    "react-native-webview": "13.16.1"
+  },
+  "devDependencies": {
+    "leaflet": "^1.9.4"
   }
 }

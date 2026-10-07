@@ -19,7 +19,6 @@ import * as TaskManager from "expo-task-manager";
 import * as Notifications from "expo-notifications";
 import * as Haptics from "expo-haptics";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import MapView, { Marker, Circle } from "react-native-maps";
 import { StatusBar } from "expo-status-bar";
 import data from "./cameras.json";
 import plData from "./cameras-pl.json";
