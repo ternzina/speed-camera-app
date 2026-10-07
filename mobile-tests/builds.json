@@ -1,0 +1,21 @@
+{
+  "checkedAt": "2026-10-07T10:31:31.703302+00:00",
+  "branch": "feature/r2-offline-release",
+  "appVersion": "0.9.0",
+  "sourceCommit": "93346d4e3082c5249ee2799321fc480422a71fbc",
+  "android": {
+    "id": "e1aad5c1-c8e3-4479-a824-1ba711a4ba67",
+    "status": "FINISHED",
+    "versionCode": 4,
+    "url": "https://expo.dev/accounts/bembi26/projects/speed-camera-prototype-direction/builds/e1aad5c1-c8e3-4479-a824-1ba711a4ba67",
+    "artifact": "https://expo.dev/artifacts/eas/CJPBpyoMUpBR9aHxtNUX8KjnPpZhUyp85R9Ulhg-XXI.aab"
+  },
+  "ios": {
+    "id": null,
+    "status": "BLOCKED_BY_EAS_QUOTA",
+    "buildNumber": "12",
+    "reason": "EAS Free plan monthly iOS build allowance exhausted; rejected before Build ID allocation",
+    "quotaResetDate": "2026-11-01"
+  },
+  "storeSubmissionPerformed": false
+}

@@ -14,3 +14,9 @@ Validation:
 - `npx expo export --platform all`: Android and iOS Hermes bundles.
 
 These are automated data/cache/render checks and production compilation checks. Physical-device GPS, airplane-mode UI and background alerts were not exercised.
+
+Build execution on 2026-10-07:
+- Android production build ID: e1aad5c1-c8e3-4479-a824-1ba711a4ba67 (source commit 93346d4e), FINISHED. App 0.9.0, versionCode 4.
+  AAB: https://expo.dev/artifacts/eas/CJPBpyoMUpBR9aHxtNUX8KjnPpZhUyp85R9Ulhg-XXI.aab
+- iOS production request was rejected before a Build ID was allocated: EAS Free plan monthly iOS builds exhausted, resets 2026-11-01. Existing iOS credentials were resolved successfully. Build 0.9.0 (12) requires restored quota or an account plan upgrade, then `npx eas-cli build --platform ios --profile production --non-interactive --no-wait`.
+- No App Store Connect or Google Play submission was requested.
