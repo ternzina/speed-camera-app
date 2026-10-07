@@ -15,6 +15,7 @@ CACHE = ROOT / 'master-db/cache/bootstrap/osm'
 COUNTRIES = dict(zip(
     'UA PL FR ES DE GB IE PT IT AT CH BE NL LU DK SE NO FI IS CZ SK HU RO BG HR SI RS BA ME MK AL GR LT LV EE MD CY MT XK TR AD LI MC SM VA US CA'.split(),
     ['Ukraine','Poland','France','Spain','Germany','United Kingdom','Ireland','Portugal','Italy','Austria','Switzerland','Belgium','Netherlands','Luxembourg','Denmark','Sweden','Norway','Finland','Iceland','Czech Republic','Slovakia','Hungary','Romania','Bulgaria','Croatia','Slovenia','Serbia','Bosnia and Herzegovina','Montenegro','North Macedonia','Albania','Greece','Lithuania','Latvia','Estonia','Moldova','Cyprus','Malta','Kosovo','Turkey','Andorra','Liechtenstein','Monaco','San Marino','Vatican City','USA','Canada']))
+COUNTRIES.update({'RU':'Russia','BY':'Belarus','GE':'Georgia','AM':'Armenia','AZ':'Azerbaijan'})
 ENDPOINTS = ['https://lambert.openstreetmap.de/api/interpreter', 'https://overpass.private.coffee/api/interpreter', 'https://overpass-api.de/api/interpreter']
 
 def boxes(code):
@@ -23,7 +24,8 @@ def boxes(code):
                'NO': [(57,4,72,32),(74,10,81,35)],
                'PT': [(36,-10,43,-6),(30,-32,41,-15)],
                'US': [(24,-125,50,-66),(50,-180,72,-129),(18,-161,23,-154)],
-               'CA': [(41,-141,65,-100),(41,-100,65,-52),(65,-141,84,-52)]}
+               'CA': [(41,-141,65,-100),(41,-100,65,-52),(65,-141,84,-52)],
+               'RU': [(41,19,82,180),(60,-180,72,-169)]}
     if code in special: return special[code]
     data=json.loads((CACHE.parent/'countries.geojson').read_text())
     for f in data['features']:

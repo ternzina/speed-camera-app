@@ -13,6 +13,7 @@ import hashlib
 import json
 import time
 import shutil
+import sys
 from public_download import get as public_get
 from pathlib import Path
 import psycopg
@@ -137,10 +138,15 @@ def stamp(value):
     if isinstance(value,str):value=dt.datetime.fromisoformat(value.replace('Z','+00:00'))
     return value.astimezone(dt.timezone.utc).isoformat()
 
-def sync(records):
+def sync(records, append_only=False):
     with connect() as conn:
-        before={cid:metadata for cid,metadata in conn.execute('select canonical_id,metadata from public.camera_records')}
-        links={(code,external):(cid,stamp(seen),state,raw_hash) for code,external,cid,seen,state,raw_hash in conn.execute("select s.code,l.external_id,r.canonical_id,l.last_seen_at,l.source_status,l.raw_payload->'_source'->>'raw_payload_sha256' from public.camera_source_links l join public.camera_sources s on s.id=l.source_id join public.camera_records r on r.id=l.camera_record_id")}
+        before={cid:metadata for cid,metadata in conn.execute('select canonical_id,metadata from public.camera_records')} if not append_only else {cid:{} for cid, in conn.execute('select canonical_id from public.camera_records')}
+        if append_only:
+            assert not ({r['canonical_id'] for r in records} & set(before)), 'Append-only sync cannot modify existing records'
+            existing_sources={(code,external) for code,external in conn.execute('select s.code,l.external_id from public.camera_source_links l join public.camera_sources s on s.id=l.source_id')}
+            incoming_sources={(s['source_code'],s['source_id']) for r in records for s in r['camera_sources']}
+            assert not (incoming_sources & existing_sources), 'Append-only sync cannot reassign an existing source identity'
+        links={} if append_only else {(code,external):(cid,stamp(seen),state,raw_hash) for code,external,cid,seen,state,raw_hash in conn.execute("select s.code,l.external_id,r.canonical_id,l.last_seen_at,l.source_status,l.raw_payload->'_source'->>'raw_payload_sha256' from public.camera_source_links l join public.camera_sources s on s.id=l.source_id join public.camera_records r on r.id=l.camera_record_id")}
         pending=[]
         for r in records:
             old=before.get(r['canonical_id'])
@@ -155,7 +161,10 @@ def sync(records):
             elif r.get('protected_existing'):diff['unchanged_count']+=1
             elif fingerprint(r)!=fingerprint(before[cid]):diff['changed'].append(cid)
             else:diff['unchanged_count']+=1
-        diff['missing_from_snapshot']=sorted(set(before)-{r['canonical_id'] for r in records})
+        diff['missing_from_snapshot']=[] if append_only else sorted(set(before)-{r['canonical_id'] for r in records})
+        if append_only:
+            diff['append_only']=True
+            diff['unchanged_count']=len(before)
         # Batch transactions permit safe resume after process/network interruption.
         totals=collections.Counter()
         for offset in range(0,len(pending),250):
@@ -186,6 +195,10 @@ def sync(records):
         print('Supabase read-back verified',current,'records;',source_links,'source links',flush=True)
 
 def main():
+    if '--expand' in sys.argv:
+        sys.argv.remove('--expand')
+        from expand_cameras import main as expand
+        return expand()
     parser=argparse.ArgumentParser();parser.add_argument('--sync-only',action='store_true');parser.add_argument('--normalize-only',action='store_true')
     parser.add_argument('--resume',action='store_true',help='Reuse completed source downloads instead of refreshing')
     parser.add_argument('--countries',nargs='+',default=list(COUNTRIES));args=parser.parse_args()

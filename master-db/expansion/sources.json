@@ -1,0 +1,418 @@
+[
+  {
+    "code": "CA_PEEL_RLC",
+    "country_code": "CA",
+    "name": "Red Light Cameras",
+    "source_url": "https://www.arcgis.com/home/item.html?id=36dbfcb33aa2453c8de55e0a34ccfc6a",
+    "download_url": "https://services6.arcgis.com/ONZht79c8QWuX759/arcgis/rest/services/Red_Light_Cameras/FeatureServer/0",
+    "format": "arcgis",
+    "license": "Open Data Licence - Peel 1.0",
+    "license_url": "https://data.peelregion.ca/pages/license",
+    "id_fields": [
+      "CAMERA_NUM"
+    ],
+    "road_field": "NAME",
+    "city_field": "MUN"
+  },
+  {
+    "code": "CA_HAMILTON_RLC",
+    "country_code": "CA",
+    "name": "Red Light Cameras",
+    "source_url": "https://www.arcgis.com/home/item.html?id=d880b4ad9b5c4e44b073d6d007e4df68",
+    "download_url": "https://services.arcgis.com/rYz782eMbySr2srL/arcgis/rest/services/Red_Light_Cameras/FeatureServer/3",
+    "format": "arcgis",
+    "license": "Open Data Licence - Hamilton",
+    "license_url": "https://www.hamilton.ca/city-initiatives/strategies-actions/open-data-licence-terms-and-conditions",
+    "id_fields": [
+      "CAMERA_ID"
+    ],
+    "direction_field": "COMMENTS",
+    "road_field": "LOCATION",
+    "city": "Hamilton"
+  },
+  {
+    "code": "CA_KINGSTON_RLC",
+    "country_code": "CA",
+    "name": "Red Light Cameras",
+    "source_url": "https://www.arcgis.com/home/item.html?id=a9414d8063e44327ad59dc7a625fa95b",
+    "download_url": "https://services1.arcgis.com/5GRYvurYYUwAecLQ/arcgis/rest/services/Red_Light_Camera_(Hosted)/FeatureServer/0",
+    "format": "arcgis",
+    "license": "Open Data Licence - Kingston",
+    "license_url": "https://www.cityofkingston.ca/documents/10180/144997/CityofKingston_OpenDataLicense.pdf",
+    "id_fields": [
+      "GLOBALID"
+    ],
+    "road_field": "ROADWAY",
+    "city": "Kingston"
+  },
+  {
+    "code": "CA_OTTAWA_RLC",
+    "country_code": "CA",
+    "name": "Red Light Camera Locations",
+    "source_url": "https://www.arcgis.com/home/item.html?id=adf1e7bd0338404196dc0d552aa6c79b",
+    "download_url": "https://services.arcgis.com/G6F8XLCl5KtAlZ2G/arcgis/rest/services/Red_Light_Camera_Locations/FeatureServer/0",
+    "format": "arcgis",
+    "license": "Open Data Licence - Ottawa 2.0",
+    "license_url": "https://ottawa.ca/en/city-hall/get-know-your-city/open-data#open-data-licence-version-2-0",
+    "id_fields": [
+      "location_desc",
+      "CAMERA_FACING"
+    ],
+    "direction_field": "CAMERA_FACING",
+    "road_field": "location_desc",
+    "city": "Ottawa"
+  },
+  {
+    "code": "GB_LANCASHIRE_CAMERAS",
+    "country_code": "GB",
+    "name": "Speed Cameras",
+    "source_url": "https://www.arcgis.com/home/item.html?id=c9e1e1d7dc4a460981a8a2b159a2744f",
+    "download_url": "https://services-eu1.arcgis.com/9MmxkLJT84uEwsJx/arcgis/rest/services/Speed_Cameras/FeatureServer/0",
+    "format": "arcgis",
+    "license": "OGL-UK-3.0",
+    "license_url": "https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/",
+    "id_fields": [
+      "CAMERA_REF"
+    ],
+    "camera_type": "fixed_speed",
+    "type_field": "TYPE_OF_CA",
+    "types": {
+      "Speed": "fixed_speed",
+      "Red Light": "red_light",
+      "Red light": "red_light"
+    },
+    "speed_field": "SPEED_LIMI",
+    "mph": true,
+    "road_field": "LOCATION"
+  },
+  {
+    "code": "PT_LISBON_RADARS",
+    "country_code": "PT",
+    "name": "MOB_RadaresPaineis",
+    "source_url": "https://www.arcgis.com/home/item.html?id=d214557e8ca0406894188596d999472c",
+    "download_url": "https://services.arcgis.com/1dSrzEWVQn5kHHyK/arcgis/rest/services/MOB_RadaresPaineis/FeatureServer/0",
+    "format": "arcgis",
+    "license": "CC0-1.0",
+    "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "id_fields": [
+      "GlobalID"
+    ],
+    "camera_type": "fixed_speed",
+    "filter": {
+      "REFNAME": "radar"
+    },
+    "city": "Lisbon"
+  },
+  {
+    "code": "US_TACOMA_CAMERAS",
+    "country_code": "US",
+    "name": "Automated Enforcement Locations (Tacoma)",
+    "source_url": "https://www.arcgis.com/home/item.html?id=ed8eb6a8c87643faa3ea1c6864301c05",
+    "download_url": "https://services3.arcgis.com/SCwJH1pD8WSn5T5y/arcgis/rest/services/AutomatedEnforcementLocations_Tacoma/FeatureServer/0",
+    "format": "arcgis",
+    "license": "City of Tacoma unrestricted open data",
+    "license_url": "https://tacoma.gov/services/tacoma-open-data-maps/",
+    "id_fields": [
+      "globalid"
+    ],
+    "type_field": "cameratype",
+    "types": {
+      "Speed": "fixed_speed",
+      "Red Light": "red_light",
+      "School Zone": "fixed_speed",
+      "School": "fixed_speed",
+      "School Zones": "fixed_speed"
+    },
+    "speed_field": "speed_limit",
+    "direction_field": "direction_of_travel",
+    "road_field": "address",
+    "city": "Tacoma"
+  },
+  {
+    "code": "US_BOULDER_RLC",
+    "country_code": "US",
+    "name": "Red Light Cameras PUBLIC VIEW",
+    "source_url": "https://www.arcgis.com/home/item.html?id=48adb3d13b8e485b88315d4766eaa254",
+    "download_url": "https://services.arcgis.com/ePKBjXrBZ2vEEgWd/arcgis/rest/services/Red_Light_Cameras_PUBLIC_VIEW/FeatureServer/0",
+    "format": "arcgis",
+    "license": "CC0-1.0",
+    "license_url": "https://bouldercolorado.gov/services/open-data",
+    "id_fields": [
+      "Location"
+    ],
+    "road_field": "Location",
+    "city": "Boulder"
+  },
+  {
+    "code": "US_MONTGOMERY_RLC",
+    "country_code": "US",
+    "name": "RedLightCameras_2024",
+    "source_url": "https://www.arcgis.com/home/item.html?id=2d3d037dd1174102ab3a6d9a100f0c9b",
+    "download_url": "https://services2.arcgis.com/gEFt9c3jUfWMXCEP/arcgis/rest/services/RedLightCameras_2024/FeatureServer/0",
+    "format": "arcgis",
+    "license": "Montgomery County license-free open data",
+    "license_url": "https://www.montgomerycountymd.gov/DTS/dataM/index.html",
+    "id_fields": [
+      "LocationsCode"
+    ],
+    "camera_type": "red_light",
+    "mph": true,
+    "road_field": "LocationsDescription",
+    "speed_field": "SpeedLImit",
+    "retired_fields": [
+      "DeactivationDate"
+    ]
+  },
+  {
+    "code": "US_MONTGOMERY_SPEED",
+    "country_code": "US",
+    "name": "SpeedCameras_2024",
+    "source_url": "https://www.arcgis.com/home/item.html?id=71702a6aebe74eea9ac6511d05748791",
+    "download_url": "https://services2.arcgis.com/gEFt9c3jUfWMXCEP/arcgis/rest/services/SpeedCameras_2024/FeatureServer/1",
+    "format": "arcgis",
+    "license": "Montgomery County license-free open data",
+    "license_url": "https://www.montgomerycountymd.gov/DTS/dataM/index.html",
+    "id_fields": [
+      "SiteNum"
+    ],
+    "camera_type": "fixed_speed",
+    "mph": true,
+    "road_field": "Street_Name",
+    "speed_field": "Speed_limit",
+    "active_field": "ActiveYN"
+  },
+  {
+    "code": "LU_PCH_FIXED",
+    "country_code": "LU",
+    "name": "PCH Emplacement des radars fixes",
+    "source_url": "https://data.public.lu/en/datasets/pch-emplacement-des-radars-fixes/",
+    "download_url": "https://data.geoportail.lu/radar",
+    "format": "geojson",
+    "license": "CC0-1.0",
+    "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "id_fields": [
+      "ID"
+    ],
+    "camera_type": "other_enforcement",
+    "road_field": "TRANCON",
+    "candidate_reason": "GeoJSON omits individual speed/red-light/combined equipment classification.",
+    "possible_camera_types": [
+      "fixed_speed",
+      "red_light",
+      "speed_and_red_light"
+    ]
+  },
+  {
+    "code": "US_NOLA_CAMERAS",
+    "country_code": "US",
+    "name": "New Orleans Traffic Camera",
+    "source_url": "https://data.nola.gov/d/te2d-4txp",
+    "download_url": "https://data.nola.gov/resource/te2d-4txp.json?$limit=50000",
+    "format": "json",
+    "license": "CC0-1.0",
+    "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "id_fields": [
+      "camid"
+    ],
+    "camera_type": "fixed_speed",
+    "type_field": "function",
+    "types": {
+      "TFS": "fixed_speed",
+      "TF": "fixed_speed",
+      "RL": "red_light",
+      "RLS": "speed_and_red_light",
+      "RLC": "red_light",
+      "FS": "fixed_speed"
+    },
+    "geometry_field": "the_geom",
+    "direction_field": "dir",
+    "road_field": "camloc",
+    "candidate_reason": "Publisher explicitly warns this dataset may be inaccurate; last data update November 2024. Needs current DPW confirmation."
+  },
+  {
+    "code": "CA_YORK_RLC",
+    "country_code": "CA",
+    "name": "York Region Red Light Camera",
+    "source_url": "https://www.arcgis.com/home/item.html?id=a94a1fdce44f4bc391ec4dfb693e1a95",
+    "download_url": "https://ww8.yorkmaps.ca/arcgis/rest/services/OpenData/Traffic/MapServer/1",
+    "format": "arcgis",
+    "license": "York Region Open Data Licence 1.0",
+    "license_url": "https://www.arcgis.com/sharing/rest/content/items/78cc02388af248c0b7a30eda6adfade0/data",
+    "id_fields": [
+      "AssetID"
+    ],
+    "active_field": "LIFECYCLESTATUS",
+    "road_field": "LOCATIONDESC",
+    "city_field": "MUNICIPALITY"
+  },
+  {
+    "code": "CA_CALGARY_ISD",
+    "country_code": "CA",
+    "name": "Calgary Intersection Safety Cameras",
+    "source_url": "https://www.arcgis.com/home/item.html?id=1d099dff8bc54a0c90ce9c09a3b494cc",
+    "download_url": "https://services1.arcgis.com/AVP60cs0Q9PEA8rH/arcgis/rest/services/IntersectionSafetyCameras_Public/FeatureServer/0",
+    "format": "arcgis",
+    "license": "Open Government Licence - City of Calgary",
+    "license_url": "https://data.calgary.ca/stories/s/u45n-7awa/",
+    "id_fields": [
+      "GlobalID"
+    ],
+    "camera_type": "red_light",
+    "road_field": "Description",
+    "direction_text_field": "Description",
+    "direction_pattern": "Direction: (\\w+)",
+    "city": "Calgary"
+  },
+  {
+    "code": "CY_NAP_CAMERAS",
+    "country_code": "CY",
+    "name": "Cyprus National Access Point traffic enforcement cameras - Elovate",
+    "source_url": "https://www.traffic4cyprus.org.cy/en/dataset/traffic_enforcement_cameras",
+    "download_url": "https://fixcyprus.cy/gnosis/open/api/nap/datasets/traffic_enforcement_cameras/",
+    "format": "datex",
+    "license": "CC-BY-4.0",
+    "license_url": "https://creativecommons.org/licenses/by/4.0/",
+    "id_fields": [
+      "id"
+    ],
+    "camera_type": "other_enforcement",
+    "road_field": "name",
+    "possible_camera_types": [
+      "fixed_speed",
+      "red_light",
+      "speed_and_red_light"
+    ],
+    "candidate_reason": "DATEX feed verifies installed enforcement equipment but omits per-device speed/red-light classification."
+  },
+  {
+    "code": "US_SFMTA_RLC",
+    "country_code": "US",
+    "name": "San Francisco SFMTA Red Light Camera Citations - recent sites",
+    "source_url": "https://data.sf.gov/d/uzmr-g2uc",
+    "download_url": "https://data.sf.gov/resource/uzmr-g2uc.json?%24select=intersection%2Cdirections_enforced%2Cpoint%2Cmax%28month%29+as+latest_month%2Csum%28count%29+as+citations&%24where=month%3E%3D%272025-10-07T00%3A00%3A00%27&%24group=intersection%2Cdirections_enforced%2Cpoint&%24limit=1000",
+    "format": "json",
+    "license": "PDDL-1.0",
+    "license_url": "https://opendatacommons.org/licenses/pddl/1-0/",
+    "id_fields": [
+      "intersection",
+      "directions_enforced"
+    ],
+    "camera_type": "red_light",
+    "geometry_field": "point",
+    "direction_field": "directions_enforced",
+    "road_field": "intersection",
+    "city": "San Francisco"
+  },
+  {
+    "code": "BE_BRUSSELS_REGIONAL",
+    "country_code": "BE",
+    "name": "Brussels Mobility regional speed/combined cameras",
+    "source_url": "https://data.mobility.brussels/fr/info/472bf315-4669-4397-afb9-ccbcb174e664/",
+    "download_url": "https://data.mobility.brussels/geoserver/bm_security/wfs?service=wfs&version=1.1.0&request=GetFeature&typeName=bm_security:speedcameras&outputFormat=json&srsName=EPSG:4326",
+    "format": "geojson",
+    "license": "CC0-1.0",
+    "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "id_fields": [
+      "rid"
+    ],
+    "camera_type": "other_enforcement",
+    "road_field": "street_fr",
+    "city_field": "mu_fr",
+    "direction_field": "direction_fr",
+    "active_field": "active",
+    "possible_camera_types": [
+      "fixed_speed",
+      "speed_and_red_light"
+    ],
+    "candidate_reason": "Publisher supplies coded radar_type but current official code dictionary is empty; individual fixed-speed vs combined type is not guessed.",
+    "count_url": "https://data.mobility.brussels/geoserver/bm_security/wfs?service=wfs&version=1.1.0&request=GetFeature&typeName=bm_security:speedcameras&resultType=hits"
+  },
+  {
+    "code": "BE_BRUSSELS_MUNICIPAL",
+    "country_code": "BE",
+    "name": "Brussels Mobility municipal speed cameras - public subset",
+    "source_url": "https://data.mobility.brussels/fr/info/90113b40-d5c5-42bf-ae2a-e19f5b552087/",
+    "download_url": "https://data.mobility.brussels/geoserver/bm_security/wfs?service=wfs&version=1.1.0&request=GetFeature&typeName=bm_security:speedcameras_municipal&outputFormat=json&srsName=EPSG:4326",
+    "count_url": "https://data.mobility.brussels/geoserver/bm_security/wfs?service=wfs&version=1.1.0&request=GetFeature&typeName=bm_security:speedcameras_municipal&resultType=hits",
+    "format": "geojson",
+    "license": "CC0-1.0",
+    "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "id_fields": [
+      "gid"
+    ],
+    "camera_type": "fixed_speed",
+    "candidate_reason": "Publicly downloadable subset has geometry/feature ID only; current operational status is not specified. Restricted service data is not accessed."
+  },
+  {
+    "code": "ES_MADRID_RADARS",
+    "country_code": "ES",
+    "name": "Ayuntamiento de Madrid — fixed and average-speed radars",
+    "source_url": "https://datos.madrid.es/dataset/300049-0-radares-fijos-moviles",
+    "download_url": "https://datos.madrid.es/dataset/300049-0-radares-fijos-moviles/resource/300049-1-radares-fijos-moviles-csv/download/300049-1-radares-fijos-moviles-csv.csv",
+    "format": "csv",
+    "delimiter": ";",
+    "city": "Madrid",
+    "license": "CC-BY-4.0",
+    "license_url": "https://creativecommons.org/licenses/by/4.0/",
+    "encoding": "utf-8-sig",
+    "id_fields": [
+      "Nº RADAR"
+    ],
+    "latitude_field": "Latitud",
+    "longitude_field": "Longitud",
+    "type_field": "Tipo",
+    "types": {
+      "Fijo": "fixed_speed",
+      "Radar de tramo": "average_speed_section"
+    },
+    "start_latitude_field": "Latitud inicio tramo",
+    "start_longitude_field": "Longitud inicio tramo",
+    "direction_field": "Sentido",
+    "road_field": "Ubicacion",
+    "speed_field": "Velocidad límite"
+  },
+  {
+    "code": "ES_MADRID_RLC",
+    "country_code": "ES",
+    "name": "Ayuntamiento de Madrid — active red-light cameras",
+    "source_url": "https://datos.madrid.es/dataset/205193-0-semaforos-foto-rojo",
+    "download_url": "https://datos.madrid.es/dataset/205193-0-semaforos-foto-rojo/resource/205193-1-semaforos-foto-rojo-csv/download/205193-1-semaforos-foto-rojo-csv.csv",
+    "format": "csv",
+    "delimiter": ";",
+    "city": "Madrid",
+    "license": "CC-BY-4.0",
+    "license_url": "https://creativecommons.org/licenses/by/4.0/",
+    "encoding": "cp1252",
+    "id_fields": [
+      "id"
+    ],
+    "latitude_field": "latitud",
+    "longitude_field": "longitud",
+    "camera_type": "red_light",
+    "active_field": "activo",
+    "road_field": "nombre",
+    "activation_date_field": "fecha_denuncia",
+    "source_snapshot_date": "2025-12-09; catalog last updated 2026-09-09"
+  },
+  {
+    "code": "US_SFMTA_SPEED",
+    "country_code": "US",
+    "name": "San Francisco SFMTA Automated Speed Enforcement - recent camera sites",
+    "source_url": "https://data.sf.gov/d/d5uh-bk84",
+    "download_url": "https://data.sf.gov/resource/d5uh-bk84.json?%24select=site_id%2Clocation%2Cenforcement_type%2Cposted_speed%2Cpoint%2Cmax%28date%29+as+latest_date%2Csum%28issued_citations%29+as+citations&%24where=date%3E%3D%272025-10-07T00%3A00%3A00%27+AND+enforcement_type%3D%27FIXED+SPEED%27&%24group=site_id%2Clocation%2Cenforcement_type%2Cposted_speed%2Cpoint&%24limit=1000",
+    "format": "json",
+    "license": "PDDL-1.0",
+    "license_url": "https://opendatacommons.org/licenses/pddl/1-0/",
+    "id_fields": [
+      "site_id"
+    ],
+    "camera_type": "fixed_speed",
+    "geometry_field": "point",
+    "direction_pattern": "^(NB|SB|EB|WB)\\b",
+    "direction_text_field": "location",
+    "road_field": "location",
+    "speed_field": "posted_speed",
+    "mph": true,
+    "city": "San Francisco"
+  }
+]

@@ -10,7 +10,7 @@ from bootstrap_cameras import save
 ROOT=Path(__file__).resolve().parents[1]
 URL='https://ydgzsdlwnurychkbgsmn.supabase.co/functions/v1/camera-export'
 
-def main():
+def main(report_base=None):
     with connect() as conn:
         coverage={r[0]:r[1] for r in conn.execute('select country_code,total from public.camera_country_coverage')}
         total,active,low,invalid,sections=conn.execute("""select count(*),count(*) filter(where active),
@@ -64,7 +64,7 @@ def main():
             'sections_missing_endpoints':sections,'duplicate_canonical_ids':duplicates,'same_feed_lane_pairs_merged':same_feed_merges,'published_geography_checked':geography_checked,'legacy_boundary_exceptions':legacy_boundary_exceptions,'sources':sources[0],'official_sources':sources[1],
             'osm_only_active':osm_only,'europe_active':sum(n for c,n in coverage.items() if c not in ('US','CA')),
             'usa_active':coverage.get('US',0),'canada_active':coverage.get('CA',0),'checks':checks}
-    save(ROOT/'master-db/bootstrap/reports/production-verification.json',report)
+    save((report_base or ROOT/'master-db/bootstrap/reports')/'production-verification.json',report)
     print('Verified production:',active,'active;',total,'stored;',len(checks),'country feeds')
 
 if __name__=='__main__':main()

@@ -45,5 +45,10 @@ export const COUNTRY_NAMES = {
   "SM": "San Marino",
   "VA": "Vatican City",
   "US": "USA",
-  "CA": "Canada"
+  "CA": "Canada",
+  "RU": "Russia",
+  "BY": "Belarus",
+  "GE": "Georgia",
+  "AM": "Armenia",
+  "AZ": "Azerbaijan"
 };

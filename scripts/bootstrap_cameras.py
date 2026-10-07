@@ -173,7 +173,7 @@ def official_records(envelope, errors=None):
             if errors is not None:errors.append({'source_code':source['code'],'row_index':index,'error_type':type(exc).__name__,'reason':'Malformed source record; raw retained, other rows continue'})
             continue
 
-def osm_records(data,code,primary_nodes=None):
+def osm_records(data,code,primary_nodes=None,primary_relations=None):
     meta=data['_bootstrap'];retrieved=meta['retrieved_at']
     source=dict(code='OSM_'+code,country_code=code,name='OpenStreetMap contributors ('+code+')',source_type='openstreetmap',
                 license='ODbL-1.0',license_url='https://opendatacommons.org/licenses/odbl/1-0/',
@@ -184,41 +184,60 @@ def osm_records(data,code,primary_nodes=None):
         key=(e['type'],e['id'])
         if key not in elements or len(e)>len(elements[key]):elements[key]=e
     for key,e in list(elements.items()):
-        current=(primary_nodes or {}).get(e['id']) if e['type']=='node' else None
-        if current and current.get('version',0)>=e.get('version',0):elements[key]=current
+        current=((primary_nodes or {}) if e['type']=='node' else (primary_relations or {}) if e['type']=='relation' else {}).get(e['id'])
+        if current and (current.get('visible') is False or current.get('version',0)>=e.get('version',0)):elements[key]=current
+    # A refreshed relation may have new, explicitly ordered endpoints/devices.
+    for e in list(elements.values()):
+        if e['type']=='relation' and e.get('visible') is not False:
+            for m in e.get('members',[]):
+                if m['type']=='node' and m.get('role') in ('device','from','to') and m['ref'] in (primary_nodes or {}):
+                    elements[('node',m['ref'])]=primary_nodes[m['ref']]
     device_tags={}; device_relations={}; sections=[]
     def point(e):
-        if not e:return None
+        if not e or e.get('visible') is False:return None
         if 'lat' in e:return e['lat'],e['lon']
         if e.get('center'):return e['center']['lat'],e['center']['lon']
         return None
     for key,e in elements.items():
         tags=e.get('tags',{})
-        if e['type']!='relation' or tags.get('type')!='enforcement':continue
+        relation_mode=tags.get('enforcement') or (tags.get('type') if tags.get('type') in ('average_speed','section_control') else None)
+        if e['type']!='relation' or not (tags.get('type')=='enforcement' or tags.get('type') in ('average_speed','section_control') or (not tags.get('type') and relation_mode)):continue
         devices=[m for m in e.get('members',[]) if m.get('role')=='device']
         for member in devices:
-            dkey=(member['type'],member['ref']);device_tags.setdefault(dkey,{}).update(tags);device_relations.setdefault(dkey,[]).append(e['id'])
-        if tags.get('enforcement') in ('average_speed','section_control'):
+            dkey=(member['type'],member['ref']);inherited=device_tags.setdefault(dkey,{})
+            prior_mode=inherited.get('enforcement');inherited.update(tags)
+            if prior_mode and tags.get('enforcement') and prior_mode!=tags['enforcement']:
+                inherited['enforcement']=';'.join(sorted(set(prior_mode.split(';'))|set(tags['enforcement'].split(';'))))
+            device_relations.setdefault(dkey,[]).append(e['id'])
+        if set((relation_mode or '').split(';')) & {'average_speed','section_control'}:
             endpoints={}
             for role in ('from','to'):
                 nodes=[elements.get((m['type'],m['ref'])) for m in e.get('members',[]) if m.get('role')==role and m['type']=='node']
                 if len(nodes)==1 and point(nodes[0]):endpoints[role]=point(nodes[0])
             if len(endpoints)==2:
-                a,b=endpoints['from'],endpoints['to'];r=base_record(source,'relation/'+str(e['id']),a[0],a[1],'average_speed_section',{'tags':tags,'members':e.get('members'),'osm_relation':e['id']},source_updated_at=e.get('timestamp'))
+                a,b=endpoints['from'],endpoints['to'];r=base_record(source,'relation/'+str(e['id']),a[0],a[1],'average_speed_section',{'tags':tags,'members':e.get('members'),'osm_relation':e['id'],'osm_version':e.get('version')},source_updated_at=e.get('timestamp'))
                 r.update(end_latitude=b[0],end_longitude=b[1],direction=direction(tags.get('direction')),direction_raw=tags.get('direction'),speed_limit=speed(tags.get('maxspeed')),road_ref=tags.get('ref'),road_name=tags.get('name'))
                 r['camera_sources'][0]['source_url']='https://www.openstreetmap.org/relation/'+str(e['id'])
+                if tags.get('disused:highway') or tags.get('disused')=='yes' or tags.get('operational_status') in ('inactive','removed') or tags.get('construction')=='yes':r['status']='candidate'
                 sections.append(r)
     yield from sections
     for key,e in elements.items():
         tags={**device_tags.get(key,{}),**e.get('tags',{})};coords=point(e)
         enforcement=tags.get('enforcement','')
+        alias=tags.get('camera:enforcement') or tags.get('camera:type')
+        if not enforcement:
+            if alias in ('speed','red_light','average_speed','section_control'):enforcement=alias
+            elif tags.get('traffic_signals:red_light_camera')=='yes' or tags.get('red_light_camera')=='yes':enforcement='red_light'
+            elif tags.get('speed_camera')=='yes' or tags.get('surveillance:type')=='speed_camera':enforcement='speed'
         if not coords or (tags.get('highway')!='speed_camera' and key not in device_tags and not enforcement):continue
-        if e['type']=='relation' and tags.get('type')=='enforcement':continue # devices emitted once; sections separately
-        if enforcement in ('average_speed','section_control'):
+        if e['type']=='relation' and (tags.get('type') in ('enforcement','average_speed','section_control') or (not tags.get('type') and enforcement)):continue # devices emitted once; sections separately
+        modes=set(enforcement.split(';'));is_red=bool(modes & {'red_light','redlight','red_light_camera','traffic_signals','traffic_lights'}) or 'red' in enforcement
+        is_speed=tags.get('highway')=='speed_camera' or bool(modes & {'speed','maxspeed','speed_camera'})
+        if modes & {'average_speed','section_control'}:
             typ='other_enforcement' # unresolved endpoint roles are not invented
-        elif ('red' in enforcement or enforcement in ('traffic_signals','traffic_lights')) and tags.get('highway')=='speed_camera':typ='speed_and_red_light'
-        elif 'red' in enforcement or enforcement in ('traffic_signals','traffic_lights'):typ='red_light'
-        elif tags.get('highway')=='speed_camera' or enforcement in ('speed','maxspeed'):typ='fixed_speed'
+        elif is_red and is_speed:typ='speed_and_red_light'
+        elif is_red:typ='red_light'
+        elif is_speed:typ='fixed_speed'
         else:typ='other_enforcement'
         external=e['type']+'/'+str(e['id']);raw={'tags':tags,'node_tags':e.get('tags',{}),'enforcement_relations':[{'id':rid,'version':elements[('relation',rid)].get('version'),'timestamp':elements[('relation',rid)].get('timestamp'),'tags':elements[('relation',rid)].get('tags',{})} for rid in device_relations.get(key,[])],'osm_id':e['id'],'osm_type':e['type'],'osm_version':e.get('version'),'osm_last_modified':e.get('timestamp'),'relations':device_relations.get(key,[])}
         r=base_record({**source,'retrieved_at':e.get('_observed_at') or retrieved},external,coords[0],coords[1],typ,raw,source_updated_at=e.get('timestamp'))
@@ -226,7 +245,7 @@ def osm_records(data,code,primary_nodes=None):
         r.update(direction=direction(rawdir),direction_raw=rawdir,speed_limit=speed(tags.get('maxspeed')),road_name=tags.get('addr:street') or tags.get('name'),road_ref=tags.get('ref'),city=tags.get('addr:city'),region=tags.get('addr:state'))
         r['camera_sources'][0]['source_url']='https://www.openstreetmap.org/'+external
         if tags.get('camera:type')=='mobile' or tags.get('mobile')=='yes' or tags.get('disused:highway') or tags.get('disused')=='yes' or tags.get('operational_status') in ('inactive','removed') or tags.get('construction')=='yes':r['status']='candidate'
-        if enforcement in ('average_speed','section_control'):r.update(confidence='LOW',status='review')
+        if modes & {'average_speed','section_control'}:r.update(confidence='LOW',status='review')
         yield r
 
 def compatible(a,b):
