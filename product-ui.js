@@ -17,11 +17,13 @@ export function Icon({ name, size = 20, color = "#46617a" }) {
   );
 }
 export function CameraMap({
+  height,
   points,
   coords,
   copy,
   driverCopy,
   language,
+  warning,
   onLocate,
   onReport,
 }) {
@@ -67,7 +69,7 @@ export function CameraMap({
     });
   }
   return (
-    <View style={m.frame}>
+    <View style={[m.frame, height && { height, flex: 0 }]}>
       <MapView
         ref={map}
         style={StyleSheet.absoluteFill}
@@ -107,7 +109,7 @@ export function CameraMap({
               ) : (
                 <Icon
                   name={CONTROL_ICONS[cluster.items[0].type] || "camera"}
-                  color="#215db5"
+                  color="#007aff"
                   size={18}
                 />
               )}
@@ -115,10 +117,41 @@ export function CameraMap({
           </Marker>
         ))}
       </MapView>
-      <View style={m.hint}>
-        <Icon name="layers" size={15} />
-        <Text style={m.hintText}>{copy.mapHint}</Text>
-      </View>
+      {warning ? (
+        <View
+          style={[
+            m.warning,
+            warning.over && {
+              backgroundColor: "#ffe3df",
+              borderColor: "#f04438",
+            },
+          ]}
+        >
+          <View style={m.warningIcon}>
+            <Icon
+              name={CONTROL_ICONS[warning.camera.type] || "camera"}
+              color={warning.over ? "#d92d20" : "#182230"}
+              size={24}
+            />
+          </View>
+          <View style={{ flex: 1 }}>
+            <Text style={m.warningTitle}>
+              {drivingLabel(warning.camera, driverCopy)}
+            </Text>
+            <Text style={m.warningDistance}>
+              {warning.distance} {driverCopy.meters}
+              {warning.camera.speed_limit > 0
+                ? ` · ${driverCopy.limit} ${warning.camera.speed_limit}`
+                : ""}
+            </Text>
+          </View>
+        </View>
+      ) : (
+        <View style={m.hint}>
+          <Icon name="layers" size={15} />
+          <Text style={m.hintText}>{copy.mapHint}</Text>
+        </View>
+      )}
       <View style={m.controls}>
         <Pressable
           accessibilityRole="button"
@@ -164,7 +197,9 @@ export function CameraMap({
           <Text style={m.title}>
             {coords
               ? nearest && nearest.distance <= 5000
-                ? `${(nearest.distance / 1000).toLocaleString(language, { maximumFractionDigits: 1 })} ${driverCopy.km}`
+                ? nearest.distance < 1000
+                  ? `${Math.round(nearest.distance)} ${driverCopy.meters}`
+                  : `${(nearest.distance / 1000).toLocaleString(language, { maximumFractionDigits: 1 })} ${driverCopy.km}`
                 : copy.calm
               : copy.enableGPS}
           </Text>
@@ -195,13 +230,42 @@ const m = StyleSheet.create({
     borderColor: "#aac4e5",
   },
   cluster: {
-    backgroundColor: "#215db5",
+    backgroundColor: "#007aff",
     borderColor: "#fff",
     width: 42,
     height: 42,
     borderRadius: 21,
   },
   clusterNumber: { color: "#fff", fontSize: 15, fontWeight: "800" },
+  warning: {
+    position: "absolute",
+    top: 16,
+    left: 16,
+    right: 16,
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 12,
+    backgroundColor: "#fff0ba",
+    borderWidth: 1,
+    borderColor: "#f8ce5c",
+    borderRadius: 18,
+    padding: 14,
+  },
+  warningIcon: {
+    width: 44,
+    height: 44,
+    borderRadius: 12,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  warningTitle: { fontSize: 16, fontWeight: "700", color: "#182230" },
+  warningDistance: {
+    fontSize: 20,
+    fontWeight: "800",
+    color: "#182230",
+    marginTop: 4,
+  },
   hint: {
     position: "absolute",
     top: 16,
@@ -215,7 +279,7 @@ const m = StyleSheet.create({
     padding: 12,
   },
   hintText: { fontSize: 12, color: "#46617a", flex: 1 },
-  controls: { position: "absolute", right: 16, top: 78, gap: 10 },
+  controls: { position: "absolute", right: 16, top: 128, gap: 10 },
   control: {
     width: 48,
     height: 48,

@@ -43,6 +43,11 @@ import {
   bearingBetween,
 } from "./driver-engine";
 import { DRIVER_COPY, drivingLabel } from "./driver-copy";
+import {
+  REFERENCE_COPY,
+  filterCountries,
+  filterHistory,
+} from "./reference-presentation";
 import { Icon, CameraMap } from "./product-ui";
 import {
   PRODUCT_COPY,
@@ -795,7 +800,7 @@ export default function App() {
           s.dataCard,
           selectedCountry === code && {
             borderColor: "#2685e3",
-            borderWidth: 2,
+            borderWidth: 1,
           },
         ]}
       >
@@ -811,7 +816,7 @@ export default function App() {
           }
           style={{ flex: 1, paddingVertical: 6 }}
         >
-          <Text style={s.dataLabel}>{item.label}</Text>
+          <Text style={[s.dataLabel, { fontSize: 16 }]}>{item.label}</Text>
           <Text style={s.note}>
             {item.publishedCount.toLocaleString(settings.language)}{" "}
             {offlineText.cameras} ·{" "}
@@ -829,16 +834,31 @@ export default function App() {
           )}
           {!!update && <Text style={s.note}>{offlineText.update}</Text>}
         </Pressable>
+        <Pressable
+          accessibilityRole="button"
+          accessibilityLabel={
+            item.label +
+            " · " +
+            (REFERENCE_COPY[settings.language] || REFERENCE_COPY.ru).details
+          }
+          onPress={() => setCountryDetail(item)}
+          style={s.countryDetailButton}
+        >
+          <Icon name="chevron-right" color="#007aff" size={20} />
+        </Pressable>
         {(!saved || update) && (
           <Pressable
             accessibilityRole="button"
             disabled={downloading}
+            accessibilityLabel={`${update ? dcopy.update : dcopy.download}: ${item.label}`}
             onPress={() => refreshRemoteData(false, code)}
             style={s.countryDownload}
           >
-            <Text style={s.countryDownloadText}>
-              {update ? dcopy.update : dcopy.download}
-            </Text>
+            <Icon
+              name={update ? "refresh-cw" : "download-cloud"}
+              color="#007aff"
+              size={22}
+            />
           </Pressable>
         )}
         <Pressable
@@ -866,7 +886,11 @@ export default function App() {
             },
           ]}
         >
-          <Text style={{ fontSize: 24 }}>{checked ? "☑" : "☐"}</Text>
+          <Icon
+            name={checked ? "check-square" : "square"}
+            color={checked ? "#007aff" : "#9ba7b7"}
+            size={21}
+          />
         </Pressable>
       </View>
     );
@@ -1201,10 +1225,34 @@ export default function App() {
       return null;
     }
   }
+  const [countrySearch, setCountrySearch] = useState("");
+  const [countryFilter, setCountryFilter] = useState("all");
+  const [countryDetail, setCountryDetail] = useState(null);
+  const [historyPeriod, setHistoryPeriod] = useState(30);
+  const [viewportHeight, setViewportHeight] = useState(650);
+  const [headerHeight, setHeaderHeight] = useState(44);
+  const ui = REFERENCE_COPY[settings.language] || REFERENCE_COPY.ru;
+  const visibleHistory = filterHistory(history, historyPeriod);
+  const listedCountries = filterCountries(
+    countryLists,
+    countrySearch,
+    countryFilter,
+    settings.language,
+  );
+  const detailFeed = countryDetail
+    ? remoteFeeds[countryDetail.country_code]
+    : null;
+  const detailSize =
+    countryDetail &&
+    (countryDetail.size_bytes ||
+      countryDetail.export_size_bytes ||
+      countryDetail.byte_size ||
+      countryDetail.bytes);
   const nav = [
     ["drive", "navigation", dcopy.drive],
     ["map", "map", t.map],
     ["offline", "globe", pcopy.countries],
+    ["history", "clock", t.history],
     ["settings", "settings", dcopy.settings],
   ];
 
@@ -1212,6 +1260,8 @@ export default function App() {
     <SafeAreaView style={s.safe}>
       <StatusBar style="dark" />
       <ScrollView
+        style={{ flex: 1 }}
+        onLayout={(event) => setViewportHeight(event.nativeEvent.layout.height)}
         scrollEnabled={tab !== "map"}
         contentContainerStyle={[
           s.container,
@@ -1220,19 +1270,28 @@ export default function App() {
         ]}
         showsVerticalScrollIndicator={false}
       >
-        <View style={s.topBar}>
-          <Text style={s.brand}>
+        <View
+          style={s.topBar}
+          onLayout={(event) => setHeaderHeight(event.nativeEvent.layout.height)}
+        >
+          <Text
+            style={[s.brand, { flex: 1 }, tab === "drive" && { fontSize: 26 }]}
+          >
             {tab === "drive"
               ? "CamAlert"
               : tab === "offline"
-                ? dcopy.offline
+                ? pcopy.countries
                 : tab === "settings"
                   ? dcopy.settings
-                  : t.map}
+                  : tab === "history"
+                    ? t.history
+                    : t.map}
           </Text>
-          <Text style={s.countryPill}>
-            {countryLabel(selectedCountry, settings.language)}
-          </Text>
+          {["drive", "map"].includes(tab) && (
+            <Text style={s.countryPill}>
+              {countryLabel(selectedCountry, settings.language)}
+            </Text>
+          )}
           <Pressable
             accessibilityRole="button"
             accessibilityLabel={dcopy.settings}
@@ -1313,10 +1372,21 @@ export default function App() {
                   overLimit && s.driverAlertOver,
                 ]}
               >
-                <Icon
-                  name={CONTROL_ICONS[shownCam.type] || "camera"}
-                  size={28}
-                />
+                <View
+                  style={[
+                    s.warningBadge,
+                    overLimit && {
+                      backgroundColor: "#fff1f0",
+                      borderColor: "#f04438",
+                    },
+                  ]}
+                >
+                  <Icon
+                    name={CONTROL_ICONS[shownCam.type] || "camera"}
+                    size={34}
+                    color={overLimit ? "#f04438" : "#007aff"}
+                  />
+                </View>
                 <Text style={s.alertTitle}>
                   {drivingLabel(shownCam, dcopy)}
                 </Text>
@@ -1381,20 +1451,22 @@ export default function App() {
                 </View>
               </View>
             )}
-            <View style={s.datasetMini}>
-              <View style={s.datasetBadge}>
-                <Icon name="database" />
+            {!shownCam && !averageTrip && (
+              <View style={s.datasetMini}>
+                <View style={s.datasetBadge}>
+                  <Icon name="database" />
+                </View>
+                <View style={{ flex: 1 }}>
+                  <Text style={s.datasetCount}>
+                    {datasetCount.toLocaleString(settings.language)}{" "}
+                    {pcopy.cameraCount}
+                  </Text>
+                  <Text style={s.datasetDate}>
+                    {datasetDate(publishedDate, settings.language, pcopy)}
+                  </Text>
+                </View>
               </View>
-              <View style={{ flex: 1 }}>
-                <Text style={s.datasetCount}>
-                  {datasetCount.toLocaleString(settings.language)}{" "}
-                  {pcopy.cameraCount}
-                </Text>
-                <Text style={s.datasetDate}>
-                  {datasetDate(publishedDate, settings.language, pcopy)}
-                </Text>
-              </View>
-            </View>
+            )}
             <View style={s.tripActions}>
               <Pressable
                 accessibilityRole="button"
@@ -1402,7 +1474,7 @@ export default function App() {
                 style={[s.tripButton, active && s.tripStop]}
               >
                 <Text
-                  style={[s.tripButtonText, active && { color: "#152535" }]}
+                  style={[s.tripButtonText, active && { color: "#101828" }]}
                 >
                   {active ? t.stop : t.start}
                 </Text>
@@ -1413,7 +1485,7 @@ export default function App() {
                 onPress={() => setModal("add")}
                 style={s.addButton}
               >
-                <Icon name="plus" color="#215db5" size={20} />
+                <Icon name="plus" color="#007aff" size={20} />
                 <Text style={s.reportButtonText}>{pcopy.report}</Text>
               </Pressable>
             </View>
@@ -1422,11 +1494,17 @@ export default function App() {
 
         {tab === "map" && (
           <CameraMap
+            height={Math.max(240, viewportHeight - headerHeight - 58)}
             points={mapPoints}
             coords={coords}
             copy={pcopy}
             driverCopy={dcopy}
             language={settings.language}
+            warning={
+              shownCam
+                ? { camera: shownCam, distance: shownDistance, over: overLimit }
+                : null
+            }
             onLocate={locateOnMap}
             onReport={() => setModal("add")}
           />
@@ -1462,51 +1540,146 @@ export default function App() {
         )}
 
         {tab === "history" && (
-          <View style={s.list}>
-            {history.map((h) => (
+          <View style={{ gap: 16 }}>
+            <View style={s.segment}>
+              {[1, 7, 30].map((days) => (
+                <Pressable
+                  key={days}
+                  accessibilityRole="button"
+                  accessibilityState={{ selected: historyPeriod === days }}
+                  onPress={() => setHistoryPeriod(days)}
+                  style={[
+                    s.segmentItem,
+                    historyPeriod === days && s.segmentActive,
+                  ]}
+                >
+                  <Text
+                    style={[
+                      s.segmentText,
+                      historyPeriod === days && s.segmentTextActive,
+                    ]}
+                  >
+                    {days === 1 ? ui.today : days === 7 ? ui.week : ui.month}
+                  </Text>
+                </Pressable>
+              ))}
+            </View>
+            <View style={s.row}>
+              <View style={s.stat}>
+                <Text style={s.listSub}>{ui.alerts}</Text>
+                <Text style={s.summaryNumber}>{visibleHistory.length}</Text>
+              </View>
+              <View style={s.stat}>
+                <Text style={s.listSub}>{ui.savedCountries}</Text>
+                <Text style={s.summaryNumber}>
+                  {countryLists.downloaded.length}
+                </Text>
+              </View>
+            </View>
+            <Text style={s.sectionTitle}>{ui.recent}</Text>
+            {visibleHistory.map((h) => (
               <View key={h.id} style={s.listItem}>
+                <View style={s.timelineIcon}>
+                  <Icon name="camera" color="#007aff" />
+                </View>
                 <View style={{ flex: 1 }}>
-                  <Text style={s.listTitle}>{h.location}</Text>
+                  <Text style={s.listTitle}>{h.location || dcopy.camera}</Text>
                   <Text style={s.listSub}>
-                    {new Date(h.when).toLocaleString()} · {h.speed} км/ч
+                    {new Date(h.when).toLocaleString(settings.language)} ·{" "}
+                    {h.speed} {dcopy.unit}
                   </Text>
                 </View>
-                <Text style={s.listDistance}>{h.limit}</Text>
+                {h.limit > 0 && <Text style={s.historyLimit}>{h.limit}</Text>}
               </View>
             ))}
-            {!history.length && (
-              <Text style={s.empty}>Предупреждений пока не было.</Text>
+            {!visibleHistory.length && (
+              <View style={s.emptyCard}>
+                <Icon name="clock" size={32} color="#007aff" />
+                <Text style={s.sectionTitle}>{ui.noHistory}</Text>
+                <Text style={s.emptyCopy}>{ui.historyHint}</Text>
+              </View>
             )}
           </View>
         )}
 
         {tab === "offline" && (
-          <View style={s.settingsCard}>
+          <View style={s.countryScreen}>
+            <View style={s.searchBox}>
+              <Icon name="search" size={18} />
+              <TextInput
+                accessibilityLabel={ui.search}
+                placeholder={ui.search}
+                value={countrySearch}
+                onChangeText={setCountrySearch}
+                style={s.searchInput}
+                placeholderTextColor="#8c96a5"
+              />
+            </View>
+            <View style={s.segment}>
+              {[
+                ["all", ui.all],
+                ["downloaded", offlineText.downloaded],
+                ["popular", ui.popular],
+              ].map(([key, label]) => (
+                <Pressable
+                  key={key}
+                  accessibilityRole="button"
+                  accessibilityState={{ selected: countryFilter === key }}
+                  onPress={() => setCountryFilter(key)}
+                  style={[
+                    s.segmentItem,
+                    countryFilter === key && s.segmentActive,
+                  ]}
+                >
+                  <Text
+                    style={[
+                      s.segmentText,
+                      countryFilter === key && s.segmentTextActive,
+                    ]}
+                  >
+                    {label}
+                  </Text>
+                </Pressable>
+              ))}
+            </View>
             {!remoteFeeds[selectedCountry] &&
               !["UA", "PL"].includes(selectedCountry) && (
                 <Text style={s.note}>{offlineText.empty}</Text>
               )}
-            <Text style={s.note}>{offlineText.hint}</Text>
-            <Text style={s.note}>{dcopy.maps}</Text>
+            <Text style={s.note}>{ui.countryHint}</Text>
             <View>
               <Text style={s.sectionTitle}>{offlineText.downloaded}</Text>
-              {!countryLists.downloaded.length && (
+              {!listedCountries.downloaded.length && (
                 <Text style={s.note}>{offlineText.none}</Text>
               )}
-              {countryLists.downloaded.map(renderCountryRow)}
-              <Text style={s.sectionTitle}>{offlineText.available}</Text>
-              {countryLists.available.map(renderCountryRow)}
-            </View>
-            {!!countryLists.territories.length && (
-              <Pressable
-                onPress={() => setModal("territories")}
-                style={s.smallButton}
-              >
-                <Text style={s.smallButtonText}>
-                  {offlineText.territories} ({countryLists.territories.length})
+              {listedCountries.downloaded.map(renderCountryRow)}
+              {countryFilter !== "downloaded" && (
+                <Text style={s.sectionTitle}>
+                  {countryFilter === "popular"
+                    ? ui.popular
+                    : offlineText.available}{" "}
+                  ({listedCountries.available.length})
                 </Text>
-              </Pressable>
-            )}
+              )}
+              {listedCountries.available.map(renderCountryRow)}
+              {!!countrySearch &&
+                !listedCountries.downloaded.length &&
+                !listedCountries.available.length && (
+                  <Text style={s.empty}>{ui.noResults}</Text>
+                )}
+            </View>
+            {countryFilter !== "downloaded" &&
+              !!countryLists.territories.length && (
+                <Pressable
+                  onPress={() => setModal("territories")}
+                  style={s.smallButton}
+                >
+                  <Text style={s.smallButtonText}>
+                    {offlineText.territories} ({countryLists.territories.length}
+                    )
+                  </Text>
+                </Pressable>
+              )}
             <Pressable
               disabled={downloading || !downloadSelection.length}
               onPress={downloadCountries}
@@ -1519,6 +1692,12 @@ export default function App() {
                 {offlineText.download} ({downloadSelection.length})
               </Text>
             </Pressable>
+            <View style={s.offlineNotice}>
+              <Icon name="wifi-off" color="#007aff" />
+              <Text style={[s.note, { flex: 1 }]}>
+                {offlineText.explanation}
+              </Text>
+            </View>
             {!!downloadStatus && (
               <Text accessibilityLiveRegion="polite" style={s.note}>
                 {downloadStatus}
@@ -1528,17 +1707,42 @@ export default function App() {
         )}
         {tab === "settings" && (
           <View style={s.settingsCard}>
+            <View style={s.profileCard}>
+              <View style={s.timelineIcon}>
+                <Icon name="shield" color="#007aff" size={26} />
+              </View>
+              <View>
+                <Text style={s.dataLabel}>CamAlert</Text>
+                <Text style={s.listSub}>{ui.driverAssistant}</Text>
+              </View>
+            </View>
+            <Text style={s.sectionTitle}>{ui.driving}</Text>
             <Pressable onPress={() => setTab("offline")} style={s.dataCard}>
-              <Text style={s.dataLabel}>{dcopy.offline} →</Text>
+              <Icon name="download-cloud" color="#007aff" />
+              <Text style={[s.dataLabel, { flex: 1, fontSize: 16 }]}>
+                {dcopy.offline}
+              </Text>
+              <Icon name="chevron-right" size={18} />
             </Pressable>
             <Pressable onPress={() => setTab("nearby")} style={s.dataCard}>
-              <Text style={s.dataLabel}>{t.nearby} →</Text>
+              <Icon name="map-pin" color="#007aff" />
+              <Text style={[s.dataLabel, { flex: 1, fontSize: 16 }]}>
+                {t.nearby}
+              </Text>
+              <Icon name="chevron-right" size={18} />
             </Pressable>
             <Pressable onPress={() => setTab("history")} style={s.dataCard}>
-              <Text style={s.dataLabel}>{t.history} →</Text>
+              <Icon name="clock" color="#007aff" />
+              <Text style={[s.dataLabel, { flex: 1, fontSize: 16 }]}>
+                {t.history}
+              </Text>
+              <Icon name="chevron-right" size={18} />
             </Pressable>
             <View style={s.backgroundCard}>
-              <Text style={[s.dataLabel, { flex: 1 }]}>{dcopy.background}</Text>
+              <Icon name="moon" color="#007aff" />
+              <Text style={[s.dataLabel, { flex: 1, fontSize: 14 }]}>
+                {dcopy.background}
+              </Text>
               <Switch
                 value={backgroundEnabled}
                 onValueChange={() =>
@@ -1570,16 +1774,19 @@ export default function App() {
               ))}
             </View>
             <SettingSwitch
+              icon="volume-2"
               label={t.voiceLabel}
               value={settings.voice}
               onChange={(v) => setSettings({ ...settings, voice: v })}
             />
             <SettingSwitch
+              icon="smartphone"
               label={t.vibrationLabel}
               value={settings.vibration}
               onChange={(v) => setSettings({ ...settings, vibration: v })}
             />
             <SettingSwitch
+              icon="navigation"
               label={t.smartDistanceLabel}
               value={settings.smartDistance}
               onChange={(v) => setSettings({ ...settings, smartDistance: v })}
@@ -1620,13 +1827,7 @@ export default function App() {
               </Pressable>
             </View>
 
-            <Text style={s.sectionTitle}>{t.coverage}</Text>
             <View style={s.coverageCard}>
-              {countryLists.coverage.map((item) => (
-                <Text key={item.country_code} style={s.coverageLine}>
-                  {item.label}: {item.publishedCount}
-                </Text>
-              ))}
               <Pressable
                 onPress={() =>
                   Linking.openURL("https://www.openstreetmap.org/copyright")
@@ -1653,18 +1854,20 @@ export default function App() {
         {nav.map(([key, icon, label]) => (
           <Pressable
             key={key}
+            accessibilityRole="tab"
+            accessibilityState={{ selected: tab === key }}
             onPress={() => setTab(key)}
             style={[s.navItem, tab === key && s.navActive]}
           >
             <Icon
               name={icon}
               size={20}
-              color={tab === key ? "#215db5" : "#8292a2"}
+              color={tab === key ? "#007aff" : "#8292a2"}
             />
             <Text
               style={[
                 s.navLabel,
-                tab === key && { color: "#215db5", fontWeight: "700" },
+                tab === key && { color: "#007aff", fontWeight: "700" },
               ]}
             >
               {label}
@@ -1673,6 +1876,103 @@ export default function App() {
         ))}
       </View>
 
+      <Modal
+        visible={!!countryDetail}
+        animationType="slide"
+        onRequestClose={() => setCountryDetail(null)}
+      >
+        <SafeAreaView style={s.safe}>
+          <ScrollView contentContainerStyle={s.container}>
+            <Pressable
+              accessibilityRole="button"
+              onPress={() => setCountryDetail(null)}
+              style={s.detailBack}
+            >
+              <Icon name="chevron-left" color="#007aff" />
+              <Text style={{ color: "#007aff", fontSize: 17 }}>
+                {pcopy.countries}
+              </Text>
+            </Pressable>
+            <View style={s.detailHero}>
+              <Text style={s.detailFlag}>
+                {countryDetail?.label?.split(" ")[0]}
+              </Text>
+              <Text style={s.detailName}>
+                {countryDetail?.label?.split(" ").slice(1).join(" ")}
+              </Text>
+              <Text style={s.summaryNumber}>
+                {countryDetail?.publishedCount?.toLocaleString(
+                  settings.language,
+                )}
+              </Text>
+              <Text style={s.listSub}>{ui.published}</Text>
+            </View>
+            <Pressable
+              accessibilityRole="button"
+              disabled={downloading}
+              onPress={() =>
+                countryDetail &&
+                refreshRemoteData(false, countryDetail.country_code)
+              }
+              style={[
+                s.tripButton,
+                { flex: 0, opacity: downloading ? 0.6 : 1 },
+              ]}
+            >
+              <Text style={s.tripButtonText}>
+                {downloading
+                  ? offlineText.busy
+                  : detailFeed
+                    ? dcopy.update
+                    : dcopy.download}
+              </Text>
+            </Pressable>
+            {detailFeed && (
+              <View style={s.offlineNotice}>
+                <Icon name="check-circle" color="#007aff" />
+                <Text style={s.dataLabel}>{dcopy.saved}</Text>
+              </View>
+            )}
+            {!!downloadStatus && (
+              <Text accessibilityLiveRegion="polite" style={s.note}>
+                {downloadStatus}
+              </Text>
+            )}
+            <View style={s.settingsCard}>
+              <View style={s.settingRow}>
+                <Text>{ui.fileSize}</Text>
+                <Text>
+                  {detailSize
+                    ? `${(detailSize / 1000000).toLocaleString(settings.language, { maximumFractionDigits: 1 })} MB`
+                    : dcopy.sizeUnknown}
+                </Text>
+              </View>
+              <View style={s.settingRow}>
+                <Text>{pcopy.updated}</Text>
+                <Text style={[s.note, { maxWidth: "58%", textAlign: "right" }]}>
+                  {datasetDate(
+                    detailFeed?.generated_at || detailFeed?.updated_at,
+                    settings.language,
+                    pcopy,
+                  )}
+                </Text>
+              </View>
+            </View>
+            <View style={s.offlineNotice}>
+              <Icon name="wifi-off" color="#007aff" />
+              <Text style={[s.note, { flex: 1 }]}>
+                {offlineText.explanation}
+              </Text>
+            </View>
+          </ScrollView>
+          <Pressable
+            onPress={() => setCountryDetail(null)}
+            style={s.sheetCancel}
+          >
+            <Text>{t.close || ui.close}</Text>
+          </Pressable>
+        </SafeAreaView>
+      </Modal>
       <Modal
         visible={modal === "territories"}
         transparent
@@ -1839,11 +2139,16 @@ function cameraTypeLabel(cam, language = "ru") {
   return (labels[language] || labels.ru)[type] || type;
 }
 
-function SettingSwitch({ label, value, onChange }) {
+function SettingSwitch({ label, value, onChange, icon }) {
   return (
     <View style={s.settingRow}>
+      {icon && <Icon name={icon} color="#007aff" size={20} />}
       <Text style={s.settingLabel}>{label}</Text>
-      <Switch value={value} onValueChange={onChange} />
+      <Switch
+        trackColor={{ true: "#007aff" }}
+        value={value}
+        onValueChange={onChange}
+      />
     </View>
   );
 }
@@ -1880,9 +2185,9 @@ const s = StyleSheet.create({
     justifyContent: "center",
   },
   speedRingCompact: {
-    width: 180,
-    height: 180,
-    borderRadius: 90,
+    width: 150,
+    height: 150,
+    borderRadius: 75,
     borderWidth: 8,
   },
   speedRing: {
@@ -1890,7 +2195,7 @@ const s = StyleSheet.create({
     height: 224,
     borderRadius: 112,
     borderWidth: 11,
-    borderColor: "#dce8f7",
+    borderColor: "#dcecff",
     backgroundColor: "#f9fbfe",
     alignItems: "center",
     justifyContent: "center",
@@ -1914,9 +2219,9 @@ const s = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  datasetCount: { fontSize: 15, fontWeight: "700", color: "#253c50" },
+  datasetCount: { fontSize: 15, fontWeight: "700", color: "#182230" },
   datasetDate: { fontSize: 12, color: "#8090a0", marginTop: 4 },
-  reportButtonText: { fontSize: 13, fontWeight: "700", color: "#215db5" },
+  reportButtonText: { fontSize: 13, fontWeight: "700", color: "#007aff" },
   sheetHandle: {
     width: 38,
     height: 4,
@@ -1928,7 +2233,7 @@ const s = StyleSheet.create({
   sheetTitle: {
     fontSize: 23,
     fontWeight: "700",
-    color: "#152535",
+    color: "#101828",
     marginBottom: 8,
   },
   choiceIcon: {
@@ -1954,7 +2259,7 @@ const s = StyleSheet.create({
     marginBottom: 20,
     flexWrap: "wrap",
   },
-  brand: { fontSize: 22, fontWeight: "800", color: "#152535" },
+  brand: { fontSize: 32, fontWeight: "800", color: "#101828" },
   countryPill: {
     fontSize: 14,
     color: "#42586b",
@@ -1975,7 +2280,7 @@ const s = StyleSheet.create({
     lineHeight: 100,
     fontWeight: "800",
     fontVariant: ["tabular-nums"],
-    color: "#152535",
+    color: "#101828",
     letterSpacing: -4,
     maxWidth: "100%",
   },
@@ -2005,11 +2310,11 @@ const s = StyleSheet.create({
     textAlignVertical: "center",
     paddingTop: 10,
     paddingHorizontal: 8,
-    color: "#152535",
+    color: "#101828",
   },
   driverAlert: {
     borderRadius: 28,
-    backgroundColor: "#e6eefb",
+    backgroundColor: "#fff",
     padding: 22,
     alignItems: "center",
     borderWidth: 1,
@@ -2023,24 +2328,34 @@ const s = StyleSheet.create({
     borderWidth: 2,
   },
   driverAlertOver: { backgroundColor: "#ffe8e5", borderColor: "#dd7970" },
+  warningBadge: {
+    width: 68,
+    height: 68,
+    borderRadius: 34,
+    borderWidth: 8,
+    borderColor: "#dcecff",
+    backgroundColor: "#eaf3ff",
+    alignItems: "center",
+    justifyContent: "center",
+  },
   alertIcon: { fontSize: 30 },
   alertTitle: {
     fontSize: 20,
     fontWeight: "700",
-    color: "#253c50",
+    color: "#182230",
     textAlign: "center",
   },
   alertDistance: {
-    fontSize: 42,
+    fontSize: 52,
     fontWeight: "800",
     fontVariant: ["tabular-nums"],
-    color: "#152535",
+    color: "#101828",
   },
   alertDetail: { fontSize: 16, color: "#526779", textAlign: "center" },
   averageNumber: {
     fontSize: 30,
     fontWeight: "800",
-    color: "#152535",
+    color: "#101828",
     textAlign: "center",
   },
 
@@ -2048,7 +2363,7 @@ const s = StyleSheet.create({
   tripButton: {
     flex: 1,
     minHeight: 60,
-    backgroundColor: "#215db5",
+    backgroundColor: "#007aff",
     borderRadius: 22,
     alignItems: "center",
     justifyContent: "center",
@@ -2072,19 +2387,116 @@ const s = StyleSheet.create({
     minHeight: 44,
     justifyContent: "center",
   },
-  countryDownloadText: { color: "#215db5", fontWeight: "700" },
+  countryDownloadText: { color: "#007aff", fontWeight: "700" },
 
-  safe: { flex: 1, backgroundColor: "#f5f6f8" },
+  safe: { flex: 1, backgroundColor: "#f3f5f8" },
   container: { padding: 20, paddingBottom: 24, gap: 14 },
   nav: {
-    marginHorizontal: 12,
-    marginBottom: 8,
+    marginHorizontal: 0,
+    marginBottom: 0,
     backgroundColor: "#fff",
-    borderRadius: 20,
+    borderRadius: 0,
+    borderTopWidth: 1,
+    borderTopColor: "#e8ecf1",
     flexDirection: "row",
     padding: 6,
     shadowOpacity: 0.12,
     shadowRadius: 15,
+  },
+  countryScreen: { gap: 14 },
+  searchBox: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+    backgroundColor: "#e8ecf2",
+    borderRadius: 14,
+    paddingHorizontal: 14,
+    minHeight: 48,
+  },
+  searchInput: { flex: 1, fontSize: 16, paddingVertical: 12, color: "#101828" },
+  segment: {
+    flexDirection: "row",
+    backgroundColor: "#e8ecf2",
+    borderRadius: 13,
+    padding: 4,
+    gap: 4,
+  },
+  segmentItem: {
+    flex: 1,
+    minHeight: 40,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 10,
+    paddingHorizontal: 4,
+  },
+  segmentActive: { backgroundColor: "#007aff" },
+  segmentText: { fontSize: 12, fontWeight: "600", color: "#596579" },
+  segmentTextActive: { color: "#fff" },
+  countryDetailButton: {
+    minWidth: 30,
+    minHeight: 44,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  offlineNotice: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 12,
+    padding: 16,
+    backgroundColor: "#eaf3ff",
+    borderRadius: 18,
+  },
+  profileCard: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 14,
+    backgroundColor: "#fff",
+    padding: 20,
+    borderRadius: 20,
+  },
+  timelineIcon: {
+    width: 44,
+    height: 44,
+    borderRadius: 14,
+    backgroundColor: "#eaf3ff",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  summaryNumber: {
+    fontSize: 30,
+    fontWeight: "800",
+    color: "#101828",
+    marginTop: 5,
+  },
+  historyLimit: {
+    borderWidth: 2,
+    borderColor: "#f04438",
+    borderRadius: 24,
+    padding: 9,
+    fontSize: 18,
+    fontWeight: "700",
+  },
+  emptyCard: {
+    backgroundColor: "#fff",
+    padding: 28,
+    borderRadius: 22,
+    alignItems: "center",
+    gap: 12,
+  },
+  emptyCopy: {
+    color: "#667085",
+    textAlign: "center",
+    fontSize: 15,
+    lineHeight: 22,
+  },
+  detailBack: { flexDirection: "row", alignItems: "center", minHeight: 44 },
+  detailHero: { alignItems: "center", paddingVertical: 24, gap: 10 },
+  detailFlag: { fontSize: 64 },
+  detailName: {
+    fontSize: 34,
+    fontWeight: "800",
+    color: "#101828",
+    textAlign: "center",
   },
   navItem: {
     flex: 1,
@@ -2093,7 +2505,7 @@ const s = StyleSheet.create({
     minHeight: 52,
     borderRadius: 13,
   },
-  navActive: { backgroundColor: "#eef0f3" },
+  navActive: { backgroundColor: "#eaf3ff" },
   navIcon: { fontSize: 17 },
 
   title: { fontSize: 30, fontWeight: "800", marginTop: 8 },
@@ -2153,7 +2565,7 @@ const s = StyleSheet.create({
   backgroundTitle: { fontSize: 17, fontWeight: "800" },
   backgroundText: { fontSize: 12, opacity: 0.55 },
   smallButton: {
-    backgroundColor: "#111",
+    backgroundColor: "#007aff",
     paddingVertical: 10,
     paddingHorizontal: 13,
     borderRadius: 12,
@@ -2161,7 +2573,7 @@ const s = StyleSheet.create({
   smallButtonStop: { backgroundColor: "#8b1e1e" },
   smallButtonText: { color: "#fff", fontWeight: "800" },
   button: {
-    backgroundColor: "#111",
+    backgroundColor: "#007aff",
     borderRadius: 18,
     paddingVertical: 17,
     alignItems: "center",
@@ -2200,13 +2612,18 @@ const s = StyleSheet.create({
   listSub: { fontSize: 12, opacity: 0.55, marginTop: 3 },
   listDistance: { fontWeight: "800" },
   settingsCard: {
-    backgroundColor: "#fff",
+    backgroundColor: "transparent",
     borderRadius: 22,
-    padding: 18,
+    padding: 0,
     gap: 12,
   },
   sectionTitle: { fontSize: 18, fontWeight: "800", marginTop: 6 },
   settingRow: {
+    gap: 12,
+    backgroundColor: "#fff",
+    borderRadius: 14,
+    paddingHorizontal: 14,
+    minHeight: 56,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
@@ -2234,6 +2651,9 @@ const s = StyleSheet.create({
   },
   langActive: { backgroundColor: "#cfd7ff" },
   aboutRow: {
+    backgroundColor: "#fff",
+    borderRadius: 14,
+    paddingHorizontal: 14,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
@@ -2268,14 +2688,15 @@ const s = StyleSheet.create({
   cancel: { alignItems: "center", padding: 12 },
   typeLabel: { fontSize: 12, fontWeight: "700", opacity: 0.5, marginTop: 5 },
   dataCard: {
-    backgroundColor: "#f3f4f6",
-    borderRadius: 14,
+    backgroundColor: "#fff",
+    borderRadius: 18,
     padding: 14,
+    marginBottom: 8,
     flexDirection: "row",
     alignItems: "center",
     gap: 12,
   },
-  dataLabel: { fontSize: 17, fontWeight: "700", color: "#253c50" },
+  dataLabel: { fontSize: 17, fontWeight: "700", color: "#182230" },
   dataValue: { fontSize: 13, fontWeight: "700", marginTop: 3 },
   coverageCard: {
     backgroundColor: "#f3f4f6",
@@ -2308,22 +2729,23 @@ const s = StyleSheet.create({
   reportChoiceText: {
     fontSize: 17,
     fontWeight: "600",
-    color: "#253c50",
+    color: "#182230",
     flex: 1,
   },
   navLabel: { fontSize: 11, marginTop: 5, color: "#8292a2" },
-  clearCard: { padding: 20, borderRadius: 24, backgroundColor: "#e9f3ef" },
+  clearCard: { padding: 20, borderRadius: 24, backgroundColor: "#fff" },
   clearTitle: {
     fontSize: 18,
     fontWeight: "700",
-    color: "#37725c",
+    color: "#007aff",
     textAlign: "left",
   },
 });
 function AboutLink({ label, url }) {
   return (
     <Pressable onPress={() => Linking.openURL(url)} style={s.aboutRow}>
-      <Text style={s.aboutLabel}>{label}</Text>
+      <Icon name="info" color="#007aff" size={18} />
+      <Text style={[s.aboutLabel, { flex: 1, marginLeft: 12 }]}>{label}</Text>
       <Text style={s.chev}>›</Text>
     </Pressable>
   );

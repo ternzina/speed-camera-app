@@ -1,0 +1,18 @@
+const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict'),babel=require('@babel/core');
+const moduleUI={exports:{}};
+vm.runInNewContext(babel.transformSync(fs.readFileSync('reference-presentation.js','utf8'),{configFile:false,babelrc:false,plugins:['@babel/plugin-transform-modules-commonjs']}).code,{module:moduleUI,exports:moduleUI.exports,Set,Date});
+const {filterCountries,filterHistory,REFERENCE_COPY}=moduleUI.exports;
+const lists={downloaded:[{country_code:'UA',label:'🇺🇦 Украина'}],available:[{country_code:'DE',label:'🇩🇪 Германия'},{country_code:'OM',label:'🇴🇲 Оман'}]};
+const before=JSON.stringify(lists);
+assert.equal(filterCountries(lists,'  ГЕРМ  ','all','ru').available[0].country_code,'DE');
+assert.equal(filterCountries(lists,'','downloaded','ru').available.length,0);
+assert.equal(filterCountries(lists,'','popular','ru').available.length,1);
+assert.equal(filterCountries(lists,'nonexistent','all','en').downloaded.length,0);
+assert.equal(JSON.stringify(lists),before);
+const now=new Date('2026-10-07T15:00:00Z').getTime();
+const history=[{when:new Date(now-1000).toISOString()},{when:new Date(now-3*86400000).toISOString()},{when:'invalid'},{when:new Date(now+3600000).toISOString()}];
+assert.equal(filterHistory(history,1,now).length,1);
+assert.equal(filterHistory(history,7,now).length,2);
+assert.equal(history.length,4);
+for(const language of ['ru','uk','en','pl'])assert.ok(REFERENCE_COPY[language].noResults && REFERENCE_COPY[language].historyHint);
+console.log('Reference UI passed: localized search, saved/popular filtering, immutable datasets and bounded history periods.');
