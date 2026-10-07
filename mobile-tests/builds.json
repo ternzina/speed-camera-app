@@ -1,5 +1,5 @@
 {
-  "checkedAt": "2026-10-07T10:31:31.703302+00:00",
+  "checkedAt": "2026-10-07T13:12:01.436850+00:00",
   "branch": "feature/r2-offline-release",
   "appVersion": "0.9.0",
   "sourceCommit": "93346d4e3082c5249ee2799321fc480422a71fbc",
@@ -11,6 +11,22 @@
     "artifact": "https://expo.dev/artifacts/eas/CJPBpyoMUpBR9aHxtNUX8KjnPpZhUyp85R9Ulhg-XXI.aab"
   },
   "ios": {
+    "id": null,
+    "status": "FINISHED_LOCAL",
+    "buildNumber": "13",
+    "builder": "Xcode 26.6 / xcodebuild archive + exportArchive",
+    "sourceCommit": "22866cb0",
+    "archive": "/Users/zina/Downloads/speed-camera-r2-offline-release/build/CamAlert-0.9.0-13.xcarchive",
+    "artifact": "/Users/zina/Downloads/speed-camera-r2-offline-release/build/ios-testflight-13/CamAlert.ipa",
+    "sizeBytes": 9433235,
+    "sha256": "89bd34587d59e1b6289b223cbc5ee113357e455c8ee93da603baa7e89ab2a34b",
+    "signatureVerified": true,
+    "hermesBundlePresent": true,
+    "exportMethod": "app-store-connect",
+    "exportDestination": "export"
+  },
+  "storeSubmissionPerformed": true,
+  "previousIos": {
     "id": null,
     "status": "FINISHED_LOCAL",
     "buildNumber": "12",
@@ -34,5 +50,14 @@
       "quotaResetDate": "2026-11-01"
     }
   },
-  "storeSubmissionPerformed": false
+  "testflightSubmission": {
+    "status": "FINISHED",
+    "ascAppId": "6818647205",
+    "id": "68316b00-f52c-4ba6-9202-e55178e4d86f",
+    "url": "https://expo.dev/accounts/bembi26/projects/speed-camera-prototype-direction/submissions/68316b00-f52c-4ba6-9202-e55178e4d86f",
+    "completedAt": "2026-10-07T13:10:24.202Z",
+    "appleProcessingState": "PROCESSING",
+    "appleUrl": "https://appstoreconnect.apple.com/apps/6818647205/testflight/ios"
+  },
+  "publicAppStoreReleasePerformed": false
 }
