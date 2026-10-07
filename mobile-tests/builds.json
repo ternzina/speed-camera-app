@@ -1,8 +1,8 @@
 {
-  "checkedAt": "2026-10-07T16:18:43.313728+00:00",
+  "checkedAt": "2026-10-07T17:33:14.959293+00:00",
   "branch": "feature/r2-offline-release",
-  "appVersion": "0.9.0",
-  "sourceCommit": "93346d4e3082c5249ee2799321fc480422a71fbc",
+  "appVersion": "1.0.0",
+  "sourceCommit": "11ebaa6b1a155a1cc73c175225274dd733e7dbab",
   "android": {
     "id": "59e7668f-0062-45a8-a28f-a08fd85a5d8f",
     "status": "FINISHED",
@@ -16,13 +16,14 @@
   "ios": {
     "id": null,
     "status": "FINISHED_LOCAL",
-    "buildNumber": "13",
+    "appVersion": "1.0.0",
+    "buildNumber": "14",
     "builder": "Xcode 26.6 / xcodebuild archive + exportArchive",
-    "sourceCommit": "22866cb0",
-    "archive": "/Users/zina/Downloads/speed-camera-r2-offline-release/build/CamAlert-0.9.0-13.xcarchive",
-    "artifact": "/Users/zina/Downloads/speed-camera-r2-offline-release/build/ios-testflight-13/CamAlert.ipa",
-    "sizeBytes": 9433235,
-    "sha256": "89bd34587d59e1b6289b223cbc5ee113357e455c8ee93da603baa7e89ab2a34b",
+    "sourceCommit": "11ebaa6b1a155a1cc73c175225274dd733e7dbab",
+    "archive": "/Users/zina/Downloads/speed-camera-r2-offline-release/build/CamAlert-1.0.0-14.xcarchive",
+    "artifact": "/Users/zina/Downloads/speed-camera-r2-offline-release/build/ios-testflight-14/CamAlert.ipa",
+    "sizeBytes": 9492712,
+    "sha256": "1435f38772498a634499f687d6ac50130fda5a4fe2e40a7ca9fd54303f8b20c4",
     "signatureVerified": true,
     "hermesBundlePresent": true,
     "exportMethod": "app-store-connect",
@@ -56,11 +57,13 @@
   "testflightSubmission": {
     "status": "FINISHED",
     "ascAppId": "6818647205",
-    "id": "68316b00-f52c-4ba6-9202-e55178e4d86f",
-    "url": "https://expo.dev/accounts/bembi26/projects/speed-camera-prototype-direction/submissions/68316b00-f52c-4ba6-9202-e55178e4d86f",
-    "completedAt": "2026-10-07T13:10:24.202Z",
+    "id": "11a1f7fe-6a9e-4866-a6ae-81b432a2ec6e",
+    "completedAt": "2026-10-07T17:31:18.759Z",
+    "url": "https://expo.dev/accounts/bembi26/projects/speed-camera-prototype-direction/submissions/11a1f7fe-6a9e-4866-a6ae-81b432a2ec6e",
+    "appleBuildId": "d96a78c2-36f1-4709-9f50-f3e1b7099883",
     "appleProcessingState": "PROCESSING",
-    "appleUrl": "https://appstoreconnect.apple.com/apps/6818647205/testflight/ios"
+    "appleUrl": "https://appstoreconnect.apple.com/apps/6818647205/testflight/ios",
+    "appleUiVerified": true
   },
   "publicAppStoreReleasePerformed": false,
   "previousAndroid": {
@@ -83,8 +86,32 @@
     "appVersion": "1.0.0",
     "iosBuildNumber": "14",
     "androidVersionCode": 6,
-    "status": "SOURCE_VERIFIED_NOT_BUILT",
-    "storeSubmissionPerformed": false,
-    "note": "Existing 0.9.0 build artifacts predate Driver Mode 1.0."
+    "status": "IOS_UPLOADED_TESTFLIGHT_ANDROID_NOT_BUILT",
+    "storeSubmissionPerformed": true,
+    "note": "iOS 1.0.0 (14) includes Driver Mode and product UI. Android artifact remains older 0.9.0 (5); no new Android upload."
+  },
+  "previousIos13": {
+    "id": null,
+    "status": "FINISHED_LOCAL",
+    "buildNumber": "13",
+    "builder": "Xcode 26.6 / xcodebuild archive + exportArchive",
+    "sourceCommit": "22866cb0",
+    "archive": "/Users/zina/Downloads/speed-camera-r2-offline-release/build/CamAlert-0.9.0-13.xcarchive",
+    "artifact": "/Users/zina/Downloads/speed-camera-r2-offline-release/build/ios-testflight-13/CamAlert.ipa",
+    "sizeBytes": 9433235,
+    "sha256": "89bd34587d59e1b6289b223cbc5ee113357e455c8ee93da603baa7e89ab2a34b",
+    "signatureVerified": true,
+    "hermesBundlePresent": true,
+    "exportMethod": "app-store-connect",
+    "exportDestination": "export"
+  },
+  "previousTestflightSubmission13": {
+    "status": "FINISHED",
+    "ascAppId": "6818647205",
+    "id": "68316b00-f52c-4ba6-9202-e55178e4d86f",
+    "url": "https://expo.dev/accounts/bembi26/projects/speed-camera-prototype-direction/submissions/68316b00-f52c-4ba6-9202-e55178e4d86f",
+    "completedAt": "2026-10-07T13:10:24.202Z",
+    "appleProcessingState": "PROCESSING",
+    "appleUrl": "https://appstoreconnect.apple.com/apps/6818647205/testflight/ios"
   }
 }
