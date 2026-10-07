@@ -16,7 +16,7 @@ import data from "./cameras.json";
 import plData from "./cameras-pl.json";
 import { nearestPolandPoint, detectAverageSpeedSection, averageSectionSpeech } from "./poland-engine";
 import { cameraPoints, countryFeed, loadCameraCache, saveCameraCache } from "./camera-data";
-import { COUNTRY_NAMES } from "./countries";
+import { countryLabel, buildCountryLists } from "./countries";
 import { refreshCountryDelivery } from "./camera-delivery";
 
 const BACKGROUND_LOCATION_TASK = "camera-background-location-v060";
@@ -273,11 +273,11 @@ export default function App() {
   const [downloadStatus,setDownloadStatus]=useState("");
   const deliveryQueue=useRef(Promise.resolve());
   const offlineText = {
-    ru: {title:"Страны офлайн",download:"Скачать выбранные",update:"Доступно обновление",ready:"Сохранено офлайн",missing:"Не скачано",busy:"Загрузка",failed:"Не удалось скачать или сохранить",done:"Сохранено",empty:"Нет локальных данных. Подключитесь к интернету и скачайте страну."},
-    uk: {title:"Країни офлайн",download:"Завантажити вибрані",update:"Доступне оновлення",ready:"Збережено офлайн",missing:"Не завантажено",busy:"Завантаження",failed:"Не вдалося завантажити або зберегти",done:"Збережено",empty:"Немає локальних даних. Підключіться до інтернету й завантажте країну."},
-    en: {title:"Offline countries",download:"Download selected",update:"Update available",ready:"Saved offline",missing:"Not downloaded",busy:"Downloading",failed:"Could not download or save",done:"Saved",empty:"No local data. Connect to the internet and download this country."},
-    pl: {title:"Kraje offline",download:"Pobierz wybrane",update:"Dostępna aktualizacja",ready:"Zapisano offline",missing:"Nie pobrano",busy:"Pobieranie",failed:"Nie udało się pobrać lub zapisać",done:"Zapisano",empty:"Brak danych lokalnych. Połącz się z internetem i pobierz kraj."}
-  }[settings.language] || {title:"Offline countries",download:"Download selected",update:"Update available",ready:"Saved offline",missing:"Not downloaded",busy:"Downloading",failed:"Could not download or save",done:"Saved",empty:"No local data. Connect and download this country."};
+    ru: {explanation:"Скачанные камеры и предупреждения доступны без интернета при включённой геолокации. Карта загружается отдельно.",downloaded:"Скачанные",available:"Доступные страны",territories:"Территории",none:"Пока нет скачанных стран",cameras:"камер",hint:"Нажмите название для выбора страны. Отметьте страны справа для офлайн-загрузки.",title:"Страны офлайн",download:"Скачать выбранные",update:"Доступно обновление",ready:"Сохранено офлайн",missing:"Не скачано",busy:"Загрузка",failed:"Не удалось скачать или сохранить",done:"Сохранено",empty:"Нет локальных данных. Подключитесь к интернету и скачайте страну."},
+    uk: {explanation:"Завантажені камери й попередження доступні без інтернету, якщо геолокацію ввімкнено. Карта завантажується окремо.",downloaded:"Завантажені",available:"Доступні країни",territories:"Території",none:"Поки немає завантажених країн",cameras:"камер",hint:"Натисніть назву, щоб вибрати країну. Позначте країни праворуч для офлайн-завантаження.",title:"Країни офлайн",download:"Завантажити вибрані",update:"Доступне оновлення",ready:"Збережено офлайн",missing:"Не завантажено",busy:"Завантаження",failed:"Не вдалося завантажити або зберегти",done:"Збережено",empty:"Немає локальних даних. Підключіться до інтернету й завантажте країну."},
+    en: {explanation:"Downloaded cameras and alerts work without internet when location is enabled. Map tiles load separately.",downloaded:"Downloaded",available:"Available countries",territories:"Territories",none:"No countries downloaded yet",cameras:"cameras",hint:"Tap a name to choose your driving country. Check countries on the right to download for offline use.",title:"Offline countries",download:"Download selected",update:"Update available",ready:"Saved offline",missing:"Not downloaded",busy:"Downloading",failed:"Could not download or save",done:"Saved",empty:"No local data. Connect to the internet and download this country."},
+    pl: {explanation:"Pobrane kamery i ostrzeżenia działają bez internetu przy włączonej lokalizacji. Mapa pobiera się osobno.",downloaded:"Pobrane",available:"Dostępne kraje",territories:"Terytoria",none:"Nie pobrano jeszcze krajów",cameras:"kamer",hint:"Dotknij nazwy, aby wybrać kraj. Zaznacz kraje po prawej stronie, aby pobrać je offline.",title:"Kraje offline",download:"Pobierz wybrane",update:"Dostępna aktualizacja",ready:"Zapisano offline",missing:"Nie pobrano",busy:"Pobieranie",failed:"Nie udało się pobrać lub zapisać",done:"Zapisano",empty:"Brak danych lokalnych. Połącz się z internetem i pobierz kraj."}
+  }[settings.language] || {explanation:"Downloaded cameras and alerts work without internet when location is enabled. Map tiles load separately.",downloaded:"Downloaded",available:"Available countries",territories:"Territories",none:"No countries downloaded yet",cameras:"cameras",hint:"Tap a name to choose your driving country. Check countries on the right to download for offline use.",title:"Offline countries",download:"Download selected",update:"Update available",ready:"Saved offline",missing:"Not downloaded",busy:"Downloading",failed:"Could not download or save",done:"Saved",empty:"No local data. Connect and download this country."};
   const remoteFeedsRef=useRef({});
   const countryVersionsRef=useRef({});
   const selectedCountry=String(settings.country||"ua").toUpperCase();
@@ -293,6 +293,7 @@ export default function App() {
   const sub = useRef(null);
   const timer = useRef(null);
   const lastSpoken = useRef({ id: null, distance: Infinity });
+  const countryLists = useMemo(()=>buildCountryLists(countryCoverage,remoteFeeds,settings.language),[countryCoverage,remoteFeeds,settings.language]);
 
   useEffect(() => {
     (async () => {
@@ -379,11 +380,29 @@ export default function App() {
     setDownloading(true);
     const failed=[];
     for(const code of downloadSelection) {
-      setDownloadStatus(`${offlineText.busy}: ${COUNTRY_NAMES[code]||code}`);
+      setDownloadStatus(`${offlineText.busy}: ${countryLabel(code,settings.language)}`);
       if(!await refreshRemoteData(true,code)) failed.push(code);
     }
-    setDownloadStatus(failed.length ? `${offlineText.failed}: ${failed.join(", ")}` : offlineText.done);
+    setDownloadStatus(failed.length ? `${offlineText.failed}: ${failed.map(code=>countryLabel(code,settings.language)).join(", ")}` : offlineText.done);
     setDownloading(false);
+  }
+
+  function renderCountryRow(item) {
+    const code=item.country_code, checked=downloadSelection.includes(code), saved=!!remoteFeeds[code];
+    const update=saved&&item.version&&countryVersionsRef.current[code]!==item.version;
+    return <View key={code} style={[s.dataCard,selectedCountry===code&&{borderColor:"#2685e3",borderWidth:2}]}>
+      <Pressable accessibilityRole="radio" accessibilityState={{selected:selectedCountry===code}}
+        accessibilityLabel={item.label} onPress={()=>setSettings(previous=>({...previous,country:code.toLowerCase()}))} style={{flex:1,paddingVertical:6}}>
+        <Text style={s.dataLabel}>{item.label}</Text>
+        <Text style={s.note}>{item.publishedCount} {offlineText.cameras} · {saved?offlineText.ready:offlineText.missing}</Text>
+        {!!update&&<Text style={s.note}>{offlineText.update}</Text>}
+      </Pressable>
+      <Pressable disabled={downloading} accessibilityRole="checkbox" accessibilityLabel={`${offlineText.download}: ${item.label}`}
+        accessibilityState={{checked,disabled:downloading}} onPress={()=>setDownloadSelection(previous=>previous.includes(code)?previous.filter(x=>x!==code):[...previous,code])}
+        style={[s.lang,{minWidth:44,minHeight:44,alignItems:"center",justifyContent:"center"}]}>
+        <Text style={{fontSize:24}}>{checked?"☑":"☐"}</Text>
+      </Pressable>
+    </View>;
   }
 
   async function sendReportToServer(item) {
@@ -703,7 +722,7 @@ export default function App() {
 
       <ScrollView contentContainerStyle={s.container}>
         <Text style={s.title}>{t.title}</Text>
-        <Text style={s.subtitle}>{COUNTRY_NAMES[selectedCountry]||selectedCountry} · {visibleCameras().length} камер</Text>
+        <Text style={s.subtitle}>{countryLabel(selectedCountry,settings.language)} · {visibleCameras().length} камер</Text>
 
         {tab === "drive" && <>
           <View style={[s.card, danger && s.cardDanger]}>
@@ -792,27 +811,20 @@ export default function App() {
         {tab === "settings" && (
           <View style={s.settingsCard}>
             <Text style={s.sectionTitle}>{t.country}</Text>
-            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-              {[...new Set(["UA","PL",...countryCoverage.map(x=>x.country_code)])].map(code=>(
-                <Pressable key={code} accessibilityRole="radio" accessibilityState={{selected:selectedCountry===code}}
-                  onPress={()=>setSettings({...settings,country:code.toLowerCase()})}
-                  style={[s.lang,selectedCountry===code&&s.langActive]}>
-                  <Text>{COUNTRY_NAMES[code]||code}</Text>
-                </Pressable>
-              ))}
-            </ScrollView>
             {!remoteFeeds[selectedCountry] && !["UA","PL"].includes(selectedCountry) && <Text style={s.note}>{offlineText.empty}</Text>}
-            <Text style={s.sectionTitle}>{offlineText.title} ({countryCoverage.length})</Text>
-            <ScrollView style={{maxHeight:260}} nestedScrollEnabled>
-              {countryCoverage.map(item=>{
-                const code=item.country_code, checked=downloadSelection.includes(code);
-                return <Pressable key={code} disabled={downloading} accessibilityRole="checkbox" accessibilityState={{checked,disabled:downloading}}
-                  onPress={()=>setDownloadSelection(previous=>checked?previous.filter(x=>x!==code):[...previous,code])} style={s.dataCard}>
-                  <Text style={{flex:1}}>{checked?"☑":"☐"} {COUNTRY_NAMES[code]||code} · {item.record_count??item.total??0}</Text>
-                  <Text>{remoteFeeds[code]?(item.version&&countryVersionsRef.current[code]!==item.version?offlineText.update:offlineText.ready):offlineText.missing}</Text>
-                </Pressable>;
-              })}
+            <Text style={s.sectionTitle}>{offlineText.title} ({countryLists.visible.length})</Text>
+            <Text style={s.note}>{offlineText.hint}</Text>
+            <Text style={s.note}>{offlineText.explanation}</Text>
+            <ScrollView style={{maxHeight:360}} nestedScrollEnabled>
+              <Text style={s.sectionTitle}>{offlineText.downloaded}</Text>
+              {!countryLists.downloaded.length&&<Text style={s.note}>{offlineText.none}</Text>}
+              {countryLists.downloaded.map(renderCountryRow)}
+              <Text style={s.sectionTitle}>{offlineText.available}</Text>
+              {countryLists.available.map(renderCountryRow)}
             </ScrollView>
+            {!!countryLists.territories.length&&<Pressable onPress={()=>setModal("territories")} style={s.smallButton}>
+              <Text style={s.smallButtonText}>{offlineText.territories} ({countryLists.territories.length})</Text>
+            </Pressable>}
             <Pressable disabled={downloading||!downloadSelection.length} onPress={downloadCountries} style={[s.smallButton,{opacity:downloading||!downloadSelection.length?0.5:1}]}>
               <Text style={s.smallButtonText}>{offlineText.download} ({downloadSelection.length})</Text>
             </Pressable>
@@ -842,7 +854,7 @@ export default function App() {
 
             <Text style={s.sectionTitle}>{t.coverage}</Text>
             <View style={s.coverageCard}>
-              {countryCoverage.map(item=><Text key={item.country_code} style={s.coverageLine}>{COUNTRY_NAMES[item.country_code]||item.country_code}: {item.record_count??item.total??0}</Text>)}
+              {countryLists.coverage.map(item=><Text key={item.country_code} style={s.coverageLine}>{item.label}: {item.publishedCount}</Text>)}
               <Pressable onPress={()=>Linking.openURL("https://www.openstreetmap.org/copyright")}><Text style={s.coverageLine}>© OpenStreetMap contributors · ODbL 1.0</Text></Pressable>
             </View>
 
@@ -858,6 +870,14 @@ export default function App() {
           </View>
         )}
       </ScrollView>
+
+      <Modal visible={modal==="territories"} transparent animationType="slide" onRequestClose={()=>setModal(null)}>
+        <View style={s.modalShade}><View style={s.modalCard}>
+          <Text style={s.modalTitle}>{offlineText.territories}</Text>
+          <ScrollView style={{maxHeight:360}}>{countryLists.territories.map(renderCountryRow)}</ScrollView>
+          <Pressable onPress={()=>setModal(null)} style={s.smallButton}><Text style={s.smallButtonText}>✓</Text></Pressable>
+        </View></View>
+      </Modal>
 
       <Modal visible={modal==="new"} transparent animationType="slide">
         <View style={s.modalShade}><View style={s.modalCard}>

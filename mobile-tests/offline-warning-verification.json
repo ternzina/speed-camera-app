@@ -1,0 +1,47 @@
+{
+  "checkedAt": "2026-10-07T12:18:30.546Z",
+  "datasetsStoredOnDisk": 6,
+  "newStorageInstanceAfterRestart": true,
+  "cacheChunksChecksumVerified": true,
+  "networkDisabled": true,
+  "results": [
+    {
+      "country": "UA",
+      "backgroundWarningFromDiskCache": true,
+      "foregroundSelection": "shared nearest-ahead engine verified",
+      "networkRequests": 0
+    },
+    {
+      "country": "PL",
+      "backgroundWarningFromDiskCache": true,
+      "foregroundSelection": "passed",
+      "networkRequests": 0
+    },
+    {
+      "country": "DE",
+      "backgroundWarningFromDiskCache": true,
+      "foregroundSelection": "passed",
+      "networkRequests": 0
+    },
+    {
+      "country": "FR",
+      "backgroundWarningFromDiskCache": true,
+      "foregroundSelection": "passed",
+      "networkRequests": 0
+    },
+    {
+      "country": "US",
+      "backgroundWarningFromDiskCache": true,
+      "foregroundSelection": "passed",
+      "networkRequests": 0
+    },
+    {
+      "country": "CA",
+      "backgroundWarningFromDiskCache": true,
+      "foregroundSelection": "passed",
+      "networkRequests": 0
+    }
+  ],
+  "polishAverageSpeedFromCache": true,
+  "physicalDeviceAirplaneTest": false
+}

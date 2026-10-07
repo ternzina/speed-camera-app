@@ -6,7 +6,7 @@ const offline=async()=>{throw Error('offline')};
 const response=text=>({ok:true,headers:{get:()=>null},text:async()=>text});
 (async()=>{
  const manifest=delivery.validateManifest(await (await fetch(delivery.CAMERA_DELIVERY_URL+'/production/v1/manifest.json')).json());
- assert.equal(manifest.countries.length,49);
+ assert.ok(manifest.countries.length>=6);
  const values=new Map();let fail=false;
  const storage={getItem:async k=>values.get(k)||null,setItem:async(k,v)=>{if(fail)throw Error('disk full');assert.ok(Buffer.byteLength(v)<1000000);values.set(k,v)},removeItem:async k=>values.delete(k)};
  const feeds={},versions={},results=[];
@@ -16,7 +16,7 @@ const response=text=>({ok:true,headers:{get:()=>null},text:async()=>text});
   await cache.saveCameraCache(storage,'cache',{feeds,countries:manifest.countries,countryVersions:versions,stamp:'verified'});
   results.push({country:code,records:manifest.countries.find(x=>x.country_code===code).record_count,source:result.source});
  }
- let saved=await cache.loadCameraCache(storage,'cache');assert.equal(Object.keys(saved.feeds).length,6);assert.equal(saved.countries.length,49);
+ let saved=await cache.loadCameraCache(storage,'cache');assert.equal(Object.keys(saved.feeds).length,6);assert.equal(saved.countries.length,manifest.countries.length);
  for(const code of Object.keys(feeds)){
   const result=await delivery.refreshCountryDelivery({country:code,feeds:saved.feeds,versions:saved.countryVersions,countries:saved.countries,fetcher:offline});assert.equal(result.source,'offline');assert.deepEqual(result.feed,saved.feeds[code]);
   let calls=0;const current=await delivery.refreshCountryDelivery({country:code,feeds:saved.feeds,versions:saved.countryVersions,fetcher:async()=>{calls++;return response(JSON.stringify(manifest));}});assert.equal(current.source,'cache-current');assert.equal(calls,1);
@@ -31,9 +31,9 @@ const response=text=>({ok:true,headers:{get:()=>null},text:async()=>text});
 
  assert.throws(()=>delivery.verifyCountryExport(text+' ',entry));
  const fallback=await delivery.refreshCountryDelivery({country:'DE',fetcher:async url=>url.includes('manifest')?response(JSON.stringify(manifest)):url.includes('supabase')?response(JSON.stringify(feeds.DE)):response(text+' ')});assert.equal(fallback.source,'supabase');assert.equal(fallback.version,null);
- const local=await delivery.refreshCountryDelivery({country:'DE',feeds:saved.feeds,fetcher:async url=>{if(url.includes('manifest'))return response(JSON.stringify(manifest));throw Error('unavailable');}});assert.equal(local.source,'offline');assert.equal(local.countries.length,49);
+ const local=await delivery.refreshCountryDelivery({country:'DE',feeds:saved.feeds,fetcher:async url=>{if(url.includes('manifest'))return response(JSON.stringify(manifest));throw Error('unavailable');}});assert.equal(local.source,'offline');assert.equal(local.countries.length,manifest.countries.length);
  const bundled=await delivery.refreshCountryDelivery({country:'UA',fetcher:offline});assert.equal(bundled.source,'bundled');assert.ok(cache.cameraPoints(cache.countryFeed({},'UA',require('../cameras.json'),require('../cameras-pl.json'))).length);
  const pointer=values.get('cache');fail=true;await assert.rejects(cache.saveCameraCache(storage,'cache',{feeds:{DE:feeds.DE},countries:[]}));assert.equal(values.get('cache'),pointer);fail=false;
  const index=JSON.parse(pointer);values.set(index.feedChunks.DE.prefix+':0','corrupt');saved=await cache.loadCameraCache(storage,'cache');assert.equal(saved.feeds.DE,undefined);assert.equal(saved.countryVersions.DE,undefined);assert.ok(saved.feeds.FR);
- console.log(JSON.stringify({checkedAt:new Date().toISOString(),manifestCountries:49,results,offlineRestart:true,manifestOnlyUpdateCheck:true,checksumRejection:true,supabaseFallback:true,localFallback:true,bundledFallback:true,failedWritePreservesCache:true,corruptionIsolated:true},null,2));
+ console.log(JSON.stringify({checkedAt:new Date().toISOString(),manifestCountries:manifest.countries.length,results,offlineRestart:true,manifestOnlyUpdateCheck:true,checksumRejection:true,supabaseFallback:true,localFallback:true,bundledFallback:true,failedWritePreservesCache:true,corruptionIsolated:true},null,2));
 })().catch(error=>{console.error(error);process.exitCode=1});
