@@ -40,6 +40,7 @@ def main():
     live={int(n.get('id')):n for n in ET.fromstring(xml).findall('node')}
     official={p.stem:json.loads(p.read_text()) for p in (ROOT/'master-db/raw/official').glob('*.json')}
     checks=[]
+    live_relations={}
     with connect() as conn:
         db={cid:(lat,lon,kind) for cid,lat,lon,kind in conn.execute('select canonical_id,latitude,longitude,camera_type from public.camera_records')}
         for r,s in chosen:
@@ -56,7 +57,15 @@ def main():
             elif s['source_type']=='openstreetmap':
                 n=live[int(s['source_id'].split('/')[1])];tags={x.get('k'):x.get('v') for x in n.findall('tag')}
                 assert close(n.get('lat'),s['latitude']) and close(n.get('lon'),s['longitude']),s['source_id']
-                assert tags.get('highway')=='speed_camera' or tags.get('enforcement') or s['raw_payload'].get('relations')
+                if tags.get('highway')!='speed_camera' and not tags.get('enforcement'):
+                    confirmed=False
+                    for rid in s['raw_payload'].get('relations',[]):
+                        if rid not in live_relations:
+                            response=requests.get('https://api.openstreetmap.org/api/0.6/relation/'+str(rid),timeout=60);response.raise_for_status()
+                            live_relations[rid]=ET.fromstring(response.content).find('relation')
+                        rel=live_relations[rid];rtags={t.get('k'):t.get('v') for t in rel.findall('tag')}
+                        confirmed=confirmed or (rtags.get('type')=='enforcement' and bool(rtags.get('enforcement')) and any(m.get('type')=='node' and m.get('ref')==n.get('id') and m.get('role')=='device' for m in rel.findall('member')))
+                    assert confirmed,'No current enforcement evidence: '+s['source_id']
                 evidence='Live official OSM API object, coordinates/tags/version; Supabase canonical read-back'
                 observed_version=n.get('version')
             else:

@@ -23,6 +23,12 @@ class BootstrapSafety(unittest.TestCase):
         self.assertTrue(compatible(a,camera(kind='red_light')))
         self.assertFalse(compatible(a,camera(kind='red_light',lon=4.0002)))
         a.pop('possible_camera_types');self.assertFalse(compatible(a,camera(kind='red_light')))
+    def test_authoritative_newer_node_blocks_stale_replica(self):
+        from bootstrap_cameras import osm_records
+        stale={'type':'node','id':1,'version':1,'lat':48.,'lon':2.,'tags':{'highway':'speed_camera'}}
+        data={'_bootstrap':{'retrieved_at':'2026-10-07'},'elements':[stale]}
+        current={1:{**stale,'version':2,'tags':{},'_observed_at':'2026-10-07'}}
+        self.assertEqual(list(osm_records(data,'FR',current)),[])
     def test_units_unknowns(self):
         self.assertEqual(speed('25 mph'),40);self.assertEqual(speed(30,mph=True),48)
         for value in ['50;70','50 @ wet','signals','walk',0,999]:self.assertIsNone(speed(value))

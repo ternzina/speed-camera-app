@@ -113,3 +113,10 @@ OSM-only New Jersey red-light devices and Alberta combined speed/red-light devic
 are held for review against current authority changes. Alberta has individual approved
 exceptions; a blanket claim that all devices are inactive is not made. See the policy
 review report for primary NJDOT / police sources and the checked date.
+
+Overpass replicas can lag the primary API. Cached authoritative node versions are
+applied before normalization, and source object versions take precedence over a
+later download timestamp. Newer primary nodes that no longer confirm enforcement
+quarantine historical OSM-only observations instead of publishing stale tags.
+Future Overpass refreshes retain per-phase replication timestamps. Sample QA checks
+the current primary API independently.

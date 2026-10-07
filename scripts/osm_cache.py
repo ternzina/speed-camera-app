@@ -28,5 +28,5 @@ def replace_phase(prior, phase, elements, timestamp=None, attempted_ids=None):
     for items in buckets.values():
         for e in items:
             key=identity(e)
-            if key not in combined or (e.get('_observed_at') or '')>=(combined[key].get('_observed_at') or ''):combined[key]=e
+            if key not in combined or (e.get('version',0),e.get('_observed_at') or '')>=(combined[key].get('version',0),combined[key].get('_observed_at') or ''):combined[key]=e
     return {**prior,'_snapshots':buckets,'elements':list(combined.values())}

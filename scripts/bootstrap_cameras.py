@@ -173,7 +173,7 @@ def official_records(envelope, errors=None):
             if errors is not None:errors.append({'source_code':source['code'],'row_index':index,'error_type':type(exc).__name__,'reason':'Malformed source record; raw retained, other rows continue'})
             continue
 
-def osm_records(data,code):
+def osm_records(data,code,primary_nodes=None):
     meta=data['_bootstrap'];retrieved=meta['retrieved_at']
     source=dict(code='OSM_'+code,country_code=code,name='OpenStreetMap contributors ('+code+')',source_type='openstreetmap',
                 license='ODbL-1.0',license_url='https://opendatacommons.org/licenses/odbl/1-0/',
@@ -183,6 +183,9 @@ def osm_records(data,code):
     for e in data['elements']:
         key=(e['type'],e['id'])
         if key not in elements or len(e)>len(elements[key]):elements[key]=e
+    for key,e in list(elements.items()):
+        current=(primary_nodes or {}).get(e['id']) if e['type']=='node' else None
+        if current and current.get('version',0)>=e.get('version',0):elements[key]=current
     device_tags={}; device_relations={}; sections=[]
     def point(e):
         if not e:return None
@@ -285,6 +288,12 @@ def reconcile_snapshots(records,previous):
     return missing
 
 def main():
+    primary_nodes={}
+    for path in (ROOT/'master-db/cache/osm-api').rglob('nodes-*.json'):
+        observed=dt.datetime.fromtimestamp(path.stat().st_mtime,dt.timezone.utc).isoformat()
+        for e in json.loads(path.read_text()):
+            current=primary_nodes.get(e['id'])
+            if current is None or (e.get('version',0),observed)>(current.get('version',0),current['_observed_at']):primary_nodes[e['id']]={**e,'_observed_at':observed}
     previous=[]
     for path in (ROOT/'master-db/cache/bootstrap/normalized').glob('*.json.gz'):
         previous.extend(json.loads(gzip.decompress(path.read_bytes())))
@@ -381,7 +390,7 @@ def main():
         data=json.loads(path.read_text());code=path.stem
         if 'remark' in data or '_bootstrap' not in data:continue
         sources.append(dict(code='OSM_'+code,country_code=code,name='OpenStreetMap contributors ('+code+')',source_type='openstreetmap',license='ODbL-1.0',license_url='https://opendatacommons.org/licenses/odbl/1-0/',source_url='https://www.openstreetmap.org/copyright',retrieved_at=data['_bootstrap']['retrieved_at']))
-        for r in osm_records(data,code):accept(r)
+        for r in osm_records(data,code,primary_nodes):accept(r)
     missing=reconcile_snapshots(records,previous)
     for r in records:
         if r['country_code']=='CA' and r['camera_type'] in ('fixed_speed','speed_and_red_light','average_speed_start','average_speed_end','average_speed_section') and ontario is not None and ontario.covers(Point(r['longitude'],r['latitude'])) and not any(x['source_type']!='openstreetmap' for x in r['camera_sources']):
@@ -393,6 +402,14 @@ def main():
                 if r['country_code']==country and r['camera_type'] in types and region in reviewed_regions and reviewed_regions[region].covers(Point(r['longitude'],r['latitude'])):
                     r.update(confidence='LOW',status='review',review_reason=reason,review_source_url=url,policy_checked_at='2026-10-07')
                     policy_reviews.append({'canonical_id':r['canonical_id'],'reason':reason,'source_url':url})
+    for r in records:
+        if r.get('protected_existing') or not r['camera_sources'] or any(x['source_type']!='openstreetmap' for x in r['camera_sources']):continue
+        for source in r['camera_sources']:
+            if not source['source_id'].startswith('node/'):continue
+            current=primary_nodes.get(int(source['source_id'].split('/')[1]));raw=source['raw_payload']
+            if current and (current.get('version') or 0)>(raw.get('osm_version') or 0) and not raw.get('relations') and current.get('tags',{}).get('highway')!='speed_camera' and not current.get('tags',{}).get('enforcement'):
+                r.update(confidence='LOW',status='review',review_reason='Newer authoritative OSM node version no longer confirms enforcement; historical observation retained',review_source_url=source['source_url'],primary_api_review={'version':current.get('version'),'timestamp':current.get('timestamp'),'tags':current.get('tags',{})})
+                policy_reviews.append({'canonical_id':r['canonical_id'],'reason':r['review_reason'],'source_url':source['source_url']})
     save(BASE/'reports/policy-reviews.json',policy_reviews)
     save(BASE/'reports/missing-observations.json',missing)
     for r in records:

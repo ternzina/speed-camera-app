@@ -75,11 +75,12 @@ def fetch(code, refresh=False, phase='speed'):
             if area_mode and not any(e['type']=='area' for e in data['elements']):
                 area_mode=False;query=make_query(False);raise ValueError('Country area unavailable; switching to envelopes')
             data['elements']=[e for e in data['elements'] if e['type']!='area']
+            replication=data.get('osm3s',{}).get('timestamp_osm_base')
             prior=json.loads(path.read_text()) if path.exists() else {}
             phases=set(prior.get('_bootstrap',{}).get('phases',[]));phases.add(phase)
             data=replace_phase(prior,phase,data['elements'])
             data['_bootstrap'] = {**prior.get('_bootstrap',{}),'country_code': code, 'retrieved_at': dt.datetime.now(dt.timezone.utc).isoformat(), 'phases':sorted(phases),
-                                  'endpoint': endpoint, 'query': query, 'license': 'ODbL-1.0',
+                                  'endpoint': endpoint, 'query': query, 'phase_replication':{**prior.get('_bootstrap',{}).get('phase_replication',{}),phase:replication},'license': 'ODbL-1.0',
                                   'source_url': 'https://www.openstreetmap.org/copyright'}
             tmp = path.with_suffix('.tmp')
             tmp.write_text(json.dumps(data, ensure_ascii=False, separators=(',', ':')))
