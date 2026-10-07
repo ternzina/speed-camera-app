@@ -35,6 +35,20 @@ export function verifyCountryExport(text,entry){
  }
  return feed;
 }
+export function validateFallbackFeed(feed,code){
+ if(code==='UA'&&feed?.country==null&&Array.isArray(feed?.cameras)&&feed.count===feed.cameras.length)feed={...feed,country:'UA'};
+ if(!feed||feed.country!==code||!groups.some(k=>Array.isArray(feed[k])))throw new Error('Invalid fallback country');
+ const coords=p=>p&&Number.isFinite(p.latitude)&&Number.isFinite(p.longitude)&&Math.abs(p.latitude)<=90&&Math.abs(p.longitude)<=180;
+ const ids=new Set();
+ for(const group of groups){
+  if(feed[group]!==undefined&&!Array.isArray(feed[group]))throw new Error('Invalid fallback array');
+  for(const p of feed[group]||[]){
+   if(p.id==null||ids.has(String(p.id)))throw new Error('Invalid fallback ID');ids.add(String(p.id));
+   if(group==='average_speed_sections'? !coords(p.start)||!coords(p.end):!coords(p))throw new Error('Invalid fallback coordinates');
+  }
+ }
+ return feed;
+}
 async function getText(fetcher,url,limit,timeout){
  const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),timeout);
  try{
@@ -55,15 +69,15 @@ export async function refreshCountryDelivery({country,feeds={},versions={},count
  }catch{
   try{
    const feed=JSON.parse(await getText(fetcher,SUPABASE_EXPORT_URL+'?country='+code,64000000,20000));
-   if(!groups.some(k=>Array.isArray(feed[k])))throw new Error('Invalid fallback feed');
+   const validatedFeed=validateFallbackFeed(feed,code);
    let fallbackCountries=manifest?.countries||countries;
    if(!manifest){
     try{const coverage=JSON.parse(await getText(fetcher,SUPABASE_EXPORT_URL+'?country=coverage',256000,8000));if(Array.isArray(coverage.countries))fallbackCountries=coverage.countries.filter(entry=>iso.test(entry.country_code));}catch{}
    }
-   return {feed,countries:fallbackCountries,version:null,source:'supabase'};
+   return {feed:validatedFeed,countries:fallbackCountries,version:null,source:'supabase'};
   }catch{
-   if(feeds[code])return {feed:feeds[code],countries,version:versions[code]||null,source:'offline'};
-   return {feed:null,countries,version:null,source:'bundled'};
+   if(feeds[code])return {feed:feeds[code],countries:manifest?.countries||countries,version:versions[code]||null,source:'offline'};
+   return {feed:null,countries:manifest?.countries||countries,version:null,source:'bundled'};
   }
  }
 }

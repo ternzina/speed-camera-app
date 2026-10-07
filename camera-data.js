@@ -41,7 +41,7 @@ export async function loadCameraCache(storage, key) {
   try { manifest=JSON.parse(raw); } catch { return null; }
   if (manifest.version !== 3 && manifest.version !== 4) return manifest;
   const feeds = {}, versions = {...(manifest.countryVersions || {})};
-  for (const [code, entry] of Object.entries(manifest.feedChunks)) {
+  for (const [code, entry] of Object.entries(manifest.feedChunks || {})) {
     try {
       const count = manifest.version===3 ? entry : entry.count;
       const prefix = manifest.version===3 ? `${key}:v3:${code}` : entry.prefix;

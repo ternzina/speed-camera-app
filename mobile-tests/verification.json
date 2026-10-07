@@ -1,0 +1,47 @@
+{
+  "checkedAt": "2026-10-07T10:10:40.218Z",
+  "manifestCountries": 49,
+  "results": [
+    {
+      "country": "UA",
+      "records": 426,
+      "source": "r2"
+    },
+    {
+      "country": "PL",
+      "records": 897,
+      "source": "r2"
+    },
+    {
+      "country": "DE",
+      "records": 5794,
+      "source": "r2"
+    },
+    {
+      "country": "FR",
+      "records": 6222,
+      "source": "r2"
+    },
+    {
+      "country": "US",
+      "records": 3390,
+      "source": "r2"
+    },
+    {
+      "country": "CA",
+      "records": 1312,
+      "source": "r2"
+    }
+  ],
+  "offlineRestart": true,
+  "manifestOnlyUpdateCheck": true,
+  "checksumRejection": true,
+  "supabaseFallback": true,
+  "localFallback": true,
+  "bundledFallback": true,
+  "failedWritePreservesCache": true,
+  "corruptionIsolated": true,
+  "liveSupabaseSixCountries": true,
+  "changedVersionRefresh": true,
+  "invalidSupabaseRejected": true
+}

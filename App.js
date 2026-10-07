@@ -266,6 +266,18 @@ export default function App() {
   const [reports, setReports] = useState([]);
   const [remoteFeeds,setRemoteFeeds]=useState({});
   const [countryCoverage,setCountryCoverage]=useState([]);
+  const countryCoverageRef=useRef([]);
+  const [cacheReady,setCacheReady]=useState(false);
+  const [downloadSelection,setDownloadSelection]=useState([]);
+  const [downloading,setDownloading]=useState(false);
+  const [downloadStatus,setDownloadStatus]=useState("");
+  const deliveryQueue=useRef(Promise.resolve());
+  const offlineText = {
+    ru: {title:"Страны офлайн",download:"Скачать выбранные",update:"Доступно обновление",ready:"Сохранено офлайн",missing:"Не скачано",busy:"Загрузка",failed:"Не удалось скачать или сохранить",done:"Сохранено",empty:"Нет локальных данных. Подключитесь к интернету и скачайте страну."},
+    uk: {title:"Країни офлайн",download:"Завантажити вибрані",update:"Доступне оновлення",ready:"Збережено офлайн",missing:"Не завантажено",busy:"Завантаження",failed:"Не вдалося завантажити або зберегти",done:"Збережено",empty:"Немає локальних даних. Підключіться до інтернету й завантажте країну."},
+    en: {title:"Offline countries",download:"Download selected",update:"Update available",ready:"Saved offline",missing:"Not downloaded",busy:"Downloading",failed:"Could not download or save",done:"Saved",empty:"No local data. Connect to the internet and download this country."},
+    pl: {title:"Kraje offline",download:"Pobierz wybrane",update:"Dostępna aktualizacja",ready:"Zapisano offline",missing:"Nie pobrano",busy:"Pobieranie",failed:"Nie udało się pobrać lub zapisać",done:"Zapisano",empty:"Brak danych lokalnych. Połącz się z internetem i pobierz kraj."}
+  }[settings.language] || {title:"Offline countries",download:"Download selected",update:"Update available",ready:"Saved offline",missing:"Not downloaded",busy:"Downloading",failed:"Could not download or save",done:"Saved",empty:"No local data. Connect and download this country."};
   const remoteFeedsRef=useRef({});
   const countryVersionsRef=useRef({});
   const selectedCountry=String(settings.country||"ua").toUpperCase();
@@ -301,12 +313,12 @@ export default function App() {
         if (saved) {
           const feeds=saved.feeds||{UA:saved.ua,PL:saved.pl};
           remoteFeedsRef.current=feeds;countryVersionsRef.current=saved.countryVersions||{};bgCameraFeeds=feeds;setRemoteFeeds(feeds);
-          setCountryCoverage(saved.countries||[]);setCoverage(saved.cov||null);setLastDataUpdate(saved.stamp||null);
+          countryCoverageRef.current=saved.countries||[];setCountryCoverage(saved.countries||[]);setCoverage(saved.cov||null);setLastDataUpdate(saved.stamp||null);
         }
-        await refreshRemoteData(true);
+        setCacheReady(true);
         const started = await Location.hasStartedLocationUpdatesAsync(BACKGROUND_LOCATION_TASK);
         setBackgroundEnabled(started);
-      } catch {}
+      } catch { setCacheReady(true); }
     })();
 
     return () => {
@@ -317,20 +329,32 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    AsyncStorage.setItem(SETTINGS_KEY, JSON.stringify(settings)).catch(()=>{});
+    if(cacheReady) AsyncStorage.setItem(SETTINGS_KEY, JSON.stringify(settings)).catch(()=>{});
     bgSettings = settings;
-  }, [settings]);
+  }, [settings,cacheReady]);
 
   useEffect(() => {
     if (active) stopTracking();
     setNearest(null);setAhead(null);setPlSectionId(null);plLastSectionState.current=null;
-    refreshRemoteData(true,selectedCountry);
-  }, [selectedCountry]);
+    if(cacheReady) refreshRemoteData(true,selectedCountry);
+  }, [selectedCountry,cacheReady]);
 
-  async function refreshRemoteData(silent=false,country=selectedCountry) {
+  function refreshRemoteData(silent=false,country=selectedCountry) {
+    const run=()=>performRefresh(silent,country);
+    deliveryQueue.current=deliveryQueue.current.catch(()=>{}).then(run);
+    return deliveryQueue.current;
+  }
+
+  async function performRefresh(silent,country) {
     try {
-      const result=await refreshCountryDelivery({country,feeds:remoteFeedsRef.current,versions:countryVersionsRef.current,countries:countryCoverage});
-      if (!result.feed || result.source==='offline' || result.source==='bundled') return false;
+      const result=await refreshCountryDelivery({country,feeds:remoteFeedsRef.current,versions:countryVersionsRef.current,countries:countryCoverageRef.current});
+      countryCoverageRef.current=result.countries;
+      setCountryCoverage(result.countries);
+      if (!result.feed || result.source==='offline' || result.source==='bundled') {
+        await saveCameraCache(AsyncStorage,REMOTE_CACHE_KEY,{feeds:remoteFeedsRef.current,countries:result.countries,cov:coverage,stamp:lastDataUpdate,countryVersions:countryVersionsRef.current});
+        if(!silent) Alert.alert(offlineText.failed);
+        return false;
+      }
       const feeds={...remoteFeedsRef.current,[country]:result.feed};
       const countryVersions={...countryVersionsRef.current};
       if(result.version)countryVersions[country]=result.version;else delete countryVersions[country];
@@ -338,17 +362,28 @@ export default function App() {
       const coverageFor=code=>countries.find(entry=>entry.country_code===code);
       const ua=feeds.UA,pl=feeds.PL;
       const cov={UA:{speed_cameras:ua?.count??ua?.cameras?.length??coverageFor('UA')?.speed_cameras??0},PL:pl?.counts||coverageFor('PL')||{}};
-      remoteFeedsRef.current=feeds;countryVersionsRef.current=countryVersions;bgCameraFeeds=feeds;
-      setRemoteFeeds(feeds);setCountryCoverage(countries);setCoverage(cov);
       const stamp = new Date().toISOString();
-      setLastDataUpdate(stamp);
-      await saveCameraCache(AsyncStorage,REMOTE_CACHE_KEY,{feeds,countries,cov,stamp,countryVersions},country).catch(()=>{});
+      await saveCameraCache(AsyncStorage,REMOTE_CACHE_KEY,{feeds,countries,cov,stamp,countryVersions},country);
+      remoteFeedsRef.current=feeds;countryVersionsRef.current=countryVersions;bgCameraFeeds=feeds;
+      setRemoteFeeds(feeds);setCountryCoverage(countries);setCoverage(cov);setLastDataUpdate(stamp);
       if (!silent) Alert.alert(t.updated);
       return true;
 
     } catch {
+      if(!silent) Alert.alert(offlineText.failed);
       return false;
     }
+  }
+
+  async function downloadCountries() {
+    setDownloading(true);
+    const failed=[];
+    for(const code of downloadSelection) {
+      setDownloadStatus(`${offlineText.busy}: ${COUNTRY_NAMES[code]||code}`);
+      if(!await refreshRemoteData(true,code)) failed.push(code);
+    }
+    setDownloadStatus(failed.length ? `${offlineText.failed}: ${failed.join(", ")}` : offlineText.done);
+    setDownloading(false);
   }
 
   async function sendReportToServer(item) {
@@ -766,6 +801,22 @@ export default function App() {
                 </Pressable>
               ))}
             </ScrollView>
+            {!remoteFeeds[selectedCountry] && !["UA","PL"].includes(selectedCountry) && <Text style={s.note}>{offlineText.empty}</Text>}
+            <Text style={s.sectionTitle}>{offlineText.title} ({countryCoverage.length})</Text>
+            <ScrollView style={{maxHeight:260}} nestedScrollEnabled>
+              {countryCoverage.map(item=>{
+                const code=item.country_code, checked=downloadSelection.includes(code);
+                return <Pressable key={code} disabled={downloading} accessibilityRole="checkbox" accessibilityState={{checked,disabled:downloading}}
+                  onPress={()=>setDownloadSelection(previous=>checked?previous.filter(x=>x!==code):[...previous,code])} style={s.dataCard}>
+                  <Text style={{flex:1}}>{checked?"☑":"☐"} {COUNTRY_NAMES[code]||code} · {item.record_count??item.total??0}</Text>
+                  <Text>{remoteFeeds[code]?(item.version&&countryVersionsRef.current[code]!==item.version?offlineText.update:offlineText.ready):offlineText.missing}</Text>
+                </Pressable>;
+              })}
+            </ScrollView>
+            <Pressable disabled={downloading||!downloadSelection.length} onPress={downloadCountries} style={[s.smallButton,{opacity:downloading||!downloadSelection.length?0.5:1}]}>
+              <Text style={s.smallButtonText}>{offlineText.download} ({downloadSelection.length})</Text>
+            </Pressable>
+            {!!downloadStatus&&<Text accessibilityLiveRegion="polite" style={s.note}>{downloadStatus}</Text>}
             <Text style={s.sectionTitle}>{t.languageLabel}</Text>
             <View style={s.row}>
               {["ru","uk","en","pl"].map(l => <Pressable key={l} onPress={()=>setSettings({...settings,language:l})} style={[s.lang,settings.language===l&&s.langActive]}><Text>{l==="uk"?"UA":l.toUpperCase()}</Text></Pressable>)}
@@ -791,7 +842,7 @@ export default function App() {
 
             <Text style={s.sectionTitle}>{t.coverage}</Text>
             <View style={s.coverageCard}>
-              {countryCoverage.map(item=><Text key={item.country_code} style={s.coverageLine}>{COUNTRY_NAMES[item.country_code]||item.country_code}: {item.total}</Text>)}
+              {countryCoverage.map(item=><Text key={item.country_code} style={s.coverageLine}>{COUNTRY_NAMES[item.country_code]||item.country_code}: {item.record_count??item.total??0}</Text>)}
               <Pressable onPress={()=>Linking.openURL("https://www.openstreetmap.org/copyright")}><Text style={s.coverageLine}>© OpenStreetMap contributors · ODbL 1.0</Text></Pressable>
             </View>
 
