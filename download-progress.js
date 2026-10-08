@@ -10,10 +10,11 @@ export function progressFetch(
   return (url, options = {}) => {
     const dataset =
       String(url).includes("/countries/") ||
+      String(url).includes("/v2/download/") ||
       (String(url).includes("camera-export?country=") &&
         !String(url).endsWith("coverage"));
-    if (!dataset || !XHR) return baseFetch(url, options);
-    const expected = String(url).includes("/countries/") ? expectedBytes : null;
+    if (!dataset || (options.method && options.method !== "GET") || !XHR) return baseFetch(url, options);
+    const expected = (String(url).includes("/countries/") || String(url).includes("/v2/download/")) ? expectedBytes : null;
     return new Promise((resolve, reject) => {
       const request = new XHR(),
         start = Date.now();
@@ -39,6 +40,7 @@ export function progressFetch(
       };
       request.open("GET", url);
       request.setRequestHeader("Cache-Control", "no-cache");
+      for (const [name,value] of Object.entries(options.headers || {})) request.setRequestHeader(name,value);
       request.onprogress = (event) =>
         report(
           event.loaded,

@@ -1,0 +1,11 @@
+{
+  "checkedAt": "2026-10-08T00:29:45.013Z",
+  "result": "passed",
+  "checks": 1649,
+  "realWorkerRuntime": true,
+  "stronglyConsistentSQLiteDO": true,
+  "projectedCountries": 122,
+  "tokenTTL": 300,
+  "tokenRetryUses": 3,
+  "productionChanged": false
+}

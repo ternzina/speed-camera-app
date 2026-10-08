@@ -341,6 +341,9 @@ export function CountryDetails({
   date,
   progress,
   onDownload,
+  onRemove,
+  removalDisabled,
+  updateAvailable,
   onClose,
   busy,
 }) {
@@ -427,7 +430,7 @@ export function CountryDetails({
         ) : (
           <Pressable
             accessibilityRole="button"
-            disabled={busy}
+            disabled={busy || (!!feed && !updateAvailable)}
             onPress={onDownload}
             style={[p.blueButton, feed && { backgroundColor: "#eaf3ff" }]}
           >
@@ -436,11 +439,13 @@ export function CountryDetails({
               color={feed ? "#007aff" : "#fff"}
             />
             <Text maxFontSizeMultiplier={1.35} style={[p.buttonText, feed && { color: "#007aff" }]}>
-              {feed ? copy.offline : copy.download}
+              {feed ? updateAvailable ? copy.update : copy.downloaded : copy.download}
             </Text>
-            {feed && <Icon name="refresh-cw" color="#007aff" size={18} />}
+            {feed && updateAvailable && <Icon name="refresh-cw" color="#007aff" size={18} />}
           </Pressable>
         )}
+        {feed && !updateAvailable && <Text maxFontSizeMultiplier={1.35} style={p.blue}>{copy.current}</Text>}
+        {feed && <Pressable accessibilityRole="button" accessibilityLabel={copy.remove} disabled={removalDisabled} onPress={onRemove} style={[p.whiteCard,{opacity:removalDisabled?0.45:1,alignItems:"center"}]}><Text maxFontSizeMultiplier={1.35} style={{color:"#d92d20"}}>{copy.remove}</Text></Pressable>}
         {progress?.phase === "failed" && <Text maxFontSizeMultiplier={1.35} accessibilityLiveRegion="polite" style={{color:"#d92d20"}}>{copy.failed}</Text>}
         <View style={p.whiteCard}>
           {[

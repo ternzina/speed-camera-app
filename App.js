@@ -31,7 +31,9 @@ import {
   saveCameraCache,
 } from "./camera-data";
 import { countryLabel, buildCountryLists } from "./countries";
-import { refreshCountryDelivery } from "./camera-delivery";
+import { refreshCountryDelivery, releaseCountry } from "./camera-delivery";
+import * as Crypto from "expo-crypto";
+import { installationId, canSaveCountry, savedCountryCodes, MAX_OFFLINE_COUNTRIES } from "./offline-country-policy";
 import {
   drivingPoints,
   nearestDrivingPoint,
@@ -514,7 +516,7 @@ export default function App() {
   const [countryCoverage, setCountryCoverage] = useState([]);
   const countryCoverageRef = useRef([]);
   const [cacheReady, setCacheReady] = useState(false);
-  const [downloadSelection, setDownloadSelection] = useState([]);
+  const [_legacyDownloadSelection] = useState([]); // No selection UI or batch download.
   const [downloading, setDownloading] = useState(false);
   const [downloadStatus, setDownloadStatus] = useState("");
   const deliveryQueue = useRef(Promise.resolve());
@@ -672,6 +674,7 @@ export default function App() {
         if (saved) {
           const feeds = saved.feeds || { UA: saved.ua, PL: saved.pl };
           remoteFeedsRef.current = feeds;
+          pendingReleases.current = saved.pendingReleases || [];
           countryVersionsRef.current = saved.countryVersions || {};
           bgCameraFeeds = feeds;
           setRemoteFeeds(feeds);
@@ -711,19 +714,25 @@ export default function App() {
     setAhead(null);
     setAverageTrip(null);
     plLastSectionState.current = null;
-    if (cacheReady) refreshRemoteData(true, selectedCountry);
+    if (cacheReady) refreshRemoteData(true, selectedCountry, true);
   }, [selectedCountry, cacheReady]);
 
-  function refreshRemoteData(silent = false, country = selectedCountry) {
-    const run = () => performRefresh(silent, country);
+  function refreshRemoteData(silent = false, country = selectedCountry, metadataOnly = false) {
+    const run = () => performRefresh(silent, country, metadataOnly);
     deliveryQueue.current = deliveryQueue.current.catch(() => {}).then(run);
     return deliveryQueue.current;
   }
 
-  async function performRefresh(silent, country) {
+  async function performRefresh(silent, country, metadataOnly = false) {
     try {
+      deliveryFailure.current = null;
+      if (!metadataOnly && !canSaveCountry(remoteFeedsRef.current, country)) return false;
+      const installation = metadataOnly ? null : await installationId(AsyncStorage, Crypto.randomUUID);
+      if (!metadataOnly) await flushPendingReleases(installation);
+
       const result = await refreshCountryDelivery({
         country,
+        installation, metadataOnly,
         feeds: remoteFeedsRef.current,
         versions: countryVersionsRef.current,
         countries: countryCoverageRef.current,
@@ -736,8 +745,13 @@ export default function App() {
           )?.size_bytes,
         ),
       });
+      deliveryFailure.current = result.error;
       countryCoverageRef.current = result.countries;
       setCountryCoverage(result.countries);
+      if (metadataOnly) {
+        await saveCameraCache(AsyncStorage, REMOTE_CACHE_KEY, {feeds:remoteFeedsRef.current,countries:result.countries,cov:coverage,stamp:lastDataUpdate,countryVersions:countryVersionsRef.current});
+        return true;
+      }
       if (
         !result.feed ||
         result.source === "offline" ||
@@ -750,7 +764,11 @@ export default function App() {
           stamp: lastDataUpdate,
           countryVersions: countryVersionsRef.current,
         });
-        if (!silent) Alert.alert(offlineText.failed);
+        if (!remoteFeedsRef.current[country]) {
+          pendingReleases.current = [...new Set([...pendingReleases.current,country])];
+          await saveCameraCache(AsyncStorage, REMOTE_CACHE_KEY, {feeds:remoteFeedsRef.current,countries:result.countries,cov:coverage,stamp:lastDataUpdate,countryVersions:countryVersionsRef.current,pendingReleases:pendingReleases.current});
+        }
+        if (!silent) Alert.alert(result.error?.includes('limit') ? qcopy.rateLimit : offlineText.failed);
         return false;
       }
       const feeds = { ...remoteFeedsRef.current, [country]: result.feed };
@@ -789,32 +807,21 @@ export default function App() {
       if (!silent) Alert.alert(t.updated);
       return true;
     } catch {
+      // A server reservation must not strand a slot when the atomic local write fails.
+      if (!metadataOnly && !remoteFeedsRef.current[country]) {
+        pendingReleases.current = [...new Set([...pendingReleases.current,country])];
+        try {
+          await saveCameraCache(AsyncStorage,REMOTE_CACHE_KEY,{feeds:remoteFeedsRef.current,countries:countryCoverageRef.current,cov:coverage,stamp:lastDataUpdate,countryVersions:countryVersionsRef.current,pendingReleases:pendingReleases.current});
+        } catch {}
+        try {await releaseCountry({country,installation:await installationId(AsyncStorage,Crypto.randomUUID)});} catch {}
+      }
       if (!silent) Alert.alert(offlineText.failed);
       return false;
     }
   }
 
-  async function downloadCountries() {
-    setDownloading(true);
-    const failed = [];
-    for (const code of downloadSelection) {
-      setDownloadStatus(
-        `${offlineText.busy}: ${countryLabel(code, settings.language)}`,
-      );
-      if (!(await refreshRemoteData(true, code))) failed.push(code);
-    }
-    setDownloadStatus(
-      failed.length
-        ? `${offlineText.failed}: ${failed.map((code) => countryLabel(code, settings.language)).join(", ")}`
-        : offlineText.done,
-    );
-    setDownloading(false);
-  }
-
   function renderCountryRow(item) {
-    const code = item.country_code,
-      checked = downloadSelection.includes(code),
-      saved = !!remoteFeeds[code];
+    const code = item.country_code, saved = !!remoteFeeds[code];
     const update =
       saved &&
       item.version &&
@@ -895,39 +902,8 @@ export default function App() {
             />
           </Pressable>
         )}
-        <Pressable
-          disabled={downloading}
-          accessibilityRole="checkbox"
-          accessibilityLabel={`${offlineText.download}: ${item.label}`}
-          accessibilityState={{ checked, disabled: downloading }}
-          onPress={() =>
-            setDownloadSelection((previous) =>
-              previous.includes(code)
-                ? previous.filter((x) => x !== code)
-                : [...previous, code],
-            )
-          }
-          style={[
-            s.lang,
-            {
-              flex: 0,
-              backgroundColor:"transparent",
-              paddingVertical:0,
-              width: 44,
-              minWidth: 44,
-              minHeight: 44,
-              paddingHorizontal: 0,
-              alignItems: "center",
-              justifyContent: "center",
-            },
-          ]}
-        >
-          <Icon
-            name={checked ? "check-square" : "square"}
-            color={checked ? "#007aff" : "#9ba7b7"}
-            size={21}
-          />
-        </Pressable>
+        {saved && <Pressable accessibilityRole="button" accessibilityLabel={`${qcopy.remove}: ${item.label}`} disabled={downloading || active || backgroundEnabled} onPress={() => confirmRemoveCountry(code)} style={s.countryDownload}><Icon name="trash-2" color={downloading || active || backgroundEnabled ? "#98a2b3" : "#d92d20"} size={18}/></Pressable>}
+
       </View>
     );
   }
@@ -1306,6 +1282,10 @@ export default function App() {
   const tripSession = useRef(null);
   const tripStatsRef = useRef([]);
   const mainScroll = useRef(null);
+  const pendingReleases = useRef([]);
+  const deliveryFailure = useRef(null);
+  const downloadBusy = useRef(false);
+  useEffect(() => {installationId(AsyncStorage,Crypto.randomUUID).catch(() => {});}, []);
   useEffect(() => {mainScroll.current?.scrollTo?.({y:0, animated:false});}, [tab, countryFilter]);
   const [systemTheme, setSystemTheme] = useState(
     Appearance?.getColorScheme?.() || "light",
@@ -1432,69 +1412,51 @@ export default function App() {
       () => {},
     );
   }, [active, tripFix]);
-  async function downloadOne(code) {
-    setDownloading(true);
-    setDownloadProgress({
-      country: code,
-      loaded: 0,
-      total:
-        countryCoverageRef.current.find((item) => item.country_code === code)
-          ?.size_bytes || null,
-      phase: "download",
-      seconds: 0,
-    });
-    try {
-      const success = await refreshRemoteData(true, code);
-      setDownloadStatus(success ? offlineText.done : offlineText.failed);
-      setDownloadProgress((previous) =>
-        previous ? { ...previous, phase: success ? "saved" : "failed" } : null,
-      );
-    } catch {
-      setDownloadStatus(offlineText.failed);
-      setDownloadProgress(previous => previous ? {...previous, phase:"failed"} : null);
-    } finally {
-      setDownloading(false);
-    }
+  async function flushPendingReleases(installation) {
+    for (const code of pendingReleases.current) await releaseCountry({country:code,installation});
+    if (!pendingReleases.current.length) return;
+    await saveCameraCache(AsyncStorage, REMOTE_CACHE_KEY, {feeds:remoteFeedsRef.current,countries:countryCoverageRef.current,cov:coverage,stamp:lastDataUpdate,countryVersions:countryVersionsRef.current,pendingReleases:[]});
+    pendingReleases.current=[];
   }
-  function removeSelected() {
-    const codes = downloadSelection.filter(
-      (code) => remoteFeedsRef.current[code],
-    );
-    if (!codes.length || active || backgroundEnabled || downloading) return;
-    Alert.alert(qcopy.confirmRemove, qcopy.removeHint, [
-      { text: t.cancel, style: "cancel" },
-      {
-        text: qcopy.remove,
-        style: "destructive",
-        onPress: () => {
-          const run = async () => {
-            if (drivingRef.current.active || drivingRef.current.backgroundEnabled) return;
-            const feeds = { ...remoteFeedsRef.current },
-              versions = { ...countryVersionsRef.current };
-            for (const code of codes) {
-              delete feeds[code];
-              delete versions[code];
-            }
-            await saveCameraCache(AsyncStorage, REMOTE_CACHE_KEY, {
-              feeds,
-              countries: countryCoverageRef.current,
-              cov: coverage,
-              stamp: lastDataUpdate,
-              countryVersions: versions,
-            });
-            remoteFeedsRef.current = feeds;
-            countryVersionsRef.current = versions;
-            bgCameraFeeds = feeds;
-            setRemoteFeeds(feeds);
-            setDownloadSelection([]);
-          };
-          deliveryQueue.current = deliveryQueue.current
-            .catch(() => {})
-            .then(run)
-            .catch(() => Alert.alert(offlineText.failed));
-        },
-      },
-    ]);
+  async function removeCountryLocal(code) {
+    if (drivingRef.current.active || drivingRef.current.backgroundEnabled) throw Error('Trip active');
+    const feeds={...remoteFeedsRef.current}, versions={...countryVersionsRef.current};
+    delete feeds[code];delete versions[code];
+    const pending=[...new Set([...pendingReleases.current,code])];
+    await saveCameraCache(AsyncStorage,REMOTE_CACHE_KEY,{feeds,countries:countryCoverageRef.current,cov:coverage,stamp:lastDataUpdate,countryVersions:versions,pendingReleases:pending});
+    remoteFeedsRef.current=feeds;countryVersionsRef.current=versions;pendingReleases.current=pending;bgCameraFeeds=feeds;setRemoteFeeds(feeds);
+  }
+  function confirmRemoveCountry(code) {
+    if (active || backgroundEnabled || downloading) return;
+    Alert.alert(qcopy.confirmRemove, countryLabel(code,settings.language)+'\n'+qcopy.removeHint,[{text:t.cancel,style:'cancel'},{text:qcopy.remove,style:'destructive',onPress:()=>{
+      deliveryQueue.current=deliveryQueue.current.catch(()=>{}).then(()=>removeCountryLocal(code)).catch(()=>Alert.alert(offlineText.failed));
+    }}]);
+  }
+  async function downloadOne(code, replacing = null) {
+    if (downloadBusy.current) return;
+    if (!replacing && !canSaveCountry(remoteFeedsRef.current,code)) {
+      if (savedCountryCodes(remoteFeedsRef.current).length > MAX_OFFLINE_COUNTRIES) {
+        Alert.alert(qcopy.offlineLimit,qcopy.legacyLimit);setCountryFilter('downloaded');setTab('offline');return;
+      }
+      if (active || backgroundEnabled) {Alert.alert(qcopy.offlineLimit,qcopy.stopToReplace);return;}
+      Alert.alert(qcopy.offlineLimit,qcopy.chooseReplacement,[...savedCountryCodes(remoteFeedsRef.current).map(saved=>({text:qcopy.remove+' '+countryLabel(saved,settings.language),style:'destructive',onPress:()=>downloadOne(code,saved)})),{text:t.cancel,style:'cancel'}]);
+      return;
+    }
+    downloadBusy.current=true;setDownloading(true);
+    setDownloadProgress({country:code,loaded:0,total:countryCoverageRef.current.find(item=>item.country_code===code)?.size_bytes||null,phase:'download',seconds:0});
+    try {
+      if (replacing) {
+        deliveryQueue.current=deliveryQueue.current.catch(()=>{}).then(()=>removeCountryLocal(replacing));
+        await deliveryQueue.current;
+      }
+      const success=await refreshRemoteData(true,code);
+      setDownloadStatus(success?offlineText.done:offlineText.failed);
+      setDownloadProgress(previous=>previous?{...previous,phase:success?'saved':'failed'}:null);
+      if (!success) Alert.alert(offlineText.failed,/limit|blocked|rate/.test(deliveryFailure.current || '')?qcopy.rateLimit:qcopy.downloadFailure);
+    }catch{
+      setDownloadStatus(offlineText.failed);setDownloadProgress(previous=>previous?{...previous,phase:'failed'}:null);
+      Alert.alert(offlineText.failed);
+    }finally{downloadBusy.current=false;setDownloading(false);}
   }
   const ui = REFERENCE_COPY[settings.language] || REFERENCE_COPY.ru;
   const visibleHistory = filterHistory(history, historyPeriod);
@@ -2065,7 +2027,8 @@ export default function App() {
               )}
 
             <View>
-              <Text maxFontSizeMultiplier={1.35} style={s.sectionTitle}>{offlineText.downloaded}</Text>
+              <Text maxFontSizeMultiplier={1.35} style={s.sectionTitle}>{qcopy.downloadedCountries} {savedCountryCodes(remoteFeeds).length}/{MAX_OFFLINE_COUNTRIES}</Text>
+              {savedCountryCodes(remoteFeeds).length > MAX_OFFLINE_COUNTRIES && <Text maxFontSizeMultiplier={1.35} style={s.note}>{qcopy.legacyLimit}</Text>}
               {!listedCountries.downloaded.length && (
                 <Text maxFontSizeMultiplier={1.35} style={s.note}>{offlineText.none}</Text>
               )}
@@ -2121,18 +2084,6 @@ export default function App() {
                   </Text>
                 </Pressable>
               )}
-            {!!downloadSelection.length && <Pressable
-              disabled={downloading || !downloadSelection.length}
-              onPress={downloadCountries}
-              style={[
-                s.smallButton,
-                { opacity: downloading || !downloadSelection.length ? 0.5 : 1 },
-              ]}
-            >
-              <Text maxFontSizeMultiplier={1.35} style={s.smallButtonText}>
-                {offlineText.download} ({downloadSelection.length})
-              </Text>
-            </Pressable>}
             {countryFilter === "downloaded" && (
               <View style={s.settingsCard}>
                 <View style={s.dataCard}>
@@ -2147,37 +2098,7 @@ export default function App() {
                     </Text>
                   </View>
                 </View>
-                <Pressable
-                  accessibilityRole="button"
-                  disabled={
-                    active ||
-                    backgroundEnabled ||
-                    downloading ||
-                    !downloadSelection.some((code) => remoteFeeds[code])
-                  }
-                  onPress={removeSelected}
-                  style={[
-                    s.sheetCancel,
-                    {
-                      backgroundColor:
-                        downloadSelection.some((code) => remoteFeeds[code]) &&
-                        !active &&
-                        !backgroundEnabled
-                          ? "#ffe8e5"
-                          : "#e8ecf2",
-                    },
-                  ]}
-                >
-                  <Text maxFontSizeMultiplier={1.35}
-                    style={{
-                      color: downloadSelection.some((code) => remoteFeeds[code])
-                        ? "#d92d20"
-                        : "#98a2b3",
-                    }}
-                  >
-                    {qcopy.remove}
-                  </Text>
-                </Pressable>
+
               </View>
             )}
             <View style={s.offlineNotice}>
@@ -2384,7 +2305,7 @@ export default function App() {
                 </Text>
               </View>
               <Pressable
-                onPress={() => refreshRemoteData(false)}
+                onPress={() => downloadOne(selectedCountry)}
                 style={s.smallButton}
               >
                 <Text maxFontSizeMultiplier={1.35} style={s.smallButtonText}>{t.updateNow}</Text>
@@ -2449,6 +2370,9 @@ export default function App() {
               ? downloadProgress
               : null
           }
+          updateAvailable={!!countryDetail?.version && countryVersionsRef.current[countryDetail?.country_code] !== countryDetail?.version}
+          onRemove={() => countryDetail && confirmRemoveCountry(countryDetail.country_code)}
+          removalDisabled={active || backgroundEnabled || downloading}
           onDownload={() =>
             countryDetail && downloadOne(countryDetail.country_code)
           }

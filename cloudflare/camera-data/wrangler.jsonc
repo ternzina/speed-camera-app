@@ -1,9 +1,43 @@
 {
   "name": "speed-camera-data",
   "main": "worker.mjs",
-  "compatibility_date": "2026-10-07",
-  "compatibility_flags": ["nodejs_compat"],
+  "compatibility_date": "2026-10-08",
+  "compatibility_flags": [
+    "nodejs_compat"
+  ],
   "workers_dev": true,
-  "r2_buckets": [{"binding": "CAMERA_DATA", "bucket_name": "speed-camera-data"}],
-  "observability": {"enabled": true, "head_sampling_rate": 0.1}
+  "r2_buckets": [
+    {
+      "binding": "CAMERA_DATA",
+      "bucket_name": "speed-camera-data"
+    }
+  ],
+  "observability": {
+    "enabled": true,
+    "head_sampling_rate": 1,
+    "logs": {
+      "invocation_logs": false
+    }
+  },
+  "durable_objects": {
+    "bindings": [
+      {
+        "name": "DOWNLOAD_LIMITER",
+        "class_name": "DownloadLimiter"
+      }
+    ]
+  },
+  "migrations": [
+    {
+      "tag": "download-authorization-v2",
+      "new_sqlite_classes": [
+        "DownloadLimiter"
+      ]
+    }
+  ],
+  "secrets": {
+    "required": [
+      "DOWNLOAD_SIGNING_SECRET"
+    ]
+  }
 }

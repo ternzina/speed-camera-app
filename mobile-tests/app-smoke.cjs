@@ -12,7 +12,7 @@ assert.ok(section);assert.equal(engine.detectAverageSpeedSection(realPL,section.
 let stateOverrides={},stateIndex=0;const stateInitials=[];const React={createElement:(type,props,...children)=>({type,props,children}),useState:value=>{const i=stateIndex++;stateInitials[i]=value;return [i in stateOverrides?stateOverrides[i]:value,next=>{const previous=i in stateOverrides?stateOverrides[i]:value;stateOverrides[i]=typeof next==='function'?next(previous):next}]},useRef:value=>({current:value}),useMemo:fn=>fn(),useEffect:()=>{}};
 let gpsPermission,gpsPosition;let timerImplementation=setTimeout;const noop=()=>{};const native={StyleSheet:{create:v=>v},Alert:{alert:noop},Vibration:{vibrate:noop},Linking:{openURL:noop}};
 for(const x of ['SafeAreaView','View','Text','Pressable','ScrollView','Modal','TextInput','Switch'])native[x]=x;
-const stubs={'./premium-ui':{HeroLanding:'HeroLanding',FullWarning:'FullWarning',PremiumTrip:'PremiumTrip',CountryDetails:'CountryDetails',Filters:'Filters',TypeIcon:'TypeIcon'},'./product-ui':{Icon:'Icon',CameraMap:'CameraMap'},'react':React,'react-native':native,'expo-location':{Accuracy:{High:4},requestForegroundPermissionsAsync:()=>gpsPermission(),getCurrentPositionAsync:()=>gpsPosition()},'expo-speech':{stop:noop},'expo-task-manager':{defineTask:noop},'expo-notifications':{setNotificationHandler:noop},'expo-haptics':{},'@react-native-async-storage/async-storage':{},'react-native-maps':{default:'MapView',Marker:'Marker',Circle:'Circle'},'expo-status-bar':{StatusBar:'StatusBar'}};
+const stubs={"expo-crypto":{randomUUID:()=>"11111111-1111-4111-8111-111111111111"},'./premium-ui':{HeroLanding:'HeroLanding',FullWarning:'FullWarning',PremiumTrip:'PremiumTrip',CountryDetails:'CountryDetails',Filters:'Filters',TypeIcon:'TypeIcon'},'./product-ui':{Icon:'Icon',CameraMap:'CameraMap'},'react':React,'react-native':native,'expo-location':{Accuracy:{High:4},requestForegroundPermissionsAsync:()=>gpsPermission(),getCurrentPositionAsync:()=>gpsPosition()},'expo-speech':{stop:noop},'expo-task-manager':{defineTask:noop},'expo-notifications':{setNotificationHandler:noop},'expo-haptics':{},'@react-native-async-storage/async-storage':{},'react-native-maps':{default:'MapView',Marker:'Marker',Circle:'Circle'},'expo-status-bar':{StatusBar:'StatusBar'}};
 const moduleApp={exports:{}};const code=babel.transformSync(fs.readFileSync(path.join(root,'App.js'),'utf8'),{configFile:false,babelrc:false,plugins:['@babel/plugin-transform-react-jsx','@babel/plugin-transform-modules-commonjs']}).code;
 vm.runInNewContext(code,{module:moduleApp,exports:moduleApp.exports,require:name=>name in stubs?stubs[name]:name.endsWith('.json')?JSON.parse(fs.readFileSync(path.join(root,name))):plain(name.slice(2)+'.js'),Set,Date,console,setInterval,clearInterval,setTimeout:(fn,ms)=>timerImplementation(fn,ms),clearTimeout});
 for(const country of ['ua','pl','de','fr','us','ca','ru','by','ge','am','az']){stateIndex=0;stateOverrides={0:{country,language:'en',smartDistance:true,cityDistance:500,roadDistance:800,highwayDistance:1000,fastDistance:1500}};assert.ok(moduleApp.exports.default());}
@@ -20,15 +20,13 @@ stateIndex=0;stateOverrides={0:{country:'de',language:'ru'},12:{PL:feed},13:[{co
 const settingsTree=moduleApp.exports.default();
 function nodes(tree,out=[]){if(tree&&typeof tree==='object'){if(tree.type==='Modal'&&tree.props?.visible===false)return out;out.push(tree);for(const child of tree.children||[])for(const item of Array.isArray(child)?child:[child])nodes(item,out);}return out;}
 const checkboxes=nodes(settingsTree).filter(n=>n.props?.accessibilityRole==='checkbox');
-assert.equal(checkboxes.length,4); // cached PL, core UA/DE and well-covered Oman.
-assert.ok(checkboxes[0].props.accessibilityLabel.includes('Польша'));
-assert.ok(checkboxes.some(n=>n.props.accessibilityLabel.includes('Оман')));
-assert.ok(!checkboxes.some(n=>n.props.accessibilityLabel.includes('Панама')||n.props.accessibilityLabel.includes('Тайвань')||n.props.accessibilityLabel.includes('Ontario')));
-assert.ok(nodes(settingsTree).some(n=>n.type==='Text'&&n.children.includes('Скачанные')));
-assert.ok(!nodes(settingsTree).some(n=>n.type==='Text'&&n.children.some(x=>typeof x==='string'&&x.includes('Скачать выбранные'))), 'bulk action stays hidden until selection');
-const omanCheckbox=checkboxes.find(n=>n.props.accessibilityLabel.includes('Оман'));
-omanCheckbox.props.onPress();assert.deepEqual(stateOverrides[15],['OM']);assert.equal(stateOverrides[0].country,'de');
-stateIndex=0;assert.ok(nodes(moduleApp.exports.default()).some(n=>n.type==='Text'&&n.children.some(x=>typeof x==='string'&&x.includes('Скачать выбранные'))), 'selection exposes bulk download');
+assert.equal(checkboxes.length,0,'multi-select removed');
+const radios=nodes(settingsTree).filter(n=>n.props?.accessibilityRole==='radio');
+assert.equal(radios.length,4);
+assert.ok(radios.some(n=>n.props.accessibilityLabel.includes('Оман')));
+assert.ok(!radios.some(n=>/Панама|Тайвань|Ontario/.test(n.props.accessibilityLabel)));
+assert.ok(nodes(settingsTree).some(n=>n.type==='Text'&&n.children.includes('Скачанные страны')));
+assert.ok(!nodes(settingsTree).some(n=>n.type==='Text'&&n.children.some(x=>typeof x==='string'&&x.includes('Скачать выбранные'))), 'no bulk download action');
 const omanRadio=nodes(settingsTree).find(n=>n.props?.accessibilityRole==='radio'&&n.props.accessibilityLabel.includes('Оман'));
 omanRadio.props.onPress();assert.equal(stateOverrides[0].country,'om');
 

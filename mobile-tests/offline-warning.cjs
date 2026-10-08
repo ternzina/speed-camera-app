@@ -14,7 +14,7 @@ const guardedFetch = (...args) => {
     networkRequests++;
     throw Error("Airplane mode: no network");
   }
-  return fetch(...args);
+  return require("./protected-fixtures.cjs").fixtureFetch(...args);
 };
 function plain(file) {
   const module = { exports: {} };
@@ -88,7 +88,7 @@ function loadBackgroundTask(storage, notifications, settings, feeds) {
     useEffect: () => {},
   };
   const noop = () => {};
-  const stubs = {'./premium-ui':{HeroLanding:'HeroLanding',FullWarning:'FullWarning',PremiumTrip:'PremiumTrip',CountryDetails:'CountryDetails',Filters:'Filters',TypeIcon:'TypeIcon'},'./product-ui':{Icon:'Icon',CameraMap:'CameraMap'},
+  const stubs={"expo-crypto":{randomUUID:()=>"11111111-1111-4111-8111-111111111111"},'./premium-ui':{HeroLanding:'HeroLanding',FullWarning:'FullWarning',PremiumTrip:'PremiumTrip',CountryDetails:'CountryDetails',Filters:'Filters',TypeIcon:'TypeIcon'},'./product-ui':{Icon:'Icon',CameraMap:'CameraMap'},
     react: React,
     "react-native": {
       StyleSheet: { create: (v) => v },
@@ -181,23 +181,13 @@ function loadBackgroundTask(storage, notifications, settings, feeds) {
     const storage = diskStorage(dir),
       feeds = {},
       versions = {};
-    const manifest = delivery.validateManifest(
-      await (
-        await fetch(
-          delivery.CAMERA_DELIVERY_URL + "/production/v1/manifest.json",
-        )
-      ).json(),
-    );
-    for (const code of ["UA", "PL", "DE", "FR", "US", "CA"]) {
-      const entry = manifest.countries.find((e) => e.country_code === code);
+    const fixtures = require('./protected-fixtures.cjs');
+    const manifest = delivery.validateManifest(fixtures.manifest());
+    for (const code of ['UA','PL','DE','FR','US','CA']) {
+      const entry=manifest.countries.find(e=>e.country_code===code);
       assert.ok(entry);
-      feeds[code] = delivery.verifyCountryExport(
-        await (
-          await fetch(delivery.CAMERA_DELIVERY_URL + "/" + entry.path)
-        ).text(),
-        entry,
-      );
-      versions[code] = entry.version;
+      feeds[code]=delivery.verifyCountryExport(await (await fixtures.fixtureFetch(delivery.CAMERA_DELIVERY_URL+'/v2/download/'+code)).text(),entry);
+      versions[code]=entry.version;
     }
     await cache.saveCameraCache(storage, "camera_remote_cache_v081", {
       feeds,
