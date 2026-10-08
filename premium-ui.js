@@ -23,7 +23,7 @@ import {
   displayDistance,
   FILTER_TYPES,
 } from "./premium-presentation";
-const HERO = require("./assets/premium/hero-road.png");
+const HERO = require("./assets/premium/hero-road.jpg");
 const NIGHT = require("./assets/premium/warning-road.png");
 const APP_ICON = require("./assets/icon.png");
 const TYPE_ICONS = {
