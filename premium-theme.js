@@ -1,4 +1,5 @@
 const replacements = {
+  "#c7ddf5": "#355677",
   "#fff": "#182230",
   "#ffffff": "#182230",
   "#f3f5f8": "#0b1220",

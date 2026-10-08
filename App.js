@@ -1526,17 +1526,6 @@ export default function App() {
         ]}
         showsVerticalScrollIndicator={false}
       >
-        {tab === "drive" && !active && (
-          <Pressable
-            accessibilityRole="button"
-            accessibilityLabel={qcopy.intro}
-            onPress={() => setPremiumPrefs((previous) => ({...previous, started:false}))}
-            style={{flexDirection:"row", alignItems:"center", gap:6, minHeight:44, alignSelf:"flex-start"}}
-          >
-            <Icon name="arrow-left" color="#007aff" size={20}/>
-            <Text maxFontSizeMultiplier={1.35} style={s.reportButtonText}>{qcopy.back}</Text>
-          </Pressable>
-        )}
         {!fullWarning && (
           <View
             style={s.topBar}
@@ -1544,7 +1533,14 @@ export default function App() {
               setHeaderHeight(event.nativeEvent.layout.height)
             }
           >
-            <Text maxFontSizeMultiplier={1.35}
+            {tab === "drive" && !active && (
+              <Pressable accessibilityRole="button" accessibilityLabel={qcopy.intro}
+                onPress={() => setPremiumPrefs((previous) => ({...previous, started:false}))}
+                style={{width:44,height:44,alignItems:"center",justifyContent:"center"}}>
+                <Icon name="arrow-left" color="#007aff" size={22}/>
+              </Pressable>
+            )}
+            <Text maxFontSizeMultiplier={1.15} numberOfLines={1} adjustsFontSizeToFit
               style={[
                 s.brand,
                 { flex: 1 },
@@ -1561,7 +1557,7 @@ export default function App() {
                       ? t.history
                       : t.map}
             </Text>
-            {["drive", "map"].includes(tab) && (
+            {tab === "map" && (
               <Text maxFontSizeMultiplier={1.35} style={s.countryPill}>
                 {countryLabel(selectedCountry, settings.language)}
               </Text>
@@ -1577,6 +1573,12 @@ export default function App() {
               <Icon name={tab === "map" ? "sliders" : "settings"} />
             </Pressable>
           </View>
+        )}
+
+        {tab === "drive" && !fullWarning && (
+          <Text maxFontSizeMultiplier={1.2} numberOfLines={1} style={[s.countryPill,{alignSelf:"flex-end"}]}>
+            {countryLabel(selectedCountry, settings.language)}
+          </Text>
         )}
 
         {tab === "drive" &&
@@ -2639,14 +2641,14 @@ const baseStyles = StyleSheet.create({
     width: 150,
     height: 150,
     borderRadius: 75,
-    borderWidth: 8,
+    borderWidth: 2,
   },
   speedRing: {
     width: 224,
     height: 224,
     borderRadius: 112,
-    borderWidth: 11,
-    borderColor: "#dcecff",
+    borderWidth: 2,
+    borderColor: "#c7ddf5",
     backgroundColor: "#f9fbfe",
     alignItems: "center",
     justifyContent: "center",
@@ -2727,12 +2729,12 @@ const baseStyles = StyleSheet.create({
   },
   speedPanel: { alignItems: "center", paddingVertical: 12 },
   heroSpeed: {
-    fontSize: 88,
-    lineHeight: 100,
-    fontWeight: "800",
+    fontSize: 76,
+    lineHeight: 90,
+    fontWeight: "600",
     fontVariant: ["tabular-nums"],
     color: "#101828",
-    letterSpacing: -4,
+    letterSpacing: -2,
     maxWidth: "100%",
   },
   speedOver: { color: "#bb3535" },
