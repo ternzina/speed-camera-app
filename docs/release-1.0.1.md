@@ -18,7 +18,8 @@
 - IPA: `build/ios-testflight-15/CamAlert.ipa`, копия `~/Downloads/CamAlert-1.0.1-15.ipa`.
 - EAS Submit iOS ID: `14c3b8c5-c50a-4bb6-b6fe-3557a60d22f7` — FINISHED. Apple завершила обработку: 1.0.1 (15) имеет статус «Тестируется» во внутренней группе Team (Expo), 2 тестировщика; инструкции What to test сохранены.
 - Android EAS Build ID: `6e71ab23-9456-46e5-972e-b055975d2a58` — FINISHED. AAB скачан, подписан, содержит новый endpoint и JPEG-фон (401620 bytes). Копия: `~/Downloads/CamAlert-1.0.1-7.aab`.
-- Публичный App Store/Google Play production rollout не запускался. Цель по предыдущему сценарию — TestFlight и internal testing.
+- 8 октября по запросу пользователя публичная заявка App Store заменена на **1.0.1 (15)** и отправлена на проверку. Статус Apple: **Ожидание проверки**; автоматический выпуск после одобрения включён. Submission ID: `3a2d7047-0673-4055-bbfe-155bdfb0eecd`. Предыдущая заявка с build 14 отменена для замены. TestFlight 15 остаётся доступен.
+- Google Play production недоступен: Console требует не менее 12 участников закрытого тестирования в течение 14 дней подряд; сейчас участвует 1 человек, кнопка подачи заявки отключена. AAB 7 ещё не загружен: повторная попытка упёрлась в Allow access to file URLs. Разрешение запрошено у пользователя; новые права без ответа не предоставлены.
 
 1649 локальных Workers security checks passed; повторные tests с новым endpoint пройдены. Offline warning regression UA/PL/DE/FR/US/CA — 0 network requests. Physical-device airplane test остаётся проверкой перед широким выпуском.
 
@@ -31,3 +32,5 @@
 Для продолжения: пользователь выбирает готовый AAB через кнопку «Загрузить» в сохранённом черновике, либо включает file URL permission расширения и подтверждает продолжение. Затем проверить versionCode 7, перейти Далее и опубликовать internal testing.
 
 Подтверждения: `build/testflight-15-testing.png`, `build/google-play-7-draft.png`, `build/protected-live-verification.json`.
+
+Подтверждение публичной заявки Apple: `build/appstore-15-waiting-review.png`. Требования Google: `build/google-production-blocked.png`.
