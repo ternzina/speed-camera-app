@@ -116,6 +116,7 @@ export const PREMIUM_COPY = {
     mapOnly:
       "Типи фільтрують карту. Попередження про камери залишаються активними.",
     intro: "Стартовий екран",
+    back: "Назад",
   },
   en: {
     title: "Speed Camera",
