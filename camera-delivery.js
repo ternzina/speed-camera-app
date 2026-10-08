@@ -1,6 +1,6 @@
 import { sha256, utf8Bytes } from './sha256';
 import { canSaveCountry } from './offline-country-policy';
-export const CAMERA_DELIVERY_URL='https://speed-camera-data.ternzina.workers.dev';
+export const CAMERA_DELIVERY_URL='https://speed-camera-protected.ternzina.workers.dev';
 const groups=['cameras','speed_cameras','red_light_cameras','checkpoints','average_speed_sections'];
 const iso=/^[A-Z]{2}$/;
 function countFeed(feed){return groups.reduce((n,k)=>n+(feed[k]?.length||0),0);}

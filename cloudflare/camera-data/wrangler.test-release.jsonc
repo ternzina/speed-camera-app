@@ -1,0 +1,12 @@
+{
+  "name":"speed-camera-protected",
+  "account_id":"912ee2aedf25096037b555f6edf94300",
+  "main":"worker.mjs",
+  "compatibility_date":"2026-10-08",
+  "compatibility_flags":["nodejs_compat"],
+  "r2_buckets":[{"binding":"CAMERA_DATA","bucket_name":"speed-camera-data"}],
+  "durable_objects":{"bindings":[{"name":"DOWNLOAD_LIMITER","class_name":"DownloadLimiter"}]},
+  "migrations":[{"tag":"download-authorization-v2","new_sqlite_classes":["DownloadLimiter"]}],
+  "observability":{"enabled":true,"head_sampling_rate":1,"logs":{"enabled":true,"invocation_logs":false}},
+  "secrets":{"required":["DOWNLOAD_SIGNING_SECRET"]}
+}

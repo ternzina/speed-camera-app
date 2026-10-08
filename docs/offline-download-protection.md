@@ -1,7 +1,7 @@
 # Защита офлайн-загрузок: подготовленный релиз
 
 Ветка: `feature/offline-download-protection`.
-Код и тесты подготовлены; **production не изменён, серверная защита ещё не включена**. Сборки в магазины не отправлялись. Коллектор, source registry, storage migration и `main` не менялись.
+Код и тесты подготовлены. Обновление 1.0.1 использует отдельный живой защищённый Worker `speed-camera-protected`; см. `release-1.0.1.md`. Старые production endpoints и Supabase доступ не переключались. Сборки в магазины не отправлялись. Коллектор, source registry, storage migration и `main` не менялись.
 
 ## Пользовательский сценарий
 
