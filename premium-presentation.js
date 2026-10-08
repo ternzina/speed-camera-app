@@ -60,6 +60,7 @@ export const PREMIUM_COPY = {
     mapOnly:
       "Типы фильтруют карту. Предупреждения о камерах остаются активными.",
     intro: "Стартовый экран",
+    back: "Назад",
   },
   uk: {
     title: "Speed Camera",
@@ -169,6 +170,7 @@ export const PREMIUM_COPY = {
     countries: "Countries",
     mapOnly: "Types filter the map. Camera warnings stay active.",
     intro: "Welcome screen",
+    back: "Back",
   },
   pl: {
     title: "Speed Camera",
@@ -223,6 +225,7 @@ export const PREMIUM_COPY = {
     countries: "Kraje",
     mapOnly: "Typy filtrują mapę. Ostrzeżenia pozostają aktywne.",
     intro: "Ekran startowy",
+    back: "Wstecz",
   },
 };
 export const FILTER_TYPES = [

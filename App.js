@@ -1564,6 +1564,17 @@ export default function App() {
         ]}
         showsVerticalScrollIndicator={false}
       >
+        {tab === "drive" && !active && (
+          <Pressable
+            accessibilityRole="button"
+            accessibilityLabel={qcopy.intro}
+            onPress={() => setPremiumPrefs((previous) => ({...previous, started:false}))}
+            style={{flexDirection:"row", alignItems:"center", gap:6, minHeight:44, alignSelf:"flex-start"}}
+          >
+            <Icon name="arrow-left" color="#007aff" size={20}/>
+            <Text maxFontSizeMultiplier={1.35} style={s.reportButtonText}>{qcopy.back}</Text>
+          </Pressable>
+        )}
         {!fullWarning && (
           <View
             style={s.topBar}
