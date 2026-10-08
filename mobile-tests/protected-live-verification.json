@@ -1,0 +1,46 @@
+{
+  "checkedAt": "2026-10-08T01:39:26.545Z",
+  "endpoint": "https://speed-camera-protected.ternzina.workers.dev",
+  "downloaded": [
+    {
+      "country": "UA",
+      "status": 200,
+      "checksum": true,
+      "bytes": 78210
+    },
+    {
+      "country": "PL",
+      "status": 200,
+      "checksum": true,
+      "bytes": 155016
+    },
+    {
+      "country": "DE",
+      "status": 200,
+      "checksum": true,
+      "bytes": 1069734
+    },
+    {
+      "country": "FR",
+      "status": 200,
+      "checksum": true,
+      "bytes": 1150504
+    },
+    {
+      "country": "US",
+      "status": 200,
+      "checksum": true,
+      "bytes": 690272
+    },
+    {
+      "country": "CA",
+      "status": 200,
+      "checksum": true,
+      "bytes": 257672
+    }
+  ],
+  "thirdCountry": 409,
+  "crossCountry": 401,
+  "directUrl": 404,
+  "legacyProductionChanged": false
+}
