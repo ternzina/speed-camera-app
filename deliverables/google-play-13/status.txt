@@ -1,0 +1,11 @@
+CamAlert 1.0.2 (13)
+AAB: /Users/zina/Downloads/CamAlert-1.0.2-play.aab
+SHA256: cd5b1473abaa3bd3eb2c8369705a37432d41fcf11ddd290a2cfa2a4e1f94d9cd
+Uploaded and processed in Play Console, closed track 1.0.1-8, release 2. Submitted for review on 2026-10-15. Play Console shows Changes in review; automated common-problem checks are running.
+Background location and foreground service declarations saved with video URL. Blocking errors cleared; optional deobfuscation-file warning remains.
+Local emulator demonstration: background-review.mp4. Recorded using existing APK with the same source as bundle 13, simulated GPS. Not physical-device evidence.
+Source unchanged; no commit or push.
+
+YouTube unlisted: https://youtube.com/shorts/Aa-R0MGIEZI
+Channel: UCrORptSLRhy8ssK3s4_GbCA
+Managed publishing is ON: approval is not automatic release to testers.

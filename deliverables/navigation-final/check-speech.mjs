@@ -1,0 +1,13 @@
+import fs from 'node:fs';
+import assert from 'node:assert/strict';
+const source=fs.readFileSync(new URL('../../camera-speech-coordinator.js',import.meta.url),'utf8');
+const {createSpeechCoordinator}=await import('data:text/javascript;base64,'+Buffer.from(source).toString('base64'));
+let callback,timeout;const states=[];
+const engine={speak:(_,opts)=>{callback=opts;},stop:()=>Promise.resolve(),isSpeakingAsync:async()=>true};
+const speech=createSpeechCoordinator(engine,fn=>{timeout=fn;return 1;},()=>{});
+const unsub=speech.subscribe(value=>states.push(value));
+speech.speak('camera');assert.equal(states.at(-1),true);callback.onDone();assert.equal(states.at(-1),false);
+speech.speak('first');const old=callback;speech.speak('second');old.onStopped();assert.equal(states.at(-1),true);callback.onError(new Error());assert.equal(states.at(-1),false);
+speech.speak('third');timeout();assert.equal(states.at(-1),false);
+speech.speak('fourth');await speech.stop();assert.equal(states.at(-1),false);
+unsub();console.log('PASS: voice arbitration completion, stale callback, error, timeout, stop');

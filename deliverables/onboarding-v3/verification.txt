@@ -1,0 +1,35 @@
+CamAlert onboarding — 2026-10-15
+
+Implemented in this task:
+- App.js: 3-page welcome flow, icon back navigation including Home -> page 3, welcome replay from settings, remove top DEMO badge on Cameras. Existing illustrative-camera explanatory notice retained.
+- onboarding.js: localized native UI (ru, uk, en, pl), fixed footer, scrollable content, inline feature icons, separate illustrations, first-frame fallback, silent video (sound removed at user request). Video pauses in background and releases on page exit.
+- onboarding-stats.json: verified published-manifest snapshot, refreshed at runtime with validated manifest and cached locally.
+- New assets: assets/onboarding-first-frame.jpg, onboarding-world.jpg, onboarding-night.jpg.
+- Countries below 100 cameras remain visible, per latest correction. No threshold filter.
+
+Statistics: 122 countries, 114794 published records.
+Source: https://speed-camera-data.ternzina.workers.dev/production/v1/manifest.json
+Catalog generated: 2026-10-13T15:35:26.807485+00:00.
+Existing exporter selects active high/medium-confidence camera_records and excludes _example_only; no candidates/observations are summed. Existing Poland physical-site projection is separate from canonical record count. Stats use canonical published catalog count, including average-speed sections and checkpoints as supplied by that catalog. No remote data modified.
+
+Checks:
+PASS: iOS Debug xcodebuild, simulator arm64, latest source.
+PASS: Android assembleDebug, arm64-v8a, latest source.
+PASS: Babel syntax parsing for App.js and onboarding.js; git diff --check.
+PASS: first page rendered on iPhone 13 mini simulator, 375x812 logical size; video visible, full footer visible in release preview.
+Python existing suite: attempted 23 tests; 17 errors, 6 passed. Errors include missing shapely/psycopg and master-db/cache temporary directory. No dependencies installed. Full output: python-tests.log.
+PASS: iOS home back icon opens page 3; back from 3 -> 2 -> 1; Skip returns home; Continue on page 3 opens system GPS permission dialog; Deny returns existing home. Relaunch shows home after completion. Informational pages shown without GPS request.
+PASS: real page 2 and page 3 screenshots captured on iPhone 13 mini (375x812). All content and footer fit at standard text size. Image sizing corrected after initial visual review.
+PENDING: iOS swipe gesture/scroll and Ukrainian runtime rendering not fully verified. UI tooling has intermittent noWindowsAvailable/timeouts. Maximum-size text review led to scaling caps: body/title/card text 1.6, brand 1.15, top action 1.3, badge 1.2, bottom button 1.5; vertical scrolling retained.
+PENDING: Android device installation and screenshots require user choice for emulator-5554 (used by BP Scan). APK build succeeded; no Android UI execution claimed.
+PENDING: airplane-mode behavior, forced video error fallback on a physical phone.
+
+Differences from references:
+- Separate generated globe illustration and reconstructed night-road illustration from user reference; all copy/stats/cards/buttons are native UI.
+- Honest description instead of unverified millions-of-users claim.
+- Stats dated and refreshed, not historical hardcoded 113205.
+- Compact typography and inline icons; large accessibility text can scroll.
+- Solid #1260E8 button; no gradient dependency added.
+- First-page back icon closes welcome and returns to existing home; subsequent pages go back one page.
+
+No commits, git push, uploads, new dependencies, camera-data mutations, GPS/alert/background/payment or release-configuration changes in this task.

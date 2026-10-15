@@ -1,0 +1,25 @@
+{
+  "changes": [
+    "Hide duplicate Google speedometer",
+    "Await Google guidance cleanup before closing route",
+    "Localize camera notifications and foreground UA speech in ru/uk/pl/en",
+    "Attempt Android background TTS after persisted deduplication; retain notification fallback"
+  ],
+  "checks": {
+    "js_syntax": "passed",
+    "alert_copy_33_assertions": "passed",
+    "android_native_build": "passed",
+    "apk_install_emulator": "passed",
+    "navigation_runtime": "route preview, guidance and return to CamAlert confirmed after emulator restart; initial noActivity error remains an intermittent issue",
+    "background_voice": "not verified",
+    "screen_locked": "screen OFF verified; secure PIN lock not tested",
+    "bluetooth": "not verified",
+    "google_language": "unchanged: native SDK language is not configured by installed JS wrapper",
+    "screen_off_notification": "passed on emulator: power Asleep and new camera alert at 77 m",
+    "background_notification": "passed on emulator: launcher foreground, camera notification at 326 m",
+    "duplicate_speedometer": "removed: screenshot shows only CamAlert speed",
+    "end_route": "passed: confirmation then return to active CamAlert trip",
+    "rendering": "native Google header appeared black after wake; requires further investigation"
+  },
+  "published": false
+}

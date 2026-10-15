@@ -1,0 +1,13 @@
+{
+  "power": [
+    "mWakefulness=Asleep"
+  ],
+  "notification": [
+    "android.title=String (Камера через 77 м)",
+    "android.text=String (Ограничение 50 км/ч.)",
+    "android.bigText=String (Ограничение 50 км/ч.)",
+    "android.title=String (Камера через 326 м)",
+    "android.text=String (Ограничение 50 км/ч.)",
+    "android.bigText=String (Ограничение 50 км/ч.)"
+  ]
+}

@@ -1,0 +1,4 @@
+New app process PID: 20364
+10-15 14:45:43.851 20364 20364 I Google Android Maps SDK: Google Play services client version: 19010000
+10-15 14:45:43.890 20364 20364 I Google Android Maps SDK: Google Play services package version: 263933035
+10-15 14:45:43.890 20364 20364 I Google Android Maps SDK: Google Play services maps renderer version(maps_core): 263020511

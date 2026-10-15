@@ -1,0 +1,18 @@
+import fs from 'node:fs';
+import assert from 'node:assert/strict';
+const source = fs.readFileSync(new URL('../../navigation-readiness.js', import.meta.url), 'utf8');
+const {withNavigationWindow} = await import('data:text/javascript;base64,'+Buffer.from(source).toString('base64'));
+let calls=0, waits=0;
+const transient=()=>Object.assign(new Error('No activity available to show the dialog'),{code:'noActivity'});
+assert.equal(await withNavigationWindow(async()=>{if(++calls<3)throw transient();return true;},()=>true,async()=>waits++),true);
+assert.equal(calls,3); assert.equal(waits,2);
+calls=0;
+await assert.rejects(withNavigationWindow(async()=>{calls++;throw transient();},()=>true,async()=>{}),{code:'noActivity'});
+assert.equal(calls,6);
+calls=0;
+await assert.rejects(withNavigationWindow(async()=>{calls++;throw Object.assign(new Error('unauthorized'),{code:'auth'});},()=>true,async()=>{}),{code:'auth'});
+assert.equal(calls,1);
+let active=true;calls=0;
+await assert.rejects(withNavigationWindow(async()=>{calls++;throw transient();},()=>active,async()=>{active=false;}),/navigationInactive/);
+assert.equal(calls,1);
+console.log('PASS: transient Activity retry, retry bound, auth not retried, cancellation');

@@ -125,3 +125,12 @@ export const COUNTRY_NAMES = {
   "PG": "Papua New Guinea",
   "PS": "Palestine",
 };
+
+// Unicode regional indicators render each country’s flag on iOS and Android.
+export function countryFlag(code) {
+  const normalized = String(code || "").trim().toUpperCase();
+  if (!/^[A-Z]{2}$/.test(normalized)) return "🌍";
+  return String.fromCodePoint(
+    ...Array.from(normalized, letter => 0x1F1E6 + letter.charCodeAt(0) - 65)
+  );
+}

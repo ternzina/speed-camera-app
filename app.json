@@ -2,7 +2,7 @@
   "expo": {
     "name": "CamAlert",
     "slug": "speed-camera-prototype-direction",
-    "version": "0.8.2",
+    "version": "1.0.2",
     "orientation": "portrait",
     "ios": {
       "supportsTablet": true,
@@ -10,6 +10,10 @@
         "NSLocationWhenInUseUsageDescription": "Местоположение нужно, чтобы предупреждать о дорожных камерах во время поездки.",
         "ITSAppUsesNonExemptEncryption": false,
         "NSLocationAlwaysAndWhenInUseUsageDescription": "Разрешите геолокацию всегда, чтобы получать предупреждения о камерах при погашенном экране.",
+        "LSApplicationQueriesSchemes": [
+          "maps",
+          "comgooglemaps"
+        ],
         "UIBackgroundModes": [
           "location"
         ]
@@ -31,7 +35,9 @@
         {
           "locationWhenInUsePermission": "Местоположение нужно, чтобы предупреждать о дорожных камерах во время поездки.",
           "locationAlwaysAndWhenInUsePermission": "Разрешите геолокацию всегда, чтобы получать предупреждения о камерах при погашенном экране.",
-          "isIosBackgroundLocationEnabled": true
+          "isIosBackgroundLocationEnabled": true,
+          "isAndroidBackgroundLocationEnabled": true,
+          "isAndroidForegroundServiceEnabled": true
         }
       ],
       "expo-notifications",
@@ -42,7 +48,9 @@
           "resizeMode": "cover",
           "backgroundColor": "#062957"
         }
-      ]
+      ],
+      "expo-video",
+      "./plugins/withNavigatorQueries"
     ],
     "extra": {
       "eas": {

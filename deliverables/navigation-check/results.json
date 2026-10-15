@@ -1,0 +1,41 @@
+{
+  "date": "2026-10-15",
+  "device": "emulator-5554, Android 16, arm64",
+  "build": "Local test APK, versionCode 11; installed over existing emulator app; not published",
+  "passed": [
+    "Native Android build (Navigation SDK and react-native-maps)",
+    "Installation retaining existing app data",
+    "Waze absent from choice",
+    "Embedded Google map and actual route calculated",
+    "Guidance started",
+    "CamAlert GPS speed 40 km/h displayed",
+    "Camera ahead distance decreased: 331 m to 143 m; limit 50 km/h",
+    "No reduce-speed demand at 40 km/h with limit 50"
+  ],
+  "partial": [
+    "Audio stream recorded and TTS engine connected; spoken content/overlap not independently verified",
+    "Google foreground NavigationService observed; this alone does not prove background camera alerts",
+    "Home action eventually reached launcher"
+  ],
+  "not_confirmed": [
+    "Camera alert delivery with app backgrounded",
+    "Camera alerts on locked screen",
+    "Back button cleanup and user-driven session stop",
+    "Bluetooth",
+    "Google speedometer stayed -- while CamAlert showed 40",
+    "Google navigation labels were English despite Russian CamAlert UI"
+  ],
+  "limitations": [
+    "ARTEMIS agent lacks API key; its hierarchy became stale compared with fresh screenshots",
+    "ADB system commands and screenshots intermittently timed out; do not treat background GPS injection logs as evidence of delivery",
+    "Initial NMEA input accepted by emulator console but did not update GPS; replaced by geo fix",
+    "Synthetic GPS segment did not follow road geometry exactly; Google recalculated route"
+  ],
+  "cleanup": "GPS replay processes finished; force-stop command for CamAlert returned successfully; no camera source files changed",
+  "evidence": [
+    "01-route-preview.png",
+    "02-guidance.png",
+    "03-camera-ahead.png",
+    "drive.mp4"
+  ]
+}
