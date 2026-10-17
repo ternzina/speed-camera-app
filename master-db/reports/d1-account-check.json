@@ -1,0 +1,51 @@
+{
+  "checked_at": "2026-10-17T20:40:27Z",
+  "wrangler": "4.81.0",
+  "cloudflare_mutations": false,
+  "active_login": {
+    "email": "herlightapp@gmail.com",
+    "account_name": "Herlightapp@gmail.com's Account",
+    "account_id": "f261ce697d712f29db7dfc5c0f2f27b9",
+    "memberships": [
+      {
+        "account_id": "f261ce697d712f29db7dfc5c0f2f27b9",
+        "account_name": "Herlightapp@gmail.com's Account",
+        "status": "accepted"
+      }
+    ],
+    "config_path": "/Users/zina/.wrangler/config/default.toml"
+  },
+  "ternzina_account_id": null,
+  "ternzina_account_id_note": "No account id for Ternzina is stored in wrangler.jsonc, archive.wrangler.jsonc, or the active OAuth memberships. The README names the account and does not record an id.",
+  "d1_list_account": "Herlightapp@gmail.com's Account",
+  "d1_databases": [],
+  "camalert_operational_on_active_account": false,
+  "r2_buckets_on_active_account": ["herlight", "herlight-media", "herlight-stories"],
+  "speed_camera_data_bucket_on_active_account": false,
+  "workers_on_active_account": {
+    "speed-camera-data": "absent",
+    "speed-camera-archive": "absent",
+    "error_code": 10007
+  },
+  "public_manifest": {
+    "url": "https://speed-camera-data.ternzina.workers.dev/production/v1/manifest.json",
+    "http_status": 200,
+    "content_length": 156618,
+    "x_content_sha256": "7824306f2409909985e482bf110b65bf6c21a3444a21716b55c7a081a9159f4b",
+    "matches_pinned_manifest": true
+  },
+  "local_sqlite": {
+    "path": "master-db/cache/d1-operational/camalert-operational.sqlite",
+    "bytes": 64274432,
+    "cameras": 123579,
+    "published": 114794,
+    "unpublished": 8785,
+    "ua_cameras": 567,
+    "ua_published": 426,
+    "pl_cameras": 2377,
+    "pl_published": 903,
+    "delivery_and_render_rows": 1397,
+    "master_key": "archive/v1/manifests/fd4cede54c8cd2e1d513d5ca05c0b520ddd13ccfc7ee0f02bf5ea8f000d9648b.json"
+  },
+  "first_cloud_import": "blocked until wrangler whoami shows ternzina@gmail.com"
+}
