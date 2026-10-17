@@ -1,0 +1,67 @@
+{
+  "checked_at": "2026-10-17T22:37:30Z",
+  "account_id": "912ee2aedf25096037b555f6edf94300",
+  "account_email": "ternzina@gmail.com",
+  "database_name": "camalert-operational",
+  "database_id": "65a68ee8-74ff-4429-9b0c-125df189018b",
+  "region": "WEUR",
+  "worker_bindings": [
+    {"type": "r2_bucket", "name": "CAMERA_DATA", "bucket_name": "speed-camera-data"}
+  ],
+  "worker_config_changed": false,
+  "schema_import": {
+    "queries": 13,
+    "rows_read": 17,
+    "rows_written": 25,
+    "size_after_bytes": 94208
+  },
+  "data_import": {
+    "queries": 5966,
+    "rows_read": 8833,
+    "rows_written": 22158,
+    "size_after_bytes": 2240512,
+    "logical_inserts": 5965
+  },
+  "queries": {
+    "cameras": 2944,
+    "published": 1329,
+    "unpublished": 1615,
+    "ua": 567,
+    "pl": 2377,
+    "other_countries": 0,
+    "candidates": 1602,
+    "candidates_published": 0,
+    "review_published": 0,
+    "published_outside_rule": 0,
+    "ua_delivery": 426,
+    "pl_delivery": 903,
+    "pl_render_rows": 68,
+    "pl_render_distinct": 68,
+    "moderation": 1615,
+    "moderation_mismatch": 0,
+    "sources": 6,
+    "foreign_key_violations": 0,
+    "duplicate_cameras": 0,
+    "duplicate_exports": 0,
+    "status_rows": [
+      {"status": "active", "published": 1, "n": 1329},
+      {"status": "candidate", "published": 0, "n": 1602},
+      {"status": "review", "published": 0, "n": 13}
+    ]
+  },
+  "repeat_import": {
+    "result": "rejected",
+    "error": "UNIQUE constraint failed: sources.source_code",
+    "cameras_after": 2944,
+    "published_after": 1329,
+    "unpublished_after": 1615,
+    "size_after_bytes": 2240512
+  },
+  "usage_utc_day_2026_10_17": {
+    "rows_read": 8850,
+    "rows_written": 22183,
+    "free_daily_row_write_limit": 100000,
+    "free_daily_row_writes_remaining_if_on_free_plan": 77817,
+    "quota_remaining_field_returned": false
+  }
+}
