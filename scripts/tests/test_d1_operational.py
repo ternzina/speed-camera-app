@@ -59,6 +59,43 @@ class OperationalImport(unittest.TestCase):
         self.assertEqual(conn.execute('SELECT COUNT(*) FROM import_runs').fetchone()[0],1)
         conn.close()
 
+    def test_repeat_sql_keeps_the_existing_source_row(self):
+        import d1_export_remaining_batch as batch
+        import d1_export_ua_pl_slice as trial
+        self.assertTrue(all("DO NOTHING" in clause and "DO UPDATE" not in clause for clause in trial.CONFLICT.values()))
+        probe=sqlite3.connect(':memory:')
+        self.assertEqual(probe.execute('SELECT '+trial.sql_value('a\nb')).fetchone()[0],'a\nb')
+        self.assertEqual(probe.execute('SELECT '+trial.sql_value('a\r\nb')).fetchone()[0],'a\r\nb')
+        probe.close()
+        schema=(Path(__file__).resolve().parents[2]/'cloudflare/camera-data/d1/schema.sql').read_text()
+        origin=sqlite3.connect(':memory:')
+        origin.executescript(schema)
+        origin.execute("INSERT INTO storage_control(id,normalized_manifest,archive_root,delivery_pending,master_decoded_sha256,master_record_count,manifest_sha256,manifest_generated_at,updated_at) VALUES(1,'manifest','root-key',0,'sha',1,'manifest-sha','2026-10-17T00:00:00Z','2026-10-17T00:00:00Z')")
+        origin.execute("INSERT INTO archive_registry(root_key,created_at,batch,observation_count,candidate_count,normalized_manifest,verified_readback) VALUES('root-key','2026-10-17T00:00:00Z','keep',1,0,'manifest',1)")
+        origin.execute("INSERT INTO archive_registry(root_key,created_at,batch,observation_count,candidate_count,normalized_manifest,verified_readback) VALUES('later-key','2026-10-17T00:00:00Z','later',1,0,'manifest',1)")
+        origin.execute("INSERT INTO sources(source_code,source_name,source_type,country_code,source_url,license,license_url,manifest_license,in_public_manifest) VALUES('OSM_DE','original','openstreetmap','DE',NULL,NULL,NULL,NULL,0)")
+        origin.execute("INSERT INTO cameras(canonical_id,country_code,camera_type,status,confidence,latitude,longitude,source_codes,source_count,published,lat_cell,lon_cell,chunk_key,row_sha256) VALUES('OSM_DE:node/1','DE','fixed_speed','active','high',52.5,13.4,'[\"OSM_DE\"]',1,1,52,13,'chunk','sha-1')")
+        origin.execute("INSERT INTO cameras(canonical_id,country_code,camera_type,status,confidence,latitude,longitude,source_codes,source_count,published,lat_cell,lon_cell,chunk_key,row_sha256) VALUES('OSM_DE:node/2','DE','fixed_speed','review','low',52.6,13.5,'[\"OSM_DE\"]',1,0,52,13,'chunk','sha-2')")
+        origin.execute("INSERT INTO camera_moderation(canonical_id,country_code,status,confidence,archive_ref) VALUES('OSM_DE:node/2','DE','review','low','manifest')")
+        rendered=batch.render_sql(origin,{
+            'source_rows':1,'registry_rows':1,'cameras':2,'unpublished':1,
+            'parts':[{'country_code':'DE','cameras':2,'unpublished':1,'first_canonical_id':'OSM_DE:node/1','last_canonical_id':'OSM_DE:node/2'}],
+        },set())
+        self.assertNotIn('DO UPDATE',rendered)
+        self.assertNotIn('INSERT INTO storage_control',rendered)
+        self.assertNotIn('INSERT INTO import_runs',rendered)
+        fresh=sqlite3.connect(':memory:')
+        fresh.executescript(schema)
+        fresh.executescript(rendered)
+        before=fresh.total_changes
+        fresh.executescript(rendered)
+        self.assertEqual(fresh.total_changes-before,0)
+        fresh.execute("INSERT INTO sources(source_code,source_name,source_type,country_code,source_url,license,license_url,manifest_license,in_public_manifest) VALUES('OSM_DE','replaced','openstreetmap','DE',NULL,NULL,NULL,NULL,1) "+trial.CONFLICT['sources'])
+        self.assertEqual(fresh.execute("SELECT source_name,in_public_manifest FROM sources").fetchone(),('original',0))
+        self.assertEqual(fresh.execute("SELECT COUNT(*) FROM cameras").fetchone()[0],2)
+        self.assertEqual(fresh.execute("SELECT speed_limit FROM cameras WHERE canonical_id='OSM_DE:node/1'").fetchone()[0],None)
+        origin.close();fresh.close()
+
     def test_verification_rejects_a_changed_speed_limit(self):
         d1.import_operational(self.root,self.database,self.master_key,self.manifest)
         conn=sqlite3.connect(self.database)

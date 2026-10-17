@@ -18,7 +18,39 @@ def sql_value(value):
         return str(value)
     if isinstance(value, float):
         return repr(value)
-    return "'" + str(value).replace("'", "''") + "'"
+    text = str(value)
+    if "\n" not in text and "\r" not in text:
+        return "'" + text.replace("'", "''") + "'"
+    pieces = []
+    buffer = []
+
+    def flush():
+        if buffer:
+            pieces.append("'" + "".join(buffer).replace("'", "''") + "'")
+            buffer.clear()
+
+    for character in text:
+        if character == "\n":
+            flush()
+            pieces.append("char(10)")
+        elif character == "\r":
+            flush()
+            pieces.append("char(13)")
+        else:
+            buffer.append(character)
+    flush()
+    return " || ".join(pieces)
+
+# Repeat loads skip the existing primary key. DO NOTHING does not replace a row.
+CONFLICT = {
+    "sources": "ON CONFLICT(source_code) DO NOTHING",
+    "cameras": "ON CONFLICT(canonical_id) DO NOTHING",
+    "camera_export_ids": "ON CONFLICT(country_code, export_group, export_id, canonical_key) DO NOTHING",
+    "camera_moderation": "ON CONFLICT(canonical_id) DO NOTHING",
+    "archive_registry": "ON CONFLICT(root_key) DO NOTHING",
+    "storage_control": "ON CONFLICT(id) DO NOTHING",
+    "import_runs": "ON CONFLICT(master_decoded_sha256) DO NOTHING",
+}
 
 def insert_rows(conn, table, query, params=()):
     cursor = conn.execute(query, params)
@@ -26,9 +58,10 @@ def insert_rows(conn, table, query, params=()):
     rows = cursor.fetchall()
     lines = []
     quoted_columns = ",".join(columns)
+    conflict = CONFLICT[table]
     for row in rows:
         values = ",".join(sql_value(value) for value in row)
-        lines.append(f"INSERT INTO {table} ({quoted_columns}) VALUES ({values});")
+        lines.append(f"INSERT INTO {table} ({quoted_columns}) VALUES ({values}) {conflict};")
     return columns, rows, lines
 
 def main():
@@ -57,9 +90,10 @@ def main():
     render = conn.execute("SELECT COUNT(*) FROM camera_export_ids WHERE country_code IN ('UA','PL') AND role='render_projection'").fetchone()[0]
     control_map["master_record_count"] = len(camera_rows)
     control_map["delivery_pending"] = 0
-    control_sql = "INSERT INTO storage_control ({columns}) VALUES ({values});".format(
+    control_sql = "INSERT INTO storage_control ({columns}) VALUES ({values}) {conflict};".format(
         columns=",".join(control_columns),
         values=",".join(sql_value(control_map[column]) for column in control_columns),
+        conflict=CONFLICT["storage_control"],
     )
     run_columns = [item[1] for item in conn.execute("PRAGMA table_info(import_runs)")]
     run = {
@@ -76,13 +110,14 @@ def main():
         "registry_count": len(registry_rows),
         "result": "ua_pl_trial",
     }
-    run_sql = "INSERT INTO import_runs ({columns}) VALUES ({values});".format(
+    run_sql = "INSERT INTO import_runs ({columns}) VALUES ({values}) {conflict};".format(
         columns=",".join(run_columns),
         values=",".join(sql_value(run[column]) for column in run_columns),
+        conflict=CONFLICT["import_runs"],
     )
     body = [
         "-- Ukraine and Poland trial extracted from the verified local SQLite file.",
-        "-- Do not apply this file until camalert-operational exists and the operator confirms.",
+        "-- Every INSERT uses ON CONFLICT DO NOTHING, so a repeat load skips existing rows.",
         "-- This is not the full 123579-row master and it does not include the 443 prepared points.",
         "PRAGMA foreign_keys = ON;",
         *source_sql,
