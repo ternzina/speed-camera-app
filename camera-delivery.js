@@ -49,11 +49,11 @@ export async function refreshCountryDelivery({country,feeds={},versions={},count
  try{
   manifest=validateManifest(JSON.parse(await getText(fetcher,CAMERA_DELIVERY_URL+CAMERA_MANIFEST_PATH,256000,8000)));
   const entry=manifest.countries.find(x=>x.country_code===code);if(!entry)throw new Error('Country absent');
-  if(feeds[code]&&versions[code]===entry.version)return {feed:feeds[code],countries:manifest.countries,version:entry.version,source:'cache-current'};
+  if(feeds[code]&&versions[code]===entry.version)return {feed:feeds[code],countries:manifest.countries,version:entry.version,source:'cache-current',generatedAt:manifest.generated_at||null};
   const feed=verifyCountryExport(await getText(fetcher,CAMERA_DELIVERY_URL+'/'+entry.path,16000000,20000),entry);
-  return {feed,countries:manifest.countries,version:entry.version,source:'r2'};
+  return {feed,countries:manifest.countries,version:entry.version,source:'r2',generatedAt:manifest.generated_at||null};
  }catch{
-  if(feeds[code])return {feed:feeds[code],countries,version:versions[code]||null,source:'offline'};
-  return {feed:null,countries,version:null,source:'bundled'};
+  if(feeds[code])return {feed:feeds[code],countries,version:versions[code]||null,source:'offline',generatedAt:null};
+  return {feed:null,countries,version:null,source:'bundled',generatedAt:null};
  }
 }
