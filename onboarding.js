@@ -3,7 +3,7 @@ import { AppState, Image, View, Text, Pressable, ScrollView, SafeAreaView, Style
 import { StatusBar } from 'expo-status-bar';
 import { useVideoPlayer, VideoView } from 'expo-video';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { CAMERA_DELIVERY_URL, validateManifest } from './camera-delivery';
+import { CAMERA_DELIVERY_URL, CAMERA_MANIFEST_PATH, validateManifest } from './camera-delivery';
 import snapshot from './onboarding-stats.json';
 
 const COPY = {
@@ -21,7 +21,7 @@ function usePublishedStats() {
   (async()=>{
    try { const cached=JSON.parse(await AsyncStorage.getItem(CACHE_KEY)); if(live&&validStats(cached))setStats(cached); } catch {}
    try {
-    const response=await fetch(CAMERA_DELIVERY_URL+'/production/v1/manifest.json',{signal:controller.signal});
+    const response=await fetch(CAMERA_DELIVERY_URL+CAMERA_MANIFEST_PATH,{signal:controller.signal});
     if(!response.ok)throw new Error('Catalog unavailable');
     const manifest=validateManifest(await response.json());
     const next={countries:manifest.countries.filter(c=>c.record_count>0).length,cameras:manifest.total_records,generated_at:manifest.generated_at};
