@@ -17,7 +17,10 @@ function response(text,ok=true){return {ok,headers:{get:()=>null},text:async()=>
  calls=[];result=await delivery.refreshCountryDelivery({country:'FR',feeds:{FR:feeds.FR},versions:{FR:entry.version},fetcher});assert.equal(result.source,'cache-current');assert.equal(calls.length,1);checks++;
  const offline=async()=>{throw new Error('offline')};result=await delivery.refreshCountryDelivery({country:'FR',feeds:{FR:feeds.FR},versions:{FR:entry.version},fetcher:offline});assert.equal(result.source,'offline');assert.equal(result.feed,feeds.FR);checks++;
  result=await delivery.refreshCountryDelivery({country:'FR',fetcher:offline});assert.equal(result.source,'bundled');assert.equal(result.feed,null);checks++;
- result=await delivery.refreshCountryDelivery({country:'FR',fetcher:async url=>url.includes('supabase')?response(JSON.stringify(feeds.FR)):url.includes('manifest')?response(JSON.stringify(manifest)):response('{}')});assert.equal(result.source,'supabase');assert.equal(result.version,null);checks++;
+ const refused=[];
+ result=await delivery.refreshCountryDelivery({country:'FR',fetcher:async url=>{refused.push(url);if(String(url).includes('/v2/')||String(url).includes('supabase'))return response(JSON.stringify(feeds.FR));return response('{}',false);}});
+ assert.equal(result.source,'bundled');assert.equal(result.feed,null);assert.ok(refused.every(url=>!String(url).includes('/v2/')&&!String(url).includes('supabase')));assert.ok(refused.some(url=>String(url).endsWith('/production/v1/manifest.json')));checks++;
+ result=await delivery.refreshCountryDelivery({country:'FR',feeds:{FR:feeds.FR},versions:{FR:'stale'},fetcher:async()=>{throw new Error('r2 down');}});assert.equal(result.source,'offline');assert.equal(result.feed,feeds.FR);checks++;
  const broken=JSON.parse(JSON.stringify(manifest));broken.countries[0].path='https://evil.invalid';assert.throws(()=>delivery.validateManifest(broken));checks++;
  const values=new Map();let fail=false;
  const storage={getItem:async k=>values.get(k)||null,setItem:async(k,v)=>{if(fail==='pointer'&&k==='cache')throw new Error('pointer write failed');if(fail===true&&k.includes(':v4:'))throw new Error('disk full');assert.ok(Buffer.byteLength(v)<1000000);values.set(k,v);},removeItem:async k=>values.delete(k)};

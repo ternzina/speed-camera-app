@@ -1,6 +1,6 @@
 import { sha256 } from './sha256';
-// Verified R2 country feeds with the retained Supabase endpoint as fallback.
-// Bundled UA/PL data are retained only as offline fallbacks.
+// Verified R2 country feeds. If R2 is unavailable, the last device cache is used,
+// then the bundled Ukraine and Poland data. No remote database fallback.
 export function cameraPoints(feed) {
   if (!feed) return [];
   if (Array.isArray(feed.cameras)) return feed.cameras;

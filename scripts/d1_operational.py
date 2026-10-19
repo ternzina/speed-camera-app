@@ -31,6 +31,27 @@ def camera_upsert_sql(publication_guard=False):
         guard+=" AND (excluded.published=0 OR (excluded.status IN ('active','missing_source') AND lower(excluded.confidence) IN ('high','medium')))"
     return f'INSERT INTO cameras({",".join(CAMERA_FIELDS)}) VALUES({placeholders}) ON CONFLICT(canonical_id) DO UPDATE SET {assignments} WHERE {guard}'
 
+def safe_update_cameras(conn, rows, archive_ref):
+    # Updates only the supplied cameras. A matching row_sha256 writes nothing.
+    # published=1 is stored only when the incoming row meets the public rule.
+    # Moderation rows for every other camera stay as they are.
+    sql=camera_upsert_sql(publication_guard=True)
+    updated=[]
+    for values in rows:
+        record=dict(zip(CAMERA_FIELDS, values))
+        before=conn.execute('SELECT row_sha256 FROM cameras WHERE canonical_id=?',(record['canonical_id'],)).fetchone()
+        conn.execute(sql, values)
+        after=conn.execute('SELECT row_sha256,published FROM cameras WHERE canonical_id=?',(record['canonical_id'],)).fetchone()
+        if before is None or before[0]!=after[0]:updated.append(record['canonical_id'])
+        if after[1]:
+            conn.execute('DELETE FROM camera_moderation WHERE canonical_id=?',(record['canonical_id'],))
+        else:
+            conn.execute('''INSERT INTO camera_moderation(canonical_id,country_code,status,confidence,archive_ref) VALUES(?,?,?,?,?)
+                ON CONFLICT(canonical_id) DO UPDATE SET country_code=excluded.country_code,status=excluded.status,confidence=excluded.confidence,archive_ref=excluded.archive_ref
+                WHERE camera_moderation.country_code<>excluded.country_code OR camera_moderation.status<>excluded.status OR camera_moderation.confidence<>excluded.confidence OR camera_moderation.archive_ref<>excluded.archive_ref''',
+                (record['canonical_id'],record['country_code'],record['status'],record['confidence'],archive_ref))
+    return updated
+
 def sha(data):return hashlib.sha256(data).hexdigest()
 def encode(value):return json.dumps(value,sort_keys=True,ensure_ascii=False,separators=(',',':'),allow_nan=False).encode()
 def published(row):return row.get('status') in ('active','missing_source') and str(row.get('confidence','')).lower() in ('high','medium')
@@ -180,7 +201,7 @@ def import_operational(data_root,database,master_key,manifest_path,expectations=
         conn.execute('CREATE TEMP TABLE imported_source(source_code TEXT PRIMARY KEY)')
         conn.execute('CREATE TEMP TABLE imported_registry(root_key TEXT PRIMARY KEY)')
         catalog={};source_index={};by_id={'UA':{},'PL':{}};counts={'cameras':0,'published':0}
-        camera_sql=camera_upsert_sql()
+        camera_sql=camera_upsert_sql(publication_guard=True)
         for chunk_key,row in iter_dataset(archive_root,master_key):
             values=camera_tuple(row,chunk_key)
             conn.execute(camera_sql,values)

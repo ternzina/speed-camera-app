@@ -130,6 +130,31 @@ class OperationalImport(unittest.TestCase):
         self.assertEqual(conn.total_changes-before,0)
         conn.close()
 
+    def test_safe_update_keeps_unrelated_moderation(self):
+        schema=(Path(__file__).resolve().parents[2]/'cloudflare/camera-data/d1/schema.sql').read_text()
+        def row(**overrides):
+            base={'canonical_id':'OSM_DE:node/9','country_code':'DE','camera_type':'fixed_speed','status':'candidate','confidence':'low','latitude':52.5,'longitude':13.4,'end_latitude':None,'end_longitude':None,'speed_limit':50,'direction':None,'direction_raw':None,'road_ref':None,'road_name':None,'city':None,'region':None,'publication_review':None,'first_seen_at':None,'last_seen_at':None,'updated_at':None,'source_codes':'["OSM_DE"]','source_count':1,'published':0,'lat_cell':52,'lon_cell':13,'chunk_key':'chunk','row_sha256':'sha-old'}
+            base.update(overrides)
+            return tuple(base[name] for name in d1.CAMERA_FIELDS)
+        conn=sqlite3.connect(':memory:')
+        conn.executescript(schema)
+        conn.execute(d1.camera_upsert_sql(publication_guard=True),row(canonical_id='OSM_DE:node/keep',row_sha256='sha-keep'))
+        conn.execute("INSERT INTO camera_moderation(canonical_id,country_code,status,confidence,archive_ref) VALUES('OSM_DE:node/keep','DE','candidate','low','keep-ref')")
+        updated=d1.safe_update_cameras(conn,[row()],'archive-ref')
+        self.assertEqual(updated,['OSM_DE:node/9'])
+        self.assertEqual(conn.execute("SELECT archive_ref FROM camera_moderation WHERE canonical_id='OSM_DE:node/keep'").fetchone()[0],'keep-ref')
+        self.assertEqual(conn.execute("SELECT m.status,c.published FROM camera_moderation m JOIN cameras c ON c.canonical_id=m.canonical_id WHERE m.canonical_id='OSM_DE:node/9'").fetchone(),('candidate',0))
+        again=d1.safe_update_cameras(conn,[row()],'archive-ref')
+        self.assertEqual(again,[])
+        blocked=d1.safe_update_cameras(conn,[row(published=1,confidence='high',speed_limit=80,row_sha256='sha-blocked')],'archive-ref')
+        self.assertEqual(blocked,[])
+        self.assertEqual(conn.execute("SELECT published,speed_limit FROM cameras WHERE canonical_id='OSM_DE:node/9'").fetchone(),(0,50))
+        published=d1.safe_update_cameras(conn,[row(status='active',confidence='high',published=1,row_sha256='sha-public')],'archive-ref')
+        self.assertEqual(published,['OSM_DE:node/9'])
+        self.assertIsNone(conn.execute("SELECT 1 FROM camera_moderation WHERE canonical_id='OSM_DE:node/9'").fetchone())
+        self.assertEqual(conn.execute("SELECT COUNT(*) FROM camera_moderation WHERE canonical_id='OSM_DE:node/keep'").fetchone()[0],1)
+        conn.close()
+
     def test_verification_rejects_a_changed_speed_limit(self):
         d1.import_operational(self.root,self.database,self.master_key,self.manifest)
         conn=sqlite3.connect(self.database)

@@ -1,0 +1,60 @@
+{
+  "applied_at": "2026-10-19T11:23:30Z",
+  "database_name": "camalert-operational",
+  "database_id": "65a68ee8-74ff-4429-9b0c-125df189018b",
+  "backup": {
+    "path": "master-db/cache/d1-operational/backups/camalert-operational-before-pointer-2026-10-19.sql",
+    "bytes": 106946255,
+    "sha256": "3ed7975e90766604d10c5c3f75b3ff81ebc39de39f5af093dd40c5dc445310f9",
+    "camera_inserts": 123579,
+    "contains_trial_master_record_count": 2944,
+    "gitignored": true
+  },
+  "bookmarks": {
+    "before_pointer_update": "0000000a-00000000-00005109-f8de20b3f9c2f3a48a1e07333115c773",
+    "after_storage_control": "0000000b-00000006-00005109-7b2d338283a629bea93f0539920a665b",
+    "after_import_runs": "0000000b-0000000c-00005109-6ee564a59159c3c033545f4f5fd6b84d",
+    "at_verification": "0000000d-00000000-00005109-f319c466498aba8dbb2a79231a00d0c3"
+  },
+  "pointer_updates": {
+    "storage_control_rows_written": 1,
+    "import_runs_rows_written": 1,
+    "repeat_rows_written": 0,
+    "database_size_bytes": 66002944
+  },
+  "verification_query": {
+    "cameras": 123579,
+    "published": 114794,
+    "unpublished": 8785,
+    "master_record_count": 123579,
+    "import_result": "full_load_verified",
+    "import_cameras": 123579,
+    "import_published": 114794,
+    "rows_written": 0,
+    "size_after": 66002944
+  },
+  "worker": {
+    "name": "speed-camera-data",
+    "version_id": "26a1d5b3-703b-4c15-9a8e-ac144c291285",
+    "deployed_at": "2026-10-19T11:19:06.362321Z",
+    "public_delivery": "r2",
+    "d1_binding": "CAMALERT_D1",
+    "operational_status": "https://speed-camera-data.ternzina.workers.dev/operational/v1/status",
+    "v2_manifest": 404,
+    "v2_token": 404
+  },
+  "live_r2": {
+    "manifest_sha256": "7824306f2409909985e482bf110b65bf6c21a3444a21716b55c7a081a9159f4b",
+    "manifest_records": 114794,
+    "manifest_generated_at": "2026-10-13T15:35:26.807485+00:00",
+    "ua_sha256": "b032b7e258734e1d8cd64f229cfc88109e6411fcc0ea461331caaded7ffd016e",
+    "ua_bytes": 1175402,
+    "pl_sha256": "173ebda90ce64b20b86d0953bed637a5b65cf351caa2b93deeb0264aaeb5203c",
+    "pl_red_light_sites": 68,
+    "pl_red_light_cameras": 169,
+    "replaced": false
+  },
+  "prepared_points_published": false,
+  "supabase_project_disabled": false,
+  "rollback_sql": "cloudflare/camera-data/d1/storage-control-rollback.sql"
+}
