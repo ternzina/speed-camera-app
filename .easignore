@@ -1,0 +1,43 @@
+# EAS uses this file instead of .gitignore. Keep the same exclusions.
+node_modules/
+.expo/
+.env
+.env.*
+credentials.json
+credentials/
+**/credentials.json
+*.jks
+*.keystore
+*.p8
+*.p12
+*.pfx
+*.pem
+*.key
+*.mobileprovision
+.npmrc
+dist/
+build/
+web-build/
+/coverage/
+*.apk
+*.aab
+*.ipa
+*.log
+*.tsbuildinfo
+.DS_Store
+*.backup-*
+*.before-*
+.bootstrap-venv/
+master-db/bootstrap/cache/
+master-db/bootstrap/backups/
+master-db/bootstrap/sql-batches/
+master-db/raw/
+master-db/cache/
+master-db/backups/
+__pycache__/
+*.pyc
+
+# Local prebuild output. Cloud builds generate native projects from app.json
+# so a stale 1.0.2 android/ or ios/ tree cannot override version 1.0.3.
+android/
+ios/

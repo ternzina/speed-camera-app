@@ -18,11 +18,11 @@ Poland exports all 169 published red-light devices and a separate 68-site render
 
 The app loads a small manifest and **only the selected country**. If its verified version is unchanged, it reuses the country cache. New JSON must pass SHA-256, byte length, ISO/schema, total count, coordinates and section endpoint checks before use.
 
-Delivery fallback: R2 → retained Supabase camera-export → last successful device cache → bundled UA/PL. Other countries require a previous successful download for offline use; bundled UA/PL are never presented as data for another country.
+Delivery fallback: R2 `/production/v1/manifest.json` → last successful device cache → bundled UA/PL. The app does not call Supabase or `/v2/manifest` / `/v2/token`. Other countries require a previous successful download for offline use; bundled UA/PL are never presented as data for another country.
 
 AsyncStorage cache v4 uses bounded 200,000-character chunks, checksums and immutable write generations. All chunks succeed before the root pointer changes. Failed writes leave the previous cache usable; corruption is isolated per country. All previously downloaded countries remain cached. Legacy caches still load, including v3. Foreground/background warning engines share the loaded trip feeds.
 
-The existing installed store builds continue using the unchanged Supabase endpoint. R2 loading is prepared in the next app source version; no App Store, Google Play or EAS OTA release was performed.
+Closed-test builds before 1.0.3 may still call Supabase or `/v2`. Version 1.0.3 loads R2 only and keeps the device cache and bundled Ukraine/Poland data when the network is unavailable.
 
 ## Repeatable export/publication pipeline
 

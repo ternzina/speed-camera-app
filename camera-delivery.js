@@ -1,6 +1,6 @@
 import { sha256, utf8Bytes } from './sha256';
 export const CAMERA_DELIVERY_URL='https://speed-camera-data.ternzina.workers.dev';
-export const SUPABASE_EXPORT_URL='https://ydgzsdlwnurychkbgsmn.supabase.co/functions/v1/camera-export';
+export const CAMERA_MANIFEST_PATH='/production/v1/manifest.json';
 const groups=['cameras','speed_cameras','red_light_cameras','checkpoints','average_speed_sections'];
 const iso=/^[A-Z]{2}$/;
 function countFeed(feed){return groups.reduce((n,k)=>n+(feed[k]?.length||0),0);}
@@ -47,23 +47,13 @@ export async function refreshCountryDelivery({country,feeds={},versions={},count
  const code=String(country).toUpperCase();if(!iso.test(code))throw new Error('Invalid country');
  let manifest;
  try{
-  manifest=validateManifest(JSON.parse(await getText(fetcher,CAMERA_DELIVERY_URL+'/production/v1/manifest.json',256000,8000)));
+  manifest=validateManifest(JSON.parse(await getText(fetcher,CAMERA_DELIVERY_URL+CAMERA_MANIFEST_PATH,256000,8000)));
   const entry=manifest.countries.find(x=>x.country_code===code);if(!entry)throw new Error('Country absent');
   if(feeds[code]&&versions[code]===entry.version)return {feed:feeds[code],countries:manifest.countries,version:entry.version,source:'cache-current'};
   const feed=verifyCountryExport(await getText(fetcher,CAMERA_DELIVERY_URL+'/'+entry.path,16000000,20000),entry);
   return {feed,countries:manifest.countries,version:entry.version,source:'r2'};
  }catch{
-  try{
-   const feed=JSON.parse(await getText(fetcher,SUPABASE_EXPORT_URL+'?country='+code,64000000,20000));
-   if(!groups.some(k=>Array.isArray(feed[k])))throw new Error('Invalid fallback feed');
-   let fallbackCountries=manifest?.countries||countries;
-   if(!manifest){
-    try{const coverage=JSON.parse(await getText(fetcher,SUPABASE_EXPORT_URL+'?country=coverage',256000,8000));if(Array.isArray(coverage.countries))fallbackCountries=coverage.countries.filter(entry=>iso.test(entry.country_code));}catch{}
-   }
-   return {feed,countries:fallbackCountries,version:null,source:'supabase'};
-  }catch{
-   if(feeds[code])return {feed:feeds[code],countries,version:versions[code]||null,source:'offline'};
-   return {feed:null,countries,version:null,source:'bundled'};
-  }
+  if(feeds[code])return {feed:feeds[code],countries,version:versions[code]||null,source:'offline'};
+  return {feed:null,countries,version:null,source:'bundled'};
  }
 }

@@ -18,5 +18,10 @@ const assert=require('node:assert/strict'),path=require('node:path'),{pathToFile
  result=await publicWorker.fetch(new Request('https://delivery/'+objectKey,{method:'HEAD'}),env,ctx);assert.equal(await result.text(),'');
  assert.equal((await publicWorker.fetch(new Request('https://delivery/private/secrets'),env,ctx)).status,404);
  assert.equal((await publicWorker.fetch(new Request('https://delivery/'+objectKey,{method:'PUT',body:'{}'}),env,ctx)).status,405);
+ assert.equal((await publicWorker.fetch(new Request('https://delivery/operational/v1/status'),env,ctx)).status,503);
+ const d1={prepare:()=>({all:async()=>({results:[{cameras:123579,published:114794,unpublished:8785,master_record_count:123579,import_result:'full_load_verified'}]})})};
+ const status=await publicWorker.fetch(new Request('https://delivery/operational/v1/status'),{...env,CAMALERT_D1:d1},ctx);
+ assert.equal(status.status,200);const statusBody=await status.json();assert.equal(statusBody.delivery,'r2');assert.equal(statusBody.cameras,123579);
+ assert.equal((await publicWorker.fetch(new Request('https://delivery/'+objectKey),{...env,CAMALERT_D1:d1},ctx)).status,200);
  const report={checked_at:new Date().toISOString(),checks:11,ed25519_authentication:true,expired_signature_denied:true,tampering_denied:true,immutable_digest_enforced:true,public_read_only:true,weak_etag_304:true,head:true,result:'passed'};fs.writeFileSync(path.join(root,'master-db/reports/r2-worker-tests.json'),JSON.stringify(report,null,2)+'\n');console.log(report);
 })().catch(e=>{console.error(e);process.exitCode=1});

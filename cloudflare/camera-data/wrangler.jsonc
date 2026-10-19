@@ -4,6 +4,12 @@
   "compatibility_date": "2026-10-07",
   "compatibility_flags": ["nodejs_compat"],
   "workers_dev": true,
+  "preview_urls": false,
   "r2_buckets": [{"binding": "CAMERA_DATA", "bucket_name": "speed-camera-data"}],
+  "d1_databases": [{
+    "binding": "CAMALERT_D1",
+    "database_name": "camalert-operational",
+    "database_id": "65a68ee8-74ff-4429-9b0c-125df189018b"
+  }],
   "observability": {"enabled": true, "head_sampling_rate": 0.1}
 }

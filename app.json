@@ -2,7 +2,7 @@
   "expo": {
     "name": "CamAlert",
     "slug": "speed-camera-prototype-direction",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "orientation": "portrait",
     "ios": {
       "supportsTablet": true,
@@ -19,14 +19,15 @@
         ]
       },
       "bundleIdentifier": "com.21wek.camera",
-      "buildNumber": "11"
+      "buildNumber": "23"
     },
     "android": {
       "permissions": [
         "ACCESS_FINE_LOCATION",
         "ACCESS_COARSE_LOCATION"
       ],
-      "package": "com.camera21wek"
+      "package": "com.camera21wek",
+      "versionCode": 17
     },
     "plugins": [
       "expo-status-bar",
@@ -40,7 +41,12 @@
           "isAndroidForegroundServiceEnabled": true
         }
       ],
-      "expo-notifications",
+      [
+        "expo-notifications",
+        {
+          "mode": "production"
+        }
+      ],
       [
         "expo-splash-screen",
         {
