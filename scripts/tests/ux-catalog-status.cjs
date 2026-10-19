@@ -165,6 +165,10 @@ assert.ok(!appSource.includes("даже при заблокированном э
 const tracking = appSource.slice(appSource.indexOf("async function startTracking"), appSource.indexOf("function stopTracking"));
 assert.ok(tracking.indexOf("watchPositionAsync") > tracking.indexOf("shouldShowBackgroundGuide"));
 assert.equal(appSource.split("await requestBackground()").length - 1, 1);
+assert.ok(appSource.includes('night: "Ночная поездка"') && appSource.includes('day: "Дневная поездка"'));
+assert.ok(appSource.includes('night: "Нічна поїздка"') && appSource.includes('day: "Денна поїздка"'));
+assert.ok(!appSource.includes('["night", "Night Drive"]'));
+assert.ok(appSource.includes("Попередній перегляд попередження"));
 const seHeight = Math.max(240, Math.min(568 * 0.62, 460));
 assert.ok(seHeight < 568);
 assert.ok(seHeight >= 240);

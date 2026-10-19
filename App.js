@@ -1503,21 +1503,25 @@ export default function App() {
             </Pressable>
             <Text style={s.sectionTitle}>{DRIVE_THEME_LABELS[settings.language] || DRIVE_THEME_LABELS.ru}</Text>
             <View style={s.driveThemeRow}>
-              {[["night", "Night Drive"], ["day", "Day Drive"]].map(([value, label]) => (
+              {["night", "day"].map(value => {
+                const themeCopy = DRIVE_THEME_OPTIONS[settings.language] || DRIVE_THEME_OPTIONS.ru;
+                const label = themeCopy[value];
+                return (
                 <Pressable
                   key={value}
                   accessibilityRole="radio"
+                  accessibilityLabel={label}
                   accessibilityState={{ selected: settings.driveTheme === value }}
                   onPress={() => setSettings({ ...settings, driveTheme: value })}
                   style={[s.driveThemeOption, settings.driveTheme === value && s.driveThemeOptionActive]}
                 >
-                  <Text style={[s.driveThemeOptionText, settings.driveTheme === value && s.driveThemeOptionTextActive]}>{label}</Text>
+                  <Text maxFontSizeMultiplier={1.4} numberOfLines={2} style={[s.driveThemeOptionText, settings.driveTheme === value && s.driveThemeOptionTextActive]}>{label}</Text>
                 </Pressable>
-              ))}
+              );})}
             </View>
             <Pressable accessibilityRole="button" onPress={() => setModal("alertDemo")} style={s.alertDemoButton}>
-              <Text style={s.alertDemoButtonTitle}>Предпросмотр предупреждения</Text>
-              <Text style={s.alertDemoButtonSub}>Демо · 250 м · 78 / 90 км/ч</Text>
+              <Text maxFontSizeMultiplier={1.4} style={s.alertDemoButtonTitle}>{(ALERT_PREVIEW_COPY[settings.language] || ALERT_PREVIEW_COPY.ru).title}</Text>
+              <Text maxFontSizeMultiplier={1.4} style={s.alertDemoButtonSub}>{(ALERT_PREVIEW_COPY[settings.language] || ALERT_PREVIEW_COPY.ru).sub}</Text>
             </Pressable>
             <Text style={s.sectionTitle}>{t.languageLabel}</Text>
             <View style={s.row}>
@@ -1531,7 +1535,7 @@ export default function App() {
             <Pressable accessibilityRole="button" onPress={openBackgroundSettings} style={s.locationButton}>
               <Text maxFontSizeMultiplier={1.4} style={s.locationButtonText}>{backgroundGuideCopy(settings.language, Platform.OS).openSettings}</Text>
             </Pressable>
-            <Text maxFontSizeMultiplier={1.5} style={s.note}>Фон: системные уведомления о камерах. Голос и Bluetooth требуют проверки на устройстве. После принудительного закрытия приложения сессию нужно запустить снова.</Text>
+            <Text maxFontSizeMultiplier={1.5} style={s.note}>{BACKGROUND_NOTE[settings.language] || BACKGROUND_NOTE.ru}</Text>
             <SettingSwitch label={t.voiceLabel} value={settings.voice} onChange={v=>setSettings({...settings,voice:v})}/>
             <SettingSwitch label={t.vibrationLabel} value={settings.vibration} onChange={v=>setSettings({...settings,vibration:v})}/>
             <SettingSwitch label={t.smartDistanceLabel} value={settings.smartDistance} onChange={v=>setSettings({...settings,smartDistance:v})}/>
@@ -1688,6 +1692,24 @@ const DRIVE_HOME_COPY = {
 
 const DRIVE_THEME_LABELS = {
   ru: "Тема приложения", uk: "Тема застосунку", en: "App theme", pl: "Motyw aplikacji",
+};
+const DRIVE_THEME_OPTIONS = {
+  ru: { night: "Ночная поездка", day: "Дневная поездка" },
+  uk: { night: "Нічна поїздка", day: "Денна поїздка" },
+  en: { night: "Night Drive", day: "Day Drive" },
+  pl: { night: "Nocna jazda", day: "Dzienna jazda" },
+};
+const ALERT_PREVIEW_COPY = {
+  ru: { title: "Предпросмотр предупреждения", sub: "Демо · 250 м · 78 / 90 км/ч" },
+  uk: { title: "Попередній перегляд попередження", sub: "Демо · 250 м · 78 / 90 км/год" },
+  en: { title: "Alert preview", sub: "Demo · 250 m · 78 / 90 km/h" },
+  pl: { title: "Podgląd ostrzeżenia", sub: "Demo · 250 m · 78 / 90 km/h" },
+};
+const BACKGROUND_NOTE = {
+  ru: "Фон: системные уведомления о камерах. Голос и Bluetooth требуют проверки на устройстве. После принудительного закрытия приложения сессию нужно запустить снова.",
+  uk: "Фон: системні сповіщення про камери. Голос і Bluetooth потребують перевірки на пристрої. Після примусового закриття застосунку сесію потрібно запустити знову.",
+  en: "Background: system camera notifications. Voice and Bluetooth need a check on the device. After force-quitting the app, start the session again.",
+  pl: "Tło: systemowe powiadomienia o kamerach. Głos i Bluetooth wymagają sprawdzenia na urządzeniu. Po wymuszonym zamknięciu aplikacji sesję trzeba uruchomić ponownie.",
 };
 
 const DRIVE_MODE_COPY = {
@@ -2748,7 +2770,7 @@ const baseAppStyles = StyleSheet.create({
   guideLaterText:{fontSize:15,fontWeight:"700",color:"#526A80",textAlign:"center"},
   dataLabel:{fontSize:12,opacity:.55},
   dataValue:{fontSize:13,fontWeight:"700",marginTop:3},
-  driveThemeRow:{flexDirection:"row",gap:9},driveThemeOption:{flex:1,alignItems:"center",paddingVertical:12,borderRadius:13,backgroundColor:"#f0f2f5",borderWidth:1,borderColor:"#e4e8ed"},driveThemeOptionActive:{backgroundColor:"#10263b",borderColor:"#23d3ef"},driveThemeOptionText:{fontSize:13,fontWeight:"700",color:"#4d5e70"},driveThemeOptionTextActive:{color:"#fff"},
+  driveThemeRow:{flexDirection:"row",gap:9},driveThemeOption:{flex:1,alignItems:"center",justifyContent:"center",paddingVertical:12,paddingHorizontal:8,borderRadius:13,backgroundColor:"#f0f2f5",borderWidth:1,borderColor:"#e4e8ed",minHeight:48},driveThemeOptionActive:{backgroundColor:"#10263b",borderColor:"#23d3ef"},driveThemeOptionText:{fontSize:13,lineHeight:17,fontWeight:"700",color:"#4d5e70",textAlign:"center"},driveThemeOptionTextActive:{color:"#fff"},
   alertDemoButton:{paddingHorizontal:13,paddingVertical:11,borderRadius:14,backgroundColor:"#10263b",borderWidth:1,borderColor:"#23d3ef"},alertDemoButtonTitle:{color:"#fff",fontSize:14,fontWeight:"800"},alertDemoButtonSub:{color:"#b8c9d9",fontSize:11,marginTop:3},
   alertDemoShade:{flex:1,justifyContent:"center",alignItems:"center",padding:16,backgroundColor:"rgba(0,0,0,0.72)"},alertDemoContent:{width:"100%",alignItems:"center",gap:12},alertDemoModeRow:{width:"100%",maxWidth:280,flexDirection:"row",gap:8},alertDemoMode:{flex:1,alignItems:"center",paddingVertical:10,borderRadius:12,backgroundColor:"rgba(16,38,59,0.92)",borderWidth:1,borderColor:"rgba(202,215,231,0.18)"},alertDemoModeActive:{borderColor:"#23D3EF",backgroundColor:"#10263B"},alertDemoModeText:{color:"#CAD7E7",fontSize:12,fontWeight:"700"},alertDemoModeTextActive:{color:"#fff"},
   coverageCard:{backgroundColor:"#f3f4f6",borderRadius:14,padding:14,gap:8},
