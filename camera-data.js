@@ -56,7 +56,7 @@ export async function loadCameraCache(storage, key) {
   return {...manifest,feeds,countryVersions:versions};
 }
 let cacheWrite = Promise.resolve(), cacheGeneration = 0;
-export function saveCameraCache(storage, key, {feeds,countries,cov,stamp,countryVersions={}}, selectedCountry) {
+export function saveCameraCache(storage, key, {feeds,countries,cov,stamp,publishedAt=null,checkedAt=null,countryVersions={}}, selectedCountry) {
   cacheWrite = cacheWrite.catch(()=>{}).then(async () => {
     const previousRaw = await storage.getItem(key);
     let previous;
@@ -77,7 +77,7 @@ export function saveCameraCache(storage, key, {feeds,countries,cov,stamp,country
       throw new Error("Camera cache write failed; previous cache retained");
     }
     try {
-      await storage.setItem(key,JSON.stringify({version:4,feedChunks,countries,cov,stamp,countryVersions}));
+      await storage.setItem(key,JSON.stringify({version:4,feedChunks,countries,cov,stamp,publishedAt,checkedAt,countryVersions}));
     } catch (error) {
       await Promise.allSettled(writes.map(([chunkKey])=>storage.removeItem(chunkKey)));
       throw error;

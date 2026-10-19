@@ -19,6 +19,7 @@ import { nearestPolandPoint, detectAverageSpeedSection, averageSectionSpeech } f
 import { cameraPoints, countryFeed, loadCameraCache, saveCameraCache } from "./camera-data";
 import { COUNTRY_NAMES, countryFlag } from "./countries";
 import { refreshCountryDelivery } from "./camera-delivery";
+import { catalogTimestamps, shouldShowBackgroundGuide, describeLocationAccess, formatCatalogDate, backgroundGuideCopy, backgroundAccessMessage, backgroundFailureCopy } from "./catalog-status";
 import { distanceBetweenMeters } from "./road-cameras";
 import { isSpeedOverLimit } from "./drive-alert-logic";
 import { buildNavigatorLinks } from "./navigator-links";
@@ -31,6 +32,7 @@ import { navigationCopy } from "./google-navigation-copy";
 const BACKGROUND_LOCATION_TASK = "camera-background-location-v060";
 const BACKGROUND_SESSION_KEY = "camalert_background_session_v1";
 const BACKGROUND_LAST_ALERT_KEY = "camalert_background_last_alert_v1";
+const BACKGROUND_GUIDE_KEY = "camalert_background_guide_postponed_v1";
 let foregroundTripRunning = false;
 const MIN_MOVING_SPEED_KMH = 8;
 const CAMERA_ALERT_OVERLAY_MS = 4200;
@@ -70,7 +72,7 @@ const I18N = {
     note: "Сообщения пока сохраняются на телефоне. Сервер синхронизации подключим отдельно.",
     about: "О приложении", privacy: "Политика конфиденциальности", safety: "Безопасность",
     sources: "Источники данных", support: "Поддержка", terms: "Условия использования",
-    reportHelp: "Как сообщить о камере", website: "Сайт приложения", coverage: "Покрытие", dataUpdate: "Обновление базы", lastUpdate: "Последнее обновление", updateNow: "Обновить сейчас", updated: "База обновлена", reportSent: "Сообщение отправлено на проверку", reportFailed: "Не удалось отправить, сохранено на телефоне", country: "Страна", ukraine: "Украина", poland: "Польша", languageLabel: "Язык", voiceLabel: "Голос", vibrationLabel: "Вибрация", smartDistanceLabel: "Умная дистанция по скорости", distancesLabel: "Дистанции предупреждения", band1: "До 60 км/ч", band2: "60–89 км/ч", band3: "90–119 км/ч", band4: "120+ км/ч"
+    reportHelp: "Как сообщить о камере", website: "Сайт приложения", coverage: "Покрытие", dataUpdate: "Обновление базы", lastUpdate: "Последнее обновление", databaseVersion: "Версия базы", lastCheck: "Последняя проверка обновлений", updateNow: "Обновить сейчас", updated: "База обновлена", databaseCurrent: "Новых данных нет. Версия базы не изменилась.", reportSent: "Сообщение отправлено на проверку", reportFailed: "Не удалось отправить, сохранено на телефоне", country: "Страна", ukraine: "Украина", poland: "Польша", languageLabel: "Язык", voiceLabel: "Голос", vibrationLabel: "Вибрация", smartDistanceLabel: "Умная дистанция по скорости", distancesLabel: "Дистанции предупреждения", band1: "До 60 км/ч", band2: "60–89 км/ч", band3: "90–119 км/ч", band4: "120+ км/ч"
   },
   uk: {
     title: "Камери на дорогах", start: "Почати поїздку", stop: "Зупинити",
@@ -86,7 +88,7 @@ const I18N = {
     note: "Повідомлення поки зберігаються на телефоні. Сервер синхронізації підключимо окремо.",
     about: "Про застосунок", privacy: "Політика конфіденційності", safety: "Безпека",
     sources: "Джерела даних", support: "Підтримка", terms: "Умови використання",
-    reportHelp: "Як повідомити про камеру", website: "Сайт застосунку", coverage: "Покриття", dataUpdate: "Оновлення бази", lastUpdate: "Останнє оновлення", updateNow: "Оновити зараз", updated: "Базу оновлено", reportSent: "Повідомлення надіслано на перевірку", reportFailed: "Не вдалося надіслати, збережено на телефоні", country: "Країна", ukraine: "Україна", poland: "Польща", languageLabel: "Мова", voiceLabel: "Голос", vibrationLabel: "Вібрація", smartDistanceLabel: "Розумна дистанція за швидкістю", distancesLabel: "Дистанції попередження", band1: "До 60 км/год", band2: "60–89 км/год", band3: "90–119 км/год", band4: "120+ км/год"
+    reportHelp: "Як повідомити про камеру", website: "Сайт застосунку", coverage: "Покриття", dataUpdate: "Оновлення бази", lastUpdate: "Останнє оновлення", databaseVersion: "Версія бази", lastCheck: "Остання перевірка оновлень", updateNow: "Оновити зараз", updated: "Базу оновлено", databaseCurrent: "Нових даних немає. Версія бази не змінилася.", reportSent: "Повідомлення надіслано на перевірку", reportFailed: "Не вдалося надіслати, збережено на телефоні", country: "Країна", ukraine: "Україна", poland: "Польща", languageLabel: "Мова", voiceLabel: "Голос", vibrationLabel: "Вібрація", smartDistanceLabel: "Розумна дистанція за швидкістю", distancesLabel: "Дистанції попередження", band1: "До 60 км/год", band2: "60–89 км/год", band3: "90–119 км/год", band4: "120+ км/год"
   },
   en: {
     title: "Road Cameras", start: "Start trip", stop: "Stop",
@@ -102,7 +104,7 @@ const I18N = {
     note: "Reports are stored on this phone for now. Server sync will be connected separately.",
     about: "About", privacy: "Privacy Policy", safety: "Safety",
     sources: "Data sources", support: "Support", terms: "Terms of Use",
-    reportHelp: "How to report a camera", website: "App website", coverage: "Coverage", dataUpdate: "Database update", lastUpdate: "Last update", updateNow: "Update now", updated: "Database updated", reportSent: "Report sent for review", reportFailed: "Could not send; saved on this phone", country: "Country", ukraine: "Ukraine", poland: "Poland", languageLabel: "Language", voiceLabel: "Voice", vibrationLabel: "Vibration", smartDistanceLabel: "Smart distance by speed", distancesLabel: "Alert distances", band1: "Up to 60 km/h", band2: "60–89 km/h", band3: "90–119 km/h", band4: "120+ km/h"
+    reportHelp: "How to report a camera", website: "App website", coverage: "Coverage", dataUpdate: "Database update", lastUpdate: "Last update", databaseVersion: "Database version", lastCheck: "Last update check", updateNow: "Update now", updated: "Database updated", databaseCurrent: "No new data. The database version is unchanged.", reportSent: "Report sent for review", reportFailed: "Could not send; saved on this phone", country: "Country", ukraine: "Ukraine", poland: "Poland", languageLabel: "Language", voiceLabel: "Voice", vibrationLabel: "Vibration", smartDistanceLabel: "Smart distance by speed", distancesLabel: "Alert distances", band1: "Up to 60 km/h", band2: "60–89 km/h", band3: "90–119 km/h", band4: "120+ km/h"
   },
   pl: {
     title: "Kamery drogowe",
@@ -135,7 +137,7 @@ const I18N = {
     support: "Pomoc",
     terms: "Warunki korzystania",
     reportHelp: "Jak zgłosić fotoradar",
-    website: "Strona aplikacji", coverage: "Zasięg", dataUpdate: "Aktualizacja bazy", lastUpdate: "Ostatnia aktualizacja", updateNow: "Aktualizuj teraz", updated: "Baza zaktualizowana", reportSent: "Zgłoszenie wysłano do weryfikacji", reportFailed: "Nie udało się wysłać; zapisano na telefonie",
+    website: "Strona aplikacji", coverage: "Zasięg", dataUpdate: "Aktualizacja bazy", lastUpdate: "Ostatnia aktualizacja", databaseVersion: "Wersja bazy", lastCheck: "Ostatnie sprawdzenie aktualizacji", updateNow: "Aktualizuj teraz", updated: "Baza zaktualizowana", databaseCurrent: "Brak nowych danych. Wersja bazy bez zmian.", reportSent: "Zgłoszenie wysłano do weryfikacji", reportFailed: "Nie udało się wysłać; zapisano na telefonie",
     country: "Kraj", languageLabel: "Język", voiceLabel: "Głos", vibrationLabel: "Wibracje", smartDistanceLabel: "Inteligentna odległość według prędkości", distancesLabel: "Odległości ostrzegania", band1: "Do 60 km/h", band2: "60–89 km/h", band3: "90–119 km/h", band4: "120+ km/h",
     ukraine: "Ukraina",
     poland: "Polska"
@@ -399,7 +401,11 @@ export default function App() {
   const activeCountryFeedRef=useRef(activePLData);
   activeCountryFeedRef.current=activePLData;
   const [coverage,setCoverage]=useState(null);
-  const [lastDataUpdate,setLastDataUpdate]=useState(null);
+  const [publishedAt,setPublishedAt]=useState(null);
+  const [checkedAt,setCheckedAt]=useState(null);
+  const [backgroundGuide,setBackgroundGuide]=useState(false);
+  const [guideReturned,setGuideReturned]=useState(false);
+  const [backgroundAccess,setBackgroundAccess]=useState("missing");
   const [tab, setTab] = useState("drive");
   const [modal, setModal] = useState(null);
   const [alertPreviewMode, setAlertPreviewMode] = useState("expanded");
@@ -409,6 +415,23 @@ export default function App() {
   const sub = useRef(null);
   const timer = useRef(null);
   const lastSpoken = useRef({ id: null, distance: Infinity });
+  const catalogRef = useRef({ publishedAt: null, checkedAt: null });
+  const postponedRef = useRef(false);
+  const pendingBackgroundRef = useRef(false);
+  const backgroundEnabledRef = useRef(false);
+  const onAppActiveRef = useRef(async () => {});
+  const { height: windowHeight } = useWindowDimensions();
+
+  useEffect(() => {
+    const subscription = AppState.addEventListener("change", state => {
+      if (state === "active") onAppActiveRef.current();
+    });
+    return () => subscription.remove();
+  }, []);
+
+  useEffect(() => {
+    backgroundEnabledRef.current = backgroundEnabled;
+  }, [backgroundEnabled]);
 
   useEffect(() => {
     AsyncStorage.getItem(ONBOARDING_KEY)
@@ -441,14 +464,25 @@ export default function App() {
           const feeds=saved.feeds||{UA:saved.ua,PL:saved.pl};
           remoteFeedsRef.current=feeds;countryVersionsRef.current=saved.countryVersions||{};bgCameraFeeds=feeds;setRemoteFeeds(feeds);
           setOfflineCountryCodes(storedCountryCodes(feeds));
-          setCountryCoverage(saved.countries||[]);setCoverage(saved.cov||null);setLastDataUpdate(saved.stamp||null);
+          const storedPublished = saved.publishedAt || null;
+          const storedChecked = saved.checkedAt || (!saved.publishedAt && saved.stamp) || null;
+          catalogRef.current = { publishedAt: storedPublished, checkedAt: storedChecked };
+          setCountryCoverage(saved.countries||[]);setCoverage(saved.cov||null);
+          setPublishedAt(storedPublished);setCheckedAt(storedChecked);
         }
+        const postponed = await AsyncStorage.getItem(BACKGROUND_GUIDE_KEY);
+        postponedRef.current = postponed === "1";
         databaseReady.current = true;
         const initialCountry = s ? String(JSON.parse(s).country || "ua").toUpperCase() : "UA";
         await refreshRemoteData(true, initialCountry);
         const started = await Location.hasStartedLocationUpdatesAsync(BACKGROUND_LOCATION_TASK);
         const session = JSON.parse(await AsyncStorage.getItem(BACKGROUND_SESSION_KEY) || "null");
         setBackgroundEnabled(started && !!session?.enabled);
+        const [foregroundPermission, backgroundPermission] = await Promise.all([
+          Location.getForegroundPermissionsAsync(),
+          Location.getBackgroundPermissionsAsync(),
+        ]);
+        setBackgroundAccess(describeLocationAccess({ foreground: foregroundPermission, background: backgroundPermission }));
       } catch {}
     })();
 
@@ -518,12 +552,19 @@ export default function App() {
       const coverageFor=code=>countries.find(entry=>entry.country_code===code);
       const ua=feeds.UA,pl=feeds.PL;
       const cov={UA:{speed_cameras:ua?.count??ua?.cameras?.length??coverageFor('UA')?.speed_cameras??0},PL:pl?.counts||coverageFor('PL')||{}};
-      const stamp = new Date().toISOString();
-      await saveCameraCache(AsyncStorage,REMOTE_CACHE_KEY,{feeds,countries,cov,stamp,countryVersions},country);
+      const dates = catalogTimestamps({
+        source: result.source,
+        generatedAt: result.generatedAt,
+        previousPublishedAt: catalogRef.current.publishedAt,
+        previousCheckedAt: catalogRef.current.checkedAt,
+        now: new Date().toISOString(),
+      });
+      catalogRef.current = { publishedAt: dates.publishedAt, checkedAt: dates.checkedAt };
+      await saveCameraCache(AsyncStorage,REMOTE_CACHE_KEY,{feeds,countries,cov,stamp:dates.stamp,publishedAt:dates.publishedAt,checkedAt:dates.checkedAt,countryVersions},country);
       remoteFeedsRef.current=feeds;countryVersionsRef.current=countryVersions;bgCameraFeeds=feeds;
       setRemoteFeeds(feeds);setCountryCoverage(countries);setCoverage(cov);
-      setLastDataUpdate(stamp);setOfflineCountryCodes(storedCountryCodes(feeds));
-      if (!silent) Alert.alert(t.updated);
+      setPublishedAt(dates.publishedAt);setCheckedAt(dates.checkedAt);setOfflineCountryCodes(storedCountryCodes(feeds));
+      if (!silent) Alert.alert(result.source === "r2" ? t.updated : t.databaseCurrent);
       return true;
     } catch {
       if (!silent) databaseMessage("error");
@@ -547,7 +588,7 @@ export default function App() {
         try {
           const feeds={...remoteFeedsRef.current,[code]:{country:code,cameras:[],_removed:true}};
           const countryVersions={...countryVersionsRef.current};delete countryVersions[code];
-          await saveCameraCache(AsyncStorage,REMOTE_CACHE_KEY,{feeds,countries:countryCoverage,cov:coverage,stamp:lastDataUpdate,countryVersions},selectedCountry);
+          await saveCameraCache(AsyncStorage,REMOTE_CACHE_KEY,{feeds,countries:countryCoverage,cov:coverage,stamp:catalogRef.current.publishedAt,publishedAt:catalogRef.current.publishedAt,checkedAt:catalogRef.current.checkedAt,countryVersions},selectedCountry);
           remoteFeedsRef.current=feeds;countryVersionsRef.current=countryVersions;bgCameraFeeds=feeds;
           setRemoteFeeds(feeds);setOfflineCountryCodes(storedCountryCodes(feeds));
           if (code===selectedCountry) {setNearest(null);setAhead(null);}
@@ -626,9 +667,13 @@ export default function App() {
       Alert.alert("GPS", "Разреши приложению использовать местоположение.");
       return;
     }
-    // Explicit Start trip also prepares background delivery; a denied permission
-    // leaves the existing foreground trip available.
-    await ensureBackground();
+    // Always is optional. Foreground GPS, sound, the map, and the catalog keep working.
+    const backgroundPermission = await Location.getBackgroundPermissionsAsync().catch(() => null);
+    if (backgroundPermission?.granted) await startBackgroundSession({ quiet: true });
+    else if (shouldShowBackgroundGuide({ backgroundGranted: false, postponed: postponedRef.current })) {
+      setGuideReturned(false);
+      setBackgroundGuide(true);
+    }
     if (sub.current) sub.current.remove();
     setGpsFixReceived(false);
     setSpeedAvailable(false);
@@ -816,18 +861,68 @@ export default function App() {
     setBackgroundEnabled(false);
   }
 
-  async function ensureBackground() {
+  async function readLocationAccess() {
+    const [foreground, background] = await Promise.all([
+      Location.getForegroundPermissionsAsync(),
+      Location.getBackgroundPermissionsAsync(),
+    ]);
+    const access = describeLocationAccess({ foreground, background });
+    setBackgroundAccess(access);
+    return access;
+  }
+
+  async function postponeBackgroundGuide() {
+    postponedRef.current = true;
+    pendingBackgroundRef.current = false;
+    setGuideReturned(false);
+    setBackgroundGuide(false);
+    await AsyncStorage.setItem(BACKGROUND_GUIDE_KEY, "1").catch(() => {});
+  }
+
+  async function openBackgroundSettings() {
+    pendingBackgroundRef.current = true;
+    try {
+      if (Platform.OS === "android") {
+        const asked = await Location.requestBackgroundPermissionsAsync();
+        const access = await readLocationAccess();
+        if (access === "always") {
+          pendingBackgroundRef.current = false;
+          setGuideReturned(false);
+          setBackgroundGuide(false);
+          await startBackgroundSession();
+          return;
+        }
+        if (asked.canAskAgain === false) {
+          await Linking.openSettings();
+          return;
+        }
+        pendingBackgroundRef.current = false;
+        setGuideReturned(true);
+        setBackgroundGuide(true);
+        return;
+      }
+      await Linking.openSettings();
+    } catch {
+      pendingBackgroundRef.current = false;
+      setGuideReturned(true);
+      setBackgroundGuide(true);
+    }
+  }
+
+  async function startBackgroundSession({ quiet = false } = {}) {
     if (backgroundBusy.current) return false;
     backgroundBusy.current = true;
+    const failure = backgroundFailureCopy(settings.language);
     try {
       if (!databaseReady.current || !storedCountryCodes(remoteFeedsRef.current).includes(selectedCountry) ||
           !cameraPoints(countryFeed(remoteFeedsRef.current,selectedCountry,data,plData)).length) {
-        throw new Error("Сначала загрузите базу выбранной страны.");
+        throw new Error(failure.database);
       }
-      if (!(await Location.hasServicesEnabledAsync())) throw new Error("Включите геолокацию телефона.");
-      if (!(await TaskManager.isAvailableAsync())) throw new Error("Для фонового режима нужна установленная сборка CamAlert.");
-      const fg = await Location.requestForegroundPermissionsAsync();
-      if (!fg.granted) throw new Error("Разрешите CamAlert доступ к местоположению в настройках телефона.");
+      if (!(await Location.hasServicesEnabledAsync())) throw new Error(failure.services);
+      if (!(await TaskManager.isAvailableAsync())) throw new Error(failure.task);
+      let fg = await Location.getForegroundPermissionsAsync();
+      if (!fg.granted) fg = await Location.requestForegroundPermissionsAsync();
+      if (!fg.granted) throw new Error(failure.foreground);
       if (Platform.OS === "android") {
         for (const sound of [true,false]) for (const vibration of [true,false]) {
           await Notifications.setNotificationChannelAsync(`camera-alerts-${sound ? "sound" : "silent"}-${vibration ? "vibrate" : "still"}`, {
@@ -837,18 +932,15 @@ export default function App() {
           });
         }
       }
-      const notifications = await Notifications.requestPermissionsAsync();
-      if (!notifications.granted) throw new Error("Разрешите уведомления CamAlert в настройках телефона.");
-      let bg = await Location.getBackgroundPermissionsAsync();
-      if (!bg.granted) {
-        const proceed = await new Promise(resolve => Alert.alert("Предупреждения в фоне",
-          "CamAlert использует местоположение во время включённой фоновой сессии, даже при заблокированном экране или открытом навигаторе. Выберите доступ «Всегда». Остановить сессию можно в настройках CamAlert.",
-          [{text:"Отмена",style:"cancel",onPress:()=>resolve(false)},{text:"Продолжить",onPress:()=>resolve(true)}],
-          {cancelable:true,onDismiss:()=>resolve(false)}));
-        if (!proceed) return false;
-        bg = await Location.requestBackgroundPermissionsAsync();
+      let notifications = await Notifications.getPermissionsAsync();
+      if (!notifications.granted) notifications = await Notifications.requestPermissionsAsync();
+      if (!notifications.granted) throw new Error(failure.notifications);
+      const bg = await Location.getBackgroundPermissionsAsync();
+      if (!bg.granted) return false;
+      if (await Location.hasStartedLocationUpdatesAsync(BACKGROUND_LOCATION_TASK)) {
+        setBackgroundEnabled(true);
+        return true;
       }
-      if (!bg.granted) throw new Error("В настройках телефона разрешите геолокацию CamAlert «Всегда».");
       await AsyncStorage.setItem(SETTINGS_KEY,JSON.stringify(settings));
       await AsyncStorage.setItem(BACKGROUND_SESSION_KEY,JSON.stringify({enabled:true,country:selectedCountry}));
       await Location.startLocationUpdatesAsync(BACKGROUND_LOCATION_TASK, {
@@ -859,23 +951,63 @@ export default function App() {
           notificationBody:"Предупреждения о камерах. Остановить: CamAlert → Настройки.",notificationColor:"#23D3EF",killServiceOnDestroy:true}} : {}),
       });
       if (!(await Location.hasStartedLocationUpdatesAsync(BACKGROUND_LOCATION_TASK)) ||
-          !(await TaskManager.isTaskRegisteredAsync(BACKGROUND_LOCATION_TASK))) throw new Error("Не удалось зарегистрировать фоновую сессию.");
+          !(await TaskManager.isTaskRegisteredAsync(BACKGROUND_LOCATION_TASK))) throw new Error(failure.start);
       setBackgroundEnabled(true);
       return true;
     } catch(error) {
       await stopBackground().catch(()=>{});
-      Alert.alert("Фоновый режим не включён",error.message || "Попробуйте ещё раз.",[
-        {text:"Закрыть",style:"cancel"},{text:"Настройки телефона",onPress:()=>Linking.openSettings()}]);
+      if (!quiet) {
+        Alert.alert(failure.title, error.message || failure.start, [
+          {text:failure.close, style:"cancel"},
+          {text:failure.openSettings, onPress:() => Linking.openSettings()},
+        ]);
+      }
       return false;
     } finally {backgroundBusy.current=false;}
+  }
+
+  async function requestBackground() {
+    let foreground = await Location.getForegroundPermissionsAsync();
+    if (!foreground.granted && foreground.canAskAgain !== false) {
+      foreground = await Location.requestForegroundPermissionsAsync();
+      setLocationPermissionStatus(foreground.status);
+    }
+    const access = await readLocationAccess();
+    if (access === "always") return startBackgroundSession();
+    if (!shouldShowBackgroundGuide({ backgroundGranted: false, postponed: postponedRef.current })) return false;
+    setGuideReturned(false);
+    setBackgroundGuide(true);
+    return false;
   }
 
   async function toggleBackground() {
     if (backgroundBusy.current) return;
     if (backgroundEnabled) {
-      try {await stopBackground();} catch(error) {Alert.alert("Фоновый режим",error.message);}
-    } else await ensureBackground();
+      try {await stopBackground();} catch(error) {Alert.alert(backgroundFailureCopy(settings.language).title, error.message);}
+    } else await requestBackground();
   }
+
+  onAppActiveRef.current = async () => {
+    const access = await readLocationAccess().catch(() => null);
+    if (!access) return;
+    if (access === "always") {
+      postponedRef.current = false;
+      await AsyncStorage.removeItem(BACKGROUND_GUIDE_KEY).catch(() => {});
+      setGuideReturned(false);
+      setBackgroundGuide(false);
+      if (pendingBackgroundRef.current && !backgroundEnabledRef.current) {
+        pendingBackgroundRef.current = false;
+        await startBackgroundSession();
+      } else pendingBackgroundRef.current = false;
+      return;
+    }
+    if (backgroundEnabledRef.current) await stopBackground().catch(() => {});
+    if (pendingBackgroundRef.current) {
+      pendingBackgroundRef.current = false;
+      setGuideReturned(true);
+      setBackgroundGuide(true);
+    }
+  };
 
   useEffect(() => {
     if (tab !== "nearby" || active) return;
@@ -1020,7 +1152,8 @@ export default function App() {
       return;
     }
 
-    if (!(await ensureBackground())) return;
+    const backgroundPermission = await Location.getBackgroundPermissionsAsync().catch(() => null);
+    if (backgroundPermission?.granted) await startBackgroundSession({ quiet: true });
     setModal(null);
     let installed = false;
     try { installed = await Linking.canOpenURL(links.appUrl); } catch (_) {}
@@ -1087,6 +1220,35 @@ export default function App() {
     await finishOnboarding();
   }
 
+  function renderBackgroundGuide() {
+    if (!backgroundGuide) return null;
+    const copy = backgroundGuideCopy(settings.language, Platform.OS);
+    return (
+      <Modal visible transparent animationType="slide" onRequestClose={postponeBackgroundGuide}>
+        <View style={s.modalShade}>
+          <Pressable accessibilityRole="button" accessibilityLabel={copy.later} onPress={postponeBackgroundGuide} style={StyleSheet.absoluteFill} />
+          <View style={[s.guideCard, {maxHeight: Math.max(240, Math.min(windowHeight * 0.62, 460))}]}>
+            <ScrollView contentContainerStyle={s.guideScroll} bounces={false}>
+              <Text maxFontSizeMultiplier={1.5} style={s.guideTitle}>{copy.title}</Text>
+              {guideReturned
+                ? <Text maxFontSizeMultiplier={1.6} style={s.guideState}>{backgroundAccessMessage(settings.language, backgroundAccess)}</Text>
+                : <>
+                    <Text maxFontSizeMultiplier={1.6} style={s.guideBody}>{copy.body}</Text>
+                    {copy.steps.map(step => <Text key={step} maxFontSizeMultiplier={1.6} style={s.guideStep}>{step}</Text>)}
+                  </>}
+              <Pressable accessibilityRole="button" onPress={openBackgroundSettings} style={s.guideButton}>
+                <Text maxFontSizeMultiplier={1.4} style={s.guideButtonText}>{copy.openSettings}</Text>
+              </Pressable>
+              <Pressable accessibilityRole="button" onPress={postponeBackgroundGuide} style={s.guideLater}>
+                <Text maxFontSizeMultiplier={1.4} style={s.guideLaterText}>{copy.later}</Text>
+              </Pressable>
+            </ScrollView>
+          </View>
+        </View>
+      </Modal>
+    );
+  }
+
   if (onboardingState !== "done") {
     if (onboardingState === "loading") {
       return <View style={{flex:1,backgroundColor:"#071525"}}><StatusBar style="light" /></View>;
@@ -1103,25 +1265,29 @@ export default function App() {
   }
 
   if (googleNavigationOpen) {
-    return <GoogleNavigationScreen
-      language={settings.language} initialDestination={navigatorDestination}
-      coords={coords} night={isNight} voiceEnabled={settings.voice} mapStyle={NIGHT_MAP_STYLE}
-      camera={ahead} gpsFixReceived={gpsFixReceived} speedKmh={speedKmh} speedAvailable={speedAvailable}
-      averageSection={averageSectionUi}
-      onStartTrip={async () => {
-        if (active) return true;
-        if (!databaseReady.current || !storedCountryCodes(remoteFeedsRef.current).includes(selectedCountry) || !cameraPoints(countryFeed(remoteFeedsRef.current, selectedCountry, data, plData)).length) {
-          Alert.alert("CamAlert", settings.language === "ru" ? "Сначала загрузите базу камер выбранной страны." : settings.language === "uk" ? "Спочатку завантажте базу камер вибраної країни." : settings.language === "pl" ? "Najpierw pobierz bazę kamer wybranego kraju." : "Download the selected country's camera database first.");
-          return false;
-        }
-        return !!(await startTracking());
-      }}
-      onClose={() => { setGoogleNavigationOpen(false); setTab("drive"); }}
-    />;
+    return <>
+      <GoogleNavigationScreen
+        language={settings.language} initialDestination={navigatorDestination}
+        coords={coords} night={isNight} voiceEnabled={settings.voice} mapStyle={NIGHT_MAP_STYLE}
+        camera={ahead} gpsFixReceived={gpsFixReceived} speedKmh={speedKmh} speedAvailable={speedAvailable}
+        averageSection={averageSectionUi}
+        onStartTrip={async () => {
+          if (active) return true;
+          if (!databaseReady.current || !storedCountryCodes(remoteFeedsRef.current).includes(selectedCountry) || !cameraPoints(countryFeed(remoteFeedsRef.current, selectedCountry, data, plData)).length) {
+            Alert.alert("CamAlert", settings.language === "ru" ? "Сначала загрузите базу камер выбранной страны." : settings.language === "uk" ? "Спочатку завантажте базу камер вибраної країни." : settings.language === "pl" ? "Najpierw pobierz bazę kamer wybranego kraju." : "Download the selected country's camera database first.");
+            return false;
+          }
+          return !!(await startTracking());
+        }}
+        onClose={() => { setGoogleNavigationOpen(false); setTab("drive"); }}
+      />
+      {renderBackgroundGuide()}
+    </>;
   }
 
   if (tab === "drive" && active) {
     return (
+      <>
       <DriveModeScreen
         theme={settings.driveTheme}
         language={settings.language}
@@ -1144,6 +1310,8 @@ export default function App() {
         onStop={stopTracking}
         onSettings={() => setTab("settings")}
       />
+      {renderBackgroundGuide()}
+      </>
     );
   }
 
@@ -1164,7 +1332,7 @@ export default function App() {
           <DriveHome
             language={settings.language}
             country={selectedCountry}
-            lastDataUpdate={lastDataUpdate}
+            lastDataUpdate={publishedAt || checkedAt}
             cameraCount={cameraPoints(countryFeed(remoteFeeds,selectedCountry,data,plData)).length}
             offlineAvailable={offlineCountryCodes.includes(selectedCountry)}
             onBack={() => {setOnboardingPage(2);setOnboardingState("new");}}
@@ -1302,7 +1470,8 @@ export default function App() {
               onSelect={selectCountryDatabase}
               onRemove={confirmRemoveDatabase}
               downloadedCount={offlineCountryCodes.length}
-              lastUpdate={lastDataUpdate}
+              publishedAt={publishedAt}
+              checkedAt={checkedAt}
             />
           </View>
         )}
@@ -1358,7 +1527,11 @@ export default function App() {
               }} style={[s.lang,settings.language===l&&s.langActive]}><Text style={s.settingLabel}>{l==="uk"?"UA":l.toUpperCase()}</Text></Pressable>)}
             </View>
             <SettingSwitch label={t.background} value={backgroundEnabled} onChange={toggleBackground}/>
-            <Text style={s.note}>Фон: системные уведомления о камерах. Голос и Bluetooth требуют проверки на устройстве. После принудительного закрытия приложения сессию нужно запустить снова.</Text>
+            <Text maxFontSizeMultiplier={1.5} style={s.note}>{backgroundAccessMessage(settings.language, backgroundAccess)}</Text>
+            <Pressable accessibilityRole="button" onPress={openBackgroundSettings} style={s.locationButton}>
+              <Text maxFontSizeMultiplier={1.4} style={s.locationButtonText}>{backgroundGuideCopy(settings.language, Platform.OS).openSettings}</Text>
+            </Pressable>
+            <Text maxFontSizeMultiplier={1.5} style={s.note}>Фон: системные уведомления о камерах. Голос и Bluetooth требуют проверки на устройстве. После принудительного закрытия приложения сессию нужно запустить снова.</Text>
             <SettingSwitch label={t.voiceLabel} value={settings.voice} onChange={v=>setSettings({...settings,voice:v})}/>
             <SettingSwitch label={t.vibrationLabel} value={settings.vibration} onChange={v=>setSettings({...settings,vibration:v})}/>
             <SettingSwitch label={t.smartDistanceLabel} value={settings.smartDistance} onChange={v=>setSettings({...settings,smartDistance:v})}/>
@@ -1368,13 +1541,17 @@ export default function App() {
               [t.band3,"highwayDistance"],[t.band4,"fastDistance"]
             ].map(([label,key]) => <DistanceRow key={key} label={label} value={settings[key]} setValue={v=>setSettings({...settings,[key]:v})}/>)}
             <Text style={s.sectionTitle}>{t.dataUpdate}</Text>
-            <View style={s.dataCard}>
-              <View style={{flex:1}}>
-                <Text style={s.dataLabel}>{t.lastUpdate}</Text>
-                <Text style={s.dataValue}>{lastDataUpdate ? new Date(lastDataUpdate).toLocaleString() : "—"}</Text>
+            <View style={[s.dataCard, s.dataCardStack]}>
+              <View>
+                <Text maxFontSizeMultiplier={1.6} style={s.dataLabel}>{t.databaseVersion}</Text>
+                <Text maxFontSizeMultiplier={1.6} style={s.dataValue}>{formatCatalogDate(publishedAt, settings.language) || "—"}</Text>
               </View>
-              <Pressable onPress={()=>refreshRemoteData(false)} style={s.smallButton}>
-                <Text style={s.smallButtonText}>{t.updateNow}</Text>
+              <View>
+                <Text maxFontSizeMultiplier={1.6} style={s.dataLabel}>{t.lastCheck}</Text>
+                <Text maxFontSizeMultiplier={1.6} style={s.dataValue}>{formatCatalogDate(checkedAt, settings.language, true) || "—"}</Text>
+              </View>
+              <Pressable onPress={()=>refreshRemoteData(false)} style={[s.smallButton, s.dataUpdateButton]}>
+                <Text maxFontSizeMultiplier={1.4} style={s.smallButtonText}>{t.updateNow}</Text>
               </Pressable>
             </View>
 
@@ -1398,6 +1575,7 @@ export default function App() {
         )}
       </ScrollView>
 
+      {renderBackgroundGuide()}
       <NavigatorPickerSheet
         visible={modal === "navigator"}
         language={settings.language}
@@ -1980,7 +2158,7 @@ function DriveHome({ language, country, cameraCount, offlineAvailable, lastDataU
   );
 }
 
-function CountriesDataScreen({ language, theme, countries, search, onSearch, onSelect, onRemove, downloadedCount, lastUpdate }) {
+function CountriesDataScreen({ language, theme, countries, search, onSearch, onSelect, onRemove, downloadedCount, publishedAt, checkedAt }) {
   const countriesStyles = baseCountriesStyles;
   const copy = COUNTRY_SCREEN_COPY[language] || COUNTRY_SCREEN_COPY.ru;
   const isNight = theme === "night";
@@ -2018,17 +2196,18 @@ function CountriesDataScreen({ language, theme, countries, search, onSearch, onS
       <View style={[countriesStyles.noteCard,isNight&&countriesStyles.countryCardNight]}>
         <Text style={[countriesStyles.noteTitle,isNight&&countriesStyles.textNight]}>{copy.offlineTitle}</Text>
         <Text style={[countriesStyles.noteText,isNight&&countriesStyles.mutedNight]}>{copy.offlineNote}</Text>
-        {lastUpdate ? <Text style={[countriesStyles.lastUpdate,isNight&&countriesStyles.mutedNight]}>{copy.updated} {new Date(lastUpdate).toLocaleDateString()}</Text> : null}
+        <Text maxFontSizeMultiplier={1.6} style={[countriesStyles.lastUpdate,isNight&&countriesStyles.mutedNight]}>{copy.version} {formatCatalogDate(publishedAt, language) || "—"}</Text>
+        <Text maxFontSizeMultiplier={1.6} style={[countriesStyles.lastUpdate,isNight&&countriesStyles.mutedNight]}>{copy.checked} {formatCatalogDate(checkedAt, language, true) || "—"}</Text>
       </View>
     </View>
   );
 }
 
 const COUNTRY_SCREEN_COPY = {
-  ru: { search:"Найти страну", cameras:"камер", countUnavailable:"Количество камер неизвестно", offline:"Доступна без интернета", loading:"Загружается…", tapToDownload:"Нажмите, чтобы выбрать и загрузить", noCountries:"Страны не найдены", offlineTitle:"Доступность офлайн", offlineNote:"Показываем офлайн-статус только для баз, сохранённых на устройстве или встроенных в приложение.", updated:"Последнее обновление:" },
-  uk: { search:"Знайти країну", cameras:"камер", countUnavailable:"Кількість камер невідома", offline:"Доступна без інтернету", loading:"Завантажується…", tapToDownload:"Натисніть, щоб вибрати й завантажити", noCountries:"Країн не знайдено", offlineTitle:"Доступність офлайн", offlineNote:"Офлайн-статус показуємо лише для баз, збережених на пристрої або вбудованих у застосунок.", updated:"Останнє оновлення:" },
-  en: { search:"Find a country", cameras:"cameras", countUnavailable:"Camera count unavailable", offline:"Available offline", loading:"Loading…", tapToDownload:"Tap to select and download", noCountries:"No countries found", offlineTitle:"Offline availability", offlineNote:"Offline status is shown only for databases saved on this device or bundled with the app.", updated:"Last update:" },
-  pl: { search:"Znajdź kraj", cameras:"kamer", countUnavailable:"Liczba kamer niedostępna", offline:"Dostępna offline", loading:"Pobieranie…", tapToDownload:"Dotknij, aby wybrać i pobrać", noCountries:"Nie znaleziono krajów", offlineTitle:"Dostępność offline", offlineNote:"Status offline pokazujemy tylko dla baz zapisanych na urządzeniu lub dołączonych do aplikacji.", updated:"Ostatnia aktualizacja:" },
+  ru: { search:"Найти страну", cameras:"камер", countUnavailable:"Количество камер неизвестно", offline:"Доступна без интернета", loading:"Загружается…", tapToDownload:"Нажмите, чтобы выбрать и загрузить", noCountries:"Страны не найдены", offlineTitle:"Доступность офлайн", offlineNote:"Показываем офлайн-статус только для баз, сохранённых на устройстве или встроенных в приложение.", version:"Версия базы:", checked:"Последняя проверка:" },
+  uk: { search:"Знайти країну", cameras:"камер", countUnavailable:"Кількість камер невідома", offline:"Доступна без інтернету", loading:"Завантажується…", tapToDownload:"Натисніть, щоб вибрати й завантажити", noCountries:"Країн не знайдено", offlineTitle:"Доступність офлайн", offlineNote:"Офлайн-статус показуємо лише для баз, збережених на пристрої або вбудованих у застосунок.", version:"Версія бази:", checked:"Остання перевірка:" },
+  en: { search:"Find a country", cameras:"cameras", countUnavailable:"Camera count unavailable", offline:"Available offline", loading:"Loading…", tapToDownload:"Tap to select and download", noCountries:"No countries found", offlineTitle:"Offline availability", offlineNote:"Offline status is shown only for databases saved on this device or bundled with the app.", version:"Database version:", checked:"Last check:" },
+  pl: { search:"Znajdź kraj", cameras:"kamer", countUnavailable:"Liczba kamer niedostępna", offline:"Dostępna offline", loading:"Pobieranie…", tapToDownload:"Dotknij, aby wybrać i pobrać", noCountries:"Nie znaleziono krajów", offlineTitle:"Dostępność offline", offlineNote:"Status offline pokazujemy tylko dla baz zapisanych na urządzeniu lub dołączonych do aplikacji.", version:"Wersja bazy:", checked:"Ostatnie sprawdzenie:" },
 };
 
 function NavigatorPickerSheet({ visible, language, platform, destination, onDestinationChange, onSelect, onAlertsOnly, onClose }) {
@@ -2555,6 +2734,18 @@ const baseAppStyles = StyleSheet.create({
   modalShade:{flex:1,backgroundColor:"rgba(0,0,0,.45)",justifyContent:"flex-end"},modalCard:{backgroundColor:"#fff",padding:22,borderTopLeftRadius:26,borderTopRightRadius:26,gap:14},modalTitle:{fontSize:23,fontWeight:"800"},modalText:{opacity:.6},input:{minHeight:90,borderWidth:1,borderColor:"#ddd",borderRadius:14,padding:12,textAlignVertical:"top"},cancel:{alignItems:"center",padding:12},
   typeLabel:{fontSize:12,fontWeight:"700",opacity:.5,marginTop:5},
   dataCard:{backgroundColor:"#f3f4f6",borderRadius:14,padding:14,flexDirection:"row",alignItems:"center",gap:12},
+  dataCardStack:{flexDirection:"column",alignItems:"stretch"},
+  dataUpdateButton:{alignSelf:"flex-start",marginTop:4},
+  guideCard:{backgroundColor:"#fff",paddingHorizontal:18,paddingTop:8,paddingBottom:14,borderTopLeftRadius:22,borderTopRightRadius:22},
+  guideScroll:{gap:8,paddingTop:8},
+  guideTitle:{fontSize:18,lineHeight:23,fontWeight:"800",color:"#14213D"},
+  guideBody:{fontSize:14,lineHeight:20,color:"#3C4C60"},
+  guideStep:{fontSize:15,lineHeight:21,fontWeight:"700",color:"#14213D"},
+  guideState:{fontSize:15,lineHeight:21,fontWeight:"700",color:"#176d68"},
+  guideButton:{minHeight:48,borderRadius:14,backgroundColor:"#1260E8",alignItems:"center",justifyContent:"center",paddingHorizontal:16,paddingVertical:12,marginTop:6},
+  guideButtonText:{color:"#fff",fontSize:16,fontWeight:"800",textAlign:"center"},
+  guideLater:{minHeight:44,alignItems:"center",justifyContent:"center"},
+  guideLaterText:{fontSize:15,fontWeight:"700",color:"#526A80",textAlign:"center"},
   dataLabel:{fontSize:12,opacity:.55},
   dataValue:{fontSize:13,fontWeight:"700",marginTop:3},
   driveThemeRow:{flexDirection:"row",gap:9},driveThemeOption:{flex:1,alignItems:"center",paddingVertical:12,borderRadius:13,backgroundColor:"#f0f2f5",borderWidth:1,borderColor:"#e4e8ed"},driveThemeOptionActive:{backgroundColor:"#10263b",borderColor:"#23d3ef"},driveThemeOptionText:{fontSize:13,fontWeight:"700",color:"#4d5e70"},driveThemeOptionTextActive:{color:"#fff"},
