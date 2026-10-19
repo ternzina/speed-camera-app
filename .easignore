@@ -22,7 +22,12 @@ web-build/
 *.apk
 *.aab
 *.ipa
+*.mp4
+*.mov
 *.log
+deliverables/
+canard-final-candidate-2026-10-05/
+audit-canard-2026-10-05/
 *.tsbuildinfo
 .DS_Store
 *.backup-*
