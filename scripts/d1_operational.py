@@ -19,6 +19,18 @@ PINNED={'cameras':123579,'published':114794,'unpublished':8785,'countries':122,'
 DELIVERY_GROUPS=('cameras','speed_cameras','red_light_cameras','checkpoints','average_speed_sections')
 CAMERA_FIELDS=('canonical_id','country_code','camera_type','status','confidence','latitude','longitude','end_latitude','end_longitude','speed_limit','direction','direction_raw','road_ref','road_name','city','region','publication_review','first_seen_at','last_seen_at','updated_at','source_codes','source_count','published','lat_cell','lon_cell','chunk_key','row_sha256')
 
+def camera_upsert_sql(publication_guard=False):
+    # A repeat with the same row_sha256 writes nothing. A different checksum
+    # updates the stored row. The publication guard additionally refuses a
+    # published=1 write unless that incoming row already meets the public rule,
+    # so a candidate cannot be switched on by a partial correction.
+    placeholders=','.join('?' for _ in CAMERA_FIELDS)
+    assignments=','.join(f'{name}=excluded.{name}' for name in CAMERA_FIELDS if name!='canonical_id')
+    guard='cameras.row_sha256<>excluded.row_sha256'
+    if publication_guard:
+        guard+=" AND (excluded.published=0 OR (excluded.status IN ('active','missing_source') AND lower(excluded.confidence) IN ('high','medium')))"
+    return f'INSERT INTO cameras({",".join(CAMERA_FIELDS)}) VALUES({placeholders}) ON CONFLICT(canonical_id) DO UPDATE SET {assignments} WHERE {guard}'
+
 def sha(data):return hashlib.sha256(data).hexdigest()
 def encode(value):return json.dumps(value,sort_keys=True,ensure_ascii=False,separators=(',',':'),allow_nan=False).encode()
 def published(row):return row.get('status') in ('active','missing_source') and str(row.get('confidence','')).lower() in ('high','medium')
@@ -168,9 +180,7 @@ def import_operational(data_root,database,master_key,manifest_path,expectations=
         conn.execute('CREATE TEMP TABLE imported_source(source_code TEXT PRIMARY KEY)')
         conn.execute('CREATE TEMP TABLE imported_registry(root_key TEXT PRIMARY KEY)')
         catalog={};source_index={};by_id={'UA':{},'PL':{}};counts={'cameras':0,'published':0}
-        placeholders=','.join('?' for _ in CAMERA_FIELDS)
-        assignments=','.join(f'{name}=excluded.{name}' for name in CAMERA_FIELDS if name!='canonical_id')
-        camera_sql=f'INSERT INTO cameras({",".join(CAMERA_FIELDS)}) VALUES({placeholders}) ON CONFLICT(canonical_id) DO UPDATE SET {assignments} WHERE cameras.row_sha256<>excluded.row_sha256'
+        camera_sql=camera_upsert_sql()
         for chunk_key,row in iter_dataset(archive_root,master_key):
             values=camera_tuple(row,chunk_key)
             conn.execute(camera_sql,values)

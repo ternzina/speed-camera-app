@@ -29,6 +29,7 @@ web-build/
 *.log
 *.tsbuildinfo
 .DS_Store
+.wrangler/
 
 # Local backups
 *.backup-*

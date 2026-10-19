@@ -1,0 +1,91 @@
+{
+  "checked_at": "2026-10-19T10:55:53Z",
+  "database_name": "camalert-operational",
+  "database_id": "65a68ee8-74ff-4429-9b0c-125df189018b",
+  "account_id": "912ee2aedf25096037b555f6edf94300",
+  "region": "WEUR",
+  "database_size_bytes": 66002944,
+  "rows_written_by_this_check": 0,
+  "storage_control_update_applied": false,
+  "import_runs_update_applied": false,
+  "production_worker_changed": false,
+  "supabase_disabled": false,
+  "prepared_points_published": false,
+  "master": {
+    "key": "archive/v1/manifests/fd4cede54c8cd2e1d513d5ca05c0b520ddd13ccfc7ee0f02bf5ea8f000d9648b.json",
+    "decoded_sha256": "5c1d560481035c7a4b8a5805ae50e9088c5ef6e23b092576b0015c21be713d39",
+    "manifest_sha256": "7824306f2409909985e482bf110b65bf6c21a3444a21716b55c7a081a9159f4b",
+    "manifest_generated_at": "2026-10-13T15:35:26.807485+00:00"
+  },
+  "d1_matches_local_sqlite": {
+    "cameras": 123579,
+    "published": 114794,
+    "unpublished": 8785,
+    "candidates": 2131,
+    "review": 6654,
+    "countries": 122,
+    "country_fingerprint_sha256": "2a8b1a2604f448f900b3cdf1a8064c2a66dd8059376c657c5ca79484779c9622",
+    "sources": 218,
+    "sources_sha256": "cc6dd68e297b1711e37578b6ebea161cde33a88aa35afc83bd88c1899cb1c5aa",
+    "export_ids": 1397,
+    "exports_sha256": "0f87acc644348b0be71a1a4d82bcd891a1eb378efb4550dbdde1747a0fa8af1f",
+    "ua_delivery": 426,
+    "pl_delivery": 903,
+    "render_rows": 68,
+    "moderation": 8785,
+    "moderation_sha256": "ef34b5d9a31d2a93ed678a3dcbb249bb0f7cf20baf7b90105b4c8a646c0f429e",
+    "registry_rows": 53,
+    "registry_sha256": "991bb484efea19358a04843f36393bc50583e2534d470b61909094201b87375a",
+    "duplicate_exports": 0,
+    "foreign_key_violations": 0,
+    "published_outside_rule": 0,
+    "korea": 30760
+  },
+  "storage_control": {
+    "master_record_count": 2944,
+    "prepared_update": "cloudflare/camera-data/d1/storage-control-full-pointer.sql",
+    "where_matches": 1,
+    "sets_master_record_count": 123579,
+    "sets_updated_at": "2026-10-19T10:07:34Z",
+    "rollback": "cloudflare/camera-data/d1/storage-control-rollback.sql"
+  },
+  "import_runs": {
+    "result": "ua_pl_trial",
+    "camera_count": 2944,
+    "prepared_update": "cloudflare/camera-data/d1/import-runs-full-pointer.sql",
+    "where_matches": 1
+  },
+  "preview_worker": {
+    "config": "cloudflare/camera-data/d1/preview.wrangler.jsonc",
+    "main": "cloudflare/camera-data/d1/preview-worker.mjs",
+    "deployed": false,
+    "local_url": "http://127.0.0.1:8788",
+    "binding": "CAMALERT_D1",
+    "remote_reads": true,
+    "post_status": 405,
+    "ua_published": 426,
+    "ua_candidates": 130,
+    "ua_published_candidates": 0,
+    "pl_delivery": 903,
+    "pl_render_projections": 68
+  },
+  "safe_update": {
+    "batch_sql": "ON CONFLICT DO NOTHING",
+    "full_importer": "ON CONFLICT DO UPDATE WHERE row_sha256 differs, then deletes rows absent from the import set",
+    "guarded_statement": "camera_upsert_sql(publication_guard=True)",
+    "local_test": "scripts/tests/test_d1_operational.py",
+    "local_test_passed": true,
+    "cloud_update_executed": false
+  },
+  "bookmarks": {
+    "before_preview_reads": "00000008-00000000-00005109-8fcb0a52800b9e5e202d9568df474e28",
+    "after_read_only_check": "00000009-00000000-00005109-9f769536358dd7c0ecba9e547fcb9700"
+  },
+  "live_endpoints": {
+    "r2_manifest": "https://speed-camera-data.ternzina.workers.dev/production/v1/manifest.json",
+    "r2_v2_manifest": "404",
+    "supabase_camera_export": "https://ydgzsdlwnurychkbgsmn.supabase.co/functions/v1/camera-export",
+    "supabase_still_serves_coverage": true,
+    "legacy_static_coverage": "https://camera.21wek.com/data/coverage.json"
+  }
+}

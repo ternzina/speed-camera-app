@@ -96,6 +96,40 @@ class OperationalImport(unittest.TestCase):
         self.assertEqual(fresh.execute("SELECT speed_limit FROM cameras WHERE canonical_id='OSM_DE:node/1'").fetchone()[0],None)
         origin.close();fresh.close()
 
+    def test_guarded_update_changes_a_different_row_and_keeps_a_candidate_unpublished(self):
+        schema=(Path(__file__).resolve().parents[2]/'cloudflare/camera-data/d1/schema.sql').read_text()
+        def row(**overrides):
+            base={'canonical_id':'OSM_DE:node/9','country_code':'DE','camera_type':'fixed_speed','status':'candidate','confidence':'low','latitude':52.5,'longitude':13.4,'end_latitude':None,'end_longitude':None,'speed_limit':50,'direction':None,'direction_raw':None,'road_ref':None,'road_name':None,'city':None,'region':None,'publication_review':None,'first_seen_at':None,'last_seen_at':None,'updated_at':None,'source_codes':'["OSM_DE"]','source_count':1,'published':0,'lat_cell':52,'lon_cell':13,'chunk_key':'chunk','row_sha256':'sha-old'}
+            base.update(overrides)
+            return tuple(base[name] for name in d1.CAMERA_FIELDS)
+        def stored(conn):
+            return conn.execute("SELECT speed_limit,status,published,row_sha256 FROM cameras").fetchone()
+        unguarded=sqlite3.connect(':memory:')
+        unguarded.executescript(schema)
+        unguarded.execute(d1.camera_upsert_sql(),row())
+        unguarded.execute(d1.camera_upsert_sql(),row(published=1,confidence='high',speed_limit=80,row_sha256='sha-publish'))
+        self.assertEqual(stored(unguarded),(80,'candidate',1,'sha-publish'))
+        unguarded.close()
+        conn=sqlite3.connect(':memory:')
+        conn.executescript(schema)
+        guarded=d1.camera_upsert_sql(publication_guard=True)
+        conn.execute(guarded,row())
+        before=conn.total_changes
+        conn.execute(guarded,row())
+        self.assertEqual(conn.total_changes-before,0)
+        conn.execute("INSERT INTO cameras("+",".join(d1.CAMERA_FIELDS)+") VALUES("+",".join("?" for _ in d1.CAMERA_FIELDS)+") ON CONFLICT(canonical_id) DO NOTHING",row(speed_limit=70,row_sha256='sha-ignored'))
+        self.assertEqual(stored(conn),(50,'candidate',0,'sha-old'))
+        conn.execute(guarded,row(published=1,confidence='high',speed_limit=80,row_sha256='sha-blocked'))
+        self.assertEqual(stored(conn),(50,'candidate',0,'sha-old'))
+        conn.execute(guarded,row(speed_limit=60,row_sha256='sha-speed'))
+        self.assertEqual(stored(conn),(60,'candidate',0,'sha-speed'))
+        conn.execute(guarded,row(status='active',confidence='high',published=1,speed_limit=60,row_sha256='sha-public'))
+        self.assertEqual(stored(conn),(60,'active',1,'sha-public'))
+        before=conn.total_changes
+        conn.execute(guarded,row(status='active',confidence='high',published=1,speed_limit=60,row_sha256='sha-public'))
+        self.assertEqual(conn.total_changes-before,0)
+        conn.close()
+
     def test_verification_rejects_a_changed_speed_limit(self):
         d1.import_operational(self.root,self.database,self.master_key,self.manifest)
         conn=sqlite3.connect(self.database)
