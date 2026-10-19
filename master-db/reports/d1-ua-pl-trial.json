@@ -1,0 +1,137 @@
+{
+  "checked_at": "2026-10-17T22:37:30Z",
+  "account_id": "912ee2aedf25096037b555f6edf94300",
+  "account_email": "ternzina@gmail.com",
+  "database_name": "camalert-operational",
+  "database_id": "65a68ee8-74ff-4429-9b0c-125df189018b",
+  "region": "WEUR",
+  "worker_bindings": [
+    {
+      "type": "r2_bucket",
+      "name": "CAMERA_DATA",
+      "bucket_name": "speed-camera-data"
+    }
+  ],
+  "worker_config_changed": false,
+  "schema_import": {
+    "queries": 13,
+    "rows_read": 17,
+    "rows_written": 25,
+    "size_after_bytes": 94208
+  },
+  "data_import": {
+    "queries": 5966,
+    "rows_read": 8833,
+    "rows_written": 22158,
+    "size_after_bytes": 2240512,
+    "logical_inserts": 5965
+  },
+  "queries": {
+    "cameras": 2944,
+    "published": 1329,
+    "unpublished": 1615,
+    "ua": 567,
+    "pl": 2377,
+    "other_countries": 0,
+    "candidates": 1602,
+    "candidates_published": 0,
+    "review_published": 0,
+    "published_outside_rule": 0,
+    "ua_delivery": 426,
+    "pl_delivery": 903,
+    "pl_render_rows": 68,
+    "pl_render_distinct": 68,
+    "moderation": 1615,
+    "moderation_mismatch": 0,
+    "sources": 6,
+    "foreign_key_violations": 0,
+    "duplicate_cameras": 0,
+    "duplicate_exports": 0,
+    "status_rows": [
+      {
+        "status": "active",
+        "published": 1,
+        "n": 1329
+      },
+      {
+        "status": "candidate",
+        "published": 0,
+        "n": 1602
+      },
+      {
+        "status": "review",
+        "published": 0,
+        "n": 13
+      }
+    ]
+  },
+  "repeat_import": {
+    "result": "idempotent",
+    "sql": "INSERT ... ON CONFLICT DO NOTHING",
+    "queries": 5966,
+    "rows_read": 8833,
+    "rows_written": 0,
+    "size_after_bytes": 2240512,
+    "database_size_mb": "2.24",
+    "final_bookmark": "00000002-00000004-00005107-ac3b194691c1751b13c33381cceae712",
+    "earlier_plain_insert": "rejected with UNIQUE constraint failed: sources.source_code; counts stayed unchanged"
+  },
+  "usage_utc_day_2026_10_17": {
+    "rows_read": 8850,
+    "rows_written": 22183,
+    "free_daily_row_write_limit": 100000,
+    "free_daily_row_writes_remaining_if_on_free_plan": 77817,
+    "quota_remaining_field_returned": false
+  },
+  "queries_after_repeat": {
+    "cameras": 2944,
+    "published": 1329,
+    "unpublished": 1615,
+    "status_candidate": 1602,
+    "status_review": 13,
+    "ua": 567,
+    "pl": 2377,
+    "other_countries": 0,
+    "published_outside_rule": 0,
+    "sources": [
+      "CANARD_PL",
+      "OSM_PL",
+      "OSM_UA",
+      "PATROL_UA",
+      "PL_CANARD_CURRENT",
+      "UA_NPU_CURRENT"
+    ],
+    "ua_delivery": 426,
+    "pl_delivery": 903,
+    "pl_render_rows": 68,
+    "null_canonical_exports": 15,
+    "moderation": 1615,
+    "moderation_mismatch": 0,
+    "missing_source_codes": 0,
+    "orphan_delivery": 0,
+    "published_without_delivery": 0,
+    "duplicate_cameras": 0,
+    "duplicate_export_keys": 0,
+    "foreign_key_violations": 0,
+    "storage_control_master_record_count": 2944,
+    "master_decoded_sha256": "5c1d560481035c7a4b8a5805ae50e9088c5ef6e23b092576b0015c21be713d39",
+    "manifest_sha256": "7824306f2409909985e482bf110b65bf6c21a3444a21716b55c7a081a9159f4b",
+    "import_runs_result": "ua_pl_trial"
+  },
+  "checksums": {
+    "cameras_canonical_id_row_sha256": "d1da7ba29d289c2497afdae7450dd8a8257dd9fd59946265b542cd55ae25ad2c",
+    "camera_rows_compared": 2944,
+    "export_ids": "16201791ae98950ecf97f725809304c178c0ee80670ccc36f6cda63b339aac83",
+    "export_rows_compared": 1397,
+    "match_local_sqlite": true
+  },
+  "usage_after_repeat": {
+    "rows_written_24h": 22183,
+    "rows_read_24h": 2012175,
+    "write_queries_24h": 4,
+    "database_size_bytes": 2240512,
+    "free_daily_row_write_limit": 100000,
+    "free_daily_row_writes_remaining_if_on_free_plan": 77817,
+    "quota_remaining_field_returned": false
+  }
+}

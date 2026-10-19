@@ -1,0 +1,14 @@
+{
+  "manifest_sha_matches_pinned": true,
+  "manifest_records": 114794,
+  "countries": 122,
+  "database_published": 114794,
+  "polish_red_light_sites": {
+    "file": 68,
+    "stored": 68,
+    "same_ids": true
+  },
+  "mismatches": [],
+  "live_r2_replaced": false,
+  "result": "passed"
+}

@@ -1,0 +1,38 @@
+{
+  "checked_at": "2026-10-17T20:50:30Z",
+  "wrangler": "4.81.0",
+  "cloudflare_mutations": false,
+  "active_login": {
+    "email": "ternzina@gmail.com",
+    "account_name": "Ternzina@gmail.com's Account",
+    "account_id": "912ee2aedf25096037b555f6edf94300"
+  },
+  "d1_databases": [],
+  "camalert_operational_present": false,
+  "r2_buckets": ["speed-camera-data"],
+  "speed_camera_data_bucket_present": true,
+  "speed_camera_data_bucket_created_at": "2026-10-07T06:49:54.826Z",
+  "worker_speed_camera_data": {
+    "present": true,
+    "author": "ternzina@gmail.com",
+    "created_at": "2026-10-07T07:38:48.472Z",
+    "changed": false
+  },
+  "ua_pl_trial": {
+    "sql_file": "master-db/cache/d1-operational/ua-pl-trial.sql",
+    "sql_bytes": 3063365,
+    "cameras": 2944,
+    "published": 1329,
+    "unpublished": 1615,
+    "ua_cameras": 567,
+    "pl_cameras": 2377,
+    "sources": 6,
+    "delivery_aliases": 1329,
+    "render_projections": 68,
+    "moderation": 1615,
+    "registry_rows": 1,
+    "row_writes": 5965,
+    "local_sql_load": "passed",
+    "cloud_import_executed": false
+  }
+}

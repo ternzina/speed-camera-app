@@ -1,0 +1,69 @@
+{
+  "database": "/Users/zina/Downloads/speed-camera-prototype-direction/master-db/cache/d1-operational/camalert-operational.sqlite",
+  "master_key": "archive/v1/manifests/fd4cede54c8cd2e1d513d5ca05c0b520ddd13ccfc7ee0f02bf5ea8f000d9648b.json",
+  "manifest_sha256": "7824306f2409909985e482bf110b65bf6c21a3444a21716b55c7a081a9159f4b",
+  "cameras": 123579,
+  "published": 114794,
+  "unpublished": 8785,
+  "sources": 218,
+  "delivery_aliases": 1329,
+  "render_projections": 68,
+  "registry_rows": 53,
+  "row_changes": 0,
+  "page_size": 4096,
+  "pages": 15692,
+  "database_bytes": 64274432,
+  "index_bytes": 5918720,
+  "free_d1": {
+    "max_database_bytes": 524288000,
+    "fits_database_size": true,
+    "daily_row_writes": 100000,
+    "import_row_writes": 134034,
+    "fits_one_free_write_day": false,
+    "rows_written_this_run": 0,
+    "note": "import_row_writes is the fresh load. rows_written_this_run is this execution and is 0 on a repeat."
+  },
+  "scope": {
+    "pinned_cameras": 123579,
+    "published": 114794,
+    "unpublished": 8785,
+    "excluded_prepared_points": 443,
+    "prepared_point_ids_checked": 408,
+    "prepared_point_ids_present": 95,
+    "prepared_points_without_canonical_id_checked_by_coordinate": 35,
+    "prepared_points_without_canonical_id_found_nearby": 27,
+    "prepared_points_already_unpublished_in_master": 122,
+    "prepared_points_published_by_this_import": 0,
+    "prepared_points_absent": 321,
+    "prepared_points_note": "95 Hong Kong ids and 27 Singapore red-light coordinates already exist in the pinned master as review/LOW unpublished rows. This import does not read the 15 October packages and published none of the 443 prepared points.",
+    "supabase_rows_downloaded": 0,
+    "remote_d1_created": false,
+    "r2_write": false,
+    "worker_changed": false,
+    "fallback_left_enabled": true
+  },
+  "runs": {
+    "fresh": {
+      "row_changes": 134034,
+      "database_bytes": 64274432,
+      "index_bytes": 5918720,
+      "verification": "passed"
+    },
+    "repeat": {
+      "row_changes": 0,
+      "database_bytes": 64274432,
+      "index_bytes": 5918720,
+      "verification": "passed"
+    }
+  },
+  "account_check": {
+    "checked_on": "2026-10-17",
+    "wrangler": "4.81.0",
+    "logged_in_account_name": "Herlightapp@gmail.com's Account",
+    "logged_in_account_id": "f261ce697d712f29db7dfc5c0f2f27b9",
+    "d1_databases": [],
+    "remote_database_created": false,
+    "production_r2_account": "Ternzina@gmail.com's Account",
+    "note": "The empty database list is only for the logged-in account. The production R2 account was not queried and was not modified."
+  }
+}
