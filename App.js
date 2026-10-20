@@ -5,6 +5,7 @@ import {
   Modal, TextInput, Switch, Vibration, Linking, Image, ImageBackground, ActivityIndicator,
   Animated, Platform, AppState, NativeModules, useWindowDimensions
 } from "react-native";
+import { SafeAreaProvider, SafeAreaView as EdgeSafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
 import * as Location from "expo-location";
 import * as Speech from "./camera-speech";
 import * as TaskManager from "expo-task-manager";
@@ -351,8 +352,47 @@ function homeThemeStyles(night) {
   return themedStyles(baseHomeStyles,night,overrides);
 }
 
+function tabLabelLayout(label, columnWidth, fontScale) {
+  const column = Math.max(28, columnWidth);
+  const scale = Math.min(Math.max(fontScale || 1, 1), 1.6);
+  const fitsLine = (line, size) => line.length * size * 0.62 <= column;
+  const desired = Math.min(13, 11 * scale);
+  const pack = (text, fontSize, lines) => ({ text, fontSize, lineHeight: Math.round(fontSize * 1.25), lines });
+  const shrinkToFit = (line, from, floor) => {
+    let size = from;
+    while (size > floor && !fitsLine(line, size)) size -= 0.5;
+    return size;
+  };
+  if (fitsLine(label, desired)) return pack(label, desired, 1);
+  if (!label.includes(" ") && label.length <= 8) {
+    const size = shrinkToFit(label, desired, 10);
+    if (fitsLine(label, size)) return pack(label, size, 1);
+  }
+  if (scale <= 1.05) {
+    const size = shrinkToFit(label, 11, 9);
+    if (fitsLine(label, size)) return pack(label, size, 1);
+  }
+  if (label.includes(" ")) {
+    const longest = label.split(" ").reduce((a, b) => (a.length >= b.length ? a : b));
+    return pack(label, shrinkToFit(longest, desired, 10), 2);
+  }
+  const mid = Math.ceil(label.length / 2);
+  const text = `${label.slice(0, mid)}\n${label.slice(mid)}`;
+  const widest = text.split("\n").reduce((a, b) => (a.length >= b.length ? a : b));
+  return pack(text, shrinkToFit(widest, desired, 10), 2);
+}
+
 export default function App() {
+  return (
+    <SafeAreaProvider>
+      <CamAlertApp />
+    </SafeAreaProvider>
+  );
+}
+
+function CamAlertApp() {
   const [settings, setSettings] = useState(DEFAULT_SETTINGS);
+  const insets = useSafeAreaInsets();
   const t = I18N[settings.language] || I18N.ru;
   const isNight = settings.driveTheme !== "day";
   const s = useMemo(() => appThemeStyles(isNight),[isNight]);
@@ -420,7 +460,7 @@ export default function App() {
   const pendingBackgroundRef = useRef(false);
   const backgroundEnabledRef = useRef(false);
   const onAppActiveRef = useRef(async () => {});
-  const { height: windowHeight } = useWindowDimensions();
+  const { height: windowHeight, width: windowWidth, fontScale } = useWindowDimensions();
 
   useEffect(() => {
     const subscription = AppState.addEventListener("change", state => {
@@ -1317,17 +1357,9 @@ export default function App() {
 
   return (
     <ThemeContext.Provider value={isNight}>
-    <SafeAreaView style={s.safe}>
+    <EdgeSafeAreaView style={s.safe} edges={["top", "left", "right"]}>
       <StatusBar style={isNight ? "light" : "dark"} />
-      <View style={s.nav}>
-        {nav.map(([key,icon,label]) => (
-          <Pressable key={key} onPress={()=>{if(key==="settings")setCountryScreenTab("settings");setTab(key);}} style={[s.navItem, tab===key && s.navActive]}>
-            <Text style={s.navIcon}>{icon}</Text><Text style={s.navLabel}>{label}</Text>
-          </Pressable>
-        ))}
-      </View>
-
-      <ScrollView contentContainerStyle={s.container}>
+      <ScrollView style={s.scroll} contentContainerStyle={s.container} keyboardShouldPersistTaps="handled">
         {tab === "drive" && !active && (
           <DriveHome
             language={settings.language}
@@ -1579,6 +1611,21 @@ export default function App() {
         )}
       </ScrollView>
 
+      <View style={[s.navDock, { paddingBottom: Math.max(insets.bottom, Platform.OS === "android" ? 12 : 8) }]}>
+        <View style={s.nav}>
+          {nav.map(([key,icon,label]) => {
+            const columnWidth = (windowWidth - 20 - 8) / nav.length - 4;
+            const layout = tabLabelLayout(label, columnWidth, fontScale);
+            return (
+            <Pressable key={key} accessibilityRole="tab" accessibilityState={{selected:tab===key}} accessibilityLabel={label} onPress={()=>{if(key==="settings")setCountryScreenTab("settings");setTab(key);}} style={[s.navItem, tab===key && s.navActive]}>
+              <Text maxFontSizeMultiplier={1.15} style={s.navIcon}>{icon}</Text>
+              <Text allowFontScaling={false} numberOfLines={layout.lines} style={[s.navLabel, { fontSize: layout.fontSize, lineHeight: layout.lineHeight }]}>{layout.text}</Text>
+            </Pressable>
+            );
+          })}
+        </View>
+      </View>
+
       {renderBackgroundGuide()}
       <NavigatorPickerSheet
         visible={modal === "navigator"}
@@ -1646,7 +1693,7 @@ export default function App() {
           </View>
         </View>
       </Modal>
-    </SafeAreaView>
+    </EdgeSafeAreaView>
     </ThemeContext.Provider>
   );
 }
@@ -2197,22 +2244,24 @@ function CountriesDataScreen({ language, theme, countries, search, onSearch, onS
         accessibilityLabel={copy.search}
       />
       {countries.map(item=>(
-        <Pressable key={item.code} accessibilityRole="button" accessibilityState={{selected:item.selected}} onPress={()=>onSelect(item.code)} style={[countriesStyles.countryCard,isNight&&countriesStyles.countryCardNight,item.selected&&countriesStyles.countrySelected]}>
-          <Text style={countriesStyles.flag}>{countryFlag(item.code)}</Text>
-          <View style={countriesStyles.countryCopy}>
-            <Text style={[countriesStyles.countryName,isNight&&countriesStyles.textNight]}>{item.name}</Text>
-            <Text style={[countriesStyles.countryCount,isNight&&countriesStyles.mutedNight]}>{item.count==null?copy.countUnavailable:`${item.count.toLocaleString()} ${copy.cameras}`}</Text>
-            <Text style={[countriesStyles.countryStatus,item.offline?countriesStyles.offlineStatus:isNight?countriesStyles.mutedNight:countriesStyles.countryCount]}>
-              {item.loading ? copy.loading : item.offline ? copy.offline : copy.tapToDownload}
-            </Text>
-          </View>
-          {item.offline && <Pressable accessibilityRole="button" disabled={item.loading} onPress={event => {event.stopPropagation();onRemove(item.code);}} style={{paddingHorizontal:8,minHeight:44,justifyContent:"center"}}>
-            <Text style={{color:isNight?"#FF9B9B":"#B52132"}}>{({ru:"Удалить базу",uk:"Видалити базу",en:"Delete database",pl:"Usuń bazę"})[language] || "Delete database"}</Text>
+        <View key={item.code} style={[countriesStyles.countryCard,isNight&&countriesStyles.countryCardNight,item.selected&&countriesStyles.countrySelected]}>
+          <Pressable accessibilityRole="button" accessibilityState={{selected:item.selected}} onPress={()=>onSelect(item.code)} style={countriesStyles.countryMain}>
+            <Text style={countriesStyles.flag}>{countryFlag(item.code)}</Text>
+            <View style={countriesStyles.countryCopy}>
+              <Text style={[countriesStyles.countryName,isNight&&countriesStyles.textNight]}>{item.name}</Text>
+              <Text style={[countriesStyles.countryCount,isNight&&countriesStyles.mutedNight]}>{item.count==null?copy.countUnavailable:`${item.count.toLocaleString()} ${copy.cameras}`}</Text>
+              <Text style={[countriesStyles.countryStatus,item.offline?countriesStyles.offlineStatus:isNight?countriesStyles.mutedNight:countriesStyles.countryCount]}>
+                {item.loading ? copy.loading : item.offline ? copy.offline : copy.tapToDownload}
+              </Text>
+            </View>
+            <View style={countriesStyles.statusMark}>
+              {item.loading ? <ActivityIndicator size="small" color="#1260E8" /> : <Text style={[countriesStyles.check,item.offline?countriesStyles.checkReady:countriesStyles.checkPending]}>{item.offline?"✓":"↓"}</Text>}
+            </View>
+          </Pressable>
+          {item.offline && <Pressable accessibilityRole="button" disabled={item.loading} onPress={()=>onRemove(item.code)} style={[countriesStyles.removeButton,isNight&&countriesStyles.removeButtonNight,item.loading&&{opacity:0.45}]}>
+            <Text maxFontSizeMultiplier={1.4} style={[countriesStyles.removeButtonText,isNight&&countriesStyles.removeButtonTextNight]}>{({ru:"Удалить базу",uk:"Видалити базу",en:"Delete database",pl:"Usuń bazę"})[language] || "Delete database"}</Text>
           </Pressable>}
-          <View style={countriesStyles.statusMark}>
-            {item.loading ? <ActivityIndicator size="small" color="#1260E8" /> : <Text style={[countriesStyles.check,item.offline?countriesStyles.checkReady:countriesStyles.checkPending]}>{item.offline?"✓":"↓"}</Text>}
-          </View>
-        </Pressable>
+        </View>
       ))}
       {!countries.length && <Text style={[countriesStyles.empty,isNight&&countriesStyles.mutedNight]}>{copy.noCountries}</Text>}
       <View style={[countriesStyles.noteCard,isNight&&countriesStyles.countryCardNight]}>
@@ -2576,10 +2625,15 @@ const baseCountriesStyles = StyleSheet.create({
   segmentText:{color:"#52677F",fontSize:13,fontWeight:"700"},segmentTextActive:{color:"#FFFFFF"},
   search:{minHeight:46,paddingHorizontal:14,borderRadius:14,backgroundColor:"#FFFFFF",borderWidth:1,borderColor:"#E2EAF2",color:"#173554",fontSize:15},
   searchNight:{backgroundColor:"#10263B",borderColor:"#27425D",color:"#FFFFFF"},
-  countryCard:{minHeight:82,flexDirection:"row",alignItems:"center",gap:12,paddingHorizontal:13,paddingVertical:10,borderRadius:18,backgroundColor:"#FFFFFF",borderWidth:1,borderColor:"#E3EAF2"},
+  countryCard:{borderRadius:18,backgroundColor:"#FFFFFF",borderWidth:1,borderColor:"#E3EAF2",overflow:"hidden"},
+  countryMain:{minHeight:82,flexDirection:"row",alignItems:"center",gap:12,paddingHorizontal:13,paddingVertical:10},
   countryCardNight:{backgroundColor:"#10263B",borderColor:"#213B55"},countrySelected:{borderColor:"#1260E8",borderWidth:1.5},
-  flag:{fontSize:32,width:40,textAlign:"center"},countryCopy:{flex:1,minWidth:0},countryName:{color:"#14213D",fontSize:15,fontWeight:"800"},
-  countryCount:{color:"#748399",fontSize:12,marginTop:2},countryStatus:{fontSize:11,fontWeight:"600",marginTop:3},offlineStatus:{color:"#169B69"},
+  flag:{fontSize:32,width:40,textAlign:"center"},countryCopy:{flex:1,minWidth:0},countryName:{color:"#14213D",fontSize:15,lineHeight:20,fontWeight:"800"},
+  countryCount:{color:"#748399",fontSize:12,lineHeight:16,marginTop:2},countryStatus:{fontSize:12,lineHeight:16,fontWeight:"600",marginTop:3},offlineStatus:{color:"#169B69"},
+  removeButton:{minHeight:48,alignItems:"center",justifyContent:"center",paddingHorizontal:14,paddingVertical:10,borderTopWidth:StyleSheet.hairlineWidth,borderTopColor:"#E3EAF2"},
+  removeButtonNight:{borderTopColor:"#213B55"},
+  removeButtonText:{color:"#B52132",fontSize:15,lineHeight:20,fontWeight:"700",textAlign:"center"},
+  removeButtonTextNight:{color:"#FF9B9B"},
   statusMark:{width:32,height:32,alignItems:"center",justifyContent:"center"},check:{fontSize:19,fontWeight:"800"},checkReady:{color:"#22C58B"},checkPending:{color:"#1260E8"},
   noteCard:{padding:14,borderRadius:16,backgroundColor:"#EEF4FA",gap:5},noteTitle:{color:"#14213D",fontSize:13,fontWeight:"800"},noteText:{color:"#627187",fontSize:12,lineHeight:17},lastUpdate:{color:"#8290A2",fontSize:11,marginTop:4},
   textNight:{color:"#FFFFFF"},mutedNight:{color:"#B8C8DA"},empty:{color:"#7B8496",textAlign:"center",padding:18},
@@ -2735,10 +2789,12 @@ const driveStyles = StyleSheet.create({
 
 const baseAppStyles = StyleSheet.create({
   safe:{flex:1,backgroundColor:"#f5f6f8"},
-  container:{padding:18,paddingBottom:150,gap:14},
-  nav:{position:"absolute",left:12,right:12,bottom:10,zIndex:20,backgroundColor:"#fff",borderRadius:20,flexDirection:"row",padding:6,shadowOpacity:.12,shadowRadius:15},
-  navItem:{flex:1,alignItems:"center",paddingVertical:5,borderRadius:13},navActive:{backgroundColor:"#eef0f3"},
-  navIcon:{fontSize:17},navLabel:{fontSize:9,marginTop:1},
+  scroll:{flex:1},
+  container:{padding:18,paddingBottom:24,gap:14},
+  navDock:{paddingHorizontal:10,paddingTop:6},
+  nav:{backgroundColor:"#fff",borderRadius:20,flexDirection:"row",alignItems:"stretch",paddingVertical:6,paddingHorizontal:4,shadowOpacity:.12,shadowRadius:15,elevation:8},
+  navItem:{flex:1,minWidth:0,alignItems:"center",justifyContent:"center",paddingVertical:4,paddingHorizontal:2,borderRadius:13},navActive:{backgroundColor:"#eef0f3"},
+  navIcon:{fontSize:16,lineHeight:20},navLabel:{width:"100%",fontSize:11,lineHeight:14,marginTop:1,textAlign:"center"},
   title:{fontSize:30,fontWeight:"800",marginTop:8},subtitle:{fontSize:14,opacity:.55},
   card:{backgroundColor:"#fff",borderRadius:24,padding:22,borderWidth:3,borderColor:"transparent"},cardDanger:{borderColor:"#ff8a00"},
   label:{fontSize:14,opacity:.55},distance:{fontSize:48,fontWeight:"900",marginTop:4},place:{fontSize:18,fontWeight:"700",marginTop:8},region:{fontSize:14,opacity:.55,marginTop:3},
