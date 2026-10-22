@@ -862,10 +862,10 @@ export const NOTICES = [
     "status": "needs_review",
     "wholeTerritory": null,
     "explanation": {
-      "ru": "Для этого кода в материалах проверки нет отдельной записи. Разрешение и запрет не записаны.",
-      "uk": "Для цього коду в матеріалах перевірки немає окремого запису. Дозвіл і заборона не записані.",
-      "en": "The research files have no separate entry for this code. Permission and a ban are not recorded.",
-      "pl": "Materiały sprawdzenia nie mają osobnego wpisu dla tego kodu. Zezwolenie i zakaz nie są zapisane."
+      "ru": "В опубликованном каталоге нет камер для этой страны. Для этого кода в материалах проверки нет отдельной записи. Разрешение и запрет не записаны.",
+      "uk": "В опублікованому каталозі немає камер для цієї країни. Для цього коду в матеріалах перевірки немає окремого запису. Дозвіл і заборона не записані.",
+      "en": "The published catalog has no cameras for this country. The research files have no separate entry for this code. Permission and a ban are not recorded.",
+      "pl": "Opublikowany katalog nie ma kamer dla tego kraju. Materiały sprawdzenia nie mają osobnego wpisu dla tego kodu. Zezwolenie i zakaz nie są zapisane."
     },
     "sourceUrl": null,
     "checkedOn": null,
@@ -966,10 +966,10 @@ export const NOTICES = [
     "status": "needs_review",
     "wholeTerritory": null,
     "explanation": {
-      "ru": "Для этого кода в материалах проверки нет отдельной записи. Разрешение и запрет не записаны.",
-      "uk": "Для цього коду в матеріалах перевірки немає окремого запису. Дозвіл і заборона не записані.",
-      "en": "The research files have no separate entry for this code. Permission and a ban are not recorded.",
-      "pl": "Materiały sprawdzenia nie mają osobnego wpisu dla tego kodu. Zezwolenie i zakaz nie są zapisane."
+      "ru": "В опубликованном каталоге нет камер для этой страны. Для этого кода в материалах проверки нет отдельной записи. Разрешение и запрет не записаны.",
+      "uk": "В опублікованому каталозі немає камер для цієї країни. Для цього коду в матеріалах перевірки немає окремого запису. Дозвіл і заборона не записані.",
+      "en": "The published catalog has no cameras for this country. The research files have no separate entry for this code. Permission and a ban are not recorded.",
+      "pl": "Opublikowany katalog nie ma kamer dla tego kraju. Materiały sprawdzenia nie mają osobnego wpisu dla tego kodu. Zezwolenie i zakaz nie są zapisane."
     },
     "sourceUrl": null,
     "checkedOn": null,
@@ -986,10 +986,10 @@ export const NOTICES = [
     "status": "needs_review",
     "wholeTerritory": null,
     "explanation": {
-      "ru": "Для этого кода в материалах проверки нет отдельной записи. Разрешение и запрет не записаны.",
-      "uk": "Для цього коду в матеріалах перевірки немає окремого запису. Дозвіл і заборона не записані.",
-      "en": "The research files have no separate entry for this code. Permission and a ban are not recorded.",
-      "pl": "Materiały sprawdzenia nie mają osobnego wpisu dla tego kodu. Zezwolenie i zakaz nie są zapisane."
+      "ru": "В опубликованном каталоге нет камер для этой страны. Для этого кода в материалах проверки нет отдельной записи. Разрешение и запрет не записаны.",
+      "uk": "В опублікованому каталозі немає камер для цієї країни. Для цього коду в матеріалах перевірки немає окремого запису. Дозвіл і заборона не записані.",
+      "en": "The published catalog has no cameras for this country. The research files have no separate entry for this code. Permission and a ban are not recorded.",
+      "pl": "Opublikowany katalog nie ma kamer dla tego kraju. Materiały sprawdzenia nie mają osobnego wpisu dla tego kodu. Zezwolenie i zakaz nie są zapisane."
     },
     "sourceUrl": null,
     "checkedOn": null,

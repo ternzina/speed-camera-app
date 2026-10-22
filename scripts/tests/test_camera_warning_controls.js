@@ -16,6 +16,7 @@ import {
   consentMatches,
 } from "../../notice-consent.js";
 import { DISPUTED_ISO, NOTICES, STATUS_LABELS, searchLegalNotices } from "../../legal-notices.js";
+import { COUNTRY_NAMES } from "../../countries.js";
 import { TERRITORY_IDS } from "../../territorial-boundaries.js";
 import { createResolverState, observeTerritory } from "../../territorial-resolver.js";
 
@@ -166,6 +167,42 @@ test("laws search is bundled and uses only the three recorded statuses", () => {
   assert.equal(searchLegalNotices("", "pl").length, 125);
   assert.equal(STATUS_LABELS.ru.known_limits, "известные ограничения");
   assert.equal(STATUS_LABELS.en.checked_functions, "checked for specific features");
+});
+
+test("Kosovo, San Marino, and Vatican stay on the label list and the laws page says the catalog has no cameras", () => {
+  const summary = JSON.parse(read("master-db/coverage/summary.json"));
+  assert.equal(summary.countries_after, 122);
+  assert.equal(summary.country_growth.length, 122);
+  const published = new Set(summary.country_growth.map((row) => row.country));
+  for (const row of summary.country_growth) {
+    assert.equal(published.has(row.country), true);
+    assert.notEqual(row.after, 0);
+  }
+  const noCameras = {
+    ru: "В опубликованном каталоге нет камер для этой страны.",
+    uk: "В опублікованому каталозі немає камер для цієї країни.",
+    en: "The published catalog has no cameras for this country.",
+    pl: "Opublikowany katalog nie ma kamer dla tego kraju.",
+  };
+  assert.equal(Object.keys(COUNTRY_NAMES).length > 122, true);
+  for (const iso of ["XK", "SM", "VA"]) {
+    assert.equal(typeof COUNTRY_NAMES[iso], "string");
+    assert.ok(COUNTRY_NAMES[iso].length > 1);
+    assert.equal(published.has(iso), false);
+    const notice = NOTICES.find((row) => row.iso === iso);
+    assert.ok(notice);
+    assert.equal(notice.status, "needs_review");
+    for (const [locale, sentence] of Object.entries(noCameras)) {
+      assert.equal(notice.explanation[locale].startsWith(sentence), true, `${iso} ${locale}`);
+    }
+  }
+  assert.equal(searchLegalNotices("Косово", "ru")[0].iso, "XK");
+  assert.equal(searchLegalNotices("San Marino", "en")[0].explanation.en.startsWith(noCameras.en), true);
+  assert.equal(searchLegalNotices("Watykan", "pl")[0].explanation.pl.startsWith(noCameras.pl), true);
+  const cameras = fs.statSync(new URL("cameras.json", root));
+  const camerasPl = fs.statSync(new URL("cameras-pl.json", root));
+  assert.ok(cameras.size > 1000);
+  assert.ok(camerasPl.size > 1000);
 });
 
 test("resolver hysteresis does not let one point or a country code flip the territory", () => {
