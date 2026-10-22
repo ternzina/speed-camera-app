@@ -18,6 +18,9 @@ import { nearestPolandPoint, detectAverageSpeedSection, averageSectionSpeech } f
 import { cameraPoints, countryFeed, loadCameraCache, saveCameraCache } from "./camera-data";
 import { COUNTRY_NAMES } from "./countries";
 import { refreshCountryDelivery } from "./camera-delivery";
+import { cameraAlertDecision, cameraWarningsEnabled, mergeStoredSettings, planCameraSurfaces } from "./camera-warning-gate";
+import { searchLegalNotices, statusLabel } from "./legal-notices";
+import { CONSENT_STORAGE_KEY, buildConsentRecord, canContinue, consentMatches, noticeCopy } from "./notice-consent";
 
 const BACKGROUND_LOCATION_TASK = "camera-background-location-v060";
 const MIN_MOVING_SPEED_KMH = 8;
@@ -55,7 +58,11 @@ const I18N = {
     note: "Сообщения пока сохраняются на телефоне. Сервер синхронизации подключим отдельно.",
     about: "О приложении", privacy: "Политика конфиденциальности", safety: "Безопасность",
     sources: "Источники данных", support: "Поддержка", terms: "Условия использования",
-    reportHelp: "Как сообщить о камере", website: "Сайт приложения", coverage: "Покрытие", dataUpdate: "Обновление базы", lastUpdate: "Последнее обновление", updateNow: "Обновить сейчас", updated: "База обновлена", reportSent: "Сообщение отправлено на проверку", reportFailed: "Не удалось отправить, сохранено на телефоне", country: "Страна", ukraine: "Украина", poland: "Польша", languageLabel: "Язык", voiceLabel: "Голос", vibrationLabel: "Вибрация", smartDistanceLabel: "Умная дистанция по скорости", distancesLabel: "Дистанции предупреждения", band1: "До 60 км/ч", band2: "60–89 км/ч", band3: "90–119 км/ч", band4: "120+ км/ч"
+    reportHelp: "Как сообщить о камере", website: "Сайт приложения", coverage: "Покрытие", dataUpdate: "Обновление базы", lastUpdate: "Последнее обновление", updateNow: "Обновить сейчас", updated: "База обновлена", reportSent: "Сообщение отправлено на проверку", reportFailed: "Не удалось отправить, сохранено на телефоне", country: "Страна", ukraine: "Украина", poland: "Польша", languageLabel: "Язык", voiceLabel: "Голос", vibrationLabel: "Вибрация", smartDistanceLabel: "Умная дистанция по скорости", distancesLabel: "Дистанции предупреждения", band1: "До 60 км/ч", band2: "60–89 км/ч", band3: "90–119 км/ч", band4: "120+ км/ч",
+    cameraWarningsLabel: "Предупреждения о камерах", cameraWarningsOff: "Предупреждения о камерах выключены",
+    lawsTitle: "Правила по странам", lawsSearch: "Поиск страны", lawsBack: "Назад",
+    officialSource: "Официальный источник", officialSourceMissing: "Официальный источник в материалах проверки не записан",
+    checkedOn: "Дата проверки", checkedOnMissing: "Дата проверки в материалах не записана"
   },
   uk: {
     title: "Камери на дорогах", start: "Почати поїздку", stop: "Зупинити",
@@ -71,7 +78,11 @@ const I18N = {
     note: "Повідомлення поки зберігаються на телефоні. Сервер синхронізації підключимо окремо.",
     about: "Про застосунок", privacy: "Політика конфіденційності", safety: "Безпека",
     sources: "Джерела даних", support: "Підтримка", terms: "Умови використання",
-    reportHelp: "Як повідомити про камеру", website: "Сайт застосунку", coverage: "Покриття", dataUpdate: "Оновлення бази", lastUpdate: "Останнє оновлення", updateNow: "Оновити зараз", updated: "Базу оновлено", reportSent: "Повідомлення надіслано на перевірку", reportFailed: "Не вдалося надіслати, збережено на телефоні", country: "Країна", ukraine: "Україна", poland: "Польща", languageLabel: "Мова", voiceLabel: "Голос", vibrationLabel: "Вібрація", smartDistanceLabel: "Розумна дистанція за швидкістю", distancesLabel: "Дистанції попередження", band1: "До 60 км/год", band2: "60–89 км/год", band3: "90–119 км/год", band4: "120+ км/год"
+    reportHelp: "Як повідомити про камеру", website: "Сайт застосунку", coverage: "Покриття", dataUpdate: "Оновлення бази", lastUpdate: "Останнє оновлення", updateNow: "Оновити зараз", updated: "Базу оновлено", reportSent: "Повідомлення надіслано на перевірку", reportFailed: "Не вдалося надіслати, збережено на телефоні", country: "Країна", ukraine: "Україна", poland: "Польща", languageLabel: "Мова", voiceLabel: "Голос", vibrationLabel: "Вібрація", smartDistanceLabel: "Розумна дистанція за швидкістю", distancesLabel: "Дистанції попередження", band1: "До 60 км/год", band2: "60–89 км/год", band3: "90–119 км/год", band4: "120+ км/год",
+    cameraWarningsLabel: "Попередження про камери", cameraWarningsOff: "Попередження про камери вимкнені",
+    lawsTitle: "Правила за країнами", lawsSearch: "Пошук країни", lawsBack: "Назад",
+    officialSource: "Офіційне джерело", officialSourceMissing: "Офіційне джерело в матеріалах перевірки не записане",
+    checkedOn: "Дата перевірки", checkedOnMissing: "Дата перевірки в матеріалах не записана"
   },
   en: {
     title: "Road Cameras", start: "Start trip", stop: "Stop",
@@ -87,7 +98,11 @@ const I18N = {
     note: "Reports are stored on this phone for now. Server sync will be connected separately.",
     about: "About", privacy: "Privacy Policy", safety: "Safety",
     sources: "Data sources", support: "Support", terms: "Terms of Use",
-    reportHelp: "How to report a camera", website: "App website", coverage: "Coverage", dataUpdate: "Database update", lastUpdate: "Last update", updateNow: "Update now", updated: "Database updated", reportSent: "Report sent for review", reportFailed: "Could not send; saved on this phone", country: "Country", ukraine: "Ukraine", poland: "Poland", languageLabel: "Language", voiceLabel: "Voice", vibrationLabel: "Vibration", smartDistanceLabel: "Smart distance by speed", distancesLabel: "Alert distances", band1: "Up to 60 km/h", band2: "60–89 km/h", band3: "90–119 km/h", band4: "120+ km/h"
+    reportHelp: "How to report a camera", website: "App website", coverage: "Coverage", dataUpdate: "Database update", lastUpdate: "Last update", updateNow: "Update now", updated: "Database updated", reportSent: "Report sent for review", reportFailed: "Could not send; saved on this phone", country: "Country", ukraine: "Ukraine", poland: "Poland", languageLabel: "Language", voiceLabel: "Voice", vibrationLabel: "Vibration", smartDistanceLabel: "Smart distance by speed", distancesLabel: "Alert distances", band1: "Up to 60 km/h", band2: "60–89 km/h", band3: "90–119 km/h", band4: "120+ km/h",
+    cameraWarningsLabel: "Camera warnings", cameraWarningsOff: "Camera warnings are off",
+    lawsTitle: "Rules by country", lawsSearch: "Search countries", lawsBack: "Back",
+    officialSource: "Official source", officialSourceMissing: "The check did not record an official source",
+    checkedOn: "Check date", checkedOnMissing: "The check date was not recorded"
   },
   pl: {
     title: "Kamery drogowe",
@@ -123,7 +138,11 @@ const I18N = {
     website: "Strona aplikacji", coverage: "Zasięg", dataUpdate: "Aktualizacja bazy", lastUpdate: "Ostatnia aktualizacja", updateNow: "Aktualizuj teraz", updated: "Baza zaktualizowana", reportSent: "Zgłoszenie wysłano do weryfikacji", reportFailed: "Nie udało się wysłać; zapisano na telefonie",
     country: "Kraj", languageLabel: "Język", voiceLabel: "Głos", vibrationLabel: "Wibracje", smartDistanceLabel: "Inteligentna odległość według prędkości", distancesLabel: "Odległości ostrzegania", band1: "Do 60 km/h", band2: "60–89 km/h", band3: "90–119 km/h", band4: "120+ km/h",
     ukraine: "Ukraina",
-    poland: "Polska"
+    poland: "Polska",
+    cameraWarningsLabel: "Ostrzeżenia o kamerach", cameraWarningsOff: "Ostrzeżenia o kamerach są wyłączone",
+    lawsTitle: "Przepisy według krajów", lawsSearch: "Szukaj kraju", lawsBack: "Wstecz",
+    officialSource: "Źródło urzędowe", officialSourceMissing: "Sprawdzenie nie zapisało źródła urzędowego",
+    checkedOn: "Data sprawdzenia", checkedOnMissing: "Data sprawdzenia nie została zapisana"
   },
 };
 
@@ -137,7 +156,7 @@ const DEFAULT_SETTINGS = {
   roadDistance: 900,
   highwayDistance: 1200,
   fastDistance: 1500,
-
+  cameraWarnings: true,
 };
 
 let bgSettings = DEFAULT_SETTINGS;
@@ -214,7 +233,7 @@ TaskManager.defineTask(BACKGROUND_LOCATION_TASK, async ({ data: taskData, error 
   if (error || !taskData?.locations?.length) return;
   try {
     const sraw = await AsyncStorage.getItem(SETTINGS_KEY);
-    bgSettings = sraw ? { ...DEFAULT_SETTINGS, ...JSON.parse(sraw) } : DEFAULT_SETTINGS;
+    bgSettings = sraw ? mergeStoredSettings(DEFAULT_SETTINGS, JSON.parse(sraw)) : { ...DEFAULT_SETTINGS };
     const hraw = await AsyncStorage.getItem(HIDDEN_KEY);
     bgHiddenIds = new Set(hraw ? JSON.parse(hraw).map(String) : []);
     const cache = await loadCameraCache(AsyncStorage,REMOTE_CACHE_KEY);
@@ -222,6 +241,7 @@ TaskManager.defineTask(BACKGROUND_LOCATION_TASK, async ({ data: taskData, error 
       bgCameraFeeds = cache.feeds || {UA:cache.ua,PL:cache.pl};
     }
   } catch {}
+  if (!cameraWarningsEnabled(bgSettings)) return;
 
   const pos = taskData.locations[taskData.locations.length - 1];
   const { latitude, longitude, speed: rawSpeed, heading: rawHeading } = pos.coords;
@@ -250,7 +270,13 @@ TaskManager.defineTask(BACKGROUND_LOCATION_TASK, async ({ data: taskData, error 
 
 export default function App() {
   const [settings, setSettings] = useState(DEFAULT_SETTINGS);
+  const settingsRef = useRef(settings);
+  settingsRef.current = settings;
   const t = I18N[settings.language] || I18N.ru;
+  const [noticeReady, setNoticeReady] = useState(false);
+  const [noticeAccepted, setNoticeAccepted] = useState(false);
+  const [noticeChecked, setNoticeChecked] = useState(false);
+  const [lawsOpen, setLawsOpen] = useState(false);
 
   const [coords, setCoords] = useState(null);
   const [nearest, setNearest] = useState(null);
@@ -281,12 +307,13 @@ export default function App() {
   const sub = useRef(null);
   const timer = useRef(null);
   const lastSpoken = useRef({ id: null, distance: Infinity });
+  const skipNextSettingsWrite = useRef(true);
 
   useEffect(() => {
     (async () => {
       try {
         const s = await AsyncStorage.getItem(SETTINGS_KEY);
-        if (s) setSettings({ ...DEFAULT_SETTINGS, ...JSON.parse(s) });
+        if (s) setSettings(mergeStoredSettings(DEFAULT_SETTINGS, JSON.parse(s)));
         const h = await AsyncStorage.getItem(HISTORY_KEY);
         if (h) setHistory(JSON.parse(h));
         const hidden = await AsyncStorage.getItem(HIDDEN_KEY);
@@ -303,10 +330,14 @@ export default function App() {
           remoteFeedsRef.current=feeds;countryVersionsRef.current=saved.countryVersions||{};bgCameraFeeds=feeds;setRemoteFeeds(feeds);
           setCountryCoverage(saved.countries||[]);setCoverage(saved.cov||null);setLastDataUpdate(saved.stamp||null);
         }
+        const noticeRaw = await AsyncStorage.getItem(CONSENT_STORAGE_KEY);
+        if (noticeRaw && consentMatches(JSON.parse(noticeRaw))) setNoticeAccepted(true);
+        setNoticeReady(true);
         await refreshRemoteData(true);
         const started = await Location.hasStartedLocationUpdatesAsync(BACKGROUND_LOCATION_TASK);
         setBackgroundEnabled(started);
       } catch {}
+      finally { setNoticeReady(true); }
     })();
 
     return () => {
@@ -317,9 +348,22 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    AsyncStorage.setItem(SETTINGS_KEY, JSON.stringify(settings)).catch(()=>{});
     bgSettings = settings;
+    if (skipNextSettingsWrite.current) {
+      skipNextSettingsWrite.current = false;
+      return;
+    }
+    AsyncStorage.setItem(SETTINGS_KEY, JSON.stringify(settings)).catch(()=>{});
   }, [settings]);
+
+  useEffect(() => {
+    if (!cameraWarningsEnabled(settings)) {
+      setNearest(null);
+      setAhead(null);
+      setPlSectionId(null);
+      Speech.stop();
+    }
+  }, [settings.cameraWarnings]);
 
   useEffect(() => {
     if (active) stopTracking();
@@ -385,23 +429,26 @@ export default function App() {
   }
 
   function speakWarning(cam, threshold) {
+    const live = settingsRef.current;
+    const decision = cameraAlertDecision(live, cam);
+    if (!cameraWarningsEnabled(live) || !decision.emit) return;
     if (!cam || cam.distance > threshold) return;
     const last = lastSpoken.current;
     if (last.id === cam.id && last.distance - cam.distance < 250) return;
 
     const over = speedKmh > Number(cam.speed_limit);
-    if (settings.vibration) {
+    if (decision.vibration) {
       Vibration.vibrate(over ? [0, 250, 120, 250] : [0, 250]);
       Haptics.notificationAsync(over ? Haptics.NotificationFeedbackType.Warning : Haptics.NotificationFeedbackType.Success).catch(()=>{});
     }
-    if (settings.voice) {
+    if (decision.voice) {
       const rounded = Math.max(100, Math.round(cam.distance / 100) * 100);
       Speech.stop();
       Speech.speak(
         over
           ? `Камера впереди через ${rounded} метров. Снизьте скорость. Ограничение ${cam.speed_limit}.`
           : `Камера впереди через ${rounded} метров. Ограничение ${cam.speed_limit}.`,
-        { language: settings.language === "uk" ? "uk-UA" : settings.language === "en" ? "en-US" : "ru-RU", rate: 0.95 }
+        { language: live.language === "uk" ? "uk-UA" : live.language === "en" ? "en-US" : "ru-RU", rate: 0.95 }
       );
     }
     lastSpoken.current = { id: cam.id, distance: cam.distance };
@@ -433,6 +480,15 @@ export default function App() {
         setSpeedKmh(kmh);
         setHeading(h);
 
+        const live = settingsRef.current;
+        if (!cameraWarningsEnabled(live)) {
+          setNearest(null);
+          setAhead(null);
+          setPlSectionId(null);
+          plLastSectionState.current = null;
+          return;
+        }
+
         bgHiddenIds = new Set(hiddenIds.map(String));
 
         if (selectedCountry !== "UA") {
@@ -445,9 +501,9 @@ export default function App() {
           setAhead(point);
 
           if (point) {
-            const threshold = alertDistanceForSpeed(kmh, settings);
+            const threshold = alertDistanceForSpeed(kmh, live);
 
-            if (point.distance <= threshold && settings.voice) {
+            if (point.distance <= threshold && live.voice && cameraWarningsEnabled(live)) {
               const rounded = Math.max(100, Math.round(point.distance / 100) * 100);
 
               const kind =
@@ -460,20 +516,20 @@ export default function App() {
               Speech.stop();
 
               Speech.speak(
-                settings.language === "pl"
+                live.language === "pl"
                   ? `${kind} za ${rounded} metrów.${point.speed_limit ? ` Ograniczenie ${point.speed_limit}.` : ""}`
-                  : settings.language === "uk"
+                  : live.language === "uk"
                   ? `Камера попереду через ${rounded} метрів.${point.speed_limit ? ` Обмеження ${point.speed_limit}.` : ""}`
-                  : settings.language === "en"
+                  : live.language === "en"
                   ? `Camera ahead in ${rounded} meters.${point.speed_limit ? ` Speed limit ${point.speed_limit}.` : ""}`
                   : `Камера впереди через ${rounded} метров.${point.speed_limit ? ` Ограничение ${point.speed_limit}.` : ""}`,
                 {
                   language:
-                    settings.language === "pl"
+                    live.language === "pl"
                       ? "pl-PL"
-                      : settings.language === "uk"
+                      : live.language === "uk"
                       ? "uk-UA"
-                      : settings.language === "en"
+                      : live.language === "en"
                       ? "en-US"
                       : "ru-RU",
                   rate: 0.95
@@ -509,19 +565,19 @@ export default function App() {
 
               const phrase = averageSectionSpeech(
                 sectionEvent,
-                settings.language
+                live.language
               );
 
-              if (phrase && settings.voice) {
+              if (phrase && live.voice && cameraWarningsEnabled(live)) {
                 Speech.stop();
 
                 Speech.speak(phrase, {
                   language:
-                    settings.language === "pl"
+                    live.language === "pl"
                       ? "pl-PL"
-                      : settings.language === "uk"
+                      : live.language === "uk"
                       ? "uk-UA"
-                      : settings.language === "en"
+                      : live.language === "en"
                       ? "en-US"
                       : "ru-RU",
                   rate: 0.95
@@ -546,7 +602,7 @@ export default function App() {
         setAhead(a);
 
         if (a) {
-          speakWarning(a, alertDistanceForSpeed(kmh, settings));
+          speakWarning(a, alertDistanceForSpeed(kmh, live));
         }
       }
     );
@@ -645,10 +701,33 @@ export default function App() {
     );
   }
 
-  const shownCam = ahead || nearest;
-  const shownDistance = ahead?.distance ?? nearest?.distance;
+  const surfaces = planCameraSurfaces(settings);
+  const shownCam = surfaces.nearestCard ? (ahead || nearest) : null;
+  const shownDistance = surfaces.distance ? (ahead?.distance ?? nearest?.distance) : null;
   const currentThreshold = alertDistanceForSpeed(speedKmh, settings);
-  const danger = shownDistance != null && shownDistance <= currentThreshold && !!ahead;
+  const danger = surfaces.distance && shownDistance != null && shownDistance <= currentThreshold && !!ahead;
+
+  async function acceptNotice() {
+    if (!canContinue(noticeChecked)) return;
+    const record = buildConsentRecord(noticeChecked, new Date().toISOString());
+    if (!record) return;
+    await AsyncStorage.setItem(CONSENT_STORAGE_KEY, JSON.stringify(record));
+    setNoticeAccepted(true);
+  }
+
+  if (!noticeReady) {
+    return <SafeAreaView style={s.safe}><StatusBar style="auto" /></SafeAreaView>;
+  }
+  if (!noticeAccepted) {
+    return (
+      <NoticeGate
+        language={settings.language}
+        checked={noticeChecked}
+        onToggle={() => setNoticeChecked((value) => !value)}
+        onContinue={acceptNotice}
+      />
+    );
+  }
 
   const nav = [
     ["drive","🚗","Поездка"], ["map","🗺️",t.map], ["nearby","📍",t.nearby],
@@ -660,7 +739,7 @@ export default function App() {
       <StatusBar style="auto" />
       <View style={s.nav}>
         {nav.map(([key,icon,label]) => (
-          <Pressable key={key} onPress={()=>setTab(key)} style={[s.navItem, tab===key && s.navActive]}>
+          <Pressable key={key} onPress={()=>{ setTab(key); if (key !== "settings") setLawsOpen(false); }} style={[s.navItem, tab===key && s.navActive]}>
             <Text style={s.navIcon}>{icon}</Text><Text style={s.navLabel}>{label}</Text>
           </Pressable>
         ))}
@@ -671,7 +750,7 @@ export default function App() {
         <Text style={s.subtitle}>{COUNTRY_NAMES[selectedCountry]||selectedCountry} · {visibleCameras().length} камер</Text>
 
         {tab === "drive" && <>
-          <View style={[s.card, danger && s.cardDanger]}>
+          {surfaces.nearestCard ? <View style={[s.card, danger && s.cardDanger]}>
             <Text style={s.label}>{ahead ? t.ahead : active && speedKmh < MIN_MOVING_SPEED_KMH ? t.waitMove : t.nearest}</Text>
             {shownCam ? <>
               <Text style={s.distance}>{shownDistance >= 1000 ? `${(shownDistance/1000).toFixed(1)} км` : `${shownDistance} м`}</Text>
@@ -686,7 +765,7 @@ export default function App() {
                 </View>
               )}
             </> : <Text style={s.empty}>{t.start}</Text>}
-          </View>
+          </View> : <View style={s.card}><Text style={s.empty}>{t.cameraWarningsOff}</Text></View>}
 
           <View style={s.row}>
             <View style={s.stat}><Text style={s.small}>{t.speed}</Text><Text style={s.statValue}>{speedKmh}</Text><Text style={s.unit}>км/ч</Text></View>
@@ -716,17 +795,18 @@ export default function App() {
         {tab === "map" && (
           coords ?
           <MapView style={s.map} initialRegion={{latitude:coords.latitude, longitude:coords.longitude, latitudeDelta:0.18, longitudeDelta:0.18}} showsUserLocation followsUserLocation>
-            {nearbyList().slice(0,50).map(cam => (
+            {surfaces.mapMarkers && nearbyList().slice(0,50).map(cam => (
               <Marker key={String(cam.id)} coordinate={{latitude:cam.latitude,longitude:cam.longitude}} title={cam.location || cam.region} description={cam.speed_limit != null ? `${cam.speed_limit} км/ч` : undefined} />
             ))}
-            <Circle center={{latitude:coords.latitude,longitude:coords.longitude}} radius={currentThreshold} />
+            {surfaces.distance && <Circle center={{latitude:coords.latitude,longitude:coords.longitude}} radius={currentThreshold} />}
           </MapView>
           : <Text style={s.empty}>Включи поездку, чтобы открыть карту вокруг тебя.</Text>
         )}
 
         {tab === "nearby" && (
           <View style={s.list}>
-            {nearbyList().map(cam => (
+            {!surfaces.distance && <Text style={s.empty}>{t.cameraWarningsOff}</Text>}
+            {surfaces.distance && nearbyList().map(cam => (
               <View key={String(cam.id)} style={s.listItem}>
                 <View style={{flex:1}}>
                   <Text style={s.listTitle}>{cam.location || cam.road_index || cam.region}</Text>
@@ -735,7 +815,7 @@ export default function App() {
                 <Text style={s.listDistance}>{cam.distance>=1000?`${(cam.distance/1000).toFixed(1)} км`:`${cam.distance} м`}</Text>
               </View>
             ))}
-            {!coords && <Text style={s.empty}>Сначала включи поездку.</Text>}
+            {surfaces.distance && !coords && <Text style={s.empty}>Сначала включи поездку.</Text>}
           </View>
         )}
 
@@ -754,8 +834,15 @@ export default function App() {
           </View>
         )}
 
-        {tab === "settings" && (
+        {tab === "settings" && (lawsOpen ? (
+          <LawsPage language={settings.language} t={t} onBack={() => setLawsOpen(false)} />
+        ) : (
           <View style={s.settingsCard}>
+            <SettingSwitch label={t.cameraWarningsLabel} value={settings.cameraWarnings !== false} onChange={v=>setSettings({...settings,cameraWarnings:v})}/>
+            <Pressable onPress={()=>setLawsOpen(true)} style={s.aboutRow}>
+              <Text style={s.aboutLabel}>{t.lawsTitle}</Text>
+              <Text style={s.chev}>›</Text>
+            </Pressable>
             <Text style={s.sectionTitle}>{t.country}</Text>
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>
               {[...new Set(["UA","PL",...countryCoverage.map(x=>x.country_code)])].map(code=>(
@@ -805,7 +892,7 @@ export default function App() {
             <AboutLink label={t.website} url={URLS.home}/>
             <Text style={s.note}>Локальных сообщений: {reports.length}. Скрытых камер: {hiddenIds.length}.</Text>
           </View>
-        )}
+        ))}
       </ScrollView>
 
       <Modal visible={modal==="new"} transparent animationType="slide">
@@ -883,12 +970,72 @@ const s = StyleSheet.create({
   dataValue:{fontSize:13,fontWeight:"700",marginTop:3},
   coverageCard:{backgroundColor:"#f3f4f6",borderRadius:14,padding:14,gap:8},
   coverageLine:{fontSize:14,fontWeight:"650"},
-note:{fontSize:12,lineHeight:18,opacity:.55}
+  note:{fontSize:12,lineHeight:18,opacity:.55},
+  buttonDisabled:{opacity:0.35},
+  noticeBody:{fontSize:16,lineHeight:23},
+  checkRow:{flexDirection:"row",alignItems:"flex-start",gap:12},
+  checkBox:{width:22,height:22,borderRadius:6,borderWidth:2,borderColor:"#111",alignItems:"center",justifyContent:"center",marginTop:2},
+  checkBoxOn:{backgroundColor:"#111"},
+  checkMark:{color:"#fff",fontSize:14,fontWeight:"800"},
+  checkText:{flex:1,fontSize:15,lineHeight:21},
+  searchInput:{borderWidth:1,borderColor:"#ddd",borderRadius:14,paddingHorizontal:12,paddingVertical:10,fontSize:16},
+  lawCard:{backgroundColor:"#f3f4f6",borderRadius:14,padding:14,gap:6},
+  lawStatus:{fontSize:13,fontWeight:"800"},
+  lawBody:{fontSize:14,lineHeight:20},
 });function AboutLink({label,url}) {
   return (
     <Pressable onPress={()=>Linking.openURL(url)} style={s.aboutRow}>
       <Text style={s.aboutLabel}>{label}</Text>
       <Text style={s.chev}>›</Text>
     </Pressable>
+  );
+}
+
+function NoticeGate({ language, checked, onToggle, onContinue }) {
+  const copy = noticeCopy(language);
+  const enabled = canContinue(checked);
+  return (
+    <SafeAreaView style={s.safe}>
+      <StatusBar style="auto" />
+      <ScrollView contentContainerStyle={s.container}>
+        <View style={s.settingsCard}>
+          <Text style={s.noticeBody}>{copy.body}</Text>
+          <Pressable accessibilityRole="checkbox" accessibilityState={{ checked }} onPress={onToggle} style={s.checkRow}>
+            <View style={[s.checkBox, checked && s.checkBoxOn]}>{checked ? <Text style={s.checkMark}>✓</Text> : null}</View>
+            <Text style={s.checkText}>{copy.checkbox}</Text>
+          </Pressable>
+          <Pressable accessibilityRole="button" accessibilityState={{ disabled: !enabled }} disabled={!enabled} onPress={onContinue} style={[s.button, !enabled && s.buttonDisabled]}>
+            <Text style={s.buttonText}>{copy.continueLabel}</Text>
+          </Pressable>
+        </View>
+      </ScrollView>
+    </SafeAreaView>
+  );
+}
+
+function LawsPage({ language, t, onBack }) {
+  const [query, setQuery] = useState("");
+  const rows = searchLegalNotices(query, language);
+  return (
+    <View style={s.settingsCard}>
+      <Pressable onPress={onBack} style={s.aboutRow}>
+        <Text style={s.aboutLabel}>{t.lawsBack}</Text>
+      </Pressable>
+      <Text style={s.sectionTitle}>{t.lawsTitle}</Text>
+      <TextInput value={query} onChangeText={setQuery} placeholder={t.lawsSearch} autoCorrect={false} autoCapitalize="none" style={s.searchInput} />
+      {rows.map((row) => (
+        <View key={row.iso} style={s.lawCard}>
+          <Text style={s.listTitle}>{row.names[language] || row.names.en}</Text>
+          <Text style={s.lawStatus}>{statusLabel(row.status, language)}</Text>
+          <Text style={s.lawBody}>{row.explanation[language] || row.explanation.ru}</Text>
+          <Text style={s.listSub}>{row.checkedOn ? `${t.checkedOn}: ${row.checkedOn}` : t.checkedOnMissing}</Text>
+          {row.sourceUrl ? (
+            <Pressable onPress={() => Linking.openURL(row.sourceUrl)}><Text style={s.coverageLine}>{t.officialSource}</Text></Pressable>
+          ) : (
+            <Text style={s.listSub}>{t.officialSourceMissing}</Text>
+          )}
+        </View>
+      ))}
+    </View>
   );
 }
