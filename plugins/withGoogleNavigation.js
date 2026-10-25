@@ -1,9 +1,11 @@
 const { withProjectBuildGradle, withAppBuildGradle, withGradleProperties } = require('@expo/config-plugins');
+const { patchNavigationSdk } = require('../scripts/patch-navigation-sdk.cjs');
 
 // Navigation SDK contains the Google Maps classes. Substitute the standalone
 // Maps artifact for every Android module (including react-native-maps) so the
 // compile and runtime classpaths use the same implementation without duplicates.
 module.exports = function withGoogleNavigation(config) {
+  patchNavigationSdk();
   config = require('./withCamAlertLocale')(config);
   config = withGradleProperties(config, mod => {
     for (const [key, value] of [['newArchEnabled', 'true'], ['android.enableJetifier', 'true']]) {

@@ -4,7 +4,8 @@
   "private": true,
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
-    "start": "expo start"
+    "start": "expo start",
+    "postinstall": "node scripts/patch-navigation-sdk.cjs"
   },
   "dependencies": {
     "@googlemaps/react-native-navigation-sdk": "0.16.3",

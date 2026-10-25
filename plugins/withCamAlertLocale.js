@@ -12,12 +12,33 @@ module.exports = function withCamAlertLocale(config) {
     return mod;
   });
   config = withMainActivity(config, mod => {
-    const source = mod.modResults.contents;
+    let source = mod.modResults.contents;
+    if (!source.includes('resumedActivity')) {
+      const classAnchor = 'class MainActivity : ReactActivity() {';
+      if (!source.includes(classAnchor)) throw new Error('Cannot track the resumed CamAlert activity');
+      source = source.replace(classAnchor, `${classAnchor}
+  companion object {
+    @JvmField
+    var resumedActivity: java.lang.ref.WeakReference<android.app.Activity>? = null
+  }
+
+  override fun onResume() {
+    super.onResume()
+    resumedActivity = java.lang.ref.WeakReference(this)
+  }
+
+  override fun onDestroy() {
+    if (resumedActivity?.get() === this) resumedActivity = null
+    super.onDestroy()
+  }
+`);
+    }
     if (!source.includes('// CamAlert app language')) {
       const anchor = 'super.onCreate(null)';
       if (!source.includes(anchor)) throw new Error('Cannot restore CamAlert app language');
-      mod.modResults.contents = source.replace(anchor, `// CamAlert app language\n    getSharedPreferences("camalert_locale", 0).getString("language", null)?.let {\n      androidx.appcompat.app.AppCompatDelegate.setApplicationLocales(androidx.core.os.LocaleListCompat.forLanguageTags(it))\n    }\n    ${anchor}`);
+      source = source.replace(anchor, `// CamAlert app language\n    getSharedPreferences("camalert_locale", 0).getString("language", null)?.let {\n      androidx.appcompat.app.AppCompatDelegate.setApplicationLocales(androidx.core.os.LocaleListCompat.forLanguageTags(it))\n    }\n    ${anchor}`);
     }
+    mod.modResults.contents = source;
     return mod;
   });
   config = withAndroidManifest(config, mod => {

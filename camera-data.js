@@ -19,7 +19,7 @@ export function countryFeed(feeds, country, fallbackUA, fallbackPL) {
 }
 
 const CACHE_CHUNK_CHARS = 200000;
-const CACHE_FIELDS = ["id","base_id","type","camera_type","latitude","longitude","speed_limit","direction","direction_code","location","road","road_index","region","name","start","end","_example_only"];
+const CACHE_FIELDS = ["id","base_id","type","camera_type","latitude","longitude","speed_limit","direction","direction_code","location","road","road_index","region","name","start","end","length_km","_example_only"];
 function compactPoint(point) {
   const result = {};
   for (const field of CACHE_FIELDS) if (point[field] !== undefined) result[field] = point[field];

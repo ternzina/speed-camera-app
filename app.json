@@ -6,10 +6,12 @@
     "orientation": "portrait",
     "ios": {
       "supportsTablet": true,
+      "requireFullScreen": true,
       "infoPlist": {
-        "NSLocationWhenInUseUsageDescription": "Местоположение нужно, чтобы предупреждать о дорожных камерах во время поездки.",
+        "NSLocationWhenInUseUsageDescription": "Location is used to warn you about road cameras during a trip.",
         "ITSAppUsesNonExemptEncryption": false,
-        "NSLocationAlwaysAndWhenInUseUsageDescription": "Разрешите геолокацию всегда, чтобы получать предупреждения о камерах при погашенном экране.",
+        "NSLocationAlwaysAndWhenInUseUsageDescription": "Allow location access all the time so camera warnings continue when the screen is off.",
+        "NSLocationAlwaysUsageDescription": "Allow CamAlert to access your location all the time so camera warnings continue when the screen is off.",
         "LSApplicationQueriesSchemes": [
           "maps",
           "comgooglemaps"
@@ -19,7 +21,7 @@
         ]
       },
       "bundleIdentifier": "com.21wek.camera",
-      "buildNumber": "25"
+      "buildNumber": "33"
     },
     "android": {
       "permissions": [
@@ -27,15 +29,15 @@
         "ACCESS_COARSE_LOCATION"
       ],
       "package": "com.camera21wek",
-      "versionCode": 20
+      "versionCode": 24
     },
     "plugins": [
       "expo-status-bar",
       [
         "expo-location",
         {
-          "locationWhenInUsePermission": "Местоположение нужно, чтобы предупреждать о дорожных камерах во время поездки.",
-          "locationAlwaysAndWhenInUsePermission": "Разрешите геолокацию всегда, чтобы получать предупреждения о камерах при погашенном экране.",
+          "locationWhenInUsePermission": "Location is used to warn you about road cameras during a trip.",
+          "locationAlwaysAndWhenInUsePermission": "Allow location access all the time so camera warnings continue when the screen is off.",
           "isIosBackgroundLocationEnabled": true,
           "isAndroidBackgroundLocationEnabled": true,
           "isAndroidForegroundServiceEnabled": true
@@ -56,7 +58,8 @@
         }
       ],
       "expo-video",
-      "./plugins/withNavigatorQueries"
+      "./plugins/withNavigatorQueries",
+      "./plugins/withLocationPurpose"
     ],
     "extra": {
       "eas": {
