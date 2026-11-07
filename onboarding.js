@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { AppState, Image, View, Text, Pressable, ScrollView, SafeAreaView, StyleSheet, useWindowDimensions, Platform, StatusBar as NativeStatusBar } from 'react-native';
+import { AppState, Image, Platform, View, Text, Pressable, ScrollView, StyleSheet, useWindowDimensions } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { useVideoPlayer, VideoView } from 'expo-video';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { CAMERA_DELIVERY_URL, CAMERA_MANIFEST_PATH, validateManifest } from './camera-delivery';
 import snapshot from './onboarding-stats.json';
+import SystemSafeArea from './system-safe-area';
 
 const COPY = {
  ru: {back:'Назад',exit:'Закрыть приветствие',skip:'Пропустить',next:'Далее',continue:'Продолжить',page:'Страница',of:'из',sound:'Звук дороги',welcome:'Уверенность на каждом километре',intro:'Ваш помощник в дороге: предупреждения о камерах и контроль скорости.',camera:'Камеры впереди',cameraBody:'Знайте о камерах заранее',voice:'Звуковые сигналы',voiceBody:'Предупреждения во время поездки',world:'Камеры по всему миру',worldBody:'Данные о камерах разных стран — для ваших поездок рядом с домом и за границей.',countries:'Страны',cameras:'Камеры',international:'Международная база',published:'Опубликованные данные',updated:'База камер регулярно обновляется',updatedBody:'Мы добавляем новые камеры и уточняем существующие данные.',date:'Версия базы',offline:'ОФЛАЙН',freedom:'Свобода в дороге',subtitle:'Предупреждения даже без интернета',offlineBody:'Загрузите базу нужной страны заранее и получайте предупреждения в поездке, даже если связь пропадёт.',works:'Работает офлайн',worksBody:'По заранее загруженной базе камер',gps:'GPS-позиция',gpsBody:'Определяется устройством',notice:'Для офлайн-предупреждений заранее загрузите базу камер нужной страны.'},
@@ -60,7 +61,8 @@ function IntroVideo() {
 }
 export default function WelcomeScreen({page,onNext,onBack,onSkip,language='ru'}) {
  const t=COPY[language]||COPY.ru;
- const {height,fontScale}=useWindowDimensions();
+ const {height,width,fontScale}=useWindowDimensions();
+ const pad=Platform.OS==='ios'&&Platform.isPad&&width>=700;
  const stats=usePublishedStats();
  const cardsStack=fontScale>1.3;
  const date=new Date(stats.generated_at).toLocaleDateString(language==='uk'?'uk-UA':language);
@@ -68,21 +70,21 @@ export default function WelcomeScreen({page,onNext,onBack,onSkip,language='ru'})
  return <View style={s.screen}>
   {page===0&&<IntroVideo/>}
   <StatusBar style="light"/>
-  <SafeAreaView style={s.safe}>
+  <SystemSafeArea style={s.safe}>
    <View style={s.topbar}>
     <Pressable accessibilityRole="button" accessibilityLabel={page===0?t.exit:t.back} onPress={onBack} style={s.iconButton}><View style={s.backArrow}/></Pressable>
     <View style={s.topActions}>
      <Pressable accessibilityRole="button" onPress={onSkip} style={s.skipButton}><Text maxFontSizeMultiplier={1.3} style={s.skip}>{t.skip}</Text></Pressable>
     </View>
    </View>
-   <ScrollView key={page} style={s.scroll} contentContainerStyle={s.content} showsVerticalScrollIndicator={false}>
+   <ScrollView key={page} style={s.scroll} contentContainerStyle={[s.content,pad&&{paddingHorizontal:48,width:'100%',maxWidth:980,alignSelf:'center'}]} showsVerticalScrollIndicator={false}>
     {page===0?<View style={{height:Math.max(105,height*0.23),flexGrow:1}}/>:
      <View style={[s.hero,{height:Math.min(240,Math.max(150,(height-180)*0.29))}]}>
       <Image source={page===1?require('./assets/onboarding-world.jpg'):require('./assets/onboarding-night.jpg')} resizeMode="cover" style={[StyleSheet.absoluteFill,{width:"100%",height:"100%"}]}/>
       {page===2&&<View style={s.offline}><WelcomeIcon kind="wifi"/><Text maxFontSizeMultiplier={1.2} style={s.offlineText}>{t.offline}</Text></View>}
      </View>}
     <Brand/>
-    <Text maxFontSizeMultiplier={1.6} style={[s.title,page===0&&s.welcomeTitle]}>{page===0?t.welcome:page===1?t.world:t.freedom}</Text>
+    <Text maxFontSizeMultiplier={1.6} style={[s.title,page===0&&s.welcomeTitle,pad&&{fontSize:40,lineHeight:46}]}>{page===0?t.welcome:page===1?t.world:t.freedom}</Text>
     {page===2&&<Text maxFontSizeMultiplier={1.6} style={s.subtitle}>{t.subtitle}</Text>}
     <Text maxFontSizeMultiplier={1.6} style={s.body}>{page===0?t.intro:page===1?t.worldBody:t.offlineBody}</Text>
     <View style={[s.cards,cardsStack&&{flexDirection:'column'}]}>
@@ -93,18 +95,18 @@ export default function WelcomeScreen({page,onNext,onBack,onSkip,language='ru'})
     {page>0&&<View style={s.notice}><WelcomeIcon kind={page===1?'refresh':'download'}/><View style={{flex:1}}>{page===1&&<Text maxFontSizeMultiplier={1.6} style={s.noticeTitle}>{t.updated}</Text>}<Text maxFontSizeMultiplier={1.6} style={s.noticeBody}>{page===1?t.updatedBody:t.notice}</Text></View></View>}
     {page===1&&<Text maxFontSizeMultiplier={1.6} style={s.date}>{t.date} {date} · CamAlert</Text>}
    </ScrollView>
-   <View style={s.footer}>
+   <View style={[s.footer,pad&&{paddingHorizontal:48,width:'100%',maxWidth:980,alignSelf:'center'}]}>
     <View accessibilityRole="progressbar" accessibilityLabel={`${t.page} ${page+1} ${t.of} 3`} accessibilityValue={{min:1,max:3,now:page+1}} style={s.dots}>{[0,1,2].map(i=><View key={i} style={[s.dot,i===page&&s.activeDot]}/>)}</View>
     <Pressable accessibilityRole="button" onPress={onNext} style={({pressed})=>[s.button,pressed&&{opacity:0.8}]}><Text maxFontSizeMultiplier={1.5} style={s.buttonText}>{page===2?t.continue:t.next}  →</Text></Pressable>
    </View>
-  </SafeAreaView>
+  </SystemSafeArea>
  </View>;
 }
 const s=StyleSheet.create({
- screen:{flex:1,backgroundColor:'#071525'},safe:{flex:1,paddingTop:Platform.OS==='android'?NativeStatusBar.currentHeight||24:0,paddingBottom:Platform.OS==='android'?24:0},
+ screen:{flex:1,backgroundColor:'#071525'},safe:{flex:1},
  topbar:{height:44,marginHorizontal:20,flexDirection:'row',justifyContent:'space-between',alignItems:'center'},topActions:{flexDirection:'row',alignItems:'center'},iconButton:{width:44,height:44,justifyContent:'center',alignItems:'center',borderRadius:22,backgroundColor:'rgba(7,21,37,0.65)'},backArrow:{width:12,height:12,borderLeftWidth:2,borderBottomWidth:2,borderColor:'#FFF',transform:[{rotate:'45deg'}]},sound:{fontSize:24,color:'#23D3EF'},skipButton:{minHeight:44,justifyContent:'center',paddingHorizontal:12},skip:{fontSize:13,color:'#B8C8DA'},scroll:{flex:1},content:{flexGrow:1,paddingHorizontal:22,paddingBottom:8},
  hero:{borderRadius:21,overflow:'hidden',marginTop:4,marginBottom:10,borderWidth:1,borderColor:'#1C394F'},brand:{color:'#FFF',fontSize:32,fontWeight:'900',letterSpacing:-1.3,marginBottom:6},cyan:{color:'#23D3EF'},title:{color:'#FFF',fontSize:24,lineHeight:29,fontWeight:'800'},welcomeTitle:{fontSize:24,lineHeight:29},subtitle:{color:'#FFF',fontSize:16,lineHeight:20,fontWeight:'700',marginTop:9},body:{color:'#B8C8DA',fontSize:14,lineHeight:19,marginTop:8,marginBottom:10},
  cards:{flexDirection:'row',gap:10},card:{flex:1,padding:10,borderRadius:19,backgroundColor:'#10263B',borderWidth:1,borderColor:'#183449'},cardHeading:{flexDirection:'row',gap:7,alignItems:'center'},cardTitle:{flex:1,color:'#FFF',fontSize:16,lineHeight:21,fontWeight:'700'},cardBody:{color:'#B8C8DA',fontSize:13,lineHeight:18,marginTop:6},notice:{marginTop:10,backgroundColor:'#10263B',borderRadius:19,padding:10,flexDirection:'row',alignItems:'center',gap:12},noticeTitle:{color:'#FFF',fontSize:16,lineHeight:21,fontWeight:'700',marginBottom:4},noticeBody:{color:'#B8C8DA',fontSize:13,lineHeight:18},date:{fontSize:11,color:'#B8C8DA',marginTop:7},
- footer:{paddingHorizontal:22,paddingTop:8,paddingBottom:10,backgroundColor:'#071525'},dots:{flexDirection:'row',justifyContent:'center',alignItems:'center',gap:10,marginBottom:12},dot:{width:7,height:7,borderRadius:4,backgroundColor:'#536F8C'},activeDot:{width:24,backgroundColor:'#23D3EF'},button:{height:56,borderRadius:21,backgroundColor:'#1260E8',justifyContent:'center',alignItems:'center'},buttonText:{color:'#FFF',fontSize:20,fontWeight:'700'},
+ footer:{paddingHorizontal:22,paddingTop:8,paddingBottom:10,backgroundColor:'#071525'},dots:{flexDirection:'row',justifyContent:'center',alignItems:'center',gap:10,marginBottom:12},dot:{width:7,height:7,borderRadius:4,backgroundColor:'#536F8C'},activeDot:{width:24,backgroundColor:'#23D3EF'},button:{minHeight:56,borderRadius:21,backgroundColor:'#1260E8',justifyContent:'center',alignItems:'center',paddingHorizontal:16,paddingVertical:12},buttonText:{color:'#FFF',fontSize:20,lineHeight:24,fontWeight:'700',textAlign:'center'},
  offline:{position:'absolute',left:12,top:12,flexDirection:'row',alignItems:'center',gap:8,paddingHorizontal:12,paddingVertical:9,backgroundColor:'rgba(16,38,59,0.9)',borderRadius:22,borderWidth:1,borderColor:'#28566D'},offlineText:{fontSize:12,color:'#8EEAFF',fontWeight:'700'},icon:{width:25,height:27,alignItems:'center',justifyContent:'center',flexShrink:0},speaker:{width:11,height:17,borderWidth:2,borderColor:'#23D3EF',borderRadius:3,marginRight:7},wave:{position:'absolute',right:1,width:8,height:22,borderRightWidth:2,borderColor:'#23D3EF',borderRadius:8},glyph:{fontSize:27,lineHeight:30,color:'#23D3EF'},camera:{width:23,height:17,borderWidth:1.8,borderColor:'#23D3EF',borderRadius:4,alignItems:'center',justifyContent:'center'},lens:{width:8,height:8,borderRadius:5,borderWidth:1.8,borderColor:'#23D3EF'},cameraTop:{position:'absolute',top:-5,left:6,width:9,height:4,borderWidth:1.8,borderBottomWidth:0,borderColor:'#23D3EF',borderTopLeftRadius:2,borderTopRightRadius:2},wifi:{position:'absolute',top:4,left:3,width:19,height:19,borderTopWidth:2,borderLeftWidth:2,borderColor:'#23D3EF',borderTopLeftRadius:19,transform:[{rotate:'45deg'}]},wifiInner:{position:'absolute',top:11,left:7,width:11,height:11,borderTopWidth:2,borderLeftWidth:2,borderColor:'#23D3EF',borderTopLeftRadius:11,transform:[{rotate:'45deg'}]},slash:{position:'absolute',width:2,height:27,backgroundColor:'#23D3EF',transform:[{rotate:'-40deg'}]},globe:{width:23,height:23,borderWidth:1.8,borderColor:'#23D3EF',borderRadius:12,alignItems:'center',justifyContent:'center'},meridian:{position:'absolute',width:10,height:21,borderWidth:1.5,borderColor:'#23D3EF',borderRadius:9},equator:{width:20,height:1.5,backgroundColor:'#23D3EF'},pin:{width:20,height:24,borderWidth:2,borderColor:'#23D3EF',borderRadius:12,alignItems:'center',justifyContent:'center'},pinDot:{width:7,height:7,borderWidth:2,borderColor:'#23D3EF',borderRadius:5}
 });

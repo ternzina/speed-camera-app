@@ -119,6 +119,41 @@ export function detectAverageSpeedSection(plData, latitude, longitude, heading, 
   };
 }
 
+function sectionLengthMeters(section) {
+  const published = Number(section?.length_km);
+  if (Number.isFinite(published) && published > 0) return published * 1000;
+  const start = section?.start;
+  const end = section?.end;
+  if (start?.latitude == null || end?.latitude == null) return null;
+  const length = distanceMeters(Number(start.latitude), Number(start.longitude), Number(end.latitude), Number(end.longitude));
+  return Number.isFinite(length) && length > 0 ? length : null;
+}
+
+export function measureSectionProgress(section, latitude, longitude) {
+  const length = sectionLengthMeters(section);
+  const end = section?.end;
+  if (end?.latitude == null || !Number.isFinite(latitude) || !Number.isFinite(longitude)) {
+    return { progress: null, remaining: null, length: length == null ? null : Math.round(length) };
+  }
+  const remaining = distanceMeters(latitude, longitude, Number(end.latitude), Number(end.longitude));
+  const progress = length ? Math.min(1, Math.max(0, 1 - remaining / length)) : null;
+  return {
+    progress,
+    remaining: Math.round(remaining),
+    length: length == null ? null : Math.round(length),
+  };
+}
+
+export function advanceSectionPace(pace, point, now) {
+  if (!point || !Number.isFinite(point.latitude) || !Number.isFinite(point.longitude) || !Number.isFinite(now)) return pace;
+  if (!pace) return { distance: 0, startedAt: now, last: point, averageKmh: null };
+  const step = distanceMeters(pace.last.latitude, pace.last.longitude, point.latitude, point.longitude);
+  const distance = pace.distance + (step >= 0 && step <= 300 ? step : 0);
+  const elapsed = (now - pace.startedAt) / 1000;
+  const averageKmh = elapsed >= 5 && distance >= 20 ? Math.round((distance / elapsed) * 3.6) : null;
+  return { distance, startedAt: pace.startedAt, last: point, averageKmh };
+}
+
 export function averageSectionSpeech(event, language = "pl") {
   if (!event) return "";
   const limit = event.section?.speed_limit;

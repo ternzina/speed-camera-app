@@ -6,6 +6,17 @@ module.exports = ({ config }) => {
   }
   return {
     ...config,
+    ios: {
+      ...config.ios,
+      infoPlist: {
+        ...config.ios?.infoPlist,
+        // Spoken camera warnings may finish while an explicit trip is in background.
+        UIBackgroundModes: [...new Set([
+          ...(config.ios?.infoPlist?.UIBackgroundModes || []),
+          'audio',
+        ])],
+      },
+    },
     plugins: [
       ...(config.plugins || []).filter(plugin =>
         (Array.isArray(plugin) ? plugin[0] : plugin) !== 'react-native-maps'),
