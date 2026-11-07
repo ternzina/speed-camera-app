@@ -20,7 +20,7 @@ test("stationary GPS and heading jitter issues one camera command, not a stream"
     if (command) {
       commands += 1;
       previous = command;
-      assert.equal(command.api, "animateCamera");
+      assert.equal(command.api, "setCamera");
     }
   }
   assert.equal(commands, 1);
@@ -38,7 +38,7 @@ test("a moving car is followed, and a second fix inside the animation window is 
   const later = nextDriveCameraCommand(first, {
     latitude: 50.4504, longitude: 30.52, heading: 12, moving: true, zoom: 17, at: 1000,
   });
-  assert.equal(later?.api, "animateCamera");
+  assert.equal(later?.api, "setCamera");
   assert.ok(later.latitude > first.latitude);
 });
 
@@ -53,7 +53,28 @@ test("zoom changes still move the camera, and an explicit recenter is not droppe
   const forced = nextDriveCameraCommand(zoomed, {
     latitude: 52.23, longitude: 21.01, heading: null, moving: false, zoom: 15, at: 60,
   }, { force: true });
-  assert.equal(forced?.api, "animateCamera");
+  assert.equal(forced?.api, "setCamera");
+});
+
+test("jumpy phone fixes stay on the non-animated camera command", () => {
+  let previous = null;
+  const apis = [];
+  for (let i = 0; i < 8; i += 1) {
+    const command = nextDriveCameraCommand(previous, {
+      latitude: 50.45 + i * 0.0008,
+      longitude: 30.52,
+      heading: 20 + i * 18,
+      moving: true,
+      zoom: 17,
+      at: i * 800,
+    });
+    if (command) {
+      apis.push(command.api);
+      previous = command;
+    }
+  }
+  assert.ok(apis.length > 1);
+  assert.deepEqual([...new Set(apis)], ["setCamera"]);
 });
 
 test("the trip screen does not restart iOS region animation on location updates", () => {
@@ -63,6 +84,12 @@ test("the trip screen does not restart iOS region animation on location updates"
   const body = app.slice(start, end);
   assert.ok(start > 0 && end > start);
   assert.equal(body.includes("animateToRegion"), false);
+  assert.equal(body.includes("animateCamera"), false);
+  assert.equal(body.includes("latitudeDelta: 100"), false);
   assert.ok(body.includes("nextDriveCameraCommand"));
-  assert.ok(body.includes("animateCamera"));
+  assert.ok(body.includes("setCamera"));
+  assert.ok(body.includes("latitudeDelta: 0.012"));
+  assert.ok(body.includes("tripMapRegion"));
+  assert.ok(body.includes("deferTripMap"));
+  assert.ok(body.includes("requestAnimationFrame"));
 });

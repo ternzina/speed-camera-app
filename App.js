@@ -1984,9 +1984,15 @@ function DriveModeScreen({
   const mapRef = useRef(null);
   const followPose = useRef(null);
   const followingRef = useRef(false);
+  const tripMapRegion = useRef(null);
   const { pad } = usePadLayout();
   const [following, setFollowing] = useState(true);
   const [mapReady, setMapReady] = useState(false);
+  const [deferTripMap, setDeferTripMap] = useState(true);
+  useEffect(() => {
+    const frame = requestAnimationFrame(() => setDeferTripMap(false));
+    return () => cancelAnimationFrame(frame);
+  }, []);
   const copy = DRIVE_MODE_COPY[language] || DRIVE_MODE_COPY.ru;
   const isNight = theme !== "day";
   const hasFix = !!(gpsFixReceived && coords && Number.isFinite(coords.latitude) && Number.isFinite(coords.longitude));
@@ -2003,15 +2009,15 @@ function DriveModeScreen({
   const expandedWarning = !!(warningPresentation && hasFix && danger && camera
     && String(camera.id) === warningPresentation.cameraId);
 
-  function applyDriveCamera(command, duration) {
-    if (!command || !mapRef.current) return;
+  function applyDriveCamera(command) {
+    if (!command || !mapRef.current || command.api !== "setCamera") return;
     followPose.current = command;
-    mapRef.current.animateCamera({
+    mapRef.current.setCamera({
       center: { latitude: command.latitude, longitude: command.longitude },
       pitch: command.pitch,
       heading: command.heading,
       zoom: command.zoom,
-    }, { duration });
+    });
   }
 
   useEffect(() => {
@@ -2030,7 +2036,7 @@ function DriveModeScreen({
       zoom: targetZoom,
       at: Date.now(),
     }, { force: resumed });
-    applyDriveCamera(command, 620);
+    applyDriveCamera(command);
   }, [coords?.latitude, coords?.longitude, hasFix, heading, headingIsReliable, following, mapReady, targetZoom]);
 
   async function adjustZoom(delta) {
@@ -2038,7 +2044,7 @@ function DriveModeScreen({
     try {
       const cameraState = await mapRef.current.getCamera();
       const zoom = Number.isFinite(cameraState.zoom) ? cameraState.zoom : 16;
-      mapRef.current.animateCamera({ ...cameraState, zoom: Math.max(10, Math.min(20, zoom + delta)) }, { duration: 220 });
+      mapRef.current.setCamera({ ...cameraState, zoom: Math.max(10, Math.min(20, zoom + delta)) });
     } catch (_) {}
   }
 
@@ -2053,7 +2059,7 @@ function DriveModeScreen({
       at: Date.now(),
     }, { force: true });
     followingRef.current = true;
-    applyDriveCamera(command, 420);
+    applyDriveCamera(command);
     if (!following) setFollowing(true);
   }
 
@@ -2065,15 +2071,22 @@ function DriveModeScreen({
     return copy.sectionInside;
   }
 
+  if (!tripMapRegion.current && hasFix) {
+    tripMapRegion.current = {
+      latitude: coords.latitude,
+      longitude: coords.longitude,
+      latitudeDelta: 0.012,
+      longitudeDelta: 0.012,
+    };
+  }
+
   return (
     <View style={[driveStyles.root, isNight ? driveStyles.nightRoot : driveStyles.dayRoot]}>
       <StatusBar style={isNight ? "light" : "dark"} translucent backgroundColor="transparent" />
-      <MapView
+      {!deferTripMap && tripMapRegion.current ? <MapView
           ref={mapRef}
           style={StyleSheet.absoluteFill}
-          initialRegion={coords && Number.isFinite(coords.latitude) && Number.isFinite(coords.longitude)
-            ? { latitude: coords.latitude, longitude: coords.longitude, latitudeDelta: 0.012, longitudeDelta: 0.012 }
-            : { latitude: 30, longitude: 15, latitudeDelta: 100, longitudeDelta: 100 }}
+          initialRegion={tripMapRegion.current}
           mapType="standard"
           userInterfaceStyle={isNight ? "dark" : "light"}
           customMapStyle={isNight ? NIGHT_MAP_STYLE : []}
@@ -2107,7 +2120,7 @@ function DriveModeScreen({
               <View style={[driveStyles.mapCameraMarker, danger && driveStyles.mapCameraMarkerDanger]}><Text style={driveStyles.mapCameraGlyph}>{cameraGlyph(camera)}</Text></View>
             </Marker>
           )}
-        </MapView>
+        </MapView> : <View pointerEvents="none" style={[StyleSheet.absoluteFill, isNight ? driveStyles.mapWaitingNight : driveStyles.mapWaitingDay]} />}
 
       <SystemSafeArea pointerEvents="box-none" style={driveStyles.safeOverlay}>
         <View pointerEvents="box-none" style={[driveStyles.topArea, pad && { marginHorizontal: 28, gap: 14 }]}>
