@@ -21,7 +21,7 @@
         ]
       },
       "bundleIdentifier": "com.21wek.camera",
-      "buildNumber": "33"
+      "buildNumber": "34"
     },
     "android": {
       "permissions": [
@@ -29,7 +29,7 @@
         "ACCESS_COARSE_LOCATION"
       ],
       "package": "com.camera21wek",
-      "versionCode": 24
+      "versionCode": 25
     },
     "plugins": [
       "expo-status-bar",

@@ -32,6 +32,7 @@ import SystemSafeArea from "./system-safe-area";
 
 import { uiCopy, cameraKind, cameraGlyph, directionLabel, SpeedState, SectionState, FilterChip } from "./drive-ui";
 import { clusterFocusRegion, clusterMapPoints, markerPixelSize } from "./map-camera-markers";
+import { nextDriveCameraCommand } from "./drive-map-follow";
 import { MapCameraPin, MapMarkerLegend } from "./map-camera-pin";
 import { cameraAlertDecision, cameraWarningsEnabled, mergeStoredSettings } from "./camera-warning-gate";
 import { searchLegalNotices, statusLabel } from "./legal-notices";
@@ -1981,6 +1982,8 @@ function DriveModeScreen({
   onRetry, onStop, onSettings,
 }) {
   const mapRef = useRef(null);
+  const followPose = useRef(null);
+  const followingRef = useRef(false);
   const { pad } = usePadLayout();
   const [following, setFollowing] = useState(true);
   const [mapReady, setMapReady] = useState(false);
@@ -2000,25 +2003,35 @@ function DriveModeScreen({
   const expandedWarning = !!(warningPresentation && hasFix && danger && camera
     && String(camera.id) === warningPresentation.cameraId);
 
+  function applyDriveCamera(command, duration) {
+    if (!command || !mapRef.current) return;
+    followPose.current = command;
+    mapRef.current.animateCamera({
+      center: { latitude: command.latitude, longitude: command.longitude },
+      pitch: command.pitch,
+      heading: command.heading,
+      zoom: command.zoom,
+    }, { duration });
+  }
+
   useEffect(() => {
-    if (!hasFix || !mapReady || !following || !mapRef.current) return;
-    if (Platform.OS === "ios") {
-      const delta = targetZoom >= 17 ? 0.015 : targetZoom >= 16 ? 0.03 : targetZoom >= 15 ? 0.06 : 0.12;
-      mapRef.current.animateToRegion({
-        latitude: coords.latitude,
-        longitude: coords.longitude,
-        latitudeDelta: delta,
-        longitudeDelta: delta,
-      }, 620);
-    } else {
-      mapRef.current.animateCamera({
-        center: coords,
-        pitch: headingIsReliable ? 34 : 0,
-        heading: headingIsReliable ? heading : 0,
-        zoom: targetZoom,
-      }, { duration: 620 });
+    if (!following) {
+      followingRef.current = false;
+      return;
     }
-  }, [coords, hasFix, heading, headingIsReliable, following, mapReady, targetZoom]);
+    if (!hasFix || !mapReady || !mapRef.current) return;
+    const resumed = !followingRef.current;
+    followingRef.current = true;
+    const command = nextDriveCameraCommand(followPose.current, {
+      latitude: coords.latitude,
+      longitude: coords.longitude,
+      heading: headingIsReliable ? heading : null,
+      moving: headingIsReliable,
+      zoom: targetZoom,
+      at: Date.now(),
+    }, { force: resumed });
+    applyDriveCamera(command, 620);
+  }, [coords?.latitude, coords?.longitude, hasFix, heading, headingIsReliable, following, mapReady, targetZoom]);
 
   async function adjustZoom(delta) {
     if (!mapRef.current || !mapReady) return;
@@ -2031,21 +2044,17 @@ function DriveModeScreen({
 
   function recenter() {
     if (!hasFix) return;
-    if (!following) {
-      setFollowing(true);
-      return;
-    }
-    setFollowing(true);
-    if (Platform.OS === "ios") {
-      const delta = targetZoom >= 17 ? 0.015 : targetZoom >= 16 ? 0.03 : targetZoom >= 15 ? 0.06 : 0.12;
-      mapRef.current?.animateToRegion({
-        latitude: coords.latitude, longitude: coords.longitude, latitudeDelta: delta, longitudeDelta: delta,
-      }, 420);
-    } else {
-      mapRef.current?.animateCamera({
-        center: coords, pitch: headingIsReliable ? 34 : 0, heading: headingIsReliable ? heading : 0, zoom: targetZoom,
-      }, { duration: 420 });
-    }
+    const command = nextDriveCameraCommand(followPose.current, {
+      latitude: coords.latitude,
+      longitude: coords.longitude,
+      heading: headingIsReliable ? heading : null,
+      moving: headingIsReliable,
+      zoom: targetZoom,
+      at: Date.now(),
+    }, { force: true });
+    followingRef.current = true;
+    applyDriveCamera(command, 420);
+    if (!following) setFollowing(true);
   }
 
   function sectionLabel() {
