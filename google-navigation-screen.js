@@ -223,7 +223,7 @@ function RouteScreen({ language, initialDestination, coords, night, mapStyle, vo
   }
   const button = (label, action, disabled = false) => <Pressable accessibilityRole="button" accessibilityState={{ disabled }} disabled={disabled} onPress={action} style={[s.button, disabled && { opacity: 0.45 }]}><Text style={s.buttonText}>{label}</Text></Pressable>;
   return <SystemSafeArea style={[s.root, { backgroundColor: bg }]}>
-    <View style={s.header}><Pressable accessibilityRole="button" accessibilityLabel={c.back} onPress={close} disabled={busy} accessibilityState={{ disabled: busy }} style={[s.back, busy && { opacity: 0.45 }]}><Text style={{ color: fg, fontSize: 32 }}>‹</Text></Pressable><Text numberOfLines={1} style={[s.title, { color: fg }]}>{c.title}</Text></View>
+    <View style={s.header}><Pressable accessibilityRole="button" accessibilityLabel={c.back} onPress={close} disabled={busy} accessibilityState={{ disabled: busy }} style={[s.back, { width: undefined, paddingHorizontal: 8, flexDirection: 'row' }, busy && { opacity: 0.45 }]}><Text style={{ color: fg, fontSize: 28, marginRight: 4 }}>‹</Text><Text style={{ color: fg, fontSize: 17, fontWeight: '700' }}>{c.back}</Text></Pressable><Text numberOfLines={1} style={[s.title, { color: fg }]}>{c.title}</Text></View>
     {stage === 'choose' ? <>
       <View style={s.inputRow}><TextInput accessibilityLabel={c.destination} placeholder={c.placeholder} placeholderTextColor={muted} value={query} onChangeText={setQuery} onSubmitEditing={search} style={[s.input, { color: fg, borderColor: muted }]} />{button(c.search, search, busy)}</View>
       <Text style={[s.note, { color: muted }]}>{c.choose}</Text>

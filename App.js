@@ -36,6 +36,50 @@ import { nextDriveCameraCommand } from "./drive-map-follow";
 import { MapCameraPin, MapMarkerLegend } from "./map-camera-pin";
 import { cameraAlertDecision, cameraWarningsEnabled, mergeStoredSettings } from "./camera-warning-gate";
 import { searchLegalNotices, statusLabel } from "./legal-notices";
+import IosRouteScreen from "./ios-route-screen";
+import { calculateRoutes } from "./ios-mapkit-directions";
+import {
+  ROUTE_CORRIDOR_METERS, corridorFeed, narrowCamerasToRoute, guidanceState, guidanceZoom,
+  planNavAnnouncement, shouldRequestReroute, formatDistance, formatDuration,
+} from "./route-guidance";
+
+// Temporary local diagnostic for a locked trip screen. It does not setState.
+// Not for TestFlight or the App Store.
+const tripDiag = { counts: {}, open: null, lines: [] };
+function traceTrip(name, phase) {
+  const now = Date.now();
+  if (phase === "enter" || phase === "render") tripDiag.counts[name] = (tripDiag.counts[name] || 0) + 1;
+  if (phase === "enter") tripDiag.open = { name, at: now };
+  if (phase === "exit" && tripDiag.open?.name === name) {
+    const ms = now - tripDiag.open.at;
+    tripDiag.open = null;
+    if (ms >= 40) {
+      const line = `${name} ${ms}ms`;
+      tripDiag.lines.push(line);
+      if (tripDiag.lines.length > 8) tripDiag.lines.shift();
+      console.log("[trip-diag] " + line);
+    }
+  }
+  const n = tripDiag.counts[name] || 0;
+  const every = name === "map" || name === "endTrip" || name === "error" || name === "gps" || name === "startTracking";
+  if (phase === "error" || (phase !== "exit" && (every || n === 1 || n % 10 === 0))) {
+    const line = phase === "error" ? `${name} error` : `${name} #${n}`;
+    tripDiag.lines.push(line);
+    if (tripDiag.lines.length > 8) tripDiag.lines.shift();
+    console.log("[trip-diag] " + line);
+  }
+}
+if (global.ErrorUtils && !global.__tripDiagHooked) {
+  global.__tripDiagHooked = true;
+  const previousHandler = global.ErrorUtils.getGlobalHandler();
+  global.ErrorUtils.setGlobalHandler((error, isFatal) => {
+    const message = error && (error.message || String(error));
+    tripDiag.lines.push(`error ${message || ""}`);
+    if (tripDiag.lines.length > 8) tripDiag.lines.shift();
+    console.log("[trip-diag] error", isFatal ? "fatal" : "nonfatal", message);
+    if (previousHandler) previousHandler(error, isFatal);
+  });
+}
 
 function usePadLayout() {
   const { width, height } = useWindowDimensions();
@@ -264,9 +308,13 @@ function alertDistanceForSpeed(speedKmh, settings) {
   if (speedKmh < 120) return settings.highwayDistance;
   return settings.fastDistance;
 }
+// Null unless an iOS MapKit route is engaged. Background location ignores it.
+let routeCorridor = null;
 function visibleCameras() {
-  return cameraPoints(countryFeed(bgCameraFeeds, bgSettings.country, data, plData))
+  const cameras = cameraPoints(countryFeed(bgCameraFeeds, bgSettings.country, data, plData))
     .filter(c => !bgHiddenIds.has(String(c.id)));
+  if (!routeCorridor || AppState.currentState !== "active") return cameras;
+  return narrowCamerasToRoute(cameras, routeCorridor.polyline, routeCorridor.meters);
 }
 function countryCameraCount(code, feeds, coverage) {
   if (feeds?.[code] && !feeds[code]._removed) return cameraPoints(feeds[code]).length;
@@ -511,6 +559,108 @@ export default function App() {
   const [alertPreviewMode, setAlertPreviewMode] = useState("expanded");
   const [navigatorDestination, setNavigatorDestination] = useState("");
   const [googleNavigationOpen, setGoogleNavigationOpen] = useState(false);
+  const [iosRouteOpen, setIosRouteOpen] = useState(false);
+  const [routeGuidance, setRouteGuidance] = useState(null);
+  const [maneuver, setManeuver] = useState(null);
+  const cameraSpeakingRef = useRef(false);
+  const navSpokenRef = useRef({});
+  const navPendingRef = useRef(null);
+  const rerouteHistoryRef = useRef([]);
+  const rerouteBusyRef = useRef(false);
+  const navInFlightRef = useRef(null);
+  const emitNavRef = useRef(() => {});
+  // A camera warning calls Speech.stop() and then speaks. Nav does not call stop,
+  // and a phrase cut off by that stop stays unannounced so it can wait.
+  emitNavRef.current = (plan) => {
+    if (!plan?.speak || navSpokenRef.current[plan.key]) return;
+    if (cameraSpeakingRef.current || navInFlightRef.current) {
+      navPendingRef.current = plan;
+      return;
+    }
+    navPendingRef.current = null;
+    navInFlightRef.current = plan.key;
+    Speech.speak(plan.phrase, {
+      language: plan.locale,
+      rate: 0.95,
+      onDone: () => {
+        navSpokenRef.current = { ...navSpokenRef.current, [plan.key]: true };
+        if (navInFlightRef.current === plan.key) navInFlightRef.current = null;
+        const waiting = navPendingRef.current;
+        if (waiting && !cameraSpeakingRef.current) {
+          navPendingRef.current = null;
+          emitNavRef.current(waiting);
+        }
+      },
+      onStopped: () => {
+        if (navInFlightRef.current === plan.key) navInFlightRef.current = null;
+        if (cameraSpeakingRef.current) navPendingRef.current = plan;
+      },
+      onError: () => {
+        if (navInFlightRef.current === plan.key) navInFlightRef.current = null;
+      },
+    });
+  };
+  useEffect(() => {
+    return Speech.subscribeCameraSpeech((speaking) => {
+      cameraSpeakingRef.current = speaking;
+      if (!speaking && navPendingRef.current) emitNavRef.current(navPendingRef.current);
+    });
+  }, []);
+  useEffect(() => {
+    navSpokenRef.current = {};
+    navPendingRef.current = null;
+    rerouteHistoryRef.current = [];
+  }, [routeGuidance?.builtAt]);
+  useEffect(() => {
+    if (!active || !routeGuidance || !coords) {
+      setManeuver(null);
+      return;
+    }
+    const speedMps = speedAvailable ? speedKmh / 3.6 : 0;
+    const snapshot = guidanceState(coords, routeGuidance);
+    if (!snapshot) {
+      setManeuver(null);
+      return;
+    }
+    setManeuver(snapshot);
+    const decision = shouldRequestReroute({
+      at: Date.now(),
+      offRouteMeters: snapshot.offRouteMeters,
+      speedMps,
+      history: rerouteHistoryRef.current,
+    });
+    if (!decision.ok) rerouteHistoryRef.current = decision.history;
+    else if (!rerouteBusyRef.current) {
+      rerouteBusyRef.current = true;
+      rerouteHistoryRef.current = decision.history;
+      const destination = routeGuidance.destination;
+      const title = routeGuidance.title;
+      calculateRoutes(coords, destination).then((routes) => {
+        const next = routes && routes[0];
+        if (!next) return;
+        const packed = {
+          builtAt: Date.now(),
+          destination,
+          title,
+          name: next.name,
+          distance: next.distance,
+          expectedTravelTime: next.expectedTravelTime,
+          polyline: next.polyline,
+          steps: next.steps,
+        };
+        routeCorridor = { polyline: packed.polyline, meters: ROUTE_CORRIDOR_METERS };
+        setRouteGuidance(packed);
+      }).catch(() => {}).finally(() => { rerouteBusyRef.current = false; });
+    }
+    emitNavRef.current(planNavAnnouncement({
+      stepIndex: snapshot.stepIndex,
+      distanceMeters: snapshot.distanceMeters,
+      speedMps,
+      spoken: navSpokenRef.current,
+      instruction: snapshot.instruction,
+      language: settings.language,
+    }));
+  }, [active, routeGuidance, coords, speedKmh, speedAvailable, settings.language]);
   const [reportNote, setReportNote] = useState("");
   useEffect(()=>{
     if(active && (!speedAvailable || speedKmh>0) && (modal==="new" || modal==="removed")) setModal(null);
@@ -777,6 +927,8 @@ export default function App() {
   }
 
   async function startTracking() {
+    traceTrip("startTracking", "enter");
+    try {
     const fg = await Location.requestForegroundPermissionsAsync();
     setLocationPermissionStatus(fg.status);
     if (fg.status !== "granted") {
@@ -797,6 +949,8 @@ export default function App() {
     sub.current = await Location.watchPositionAsync(
       { accuracy: Location.Accuracy.BestForNavigation, timeInterval: 1000, distanceInterval: 5 },
       pos => {
+        traceTrip("gps", "enter");
+        try {
         if (AppState.currentState !== "active") return;
         const { latitude, longitude, speed: rs, heading: rh } = pos.coords;
         const kmh = typeof rs === "number" && rs >= 0 ? Math.round(rs * 3.6) : 0;
@@ -824,9 +978,12 @@ export default function App() {
         }
 
         if (selectedCountry !== "UA") {
+          const polandFeed = routeCorridor
+            ? corridorFeed(activeCountryFeedRef.current, routeCorridor.polyline, routeCorridor.meters)
+            : activeCountryFeedRef.current;
           const point =
             kmh >= MIN_MOVING_SPEED_KMH && h != null
-              ? nearestPolandPoint(activeCountryFeedRef.current, latitude, longitude, h, 5000)
+              ? nearestPolandPoint(polandFeed, latitude, longitude, h, 5000)
               : null;
 
           setNearest(point);
@@ -975,14 +1132,25 @@ export default function App() {
         if (a) {
           speakWarning(a, alertDistanceForSpeed(kmh, settings), kmh, typeof rs === "number" && Number.isFinite(rs) && rs >= 0);
         }
+        } finally {
+          traceTrip("gps", "exit");
+        }
       }
     );
     foregroundTripRunning = true;
     setActive(true);
     return true;
+    } finally {
+      traceTrip("startTracking", "exit");
+    }
   }
 
   function stopTracking() {
+    traceTrip("endTrip", "enter");
+    try {
+    routeCorridor = null;
+    setRouteGuidance(null);
+    setManeuver(null);
     foregroundTripRunning = false;
     stopBackground().catch(error => Alert.alert("Фоновый режим", error.message));
     if (sub.current) { sub.current.remove(); sub.current = null; }
@@ -994,6 +1162,13 @@ export default function App() {
     if (averageSectionEndTimer.current) clearTimeout(averageSectionEndTimer.current);
     averageSectionUiRef.current = null;
     setActive(false); setAhead(null); setHeading(null); setGpsFixReceived(false); setSpeedAvailable(false); setAverageSectionUi(null);
+    } catch (error) {
+      traceTrip("error", "error");
+      console.log("[trip-diag] error endTrip", error && (error.message || String(error)));
+      throw error;
+    } finally {
+      traceTrip("endTrip", "exit");
+    }
   }
 
   const backgroundBusy = useRef(false);
@@ -1284,6 +1459,8 @@ export default function App() {
   }
 
   useEffect(() => {
+    traceTrip("warningsEffect", "enter");
+    try {
     if (cameraWarningsEnabled(settings)) return;
     Speech.stop();
     dismissCameraAlert();
@@ -1296,6 +1473,9 @@ export default function App() {
     setAverageSectionUi(null);
     setNearest(null);
     setAhead(null);
+    } finally {
+      traceTrip("warningsEffect", "exit");
+    }
   }, [settings.cameraWarnings]);
 
   function openNavigatorPicker() {
@@ -1303,7 +1483,19 @@ export default function App() {
     setModal("navigator");
   }
 
+  function endRouteOnly() {
+    routeCorridor = null;
+    setRouteGuidance(null);
+    setManeuver(null);
+  }
+
   async function launchNavigator(navigator, destination) {
+    if (navigator === "inapp") {
+      if (Platform.OS !== "ios") return;
+      setModal(null);
+      setIosRouteOpen(true);
+      return;
+    }
     if (navigator === "google" && Platform.OS === "android") {
       setNavigatorDestination(destination || "");
       setModal(null);
@@ -1395,11 +1587,11 @@ export default function App() {
     if (!backgroundGuide) return null;
     const copy = backgroundGuideCopy(settings.language, Platform.OS);
     return (
-      <Modal visible transparent animationType="slide" onRequestClose={postponeBackgroundGuide}>
-        <View style={s.modalShade}>
+      <View style={[StyleSheet.absoluteFill, s.modalShade]}>
           <Pressable accessibilityRole="button" accessibilityLabel={copy.later} onPress={postponeBackgroundGuide} style={StyleSheet.absoluteFill} />
           <View style={[s.guideCard, {maxHeight: Math.max(240, Math.min(windowHeight * 0.62, 460))}]}>
             <ScrollView contentContainerStyle={s.guideScroll} bounces={false}>
+              <PageBackButton language={settings.language} onPress={postponeBackgroundGuide} onLight />
               <Text maxFontSizeMultiplier={1.5} style={s.guideTitle}>{copy.title}</Text>
               {guideReturned
                 ? <Text maxFontSizeMultiplier={1.6} style={s.guideState}>{backgroundAccessMessage(settings.language, backgroundAccess)}</Text>
@@ -1415,8 +1607,7 @@ export default function App() {
               </Pressable>
             </ScrollView>
           </View>
-        </View>
-      </Modal>
+      </View>
     );
   }
 
@@ -1433,6 +1624,50 @@ export default function App() {
         onSkip={finishOnboarding}
       />
     );
+  }
+
+  if (iosRouteOpen) {
+    return <>
+      <IosRouteScreen
+        language={settings.language}
+        night={isNight}
+        initialQuery={navigatorDestination}
+        coords={coords}
+        onClose={() => setIosRouteOpen(false)}
+        onStartGuidance={async (packed) => {
+          if (!packed?.polyline || packed.polyline.length < 2) return false;
+          routeCorridor = { polyline: packed.polyline, meters: ROUTE_CORRIDOR_METERS };
+          setRouteGuidance(packed);
+          setIosRouteOpen(false);
+          setTab("drive");
+          if (active) return true;
+          try {
+            const started = await startTracking();
+            if (!started) {
+              routeCorridor = null;
+              setRouteGuidance(null);
+              setManeuver(null);
+              return false;
+            }
+            return true;
+          } catch (error) {
+            routeCorridor = null;
+            setRouteGuidance(null);
+            setManeuver(null);
+            throw error;
+          }
+        }}
+        onOpenApple={(place) => {
+          setIosRouteOpen(false);
+          return launchNavigator("apple", `${place.latitude},${place.longitude}`);
+        }}
+        onOpenGoogle={(place) => {
+          setIosRouteOpen(false);
+          return launchNavigator("google", `${place.latitude},${place.longitude}`);
+        }}
+      />
+      {renderBackgroundGuide()}
+    </>;
   }
 
   if (googleNavigationOpen) {
@@ -1480,6 +1715,14 @@ export default function App() {
         onDismissWarning={dismissCameraAlert}
         onRetry={startTracking}
         onStop={stopTracking}
+        routePolyline={routeGuidance?.polyline || null}
+        routeZoom={routeGuidance ? guidanceZoom(speedKmh) : null}
+        maneuver={routeGuidance && maneuver ? {
+          distanceLabel: formatDistance(settings.language, maneuver.distanceMeters),
+          instruction: maneuver.instruction,
+          etaLabel: formatDuration(settings.language, routeGuidance.expectedTravelTime),
+        } : null}
+        onEndRoute={routeGuidance ? endRouteOnly : null}
         databaseStatus={`${countryFlag(selectedCountry)} ${countryDisplayName(selectedCountry,settings.language)} · ${countryLoading===selectedCountry?({ru:"↻ Обновление",uk:"↻ Оновлення",en:"↻ Updating",pl:"↻ Aktualizacja"})[settings.language]:databaseErrors[selectedCountry]?"⚠":"✓"} ${offlineCountryCodes.includes(selectedCountry)?({ru:"База на устройстве",uk:"База на пристрої",en:"Database on device",pl:"Baza na urządzeniu"})[settings.language]:"—"}${databaseErrors[selectedCountry]?" · "+({ru:"Обновить не удалось",uk:"Не вдалося оновити",en:"Update failed",pl:"Aktualizacja nieudana"})[settings.language]:""}`}
         onSettings={() => {setCountryScreenTab("settings");setTab("settings");}}
       />
@@ -1511,9 +1754,7 @@ export default function App() {
         )}
         {!(tab === "drive" && !active) && <>
           <View style={s.screenHeader}>
-            <Pressable accessibilityRole="button" accessibilityLabel={settings.language === "en" ? "Back to home" : settings.language === "uk" ? "На головну" : settings.language === "pl" ? "Powrót do strony głównej" : "На главный экран"} onPress={() => setTab("drive")} style={{width:44,height:44,alignItems:"center",justifyContent:"center"}}>
-              <View style={{width:12,height:12,borderLeftWidth:2,borderBottomWidth:2,borderColor:isNight?"#CAD7E7":"#10263B",transform:[{rotate:"45deg"}]}} />
-            </Pressable>
+            <PageBackButton language={settings.language} onPress={() => setTab("drive")} onLight={!isNight} />
           <Text maxFontSizeMultiplier={1.25} numberOfLines={2} style={[s.title, {flex:1}, pad && { fontSize: 40, lineHeight: 50 }]}>{tab === "settings" ? (settings.language === "uk" ? "Країни та дані" : settings.language === "en" ? "Countries and data" : settings.language === "pl" ? "Kraje i dane" : "Страны и данные") : tab === "nearby" ? nearbyCopy.title : tab === "history" ? ui.history : t.title}</Text>
           </View>
           {tab !== "settings" && <Text style={s.subtitle}>{countryFlag(selectedCountry)} {countryDisplayName(selectedCountry,settings.language)}{cameraWarningsEnabled(settings) ? ` · ${visibleCameras().length} камер` : ""}</Text>}
@@ -1809,28 +2050,31 @@ export default function App() {
         onClose={() => setModal(null)}
       />
 
-      <Modal visible={modal==="new"} transparent animationType="slide">
+      {modal === "new" && <Modal visible transparent animationType="slide">
         <View style={s.modalShade}><View style={[s.modalCard, pad && { width: "100%", maxWidth: 640, alignSelf: "center", marginBottom: 24, borderRadius: 26 }]}>
+          <PageBackButton language={settings.language} onPress={() => setModal(null)} onLight={!isNight} />
           <Text style={s.modalTitle}>{t.reportTitle}</Text>
           <Text style={s.modalText}>{coords ? `${coords.latitude.toFixed(5)}, ${coords.longitude.toFixed(5)}` : "GPS недоступен"}</Text>
           <TextInput style={s.input} value={reportNote} onChangeText={setReportNote} placeholder="Комментарий, например направление или тип камеры" multiline />
           <Pressable onPress={reportNewCamera} style={s.button}><Text style={s.buttonText}>{t.send}</Text></Pressable>
           <Pressable onPress={()=>setModal(null)} style={s.cancel}><Text style={s.settingLabel}>{t.cancel}</Text></Pressable>
         </View></View>
-      </Modal>
+      </Modal>}
 
-      <Modal visible={modal==="removed"} transparent animationType="slide">
+      {modal === "removed" && <Modal visible transparent animationType="slide">
         <View style={s.modalShade}><View style={[s.modalCard, pad && { width: "100%", maxWidth: 640, alignSelf: "center", marginBottom: 24, borderRadius: 26 }]}>
+          <PageBackButton language={settings.language} onPress={() => setModal(null)} onLight={!isNight} />
           <Text style={s.modalTitle}>{t.removedTitle}</Text>
           <Text style={s.modalText}>{shownCam?.location || shownCam?.region}</Text>
           <Pressable onPress={()=>reportRemovedCamera(shownCam)} style={[s.button,s.stop]}><Text style={s.buttonText}>{t.removed}</Text></Pressable>
           <Pressable onPress={()=>setModal(null)} style={s.cancel}><Text style={s.settingLabel}>{t.cancel}</Text></Pressable>
         </View></View>
-      </Modal>
+      </Modal>}
 
-      <Modal visible={modal==="alertDemo"} transparent animationType="fade" onRequestClose={() => setModal(null)}>
+      {modal === "alertDemo" && <Modal visible transparent animationType="fade" onRequestClose={() => setModal(null)}>
         <View style={s.alertDemoShade}>
           <View style={s.alertDemoContent}>
+            <PageBackButton language={settings.language} onPress={() => setModal(null)} onLight={settings.driveTheme === "day"} />
             <View style={s.alertDemoModeRow}>
               {["compact", "expanded"].map((mode) => {
                 const previewCopy = ALERT_PREVIEW_COPY[settings.language] || ALERT_PREVIEW_COPY.ru;
@@ -1865,7 +2109,7 @@ export default function App() {
             {alertPreviewMode === "compact" && <Pressable onPress={() => setModal(null)} style={driveStyles.warningDismiss}><Text style={[driveStyles.warningDismissText, settings.driveTheme === "day" ? driveStyles.textMutedDay : driveStyles.textMuted]}>{(ALERT_PREVIEW_COPY[settings.language] || ALERT_PREVIEW_COPY.ru).close}</Text></Pressable>}
           </View>
         </View>
-      </Modal>
+      </Modal>}
     </SystemSafeArea>
     </ThemeContext.Provider>
   );
@@ -1975,11 +2219,28 @@ const DRIVE_MODE_COPY = {
   },
 };
 
+function pageBackLabel(language) {
+  return language === "en" ? "Back" : language === "pl" ? "Wstecz" : "Назад";
+}
+
+function PageBackButton({ language, onPress, onLight = false, label }) {
+  const text = label || pageBackLabel(language);
+  const color = onLight ? "#10263B" : "#F7FBFF";
+  const background = onLight ? "rgba(255,255,255,0.96)" : "rgba(16,38,59,0.94)";
+  return (
+    <Pressable accessibilityRole="button" accessibilityLabel={text} onPress={onPress} style={{ minHeight: 44, paddingHorizontal: 12, borderRadius: 14, flexDirection: "row", alignItems: "center", alignSelf: "flex-start", backgroundColor: background }}>
+      <View style={{ width: 10, height: 10, borderLeftWidth: 2, borderBottomWidth: 2, borderColor: color, transform: [{ rotate: "45deg" }], marginRight: 8 }} />
+      <Text maxFontSizeMultiplier={1.4} style={{ color, fontSize: 17, fontWeight: "700" }}>{text}</Text>
+    </Pressable>
+  );
+}
+
 function DriveModeScreen({
   theme, language, coords, gpsFixReceived, locationPermissionStatus, speedKmh, speedAvailable, heading,
   camera, currentThreshold, danger, warningsEnabled = true, voiceEnabled, vibrationEnabled, backgroundEnabled, averageSection,
   warningPresentation, onDismissWarning, databaseStatus,
   onRetry, onStop, onSettings,
+  routePolyline = null, routeZoom = null, maneuver = null, onEndRoute = null,
 }) {
   const mapRef = useRef(null);
   const followPose = useRef(null);
@@ -1999,7 +2260,7 @@ function DriveModeScreen({
   const headingIsReliable = hasFix && speedAvailable && speedKmh >= MIN_MOVING_SPEED_KMH && Number.isFinite(heading);
   const hasCameraCoordinate = camera && camera.latitude != null && camera.longitude != null
     && Number.isFinite(Number(camera.latitude)) && Number.isFinite(Number(camera.longitude));
-  const targetZoom = camera?.distance > 3000 ? 14 : camera?.distance > 1500 ? 15 : camera?.distance > 700 ? 16 : 17;
+  const targetZoom = routeZoom ?? (camera?.distance > 3000 ? 14 : camera?.distance > 1500 ? 15 : camera?.distance > 700 ? 16 : 17);
   const proximity = camera && currentThreshold > 0
     ? Math.max(0, Math.min(1, 1 - Number(camera.distance || 0) / currentThreshold))
     : 0;
@@ -2010,6 +2271,8 @@ function DriveModeScreen({
     && String(camera.id) === warningPresentation.cameraId);
 
   function applyDriveCamera(command) {
+    traceTrip("map", "enter");
+    try {
     if (!command || !mapRef.current || command.api !== "setCamera") return;
     followPose.current = command;
     mapRef.current.setCamera({
@@ -2018,9 +2281,18 @@ function DriveModeScreen({
       heading: command.heading,
       zoom: command.zoom,
     });
+    } catch (error) {
+      traceTrip("error", "error");
+      console.log("[trip-diag] error map", error && (error.message || String(error)));
+      throw error;
+    } finally {
+      traceTrip("map", "exit");
+    }
   }
 
   useEffect(() => {
+    traceTrip("follow", "enter");
+    try {
     if (!following) {
       followingRef.current = false;
       return;
@@ -2037,6 +2309,9 @@ function DriveModeScreen({
       at: Date.now(),
     }, { force: resumed });
     applyDriveCamera(command);
+    } finally {
+      traceTrip("follow", "exit");
+    }
   }, [coords?.latitude, coords?.longitude, hasFix, heading, headingIsReliable, following, mapReady, targetZoom]);
 
   async function adjustZoom(delta) {
@@ -2080,9 +2355,13 @@ function DriveModeScreen({
     };
   }
 
+  traceTrip("driveRender", "render");
   return (
-    <View style={[driveStyles.root, isNight ? driveStyles.nightRoot : driveStyles.dayRoot]}>
+    <View testID="DriveModeScreenRoot" collapsable={false} style={[driveStyles.root, isNight ? driveStyles.nightRoot : driveStyles.dayRoot]}>
       <StatusBar style={isNight ? "light" : "dark"} translucent backgroundColor="transparent" />
+      <View pointerEvents="none" style={{ position: "absolute", top: 54, left: 8, right: 8, zIndex: 40 }}>
+        <Text style={{ color: "#F4F7FB", fontSize: 11, lineHeight: 14, backgroundColor: "rgba(12,22,36,0.55)" }}>{tripDiag.open ? `open ${tripDiag.open.name}` : tripDiag.lines.join(" · ")}</Text>
+      </View>
       {!deferTripMap && tripMapRegion.current ? <MapView
           ref={mapRef}
           style={StyleSheet.absoluteFill}
@@ -2099,6 +2378,9 @@ function DriveModeScreen({
           onMapReady={() => setMapReady(true)}
           onPanDrag={() => setFollowing(false)}
         >
+          {Array.isArray(routePolyline) && routePolyline.length > 1 && (
+            <Polyline coordinates={routePolyline} strokeColor="#1260E8" strokeWidth={5} />
+          )}
           {averageSection && ["start","end"].map(edge=>{
             const point=averageSection[edge];
             if(point?.latitude==null || point?.longitude==null || !Number.isFinite(Number(point.latitude)) || !Number.isFinite(Number(point.longitude))) return null;
@@ -2124,6 +2406,7 @@ function DriveModeScreen({
 
       <SystemSafeArea pointerEvents="box-none" style={driveStyles.safeOverlay}>
         <View pointerEvents="box-none" style={[driveStyles.topArea, pad && { marginHorizontal: 28, gap: 14 }]}>
+          <PageBackButton language={language} onPress={onStop} onLight={!isNight} />
           <View style={driveStyles.statusRow}>
             <View style={[driveStyles.statusCard, isNight ? driveStyles.glassNight : driveStyles.glassDay]}>
               <View style={[driveStyles.statusDot, hasFix ? driveStyles.dotReady : locationPermissionStatus === "granted" ? driveStyles.dotSearching : driveStyles.dotOff]} />
@@ -2201,6 +2484,20 @@ function DriveModeScreen({
                 <Text style={[driveStyles.noCameraSub, pad && { fontSize: 15 }, isNight ? driveStyles.textMuted : driveStyles.textMutedDay]}>{warningsEnabled ? copy.noCameraSub : copy.warningsPausedSub}</Text>
               </View>
             </View>
+          )}
+          {maneuver && (
+            <View style={[driveStyles.noCameraCard, isNight ? driveStyles.glassNightStrong : driveStyles.glassDay]}>
+              <View style={{ flex: 1 }}>
+                <Text style={[driveStyles.noCameraTitle, isNight ? driveStyles.textWhite : driveStyles.textDark]}>{maneuver.distanceLabel}</Text>
+                {!!maneuver.instruction && <Text style={[driveStyles.noCameraSub, isNight ? driveStyles.textMuted : driveStyles.textMutedDay]}>{maneuver.instruction}</Text>}
+                {!!maneuver.etaLabel && <Text style={[driveStyles.noCameraSub, isNight ? driveStyles.textMuted : driveStyles.textMutedDay]}>{maneuver.etaLabel}</Text>}
+              </View>
+            </View>
+          )}
+          {onEndRoute && (
+            <Pressable accessibilityRole="button" onPress={onEndRoute} style={driveStyles.retryButton}>
+              <Text style={driveStyles.retryText}>{language === "en" ? "End route" : language === "pl" ? "Zakończ trasę" : language === "uk" ? "Завершити маршрут" : "Завершить маршрут"}</Text>
+            </Pressable>
           )}
           <Pressable accessibilityRole="button" onPress={onStop} style={({ pressed }) => [driveStyles.stopButton, pad && { minHeight: 64, borderRadius: 20 }, pressed && driveStyles.stopButtonPressed]}>
             <Text style={[driveStyles.stopButtonText, pad && { fontSize: 20 }]}>{copy.stop}</Text>
@@ -2359,9 +2656,7 @@ function DriveHome({ language, country, cameraCount, offlineAvailable, lastDataU
 
   const header = (
       <View style={homeStyles.header}>
-        <Pressable accessibilityRole="button" accessibilityLabel={language === "uk" ? "Назад до привітання" : language === "en" ? "Back to welcome" : language === "pl" ? "Wróć do powitania" : "Назад к приветствию"} onPress={onBack} style={homeStyles.backButton}>
-          <View style={{width:12,height:12,borderLeftWidth:2,borderBottomWidth:2,borderColor:isNight?"#CAD7E7":"#102A4D",transform:[{rotate:"45deg"}]}} />
-        </Pressable>
+        <PageBackButton language={language} onPress={onBack} onLight={!isNight} />
         <View style={homeStyles.brandLockup}>
           <View style={homeStyles.brandMark}><Text style={homeStyles.brandMarkText}>A</Text></View>
           <Text maxFontSizeMultiplier={1.2} adjustsFontSizeToFit numberOfLines={1} style={[homeStyles.brand,{flexShrink:1}]}><Text style={homeStyles.brandCam}>Cam</Text><Text style={homeStyles.brandAlert}>Alert</Text></Text>
@@ -2557,15 +2852,20 @@ function NavigatorPickerSheet({ visible, language, platform, destination, onDest
   const copy = NAVIGATOR_SHEET_COPY[language] || NAVIGATOR_SHEET_COPY.ru;
   const options = [
     { id: "alerts", name: "CamAlert", action: copy.alertsSubtitle },
-    ...(platform === "ios" ? [{ id: "apple", icon: "⌖", name: "Apple Maps", action: copy.openApple }] : []),
+    ...(platform === "ios" ? [
+      { id: "inapp", icon: "➤", name: copy.routeInApp, action: copy.routeInAppAction },
+      { id: "apple", icon: "⌖", name: "Apple Maps", action: copy.openApple },
+    ] : []),
     { id: "google", icon: "📍", name: "Google Maps", action: platform === "android" ? navigationCopy(language).title : copy.openGoogle },
   ];
 
+  if (!visible) return null;
   return (
-    <Modal visible={visible} transparent animationType="slide" onRequestClose={onClose}>
+    <Modal visible transparent animationType="slide" onRequestClose={onClose}>
       <View style={navigatorStyles.root}>
         <Pressable accessibilityRole="button" accessibilityLabel={copy.close} onPress={onClose} style={StyleSheet.absoluteFill} />
         <View style={[navigatorStyles.sheet, pad && { width: "100%", maxWidth: 680, alignSelf: "center", borderRadius: 28 }]}>
+          <PageBackButton language={language} onPress={onClose} onLight={!isNight} />
           <View style={navigatorStyles.handle} />
           <Text style={navigatorStyles.title}>{copy.title}</Text>
           <Text style={navigatorStyles.subtitle}>{platform === "android" ? navigationCopy(language).choose : copy.subtitle}</Text>
@@ -2614,7 +2914,8 @@ function NavigatorPickerSheet({ visible, language, platform, destination, onDest
 
 const NAVIGATOR_SHEET_COPY = {
   ru: {
-    title: "Выберите навигатор", subtitle: "CamAlert не строит маршрут: он передаст пункт назначения выбранному приложению.",
+    title: "Выберите навигатор", subtitle: "Поездка без цели остаётся основной кнопкой. Здесь можно построить маршрут в CamAlert или передать цель в другое приложение.",
+    routeInApp: "Маршрут в CamAlert", routeInAppAction: "Адрес, варианты Apple и ведение",
     destination: "Пункт назначения", destinationPlaceholder: "Адрес или координаты",
     destinationHint: "Необязательно · координаты укажите как широта, долгота",
     openApple: "Открыть в Apple Maps", openGoogle: "Открыть в Google Maps",
@@ -2622,7 +2923,8 @@ const NAVIGATOR_SHEET_COPY = {
     cancel: "Отмена", close: "Закрыть выбор навигатора",
   },
   uk: {
-    title: "Оберіть навігатор", subtitle: "CamAlert не будує маршрут: застосунок передасть пункт призначення вибраній програмі.",
+    title: "Оберіть навігатор", subtitle: "Поїздка без цілі лишається основною кнопкою. Тут можна побудувати маршрут у CamAlert або передати ціль в іншу програму.",
+    routeInApp: "Маршрут у CamAlert", routeInAppAction: "Адреса, варіанти Apple і ведення",
     destination: "Пункт призначення", destinationPlaceholder: "Адреса або координати",
     destinationHint: "Необов’язково · координати: широта, довгота",
     openApple: "Відкрити в Apple Maps", openGoogle: "Відкрити в Google Maps",
@@ -2630,7 +2932,8 @@ const NAVIGATOR_SHEET_COPY = {
     cancel: "Скасувати", close: "Закрити вибір навігатора",
   },
   en: {
-    title: "Choose a navigator", subtitle: "CamAlert does not create routes; it passes your destination to the selected app.",
+    title: "Choose a navigator", subtitle: "A trip without a destination stays the main button. Build a route in CamAlert or pass the destination to another app.",
+    routeInApp: "Route in CamAlert", routeInAppAction: "Address, Apple alternatives, and guidance",
     destination: "Destination", destinationPlaceholder: "Address or coordinates",
     destinationHint: "Optional · enter coordinates as latitude, longitude",
     openApple: "Open in Apple Maps", openGoogle: "Open in Google Maps",
@@ -2638,7 +2941,8 @@ const NAVIGATOR_SHEET_COPY = {
     cancel: "Cancel", close: "Close navigator selection",
   },
   pl: {
-    title: "Wybierz nawigację", subtitle: "CamAlert nie wyznacza trasy; przekazuje cel do wybranej aplikacji.",
+    title: "Wybierz nawigację", subtitle: "Podróż bez celu zostaje głównym przyciskiem. Tu można wyznaczyć trasę w CamAlert albo przekazać cel do innej aplikacji.",
+    routeInApp: "Trasa w CamAlert", routeInAppAction: "Adres, warianty Apple i prowadzenie",
     destination: "Cel podróży", destinationPlaceholder: "Adres lub współrzędne",
     destinationHint: "Opcjonalnie · współrzędne: szerokość, długość",
     openApple: "Otwórz w Apple Maps", openGoogle: "Otwórz w Google Maps",
@@ -2820,17 +3124,11 @@ function RoadCamerasScreen({ country, language, feed, userCoords, onCountries, s
                 <MapCameraPin camera={item.camera} size={pinSize} night={isNight} />
               </Marker>)}
         </MapView>
-        {selected && <Pressable accessibilityRole="button" accessibilityLabel={backToCamerasLabel}
-          onPress={backToCameras} style={[rc.cameraBackButton,rc.mapBackButton]}>
-          <View style={rc.cameraBackArrow} />
-        </Pressable>}
+        {selected && <View style={rc.mapBackButton}><PageBackButton language={language} onPress={backToCameras} onLight={!isNight} label={backToCamerasLabel} /></View>}
       </View>
       {selected && <View style={rc.selectedCard}>
         <View style={rc.selectedTop}>
-          <Pressable accessibilityRole="button" accessibilityLabel={backToCamerasLabel}
-            onPress={backToCameras} style={rc.cameraBackButton}>
-            <View style={rc.cameraBackArrow} />
-          </Pressable>
+          <PageBackButton language={language} onPress={backToCameras} onLight={!isNight} label={backToCamerasLabel} />
           <Text style={[rc.cameraTitle,{flex:1,marginTop:0}]}>{title(selected)}</Text>
         </View>
         <Text style={rc.cameraDirection}>{cameraTypeLabel(selected,language)}</Text>
