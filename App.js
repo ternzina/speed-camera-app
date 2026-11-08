@@ -39,8 +39,9 @@ import { searchLegalNotices, statusLabel } from "./legal-notices";
 import IosRouteScreen from "./ios-route-screen";
 import { calculateRoutes } from "./ios-mapkit-directions";
 import {
-  ROUTE_CORRIDOR_METERS, corridorFeed, narrowCamerasToRoute, guidanceState, guidanceZoom,
-  planNavAnnouncement, shouldRequestReroute, formatDistance, formatDuration,
+  ROUTE_CORRIDOR_METERS, narrowCamerasToRoute, guidanceState, guidanceZoom,
+  approximateRouteProgress, planNavAnnouncement, shouldRequestReroute,
+  formatDistance, formatArrivalTime,
 } from "./route-guidance";
 
 // Temporary local diagnostic for a locked trip screen. It does not setState.
@@ -308,13 +309,9 @@ function alertDistanceForSpeed(speedKmh, settings) {
   if (speedKmh < 120) return settings.highwayDistance;
   return settings.fastDistance;
 }
-// Null unless an iOS MapKit route is engaged. Background location ignores it.
-let routeCorridor = null;
 function visibleCameras() {
-  const cameras = cameraPoints(countryFeed(bgCameraFeeds, bgSettings.country, data, plData))
+  return cameraPoints(countryFeed(bgCameraFeeds, bgSettings.country, data, plData))
     .filter(c => !bgHiddenIds.has(String(c.id)));
-  if (!routeCorridor || AppState.currentState !== "active") return cameras;
-  return narrowCamerasToRoute(cameras, routeCorridor.polyline, routeCorridor.meters);
 }
 function countryCameraCount(code, feeds, coverage) {
   if (feeds?.[code] && !feeds[code]._removed) return cameraPoints(feeds[code]).length;
@@ -618,49 +615,62 @@ export default function App() {
     }
     const speedMps = speedAvailable ? speedKmh / 3.6 : 0;
     const snapshot = guidanceState(coords, routeGuidance);
-    if (!snapshot) {
+    const progress = approximateRouteProgress(coords, routeGuidance);
+    if (!snapshot && !progress) {
       setManeuver(null);
       return;
     }
-    setManeuver(snapshot);
-    const decision = shouldRequestReroute({
-      at: Date.now(),
-      offRouteMeters: snapshot.offRouteMeters,
-      speedMps,
-      history: rerouteHistoryRef.current,
+    setManeuver({
+      ...(snapshot || {}),
+      remainingMeters: progress ? progress.remainingMeters : null,
+      etaSeconds: progress ? progress.etaSeconds : null,
     });
-    if (!decision.ok) rerouteHistoryRef.current = decision.history;
-    else if (!rerouteBusyRef.current) {
-      rerouteBusyRef.current = true;
-      rerouteHistoryRef.current = decision.history;
-      const destination = routeGuidance.destination;
-      const title = routeGuidance.title;
-      calculateRoutes(coords, destination).then((routes) => {
-        const next = routes && routes[0];
-        if (!next) return;
-        const packed = {
-          builtAt: Date.now(),
-          destination,
-          title,
-          name: next.name,
-          distance: next.distance,
-          expectedTravelTime: next.expectedTravelTime,
-          polyline: next.polyline,
-          steps: next.steps,
-        };
-        routeCorridor = { polyline: packed.polyline, meters: ROUTE_CORRIDOR_METERS };
-        setRouteGuidance(packed);
-      }).catch(() => {}).finally(() => { rerouteBusyRef.current = false; });
+    if (snapshot) {
+      const decision = shouldRequestReroute({
+        at: Date.now(),
+        offRouteMeters: snapshot.offRouteMeters,
+        speedMps,
+        history: rerouteHistoryRef.current,
+      });
+      if (!decision.ok) rerouteHistoryRef.current = decision.history;
+      else if (!rerouteBusyRef.current) {
+        rerouteBusyRef.current = true;
+        rerouteHistoryRef.current = decision.history;
+        const destination = routeGuidance.destination;
+        const title = routeGuidance.title;
+        calculateRoutes(coords, destination).then((routes) => {
+          const next = routes && routes[0];
+          if (!next) return;
+          const packed = {
+            builtAt: Date.now(),
+            destination,
+            title,
+            name: next.name,
+            distance: next.distance,
+            expectedTravelTime: next.expectedTravelTime,
+            polyline: next.polyline,
+            steps: next.steps,
+          };
+          setRouteGuidance(packed);
+        }).catch(() => {}).finally(() => { rerouteBusyRef.current = false; });
+      }
+      emitNavRef.current(planNavAnnouncement({
+        stepIndex: snapshot.stepIndex,
+        distanceMeters: snapshot.distanceMeters,
+        speedMps,
+        spoken: navSpokenRef.current,
+        instruction: snapshot.instruction,
+        language: settings.language,
+      }));
     }
-    emitNavRef.current(planNavAnnouncement({
-      stepIndex: snapshot.stepIndex,
-      distanceMeters: snapshot.distanceMeters,
-      speedMps,
-      spoken: navSpokenRef.current,
-      instruction: snapshot.instruction,
-      language: settings.language,
-    }));
   }, [active, routeGuidance, coords, speedKmh, speedAvailable, settings.language]);
+  const routeMapCameras = useMemo(() => {
+    const line = routeGuidance?.polyline;
+    if (!Array.isArray(line) || line.length < 2) return [];
+    return narrowCamerasToRoute(visibleCameras(), line, ROUTE_CORRIDOR_METERS).filter((camera) => (
+      Number.isFinite(Number(camera.latitude)) && Number.isFinite(Number(camera.longitude))
+    ));
+  }, [routeGuidance?.builtAt, routeGuidance?.polyline]);
   const [reportNote, setReportNote] = useState("");
   useEffect(()=>{
     if(active && (!speedAvailable || speedKmh>0) && (modal==="new" || modal==="removed")) setModal(null);
@@ -978,12 +988,9 @@ export default function App() {
         }
 
         if (selectedCountry !== "UA") {
-          const polandFeed = routeCorridor
-            ? corridorFeed(activeCountryFeedRef.current, routeCorridor.polyline, routeCorridor.meters)
-            : activeCountryFeedRef.current;
           const point =
             kmh >= MIN_MOVING_SPEED_KMH && h != null
-              ? nearestPolandPoint(polandFeed, latitude, longitude, h, 5000)
+              ? nearestPolandPoint(activeCountryFeedRef.current, latitude, longitude, h, 5000)
               : null;
 
           setNearest(point);
@@ -1148,7 +1155,6 @@ export default function App() {
   function stopTracking() {
     traceTrip("endTrip", "enter");
     try {
-    routeCorridor = null;
     setRouteGuidance(null);
     setManeuver(null);
     foregroundTripRunning = false;
@@ -1484,7 +1490,6 @@ export default function App() {
   }
 
   function endRouteOnly() {
-    routeCorridor = null;
     setRouteGuidance(null);
     setManeuver(null);
   }
@@ -1636,7 +1641,6 @@ export default function App() {
         onClose={() => setIosRouteOpen(false)}
         onStartGuidance={async (packed) => {
           if (!packed?.polyline || packed.polyline.length < 2) return false;
-          routeCorridor = { polyline: packed.polyline, meters: ROUTE_CORRIDOR_METERS };
           setRouteGuidance(packed);
           setIosRouteOpen(false);
           setTab("drive");
@@ -1644,14 +1648,12 @@ export default function App() {
           try {
             const started = await startTracking();
             if (!started) {
-              routeCorridor = null;
               setRouteGuidance(null);
               setManeuver(null);
               return false;
             }
             return true;
           } catch (error) {
-            routeCorridor = null;
             setRouteGuidance(null);
             setManeuver(null);
             throw error;
@@ -1716,11 +1718,13 @@ export default function App() {
         onRetry={startTracking}
         onStop={stopTracking}
         routePolyline={routeGuidance?.polyline || null}
+        routeCameras={routeMapCameras}
         routeZoom={routeGuidance ? guidanceZoom(speedKmh) : null}
         maneuver={routeGuidance && maneuver ? {
           distanceLabel: formatDistance(settings.language, maneuver.distanceMeters),
           instruction: maneuver.instruction,
-          etaLabel: formatDuration(settings.language, routeGuidance.expectedTravelTime),
+          remainingLabel: formatDistance(settings.language, maneuver.remainingMeters),
+          arrivalLabel: formatArrivalTime(settings.language, maneuver.etaSeconds),
         } : null}
         onEndRoute={routeGuidance ? endRouteOnly : null}
         databaseStatus={`${countryFlag(selectedCountry)} ${countryDisplayName(selectedCountry,settings.language)} · ${countryLoading===selectedCountry?({ru:"↻ Обновление",uk:"↻ Оновлення",en:"↻ Updating",pl:"↻ Aktualizacja"})[settings.language]:databaseErrors[selectedCountry]?"⚠":"✓"} ${offlineCountryCodes.includes(selectedCountry)?({ru:"База на устройстве",uk:"База на пристрої",en:"Database on device",pl:"Baza na urządzeniu"})[settings.language]:"—"}${databaseErrors[selectedCountry]?" · "+({ru:"Обновить не удалось",uk:"Не вдалося оновити",en:"Update failed",pl:"Aktualizacja nieudana"})[settings.language]:""}`}
@@ -2240,7 +2244,7 @@ function DriveModeScreen({
   camera, currentThreshold, danger, warningsEnabled = true, voiceEnabled, vibrationEnabled, backgroundEnabled, averageSection,
   warningPresentation, onDismissWarning, databaseStatus,
   onRetry, onStop, onSettings,
-  routePolyline = null, routeZoom = null, maneuver = null, onEndRoute = null,
+  routePolyline = null, routeCameras = null, routeZoom = null, maneuver = null, onEndRoute = null,
 }) {
   const mapRef = useRef(null);
   const followPose = useRef(null);
@@ -2381,6 +2385,16 @@ function DriveModeScreen({
           {Array.isArray(routePolyline) && routePolyline.length > 1 && (
             <Polyline coordinates={routePolyline} strokeColor="#1260E8" strokeWidth={5} />
           )}
+          {Array.isArray(routeCameras) && routeCameras.map((item) => (
+            <Marker
+              key={`route-camera-${item.id}`}
+              coordinate={{ latitude: Number(item.latitude), longitude: Number(item.longitude) }}
+              anchor={{ x: 0.5, y: 0.5 }}
+              tracksViewChanges={false}
+            >
+              <View style={driveStyles.routeCameraDot} />
+            </Marker>
+          ))}
           {averageSection && ["start","end"].map(edge=>{
             const point=averageSection[edge];
             if(point?.latitude==null || point?.longitude==null || !Number.isFinite(Number(point.latitude)) || !Number.isFinite(Number(point.longitude))) return null;
@@ -2490,7 +2504,9 @@ function DriveModeScreen({
               <View style={{ flex: 1 }}>
                 <Text style={[driveStyles.noCameraTitle, isNight ? driveStyles.textWhite : driveStyles.textDark]}>{maneuver.distanceLabel}</Text>
                 {!!maneuver.instruction && <Text style={[driveStyles.noCameraSub, isNight ? driveStyles.textMuted : driveStyles.textMutedDay]}>{maneuver.instruction}</Text>}
-                {!!maneuver.etaLabel && <Text style={[driveStyles.noCameraSub, isNight ? driveStyles.textMuted : driveStyles.textMutedDay]}>{maneuver.etaLabel}</Text>}
+                {!!maneuver.remainingLabel && <Text style={[driveStyles.noCameraSub, isNight ? driveStyles.textMuted : driveStyles.textMutedDay]}>{language === "en" ? "Remaining" : language === "pl" ? "Pozostało" : language === "uk" ? "Залишилось" : "Осталось"} {maneuver.remainingLabel}</Text>}
+                {!!maneuver.arrivalLabel && <Text style={[driveStyles.noCameraSub, isNight ? driveStyles.textMuted : driveStyles.textMutedDay]}>{language === "en" ? "Arrival" : language === "pl" ? "Przyjazd" : language === "uk" ? "Прибуття" : "Прибытие"} {maneuver.arrivalLabel}</Text>}
+                {!!maneuver.arrivalLabel && <Text style={[driveStyles.noCameraSub, isNight ? driveStyles.textMuted : driveStyles.textMutedDay]}>{language === "en" ? "Scaled from the last Apple estimate. Not live traffic." : language === "pl" ? "Przeliczone z ostatniego szacunku Apple. To nie są aktualne korki." : language === "uk" ? "Перерахунок останньої оцінки Apple. Не поточні затори." : "Пересчёт последней оценки Apple. Не текущие пробки."}</Text>}
               </View>
             </View>
           )}
@@ -3362,6 +3378,7 @@ const driveStyles = StyleSheet.create({
   limitValue: { color: "#152C44", fontSize: 18, fontWeight: "900" },
   limitCaption: { fontSize: 8, lineHeight: 10, fontWeight: "700", textAlign: "center" },
   carMarkerHalo: { width: 43, height: 43, alignItems: "center", justifyContent: "center", borderRadius: 22, borderWidth: 1.5 },
+  routeCameraDot: { width: 10, height: 10, borderRadius: 5, backgroundColor: "#1260E8", borderWidth: 1, borderColor: "#fff" },
   carMarkerHaloNight: { backgroundColor: "rgba(35, 211, 239, 0.2)", borderColor: "rgba(100, 237, 255, 0.75)" },
   carMarkerHaloDay: { backgroundColor: "rgba(18, 96, 232, 0.16)", borderColor: "rgba(18, 96, 232, 0.6)" },
   carArrow: { color: "#23D3EF", fontSize: 29, lineHeight: 34, fontWeight: "900", textShadowColor: "rgba(35, 211, 239, 0.55)", textShadowRadius: 8 },

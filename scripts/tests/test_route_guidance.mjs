@@ -3,8 +3,10 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import {
   announceBand,
+  approximateRouteProgress,
   corridorFeed,
   distanceAlongPolyline,
+  formatArrivalTime,
   formatDuration,
   guidanceState,
   narrowCamerasToRoute,
@@ -89,6 +91,24 @@ test("voice timing uses speed, and a camera-spoken key is not repeated", () => {
   assert.equal(formatDuration("ru", Number.NaN), null);
 });
 
+test("moving ETA scales the last Apple estimate and is not live traffic", () => {
+  const route = { polyline: line, expectedTravelTime: 600, steps: [{ instructions: "Прямо", distance: 1000 }] };
+  const start = approximateRouteProgress(north(0), route);
+  const middle = approximateRouteProgress(north(1), route);
+  assert.equal(start.liveTraffic, false);
+  assert.equal(start.approximate, true);
+  assert.ok(start.remainingMeters > 900, start.remainingMeters);
+  assert.ok(Math.abs(start.etaSeconds - 600) < 30, start.etaSeconds);
+  assert.ok(middle.remainingMeters < start.remainingMeters);
+  assert.ok(middle.etaSeconds < start.etaSeconds);
+  assert.equal(approximateRouteProgress(north(0), { polyline: line, expectedTravelTime: Number.NaN }).etaSeconds, null);
+  assert.equal(approximateRouteProgress(north(0), { polyline: [] }), null);
+  assert.equal(formatArrivalTime("ru", Number.NaN, 0), null);
+  const clock = formatArrivalTime("ru", 90, Date.UTC(2026, 10, 8, 12, 0, 0));
+  assert.match(clock, /^примерно \d{2}:\d{2}$/);
+  assert.doesNotMatch(clock, /пробк|traffic/i);
+});
+
 test("automatic MKDirections reroutes are capped", () => {
   const fast = { offRouteMeters: 90, speedMps: 12 };
   const first = shouldRequestReroute({ at: 0, ...fast, history: [] });
@@ -116,6 +136,10 @@ test("the proven warning functions and background task stay on the full feed pat
   const app = fs.readFileSync(new URL("App.js", root), "utf8");
   const ahead = app.slice(app.indexOf("function findNearestAhead"), app.indexOf("Notifications.setNotificationHandler"));
   assert.doesNotMatch(ahead, /routeCorridor|corridorFeed|narrowCameras/);
+  const visible = app.slice(app.indexOf("function visibleCameras"), app.indexOf("function countryCameraCount"));
+  assert.doesNotMatch(visible, /routeCorridor|corridorFeed|narrowCameras/);
+  const speech = app.slice(app.indexOf("function speakWarning"), app.indexOf("async function startTracking"));
+  assert.doesNotMatch(speech, /routeCorridor|corridorFeed|narrowCameras|approximateRouteProgress/);
   const poland = fs.readFileSync(new URL("poland-engine.js", root), "utf8");
   assert.doesNotMatch(poland.slice(poland.indexOf("export function nearestPolandPoint"), poland.indexOf("export function detectAverageSpeedSection")), /corridorFeed|polyline/);
   assert.doesNotMatch(poland.slice(poland.indexOf("export function detectAverageSpeedSection")), /corridorFeed/);
@@ -124,8 +148,21 @@ test("the proven warning functions and background task stay on the full feed pat
   assert.doesNotMatch(background, /corridorFeed|routeCorridor/);
   const tracking = app.slice(app.indexOf("async function startTracking"), app.indexOf("function stopTracking"));
   assert.match(tracking, /detectAverageSpeedSection\(\s*activeCountryFeedRef\.current/);
+  assert.match(tracking, /nearestPolandPoint\(activeCountryFeedRef\.current/);
+  assert.doesNotMatch(tracking, /corridorFeed|routeCorridor|narrowCamerasToRoute/);
   assert.match(tracking, /watchPositionAsync/);
+  const stopping = app.slice(app.indexOf("function stopTracking"), app.indexOf("const backgroundBusy"));
+  assert.match(stopping, /setRouteGuidance\(null\)/);
+  assert.doesNotMatch(app.slice(app.indexOf("function endRouteOnly"), app.indexOf("async function launchNavigator")), /stopTracking/);
   assert.match(app, /onStart=\{startTracking\}/);
+  assert.match(app, /Начать поездку/);
+  assert.match(app, /Завершить поездку/);
+  assert.match(app, /Завершить маршрут/);
+  assert.match(app, /onEndRoute=\{routeGuidance \? endRouteOnly : null\}/);
+  assert.match(app, /onStop=\{stopTracking\}/);
+  const routeScreen = fs.readFileSync(new URL("ios-route-screen.js", root), "utf8");
+  assert.match(routeScreen, /Вести в CamAlert/);
+  assert.match(routeScreen, /onStartGuidance\(packed\)/);
   assert.match(fs.readFileSync(new URL("camera-delivery.js", root), "utf8"), /https:\/\/speed-camera-data\.ternzina\.workers\.dev/);
   assert.match(fs.readFileSync(new URL("camera-data.js", root), "utf8"), /camera_remote_cache_v081|CACHE_CHUNK_CHARS/);
   assert.match(app, /REMOTE_CACHE_KEY = "camera_remote_cache_v081"/);

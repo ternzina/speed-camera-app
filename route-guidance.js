@@ -71,6 +71,13 @@ function segmentFraction(point, start, end) {
   return Math.max(0, Math.min(1, ((-a.x) * dx + (-a.y) * dy) / lengthSq));
 }
 
+export function polylineLengthMeters(polyline) {
+  if (!Array.isArray(polyline) || polyline.length < 2) return 0;
+  let walked = 0;
+  for (let index = 1; index < polyline.length; index += 1) walked += distanceMeters(polyline[index - 1], polyline[index]);
+  return walked;
+}
+
 export function distanceAlongPolyline(point, polyline) {
   if (!point || !Array.isArray(polyline) || polyline.length < 2) return 0;
   let best = Infinity;
@@ -102,7 +109,7 @@ export function narrowCamerasToRoute(cameras, polyline, meters = ROUTE_CORRIDOR_
   return cameras.filter((camera) => distanceToPolylineMeters(camera, polyline) <= meters);
 }
 
-// Point groups can shrink. Average-speed sections stay on the same array.
+// Display helper only. Warning selection must keep using the full loaded feed.
 export function corridorFeed(feed, polyline, meters = ROUTE_CORRIDOR_METERS) {
   if (!feed || !Array.isArray(polyline) || polyline.length < 2) return feed;
   const narrow = (list) => (Array.isArray(list) ? narrowCamerasToRoute(list, polyline, meters) : list);
@@ -147,6 +154,30 @@ export function guidanceState(location, route) {
     cursor = end;
   }
   return null;
+}
+
+// Scales the last Apple duration by remaining geometry. This is not live traffic.
+export function approximateRouteProgress(location, route) {
+  if (!location || !route || !Array.isArray(route.polyline) || route.polyline.length < 2) return null;
+  const totalMeters = polylineLengthMeters(route.polyline);
+  if (!(totalMeters > 0)) return null;
+  const traveled = Math.min(totalMeters, Math.max(0, distanceAlongPolyline(location, route.polyline)));
+  const remainingMeters = Math.max(0, totalMeters - traveled);
+  const appleSeconds = Number(route.expectedTravelTime);
+  const etaSeconds = Number.isFinite(appleSeconds) && appleSeconds >= 0
+    ? appleSeconds * (remainingMeters / totalMeters)
+    : null;
+  return { remainingMeters, totalMeters, etaSeconds, approximate: true, liveTraffic: false };
+}
+
+export function formatArrivalTime(language, etaSeconds, nowMs = Date.now()) {
+  if (!Number.isFinite(etaSeconds) || etaSeconds < 0) return null;
+  const arrival = new Date(nowMs + etaSeconds * 1000);
+  const clock = `${String(arrival.getHours()).padStart(2, "0")}:${String(arrival.getMinutes()).padStart(2, "0")}`;
+  if (language === "en") return `about ${clock}`;
+  if (language === "pl") return `około ${clock}`;
+  if (language === "uk") return `приблизно ${clock}`;
+  return `примерно ${clock}`;
 }
 
 export function announceBand({ distanceMeters, speedMps }) {
