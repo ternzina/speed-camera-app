@@ -483,6 +483,8 @@ function homeThemeStyles(night) {
   for(const key of ["brandMark","settingsButton","statusCard","navigatorCard","navigatorIconBox","countryCard"]) overrides[key]={backgroundColor:"#172A40",borderColor:"#29435A"};
   for(const key of ["brandCam","settingsGlyph","statusIcon","databaseIcon","statusTitle","title","sectionTitle","countryName","countryChevron"]) overrides[key]={color:"#FFFFFF"};
   for(const key of ["statusValue","subtitle","navigatorLabel","navNote","countryMeta","countryUpdate"]) overrides[key]={color:"#CAD7E7"};
+  overrides.whereButton={backgroundColor:"#10263B",borderColor:"#7EB6FF"};
+  overrides.whereButtonText={color:"#D6E6FF"};
   return themedStyles(baseHomeStyles,night,overrides);
 }
 
@@ -1494,6 +1496,35 @@ export default function App() {
     setManeuver(null);
   }
 
+  function openInAppRoute() {
+    if (Platform.OS !== "ios") return;
+    setModal(null);
+    setIosRouteOpen(true);
+  }
+
+  async function startRouteGuidance(packed) {
+    if (!packed?.polyline || packed.polyline.length < 2) return false;
+    setRouteGuidance(packed);
+    setIosRouteOpen(false);
+    setTab("drive");
+    // The running trip already owns watchPositionAsync. Calling startTracking
+    // again removes that watch and starts a second GPS session.
+    if (foregroundTripRunning || sub.current) return true;
+    try {
+      const started = await startTracking();
+      if (!started) {
+        setRouteGuidance(null);
+        setManeuver(null);
+        return false;
+      }
+      return true;
+    } catch (error) {
+      setRouteGuidance(null);
+      setManeuver(null);
+      throw error;
+    }
+  }
+
   async function launchNavigator(navigator, destination) {
     if (navigator === "inapp") {
       if (Platform.OS !== "ios") return;
@@ -1639,26 +1670,7 @@ export default function App() {
         initialQuery={navigatorDestination}
         coords={coords}
         onClose={() => setIosRouteOpen(false)}
-        onStartGuidance={async (packed) => {
-          if (!packed?.polyline || packed.polyline.length < 2) return false;
-          setRouteGuidance(packed);
-          setIosRouteOpen(false);
-          setTab("drive");
-          if (active) return true;
-          try {
-            const started = await startTracking();
-            if (!started) {
-              setRouteGuidance(null);
-              setManeuver(null);
-              return false;
-            }
-            return true;
-          } catch (error) {
-            setRouteGuidance(null);
-            setManeuver(null);
-            throw error;
-          }
-        }}
+        onStartGuidance={startRouteGuidance}
         onOpenApple={(place) => {
           setIosRouteOpen(false);
           return launchNavigator("apple", `${place.latitude},${place.longitude}`);
@@ -1727,6 +1739,7 @@ export default function App() {
           arrivalLabel: formatArrivalTime(settings.language, maneuver.etaSeconds),
         } : null}
         onEndRoute={routeGuidance ? endRouteOnly : null}
+        onOpenRoute={Platform.OS === "ios" ? openInAppRoute : null}
         databaseStatus={`${countryFlag(selectedCountry)} ${countryDisplayName(selectedCountry,settings.language)} · ${countryLoading===selectedCountry?({ru:"↻ Обновление",uk:"↻ Оновлення",en:"↻ Updating",pl:"↻ Aktualizacja"})[settings.language]:databaseErrors[selectedCountry]?"⚠":"✓"} ${offlineCountryCodes.includes(selectedCountry)?({ru:"База на устройстве",uk:"База на пристрої",en:"Database on device",pl:"Baza na urządzeniu"})[settings.language]:"—"}${databaseErrors[selectedCountry]?" · "+({ru:"Обновить не удалось",uk:"Не вдалося оновити",en:"Update failed",pl:"Aktualizacja nieudana"})[settings.language]:""}`}
         onSettings={() => {setCountryScreenTab("settings");setTab("settings");}}
       />
@@ -1751,6 +1764,7 @@ export default function App() {
             offlineAvailable={offlineCountryCodes.includes(selectedCountry)}
             onBack={() => {setOnboardingPage(2);setOnboardingState("new");}}
             onStart={startTracking}
+            onOpenRoute={openInAppRoute}
             onChooseNavigator={openNavigatorPicker}
             onSettings={() => { setCountryScreenTab("settings"); setTab("settings"); }}
             onCountry={() => { setCountryScreenTab("countries"); setTab("settings"); }}
@@ -2123,7 +2137,7 @@ const DRIVE_HOME_COPY = {
   ru: {
     gps: "GPS", gpsReady: "Разрешение есть", gpsNeeded: "Нужен доступ", database: "База камер",
     databaseReady: "Обновлена", localDatabase: "Локальная база", title: "В путь!", subtitle: "Больше уверенности на каждой дороге",
-    start: "Начать поездку", chooseNav: "Выберите навигацию", alertsOnly: "Только предупреждения",
+    start: "Начать поездку", where: "Куда едем?", chooseNav: "Выберите навигацию", alertsOnly: "Только предупреждения",
     country: "Украина", cameras: "камер", settings: "Настройки", updated: "Обновлено", baseLoaded: "База загружена", databaseMissing: "Базы пока нет", offlineAvailable: "Доступна офлайн", offlineUnknown: "Офлайн не подтверждён",
     localReady: "Доступна на устройстве", navNote: "Фоновые предупреждения рядом с навигатором ещё требуют настройки и проверки.",
     navUnavailableTitle: "Навигация недоступна",
@@ -2132,7 +2146,7 @@ const DRIVE_HOME_COPY = {
   uk: {
     gps: "GPS", gpsReady: "Дозвіл є", gpsNeeded: "Потрібен доступ", database: "База камер",
     databaseReady: "Оновлена", localDatabase: "Локальна база", title: "У дорогу!", subtitle: "Більше впевненості на кожній дорозі",
-    start: "Почати поїздку", chooseNav: "Оберіть навігацію", alertsOnly: "Лише попередження",
+    start: "Почати поїздку", where: "Куди їдемо?", chooseNav: "Оберіть навігацію", alertsOnly: "Лише попередження",
     country: "Україна", cameras: "камер", settings: "Налаштування", updated: "Оновлено", baseLoaded: "Базу завантажено", databaseMissing: "Бази ще немає", offlineAvailable: "Доступна офлайн", offlineUnknown: "Офлайн не підтверджено",
     localReady: "Доступна на пристрої", navNote: "Фонові попередження поруч із навігатором ще потрібно налаштувати й перевірити.",
     navUnavailableTitle: "Навігацію ще не підключено",
@@ -2141,7 +2155,7 @@ const DRIVE_HOME_COPY = {
   en: {
     gps: "GPS", gpsReady: "Permission granted", gpsNeeded: "Access needed", database: "Camera database",
     databaseReady: "Updated", localDatabase: "Local database", title: "Ready to go", subtitle: "More confidence on every road",
-    start: "Start trip", chooseNav: "Choose navigation", alertsOnly: "Alerts only",
+    start: "Start trip", where: "Where to?", chooseNav: "Choose navigation", alertsOnly: "Alerts only",
     country: "Ukraine", cameras: "cameras", settings: "Settings", updated: "Updated", baseLoaded: "Database ready", databaseMissing: "No database yet", offlineAvailable: "Available offline", offlineUnknown: "Offline not confirmed",
     localReady: "Available on this device", navNote: "Background alerts alongside a navigator still need setup and device testing.",
     navUnavailableTitle: "Navigation is not connected yet",
@@ -2150,7 +2164,7 @@ const DRIVE_HOME_COPY = {
   pl: {
     gps: "GPS", gpsReady: "Zezwolono", gpsNeeded: "Wymagany dostęp", database: "Baza fotoradarów",
     databaseReady: "Zaktualizowana", localDatabase: "Baza lokalna", title: "W drogę!", subtitle: "Więcej pewności na każdej trasie",
-    start: "Rozpocznij jazdę", chooseNav: "Wybierz nawigację", alertsOnly: "Tylko ostrzeżenia",
+    start: "Rozpocznij jazdę", where: "Dokąd jedziemy?", chooseNav: "Wybierz nawigację", alertsOnly: "Tylko ostrzeżenia",
     country: "Ukraina", cameras: "kamer", settings: "Ustawienia", updated: "Zaktualizowano", baseLoaded: "Baza gotowa", databaseMissing: "Brak bazy", offlineAvailable: "Dostępna offline", offlineUnknown: "Offline niepotwierdzony",
     localReady: "Dostępna na urządzeniu", navNote: "Ostrzeżenia w tle obok nawigacji wymagają konfiguracji i testów.",
     navUnavailableTitle: "Nawigacja nie jest jeszcze połączona",
@@ -2188,7 +2202,7 @@ const DRIVE_MODE_COPY = {
     cameraType: "Тип контроля", cameraLimit: "Лимит камеры", sectionLimit: "Ограничение участка",     noCamera: "Поиск камер активен",
     noCameraSub: "Камер впереди пока нет", warningsPaused: "Предупреждения о камерах выключены", warningsPausedSub: "Спидометр и карта работают", gpsTitle: "Ожидаем GPS-сигнал", gpsBody: "Положение и скорость появятся после получения данных GPS.",
     retry: "Повторить поиск", center: "К автомобилю", zoomIn: "Увеличить карту", zoomOut: "Уменьшить карту",
-    settings: "Настройки", stop: "Завершить поездку", sectionApproach: "Начало участка через", sectionEntering: "Начало участка контроля средней скорости",
+    settings: "Настройки", route: "Маршрут", stop: "Завершить поездку", sectionApproach: "Начало участка через", sectionEntering: "Начало участка контроля средней скорости",
     sectionInside: "Контроль средней скорости", sectionEnding: "Конец участка контроля средней скорости", meters: "м",
   },
   uk: {
@@ -2198,7 +2212,7 @@ const DRIVE_MODE_COPY = {
     cameraType: "Тип контролю", cameraLimit: "Обмеження камери", sectionLimit: "Обмеження ділянки",     noCamera: "Пошук камер активний",
     noCameraSub: "Камер попереду поки немає", warningsPaused: "Попередження про камери вимкнені", warningsPausedSub: "Спідометр і карта працюють", gpsTitle: "Очікуємо сигнал GPS", gpsBody: "Положення та швидкість з’являться після отримання даних GPS.",
     retry: "Повторити пошук", center: "До автомобіля", zoomIn: "Збільшити карту", zoomOut: "Зменшити карту",
-    settings: "Налаштування", stop: "Завершити поїздку", sectionApproach: "Початок ділянки через", sectionEntering: "Початок контролю середньої швидкості",
+    settings: "Налаштування", route: "Маршрут", stop: "Завершити поїздку", sectionApproach: "Початок ділянки через", sectionEntering: "Початок контролю середньої швидкості",
     sectionInside: "Контроль середньої швидкості", sectionEnding: "Кінець контролю середньої швидкості", meters: "м",
   },
   en: {
@@ -2208,7 +2222,7 @@ const DRIVE_MODE_COPY = {
     cameraType: "Enforcement", cameraLimit: "Camera limit", sectionLimit: "Section limit",     noCamera: "Camera search active",
     noCameraSub: "No camera ahead right now", warningsPaused: "Camera warnings are off", warningsPausedSub: "The speedometer and map keep working", gpsTitle: "Waiting for GPS signal", gpsBody: "Your position and speed will appear when GPS data arrives.",
     retry: "Retry GPS", center: "Center on car", zoomIn: "Zoom in", zoomOut: "Zoom out",
-    settings: "Settings", stop: "End trip", sectionApproach: "Section starts in", sectionEntering: "Average-speed section starts",
+    settings: "Settings", route: "Route", stop: "End trip", sectionApproach: "Section starts in", sectionEntering: "Average-speed section starts",
     sectionInside: "Average-speed control", sectionEnding: "Average-speed section ends", meters: "m",
   },
   pl: {
@@ -2218,7 +2232,7 @@ const DRIVE_MODE_COPY = {
     cameraType: "Rodzaj kontroli", cameraLimit: "Limit fotoradaru", sectionLimit: "Limit odcinka",     noCamera: "Wyszukiwanie fotoradarów aktywne",
     noCameraSub: "Brak fotoradaru przed Tobą", warningsPaused: "Ostrzeżenia o kamerach są wyłączone", warningsPausedSub: "Prędkościomierz i mapa nadal działają", gpsTitle: "Oczekiwanie na sygnał GPS", gpsBody: "Pozycja i prędkość pojawią się po otrzymaniu danych GPS.",
     retry: "Ponów GPS", center: "Wyśrodkuj na aucie", zoomIn: "Przybliż mapę", zoomOut: "Oddal mapę",
-    settings: "Ustawienia", stop: "Zakończ jazdę", sectionApproach: "Początek odcinka za", sectionEntering: "Początek odcinkowego pomiaru prędkości",
+    settings: "Ustawienia", route: "Trasa", stop: "Zakończ jazdę", sectionApproach: "Początek odcinka za", sectionEntering: "Początek odcinkowego pomiaru prędkości",
     sectionInside: "Kontrola średniej prędkości", sectionEnding: "Koniec odcinkowego pomiaru prędkości", meters: "m",
   },
 };
@@ -2244,7 +2258,7 @@ function DriveModeScreen({
   camera, currentThreshold, danger, warningsEnabled = true, voiceEnabled, vibrationEnabled, backgroundEnabled, averageSection,
   warningPresentation, onDismissWarning, databaseStatus,
   onRetry, onStop, onSettings,
-  routePolyline = null, routeCameras = null, routeZoom = null, maneuver = null, onEndRoute = null,
+  routePolyline = null, routeCameras = null, routeZoom = null, maneuver = null, onEndRoute = null, onOpenRoute = null,
 }) {
   const mapRef = useRef(null);
   const followPose = useRef(null);
@@ -2363,9 +2377,6 @@ function DriveModeScreen({
   return (
     <View testID="DriveModeScreenRoot" collapsable={false} style={[driveStyles.root, isNight ? driveStyles.nightRoot : driveStyles.dayRoot]}>
       <StatusBar style={isNight ? "light" : "dark"} translucent backgroundColor="transparent" />
-      <View pointerEvents="none" style={{ position: "absolute", top: 54, left: 8, right: 8, zIndex: 40 }}>
-        <Text style={{ color: "#F4F7FB", fontSize: 11, lineHeight: 14, backgroundColor: "rgba(12,22,36,0.55)" }}>{tripDiag.open ? `open ${tripDiag.open.name}` : tripDiag.lines.join(" · ")}</Text>
-      </View>
       {!deferTripMap && tripMapRegion.current ? <MapView
           ref={mapRef}
           style={StyleSheet.absoluteFill}
@@ -2510,6 +2521,11 @@ function DriveModeScreen({
               </View>
             </View>
           )}
+          {onOpenRoute && (
+            <Pressable accessibilityRole="button" accessibilityLabel={copy.route} onPress={onOpenRoute} style={[driveStyles.routeButton, pad && { minHeight: 64, borderRadius: 20 }]}>
+              <Text style={[driveStyles.routeButtonText, pad && { fontSize: 20 }]}>{copy.route}</Text>
+            </Pressable>
+          )}
           {onEndRoute && (
             <Pressable accessibilityRole="button" onPress={onEndRoute} style={driveStyles.retryButton}>
               <Text style={driveStyles.retryText}>{language === "en" ? "End route" : language === "pl" ? "Zakończ trasę" : language === "uk" ? "Завершити маршрут" : "Завершить маршрут"}</Text>
@@ -2643,7 +2659,7 @@ function CameraWarningPanel({
   );
 }
 
-function DriveHome({ language, country, cameraCount, offlineAvailable, lastDataUpdate, onBack, onStart, onChooseNavigator, onSettings, onCountry }) {
+function DriveHome({ language, country, cameraCount, offlineAvailable, lastDataUpdate, onBack, onStart, onOpenRoute, onChooseNavigator, onSettings, onCountry }) {
   const isNight = useContext(ThemeContext);
   const homeStyles = useMemo(() => homeThemeStyles(isNight),[isNight]);
   const { pad, landscape } = usePadLayout();
@@ -2735,6 +2751,16 @@ function DriveHome({ language, country, cameraCount, offlineAvailable, lastDataU
         <Text style={[homeStyles.startButtonText, pad && { fontSize: 22 }]}>{copy.start}</Text>
       </Pressable>
   );
+  const whereTo = Platform.OS === "ios" && onOpenRoute ? (
+      <Pressable
+        accessibilityRole="button"
+        accessibilityLabel={copy.where}
+        onPress={onOpenRoute}
+        style={({ pressed }) => [homeStyles.whereButton, pad && { minHeight: 64 }, pressed && homeStyles.whereButtonPressed]}
+      >
+        <Text style={[homeStyles.whereButtonText, pad && { fontSize: 22 }]}>{copy.where}</Text>
+      </Pressable>
+  ) : null;
   const navigation = (
       <View style={homeStyles.navSection}>
         <Text style={[homeStyles.sectionTitle, pad && { fontSize: 18 }]}>{copy.chooseNav}</Text>
@@ -2744,8 +2770,8 @@ function DriveHome({ language, country, cameraCount, offlineAvailable, lastDataU
               key={option.key}
               accessibilityRole="button"
               accessibilityLabel={option.label}
-              onPress={option.key === "alerts" ? onStart : (onChooseNavigator || onStart)}
-              style={({ pressed }) => [homeStyles.navigatorCard, pad && { minHeight: 118, paddingVertical: 16 }, pressed && option.key !== "alerts" && homeStyles.navigatorPressed]}
+              onPress={option.key === "alerts" ? (Platform.OS === "ios" && onOpenRoute ? onOpenRoute : onStart) : (onChooseNavigator || onStart)}
+              style={({ pressed }) => [homeStyles.navigatorCard, pad && { minHeight: 118, paddingVertical: 16 }, pressed && homeStyles.navigatorPressed]}
             >
               <View style={[homeStyles.navigatorIconBox, pad && { width: 52, height: 52, borderRadius: 16 }]}>
                 {option.key === "alerts"
@@ -2776,7 +2802,7 @@ function DriveHome({ language, country, cameraCount, offlineAvailable, lastDataU
       <View style={[homeStyles.screen, { flex: 1, gap: 18 }]}>
         {header}
         <View style={{ flex: 1, flexDirection: "row", gap: 24 }}>
-          <View style={{ flex: 1.15, gap: 16 }}>{hero}{intro}{start}</View>
+          <View style={{ flex: 1.15, gap: 16 }}>{hero}{intro}{start}{whereTo}</View>
           <View style={{ flex: 1, gap: 18, justifyContent: "center" }}>{status}{navigation}{countryCard}</View>
         </View>
       </View>
@@ -2790,6 +2816,7 @@ function DriveHome({ language, country, cameraCount, offlineAvailable, lastDataU
       {hero}
       {intro}
       {start}
+      {whereTo}
       {navigation}
       {countryCard}
     </View>
@@ -3275,6 +3302,9 @@ const baseHomeStyles = StyleSheet.create({
   startButtonPressed: { backgroundColor: "#1049CC", transform: [{ scale: 0.99 }] },
   playIcon: { color: "#fff", fontSize: 17, marginTop: 1 },
   startButtonText: { color: "#fff", fontSize: 17, fontWeight: "800" },
+  whereButton: { minHeight: 54, alignItems: "center", justifyContent: "center", borderRadius: 20, backgroundColor: "#FFFFFF", borderWidth: 1.5, borderColor: "#1558ED" },
+  whereButtonPressed: { backgroundColor: "#E7F0FF" },
+  whereButtonText: { color: "#1558ED", fontSize: 17, fontWeight: "800" },
   navSection: { gap: 7 },
   sectionTitle: { color: "#183453", fontSize: 14, fontWeight: "800" },
   navigatorRow: { flexDirection: "row", gap: 7 },
@@ -3394,6 +3424,8 @@ const driveStyles = StyleSheet.create({
   gpsPrompt: { width: "100%", maxWidth: 360, paddingHorizontal: 20, paddingVertical: 18, alignItems: "center", borderWidth: 1, borderRadius: 22 },
   gpsPromptTitle: { fontSize: 17, fontWeight: "800", textAlign: "center" },
   gpsPromptBody: { fontSize: 12, lineHeight: 17, textAlign: "center", marginTop: 6 },
+  routeButton: { minHeight: 48, alignItems: "center", justifyContent: "center", borderRadius: 16, backgroundColor: "#1260E8" },
+  routeButtonText: { color: "#FFFFFF", fontSize: 17, fontWeight: "800" },
   retryButton: { marginTop: 14, paddingHorizontal: 16, paddingVertical: 10, borderRadius: 13, backgroundColor: "#1260E8" },
   retryText: { color: "#FFFFFF", fontSize: 12, fontWeight: "800" },
   bottomArea: { marginTop: "auto", marginHorizontal: 14, gap: 9, paddingBottom: 8 },
