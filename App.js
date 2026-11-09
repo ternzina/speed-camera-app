@@ -16,6 +16,7 @@ import { StatusBar } from "expo-status-bar";
 import data from "./cameras.json";
 import plData from "./cameras-pl.json";
 import { nearestPolandPoint, detectAverageSpeedSection, averageSectionSpeech, measureSectionProgress, advanceSectionPace } from "./poland-engine";
+import { createNavtestSectionStore } from "./navtest-section";
 import { cameraPoints, countryFeed, loadCameraCache, saveCameraCache } from "./camera-data";
 import { COUNTRY_NAMES, countryFlag } from "./countries";
 import { refreshCountryDelivery } from "./camera-delivery";
@@ -363,6 +364,26 @@ Notifications.setNotificationHandler({
 });
 
 let backgroundQueue = Promise.resolve();
+let navtestSections = null;
+function navtestSectionStore() {
+  if (!navtestSections) navtestSections = createNavtestSectionStore(AsyncStorage);
+  return navtestSections;
+}
+function navtestSpeechLocale(language) {
+  if (language === "pl") return "pl-PL";
+  if (language === "uk") return "uk-UA";
+  if (language === "en") return "en-US";
+  return "ru-RU";
+}
+async function speakNavtestPhrases(phrases, language) {
+  if (!phrases?.length || await Speech.isSpeakingAsync()) return false;
+  const locale = navtestSpeechLocale(language);
+  for (const phrase of phrases) {
+    if (await Speech.isSpeakingAsync()) return false;
+    await Speech.speakAndWait(phrase, { language: locale, rate: 0.95 });
+  }
+  return true;
+}
 TaskManager.defineTask(BACKGROUND_LOCATION_TASK, payload => {
   backgroundQueue = backgroundQueue.catch(() => {}).then(() => processBackgroundLocation(payload));
   return backgroundQueue;
@@ -383,7 +404,10 @@ async function processBackgroundLocation({ data: taskData, error }) {
       bgCameraFeeds = cache.feeds || {UA:cache.ua,PL:cache.pl};
     }
   } catch { return; }
-  if (!cameraWarningsEnabled(bgSettings)) return;
+  if (!cameraWarningsEnabled(bgSettings)) {
+    if (isGoogleNavTestApp()) navtestSectionStore().reset().catch(() => {});
+    return;
+  }
 
   const pos = taskData.locations[taskData.locations.length - 1];
   if (!Number.isFinite(pos.timestamp) || Date.now()-pos.timestamp > 60000) return;
@@ -391,6 +415,13 @@ async function processBackgroundLocation({ data: taskData, error }) {
   if (!Number.isFinite(latitude) || !Number.isFinite(longitude)) return;
   const speedKmh = typeof rawSpeed === "number" && rawSpeed >= 0 ? Math.round(rawSpeed * 3.6) : 0;
   const heading = typeof rawHeading === "number" && rawHeading >= 0 ? norm(rawHeading) : null;
+  const sectionFix = isGoogleNavTestApp() ? {
+    feed: countryFeed(bgCameraFeeds, session.country, data, plData),
+    latitude, longitude, heading, now: Date.now(), timestamp: pos.timestamp,
+    language: bgSettings.language,
+    speak: phrases => bgSettings.voice ? speakNavtestPhrases(phrases, bgSettings.language) : Promise.resolve(true),
+  } : null;
+  try {
   if (speedKmh < MIN_MOVING_SPEED_KMH || heading == null) return;
 
   const threshold = alertDistanceForSpeed(speedKmh, bgSettings);
@@ -445,6 +476,9 @@ async function processBackgroundLocation({ data: taskData, error }) {
       // A recorded camera event alone is not evidence of audible speech.
       await saveSpeechStatus("error").catch(() => {});
     }
+  }
+  } finally {
+    if (sectionFix) await navtestSectionStore().apply(sectionFix).catch(() => {});
   }
 }
 
@@ -968,7 +1002,7 @@ export default function App() {
     setSpeedAvailable(false);
     sub.current = await Location.watchPositionAsync(
       { accuracy: Location.Accuracy.BestForNavigation, timeInterval: 1000, distanceInterval: 5 },
-      pos => {
+      async pos => {
         traceTrip("gps", "enter");
         try {
         if (AppState.currentState !== "active") return;
@@ -986,6 +1020,7 @@ export default function App() {
         if (!cameraWarningsEnabled(bgSettings)) {
           polandVisualAlertCameraId.current = null;
           navtestPolandSpoken.current = { id: null, distance: Infinity };
+          if (isGoogleNavTestApp()) navtestSectionStore().reset().catch(() => {});
           plSectionIdRef.current = null;
           sectionPaceRef.current = null;
           plLastSectionState.current = null;
@@ -1054,6 +1089,43 @@ export default function App() {
 
           if (!point || point.distance > alertDistanceForSpeed(kmh, settings)) {
             polandVisualAlertCameraId.current = null;
+          }
+
+          if (isGoogleNavTestApp()) {
+            const outcome = await navtestSectionStore().apply({
+              feed: activeCountryFeedRef.current,
+              latitude, longitude, heading: h, now: Date.now(), timestamp: pos.timestamp,
+              language: settings.language,
+              speak: phrases => settings.voice ? speakNavtestPhrases(phrases, settings.language) : Promise.resolve(true),
+            });
+            if (outcome.event) {
+              const measured = measureSectionProgress(outcome.event.section, latitude, longitude);
+              const onSection = outcome.event.state === "inside" || outcome.event.state === "ending";
+              const sectionUi = {
+                state: outcome.event.state,
+                distance: outcome.event.distance,
+                remaining: measured?.remaining ?? null,
+                progress: measured?.progress ?? null,
+                length: measured?.length ?? null,
+                averageKmh: onSection && outcome.pace?.reliable ? outcome.pace.averageKmh : null,
+                speedLimit: outcome.event.section.speed_limit,
+                name: outcome.event.section.name,
+                start: outcome.event.section.start, end: outcome.event.section.end,
+              };
+              setAverageSectionUi(sectionUi);
+              averageSectionUiRef.current = sectionUi;
+              if (averageSectionEndTimer.current) clearTimeout(averageSectionEndTimer.current);
+              if (outcome.event.state === "ending") {
+                averageSectionEndTimer.current = setTimeout(() => {
+                  averageSectionUiRef.current = null;
+                  setAverageSectionUi(null);
+                }, 6000);
+              }
+            } else if (!outcome.state?.closed) {
+              averageSectionUiRef.current = null;
+              setAverageSectionUi(null);
+            }
+            return;
           }
 
           const sectionEvent =
@@ -1172,13 +1244,16 @@ export default function App() {
     setRouteGuidance(null);
     setManeuver(null);
     foregroundTripRunning = false;
-    stopBackground().catch(error => Alert.alert("Фоновый режим", error.message));
+    const stoppingBackground = stopBackground().catch(error => Alert.alert("Фоновый режим", error.message));
     if (sub.current) { sub.current.remove(); sub.current = null; }
     Speech.stop();
     dismissCameraAlert();
     polandVisualAlertCameraId.current = null;
     navtestPolandSpoken.current = { id: null, distance: Infinity };
-    if (isGoogleNavTestApp()) resetNavtestCameraSpeech();
+    if (isGoogleNavTestApp()) {
+      resetNavtestCameraSpeech();
+      stoppingBackground.then(() => navtestSectionStore().reset()).catch(() => {});
+    }
     plSectionIdRef.current = null;
     sectionPaceRef.current = null;
     if (averageSectionEndTimer.current) clearTimeout(averageSectionEndTimer.current);

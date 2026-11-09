@@ -189,5 +189,101 @@ export function averageSectionSpeech(event, language = "pl") {
     },
   };
 
+  if (event.state === "over") {
+    const average = Number(event.averageKmh);
+    const limit = Number(event.section?.speed_limit);
+    if (!Number.isFinite(average) || !Number.isFinite(limit)) return "";
+    const over = {
+      pl: `Średnia prędkość ${average} kilometrów na godzinę. Ograniczenie ${limit}.`,
+      uk: `Середня швидкість ${average} кілометрів на годину. Обмеження ${limit}.`,
+      en: `Average speed ${average} kilometers per hour. Limit ${limit}.`,
+      ru: `Средняя скорость ${average} километров в час. Ограничение ${limit}.`,
+    };
+    return (over[language] || over.ru);
+  }
+
   return (table[language] || table.ru)[event.state] || "";
+}
+
+const SECTION_MAX_STEP_M = 300;
+
+function emptyNavtestSection() {
+  return { sectionId: null, pace: null, saidEntry: false, saidOver: false, saidEnd: false, closed: null };
+}
+
+function finitePoint(point) {
+  const latitude = Number(point?.latitude);
+  const longitude = Number(point?.longitude);
+  if (!Number.isFinite(latitude) || !Number.isFinite(longitude)) return null;
+  return { latitude, longitude };
+}
+
+function continueSectionPace(pace, point, now) {
+  if (!pace) {
+    return { distance: 0, startedAt: now, last: point, lastAt: now, averageKmh: null, reliable: true };
+  }
+  const step = distanceMeters(pace.last.latitude, pace.last.longitude, point.latitude, point.longitude);
+  const lastAt = Number.isFinite(pace.lastAt) ? pace.lastAt : pace.startedAt;
+  const gap = now - lastAt;
+  if (!(step >= 0 && step <= SECTION_MAX_STEP_M) || gap < 0) {
+    const startedAt = gap > 0 ? pace.startedAt + gap : pace.startedAt;
+    return { distance: pace.distance, startedAt, last: point, lastAt: now, averageKmh: null, reliable: false };
+  }
+  const next = advanceSectionPace(pace, point, now);
+  return { ...next, lastAt: now, reliable: true };
+}
+
+export function stepNavtestSection(state, input = {}) {
+  const current = { ...emptyNavtestSection(), ...(state && typeof state === "object" ? state : {}) };
+  const now = Number(input.now);
+  const point = finitePoint(input);
+  const hold = { state: current, say: [], stateIfUnsaid: current, event: null, pace: current.pace };
+  if (!point || !Number.isFinite(now)) return hold;
+  if (input.timestamp != null && Number.isFinite(Number(input.timestamp)) && now - Number(input.timestamp) > 60000) return hold;
+
+  if (current.closed) {
+    const end = finitePoint(current.closed.end);
+    const start = finitePoint(current.closed.start);
+    const nearEnd = end && distanceMeters(point.latitude, point.longitude, end.latitude, end.longitude) <= 250;
+    const nearStart = start && distanceMeters(point.latitude, point.longitude, start.latitude, start.longitude) <= 250;
+    if (nearEnd || nearStart) return hold;
+    current.closed = null;
+    current.saidEnd = false;
+  }
+
+  const event = detectAverageSpeedSection(input.feed || {}, point.latitude, point.longitude, input.heading ?? null, current.sectionId);
+  if (!event || event.state === "approaching") return { ...hold, state: current, stateIfUnsaid: current, event };
+  const id = String(event.section.id);
+  let saidEntry = current.sectionId === id ? current.saidEntry : false;
+  let saidOver = current.sectionId === id ? current.saidOver : false;
+  const pace = continueSectionPace(current.sectionId === id ? current.pace : null, point, now);
+  const language = input.language || "pl";
+  const base = { sectionId: id, pace, saidEntry, saidOver, saidEnd: false, closed: null };
+
+  if (event.state === "ending") {
+    const say = current.sectionId === id && current.saidEnd ? [] : [averageSectionSpeech({ ...event, state: "ending" }, language)].filter(Boolean);
+    const next = {
+      ...emptyNavtestSection(),
+      saidEnd: true,
+      closed: { id, start: finitePoint(event.section.start), end: finitePoint(event.section.end) },
+    };
+    return { state: next, say, stateIfUnsaid: base, event, pace };
+  }
+
+  const say = [];
+  if (!saidEntry) {
+    say.push(averageSectionSpeech({ ...event, state: "entering" }, language));
+    saidEntry = true;
+  }
+  const limit = Number(event.section.speed_limit);
+  if (pace.reliable && Number.isFinite(limit) && pace.averageKmh != null && pace.averageKmh > limit) {
+    if (!saidOver) {
+      say.push(averageSectionSpeech({ ...event, state: "over", averageKmh: pace.averageKmh }, language));
+      saidOver = true;
+    }
+  } else if (pace.reliable && pace.averageKmh != null && Number.isFinite(limit) && pace.averageKmh <= limit) {
+    saidOver = false;
+  }
+  const next = { ...base, saidEntry, saidOver };
+  return { state: next, say: say.filter(Boolean), stateIfUnsaid: base, event, pace };
 }

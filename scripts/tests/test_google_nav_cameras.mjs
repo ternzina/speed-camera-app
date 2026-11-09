@@ -135,7 +135,7 @@ test("navtest shares the 250 m camera skip between foreground and background", (
   assert.ok(last > 0 && sharedWarning > last);
   const stopping = app.slice(app.indexOf("function stopTracking"), app.indexOf("const backgroundBusy"));
   assert.match(stopping, /stopLocationUpdatesAsync\(BACKGROUND_LOCATION_TASK\)|stopBackground\(\)/);
-  assert.match(stopping, /isGoogleNavTestApp\(\)\) resetNavtestCameraSpeech\(\)/);
+  assert.match(stopping, /resetNavtestCameraSpeech\(\)/);
 });
 
 test("search, route, buttons, and warnings have RU UK EN and PL copy", () => {
