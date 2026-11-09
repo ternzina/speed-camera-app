@@ -51,3 +51,27 @@ export function barScale(available, widths) {
 export function summaryItemWidths(items, valueSize = 18, captionSize = 11) {
   return items.map(item => Math.max(textWidth(item.value, valueSize), textWidth(item.caption, captionSize)) + 16);
 }
+
+export const IPHONE_15_WIDTH = 393;
+export const IPHONE_15_HEIGHT = 852;
+// The phone on the desk is an iPhone 15 Pro Max.
+export const NAV_DEVICE_WIDTH = 430;
+export const NAV_DEVICE_HEIGHT = 932;
+
+export function keyboardClearance({ contentBottom, keyboardTop }) {
+  const bottom = Number(contentBottom);
+  const top = Number(keyboardTop);
+  if (!Number.isFinite(bottom) || !Number.isFinite(top)) return 0;
+  return Math.max(0, Math.round(bottom - top));
+}
+
+export function suggestionViewport({ windowHeight, keyboardHeight = 0, topChrome = 0, bottomChrome = 0, cap = 280 }) {
+  const height = Number(windowHeight);
+  if (!Number.isFinite(height) || height <= 0) return 0;
+  const room = height
+    - Math.max(0, Number(keyboardHeight) || 0)
+    - Math.max(0, Number(topChrome) || 0)
+    - Math.max(0, Number(bottomChrome) || 0);
+  if (room <= 0) return 0;
+  return Math.min(cap, Math.round(room));
+}

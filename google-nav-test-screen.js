@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
-import { AppState, Pressable, StyleSheet, Text, TextInput, useWindowDimensions, View } from "react-native";
+import { AppState, Keyboard, Pressable, ScrollView, StyleSheet, Text, TextInput, useWindowDimensions, View } from "react-native";
 import {
   AudioGuidance, MapType, NavigationNightMode, NavigationProvider, NavigationSessionStatus,
   NavigationView, RouteStatus, TaskRemovedBehavior, TravelMode, useNavigation,
 } from "@googlemaps/react-native-navigation-sdk";
 import { subscribeCameraSpeech } from "./camera-speech";
-import { barScale, routeSummary, summaryItemWidths } from "./google-nav-chrome";
+import { barScale, keyboardClearance, routeSummary, suggestionViewport, summaryItemWidths } from "./google-nav-chrome";
 import { lookupDestinations } from "./google-nav-search";
 import { autocompletePlaces, placeDetailsLocation, PLACES_DEBOUNCE_MS, placesLanguage, reduceSearchSchedule } from "./google-places";
 import { readPlacesKey } from "./google-places-key";
@@ -100,14 +100,34 @@ function GoogleNavBody({
   const [suggestions, setSuggestions] = useState([]);
   const [searchNote, setSearchNote] = useState("");
   const navView = useRef(null);
+  const searchField = useRef(null);
+  const probeRef = useRef(null);
   const schedule = useRef({ text: "", token: null, sendAt: null });
   const suppressQuery = useRef("");
   const palette = night ? DARK : LIGHT;
+  const { height: windowHeight } = useWindowDimensions();
+  const [contentBottom, setContentBottom] = useState(0);
+  const [keyboardTop, setKeyboardTop] = useState(null);
 
   useEffect(() => {
     alive.current = true;
     return () => { alive.current = false; };
   }, []);
+
+  useEffect(() => {
+    const frame = Keyboard.addListener("keyboardWillChangeFrame", event => {
+      const top = event?.endCoordinates?.screenY;
+      setKeyboardTop(Number.isFinite(top) ? top : null);
+    });
+    return () => frame.remove();
+  }, []);
+
+  function measureProbe() {
+    probeRef.current?.measureInWindow((_x, y) => {
+      if (!Number.isFinite(y) || y <= 0) return;
+      setContentBottom(current => Math.abs(current - y) < 1 ? current : y);
+    });
+  }
 
   useEffect(() => {
     if (guiding || (suppressQuery.current && query === suppressQuery.current)) return undefined;
@@ -252,7 +272,13 @@ function GoogleNavBody({
     });
   }
 
+  function dismissSearch() {
+    Keyboard.dismiss();
+    searchField.current?.blur();
+  }
+
   function chooseResult(result) {
+    dismissSearch();
     suppressQuery.current = result.title;
     setQuery(result.title);
     setSuggestions([]);
@@ -299,13 +325,24 @@ function GoogleNavBody({
   const target = finiteCoord(coords);
   const items = routeSummary(language, routed || guiding ? progress : null);
   const showSearch = !guiding;
+  const keyboardFrame = keyboardTop == null ? windowHeight : keyboardTop;
+  const lift = keyboardClearance({
+    contentBottom: contentBottom || windowHeight,
+    keyboardTop: keyboardFrame,
+  });
+  const listMax = suggestionViewport({
+    windowHeight,
+    keyboardHeight: Math.max(0, windowHeight - keyboardFrame),
+    topChrome: 148,
+    bottomChrome: pads.bottom + 16,
+  });
 
   return (
     <View style={styles.root}>
       <NavigationView
         style={StyleSheet.absoluteFill}
         mapType={mapType}
-        mapPadding={{ top: pads.top, right: 16, bottom: pads.bottom, left: 16 }}
+        mapPadding={{ top: pads.top, right: 16, bottom: pads.bottom + lift, left: 16 }}
         navigationNightMode={night ? NavigationNightMode.FORCE_NIGHT : NavigationNightMode.FORCE_DAY}
         myLocationEnabled
         headerEnabled={guiding}
@@ -313,7 +350,10 @@ function GoogleNavBody({
         speedometerEnabled={false}
         speedLimitIconEnabled={false}
         onNavigationViewControllerCreated={value => { navView.current = value; }}
-        onMapClick={pickPoint}
+        onMapClick={coordinate => {
+          dismissSearch();
+          pickPoint(coordinate);
+        }}
         initialCameraPosition={target ? { target, zoom: 15 } : undefined}
       />
       <SystemSafeArea pointerEvents="box-none" style={styles.overlay}>
@@ -322,6 +362,7 @@ function GoogleNavBody({
             <View style={[styles.searchCard, { backgroundColor: palette.panel }]}>
               <View style={styles.searchRow}>
                 <TextInput
+                  ref={searchField}
                   value={query}
                   onChangeText={setQuery}
                   placeholder={copy.where}
@@ -334,14 +375,18 @@ function GoogleNavBody({
                 />
                 <MapTools copy={copy} palette={palette} voiceEnabled={voiceEnabled} onToggleVoice={onToggleVoice} layersOpen={layersOpen} setLayersOpen={setLayersOpen} mapType={mapType} setMapType={setMapType} />
               </View>
-              {suggestions.map(result => (
-                <Pressable key={result.id} accessibilityRole="button" onPress={() => chooseResult(result)} style={styles.result}>
-                  <Text numberOfLines={1} style={[styles.resultTitle, { color: palette.ink }]}>{result.title}</Text>
-                  <Text numberOfLines={2} style={[styles.resultAddress, { color: palette.muted }]}>{result.address || copy.point}</Text>
-                </Pressable>
-              ))}
+              {suggestions.length > 0 && (
+                <ScrollView keyboardShouldPersistTaps="handled" keyboardDismissMode="none" style={[styles.results, { maxHeight: listMax }]}>
+                  {suggestions.map(result => (
+                    <Pressable key={result.id} accessibilityRole="button" onPress={() => chooseResult(result)} style={styles.result}>
+                      <Text numberOfLines={1} style={[styles.resultTitle, { color: palette.ink }]}>{result.title}</Text>
+                      <Text numberOfLines={2} style={[styles.resultAddress, { color: palette.muted }]}>{result.address || copy.point}</Text>
+                    </Pressable>
+                  ))}
+                </ScrollView>
+              )}
               {!!searchNote && <Text numberOfLines={2} style={[styles.searchOff, { color: palette.muted }]}>{searchNote}</Text>}
-              {!searchNote && !suggestions.length && (
+              {!searchNote && !suggestions.length && !busy && (
                 <Text numberOfLines={2} style={[styles.searchOff, { color: palette.muted }]}>{routed ? copy.routed : copy.pick}</Text>
               )}
             </View>
@@ -355,7 +400,7 @@ function GoogleNavBody({
           {rerouting && <Text numberOfLines={1} style={styles.note}>{copy.reroute}</Text>}
           {!!error && <Text accessibilityRole="alert" numberOfLines={3} style={styles.error}>{error}</Text>}
         </View>
-        <View pointerEvents="box-none" style={styles.bottom} onLayout={event => remember("bottom", event)}>
+        <View pointerEvents="box-none" style={[styles.bottom, { marginBottom: 8 + lift }]} onLayout={event => remember("bottom", event)}>
           {guiding && (
             <View style={styles.toolsDock}>
               <MapTools copy={copy} palette={palette} voiceEnabled={voiceEnabled} onToggleVoice={onToggleVoice} layersOpen={layersOpen} setLayersOpen={setLayersOpen} mapType={mapType} setMapType={setMapType} />
@@ -390,6 +435,7 @@ function GoogleNavBody({
             </Pressable>
           )}
         </View>
+        <View ref={probeRef} pointerEvents="none" onLayout={measureProbe} style={styles.probe} />
       </SystemSafeArea>
     </View>
   );
@@ -467,6 +513,8 @@ const styles = StyleSheet.create({
   resultTitle: { fontSize: 16, fontWeight: "700" },
   resultAddress: { fontSize: 13, fontWeight: "600" },
   searchOff: { fontSize: 13, fontWeight: "600" },
+  results: { flexGrow: 0 },
+  probe: { position: "absolute", left: 0, right: 0, bottom: 0, height: 0 },
   tools: { alignItems: "flex-end", gap: 6 },
   toolRow: { flexDirection: "row", gap: 8 },
   toolsDock: { alignItems: "flex-end" },

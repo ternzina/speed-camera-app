@@ -72,3 +72,23 @@ test("the route bar is one horizontal line and the terms dialog is not repeated"
   assert.match(summaryToEnd, /copy\.go/);
   assert.doesNotMatch(summaryToEnd, /copy\.endRoute/);
 });
+
+test("choosing a suggestion dismisses the keyboard and keeps the route button clear", () => {
+  const screen = read("google-nav-test-screen.js");
+  const choose = screen.slice(screen.indexOf("function dismissSearch"), screen.indexOf("function startGuidance"));
+  assert.match(choose, /Keyboard\.dismiss\(\)/);
+  assert.match(choose, /searchField\.current\?\.blur\(\)/);
+  const pick = choose.indexOf("function chooseResult");
+  const dismiss = choose.indexOf("dismissSearch()", pick);
+  const clear = choose.indexOf("setSuggestions([])", pick);
+  const route = choose.indexOf("buildRoute(", pick);
+  assert.ok(pick >= 0 && dismiss > pick && clear > dismiss && route > clear);
+  assert.match(screen, /onMapClick=\{coordinate => \{/);
+  assert.match(screen, /dismissSearch\(\);\s*pickPoint\(coordinate\);/);
+  assert.match(screen, /keyboardShouldPersistTaps="handled"/);
+  assert.match(screen, /keyboardClearance\(/);
+  assert.match(screen, /suggestionViewport\(/);
+  assert.match(screen, /flexWrap: "nowrap"/);
+  assert.doesNotMatch(screen, /showSoftInputOnFocus=\{false\}/);
+  assert.doesNotMatch(choose, /startGuidance\(/);
+});
