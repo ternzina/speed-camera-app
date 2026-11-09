@@ -51,7 +51,9 @@ test("the route screen is one map, with pick, search, and back", () => {
   assert.match(screen, /Моё местоположение/);
   assert.match(screen, /Отменить точку/);
   assert.match(screen, /Назад/);
-  assert.match(screen, /Вести в CamAlert/);
+  assert.match(screen, /В путь/);
+  assert.doesNotMatch(screen, /Вести в CamAlert/);
+  assert.doesNotMatch(screen, /Speech\.speak|planNavAnnouncement/);
   assert.match(screen, /onStartGuidance\(packed\)/);
   assert.match(screen, /searchPlaces\(/);
   assert.match(screen, /calculateRoutes\(/);

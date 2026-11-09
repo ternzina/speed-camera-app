@@ -158,6 +158,12 @@ test("the proven warning functions and background task stay on the full feed pat
   assert.match(app, /Начать поездку/);
   assert.match(app, /Куда едем\?/);
   assert.match(app, /onOpenRoute=\{openInAppRoute\}/);
+  assert.match(app, /onOpenExternal=\{\(navigator\) => launchNavigator\(navigator, ""\)\}/);
+  assert.doesNotMatch(app, /visible=\{modal === "navigator"\}/);
+  const navEffect = app.slice(app.indexOf("if (!active || !routeGuidance || !coords)"), app.indexOf("const routeMapCameras"));
+  assert.match(navEffect, /planNavAnnouncement/);
+  assert.match(navEffect, /approximateRouteProgress/);
+  assert.match(navEffect, /shouldRequestReroute/);
   assert.match(app, /onOpenRoute=\{Platform\.OS === "ios" \? openInAppRoute : null\}/);
   const opener = app.slice(app.indexOf("function openInAppRoute"), app.indexOf("async function startRouteGuidance"));
   assert.match(opener, /setIosRouteOpen\(true\)/);
@@ -179,7 +185,8 @@ test("the proven warning functions and background task stay on the full feed pat
   assert.match(app, /onEndRoute=\{routeGuidance \? endRouteOnly : null\}/);
   assert.match(app, /onStop=\{stopTracking\}/);
   const routeScreen = fs.readFileSync(new URL("ios-route-screen.js", root), "utf8");
-  assert.match(routeScreen, /Вести в CamAlert/);
+  assert.match(routeScreen, /В путь/);
+  assert.doesNotMatch(routeScreen, /Вести в CamAlert/);
   assert.match(routeScreen, /onStartGuidance\(packed\)/);
   assert.match(fs.readFileSync(new URL("camera-delivery.js", root), "utf8"), /https:\/\/speed-camera-data\.ternzina\.workers\.dev/);
   assert.match(fs.readFileSync(new URL("camera-data.js", root), "utf8"), /camera_remote_cache_v081|CACHE_CHUNK_CHARS/);

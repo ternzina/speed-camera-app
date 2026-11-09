@@ -38,7 +38,7 @@ const COPY = {
     build: "Построить маршрут",
     cancel: "Отменить точку",
     alternatives: "Варианты Apple",
-    guide: "Вести в CamAlert",
+    guide: "В путь",
     apple: "Открыть в Apple Maps",
     google: "Открыть в Google Maps",
     eta: "Оценка Apple",
@@ -65,7 +65,7 @@ const COPY = {
     build: "Побудувати маршрут",
     cancel: "Скасувати точку",
     alternatives: "Варіанти Apple",
-    guide: "Вести в CamAlert",
+    guide: "У дорогу",
     apple: "Відкрити в Apple Maps",
     google: "Відкрити в Google Maps",
     eta: "Оцінка Apple",
@@ -92,7 +92,7 @@ const COPY = {
     build: "Build route",
     cancel: "Cancel point",
     alternatives: "Apple routes",
-    guide: "Guide in CamAlert",
+    guide: "Start guidance",
     apple: "Open in Apple Maps",
     google: "Open in Google Maps",
     eta: "Apple estimate",
@@ -119,7 +119,7 @@ const COPY = {
     build: "Wyznacz trasę",
     cancel: "Anuluj punkt",
     alternatives: "Warianty Apple",
-    guide: "Prowadź w CamAlert",
+    guide: "W drogę",
     apple: "Otwórz w Apple Maps",
     google: "Otwórz w Google Maps",
     eta: "Szacunek Apple",
@@ -452,8 +452,8 @@ export default function IosRouteScreen({ language, night, initialQuery, coords, 
             );
           })}
           {route && (
-            <Pressable accessibilityRole="button" disabled={!!busy} onPress={start} style={[styles.button, busy && styles.dimmed]}>
-              <Text style={styles.buttonText}>{copy.guide}</Text>
+            <Pressable accessibilityRole="button" disabled={!!busy} onPress={start} style={[styles.button, styles.goButton, busy && styles.dimmed]}>
+              <Text style={styles.goButtonText}>{copy.guide}</Text>
             </Pressable>
           )}
           {!!destination && (
@@ -520,6 +520,8 @@ const styles = StyleSheet.create({
   button: { backgroundColor: "#1260E8", borderRadius: 14, minHeight: 48, paddingHorizontal: 14, alignItems: "center", justifyContent: "center" },
   searchButton: { alignSelf: "stretch" },
   buttonText: { color: "white", fontWeight: "700", fontSize: 16 },
+  goButton: { minHeight: 64, borderRadius: 18 },
+  goButtonText: { color: "white", fontWeight: "900", fontSize: 22 },
   dimmed: { opacity: 0.45 },
   note: { fontSize: 14, lineHeight: 19 },
   error: { color: "#9A3700", fontSize: 14 },
