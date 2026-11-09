@@ -38,6 +38,7 @@ import { cameraAlertDecision, cameraWarningsEnabled, mergeStoredSettings } from 
 import { searchLegalNotices, statusLabel } from "./legal-notices";
 import IosRouteScreen from "./ios-route-screen";
 import { isGoogleNavTestApp } from "./google-nav-gate";
+import { skipRepeatedCameraSpeech } from "./navtest-speech";
 import GoogleNavTestScreen from "./google-nav-test";
 import { calculateRoutes } from "./ios-mapkit-directions";
 import {
@@ -525,6 +526,7 @@ export default function App() {
   const [cameraAlertPresentation, setCameraAlertPresentation] = useState(null);
   const cameraAlertDismissTimer = useRef(null);
   const polandVisualAlertCameraId = useRef(null);
+  const navtestPolandSpoken = useRef({ id: null, distance: Infinity });
   const plSectionIdRef = useRef(null);
   const sectionPaceRef = useRef(null);
   const plLastSectionState = useRef(null);
@@ -979,6 +981,7 @@ export default function App() {
 
         if (!cameraWarningsEnabled(bgSettings)) {
           polandVisualAlertCameraId.current = null;
+          navtestPolandSpoken.current = { id: null, distance: Infinity };
           plSectionIdRef.current = null;
           sectionPaceRef.current = null;
           plLastSectionState.current = null;
@@ -1007,7 +1010,9 @@ export default function App() {
               polandVisualAlertCameraId.current = String(point.id);
             }
 
-            if (point.distance <= threshold && settings.voice) {
+            const repeatedNavtestSpeech = isGoogleNavTestApp() && skipRepeatedCameraSpeech(navtestPolandSpoken.current, point);
+            if (point.distance <= threshold && settings.voice && !repeatedNavtestSpeech) {
+              if (isGoogleNavTestApp()) navtestPolandSpoken.current = { id: String(point.id), distance: point.distance };
               const rounded = Math.max(100, Math.round(point.distance / 100) * 100);
 
               const kind =
@@ -1167,6 +1172,7 @@ export default function App() {
     Speech.stop();
     dismissCameraAlert();
     polandVisualAlertCameraId.current = null;
+    navtestPolandSpoken.current = { id: null, distance: Infinity };
     plSectionIdRef.current = null;
     sectionPaceRef.current = null;
     if (averageSectionEndTimer.current) clearTimeout(averageSectionEndTimer.current);
@@ -1475,6 +1481,7 @@ export default function App() {
     Speech.stop();
     dismissCameraAlert();
     polandVisualAlertCameraId.current = null;
+    navtestPolandSpoken.current = { id: null, distance: Infinity };
     plSectionIdRef.current = null;
     sectionPaceRef.current = null;
     plLastSectionState.current = null;

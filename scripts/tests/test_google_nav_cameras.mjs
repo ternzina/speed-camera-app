@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import test from "node:test";
 import { cameraBanner, googleAudioMode, navChrome } from "../../google-nav-banner.js";
+import { skipRepeatedCameraSpeech } from "../../navtest-speech.js";
 
 const root = new URL("../../", import.meta.url);
 const read = (name) => fs.readFileSync(new URL(name, root), "utf8");
@@ -72,6 +73,30 @@ test("warnings stay on the phone GPS feed and ignore the Google route line", () 
   assert.match(screen, /setFollowingPerspective\?\.\(CameraPerspective\.TILTED\)/);
   assert.match(screen, /setNavigationUIEnabled\?\.\(false\)/);
   assert.doesNotMatch(screen, /copy\.reroute|copy\.pick|copy\.routed/);
+});
+
+test("navtest skips a repeated non-UA camera phrase and production still speaks", () => {
+  assert.equal(skipRepeatedCameraSpeech({ id: "pl-1", distance: 400 }, { id: "pl-1", distance: 280 }), true);
+  assert.equal(skipRepeatedCameraSpeech({ id: "pl-1", distance: 400 }, { id: "pl-1", distance: 150 }), false);
+  assert.equal(skipRepeatedCameraSpeech({ id: "pl-1", distance: 400 }, { id: "pl-2", distance: 390 }), false);
+  assert.equal(skipRepeatedCameraSpeech({ id: null, distance: Infinity }, { id: "pl-1", distance: 200 }), false);
+  const app = read("App.js");
+  const branch = app.slice(app.indexOf('if (selectedCountry !== "UA")'), app.indexOf("const n = findNearestAny"));
+  const guard = branch.indexOf("isGoogleNavTestApp() && skipRepeatedCameraSpeech");
+  const stop = branch.indexOf("Speech.stop()");
+  const speak = branch.indexOf("Speech.speak(");
+  assert.ok(guard > 0 && guard < stop && stop < speak);
+  assert.match(branch, /if \(point\.distance <= threshold && settings\.voice && !repeatedNavtestSpeech\)/);
+  assert.match(branch, /if \(isGoogleNavTestApp\(\)\) navtestPolandSpoken\.current = \{ id: String\(point\.id\), distance: point\.distance \};/);
+  const screen = read("google-nav-test-screen.js");
+  assert.match(screen, /footerEnabled=\{false\}/);
+  assert.match(screen, /<RouteBar/);
+  const header = fs.readFileSync(new URL("../../ios/Pods/GoogleNavigation/Frameworks/GoogleNavigation.xcframework/ios-arm64/GoogleNavigation.framework/Headers/GMSNavigationTypes.h", import.meta.url), "utf8");
+  const format = header.slice(header.indexOf("typedef NS_ENUM(NSInteger, GMSNavigationRouteCalloutFormat)"), header.indexOf("typedef NS_ENUM(NSInteger, GMSNavigationAlternateRoutesStrategy)"));
+  assert.match(format, /GMSNavigationRouteCalloutFormatTime/);
+  assert.match(format, /GMSNavigationRouteCalloutFormatDistance/);
+  assert.doesNotMatch(format, /None|Hidden|Disabled/);
+  assert.doesNotMatch(screen, /routeCalloutFormat|setRouteCallout|navigationFooterEnabled/);
 });
 
 test("search, route, buttons, and warnings have RU UK EN and PL copy", () => {
