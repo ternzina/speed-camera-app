@@ -1,0 +1,47 @@
+import assert from "node:assert/strict";
+import fs from "node:fs";
+import test from "node:test";
+
+const root = new URL("../../", import.meta.url);
+const read = (name) => fs.readFileSync(new URL(name, root), "utf8");
+
+test("navtest is the only bundle that mounts the Google map", () => {
+  const gate = read("google-nav-gate.js");
+  const app = read("App.js");
+  assert.match(gate, /com\.21wek\.camera\.navtest/);
+  assert.doesNotMatch(gate, /com\.21wek\.camera"/);
+  assert.match(app, /isGoogleNavTestApp\(\) && \(iosRouteOpen \|\| \(tab === "drive" && active\)\)/);
+  assert.match(app, /hideExternalNav=\{isGoogleNavTestApp\(\)\}/);
+  assert.match(app, /if \(foregroundTripRunning \|\| sub\.current\) return true/);
+});
+
+test("the Google screen does not draw an Apple route or a second maps SDK", () => {
+  const screen = read("google-nav-test-screen.js");
+  const loader = read("google-nav-test.js");
+  assert.doesNotMatch(screen, /react-native-maps|PROVIDER_GOOGLE|calculateRoutes|MKDirections|ios-mapkit-directions/);
+  assert.match(screen, /MapType\.NORMAL/);
+  assert.match(screen, /MapType\.SATELLITE/);
+  assert.match(screen, /MapType\.HYBRID/);
+  assert.match(screen, /setDestination\(/);
+  assert.match(screen, /startGuidance\(\)/);
+  assert.match(screen, /AudioGuidance\.SILENT/);
+  assert.match(screen, /subscribeCameraSpeech/);
+  assert.match(screen, /setOnReroutingRequestedByOffRoute/);
+  assert.match(screen, /setOnRemainingTimeOrDistanceChanged/);
+  assert.match(screen, /controllerRef\.current\.init\(\)/);
+  assert.match(loader, /TurboModuleRegistry\.get\("NavModule"\)/);
+  assert.match(read("modules/camalert-mapkit-directions/ios/CamAlertMapKitDirectionsModule.swift"), /MKDirections/);
+});
+
+test("turn voice stays off until the guidance button", () => {
+  const screen = read("google-nav-test-screen.js");
+  const session = screen.slice(screen.indexOf("async function ensureSession"), screen.indexOf("async function run"));
+  assert.match(session, /setAudioGuidanceType\(AudioGuidance\.SILENT\)/);
+  assert.doesNotMatch(session, /startGuidance|VOICE_ALERTS_AND_GUIDANCE/);
+  const build = screen.slice(screen.indexOf("function buildRoute"), screen.indexOf("function startGuidance"));
+  assert.match(build, /setDestination\(/);
+  assert.doesNotMatch(build, /startGuidance\(/);
+  const go = screen.slice(screen.indexOf("function startGuidance"), screen.indexOf("async function endRoute"));
+  assert.match(go, /startGuidance\(\)/);
+  assert.match(go, /onStartTrip\(\)/);
+});

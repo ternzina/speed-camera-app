@@ -37,6 +37,8 @@ import { MapCameraPin, MapMarkerLegend } from "./map-camera-pin";
 import { cameraAlertDecision, cameraWarningsEnabled, mergeStoredSettings } from "./camera-warning-gate";
 import { searchLegalNotices, statusLabel } from "./legal-notices";
 import IosRouteScreen from "./ios-route-screen";
+import { isGoogleNavTestApp } from "./google-nav-gate";
+import GoogleNavTestScreen from "./google-nav-test";
 import { calculateRoutes } from "./ios-mapkit-directions";
 import {
   ROUTE_CORRIDOR_METERS, narrowCamerasToRoute, guidanceState, guidanceZoom,
@@ -1649,6 +1651,31 @@ export default function App() {
     );
   }
 
+  if (isGoogleNavTestApp() && (iosRouteOpen || (tab === "drive" && active))) {
+    return (
+      <>
+        <GoogleNavTestScreen
+          language={settings.language}
+          night={isNight}
+          coords={coords}
+          camera={cameraWarningsEnabled(settings) ? ahead : null}
+          cameraType={cameraWarningsEnabled(settings) && ahead ? cameraTypeLabel(ahead, settings.language) : ""}
+          voiceEnabled={cameraWarningsEnabled(settings) && settings.voice}
+          onToggleVoice={() => setSettings((current) => ({ ...current, voice: !current.voice }))}
+          picking={iosRouteOpen}
+          tripActive={active}
+          onStartTrip={async () => {
+            if (foregroundTripRunning || sub.current) return true;
+            return !!(await startTracking());
+          }}
+          onStopTrip={stopTracking}
+          onClosePick={() => setIosRouteOpen(false)}
+        />
+        {renderBackgroundGuide()}
+      </>
+    );
+  }
+
   if (iosRouteOpen) {
     return <>
       <IosRouteScreen
@@ -1754,7 +1781,8 @@ export default function App() {
             onBack={() => {setOnboardingPage(2);setOnboardingState("new");}}
             onStart={startTracking}
             onOpenRoute={openInAppRoute}
-            onOpenExternal={(navigator) => launchNavigator(navigator, "")}
+            onOpenExternal={isGoogleNavTestApp() ? null : (navigator) => launchNavigator(navigator, "")}
+            hideExternalNav={isGoogleNavTestApp()}
             onSettings={() => { setCountryScreenTab("settings"); setTab("settings"); }}
             onCountry={() => { setCountryScreenTab("countries"); setTab("settings"); }}
           />
@@ -2601,7 +2629,7 @@ function CameraWarningPanel({
   );
 }
 
-function DriveHome({ language, country, cameraCount, offlineAvailable, lastDataUpdate, onBack, onStart, onOpenRoute, onOpenExternal, onSettings, onCountry }) {
+function DriveHome({ language, country, cameraCount, offlineAvailable, lastDataUpdate, onBack, onStart, onOpenRoute, onOpenExternal, hideExternalNav = false, onSettings, onCountry }) {
   const isNight = useContext(ThemeContext);
   const homeStyles = useMemo(() => homeThemeStyles(isNight),[isNight]);
   const { pad, landscape } = usePadLayout();
@@ -2702,7 +2730,7 @@ function DriveHome({ language, country, cameraCount, offlineAvailable, lastDataU
         <Text style={[homeStyles.whereButtonText, pad && { fontSize: 22 }]}>{copy.where}</Text>
       </Pressable>
   ) : null;
-  const navigation = (
+  const navigation = hideExternalNav ? null : (
       <View style={homeStyles.navSection}>
         <Text style={[homeStyles.sectionTitle, pad && { fontSize: 18 }]}>{copy.chooseNav}</Text>
         <View style={homeStyles.navigatorRow}>
