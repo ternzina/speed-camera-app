@@ -1,10 +1,10 @@
 import { formatDistance } from "./route-guidance.js";
 
 const CAPTIONS = {
-  ru: ["Осталось", "В пути", "Прибытие"],
-  uk: ["Залишилось", "В дорозі", "Прибуття"],
-  en: ["Remaining", "Driving", "Arrival"],
-  pl: ["Zostało", "W trasie", "Przyjazd"],
+  ru: ["Расстояние", "В пути", "Прибытие"],
+  uk: ["Відстань", "В дорозі", "Прибуття"],
+  en: ["Distance", "Driving", "Arrival"],
+  pl: ["Dystans", "W trasie", "Przyjazd"],
 };
 
 const TRANSIT = {
