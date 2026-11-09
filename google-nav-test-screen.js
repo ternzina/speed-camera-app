@@ -1,11 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
-import { AppState, Pressable, StyleSheet, Text, View } from "react-native";
+import { AppState, Pressable, StyleSheet, Text, TextInput, useWindowDimensions, View } from "react-native";
 import {
   AudioGuidance, MapType, NavigationNightMode, NavigationProvider, NavigationSessionStatus,
   NavigationView, RouteStatus, TaskRemovedBehavior, TravelMode, useNavigation,
 } from "@googlemaps/react-native-navigation-sdk";
 import { subscribeCameraSpeech } from "./camera-speech";
-import { formatArrivalTime, formatDistance, formatDuration } from "./route-guidance";
+import { barScale, routeSummary, summaryItemWidths } from "./google-nav-chrome";
+import { lookupDestinations } from "./google-nav-search";
 import { withNavigationWindow } from "./navigation-readiness";
 import SystemSafeArea from "./system-safe-area";
 
@@ -13,43 +14,52 @@ const COPY = {
   ru: {
     where: "Куда едем?", build: "Построить маршрут", go: "В путь", endRoute: "Завершить маршрут",
     endTrip: "Завершить поездку", road: "Схема", satellite: "Спутник", hybrid: "Гибрид",
-    voice: "Голос", voiceOff: "Без голоса", arrival: "Прибытие", left: "Осталось", time: "Время",
-    pick: "Нажмите точку на карте", routed: "Маршрут построен. Ведение начнётся после «В путь».",
+    voice: "Голос", voiceOff: "Без голоса", layers: "Слои карты",
+    pick: "Долгое нажатие выбирает точку", routed: "Маршрут построен. Ведение начнётся после «В путь».",
     camera: "Камера", terms: "Нужно принять условия Google Navigation.",
     auth: "Ключ iOS не принят Navigation SDK. Проверьте GOOGLE_MAPS_IOS_API_KEY в сборке.",
     failed: "Не удалось открыть навигацию Google.", noRoute: "Маршрут не найден.",
     back: "Назад", reroute: "Строится новый маршрут",
+    searchOff: "Адресный поиск не включён", point: "Точка",
   },
   uk: {
     where: "Куди їдемо?", build: "Побудувати маршрут", go: "У дорогу", endRoute: "Завершити маршрут",
     endTrip: "Завершити поїздку", road: "Схема", satellite: "Супутник", hybrid: "Гібрид",
-    voice: "Голос", voiceOff: "Без голосу", arrival: "Прибуття", left: "Залишилось", time: "Час",
-    pick: "Натисніть точку на карті", routed: "Маршрут побудовано. Ведення почнеться після «У дорогу».",
+    voice: "Голос", voiceOff: "Без голосу", layers: "Шари карти",
+    pick: "Довге натискання вибирає точку", routed: "Маршрут побудовано. Ведення почнеться після «У дорогу».",
     camera: "Камера", terms: "Потрібно прийняти умови Google Navigation.",
     auth: "Ключ iOS не прийнято Navigation SDK.", failed: "Не вдалося відкрити навігацію Google.",
     noRoute: "Маршрут не знайдено.", back: "Назад", reroute: "Будується новий маршрут",
+    searchOff: "Адресний пошук не ввімкнено", point: "Точка",
   },
   en: {
     where: "Where to?", build: "Build route", go: "Start guidance", endRoute: "End route",
     endTrip: "End trip", road: "Road", satellite: "Satellite", hybrid: "Hybrid",
-    voice: "Voice", voiceOff: "Voice off", arrival: "Arrival", left: "Left", time: "Time",
-    pick: "Tap a point on the map", routed: "Route ready. Guidance starts after the button.",
+    voice: "Voice", voiceOff: "Voice off", layers: "Map layers",
+    pick: "Long-press the map to pick a point", routed: "Route ready. Guidance starts after the button.",
     camera: "Camera", terms: "Accept the Google Navigation terms.",
     auth: "The iOS key was not accepted by the Navigation SDK.", failed: "Google navigation failed.",
     noRoute: "No route found.", back: "Back", reroute: "Building a new route",
+    searchOff: "Address search is not enabled", point: "Point",
   },
   pl: {
     where: "Dokąd jedziemy?", build: "Wyznacz trasę", go: "W drogę", endRoute: "Zakończ trasę",
     endTrip: "Zakończ przejazd", road: "Mapa", satellite: "Satelita", hybrid: "Hybryda",
-    voice: "Głos", voiceOff: "Bez głosu", arrival: "Przyjazd", left: "Zostało", time: "Czas",
-    pick: "Dotknij punktu na mapie", routed: "Trasa gotowa. Prowadzenie zacznie się po przycisku.",
+    voice: "Głos", voiceOff: "Bez głosu", layers: "Warstwy mapy",
+    pick: "Przytrzymaj mapę, aby wybrać punkt", routed: "Trasa gotowa. Prowadzenie zacznie się po przycisku.",
     camera: "Kamera", terms: "Zaakceptuj warunki Google Navigation.",
     auth: "Klucz iOS nie został przyjęty przez Navigation SDK.", failed: "Nawigacja Google nie ruszyła.",
     noRoute: "Nie znaleziono trasy.", back: "Wstecz", reroute: "Wyznaczanie nowej trasy",
+    searchOff: "Wyszukiwanie adresu jest wyłączone", point: "Punkt",
   },
 };
 
 const terms = { title: "Google Navigation", companyName: "CamAlert", showOnlyDisclaimer: false };
+const MAPS = [
+  [MapType.NORMAL, "road"],
+  [MapType.SATELLITE, "satellite"],
+  [MapType.HYBRID, "hybrid"],
+];
 
 export default function GoogleNavTestScreen(props) {
   return (
@@ -71,14 +81,19 @@ function GoogleNavBody({
   const ready = useRef(false);
   const guidingRef = useRef(false);
   const [point, setPoint] = useState(null);
+  const [query, setQuery] = useState("");
   const [routed, setRouted] = useState(false);
   const [guiding, setGuiding] = useState(false);
   const [mapType, setMapType] = useState(MapType.NORMAL);
+  const [layersOpen, setLayersOpen] = useState(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
   const [rerouting, setRerouting] = useState(false);
   const [progress, setProgress] = useState(null);
+  const [pads, setPads] = useState({ top: 112, bottom: 148 });
   const navView = useRef(null);
+  const palette = night ? DARK : LIGHT;
+  const lookup = lookupDestinations(query);
 
   useEffect(() => {
     alive.current = true;
@@ -117,13 +132,17 @@ function GoogleNavBody({
   async function ensureSession() {
     if (ready.current) return;
     const foreground = () => alive.current && AppState.currentState === "active";
-    const accepted = await withNavigationWindow(() => controllerRef.current.showTermsAndConditionsDialog(), foreground);
+    let accepted = await controllerRef.current.areTermsAccepted();
+    if (!accepted) {
+      accepted = await withNavigationWindow(() => controllerRef.current.showTermsAndConditionsDialog(), foreground);
+    }
     if (!accepted) throw new Error(copy.terms);
     const status = await withNavigationWindow(() => controllerRef.current.init(), foreground);
     if (status !== NavigationSessionStatus.OK) {
       throw new Error(status === NavigationSessionStatus.NOT_AUTHORIZED ? copy.auth : copy.failed);
     }
     controllerRef.current.setAudioGuidanceType(AudioGuidance.SILENT);
+    navView.current?.setNavigationUIEnabled?.(true);
     ready.current = true;
   }
 
@@ -136,24 +155,44 @@ function GoogleNavBody({
     finally { if (alive.current) setBusy(false); }
   }
 
-  function buildRoute() {
-    if (!point) return;
+  function pickPoint(latLng) {
+    if (busy || guiding) return;
+    const lat = Number(latLng?.lat);
+    const lng = Number(latLng?.lng);
+    if (!Number.isFinite(lat) || !Number.isFinite(lng)) return;
+    setPoint({ lat, lng });
+    setQuery(`${lat.toFixed(5)}, ${lng.toFixed(5)}`);
+    setRouted(false);
+    setProgress(null);
+    setLayersOpen(false);
+  }
+
+  function buildRoute(target = point) {
+    const dest = target && Number.isFinite(target.lat) ? target : point;
+    if (!dest) return;
     run(async () => {
       await ensureSession();
       const foreground = () => alive.current && AppState.currentState === "active";
       const status = await withNavigationWindow(() => controllerRef.current.setDestination(
-        { title: copy.where, position: { lat: point.lat, lng: point.lng } },
+        { title: dest.title || copy.where, position: { lat: dest.lat, lng: dest.lng } },
         { routingOptions: { travelMode: TravelMode.DRIVING } },
       ), foreground);
       if (status !== RouteStatus.OK) throw new Error(status === RouteStatus.NO_ROUTE_FOUND ? copy.noRoute : copy.failed);
       const remaining = await controllerRef.current.getCurrentTimeAndDistance().catch(() => null);
       if (alive.current) {
         if (remaining) setProgress(remaining);
+        setPoint({ lat: dest.lat, lng: dest.lng });
         setRouted(true);
         setRerouting(false);
+        setLayersOpen(false);
         navView.current?.showRouteOverview?.();
       }
     });
+  }
+
+  function chooseResult(result) {
+    setQuery(result.title);
+    buildRoute({ lat: result.lat, lng: result.lng, title: result.title });
   }
 
   function startGuidance() {
@@ -165,6 +204,7 @@ function GoogleNavBody({
       if (!alive.current) return;
       guidingRef.current = true;
       setGuiding(true);
+      setLayersOpen(false);
       controllerRef.current.setAudioGuidanceType(voiceEnabled ? AudioGuidance.VOICE_ALERTS_AND_GUIDANCE : AudioGuidance.SILENT);
       navView.current?.setNavigationUIEnabled?.(true);
     });
@@ -175,6 +215,7 @@ function GoogleNavBody({
     setGuiding(false);
     setRouted(false);
     setPoint(null);
+    setQuery("");
     setProgress(null);
     setRerouting(false);
     try {
@@ -184,16 +225,22 @@ function GoogleNavBody({
     } catch (_) {}
   }
 
+  function remember(edge, event) {
+    const height = Math.ceil(event.nativeEvent.layout.height);
+    if (height < 1) return;
+    setPads(current => current[edge] === height ? current : { ...current, [edge]: height });
+  }
+
   const target = finiteCoord(coords);
-  const remainingLabel = progress ? formatDistance(language, progress.meters) : "—";
-  const timeLabel = progress ? formatDuration(language, progress.seconds) : "—";
-  const arrivalLabel = progress ? formatArrivalTime(language, progress.seconds) : "—";
+  const items = routeSummary(language, routed || guiding ? progress : null);
+  const showSearch = !guiding;
 
   return (
     <View style={styles.root}>
       <NavigationView
         style={StyleSheet.absoluteFill}
         mapType={mapType}
+        mapPadding={{ top: pads.top, right: 16, bottom: pads.bottom, left: 16 }}
         navigationNightMode={night ? NavigationNightMode.FORCE_NIGHT : NavigationNightMode.FORCE_DAY}
         myLocationEnabled
         headerEnabled={guiding}
@@ -201,81 +248,131 @@ function GoogleNavBody({
         speedometerEnabled={false}
         speedLimitIconEnabled={false}
         onNavigationViewControllerCreated={value => { navView.current = value; }}
-        onMapClick={latLng => {
-          if (busy || guiding || !picking) return;
-          setPoint(latLng);
-          setRouted(false);
-          setProgress(null);
-        }}
+        onMapClick={pickPoint}
         initialCameraPosition={target ? { target, zoom: 15 } : undefined}
       />
       <SystemSafeArea pointerEvents="box-none" style={styles.overlay}>
-        <View pointerEvents="box-none" style={styles.top}>
-          {picking && !guiding && (
-            <View style={styles.card}>
-              <Text style={styles.title}>{routed ? copy.routed : point ? `${point.lat.toFixed(5)}, ${point.lng.toFixed(5)}` : copy.pick}</Text>
+        <View pointerEvents="box-none" onLayout={event => remember("top", event)}>
+          {showSearch && (
+            <View style={[styles.searchCard, { backgroundColor: palette.panel }]}>
+              <View style={styles.searchRow}>
+                <TextInput
+                  value={query}
+                  onChangeText={setQuery}
+                  placeholder={copy.where}
+                  placeholderTextColor={palette.muted}
+                  autoCorrect={false}
+                  autoCapitalize="words"
+                  returnKeyType="search"
+                  onSubmitEditing={() => { if (lookup.results[0]) chooseResult(lookup.results[0]); }}
+                  style={[styles.searchInput, { color: palette.ink }]}
+                />
+                <MapTools copy={copy} palette={palette} voiceEnabled={voiceEnabled} onToggleVoice={onToggleVoice} layersOpen={layersOpen} setLayersOpen={setLayersOpen} mapType={mapType} setMapType={setMapType} />
+              </View>
+              {lookup.results.map(result => (
+                <Pressable key={result.id} accessibilityRole="button" onPress={() => chooseResult(result)} style={styles.result}>
+                  <Text numberOfLines={1} style={[styles.resultTitle, { color: palette.ink }]}>{result.title}</Text>
+                  <Text numberOfLines={1} style={[styles.resultAddress, { color: palette.muted }]}>{result.address || copy.point}</Text>
+                </Pressable>
+              ))}
+              {lookup.blocked && <Text numberOfLines={1} style={[styles.searchOff, { color: palette.muted }]}>{copy.searchOff}</Text>}
+              {!lookup.blocked && !lookup.results.length && (
+                <Text numberOfLines={2} style={[styles.searchOff, { color: palette.muted }]}>{routed ? copy.routed : copy.pick}</Text>
+              )}
             </View>
           )}
           {!!camera && (
             <View style={styles.camera}>
-              <Text style={styles.cameraDistance}>{Math.round(camera.distance)} м</Text>
-              <Text style={styles.cameraType}>{cameraType || copy.camera}</Text>
+              <Text numberOfLines={1} style={styles.cameraDistance}>{Math.round(camera.distance)} м</Text>
+              <Text numberOfLines={1} style={styles.cameraType}>{cameraType || copy.camera}</Text>
             </View>
           )}
-          {rerouting && <Text style={styles.note}>{copy.reroute}</Text>}
-          {!!error && <Text accessibilityRole="alert" style={styles.error}>{error}</Text>}
+          {rerouting && <Text numberOfLines={1} style={styles.note}>{copy.reroute}</Text>}
+          {!!error && <Text accessibilityRole="alert" numberOfLines={3} style={styles.error}>{error}</Text>}
         </View>
-        <View pointerEvents="box-none" style={styles.side}>
-          {[
-            [MapType.NORMAL, copy.road],
-            [MapType.SATELLITE, copy.satellite],
-            [MapType.HYBRID, copy.hybrid],
-          ].map(([type, label]) => (
-            <Pressable key={label} accessibilityRole="button" onPress={() => setMapType(type)} style={[styles.sideButton, mapType === type && styles.sideOn]}>
-              <Text style={styles.sideText}>{label}</Text>
-            </Pressable>
-          ))}
-          {onToggleVoice && (
-            <Pressable accessibilityRole="button" onPress={onToggleVoice} style={styles.sideButton}>
-              <Text style={styles.sideText}>{voiceEnabled ? copy.voice : copy.voiceOff}</Text>
-            </Pressable>
+        <View pointerEvents="box-none" style={styles.bottom} onLayout={event => remember("bottom", event)}>
+          {guiding && (
+            <View style={styles.toolsDock}>
+              <MapTools copy={copy} palette={palette} voiceEnabled={voiceEnabled} onToggleVoice={onToggleVoice} layersOpen={layersOpen} setLayersOpen={setLayersOpen} mapType={mapType} setMapType={setMapType} />
+            </View>
           )}
-        </View>
-        <View pointerEvents="box-none" style={styles.bottom}>
           {(routed || guiding) && (
-            <View style={styles.bar}>
-              <Stat value={arrivalLabel} label={copy.arrival} />
-              <Stat value={remainingLabel} label={copy.left} />
-              <Stat value={timeLabel} label={copy.time} />
-              <Pressable accessibilityRole="button" onPress={endRoute} style={styles.end}><Text style={styles.endText}>{copy.endRoute}</Text></Pressable>
-            </View>
+            <RouteBar items={items} palette={palette} />
           )}
-          <View style={styles.actions}>
-            {picking && !routed && (
-              <Pressable accessibilityRole="button" disabled={!point || busy} onPress={buildRoute} style={[styles.go, (!point || busy) && styles.dim]}>
-                <Text style={styles.goText}>{copy.build}</Text>
-              </Pressable>
-            )}
-            {routed && !guiding && (
-              <Pressable accessibilityRole="button" disabled={busy} onPress={startGuidance} style={[styles.go, busy && styles.dim]}>
-                <Text style={styles.goText}>{copy.go}</Text>
-              </Pressable>
-            )}
-            {picking && !tripActive && !guiding && (
-              <Pressable accessibilityRole="button" onPress={onClosePick} style={styles.secondary}><Text style={styles.secondaryText}>{copy.back}</Text></Pressable>
-            )}
-            {tripActive && (
-              <Pressable accessibilityRole="button" onPress={onStopTrip} style={styles.secondary}><Text style={styles.secondaryText}>{copy.endTrip}</Text></Pressable>
-            )}
-          </View>
+          {routed && !guiding && (
+            <Pressable accessibilityRole="button" disabled={busy} onPress={startGuidance} style={[styles.go, busy && styles.dim]}>
+              <Text numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.7} style={styles.goText}>{copy.go}</Text>
+            </Pressable>
+          )}
+          {!routed && !guiding && !!point && (
+            <Pressable accessibilityRole="button" disabled={busy} onPress={() => buildRoute()} style={[styles.go, busy && styles.dim]}>
+              <Text numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.7} style={styles.goText}>{copy.build}</Text>
+            </Pressable>
+          )}
+          {(routed || guiding) && (
+            <Pressable accessibilityRole="button" onPress={endRoute} style={[styles.end, { backgroundColor: palette.panel }]}>
+              <Text numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.75} style={[styles.endText, { color: palette.danger }]}>{copy.endRoute}</Text>
+            </Pressable>
+          )}
+          {picking && !tripActive && !guiding && (
+            <Pressable accessibilityRole="button" onPress={onClosePick} style={styles.secondary}>
+              <Text numberOfLines={1} style={[styles.secondaryText, { color: palette.ink }]}>{copy.back}</Text>
+            </Pressable>
+          )}
+          {tripActive && (
+            <Pressable accessibilityRole="button" onPress={onStopTrip} style={styles.secondary}>
+              <Text numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.75} style={[styles.secondaryText, { color: palette.ink }]}>{copy.endTrip}</Text>
+            </Pressable>
+          )}
         </View>
       </SystemSafeArea>
     </View>
   );
 }
 
-function Stat({ value, label }) {
-  return <View style={styles.stat}><Text style={styles.statValue}>{value}</Text><Text style={styles.statLabel}>{label}</Text></View>;
+function MapTools({ copy, palette, voiceEnabled, onToggleVoice, layersOpen, setLayersOpen, mapType, setMapType }) {
+  return (
+    <View style={styles.tools}>
+      {layersOpen && (
+        <View style={[styles.menu, { backgroundColor: palette.menu }]}>
+          {MAPS.map(([type, key]) => (
+            <Pressable key={key} accessibilityRole="button" onPress={() => { setMapType(type); setLayersOpen(false); }} style={styles.menuRow}>
+              <Text numberOfLines={1} style={[styles.menuText, { color: mapType === type ? "#1260E8" : palette.ink }]}>{copy[key]}</Text>
+            </Pressable>
+          ))}
+        </View>
+      )}
+      <View style={styles.toolRow}>
+        {onToggleVoice && (
+          <Pressable accessibilityRole="button" accessibilityLabel={voiceEnabled ? copy.voice : copy.voiceOff} onPress={onToggleVoice} style={[styles.speaker, { backgroundColor: palette.button }]}>
+            <Text style={styles.speakerGlyph}>{voiceEnabled ? "🔊" : "🔇"}</Text>
+          </Pressable>
+        )}
+        <Pressable accessibilityRole="button" accessibilityLabel={copy.layers} onPress={() => setLayersOpen(open => !open)} style={[styles.speaker, { backgroundColor: layersOpen ? "#1260E8" : palette.button }]}>
+          <Text style={[styles.layerGlyph, { color: layersOpen ? "#FFFFFF" : palette.ink }]}>▦</Text>
+        </Pressable>
+      </View>
+    </View>
+  );
+}
+
+function RouteBar({ items, palette }) {
+  const { width } = useWindowDimensions();
+  const widths = summaryItemWidths(items);
+  const scale = barScale(Math.max(160, width - 48), widths);
+  return (
+    <View style={[styles.summary, { backgroundColor: palette.panel, transform: [{ scale }] }]}>
+      {items.map((item, index) => (
+        <View key={item.caption} style={styles.summaryItem}>
+          {index > 0 && <View style={[styles.divider, { backgroundColor: palette.line }]} />}
+          <View style={styles.summaryCopy}>
+            <Text numberOfLines={1} style={[styles.summaryValue, { color: palette.ink }]}>{item.value}</Text>
+            <Text numberOfLines={1} style={[styles.summaryCaption, { color: palette.muted }]}>{item.caption}</Text>
+          </View>
+        </View>
+      ))}
+    </View>
+  );
 }
 
 function finiteCoord(coords) {
@@ -285,32 +382,46 @@ function finiteCoord(coords) {
   return { lat, lng };
 }
 
+const LIGHT = { panel: "rgba(255,255,255,0.96)", ink: "#10263B", muted: "#4E6278", button: "#E7EEF6", menu: "#FFFFFF", line: "#D5E0EC", danger: "#9A3412" };
+const DARK = { panel: "rgba(16,38,59,0.94)", ink: "#F5F8FB", muted: "#CAD7E7", button: "#1C334C", menu: "#16304A", line: "#355272", danger: "#FFB4A8" };
+
 const styles = StyleSheet.create({
   root: { flex: 1, backgroundColor: "#0B1829" },
-  overlay: { flex: 1, paddingTop: 8 },
-  top: { marginHorizontal: 12, gap: 8 },
-  card: { backgroundColor: "rgba(16,38,59,0.92)", borderRadius: 16, padding: 12 },
-  title: { color: "#FFFFFF", fontSize: 15, fontWeight: "700" },
-  camera: { alignSelf: "flex-start", flexDirection: "row", gap: 8, backgroundColor: "#8E2A22", borderRadius: 14, paddingHorizontal: 12, paddingVertical: 8 },
-  cameraDistance: { color: "#FFFFFF", fontSize: 18, fontWeight: "900" },
-  cameraType: { color: "#FFFFFF", fontSize: 14, fontWeight: "700" },
-  note: { color: "#F5B64C", fontWeight: "700" },
-  error: { color: "#FFBD85", fontWeight: "700" },
-  side: { position: "absolute", right: 12, top: "32%", gap: 8 },
-  sideButton: { backgroundColor: "rgba(16,38,59,0.92)", borderRadius: 12, paddingHorizontal: 10, paddingVertical: 8 },
-  sideOn: { backgroundColor: "#1260E8" },
-  sideText: { color: "#FFFFFF", fontSize: 12, fontWeight: "800" },
-  bottom: { marginTop: "auto", marginHorizontal: 12, marginBottom: 10, gap: 8 },
-  bar: { flexDirection: "row", alignItems: "center", gap: 8, backgroundColor: "rgba(16,38,59,0.92)", borderRadius: 16, padding: 10 },
-  stat: { flex: 1 },
-  statValue: { color: "#FFFFFF", fontSize: 15, fontWeight: "900" },
-  statLabel: { color: "#CAD7E7", fontSize: 11, fontWeight: "700" },
-  end: { backgroundColor: "#5C2430", borderRadius: 12, paddingHorizontal: 10, paddingVertical: 8 },
-  endText: { color: "#FFFFFF", fontSize: 12, fontWeight: "800" },
-  actions: { gap: 8 },
-  go: { minHeight: 64, borderRadius: 18, backgroundColor: "#1260E8", alignItems: "center", justifyContent: "center" },
+  overlay: { flex: 1, justifyContent: "space-between" },
+  searchCard: { marginHorizontal: 12, marginTop: 6, borderRadius: 16, paddingHorizontal: 10, paddingVertical: 8, gap: 6 },
+  searchRow: { flexDirection: "row", alignItems: "center", gap: 8 },
+  searchInput: { flex: 1, minHeight: 40, fontSize: 17, fontWeight: "700", paddingVertical: 0 },
+  speaker: { width: 40, height: 40, borderRadius: 12, alignItems: "center", justifyContent: "center" },
+  speakerOn: { backgroundColor: "#1260E8" },
+  speakerGlyph: { fontSize: 16 },
+  layerGlyph: { fontSize: 18, fontWeight: "700" },
+  menu: { alignSelf: "flex-end", width: 168, borderRadius: 12, overflow: "hidden" },
+  menuRow: { minHeight: 40, justifyContent: "center", paddingHorizontal: 12 },
+  menuText: { fontSize: 15, fontWeight: "700" },
+  result: { minHeight: 40, justifyContent: "center" },
+  resultTitle: { fontSize: 16, fontWeight: "700" },
+  resultAddress: { fontSize: 13, fontWeight: "600" },
+  searchOff: { fontSize: 13, fontWeight: "600" },
+  tools: { alignItems: "flex-end", gap: 6 },
+  toolRow: { flexDirection: "row", gap: 8 },
+  toolsDock: { alignItems: "flex-end" },
+  camera: { alignSelf: "flex-start", maxWidth: "92%", flexDirection: "row", gap: 8, backgroundColor: "#8E2A22", borderRadius: 14, paddingHorizontal: 12, paddingVertical: 8, marginHorizontal: 12, marginTop: 8 },
+  cameraDistance: { color: "#FFFFFF", fontSize: 18, fontWeight: "900", flexShrink: 0 },
+  cameraType: { color: "#FFFFFF", fontSize: 14, fontWeight: "700", flexShrink: 1 },
+  note: { color: "#F5B64C", fontWeight: "700", marginHorizontal: 12, marginTop: 6 },
+  error: { color: "#9A3412", backgroundColor: "#FFE8D6", borderRadius: 12, overflow: "hidden", fontWeight: "700", marginHorizontal: 12, marginTop: 6, paddingHorizontal: 10, paddingVertical: 8 },
+  bottom: { marginHorizontal: 12, marginBottom: 8, gap: 8 },
+  summary: { alignSelf: "center", flexDirection: "row", flexWrap: "nowrap", alignItems: "stretch", borderRadius: 16, paddingVertical: 8, paddingHorizontal: 4 },
+  summaryItem: { flexDirection: "row", flexGrow: 0, flexShrink: 0, alignItems: "center" },
+  divider: { width: 1, alignSelf: "stretch", marginVertical: 2 },
+  summaryCopy: { alignItems: "center", paddingHorizontal: 10 },
+  summaryValue: { fontSize: 18, fontWeight: "800" },
+  summaryCaption: { fontSize: 11, fontWeight: "600", marginTop: 2 },
+  go: { minHeight: 52, borderRadius: 16, backgroundColor: "#1260E8", alignItems: "center", justifyContent: "center", paddingHorizontal: 16 },
   goText: { color: "#FFFFFF", fontSize: 22, fontWeight: "900" },
   dim: { opacity: 0.45 },
+  end: { minHeight: 40, alignItems: "center", justifyContent: "center" },
+  endText: { color: "#9A3412", fontSize: 16, fontWeight: "800" },
   secondary: { minHeight: 44, alignItems: "center", justifyContent: "center" },
-  secondaryText: { color: "#FFFFFF", fontSize: 16, fontWeight: "700" },
+  secondaryText: { fontSize: 16, fontWeight: "700" },
 });

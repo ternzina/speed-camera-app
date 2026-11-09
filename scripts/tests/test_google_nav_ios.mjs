@@ -45,3 +45,27 @@ test("turn voice stays off until the guidance button", () => {
   assert.match(go, /startGuidance\(\)/);
   assert.match(go, /onStartTrip\(\)/);
 });
+
+test("the route bar is one horizontal line and the terms dialog is not repeated", () => {
+  const screen = read("google-nav-test-screen.js");
+  const session = screen.slice(screen.indexOf("async function ensureSession"), screen.indexOf("async function run"));
+  assert.match(session, /areTermsAccepted\(\)/);
+  assert.match(session, /if \(!accepted\)/);
+  assert.match(screen, /placeholder=\{copy\.where\}/);
+  assert.match(screen, /Куда едем\?/);
+  assert.match(screen, /flexWrap: "nowrap"/);
+  assert.match(screen, /flexShrink: 0/);
+  assert.match(screen, /numberOfLines=\{1\}/);
+  assert.match(screen, /mapPadding=/);
+  assert.match(screen, /SystemSafeArea/);
+  assert.match(screen, /footerEnabled=\{false\}/);
+  assert.match(screen, /accessibilityLabel=\{copy\.layers\}/);
+  assert.match(screen, /styles\.speaker/);
+  assert.doesNotMatch(screen, /sideButton|fetch\(|places\.googleapis|MKLocalSearch|CLGeocoder|MKDirections/);
+  const bar = screen.slice(screen.indexOf("function RouteBar"), screen.indexOf("function finiteCoord"));
+  assert.match(bar, /numberOfLines=\{1\}/);
+  assert.doesNotMatch(bar, /endRoute|В путь/);
+  const summaryToEnd = screen.slice(screen.indexOf("<RouteBar"), screen.indexOf("copy.endRoute"));
+  assert.match(summaryToEnd, /copy\.go/);
+  assert.doesNotMatch(summaryToEnd, /copy\.endRoute/);
+});

@@ -107,20 +107,81 @@ function patchNavViewModule(source) {
   return next;
 }
 
+const NAV_ON_LOAD = `  if (*_mapViewType == NAVIGATION) {
+    _mapView.navigationEnabled = YES;
+  }`;
+
+const NAV_AFTER_ACCEPTANCE = `  // The map used to enable navigation while the view loaded, and Google
+  // presented the terms dialog on every open. Leave it off until the SDK
+  // already has a stored acceptance. The screen shows that dialog once.
+  if (*_mapViewType == NAVIGATION && GMSNavigationServices.areTermsAndConditionsAccepted) {
+    _mapView.navigationEnabled = YES;
+  }`;
+
+const NAV_DEFERRED = `  // Navigation stays off while the view loads. Enabling it here presented
+  // the Google terms dialog on every launch. The screen enables it after
+  // the SDK reports that acceptance is already stored.`;
+
+const MAP_TAP = `- (void)mapView:(GMSMapView *)mapView didTapAtCoordinate:(CLLocationCoordinate2D)coordinate {
+  [_viewCallbacks
+      handleMapClick:[ObjectTranslationUtil transformCoordinateToDictionary:coordinate]];
+}`;
+
+const MAP_LONG_PRESS = `- (void)mapView:(GMSMapView *)mapView didLongPressAtCoordinate:(CLLocationCoordinate2D)coordinate {
+  [_viewCallbacks
+      handleMapClick:[ObjectTranslationUtil transformCoordinateToDictionary:coordinate]];
+}`;
+
+function patchNavViewController(source) {
+  let next = source;
+  if (next.includes(NAV_ON_LOAD)) next = next.replace(NAV_ON_LOAD, NAV_DEFERRED);
+  if (next.includes(NAV_AFTER_ACCEPTANCE)) next = next.replace(NAV_AFTER_ACCEPTANCE, NAV_DEFERRED);
+  const loadView = next.slice(next.indexOf('- (void)loadView'), next.indexOf('- (void)viewDidLoad'));
+  if (loadView.includes('navigationEnabled = YES')) {
+    throw new Error('Navigation SDK NavViewController.mm still enables navigation while loading');
+  }
+  if (!next.includes('didLongPressAtCoordinate')) {
+    if (!next.includes(MAP_TAP)) {
+      throw new Error('Navigation SDK NavViewController.mm no longer has the map tap callback');
+    }
+    next = next.replace(MAP_TAP, `${MAP_TAP}\n\n${MAP_LONG_PRESS}`);
+  }
+  if (!next.includes(NAV_DEFERRED) || !next.includes('didLongPressAtCoordinate')) {
+    throw new Error('Navigation SDK NavViewController.mm patch did not apply');
+  }
+  return next;
+}
+
 function patchNavigationSdk() {
   const navModulePath = path.join(SDK_JAVA, 'NavModule.java');
   const navViewPath = path.join(SDK_JAVA, 'NavViewModule.java');
-  if (!fs.existsSync(navModulePath) || !fs.existsSync(navViewPath)) return { applied: false };
-  const navModule = fs.readFileSync(navModulePath, 'utf8');
-  const navView = fs.readFileSync(navViewPath, 'utf8');
-  const nextModule = patchNavModule(navModule);
-  const nextView = patchNavViewModule(navView);
-  if (nextModule !== navModule) fs.writeFileSync(navModulePath, nextModule);
-  if (nextView !== navView) fs.writeFileSync(navViewPath, nextView);
-  return { applied: nextModule !== navModule || nextView !== navView };
+  const navViewControllerPath = path.join(
+    __dirname,
+    '..',
+    'node_modules/@googlemaps/react-native-navigation-sdk/ios/react-native-navigation-sdk/NavViewController.mm'
+  );
+  let applied = false;
+  if (fs.existsSync(navModulePath) && fs.existsSync(navViewPath)) {
+    const navModule = fs.readFileSync(navModulePath, 'utf8');
+    const navView = fs.readFileSync(navViewPath, 'utf8');
+    const nextModule = patchNavModule(navModule);
+    const nextView = patchNavViewModule(navView);
+    if (nextModule !== navModule) fs.writeFileSync(navModulePath, nextModule);
+    if (nextView !== navView) fs.writeFileSync(navViewPath, nextView);
+    applied = nextModule !== navModule || nextView !== navView;
+  }
+  if (fs.existsSync(navViewControllerPath)) {
+    const current = fs.readFileSync(navViewControllerPath, 'utf8');
+    const next = patchNavViewController(current);
+    if (next !== current) {
+      fs.writeFileSync(navViewControllerPath, next);
+      applied = true;
+    }
+  }
+  return { applied };
 }
 
-module.exports = { patchNavModule, patchNavViewModule, patchNavigationSdk };
+module.exports = { patchNavModule, patchNavViewModule, patchNavViewController, patchNavigationSdk };
 
 if (require.main === module) {
   const result = patchNavigationSdk();
