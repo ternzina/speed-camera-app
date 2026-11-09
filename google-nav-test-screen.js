@@ -23,7 +23,7 @@ const COPY = {
     failed: "Не удалось открыть навигацию Google.", noRoute: "Маршрут не найден.",
     back: "Назад", reroute: "Строится новый маршрут",
     searching: "Ищем адрес…", empty: "Ничего не найдено", searchFailed: "Не удалось найти адрес",
-    searchKey: "Поиск адреса не настроен в этой сборке", point: "Точка",
+    searchKey: "Поиск адреса не настроен в этой сборке", point: "Точка", meters: "м",
   },
   uk: {
     where: "Куди їдемо?", build: "Побудувати маршрут", go: "У дорогу", endRoute: "Завершити маршрут",
@@ -34,7 +34,7 @@ const COPY = {
     auth: "Ключ iOS не прийнято Navigation SDK.", failed: "Не вдалося відкрити навігацію Google.",
     noRoute: "Маршрут не знайдено.", back: "Назад", reroute: "Будується новий маршрут",
     searching: "Шукаємо адресу…", empty: "Нічого не знайдено", searchFailed: "Не вдалося знайти адресу",
-    searchKey: "Пошук адреси не налаштовано в цій збірці", point: "Точка",
+    searchKey: "Пошук адреси не налаштовано в цій збірці", point: "Точка", meters: "м",
   },
   en: {
     where: "Where to?", build: "Build route", go: "Start guidance", endRoute: "End route",
@@ -45,7 +45,7 @@ const COPY = {
     auth: "The iOS key was not accepted by the Navigation SDK.", failed: "Google navigation failed.",
     noRoute: "No route found.", back: "Back", reroute: "Building a new route",
     searching: "Searching…", empty: "Nothing found", searchFailed: "Address search failed",
-    searchKey: "Address search is not configured in this build", point: "Point",
+    searchKey: "Address search is not configured in this build", point: "Point", meters: "m",
   },
   pl: {
     where: "Dokąd jedziemy?", build: "Wyznacz trasę", go: "W drogę", endRoute: "Zakończ trasę",
@@ -56,7 +56,7 @@ const COPY = {
     auth: "Klucz iOS nie został przyjęty przez Navigation SDK.", failed: "Nawigacja Google nie ruszyła.",
     noRoute: "Nie znaleziono trasy.", back: "Wstecz", reroute: "Wyznaczanie nowej trasy",
     searching: "Szukamy adresu…", empty: "Nic nie znaleziono", searchFailed: "Nie udało się znaleźć adresu",
-    searchKey: "Wyszukiwanie adresu nie jest ustawione w tej wersji", point: "Punkt",
+    searchKey: "Wyszukiwanie adresu nie jest ustawione w tej wersji", point: "Punkt", meters: "m",
   },
 };
 
@@ -182,6 +182,7 @@ function GoogleNavBody({
 
   useEffect(() => {
     if (!ready.current) return undefined;
+    // Google turn prompts follow the iPhone language. SDK 10.13.0 exposes no language setter.
     return subscribeCameraSpeech(cameraSpeaking => {
       const mode = guidingRef.current && voiceEnabled && !cameraSpeaking
         ? AudioGuidance.VOICE_ALERTS_AND_GUIDANCE
@@ -393,7 +394,7 @@ function GoogleNavBody({
           )}
           {!!camera && (
             <View style={styles.camera}>
-              <Text numberOfLines={1} style={styles.cameraDistance}>{Math.round(camera.distance)} м</Text>
+              <Text numberOfLines={1} style={styles.cameraDistance}>{Math.round(camera.distance)} {copy.meters}</Text>
               <Text numberOfLines={1} style={styles.cameraType}>{cameraType || copy.camera}</Text>
             </View>
           )}

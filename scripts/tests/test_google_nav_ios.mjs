@@ -73,6 +73,42 @@ test("the route bar is one horizontal line and the terms dialog is not repeated"
   assert.doesNotMatch(summaryToEnd, /copy\.endRoute/);
 });
 
+test("the four tabs follow the CamAlert language", () => {
+  const app = read("App.js");
+  const navStart = app.indexOf("const nav = [");
+  const nav = app.slice(navStart, app.indexOf("];", navStart) + 2);
+  assert.match(nav, /t\.drive/);
+  assert.match(nav, /t\.map/);
+  assert.match(nav, /t\.nearby/);
+  assert.match(nav, /t\.settings/);
+  assert.doesNotMatch(nav, /Поездка/);
+  assert.match(app, /drive: "Поездка"/);
+  assert.match(app, /drive: "Поїздка"/);
+  assert.match(app, /drive: "Drive"/);
+  assert.match(app, /drive: "Jazda"/);
+  assert.match(app, /nearby: "Рядом"/);
+  assert.match(app, /nearby: "Поруч"/);
+  assert.match(app, /nearby: "Nearby"/);
+  assert.match(app, /nearby: "W pobliżu"/);
+  assert.match(app, /settings: "Настройки"/);
+  assert.match(app, /settings: "Налаштування"/);
+  assert.match(app, /settings: "Settings"/);
+  assert.match(app, /settings: "Ustawienia"/);
+});
+
+test("Google turn voice stays with the SDK because it has no language setter", () => {
+  const screen = read("google-nav-test-screen.js");
+  const header = read("ios/Pods/GoogleNavigation/Frameworks/GoogleNavigation.xcframework/ios-arm64/GoogleNavigation.framework/Headers/GMSNavigator.h");
+  const bridge = read("node_modules/@googlemaps/react-native-navigation-sdk/ios/react-native-navigation-sdk/NavModule.mm");
+  assert.match(screen, /setAudioGuidanceType\(/);
+  assert.match(screen, /SDK 10\.13\.0 exposes no language setter/);
+  assert.doesNotMatch(screen, /Speech\.speak|setVoiceLanguage|setLocale\(/);
+  assert.match(header, /voiceGuidance/);
+  assert.doesNotMatch(header, /language|locale/i);
+  assert.match(bridge, /setAudioGuidanceType/);
+  assert.doesNotMatch(bridge, /setLanguage|setLocale|voiceLanguage/);
+});
+
 test("choosing a suggestion dismisses the keyboard and keeps the route button clear", () => {
   const screen = read("google-nav-test-screen.js");
   const choose = screen.slice(screen.indexOf("function dismissSearch"), screen.indexOf("function startGuidance"));

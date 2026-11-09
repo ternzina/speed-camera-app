@@ -124,7 +124,7 @@ const I18N = {
     nearest: "Ближайшая камера", ahead: "Камера впереди по ходу движения",
     waitMove: "Ждёт движения", speed: "Текущая скорость",
     direction: "Направление", background: "Фоновый режим", on: "Включён", off: "Выключен",
-    enable: "Включить", disable: "Выключить", map: "Карта", nearby: "Рядом",
+    enable: "Включить", disable: "Выключить", drive: "Поездка", map: "Карта", nearby: "Рядом",
     settings: "Настройки", history: "История", report: "Сообщить о камере",
     removed: "Камеры больше нет", limit: "Ограничение",
     aheadWarn: "Впереди камера", gpsWorks: "GPS работает", gpsWait: "GPS ждёт",
@@ -140,7 +140,7 @@ const I18N = {
     nearest: "Найближча камера", ahead: "Камера попереду за напрямком руху",
     waitMove: "Очікує руху", speed: "Поточна швидкість",
     direction: "Напрямок", background: "Фоновий режим", on: "Увімкнено", off: "Вимкнено",
-    enable: "Увімкнути", disable: "Вимкнути", map: "Карта", nearby: "Поруч",
+    enable: "Увімкнути", disable: "Вимкнути", drive: "Поїздка", map: "Карта", nearby: "Поруч",
     settings: "Налаштування", history: "Історія", report: "Повідомити про камеру",
     removed: "Камери більше немає", limit: "Обмеження",
     aheadWarn: "Попереду камера", gpsWorks: "GPS працює", gpsWait: "GPS очікує",
@@ -156,7 +156,7 @@ const I18N = {
     nearest: "Nearest camera", ahead: "Camera ahead",
     waitMove: "Waiting for movement", speed: "Current speed",
     direction: "Direction", background: "Background mode", on: "On", off: "Off",
-    enable: "Enable", disable: "Disable", map: "Map", nearby: "Nearby",
+    enable: "Enable", disable: "Disable", drive: "Drive", map: "Map", nearby: "Nearby",
     settings: "Settings", history: "History", report: "Report camera",
     removed: "Camera is gone", limit: "Speed limit",
     aheadWarn: "Camera ahead", gpsWorks: "GPS active", gpsWait: "GPS waiting",
@@ -1590,7 +1590,7 @@ export default function App() {
   }, [active, gpsFixReceived, ahead?.id, danger]);
 
   const nav = [
-    ["drive","🚗","Поездка"], ["map","🗺️",t.map], ["nearby","📍",t.nearby], ["settings","⚙️",t.settings]
+    ["drive","🚗",t.drive], ["map","🗺️",t.map], ["nearby","📍",t.nearby], ["settings","⚙️",t.settings]
   ];
 
   async function finishOnboarding() {
