@@ -7,6 +7,8 @@ import {
 import { subscribeCameraSpeech } from "./camera-speech";
 import { barScale, routeSummary, summaryItemWidths } from "./google-nav-chrome";
 import { lookupDestinations } from "./google-nav-search";
+import { autocompletePlaces, placeDetailsLocation, PLACES_DEBOUNCE_MS, placesLanguage, reduceSearchSchedule } from "./google-places";
+import { readPlacesKey } from "./google-places-key";
 import { withNavigationWindow } from "./navigation-readiness";
 import SystemSafeArea from "./system-safe-area";
 
@@ -20,7 +22,8 @@ const COPY = {
     auth: "Ключ iOS не принят Navigation SDK. Проверьте GOOGLE_MAPS_IOS_API_KEY в сборке.",
     failed: "Не удалось открыть навигацию Google.", noRoute: "Маршрут не найден.",
     back: "Назад", reroute: "Строится новый маршрут",
-    searchOff: "Адресный поиск не включён", point: "Точка",
+    searching: "Ищем адрес…", empty: "Ничего не найдено", searchFailed: "Не удалось найти адрес",
+    searchKey: "Поиск адреса не настроен в этой сборке", point: "Точка",
   },
   uk: {
     where: "Куди їдемо?", build: "Побудувати маршрут", go: "У дорогу", endRoute: "Завершити маршрут",
@@ -30,7 +33,8 @@ const COPY = {
     camera: "Камера", terms: "Потрібно прийняти умови Google Navigation.",
     auth: "Ключ iOS не прийнято Navigation SDK.", failed: "Не вдалося відкрити навігацію Google.",
     noRoute: "Маршрут не знайдено.", back: "Назад", reroute: "Будується новий маршрут",
-    searchOff: "Адресний пошук не ввімкнено", point: "Точка",
+    searching: "Шукаємо адресу…", empty: "Нічого не знайдено", searchFailed: "Не вдалося знайти адресу",
+    searchKey: "Пошук адреси не налаштовано в цій збірці", point: "Точка",
   },
   en: {
     where: "Where to?", build: "Build route", go: "Start guidance", endRoute: "End route",
@@ -40,7 +44,8 @@ const COPY = {
     camera: "Camera", terms: "Accept the Google Navigation terms.",
     auth: "The iOS key was not accepted by the Navigation SDK.", failed: "Google navigation failed.",
     noRoute: "No route found.", back: "Back", reroute: "Building a new route",
-    searchOff: "Address search is not enabled", point: "Point",
+    searching: "Searching…", empty: "Nothing found", searchFailed: "Address search failed",
+    searchKey: "Address search is not configured in this build", point: "Point",
   },
   pl: {
     where: "Dokąd jedziemy?", build: "Wyznacz trasę", go: "W drogę", endRoute: "Zakończ trasę",
@@ -50,7 +55,8 @@ const COPY = {
     camera: "Kamera", terms: "Zaakceptuj warunki Google Navigation.",
     auth: "Klucz iOS nie został przyjęty przez Navigation SDK.", failed: "Nawigacja Google nie ruszyła.",
     noRoute: "Nie znaleziono trasy.", back: "Wstecz", reroute: "Wyznaczanie nowej trasy",
-    searchOff: "Wyszukiwanie adresu jest wyłączone", point: "Punkt",
+    searching: "Szukamy adresu…", empty: "Nic nie znaleziono", searchFailed: "Nie udało się znaleźć adresu",
+    searchKey: "Wyszukiwanie adresu nie jest ustawione w tej wersji", point: "Punkt",
   },
 };
 
@@ -91,14 +97,55 @@ function GoogleNavBody({
   const [rerouting, setRerouting] = useState(false);
   const [progress, setProgress] = useState(null);
   const [pads, setPads] = useState({ top: 112, bottom: 148 });
+  const [suggestions, setSuggestions] = useState([]);
+  const [searchNote, setSearchNote] = useState("");
   const navView = useRef(null);
+  const schedule = useRef({ text: "", token: null, sendAt: null });
+  const suppressQuery = useRef("");
   const palette = night ? DARK : LIGHT;
-  const lookup = lookupDestinations(query);
 
   useEffect(() => {
     alive.current = true;
     return () => { alive.current = false; };
   }, []);
+
+  useEffect(() => {
+    if (guiding || (suppressQuery.current && query === suppressQuery.current)) return undefined;
+    const next = reduceSearchSchedule(schedule.current, query, Date.now());
+    schedule.current = next;
+    const local = lookupDestinations(query);
+    if (next.sendAt == null) {
+      setSuggestions(local.results);
+      setSearchNote("");
+      return undefined;
+    }
+    let cancelled = false;
+    const controller = new AbortController();
+    const handle = setTimeout(() => {
+      setSearchNote(copy.searching);
+      autocompletePlaces({
+        input: next.text,
+        sessionToken: next.token,
+        languageCode: placesLanguage(language),
+        key: readPlacesKey(),
+        fetch: global.fetch.bind(global),
+        signal: controller.signal,
+      }).then(results => {
+        if (cancelled || !alive.current) return;
+        setSuggestions(results);
+        setSearchNote(results.length ? "" : copy.empty);
+      }).catch(error => {
+        if (cancelled || !alive.current || error?.name === "AbortError") return;
+        setSuggestions([]);
+        setSearchNote(error?.code === "missing-key" ? copy.searchKey : copy.searchFailed);
+      });
+    }, PLACES_DEBOUNCE_MS);
+    return () => {
+      cancelled = true;
+      clearTimeout(handle);
+      controller.abort();
+    };
+  }, [copy.empty, copy.searchFailed, copy.searchKey, copy.searching, guiding, language, query]);
 
   useEffect(() => {
     setOnRemainingTimeOrDistanceChanged(value => {
@@ -151,7 +198,11 @@ function GoogleNavBody({
     setBusy(true);
     setError("");
     try { await action(); }
-    catch (error) { if (alive.current) setError(error?.message || copy.failed); }
+    catch (error) {
+      if (!alive.current) return;
+      const known = error?.code === "missing-key" ? copy.searchKey : error?.code === "places-failed" ? copy.searchFailed : "";
+      setError(known || error?.message || copy.failed);
+    }
     finally { if (alive.current) setBusy(false); }
   }
 
@@ -168,20 +219,31 @@ function GoogleNavBody({
   }
 
   function buildRoute(target = point) {
-    const dest = target && Number.isFinite(target.lat) ? target : point;
+    const dest = target && (Number.isFinite(target.lat) || target.placeId) ? target : point;
     if (!dest) return;
     run(async () => {
+      let next = dest;
+      if (!Number.isFinite(next.lat)) {
+        const located = await placeDetailsLocation({
+          placeId: next.placeId,
+          sessionToken: schedule.current.token,
+          key: readPlacesKey(),
+          fetch: global.fetch.bind(global),
+        });
+        schedule.current = { text: "", token: null, sendAt: null };
+        next = { ...next, lat: located.lat, lng: located.lng };
+      }
       await ensureSession();
       const foreground = () => alive.current && AppState.currentState === "active";
       const status = await withNavigationWindow(() => controllerRef.current.setDestination(
-        { title: dest.title || copy.where, position: { lat: dest.lat, lng: dest.lng } },
+        { title: next.title || copy.where, position: { lat: next.lat, lng: next.lng } },
         { routingOptions: { travelMode: TravelMode.DRIVING } },
       ), foreground);
       if (status !== RouteStatus.OK) throw new Error(status === RouteStatus.NO_ROUTE_FOUND ? copy.noRoute : copy.failed);
       const remaining = await controllerRef.current.getCurrentTimeAndDistance().catch(() => null);
       if (alive.current) {
         if (remaining) setProgress(remaining);
-        setPoint({ lat: dest.lat, lng: dest.lng });
+        setPoint({ lat: next.lat, lng: next.lng });
         setRouted(true);
         setRerouting(false);
         setLayersOpen(false);
@@ -191,8 +253,11 @@ function GoogleNavBody({
   }
 
   function chooseResult(result) {
+    suppressQuery.current = result.title;
     setQuery(result.title);
-    buildRoute({ lat: result.lat, lng: result.lng, title: result.title });
+    setSuggestions([]);
+    setSearchNote("");
+    buildRoute({ lat: result.lat, lng: result.lng, title: result.title, placeId: result.placeId });
   }
 
   function startGuidance() {
@@ -264,19 +329,19 @@ function GoogleNavBody({
                   autoCorrect={false}
                   autoCapitalize="words"
                   returnKeyType="search"
-                  onSubmitEditing={() => { if (lookup.results[0]) chooseResult(lookup.results[0]); }}
+                  onSubmitEditing={() => { if (suggestions[0]) chooseResult(suggestions[0]); }}
                   style={[styles.searchInput, { color: palette.ink }]}
                 />
                 <MapTools copy={copy} palette={palette} voiceEnabled={voiceEnabled} onToggleVoice={onToggleVoice} layersOpen={layersOpen} setLayersOpen={setLayersOpen} mapType={mapType} setMapType={setMapType} />
               </View>
-              {lookup.results.map(result => (
+              {suggestions.map(result => (
                 <Pressable key={result.id} accessibilityRole="button" onPress={() => chooseResult(result)} style={styles.result}>
                   <Text numberOfLines={1} style={[styles.resultTitle, { color: palette.ink }]}>{result.title}</Text>
-                  <Text numberOfLines={1} style={[styles.resultAddress, { color: palette.muted }]}>{result.address || copy.point}</Text>
+                  <Text numberOfLines={2} style={[styles.resultAddress, { color: palette.muted }]}>{result.address || copy.point}</Text>
                 </Pressable>
               ))}
-              {lookup.blocked && <Text numberOfLines={1} style={[styles.searchOff, { color: palette.muted }]}>{copy.searchOff}</Text>}
-              {!lookup.blocked && !lookup.results.length && (
+              {!!searchNote && <Text numberOfLines={2} style={[styles.searchOff, { color: palette.muted }]}>{searchNote}</Text>}
+              {!searchNote && !suggestions.length && (
                 <Text numberOfLines={2} style={[styles.searchOff, { color: palette.muted }]}>{routed ? copy.routed : copy.pick}</Text>
               )}
             </View>

@@ -33,11 +33,9 @@ test("iPhone 15 width keeps the summary on one line", () => {
   assert.ok(narrow < 1 && narrow > 0.5);
 });
 
-test("address search stays off and a coordinate still resolves", () => {
+test("a typed coordinate still resolves without a network call", () => {
   assert.equal(parseCoordinate("вулиця Хрещатик, 1, Київ"), null);
-  const blocked = lookupDestinations("Хрещатик 1 Київ");
-  assert.equal(blocked.blocked, "places-autocomplete");
-  assert.deepEqual(blocked.results, []);
+  assert.deepEqual(lookupDestinations("Хрещатик 1 Київ").results, []);
   const point = lookupDestinations("50,45010, 30,52340");
   assert.equal(point.results.length, 1);
   assert.ok(Math.abs(point.results[0].lat - 50.4501) < 0.00001);

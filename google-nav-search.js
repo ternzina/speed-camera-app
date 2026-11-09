@@ -1,6 +1,5 @@
-// Destination lookup that does not call Google Places or Geocoding.
-// Those APIs are separate paid products and are not enabled for this build.
-// A typed coordinate still resolves locally. An address does not.
+// A typed coordinate is resolved on the phone. Address text goes through
+// google-places.js, not through this function.
 
 export function parseCoordinate(query) {
   const match = String(query || "").trim().match(
@@ -28,7 +27,5 @@ export function lookupDestinations(query) {
       }],
     };
   }
-  const text = String(query || "").trim();
-  if (text.length < 2) return { available: false, results: [] };
-  return { available: false, results: [], blocked: "places-autocomplete" };
+  return { results: [] };
 }

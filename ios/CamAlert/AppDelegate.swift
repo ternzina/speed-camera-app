@@ -1,4 +1,5 @@
 internal import Expo
+import Foundation
 import React
 import ReactAppDependencyProvider
 #if CAMALERT_GOOGLE_NAV
@@ -21,6 +22,8 @@ class AppDelegate: ExpoAppDelegate {
     // GOOGLE_MAPS_IOS_API_KEY. It is never stored in git.
     if let key = Bundle.main.object(forInfoDictionaryKey: "CamAlertGoogleNavKey") as? String, !key.isEmpty {
       GMSServices.provideAPIKey(key)
+      // Places requests from JavaScript read this same value. Do not log it.
+      UserDefaults.standard.set(key, forKey: "CamAlertGoogleNavKey")
     }
 #endif
     let delegate = ReactNativeDelegate()

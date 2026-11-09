@@ -59,6 +59,9 @@ test("the route bar is one horizontal line and the terms dialog is not repeated"
   assert.match(screen, /mapPadding=/);
   assert.match(screen, /SystemSafeArea/);
   assert.match(screen, /footerEnabled=\{false\}/);
+  assert.match(screen, /clearTimeout/);
+  assert.match(screen, /PLACES_DEBOUNCE_MS/);
+  assert.match(screen, /placeDetailsLocation/);
   assert.match(screen, /accessibilityLabel=\{copy\.layers\}/);
   assert.match(screen, /styles\.speaker/);
   assert.doesNotMatch(screen, /sideButton|fetch\(|places\.googleapis|MKLocalSearch|CLGeocoder|MKDirections/);
