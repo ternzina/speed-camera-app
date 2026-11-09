@@ -1,10 +1,10 @@
-import { formatDistance, formatDuration } from "./route-guidance.js";
+import { formatDistance } from "./route-guidance.js";
 
 const CAPTIONS = {
-  ru: ["Осталось", "Время", "Прибытие"],
-  uk: ["Залишилось", "Час", "Прибуття"],
-  en: ["Left", "Time", "Arrival"],
-  pl: ["Zostało", "Czas", "Przyjazd"],
+  ru: ["Осталось", "Прибытие"],
+  uk: ["Залишилось", "Прибуття"],
+  en: ["Remaining", "Arrival"],
+  pl: ["Zostało", "Przyjazd"],
 };
 
 export function formatClock(etaSeconds, nowMs = Date.now()) {
@@ -27,8 +27,7 @@ export function routeSummary(language, progress, nowMs = Date.now()) {
   }
   return [
     { value: shownDistance(language, progress.meters), caption: captions[0] },
-    { value: formatDuration(language, progress.seconds) || "—", caption: captions[1] },
-    { value: formatClock(progress.seconds, nowMs), caption: captions[2] },
+    { value: formatClock(progress.seconds, nowMs), caption: captions[1] },
   ];
 }
 
@@ -49,7 +48,10 @@ export function barScale(available, widths) {
 }
 
 export function summaryItemWidths(items, valueSize = 18, captionSize = 11) {
-  return items.map(item => Math.max(textWidth(item.value, valueSize), textWidth(item.caption, captionSize)) + 16);
+  const widths = items.map(item => Math.max(textWidth(item.value, valueSize), textWidth(item.caption, captionSize)) + 16);
+  if (widths.length !== 2) return widths;
+  const column = Math.max(widths[0], widths[1]);
+  return [column, column];
 }
 
 export const IPHONE_15_WIDTH = 393;

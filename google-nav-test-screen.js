@@ -497,7 +497,7 @@ function RouteBar({ items, palette }) {
       {items.map((item, index) => (
         <View key={item.caption} style={styles.summaryItem}>
           {index > 0 && <View style={[styles.divider, { backgroundColor: palette.line }]} />}
-          <View style={styles.summaryCopy}>
+          <View style={[styles.summaryCopy, { width: widths[index] }]}>
             <Text numberOfLines={1} maxFontSizeMultiplier={1.3} style={[styles.summaryValue, { color: palette.ink }]}>{item.value}</Text>
             <Text numberOfLines={1} maxFontSizeMultiplier={1.3} style={[styles.summaryCaption, { color: palette.muted }]}>{item.caption}</Text>
           </View>

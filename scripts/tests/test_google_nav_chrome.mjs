@@ -6,21 +6,28 @@ import {
 } from "../../google-nav-chrome.js";
 import { lookupDestinations, parseCoordinate } from "../../google-nav-search.js";
 
-test("the route summary is one row of distance, duration, and clock", () => {
+test("the route summary is distance and arrival in two equal columns", () => {
   const now = Date.UTC(2026, 10, 9, 10, 2, 0);
   const row = routeSummary("ru", { meters: 7300, seconds: 600 }, now);
-  assert.deepEqual(row.map(item => item.caption), ["Осталось", "Время", "Прибытие"]);
+  assert.deepEqual(row.map(item => item.caption), ["Осталось", "Прибытие"]);
   assert.equal(row[0].value, "7,3 км");
-  assert.equal(row[1].value, "10 мин");
-  assert.match(row[2].value, /^\d{2}:\d{2}$/);
-  assert.equal(row[2].value.includes("примерно"), false);
+  assert.match(row[1].value, /^\d{2}:\d{2}$/);
+  assert.equal(row[1].value.includes("примерно"), false);
+  assert.equal(row.some(item => item.caption === "Время"), false);
   for (const item of row) {
     assert.equal(item.value.includes("\n"), false);
     assert.equal(item.caption.includes(item.value), false);
   }
+  const widths = summaryItemWidths(row);
+  assert.equal(widths.length, 2);
+  assert.equal(widths[0], widths[1]);
   const uk = routeSummary("uk", { meters: 7300, seconds: 600 }, now);
   assert.equal(uk[0].value, "7,3 км");
-  assert.equal(uk[0].caption, "Залишилось");
+  assert.deepEqual(uk.map(item => item.caption), ["Залишилось", "Прибуття"]);
+  const en = routeSummary("en", { meters: 7300, seconds: 600 }, now);
+  assert.deepEqual(en.map(item => item.caption), ["Remaining", "Arrival"]);
+  const pl = routeSummary("pl", { meters: 7300, seconds: 600 }, now);
+  assert.deepEqual(pl.map(item => item.caption), ["Zostało", "Przyjazd"]);
   const wide = ["Швидкість і червоне світло", "Контроль червоного світла", "Завершити поїздку"];
   for (const label of wide) assert.ok(textWidth(label, 16) < 393 - 48, label);
 });
@@ -34,7 +41,7 @@ test("iPhone 15 width keeps the summary on one line", () => {
       assert.equal(scale, 1, `${language} ${width}`);
     }
   }
-  const narrow = barScale(180, [100, 100, 100]);
+  const narrow = barScale(180, [100, 100]);
   assert.ok(narrow < 1 && narrow > 0.5);
 });
 
