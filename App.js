@@ -38,7 +38,7 @@ import { cameraAlertDecision, cameraWarningsEnabled, mergeStoredSettings } from 
 import { searchLegalNotices, statusLabel } from "./legal-notices";
 import IosRouteScreen from "./ios-route-screen";
 import { isGoogleNavTestApp } from "./google-nav-gate";
-import { skipRepeatedCameraSpeech } from "./navtest-speech";
+import { noteNavtestCameraSpeech, resetNavtestCameraSpeech, skipRepeatedCameraSpeech, skipSharedNavtestSpeech } from "./navtest-speech";
 import GoogleNavTestScreen from "./google-nav-test";
 import { calculateRoutes } from "./ios-mapkit-directions";
 import {
@@ -402,6 +402,7 @@ async function processBackgroundLocation({ data: taskData, error }) {
 
   const now = Date.now();
   if (bgLastAlert.country === session.country && bgLastAlert.id === cam.id && now - bgLastAlert.at < 45000 && bgLastAlert.distance - cam.distance < 250) return;
+  if (isGoogleNavTestApp() && skipSharedNavtestSpeech(cam)) return;
   bgLastAlert = { id: cam.id, at: now, distance: cam.distance, country: session.country };
 
   const message = cameraAlertCopy(bgSettings.language, cam, speedKmh);
@@ -436,6 +437,7 @@ async function processBackgroundLocation({ data: taskData, error }) {
         await saveSpeechStatus("already-speaking");
       } else {
         await saveSpeechStatus("requested");
+        if (isGoogleNavTestApp()) noteNavtestCameraSpeech(cam);
         const outcome = await Speech.speakAndWait(message.speech, { language: message.locale, rate: 0.95 });
         await saveSpeechStatus(outcome);
       }
@@ -918,6 +920,7 @@ export default function App() {
     if (!cam || cam.distance > threshold) return;
     const last = lastSpoken.current;
     if (last.id === cam.id && last.distance - cam.distance < 250) return;
+    if (isGoogleNavTestApp() && skipSharedNavtestSpeech(cam)) return;
 
     const over = isSpeedOverLimit(currentSpeedKmh, currentSpeedAvailable, cam.speed_limit);
     presentCameraAlert(cam, currentSpeedKmh, currentSpeedAvailable);
@@ -927,6 +930,7 @@ export default function App() {
     }
     if (decision.voice) {
       const message = cameraAlertCopy(settings.language, cam, currentSpeedKmh, currentSpeedAvailable);
+      if (isGoogleNavTestApp()) noteNavtestCameraSpeech(cam);
       Speech.stop();
       Speech.speak(message.speech, { language: message.locale, rate: 0.95 });
     }
@@ -1010,9 +1014,10 @@ export default function App() {
               polandVisualAlertCameraId.current = String(point.id);
             }
 
-            const repeatedNavtestSpeech = isGoogleNavTestApp() && skipRepeatedCameraSpeech(navtestPolandSpoken.current, point);
+            const repeatedNavtestSpeech = isGoogleNavTestApp() && (skipRepeatedCameraSpeech(navtestPolandSpoken.current, point) || skipSharedNavtestSpeech(point));
             if (point.distance <= threshold && settings.voice && !repeatedNavtestSpeech) {
               if (isGoogleNavTestApp()) navtestPolandSpoken.current = { id: String(point.id), distance: point.distance };
+              if (isGoogleNavTestApp()) noteNavtestCameraSpeech(point);
               const rounded = Math.max(100, Math.round(point.distance / 100) * 100);
 
               const kind =
@@ -1173,6 +1178,7 @@ export default function App() {
     dismissCameraAlert();
     polandVisualAlertCameraId.current = null;
     navtestPolandSpoken.current = { id: null, distance: Infinity };
+    if (isGoogleNavTestApp()) resetNavtestCameraSpeech();
     plSectionIdRef.current = null;
     sectionPaceRef.current = null;
     if (averageSectionEndTimer.current) clearTimeout(averageSectionEndTimer.current);

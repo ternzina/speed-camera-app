@@ -108,7 +108,7 @@ test("end trip sits below the tool row and camera warnings stay", () => {
   assert.doesNotMatch(endStyle, /position: "absolute"|top:|bottom: -/);
   const app = fs.readFileSync(new URL("../../App.js", import.meta.url), "utf8");
   assert.match(app, /function speakWarning/);
-  assert.match(app, /isGoogleNavTestApp\(\) && skipRepeatedCameraSpeech/);
+  assert.match(app, /isGoogleNavTestApp\(\) && \(skipRepeatedCameraSpeech/);
   assert.match(screen, /subscribeCameraSpeech/);
 });
 

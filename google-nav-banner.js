@@ -18,6 +18,10 @@ export function googleAudioMode({ cameraSpeaking, guiding, voiceEnabled }) {
   return "alerts-and-guidance";
 }
 
+export function googleBackgroundLocationEnabled({ guiding, tripActive } = {}) {
+  return !!(guiding && tripActive);
+}
+
 export function navChrome({ guiding = false, routed = false, hasPoint = false } = {}) {
   return {
     search: !guiding,

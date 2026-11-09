@@ -5,7 +5,7 @@ import {
   NavigationView, RouteStatus, TaskRemovedBehavior, TravelMode, useNavigation,
 } from "@googlemaps/react-native-navigation-sdk";
 import { subscribeCameraSpeech } from "./camera-speech";
-import { cameraBanner, googleAudioMode, navChrome } from "./google-nav-banner";
+import { cameraBanner, googleAudioMode, googleBackgroundLocationEnabled, navChrome } from "./google-nav-banner";
 import { keyboardClearance, routeSummary, suggestionViewport, summaryFit } from "./google-nav-chrome";
 import { lookupDestinations } from "./google-nav-search";
 import { autocompletePlaces, placeDetailsLocation, PLACES_DEBOUNCE_MS, placesLanguage, reduceSearchSchedule } from "./google-places";
@@ -114,6 +114,16 @@ function GoogleNavBody({
     alive.current = true;
     return () => { alive.current = false; };
   }, []);
+
+  function setRoadSnapBackground(enabled) {
+    if (!ready.current) return;
+    try { controllerRef.current.setBackgroundLocationUpdatesEnabled(!!enabled); } catch (_) {}
+  }
+
+  useEffect(() => {
+    setRoadSnapBackground(googleBackgroundLocationEnabled({ guiding, tripActive }));
+    return () => setRoadSnapBackground(false);
+  }, [guiding, tripActive]);
 
   useEffect(() => {
     const frame = Keyboard.addListener("keyboardWillChangeFrame", event => {
@@ -306,6 +316,7 @@ function GoogleNavBody({
 
   async function endRoute() {
     guidingRef.current = false;
+    setRoadSnapBackground(false);
     setGuiding(false);
     setRouted(false);
     setPoint(null);
@@ -443,7 +454,7 @@ function GoogleNavBody({
             </Pressable>
           )}
           {tripActive && (
-            <Pressable accessibilityRole="button" onPress={onStopTrip} style={styles.endTrip}>
+            <Pressable accessibilityRole="button" onPress={() => { setRoadSnapBackground(false); onStopTrip(); }} style={styles.endTrip}>
               <Text numberOfLines={1} maxFontSizeMultiplier={1} adjustsFontSizeToFit minimumFontScale={0.8} style={[styles.secondaryText, { color: palette.ink }]}>{copy.endTrip}</Text>
             </Pressable>
           )}

@@ -1,8 +1,8 @@
 import assert from "node:assert/strict";
 import fs from "node:fs";
 import test from "node:test";
-import { cameraBanner, googleAudioMode, navChrome } from "../../google-nav-banner.js";
-import { skipRepeatedCameraSpeech } from "../../navtest-speech.js";
+import { cameraBanner, googleAudioMode, googleBackgroundLocationEnabled, navChrome } from "../../google-nav-banner.js";
+import { noteNavtestCameraSpeech, resetNavtestCameraSpeech, skipRepeatedCameraSpeech, skipSharedNavtestSpeech } from "../../navtest-speech.js";
 
 const root = new URL("../../", import.meta.url);
 const read = (name) => fs.readFileSync(new URL(name, root), "utf8");
@@ -82,7 +82,7 @@ test("navtest skips a repeated non-UA camera phrase and production still speaks"
   assert.equal(skipRepeatedCameraSpeech({ id: null, distance: Infinity }, { id: "pl-1", distance: 200 }), false);
   const app = read("App.js");
   const branch = app.slice(app.indexOf('if (selectedCountry !== "UA")'), app.indexOf("const n = findNearestAny"));
-  const guard = branch.indexOf("isGoogleNavTestApp() && skipRepeatedCameraSpeech");
+  const guard = branch.indexOf("isGoogleNavTestApp() && (skipRepeatedCameraSpeech");
   const stop = branch.indexOf("Speech.stop()");
   const speak = branch.indexOf("Speech.speak(");
   assert.ok(guard > 0 && guard < stop && stop < speak);
@@ -97,6 +97,45 @@ test("navtest skips a repeated non-UA camera phrase and production still speaks"
   assert.match(format, /GMSNavigationRouteCalloutFormatDistance/);
   assert.doesNotMatch(format, /None|Hidden|Disabled/);
   assert.doesNotMatch(screen, /routeCalloutFormat|setRouteCallout|navigationFooterEnabled/);
+});
+
+test("background road-snap updates run only while guidance and the trip are both active", () => {
+  assert.equal(googleBackgroundLocationEnabled({ guiding: true, tripActive: true }), true);
+  assert.equal(googleBackgroundLocationEnabled({ guiding: true, tripActive: false }), false);
+  assert.equal(googleBackgroundLocationEnabled({ guiding: false, tripActive: true }), false);
+  assert.equal(googleBackgroundLocationEnabled(), false);
+  const screen = read("google-nav-test-screen.js");
+  assert.match(screen, /setBackgroundLocationUpdatesEnabled/);
+  assert.match(screen, /googleBackgroundLocationEnabled\(\{ guiding, tripActive \}\)/);
+  assert.match(screen, /setRoadSnapBackground\(false\); onStopTrip\(\)/);
+  const end = screen.slice(screen.indexOf("async function endRoute"), screen.indexOf("function showLocation"));
+  assert.match(end, /setRoadSnapBackground\(false\)/);
+  assert.doesNotMatch(screen, /simulateLocations|GMSLocationSimulator/);
+});
+
+test("navtest shares the 250 m camera skip between foreground and background", () => {
+  resetNavtestCameraSpeech();
+  assert.equal(skipSharedNavtestSpeech({ id: "pl-1", distance: 300 }), false);
+  noteNavtestCameraSpeech({ id: "pl-1", distance: 400 });
+  assert.equal(skipSharedNavtestSpeech({ id: "pl-1", distance: 280 }), true);
+  assert.equal(skipSharedNavtestSpeech({ id: "pl-1", distance: 140 }), false);
+  assert.equal(skipRepeatedCameraSpeech({ id: "pl-1", distance: 400 }, { id: "pl-1", distance: 280 }), true);
+  noteNavtestCameraSpeech({ id: "ua-9", distance: 500 });
+  assert.equal(skipSharedNavtestSpeech({ id: "ua-9", distance: 460 }), true);
+  resetNavtestCameraSpeech();
+  assert.equal(skipSharedNavtestSpeech({ id: "ua-9", distance: 460 }), false);
+  const app = read("App.js");
+  const background = app.slice(app.indexOf("async function processBackgroundLocation"), app.indexOf("function storedCountryCodes"));
+  const shared = background.indexOf("isGoogleNavTestApp() && skipSharedNavtestSpeech");
+  const noted = background.indexOf("isGoogleNavTestApp()) noteNavtestCameraSpeech");
+  assert.ok(shared > 0 && noted > shared);
+  const warning = app.slice(app.indexOf("function speakWarning"), app.indexOf("async function startTracking"));
+  const last = warning.indexOf("last.distance - cam.distance < 250");
+  const sharedWarning = warning.indexOf("isGoogleNavTestApp() && skipSharedNavtestSpeech");
+  assert.ok(last > 0 && sharedWarning > last);
+  const stopping = app.slice(app.indexOf("function stopTracking"), app.indexOf("const backgroundBusy"));
+  assert.match(stopping, /stopLocationUpdatesAsync\(BACKGROUND_LOCATION_TASK\)|stopBackground\(\)/);
+  assert.match(stopping, /isGoogleNavTestApp\(\)\) resetNavtestCameraSpeech\(\)/);
 });
 
 test("search, route, buttons, and warnings have RU UK EN and PL copy", () => {
