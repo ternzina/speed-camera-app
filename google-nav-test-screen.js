@@ -6,7 +6,7 @@ import {
 } from "@googlemaps/react-native-navigation-sdk";
 import { subscribeCameraSpeech } from "./camera-speech";
 import { cameraBanner, googleAudioMode, navChrome } from "./google-nav-banner";
-import { barScale, keyboardClearance, routeSummary, suggestionViewport, summaryItemWidths } from "./google-nav-chrome";
+import { keyboardClearance, routeSummary, suggestionViewport, summaryFit } from "./google-nav-chrome";
 import { lookupDestinations } from "./google-nav-search";
 import { autocompletePlaces, placeDetailsLocation, PLACES_DEBOUNCE_MS, placesLanguage, reduceSearchSchedule } from "./google-places";
 import { readPlacesKey } from "./google-places-key";
@@ -443,8 +443,8 @@ function GoogleNavBody({
             </Pressable>
           )}
           {tripActive && (
-            <Pressable accessibilityRole="button" onPress={onStopTrip} style={styles.secondary}>
-              <Text numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.75} style={[styles.secondaryText, { color: palette.ink }]}>{copy.endTrip}</Text>
+            <Pressable accessibilityRole="button" onPress={onStopTrip} style={styles.endTrip}>
+              <Text numberOfLines={1} maxFontSizeMultiplier={1} adjustsFontSizeToFit minimumFontScale={0.8} style={[styles.secondaryText, { color: palette.ink }]}>{copy.endTrip}</Text>
             </Pressable>
           )}
         </View>
@@ -490,16 +490,15 @@ function MapTools({ copy, palette, voiceEnabled, onToggleVoice, layersOpen, setL
 
 function RouteBar({ items, palette }) {
   const { width } = useWindowDimensions();
-  const widths = summaryItemWidths(items);
-  const scale = barScale(Math.max(160, width - 48), widths);
+  const fit = summaryFit(items, Math.max(160, width - 32));
   return (
-    <View style={[styles.summary, { backgroundColor: palette.panel, transform: [{ scale }] }]}>
+    <View style={[styles.summary, { backgroundColor: palette.panel }]}>
       {items.map((item, index) => (
         <View key={item.caption} style={styles.summaryItem}>
           {index > 0 && <View style={[styles.divider, { backgroundColor: palette.line }]} />}
-          <View style={[styles.summaryCopy, { width: widths[index] }]}>
-            <Text numberOfLines={1} maxFontSizeMultiplier={1.3} style={[styles.summaryValue, { color: palette.ink }]}>{item.value}</Text>
-            <Text numberOfLines={1} maxFontSizeMultiplier={1.3} style={[styles.summaryCaption, { color: palette.muted }]}>{item.caption}</Text>
+          <View style={[styles.summaryCopy, { width: fit.widths[index] }]}>
+            <Text numberOfLines={1} maxFontSizeMultiplier={1} style={[styles.summaryValue, { color: palette.ink, fontSize: fit.valueSize }]}>{item.value}</Text>
+            <Text numberOfLines={1} maxFontSizeMultiplier={1} style={[styles.summaryCaption, { color: palette.muted, fontSize: fit.captionSize }]}>{item.caption}</Text>
           </View>
         </View>
       ))}
@@ -546,17 +545,18 @@ const styles = StyleSheet.create({
   note: { color: "#F5B64C", fontWeight: "700", marginHorizontal: 12, marginTop: 6 },
   error: { color: "#9A3412", backgroundColor: "#FFE8D6", borderRadius: 12, overflow: "hidden", fontWeight: "700", marginHorizontal: 12, marginTop: 6, paddingHorizontal: 10, paddingVertical: 8 },
   bottom: { marginHorizontal: 12, marginBottom: 8, gap: 8 },
-  summary: { alignSelf: "center", flexDirection: "row", flexWrap: "nowrap", alignItems: "stretch", borderRadius: 16, paddingVertical: 8, paddingHorizontal: 4 },
+  summary: { alignSelf: "center", maxWidth: "100%", flexDirection: "row", flexWrap: "nowrap", alignItems: "stretch", borderRadius: 16, paddingVertical: 6, paddingHorizontal: 2 },
   summaryItem: { flexDirection: "row", flexGrow: 0, flexShrink: 0, alignItems: "center" },
   divider: { width: 1, alignSelf: "stretch", marginVertical: 2 },
-  summaryCopy: { alignItems: "center", paddingHorizontal: 10 },
+  summaryCopy: { alignItems: "center", justifyContent: "center" },
   summaryValue: { fontSize: 18, fontWeight: "800" },
-  summaryCaption: { fontSize: 11, fontWeight: "600", marginTop: 2 },
+  summaryCaption: { fontSize: 11, fontWeight: "600", marginTop: 1 },
   go: { minHeight: 52, borderRadius: 16, backgroundColor: "#1260E8", alignItems: "center", justifyContent: "center", paddingHorizontal: 16 },
   goText: { color: "#FFFFFF", fontSize: 22, fontWeight: "900" },
   dim: { opacity: 0.45 },
   end: { minHeight: 40, alignItems: "center", justifyContent: "center" },
   endText: { color: "#9A3412", fontSize: 16, fontWeight: "800" },
+  endTrip: { minHeight: 44, marginTop: 6, marginBottom: 16, paddingHorizontal: 8, alignItems: "center", justifyContent: "center" },
   secondary: { minHeight: 44, alignItems: "center", justifyContent: "center" },
   secondaryText: { fontSize: 16, fontWeight: "700" },
 });
