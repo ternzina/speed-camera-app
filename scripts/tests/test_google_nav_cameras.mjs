@@ -1,0 +1,90 @@
+import assert from "node:assert/strict";
+import fs from "node:fs";
+import test from "node:test";
+import { cameraBanner, googleAudioMode, navChrome } from "../../google-nav-banner.js";
+
+const root = new URL("../../", import.meta.url);
+const read = (name) => fs.readFileSync(new URL(name, root), "utf8");
+
+test("the camera banner shows only fields the feed actually has", () => {
+  assert.equal(cameraBanner(null, "Камера скорости"), null);
+  assert.equal(cameraBanner({ latitude: 50 }, "Камера скорости"), null);
+  assert.deepEqual(cameraBanner({ distance: 240.4 }, "Камера скорости"), { distance: 240 });
+  assert.deepEqual(
+    cameraBanner({ distance: 180, type: "speed_camera", speed_limit: 50 }, "Камера скорости"),
+    { type: "Камера скорости", distance: 180, limit: 50 },
+  );
+  assert.deepEqual(cameraBanner({ type: "red_light", speed_limit: "" }, "Red-light camera"), { type: "Red-light camera" });
+  assert.equal(cameraBanner({ speed_limit: "fast" }, ""), null);
+});
+
+test("camera speech pauses Google voice and the banner does not speak", () => {
+  assert.equal(googleAudioMode({ cameraSpeaking: true, guiding: true, voiceEnabled: true }), "silent");
+  assert.equal(googleAudioMode({ cameraSpeaking: false, guiding: true, voiceEnabled: true }), "alerts-and-guidance");
+  assert.equal(googleAudioMode({ cameraSpeaking: false, guiding: true, voiceEnabled: false }), "silent");
+  assert.equal(googleAudioMode({ cameraSpeaking: false, guiding: false, voiceEnabled: true }), "silent");
+  const screen = read("google-nav-test-screen.js");
+  assert.match(screen, /googleAudioMode\(/);
+  assert.match(screen, /cameraBanner\(/);
+  assert.doesNotMatch(screen, /Speech\.speak|GMSLocationSimulator|simulateLocations/);
+});
+
+test("navigation chrome changes with the route and does not duplicate the maneuver", () => {
+  const map = navChrome({});
+  assert.equal(map.search, true);
+  assert.equal(map.maneuver, false);
+  assert.equal(map.ordinaryMap, true);
+  assert.equal(map.routeBar, false);
+  const preview = navChrome({ routed: true, hasPoint: true });
+  assert.equal(preview.go, true);
+  assert.equal(preview.endRoute, true);
+  assert.equal(preview.maneuver, false);
+  assert.equal(preview.following, false);
+  const guiding = navChrome({ guiding: true, routed: true });
+  assert.equal(guiding.search, false);
+  assert.equal(guiding.maneuver, true);
+  assert.equal(guiding.go, false);
+  assert.equal(guiding.routeBar, true);
+  assert.equal(guiding.following, true);
+  const ended = navChrome({});
+  assert.deepEqual(ended, map);
+});
+
+test("warnings stay on the phone GPS feed and ignore the Google route line", () => {
+  const app = read("App.js");
+  const aheadStart = app.indexOf("function findNearestAhead");
+  const ahead = app.slice(aheadStart, app.indexOf("return best;", aheadStart));
+  assert.match(ahead, /angleDiff\(movementHeading,Number\(cam\.direction\)\)>60/);
+  assert.match(ahead, /FORWARD_ANGLE_DEGREES/);
+  assert.doesNotMatch(ahead, /polyline|narrowCamerasToRoute/);
+  const speech = app.slice(app.indexOf("function speakWarning"), app.indexOf("async function startTracking"));
+  assert.match(speech, /last\.distance - cam\.distance < 250/);
+  const tracking = app.slice(app.indexOf("async function startTracking"), app.indexOf("function stopTracking"));
+  assert.match(tracking, /watchPositionAsync/);
+  assert.match(tracking, /AppState\.currentState !== "active"/);
+  const mount = app.slice(app.indexOf("isGoogleNavTestApp() && (iosRouteOpen"), app.indexOf("if (iosRouteOpen)"));
+  assert.match(mount, /camera=\{cameraWarningsEnabled\(settings\) \? ahead : null\}/);
+  assert.match(mount, /if \(foregroundTripRunning \|\| sub\.current\) return true/);
+  assert.doesNotMatch(mount, /watchPositionAsync|simulate/);
+  const screen = read("google-nav-test-screen.js");
+  assert.match(screen, /headerEnabled=\{chrome\.maneuver\}/);
+  assert.match(screen, /recenterButtonEnabled=\{false\}/);
+  assert.match(screen, /setFollowingPerspective\?\.\(CameraPerspective\.TILTED\)/);
+  assert.match(screen, /setNavigationUIEnabled\?\.\(false\)/);
+  assert.doesNotMatch(screen, /copy\.reroute|copy\.pick|copy\.routed/);
+});
+
+test("search, route, buttons, and warnings have RU UK EN and PL copy", () => {
+  const screen = read("google-nav-test-screen.js");
+  for (const text of ["Куда едем?", "Куди їдемо?", "Where to?", "Dokąd jedziemy?", "В путь", "У дорогу", "Start guidance", "W drogę", "Завершить маршрут", "Завершити маршрут", "End route", "Zakończ trasę"]) {
+    assert.match(screen, new RegExp(text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")));
+  }
+  const app = read("App.js");
+  for (const text of ["Поездка", "Поїздка", "Drive", "Jazda", "Рядом", "Поруч", "Nearby", "W pobliżu", "Настройки", "Налаштування", "Settings", "Ustawienia"]) {
+    assert.match(app, new RegExp(text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")));
+  }
+  const labels = app.slice(app.indexOf("function cameraTypeLabel"), app.indexOf("function LawsPage"));
+  for (const text of ["Камера скорости", "Камера швидкості", "Speed camera", "Fotoradar"]) {
+    assert.match(labels, new RegExp(text));
+  }
+});
