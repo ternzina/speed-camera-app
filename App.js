@@ -417,7 +417,7 @@ async function processBackgroundLocation({ data: taskData, error }) {
   const heading = typeof rawHeading === "number" && rawHeading >= 0 ? norm(rawHeading) : null;
   const sectionFix = isGoogleNavTestApp() ? {
     feed: countryFeed(bgCameraFeeds, session.country, data, plData),
-    latitude, longitude, heading, now: Date.now(), timestamp: pos.timestamp,
+    latitude, longitude, heading, accuracy: pos.coords?.accuracy, now: Date.now(), timestamp: pos.timestamp,
     language: bgSettings.language,
     speak: phrases => bgSettings.voice ? speakNavtestPhrases(phrases, bgSettings.language) : Promise.resolve(true),
   } : null;
@@ -1094,7 +1094,7 @@ export default function App() {
           if (isGoogleNavTestApp()) {
             const outcome = await navtestSectionStore().apply({
               feed: activeCountryFeedRef.current,
-              latitude, longitude, heading: h, now: Date.now(), timestamp: pos.timestamp,
+              latitude, longitude, heading: h, accuracy: pos.coords?.accuracy, now: Date.now(), timestamp: pos.timestamp,
               language: settings.language,
               speak: phrases => settings.voice ? speakNavtestPhrases(phrases, settings.language) : Promise.resolve(true),
             });

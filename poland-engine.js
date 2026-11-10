@@ -206,6 +206,34 @@ export function averageSectionSpeech(event, language = "pl") {
 }
 
 const SECTION_MAX_STEP_M = 300;
+const SECTION_ENTRY_M = 180;
+
+function recordedPoints(value) {
+  if (!Array.isArray(value)) return [];
+  return value.map(finitePoint).filter(Boolean);
+}
+
+// A stored road line has to already be on the record. Start and end are not one.
+export function recordedSectionGeometry(section) {
+  for (const key of ["polyline", "geometry", "road_geometry"]) {
+    const points = recordedPoints(section?.[key]);
+    if (points.length >= 3) return points;
+  }
+  return null;
+}
+
+export function midsectionRecognition(section) {
+  return recordedSectionGeometry(section) ? "geometry" : "silent";
+}
+
+function opposedToEndpoints(section, heading) {
+  if (heading == null || !Number.isFinite(Number(heading))) return false;
+  const start = finitePoint(section?.start);
+  const end = finitePoint(section?.end);
+  if (!start || !end) return true;
+  const bearing = bearingDegrees(start.latitude, start.longitude, end.latitude, end.longitude);
+  return angleDiff(Number(heading), bearing) >= 90;
+}
 
 function emptyNavtestSection() {
   return { sectionId: null, pace: null, saidEntry: false, saidOver: false, saidEnd: false, closed: null };
@@ -240,6 +268,8 @@ export function stepNavtestSection(state, input = {}) {
   const hold = { state: current, say: [], stateIfUnsaid: current, event: null, pace: current.pace };
   if (!point || !Number.isFinite(now)) return hold;
   if (input.timestamp != null && Number.isFinite(Number(input.timestamp)) && now - Number(input.timestamp) > 60000) return hold;
+  const accuracy = Number(input.accuracy);
+  if (Number.isFinite(accuracy) && (accuracy < 0 || accuracy > SECTION_ENTRY_M)) return hold;
 
   if (current.closed) {
     const end = finitePoint(current.closed.end);
@@ -252,6 +282,16 @@ export function stepNavtestSection(state, input = {}) {
   }
 
   const event = detectAverageSpeedSection(input.feed || {}, point.latitude, point.longitude, input.heading ?? null, current.sectionId);
+  // Two endpoints cannot show that the car is on the section. The straight line
+  // between them is not a road, so an unobserved middle stays silent.
+  if (!current.sectionId && midsectionRecognition(event?.section) !== "geometry") {
+    if (!event || (event.state !== "entering" && event.state !== "approaching")) {
+      return { state: current, say: [], stateIfUnsaid: current, event: null, pace: null };
+    }
+    if (opposedToEndpoints(event.section, input.heading)) {
+      return { state: current, say: [], stateIfUnsaid: current, event: null, pace: null };
+    }
+  }
   if (!event || event.state === "approaching") return { ...hold, state: current, stateIfUnsaid: current, event };
   const id = String(event.section.id);
   let saidEntry = current.sectionId === id ? current.saidEntry : false;
