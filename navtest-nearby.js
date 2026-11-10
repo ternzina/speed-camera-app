@@ -1,25 +1,39 @@
 import React, { useEffect, useRef, useState } from "react";
 import { ActivityIndicator, Linking, Pressable, Text, View } from "react-native";
+import * as Location from "expo-location";
 import {
-  NEARBY_CATEGORIES, formatNearbyDistance, nearbyCategory, nearbyCopy, nearbyFix, nearbyPlaces,
+  NEARBY_CATEGORIES, createNearbyController, formatNearbyDistance, nearbyCategory, nearbyCopy,
 } from "./google-places";
 import { readPlacesKey } from "./google-places-key";
+
+async function readNearbyFix() {
+  const current = await Location.getForegroundPermissionsAsync();
+  let status = current.status;
+  if (status !== "granted" && current.canAskAgain !== false) {
+    status = (await Location.requestForegroundPermissionsAsync()).status;
+  }
+  if (status !== "granted") return { permission: status === "denied" ? "denied" : status };
+  const position = await Location.getCurrentPositionAsync({ accuracy: Location.Accuracy.Balanced });
+  return {
+    permission: "granted",
+    latitude: position?.coords?.latitude,
+    longitude: position?.coords?.longitude,
+  };
+}
 
 export default function NavtestNearby({ language, coords, permission, onGo, onKind }) {
   const copy = nearbyCopy(language);
   const [categoryId, setCategoryId] = useState(null);
   const [status, setStatus] = useState("idle");
   const [places, setPlaces] = useState([]);
-  const waitRef = useRef(null);
-  const abortRef = useRef(null);
-  const point = nearbyFix(permission, coords);
+  const requests = useRef(null);
+  if (!requests.current) requests.current = createNearbyController();
 
   function choose(id) {
     setCategoryId(id);
     onKind?.(id);
     if (!nearbyCategory(id)?.types?.length) {
-      abortRef.current?.abort();
-      waitRef.current = null;
+      requests.current.stop();
       setPlaces([]);
       setStatus("cameras");
       return;
@@ -27,61 +41,25 @@ export default function NavtestNearby({ language, coords, permission, onGo, onKi
     search(id);
   }
 
-  async function search(id, origin = point) {
-    abortRef.current?.abort();
-    if (!nearbyCategory(id)) return;
-    if (!origin.ok && origin.reason === "denied") {
-      waitRef.current = null;
-      setPlaces([]);
-      setStatus("denied");
-      return;
-    }
-    if (!origin.ok) {
-      waitRef.current = id;
-      setPlaces([]);
-      setStatus("loading");
-      return;
-    }
-    waitRef.current = null;
-    const controller = new AbortController();
-    abortRef.current = controller;
+  async function search(id) {
+    if (!nearbyCategory(id)?.types?.length) return;
+    setPlaces([]);
     setStatus("loading");
-    try {
-      const found = await nearbyPlaces({
-        categoryId: id,
-        latitude: origin.latitude,
-        longitude: origin.longitude,
-        languageCode: language,
-        key: readPlacesKey(),
-        fetch: global.fetch.bind(global),
-        signal: controller.signal,
-      });
-      if (controller.signal.aborted) return;
-      setPlaces(found);
-      setStatus(found.length ? "ready" : "empty");
-    } catch (error) {
-      if (controller.signal.aborted || error?.name === "AbortError") return;
-      setPlaces([]);
-      setStatus("error");
-    }
+    const result = await requests.current.search({
+      categoryId: id,
+      permission,
+      coords,
+      languageCode: language,
+      key: readPlacesKey(),
+      fetch: global.fetch.bind(global),
+      locate: readNearbyFix,
+    });
+    if (result.status === "stale") return;
+    setPlaces(result.places);
+    setStatus(result.status);
   }
 
-  useEffect(() => {
-    if (!waitRef.current) return undefined;
-    if (!point.ok && point.reason === "denied") {
-      waitRef.current = null;
-      setPlaces([]);
-      setStatus("denied");
-      return undefined;
-    }
-    if (!point.ok) return undefined;
-    const id = waitRef.current;
-    waitRef.current = null;
-    search(id, point);
-    return undefined;
-  }, [point.ok, point.reason, point.latitude, point.longitude, permission]);
-
-  useEffect(() => () => abortRef.current?.abort(), []);
+  useEffect(() => () => requests.current?.stop(), []);
 
   return (
     <View style={styles.screen}>
@@ -108,9 +86,9 @@ export default function NavtestNearby({ language, coords, permission, onGo, onKi
         </View>
       )}
       {status === "empty" && <Text maxFontSizeMultiplier={1.4} style={styles.noteText}>{copy.empty}</Text>}
-      {status === "error" && (
+      {(status === "error" || status === "timeout") && (
         <View style={styles.note}>
-          <Text maxFontSizeMultiplier={1.4} style={styles.noteText}>{copy.error}</Text>
+          <Text maxFontSizeMultiplier={1.4} style={styles.noteText}>{status === "timeout" ? copy.timeout : copy.error}</Text>
           <Pressable accessibilityRole="button" onPress={() => search(categoryId)} style={styles.retry}>
             <Text maxFontSizeMultiplier={1.3} style={styles.retryText}>{copy.retry}</Text>
           </Pressable>

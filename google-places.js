@@ -11,6 +11,7 @@ export const PLACE_DETAILS_FIELD_MASK = "location";
 export const NEARBY_FIELD_MASK = "places.id,places.displayName,places.formattedAddress,places.location";
 export const NEARBY_MAX_RESULTS = 10;
 export const NEARBY_RADIUS_M = 5000;
+export const NEARBY_TIMEOUT_MS = 12000;
 export const AUTOCOMPLETE_FIELD_MASK = [
   "suggestions.placePrediction.placeId",
   "suggestions.placePrediction.text.text",
@@ -35,7 +36,7 @@ export const NEARBY_COPY = {
     repair: "Ремонт и шиномонтаж", hospital: "Больница", pharmacy: "Аптека",
     cameras: "Камеры рядом",
     go: "Поехать", loading: "Ищем места…", empty: "Рядом ничего не найдено",
-    error: "Нет сети. Поиск не выполнен", denied: "Нет доступа к геолокации",
+    error: "Нет сети. Поиск не выполнен", timeout: "Поиск не ответил. Проверьте сеть и повторите", denied: "Нет доступа к геолокации",
     settings: "Открыть настройки", retry: "Повторить",
     replaceTitle: "Заменить маршрут?", replaceBody: "Сейчас уже построен маршрут. Заменить его на это место?",
     replace: "Заменить", cancel: "Отмена", meters: "м", km: "км",
@@ -45,7 +46,7 @@ export const NEARBY_COPY = {
     repair: "Ремонт і шиномонтаж", hospital: "Лікарня", pharmacy: "Аптека",
     cameras: "Камери поруч",
     go: "Поїхати", loading: "Шукаємо місця…", empty: "Поруч нічого не знайдено",
-    error: "Немає мережі. Пошук не виконано", denied: "Немає доступу до геолокації",
+    error: "Немає мережі. Пошук не виконано", timeout: "Пошук не відповів. Перевірте мережу та повторіть", denied: "Немає доступу до геолокації",
     settings: "Відкрити налаштування", retry: "Повторити",
     replaceTitle: "Замінити маршрут?", replaceBody: "Зараз уже побудовано маршрут. Замінити його на це місце?",
     replace: "Замінити", cancel: "Скасувати", meters: "м", km: "км",
@@ -55,7 +56,7 @@ export const NEARBY_COPY = {
     repair: "Car repair and tire service", hospital: "Hospital", pharmacy: "Pharmacy",
     cameras: "Nearby cameras",
     go: "Go", loading: "Searching nearby…", empty: "Nothing nearby",
-    error: "No network. The search did not run", denied: "Location permission is denied",
+    error: "No network. The search did not run", timeout: "The search did not answer. Check the network and try again", denied: "Location permission is denied",
     settings: "Open settings", retry: "Try again",
     replaceTitle: "Replace the route?", replaceBody: "A route is already active. Replace it with this place?",
     replace: "Replace", cancel: "Cancel", meters: "m", km: "km",
@@ -65,7 +66,7 @@ export const NEARBY_COPY = {
     repair: "Naprawa i wulkanizacja", hospital: "Szpital", pharmacy: "Apteka",
     cameras: "Kamery w pobliżu",
     go: "Jedź", loading: "Szukamy miejsc…", empty: "W pobliżu nic nie znaleziono",
-    error: "Brak sieci. Wyszukiwanie nie zostało wykonane", denied: "Brak dostępu do lokalizacji",
+    error: "Brak sieci. Wyszukiwanie nie zostało wykonane", timeout: "Wyszukiwanie nie odpowiedziało. Sprawdź sieć i spróbuj ponownie", denied: "Brak dostępu do lokalizacji",
     settings: "Otwórz ustawienia", retry: "Powtórz",
     replaceTitle: "Zastąpić trasę?", replaceBody: "Trasa jest już wyznaczona. Zastąpić ją tym miejscem?",
     replace: "Zastąp", cancel: "Anuluj", meters: "m", km: "km",
@@ -229,6 +230,33 @@ export function nearbyFix(permission, coords) {
   return { ok: true, latitude, longitude };
 }
 
+export function nearbySearchStep(permission, coords) {
+  const fix = nearbyFix(permission, coords);
+  if (fix.ok) return { step: "search", origin: fix };
+  if (fix.reason === "denied") return { step: "denied" };
+  return { step: "locate" };
+}
+
+export function deadline(work, timeoutMs, signal) {
+  return new Promise((resolve, reject) => {
+    let settled = false;
+    const finish = (fn, value) => {
+      if (settled) return;
+      settled = true;
+      clearTimeout(timer);
+      signal?.removeEventListener?.("abort", onAbort);
+      fn(value);
+    };
+    const onAbort = () => finish(reject, placesError("aborted"));
+    const timer = setTimeout(() => finish(reject, placesError("timeout")), timeoutMs);
+    if (signal?.aborted) onAbort();
+    else signal?.addEventListener?.("abort", onAbort, { once: true });
+    Promise.resolve()
+      .then(work)
+      .then(value => finish(resolve, value), error => finish(reject, error));
+  });
+}
+
 export async function nearbyPlaces({ categoryId, latitude, longitude, languageCode, key, fetch, signal }) {
   if (!key) throw placesError("missing-key");
   const category = nearbyCategory(categoryId);
@@ -251,6 +279,56 @@ export async function nearbyPlaces({ categoryId, latitude, longitude, languageCo
   });
   if (!response.ok) throw placesError("places-failed");
   return parseNearbyPlaces(await response.json(), { latitude: lat, longitude: lng });
+}
+
+export async function runNearbySearch({
+  categoryId, permission, coords, languageCode, key, fetch, signal, locate, timeoutMs = NEARBY_TIMEOUT_MS,
+}) {
+  const step = nearbySearchStep(permission, coords);
+  if (step.step === "denied") return { status: "denied", places: [] };
+  let origin = step.origin || null;
+  if (!origin) {
+    const located = await deadline(() => locate({ signal }), timeoutMs, signal);
+    if (located?.permission === "denied") return { status: "denied", places: [] };
+    const fix = nearbyFix("granted", located);
+    if (!fix.ok) throw placesError("timeout");
+    origin = fix;
+  }
+  const places = await deadline(() => nearbyPlaces({
+    categoryId,
+    latitude: origin.latitude,
+    longitude: origin.longitude,
+    languageCode,
+    key,
+    fetch,
+    signal,
+  }), timeoutMs, signal);
+  return { status: places.length ? "ready" : "empty", places };
+}
+
+export function createNearbyController() {
+  let generation = 0;
+  let abort = null;
+  return {
+    async search(args) {
+      const mine = ++generation;
+      abort?.abort();
+      const controller = new AbortController();
+      abort = controller;
+      try {
+        const result = await runNearbySearch({ ...args, signal: controller.signal });
+        if (mine !== generation) return { status: "stale", places: [] };
+        return result;
+      } catch (error) {
+        if (mine !== generation || error?.code === "aborted") return { status: "stale", places: [] };
+        return { status: error?.code === "timeout" ? "timeout" : "error", places: [] };
+      }
+    },
+    stop() {
+      generation += 1;
+      abort?.abort();
+    },
+  };
 }
 
 export function nearbyHandoff(place, routeActive) {

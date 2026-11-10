@@ -3,8 +3,8 @@ import fs from "node:fs";
 import test from "node:test";
 import {
   NEARBY_CATEGORIES, NEARBY_COPY, NEARBY_FIELD_MASK, NEARBY_MAX_RESULTS, NEARBY_RADIUS_M,
-  NAVTEST_BUNDLE, PLACES_NEARBY_URL, formatNearbyDistance, nearbyCategory, nearbyCopy,
-  nearbyFix, nearbyHandoff, nearbyPlaces, parseNearbyPlaces,
+  NAVTEST_BUNDLE, PLACES_NEARBY_URL, createNearbyController, formatNearbyDistance, nearbyCategory, nearbyCopy,
+  nearbyFix, nearbyHandoff, nearbyPlaces, nearbySearchStep, parseNearbyPlaces,
 } from "../../google-places.js";
 
 const root = new URL("../../", import.meta.url);
@@ -35,7 +35,7 @@ test("place categories use Places API (New) table A types and cameras stays loca
 });
 
 test("category labels and every nearby message exist in four languages", () => {
-  const keys = ["title", "gas", "parking", "food", "repair", "hospital", "pharmacy", "cameras", "go", "loading", "empty", "error", "denied", "settings", "retry", "replaceTitle", "replaceBody", "replace", "cancel", "meters", "km"];
+  const keys = ["title", "gas", "parking", "food", "repair", "hospital", "pharmacy", "cameras", "go", "loading", "empty", "error", "timeout", "denied", "settings", "retry", "replaceTitle", "replaceBody", "replace", "cancel", "meters", "km"];
   assert.deepEqual(Object.keys(NEARBY_COPY).sort(), ["en", "pl", "ru", "uk"]);
   for (const language of ["ru", "uk", "en", "pl"]) {
     const copy = nearbyCopy(language);
@@ -55,6 +55,8 @@ test("category labels and every nearby message exist in four languages", () => {
   assert.equal(nearbyCopy("ru").gas, "АЗС");
   assert.equal(nearbyCopy("uk").gas, "АЗС");
   assert.equal(nearbyCopy("pl").gas, "Stacja paliw");
+  assert.equal(nearbyCopy("ru").timeout, "Поиск не ответил. Проверьте сеть и повторите");
+  assert.equal(nearbyCopy("en").timeout, "The search did not answer. Check the network and try again");
   assert.equal(nearbyCopy("ru").cameras, "Камеры рядом");
   assert.equal(nearbyCopy("uk").cameras, "Камери поруч");
   assert.equal(nearbyCopy("en").cameras, "Nearby cameras");
@@ -67,6 +69,131 @@ test("a granted fix can search and a denied or missing fix cannot", () => {
   assert.deepEqual(nearbyFix("undetermined", ORIGIN), { ok: false, reason: "waiting" });
   assert.equal(nearbyFix("granted", null).reason, "waiting");
   assert.equal(nearbyFix("granted", { latitude: Number.NaN, longitude: 0 }).reason, "waiting");
+  assert.equal(nearbySearchStep("granted", ORIGIN).step, "search");
+  assert.equal(nearbySearchStep("denied", ORIGIN).step, "denied");
+  assert.equal(nearbySearchStep("granted", null).step, "locate");
+  assert.equal(nearbySearchStep("unknown", null).step, "locate");
+});
+
+function okFetch(payload) {
+  return async () => ({ ok: true, json: async () => payload });
+}
+
+test("a place search uses the current fix and does not ask for another one", async () => {
+  let located = 0;
+  const result = await createNearbyController().search({
+    categoryId: "gas",
+    permission: "granted",
+    coords: ORIGIN,
+    languageCode: "ru",
+    key: "test-key",
+    fetch: okFetch({ places: [place("station", { name: "АЗС", address: "вул. Тестова, 1" })] }),
+    locate: () => { located += 1; },
+  });
+  assert.equal(located, 0);
+  assert.equal(result.status, "ready");
+  assert.equal(result.places[0].name, "АЗС");
+  assert.equal(result.places[0].address, "вул. Тестова, 1");
+  assert.equal("rating" in result.places[0], false);
+  assert.ok(result.places[0].distance >= 0);
+});
+
+test("without a trip fix the search takes one location read and then one request", async () => {
+  const calls = [];
+  let located = 0;
+  const result = await createNearbyController().search({
+    categoryId: "gas",
+    permission: "unknown",
+    coords: null,
+    languageCode: "uk",
+    key: "test-key",
+    locate: async () => {
+      located += 1;
+      return { permission: "granted", latitude: 50.45, longitude: 30.5234 };
+    },
+    fetch: async (url, options) => {
+      calls.push(JSON.parse(options.body));
+      return { ok: true, json: async () => ({ places: [place("station", { name: "АЗС", address: "вул. Тестова, 1" })] }) };
+    },
+  });
+  assert.equal(located, 1);
+  assert.equal(calls.length, 1);
+  assert.deepEqual(calls[0].includedTypes, ["gas_station"]);
+  assert.equal(calls[0].locationRestriction.circle.center.latitude, 50.45);
+  assert.equal(result.status, "ready");
+  assert.equal(result.places[0].name, "АЗС");
+});
+
+test("a denied location never calls the network", async () => {
+  let called = 0;
+  const result = await createNearbyController().search({
+    categoryId: "pharmacy",
+    permission: "denied",
+    coords: ORIGIN,
+    key: "test-key",
+    fetch: () => { called += 1; },
+    locate: () => { called += 1; },
+  });
+  assert.equal(called, 0);
+  assert.equal(result.status, "denied");
+  assert.deepEqual(result.places, []);
+});
+
+test("a network error ends the search without inventing places", async () => {
+  const result = await createNearbyController().search({
+    categoryId: "hospital",
+    permission: "granted",
+    coords: ORIGIN,
+    key: "test-key",
+    fetch: async () => ({ ok: false, status: 503, json: async () => ({}) }),
+    locate: () => { throw new Error("no locate"); },
+  });
+  assert.equal(result.status, "error");
+  assert.deepEqual(result.places, []);
+});
+
+test("a request that never settles ends as a timeout", async () => {
+  const result = await createNearbyController().search({
+    categoryId: "gas",
+    permission: "granted",
+    coords: ORIGIN,
+    key: "test-key",
+    timeoutMs: 20,
+    fetch: () => new Promise(() => {}),
+    locate: () => { throw new Error("no locate"); },
+  });
+  assert.equal(result.status, "timeout");
+  assert.deepEqual(result.places, []);
+});
+
+test("opening the same category again replaces the hung request", async () => {
+  const controller = createNearbyController();
+  let fetches = 0;
+  const first = controller.search({
+    categoryId: "gas",
+    permission: "granted",
+    coords: ORIGIN,
+    key: "test-key",
+    fetch: (_url, options) => new Promise((_resolve, reject) => {
+      fetches += 1;
+      options.signal.addEventListener("abort", () => reject(Object.assign(new Error("aborted"), { name: "AbortError", code: "aborted" })));
+    }),
+    locate: () => { throw new Error("no locate"); },
+  });
+  const second = controller.search({
+    categoryId: "gas",
+    permission: "granted",
+    coords: { latitude: 50.451, longitude: 30.524 },
+    key: "test-key",
+    fetch: okFetch({ places: [place("next", { name: "Друга АЗС", address: "вул. Друга, 2", latitude: 50.452 })] }),
+    locate: () => { throw new Error("no locate"); },
+  });
+  const [stale, fresh] = await Promise.all([first, second]);
+  assert.equal(stale.status, "stale");
+  assert.equal(fresh.status, "ready");
+  assert.equal(fresh.places[0].name, "Друга АЗС");
+  assert.equal(fetches, 1);
+  assert.equal(fresh.places.length, 1);
 });
 
 test("nearby search uses one fixture request and keeps only real fields", async () => {
@@ -209,7 +336,11 @@ test("navtest nearby is list-only and hands the chosen point to the existing Goo
   assert.match(app, /averageSectionSpeech/);
   assert.match(app, /if \(foregroundTripRunning \|\| sub\.current\) return true/);
   assert.doesNotMatch(nearby, /MapView|react-native-maps|places\.googleapis|AIza|console\.log/);
-  assert.equal(nearby.match(/nearbyPlaces\(/g).length, 1);
+  assert.equal(nearby.match(/createNearbyController\(/g).length, 1);
+  assert.match(places, /runNearbySearch\(/);
+  assert.match(nearby, /getCurrentPositionAsync/);
+  assert.doesNotMatch(nearby, /watchPositionAsync|startTracking|point\.latitude/);
+  assert.match(nearby, /status === "timeout"/);
   assert.match(nearby, /status === "denied"/);
   assert.match(nearby, /status === "empty"/);
   assert.match(nearby, /status === "error"/);
