@@ -5,6 +5,7 @@ import {
   NEARBY_CATEGORIES, createNearbyController, formatNearbyDistance, nearbyCategory, nearbyCopy,
 } from "./google-places";
 import { readPlacesKey } from "./google-places-key";
+import { savedPlaceCopy } from "./navtest-saved-places";
 
 async function readNearbyFix() {
   const current = await Location.getForegroundPermissionsAsync();
@@ -21,8 +22,9 @@ async function readNearbyFix() {
   };
 }
 
-export default function NavtestNearby({ language, coords, permission, onGo, onKind }) {
+export default function NavtestNearby({ language, coords, permission, onGo, onKind, onFavorite }) {
   const copy = nearbyCopy(language);
+  const savedCopy = savedPlaceCopy(language);
   const [categoryId, setCategoryId] = useState(null);
   const [status, setStatus] = useState("idle");
   const [places, setPlaces] = useState([]);
@@ -109,9 +111,14 @@ export default function NavtestNearby({ language, coords, permission, onGo, onKi
           <Text numberOfLines={2} maxFontSizeMultiplier={1.4} style={styles.name}>{place.name}</Text>
           {!!place.address && <Text numberOfLines={2} maxFontSizeMultiplier={1.4} style={styles.address}>{place.address}</Text>}
           {!!distanceLabel && <Text maxFontSizeMultiplier={1.3} style={styles.meta}>{distanceLabel}</Text>}
-          <Pressable accessibilityRole="button" onPress={() => onGo?.(place)} style={styles.go}>
-            <Text maxFontSizeMultiplier={1.3} style={styles.goText}>{copy.go}</Text>
-          </Pressable>
+          <View style={styles.actions}>
+            <Pressable accessibilityRole="button" accessibilityLabel={savedCopy.favorite} onPress={() => onFavorite?.(place)} style={styles.heart}>
+              <Text maxFontSizeMultiplier={1.3} style={styles.heartGlyph}>♡</Text>
+            </Pressable>
+            <Pressable accessibilityRole="button" onPress={() => onGo?.(place)} style={styles.go}>
+              <Text maxFontSizeMultiplier={1.3} style={styles.goText}>{copy.go}</Text>
+            </Pressable>
+          </View>
         </View>
         );
       })}
@@ -138,6 +145,9 @@ const styles = {
   name: { fontSize: 16, lineHeight: 21, fontWeight: "800", color: "#10263B" },
   address: { fontSize: 13, lineHeight: 18, color: "#526A80" },
   meta: { fontSize: 13, lineHeight: 18, fontWeight: "700", color: "#10263B" },
-  go: { marginTop: 6, minHeight: 44, borderRadius: 14, backgroundColor: "#1260E8", alignItems: "center", justifyContent: "center" },
+  actions: { marginTop: 6, flexDirection: "row", flexWrap: "nowrap", alignItems: "center", gap: 8 },
+  heart: { width: 44, height: 44, borderRadius: 14, borderWidth: 1, borderColor: "#e4e8ed", alignItems: "center", justifyContent: "center" },
+  heartGlyph: { fontSize: 18, color: "#9A3412" },
+  go: { flex: 1, minHeight: 44, borderRadius: 14, backgroundColor: "#1260E8", alignItems: "center", justifyContent: "center" },
   goText: { color: "#fff", fontWeight: "800" },
 };

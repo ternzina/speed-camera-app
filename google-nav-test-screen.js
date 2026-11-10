@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
-import { AppState, Keyboard, Pressable, ScrollView, StyleSheet, Text, TextInput, useWindowDimensions, View } from "react-native";
+import { Alert, AppState, Keyboard, Pressable, ScrollView, StyleSheet, Text, TextInput, useWindowDimensions, View } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
   AudioGuidance, CameraPerspective, MapType, NavigationNightMode, NavigationProvider, NavigationSessionStatus,
   NavigationView, RouteStatus, TaskRemovedBehavior, TravelMode, useNavigation,
@@ -10,6 +11,10 @@ import { keyboardClearance, routeSummary, suggestionViewport, summaryFit } from 
 import { lookupDestinations } from "./google-nav-search";
 import { autocompletePlaces, placeDetailsLocation, PLACES_DEBOUNCE_MS, placesLanguage, reduceSearchSchedule } from "./google-places";
 import { readPlacesKey } from "./google-places-key";
+import {
+  addFavorite, assignSavedSlot, clearSavedSlot, emptySavedPlaces, loadSavedPlaces, removeFavorite,
+  savedPlaceCopy, savedPlaceFromSuggestion, savedPlaceRoute, storeSavedPlaces,
+} from "./navtest-saved-places";
 import { withNavigationWindow } from "./navigation-readiness";
 import SystemSafeArea from "./system-safe-area";
 
@@ -81,6 +86,7 @@ function GoogleNavBody({
   picking, tripActive, onStartTrip, onStopTrip, onClosePick, handoff, onRouteActive,
 }) {
   const copy = COPY[language] || COPY.ru;
+  const places = savedPlaceCopy(language);
   const { navigationController: controller, setOnRemainingTimeOrDistanceChanged, setOnReroutingRequestedByOffRoute } = useNavigation();
   const controllerRef = useRef(controller);
   controllerRef.current = controller;
@@ -100,6 +106,11 @@ function GoogleNavBody({
   const [pads, setPads] = useState({ top: 112, bottom: 148 });
   const [suggestions, setSuggestions] = useState([]);
   const [searchNote, setSearchNote] = useState("");
+  const [saved, setSaved] = useState(emptySavedPlaces);
+  const [saveSlot, setSaveSlot] = useState(null);
+  const [favoritesOpen, setFavoritesOpen] = useState(false);
+  const savedRef = useRef(emptySavedPlaces());
+  savedRef.current = saved;
   const navView = useRef(null);
   const searchField = useRef(null);
   const handoffToken = useRef(null);
@@ -114,6 +125,16 @@ function GoogleNavBody({
   useEffect(() => {
     alive.current = true;
     return () => { alive.current = false; };
+  }, []);
+
+  useEffect(() => {
+    let live = true;
+    loadSavedPlaces(AsyncStorage).then(value => {
+      if (live && alive.current) setSaved(value);
+    }).catch(() => {
+      if (live && alive.current) setSaved(emptySavedPlaces());
+    });
+    return () => { live = false; };
   }, []);
 
   function setRoadSnapBackground(enabled) {
@@ -142,7 +163,7 @@ function GoogleNavBody({
   }
 
   useEffect(() => {
-    if (guiding || (suppressQuery.current && query === suppressQuery.current)) return undefined;
+    if ((guiding && !saveSlot) || (suppressQuery.current && query === suppressQuery.current)) return undefined;
     const next = reduceSearchSchedule(schedule.current, query, Date.now());
     schedule.current = next;
     const local = lookupDestinations(query);
@@ -177,7 +198,7 @@ function GoogleNavBody({
       clearTimeout(handle);
       controller.abort();
     };
-  }, [copy.empty, copy.searchFailed, copy.searchKey, copy.searching, guiding, language, query]);
+  }, [copy.empty, copy.searchFailed, copy.searchKey, copy.searching, guiding, language, query, saveSlot]);
 
   useEffect(() => {
     setOnRemainingTimeOrDistanceChanged(value => {
@@ -309,6 +330,10 @@ function GoogleNavBody({
     setQuery(result.title);
     setSuggestions([]);
     setSearchNote("");
+    if (saveSlot) {
+      rememberChosen(saveSlot, result);
+      return;
+    }
     buildRoute({ lat: result.lat, lng: result.lng, title: result.title, placeId: result.placeId });
   }
 
@@ -350,6 +375,103 @@ function GoogleNavBody({
     if (guidingRef.current) navView.current?.setFollowingPerspective?.(CameraPerspective.TILTED);
     else if (routed) navView.current?.showRouteOverview?.();
     else navView.current?.setFollowingPerspective?.(CameraPerspective.TOP_DOWN_NORTH_UP);
+  }
+
+  function beginSave(slot) {
+    setSaveSlot(slot);
+    setFavoritesOpen(slot === "favorite");
+    setQuery("");
+    setSuggestions([]);
+    setSearchNote("");
+    suppressQuery.current = "";
+    setTimeout(() => searchField.current?.focus?.(), 50);
+  }
+
+  async function persist(next) {
+    const safe = await storeSavedPlaces(AsyncStorage, next);
+    if (alive.current) setSaved(safe);
+    return safe;
+  }
+
+  function rememberChosen(slot, result) {
+    run(async () => {
+      let lat = Number(result?.lat);
+      let lng = Number(result?.lng);
+      const placeId = typeof result?.placeId === "string" ? result.placeId : "";
+      if (!Number.isFinite(lat) || !Number.isFinite(lng)) {
+        const located = await placeDetailsLocation({
+          placeId,
+          sessionToken: schedule.current.token,
+          key: readPlacesKey(),
+          fetch: global.fetch.bind(global),
+        });
+        schedule.current = { text: "", token: null, sendAt: null };
+        lat = located.lat;
+        lng = located.lng;
+      }
+      const place = savedPlaceFromSuggestion({ ...result, lat, lng, placeId }, null);
+      if (!place) throw Object.assign(new Error(places.saveFailed), { code: "save-failed" });
+      if (slot === "favorite") {
+        const outcome = addFavorite(savedRef.current, place);
+        if (!outcome.added) {
+          if (outcome.reason === "duplicate") setSearchNote(places.duplicate);
+          setSaveSlot(null);
+          return;
+        }
+        await persist(outcome.store);
+        setSaveSlot(null);
+        return;
+      }
+      const next = assignSavedSlot(savedRef.current, slot, place);
+      if (!next[slot]) throw Object.assign(new Error(places.saveFailed), { code: "save-failed" });
+      await persist(next);
+      setSaveSlot(null);
+    });
+  }
+
+  function openSaved(place) {
+    const decision = savedPlaceRoute(place, routed || guiding);
+    if (decision.action === "ignore") return;
+    const go = () => buildRoute(decision.destination);
+    if (decision.action === "confirm") {
+      Alert.alert(places.replaceTitle, places.replaceBody, [
+        { text: places.cancel, style: "cancel" },
+        { text: places.replace, onPress: go },
+      ]);
+      return;
+    }
+    go();
+  }
+
+  function pressSaved(slot) {
+    const place = savedRef.current?.[slot];
+    if (!place) {
+      beginSave(slot);
+      return;
+    }
+    openSaved(place);
+  }
+
+  function holdSaved(slot) {
+    const place = savedRef.current?.[slot];
+    if (!place) return;
+    Alert.alert(place.name, place.address || places.change, [
+      { text: places.change, onPress: () => beginSave(slot) },
+      { text: places.delete, style: "destructive", onPress: () => dropSlot(slot) },
+      { text: places.cancel, style: "cancel" },
+    ]);
+  }
+
+  function dropSlot(slot) {
+    run(async () => {
+      await persist(clearSavedSlot(savedRef.current, slot));
+    });
+  }
+
+  function removeSavedFavorite(place) {
+    run(async () => {
+      await persist(removeFavorite(savedRef.current, place));
+    });
   }
 
   function remember(edge, event) {
@@ -397,7 +519,7 @@ function GoogleNavBody({
       <SystemSafeArea pointerEvents="box-none" style={styles.overlay}>
         <View pointerEvents="box-none" onLayout={event => remember("top", event)}>
           {chrome.maneuver && <View pointerEvents="none" style={styles.maneuverClearance} />}
-          {chrome.search && (
+          {(chrome.search || saveSlot) && (
             <View style={[styles.searchCard, { backgroundColor: palette.panel }]}>
               <View style={styles.searchRow}>
                 <TextInput
@@ -414,6 +536,21 @@ function GoogleNavBody({
                   style={[styles.searchInput, { color: palette.ink }]}
                 />
               </View>
+              <SavedPlaceBar
+                places={places}
+                saved={saved}
+                compact={windowHeight < 700}
+                open={favoritesOpen}
+                saveSlot={saveSlot}
+                palette={palette}
+                onPress={pressSaved}
+                onHold={holdSaved}
+                onToggle={() => setFavoritesOpen(open => !open)}
+                onAdd={() => beginSave("favorite")}
+                onGo={openSaved}
+                onRemove={removeSavedFavorite}
+                onCancelSave={() => setSaveSlot(null)}
+              />
               {suggestions.length > 0 && (
                 <ScrollView keyboardShouldPersistTaps="handled" keyboardDismissMode="none" style={[styles.results, { maxHeight: listMax }]}>
                   {suggestions.map(result => (
@@ -425,6 +562,25 @@ function GoogleNavBody({
                 </ScrollView>
               )}
               {!!searchNote && <Text numberOfLines={2} maxFontSizeMultiplier={1.4} style={[styles.searchOff, { color: palette.muted }]}>{searchNote}</Text>}
+            </View>
+          )}
+          {!chrome.search && !saveSlot && (
+            <View style={[styles.searchCard, { backgroundColor: palette.panel }]}>
+              <SavedPlaceBar
+                places={places}
+                saved={saved}
+                compact={windowHeight < 700}
+                open={favoritesOpen}
+                saveSlot={saveSlot}
+                palette={palette}
+                onPress={pressSaved}
+                onHold={holdSaved}
+                onToggle={() => setFavoritesOpen(open => !open)}
+                onAdd={() => beginSave("favorite")}
+                onGo={openSaved}
+                onRemove={removeSavedFavorite}
+                onCancelSave={() => setSaveSlot(null)}
+              />
             </View>
           )}
           {banner && (
@@ -538,6 +694,69 @@ function finiteCoord(coords) {
   return { lat, lng };
 }
 
+function SavedPlaceBar({ places, saved, compact, open, saveSlot, palette, onPress, onHold, onToggle, onAdd, onGo, onRemove, onCancelSave }) {
+  const slots = [
+    ["home", places.home],
+    ["work", places.work],
+    ["favorites", places.favorites],
+  ];
+  const prompt = saveSlot === "home" ? places.saveHome : saveSlot === "work" ? places.saveWork : saveSlot === "favorite" ? places.saveFavorite : "";
+  const favorites = Array.isArray(saved?.favorites) ? saved.favorites : [];
+  return (
+    <View style={styles.savedBlock}>
+      <View style={styles.savedRow}>
+        {slots.map(([slot, label]) => {
+          const stored = slot === "favorites" ? null : saved?.[slot];
+          return (
+            <Pressable
+              key={slot}
+              accessibilityRole="button"
+              accessibilityLabel={slot === "favorites" && open ? places.close : label}
+              onPress={() => slot === "favorites" ? onToggle() : onPress(slot)}
+              onLongPress={() => { if (slot !== "favorites") onHold(slot); }}
+              style={[styles.savedButton, compact && styles.savedButtonCompact, { backgroundColor: palette.button }]}
+            >
+              <Text numberOfLines={1} maxFontSizeMultiplier={1.2} style={[styles.savedLabel, { color: palette.ink }]}>{stored?.name || label}</Text>
+            </Pressable>
+          );
+        })}
+      </View>
+      {!!prompt && (
+        <View style={styles.savedPrompt}>
+          <Text numberOfLines={1} maxFontSizeMultiplier={1.2} style={[styles.savedHint, { color: palette.muted }]}>{prompt}</Text>
+          <Pressable accessibilityRole="button" accessibilityLabel={places.cancel} onPress={onCancelSave}>
+            <Text numberOfLines={1} maxFontSizeMultiplier={1.2} style={[styles.savedHint, { color: palette.ink }]}>{places.cancel}</Text>
+          </Pressable>
+        </View>
+      )}
+      {open && (
+        <View style={[styles.savedList, compact ? styles.savedListCompact : null]}>
+          <Pressable accessibilityRole="button" accessibilityLabel={places.add} onPress={onAdd} style={styles.savedAdd}>
+            <Text numberOfLines={1} maxFontSizeMultiplier={1.2} style={[styles.savedLabel, { color: palette.ink }]}>{places.add}</Text>
+          </Pressable>
+          {!favorites.length && <Text numberOfLines={2} maxFontSizeMultiplier={1.2} style={[styles.savedHint, { color: palette.muted }]}>{places.empty}</Text>}
+          <ScrollView keyboardShouldPersistTaps="handled" style={compact ? styles.savedScrollCompact : styles.savedScroll}>
+            {favorites.map(place => (
+              <View key={place.placeId || `${place.name}:${place.latitude}:${place.longitude}`} style={styles.savedItem}>
+                <Text numberOfLines={1} maxFontSizeMultiplier={1.2} style={[styles.savedLabel, { color: palette.ink }]}>{place.name}</Text>
+                {!!place.address && <Text numberOfLines={1} maxFontSizeMultiplier={1.2} style={[styles.savedHint, { color: palette.muted }]}>{place.address}</Text>}
+                <View style={styles.savedActions}>
+                  <Pressable accessibilityRole="button" accessibilityLabel={places.go} onPress={() => onGo(place)}>
+                    <Text numberOfLines={1} maxFontSizeMultiplier={1.2} style={styles.savedGo}>{places.go}</Text>
+                  </Pressable>
+                  <Pressable accessibilityRole="button" accessibilityLabel={places.delete} onPress={() => onRemove(place)}>
+                    <Text numberOfLines={1} maxFontSizeMultiplier={1.2} style={[styles.savedHint, { color: palette.danger }]}>{places.delete}</Text>
+                  </Pressable>
+                </View>
+              </View>
+            ))}
+          </ScrollView>
+        </View>
+      )}
+    </View>
+  );
+}
+
 const LIGHT = { panel: "rgba(255,255,255,0.96)", ink: "#10263B", muted: "#4E6278", button: "#E7EEF6", menu: "#FFFFFF", line: "#D5E0EC", danger: "#9A3412" };
 const DARK = { panel: "rgba(16,38,59,0.94)", ink: "#F5F8FB", muted: "#CAD7E7", button: "#1C334C", menu: "#16304A", line: "#355272", danger: "#FFB4A8" };
 
@@ -584,4 +803,19 @@ const styles = StyleSheet.create({
   endTrip: { minHeight: 44, marginTop: 6, marginBottom: 16, paddingHorizontal: 8, alignItems: "center", justifyContent: "center" },
   secondary: { minHeight: 44, alignItems: "center", justifyContent: "center" },
   secondaryText: { fontSize: 16, fontWeight: "700" },
+  savedBlock: { gap: 4 },
+  savedRow: { flexDirection: "row", flexWrap: "nowrap", gap: 6 },
+  savedButton: { flex: 1, minHeight: 34, borderRadius: 10, alignItems: "center", justifyContent: "center", paddingHorizontal: 6 },
+  savedButtonCompact: { minHeight: 30 },
+  savedLabel: { fontSize: 13, fontWeight: "800" },
+  savedHint: { fontSize: 12, fontWeight: "600", flexShrink: 1 },
+  savedPrompt: { flexDirection: "row", flexWrap: "nowrap", alignItems: "center", justifyContent: "space-between", gap: 8 },
+  savedList: { maxHeight: 168, gap: 2 },
+  savedListCompact: { maxHeight: 96 },
+  savedScroll: { maxHeight: 132 },
+  savedScrollCompact: { maxHeight: 64 },
+  savedAdd: { minHeight: 30, justifyContent: "center" },
+  savedItem: { gap: 1, paddingVertical: 2 },
+  savedActions: { flexDirection: "row", flexWrap: "nowrap", alignItems: "center", gap: 12 },
+  savedGo: { color: "#1260E8", fontSize: 13, fontWeight: "800" },
 });
