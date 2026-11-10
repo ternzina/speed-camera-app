@@ -1,8 +1,13 @@
 // Trip-map camera follow.
-// iOS MapKit freezes when animateToRegion is restarted on every GPS or heading
-// sample: each call queues setRegion:animated: and the main thread stops
-// taking touches. Follow with animateCamera, and only when the pose actually
-// changed.
+// The shipped iOS app is Fabric. RNMapsMapView installs onRegionChange on
+// every map, and AIRMapManager clears ignoreRegionChanges inside
+// regionDidChangeAnimated. animateCamera still calls setCamera:animated:YES,
+// so mapViewDidChangeVisibleRegion keeps crossing the bridge for every frame
+// of that animation. Opening a trip forces the first command, and a real
+// iPhone then restarts it whenever a fix jumps by more than 12 m or 12°.
+// setCamera is not animated, so those updates do not start the frame stream.
+// The gate still drops stationary jitter. Warnings and background location
+// stay on.
 
 const EARTH_METERS = 6371000;
 
@@ -26,7 +31,7 @@ function headingDelta(a, b) {
 function commandFrom(sample) {
   const moving = !!sample.moving && Number.isFinite(sample.heading);
   return {
-    api: "animateCamera",
+    api: "setCamera",
     latitude: sample.latitude,
     longitude: sample.longitude,
     heading: moving ? sample.heading : 0,

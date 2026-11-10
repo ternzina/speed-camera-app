@@ -1,0 +1,10 @@
+{
+  "name": "camalert-mapkit-directions",
+  "version": "1.0.0",
+  "description": "MKLocalSearch and MKDirections for CamAlert on iOS",
+  "license": "UNLICENSED",
+  "main": "index.js",
+  "peerDependencies": {
+    "expo": "*"
+  }
+}

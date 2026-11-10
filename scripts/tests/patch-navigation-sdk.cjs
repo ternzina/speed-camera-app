@@ -1,7 +1,7 @@
 const assert = require('assert');
 const fs = require('fs');
 const path = require('path');
-const { patchNavModule, patchNavViewModule } = require('../patch-navigation-sdk.cjs');
+const { patchNavModule, patchNavViewModule, patchNavViewController } = require('../patch-navigation-sdk.cjs');
 
 const terms = `  @Override
   public void showTermsAndConditionsDialog(
@@ -41,5 +41,12 @@ for (const [file, patch] of [['NavModule.java', patchNavModule], ['NavViewModule
   const source = fs.readFileSync(path.join(sdk, file), 'utf8');
   assert.equal(patch(source), source, `${file} installed sources differ from the project patch`);
 }
+
+const viewController = path.join(__dirname, '../../node_modules/@googlemaps/react-native-navigation-sdk/ios/react-native-navigation-sdk/NavViewController.mm');
+const installedView = fs.readFileSync(viewController, 'utf8');
+assert.equal(patchNavViewController(installedView), installedView, 'NavViewController.mm installed sources differ from the project patch');
+const loadView = installedView.slice(installedView.indexOf('- (void)loadView'), installedView.indexOf('- (void)viewDidLoad'));
+assert.doesNotMatch(loadView, /navigationEnabled = YES/);
+assert.match(installedView, /didLongPressAtCoordinate/);
 
 console.log('navigation sdk patch ok');

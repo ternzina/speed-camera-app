@@ -126,7 +126,8 @@ test("the current app keeps every country, the distances, and leaves the GPS res
   assert.match(app, /Sample alert/);
   assert.match(app, /Przykład powiadomienia/);
   assert.doesNotMatch(app, /Предпросмотр предупреждени|Закрыть демо|Попередній перегляд|Alert preview|Podgląd ostrzeżenia|"Демо |"ДЕМО"|"Demo |"DEMO"/);
-  const preview = app.slice(app.indexOf('visible={modal==="alertDemo"}'), app.indexOf("SystemSafeArea", app.indexOf('visible={modal==="alertDemo"}')));
+  const previewStart = app.indexOf('{modal === "alertDemo" && <Modal visible');
+  const preview = app.slice(previewStart, app.indexOf("</SystemSafeArea>", previewStart));
   assert.match(preview, /voiceEnabled=\{false\}/);
   assert.match(preview, /vibrationEnabled=\{false\}/);
   assert.match(preview, /id: "demo-only-camera"/);
