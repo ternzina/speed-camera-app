@@ -39,6 +39,7 @@ import { cameraAlertDecision, cameraWarningsEnabled, mergeStoredSettings } from 
 import { searchLegalNotices, statusLabel } from "./legal-notices";
 import IosRouteScreen from "./ios-route-screen";
 import { isGoogleNavTestApp } from "./google-nav-gate";
+import { countryFeedsAfterDelivery, navtestCountryReady, navtestStoredCountryCodes } from "./navtest-country-store";
 import { noteNavtestCameraSpeech, resetNavtestCameraSpeech, skipRepeatedCameraSpeech, skipSharedNavtestSpeech } from "./navtest-speech";
 import GoogleNavTestScreen from "./google-nav-test";
 import { calculateRoutes } from "./ios-mapkit-directions";
@@ -484,11 +485,18 @@ async function processBackgroundLocation({ data: taskData, error }) {
 
 // Empty tombstones keep deleted bundled databases from reappearing after restart.
 function storedCountryCodes(feeds) {
+  if (isGoogleNavTestApp()) return navtestStoredCountryCodes(feeds);
   return [...new Set(["UA", "PL", ...Object.keys(feeds)])].filter(code => {
     const feed = feeds[code];
     if (feed?._removed) return false;
     return !!feed || code === "UA" || code === "PL";
   });
+}
+
+function selectedDatabaseReady(feeds, code) {
+  const points = cameraPoints(countryFeed(feeds, code, data, plData));
+  if (isGoogleNavTestApp()) return navtestCountryReady(feeds, code, points);
+  return storedCountryCodes(feeds).includes(code) && points.length > 0;
 }
 
 const ThemeContext = createContext(false);
@@ -573,7 +581,7 @@ export default function App() {
   const [reports, setReports] = useState([]);
   const [remoteFeeds,setRemoteFeeds]=useState({});
   const [countryCoverage,setCountryCoverage]=useState([]);
-  const [offlineCountryCodes,setOfflineCountryCodes]=useState(["UA","PL"]);
+  const [offlineCountryCodes,setOfflineCountryCodes]=useState(isGoogleNavTestApp() ? [] : ["UA","PL"]);
   const databaseBusy = useRef(false);
   const databaseReady = useRef(false);
   const [countryLoading,setCountryLoading]=useState(null);
@@ -855,12 +863,25 @@ export default function App() {
     setCountryLoading(country);
     try {
       const result=await refreshCountryDelivery({country,feeds:remoteFeedsRef.current,versions:countryVersionsRef.current,countries:countryCoverage});
-      if (!result.feed || result.source==='offline' || result.source==='bundled') {
+      let feeds;
+      if (isGoogleNavTestApp()) {
+        feeds = countryFeedsAfterDelivery(remoteFeedsRef.current, country, result);
+        if (feeds === remoteFeedsRef.current) {
+          const stored = navtestStoredCountryCodes(remoteFeedsRef.current);
+          if (!silent && !stored.includes(String(country).toUpperCase()) && stored.length >= 2) databaseMessage("limit");
+          else {
+            setDatabaseErrors(previous=>({...previous,[country]:true}));
+            if (!silent) databaseMessage("error");
+          }
+          return false;
+        }
+      } else if (!result.feed || result.source==='offline' || result.source==='bundled') {
         setDatabaseErrors(previous=>({...previous,[country]:true}));
         if (!silent) databaseMessage("error");
         return false;
+      } else {
+        feeds={...remoteFeedsRef.current,[country]:result.feed};
       }
-      const feeds={...remoteFeedsRef.current,[country]:result.feed};
       const countryVersions={...countryVersionsRef.current};
       if(result.version)countryVersions[country]=result.version;else delete countryVersions[country];
       const countries=result.countries;
@@ -1331,8 +1352,7 @@ export default function App() {
     backgroundBusy.current = true;
     const failure = backgroundFailureCopy(settings.language);
     try {
-      if (!databaseReady.current || !storedCountryCodes(remoteFeedsRef.current).includes(selectedCountry) ||
-          !cameraPoints(countryFeed(remoteFeedsRef.current,selectedCountry,data,plData)).length) {
+      if (!databaseReady.current || !selectedDatabaseReady(remoteFeedsRef.current, selectedCountry)) {
         throw new Error(failure.database);
       }
       if (!(await Location.hasServicesEnabledAsync())) throw new Error(failure.services);
@@ -1795,7 +1815,7 @@ export default function App() {
         averageSection={cameraWarningsEnabled(settings) ? averageSectionUi : null}
         onStartTrip={async () => {
           if (active) return true;
-          if (!databaseReady.current || !storedCountryCodes(remoteFeedsRef.current).includes(selectedCountry) || !cameraPoints(countryFeed(remoteFeedsRef.current, selectedCountry, data, plData)).length) {
+          if (!databaseReady.current || !selectedDatabaseReady(remoteFeedsRef.current, selectedCountry)) {
             Alert.alert("CamAlert", settings.language === "ru" ? "Сначала загрузите базу камер выбранной страны." : settings.language === "uk" ? "Спочатку завантажте базу камер вибраної країни." : settings.language === "pl" ? "Najpierw pobierz bazę kamer wybranego kraju." : "Download the selected country's camera database first.");
             return false;
           }

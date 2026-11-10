@@ -154,6 +154,10 @@ export function advanceSectionPace(pace, point, now) {
   return { distance, startedAt: pace.startedAt, last: point, averageKmh };
 }
 
+function publishedSpeedLimit(value) {
+  return typeof value === "number" && Number.isFinite(value) ? value : null;
+}
+
 export function averageSectionSpeech(event, language = "pl") {
   if (!event) return "";
   const limit = event.section?.speed_limit;
@@ -191,8 +195,8 @@ export function averageSectionSpeech(event, language = "pl") {
 
   if (event.state === "over") {
     const average = Number(event.averageKmh);
-    const limit = Number(event.section?.speed_limit);
-    if (!Number.isFinite(average) || !Number.isFinite(limit)) return "";
+    const limit = publishedSpeedLimit(event.section?.speed_limit);
+    if (!Number.isFinite(average) || limit == null) return "";
     const over = {
       pl: `Średnia prędkość ${average} kilometrów na godzinę. Ograniczenie ${limit}.`,
       uk: `Середня швидкість ${average} кілометрів на годину. Обмеження ${limit}.`,
@@ -315,8 +319,8 @@ export function stepNavtestSection(state, input = {}) {
     say.push(averageSectionSpeech({ ...event, state: "entering" }, language));
     saidEntry = true;
   }
-  const limit = Number(event.section.speed_limit);
-  if (pace.reliable && Number.isFinite(limit) && pace.averageKmh != null && pace.averageKmh > limit) {
+  const limit = publishedSpeedLimit(event.section?.speed_limit);
+  if (pace.reliable && limit != null && pace.averageKmh != null && pace.averageKmh > limit) {
     if (!saidOver) {
       say.push(averageSectionSpeech({ ...event, state: "over", averageKmh: pace.averageKmh }, language));
       saidOver = true;

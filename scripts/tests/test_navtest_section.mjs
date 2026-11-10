@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import fs from "node:fs";
 import test from "node:test";
-import { stepNavtestSection } from "../../poland-engine.js";
+import { averageSectionSpeech, stepNavtestSection } from "../../poland-engine.js";
 import { createNavtestSectionStore, NAVTEST_SECTION_KEY } from "../../navtest-section.js";
 
 const stretch = {
@@ -67,6 +67,32 @@ test("an average over the stored limit is spoken once", async () => {
     feed: stretch, latitude: 52.0026, longitude: 21, heading: 0, now: 20000, timestamp: 20000, language: "en", speak,
   });
   assert.equal(heard.filter(phrase => phrase.includes("kilometers per hour")).length, 1);
+});
+
+test("a section without a numeric limit keeps the start warning and does not speak a limit", async () => {
+  const heard = [];
+  const open = {
+    average_speed_sections: [{
+      id: "plain",
+      length_km: 2,
+      speed_limit: null,
+      start: { latitude: 52, longitude: 21 },
+      end: { latitude: 52.018, longitude: 21 },
+    }],
+  };
+  const store = createNavtestSectionStore(memory());
+  const speak = async phrases => { heard.push(...phrases); return true; };
+  await store.apply({ feed: open, latitude: 52, longitude: 21, heading: 0, now: 0, timestamp: 0, language: "en", speak });
+  assert.equal(heard.length, 1);
+  assert.match(heard[0], /Average speed control starts now/);
+  assert.doesNotMatch(heard[0], /limit/i);
+  await store.apply({
+    feed: open, latitude: 52.0013, longitude: 21, heading: 0, now: 10000, timestamp: 10000, language: "en", speak,
+  });
+  assert.equal(heard.length, 1);
+  assert.equal(heard.some(phrase => /kilometers per hour|Limit \d|Speed limit/i.test(phrase)), false);
+  assert.equal(open.average_speed_sections[0].speed_limit, null);
+  assert.equal(averageSectionSpeech({ state: "over", averageKmh: 90, section: open.average_speed_sections[0] }, "en"), "");
 });
 
 test("a missing limit does not invent an over-speed phrase", async () => {
