@@ -2,16 +2,16 @@
   "expo": {
     "name": "CamAlert",
     "slug": "speed-camera-prototype-direction",
-    "version": "1.0.4",
+    "version": "1.0.5",
     "orientation": "portrait",
     "ios": {
       "supportsTablet": true,
       "requireFullScreen": true,
       "infoPlist": {
-        "NSLocationWhenInUseUsageDescription": "Location is used to warn you about road cameras during a trip.",
+        "NSLocationWhenInUseUsageDescription": "Location is used to follow your route and warn you about road cameras during a trip.",
         "ITSAppUsesNonExemptEncryption": false,
-        "NSLocationAlwaysAndWhenInUseUsageDescription": "Allow location access all the time so camera warnings continue when the screen is off.",
-        "NSLocationAlwaysUsageDescription": "Allow CamAlert to access your location all the time so camera warnings continue when the screen is off.",
+        "NSLocationAlwaysAndWhenInUseUsageDescription": "Allow location access all the time so route guidance and camera warnings continue when the screen is off.",
+        "NSLocationAlwaysUsageDescription": "Allow CamAlert to access your location all the time so route guidance and camera warnings continue when the screen is off.",
         "LSApplicationQueriesSchemes": [
           "maps",
           "comgooglemaps"
@@ -21,7 +21,7 @@
         ]
       },
       "bundleIdentifier": "com.21wek.camera",
-      "buildNumber": "40"
+      "buildNumber": "41"
     },
     "android": {
       "permissions": [
@@ -36,8 +36,8 @@
       [
         "expo-location",
         {
-          "locationWhenInUsePermission": "Location is used to warn you about road cameras during a trip.",
-          "locationAlwaysAndWhenInUsePermission": "Allow location access all the time so camera warnings continue when the screen is off.",
+          "locationWhenInUsePermission": "Location is used to follow your route and warn you about road cameras during a trip.",
+          "locationAlwaysAndWhenInUsePermission": "Allow location access all the time so route guidance and camera warnings continue when the screen is off.",
           "isIosBackgroundLocationEnabled": true,
           "isAndroidBackgroundLocationEnabled": true,
           "isAndroidForegroundServiceEnabled": true

@@ -206,10 +206,10 @@ test("the Drive screen keeps the buttons under the search and routes through the
   assert.match(screen, /places\.duplicate/);
   assert.match(screen, /places\.saveFailed/);
   assert.doesNotMatch(screen, /AsyncStorage\.(clear|setItem|removeItem)|watchPositionAsync|startTracking|sideButton|fetch\(|places\.googleapis/);
-  assert.match(app, /isGoogleNavTestApp\(\) && \(iosRouteOpen \|\| \(tab === "drive" && active\)\)/);
+  assert.match(app, /usesInAppGoogleNav\(\) && \(iosRouteOpen \|\| \(tab === "drive" && active\)\)/);
   assert.match(app, /onFavorite=\{rememberNearbyFavorite\}/);
   assert.match(favorite, /storeSavedPlaces\(AsyncStorage, store\)/);
-  assert.match(favorite, /if \(!isGoogleNavTestApp\(\)\) return/);
+  assert.match(favorite, /if \(!usesInAppGoogleNav\(\)\) return/);
   assert.doesNotMatch(favorite, /Alert\.alert|startTracking|watchPositionAsync|startGuidance|setDestination|AsyncStorage\.clear/);
   const card = nearby.slice(nearby.indexOf('status === "ready"'), nearby.indexOf("const styles"));
   const heart = nearby.slice(nearby.indexOf("function pressHeart"), nearby.indexOf('status === "loading"'));

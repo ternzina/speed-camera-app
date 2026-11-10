@@ -1,8 +1,8 @@
 import React from "react";
 import { Text, TurboModuleRegistry, View } from "react-native";
 
-// The Navigation SDK is loaded only when this screen is shown. Production
-// bundle id com.21wek.camera never mounts it, so it keeps MapKit.
+// The Navigation SDK is loaded only when this screen is shown. The store
+// bundle and the navtest bundle both mount it during a route or an active trip.
 export default function GoogleNavTestScreen(props) {
   if (!TurboModuleRegistry.get("NavModule")) {
     return (

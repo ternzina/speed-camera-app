@@ -5,14 +5,20 @@ import test from "node:test";
 const root = new URL("../../", import.meta.url);
 const read = (name) => fs.readFileSync(new URL(name, root), "utf8");
 
-test("navtest is the only bundle that mounts the Google map", () => {
+test("the store app and navtest both mount the Google map", () => {
   const gate = read("google-nav-gate.js");
   const app = read("App.js");
+  const config = read("react-native.config.js");
+  assert.match(gate, /STORE_BUNDLE = "com\.21wek\.camera"/);
   assert.match(gate, /com\.21wek\.camera\.navtest/);
-  assert.doesNotMatch(gate, /com\.21wek\.camera"/);
-  assert.match(app, /isGoogleNavTestApp\(\) && \(iosRouteOpen \|\| \(tab === "drive" && active\)\)/);
+  assert.match(gate, /function usesInAppGoogleNav/);
+  assert.match(gate, /applicationId === STORE_BUNDLE \|\| applicationId === GOOGLE_NAV_TEST_BUNDLE/);
+  assert.match(app, /usesInAppGoogleNav\(\) && \(iosRouteOpen \|\| \(tab === "drive" && active\)\)/);
   assert.match(app, /hideExternalNav=\{isGoogleNavTestApp\(\)\}/);
   assert.match(app, /if \(foregroundTripRunning \|\| sub\.current\) return true/);
+  assert.match(app, /isGoogleNavTestApp\(\) \? \[\] : \["UA","PL"\]/);
+  assert.doesNotMatch(config, /platforms: \{ ios: null \}/);
+  assert.doesNotMatch(config, /CAMALERT_IOS_GOOGLE_NAV_TEST === '1'/);
 });
 
 test("the Google screen does not draw an Apple route or a second maps SDK", () => {

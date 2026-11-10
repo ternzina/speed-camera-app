@@ -314,15 +314,15 @@ test("navtest nearby is list-only and hands the chosen point to the existing Goo
   const handoff = app.slice(app.indexOf("function handoffNearbyPlace"), app.indexOf("function openInAppRoute"));
   const effect = screen.slice(screen.indexOf("if (!handoff || handoff.token"), screen.indexOf("function dismissSearch"));
   const build = screen.slice(screen.indexOf("function buildRoute"), screen.indexOf("function startGuidance"));
-  assert.match(app, /tab === "nearby" && isGoogleNavTestApp\(\) && \([\s\S]*<NavtestNearby/);
+  assert.match(app, /tab === "nearby" && usesInAppGoogleNav\(\) && \([\s\S]*<NavtestNearby/);
   assert.match(app, /navtestNearbyKind === "cameras"/);
   assert.match(app, /onKind=\{setNavtestNearbyKind\}/);
   assert.match(nearby, /status === "cameras"|!nearbyCategory\(id\)\?\.types/);
   assert.doesNotMatch(nearby, /rating/);
   assert.doesNotMatch(places, /rating/);
-  assert.match(app, /tab === "nearby" && \(!isGoogleNavTestApp\(\) \|\| navtestNearbyKind === "cameras"\) && cameraWarningsEnabled\(settings\)/);
+  assert.match(app, /tab === "nearby" && \(!usesInAppGoogleNav\(\) \|\| navtestNearbyKind === "cameras"\) && cameraWarningsEnabled\(settings\)/);
   assert.match(app, /Камеры рядом/);
-  assert.match(app, /isGoogleNavTestApp\(\) \? t\.nearby : nearbyCopy\.title/);
+  assert.match(app, /usesInAppGoogleNav\(\) \? t\.nearby : nearbyCopy\.title/);
   assert.match(handoff, /nearbyHandoff\(place, navtestRouteActiveRef\.current\)/);
   assert.match(handoff, /Alert\.alert/);
   assert.match(handoff, /setIosRouteOpen\(true\)/);

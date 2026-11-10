@@ -2,9 +2,7 @@ internal import Expo
 import Foundation
 import React
 import ReactAppDependencyProvider
-#if CAMALERT_GOOGLE_NAV
 import GoogleMaps
-#endif
 
 @main
 class AppDelegate: ExpoAppDelegate {
@@ -17,15 +15,12 @@ class AppDelegate: ExpoAppDelegate {
     _ application: UIApplication,
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
   ) -> Bool {
-#if CAMALERT_GOOGLE_NAV
-    // The value is injected into the navtest Info.plist at build time from
-    // GOOGLE_MAPS_IOS_API_KEY. It is never stored in git.
+    // The store archive injects CamAlertGoogleNavKey into a temporary Info.plist.
+    // The value is never stored in git and is never logged.
     if let key = Bundle.main.object(forInfoDictionaryKey: "CamAlertGoogleNavKey") as? String, !key.isEmpty {
       GMSServices.provideAPIKey(key)
-      // Places requests from JavaScript read this same value. Do not log it.
       UserDefaults.standard.set(key, forKey: "CamAlertGoogleNavKey")
     }
-#endif
     let delegate = ReactNativeDelegate()
     let factory = ExpoReactNativeFactory(delegate: delegate)
     delegate.dependencyProvider = RCTAppDependencyProvider()
