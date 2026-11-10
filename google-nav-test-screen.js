@@ -78,7 +78,7 @@ export default function GoogleNavTestScreen(props) {
 
 function GoogleNavBody({
   language, night, coords, camera, cameraType, voiceEnabled, onToggleVoice,
-  picking, tripActive, onStartTrip, onStopTrip, onClosePick,
+  picking, tripActive, onStartTrip, onStopTrip, onClosePick, handoff, onRouteActive,
 }) {
   const copy = COPY[language] || COPY.ru;
   const { navigationController: controller, setOnRemainingTimeOrDistanceChanged, setOnReroutingRequestedByOffRoute } = useNavigation();
@@ -102,6 +102,7 @@ function GoogleNavBody({
   const [searchNote, setSearchNote] = useState("");
   const navView = useRef(null);
   const searchField = useRef(null);
+  const handoffToken = useRef(null);
   const probeRef = useRef(null);
   const schedule = useRef({ text: "", token: null, sendAt: null });
   const suppressQuery = useRef("");
@@ -283,6 +284,19 @@ function GoogleNavBody({
       }
     });
   }
+
+  useEffect(() => {
+    onRouteActive?.(routed || guiding);
+  }, [guiding, onRouteActive, routed]);
+
+  useEffect(() => {
+    if (!handoff || handoff.token == null || handoffToken.current === handoff.token) return;
+    const lat = Number(handoff.lat);
+    const lng = Number(handoff.lng);
+    if (!Number.isFinite(lat) || !Number.isFinite(lng)) return;
+    handoffToken.current = handoff.token;
+    buildRoute({ lat, lng, title: handoff.title });
+  }, [handoff]);
 
   function dismissSearch() {
     Keyboard.dismiss();

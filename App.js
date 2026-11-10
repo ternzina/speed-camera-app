@@ -39,6 +39,8 @@ import { cameraAlertDecision, cameraWarningsEnabled, mergeStoredSettings } from 
 import { searchLegalNotices, statusLabel } from "./legal-notices";
 import IosRouteScreen from "./ios-route-screen";
 import { isGoogleNavTestApp } from "./google-nav-gate";
+import { nearbyCopy as placesNearbyCopy, nearbyHandoff } from "./google-places";
+import NavtestNearby from "./navtest-nearby";
 import { countryFeedsAfterDelivery, navtestCountryReady, navtestStoredCountryCodes } from "./navtest-country-store";
 import { noteNavtestCameraSpeech, resetNavtestCameraSpeech, skipRepeatedCameraSpeech, skipSharedNavtestSpeech } from "./navtest-speech";
 import GoogleNavTestScreen from "./google-nav-test";
@@ -606,6 +608,8 @@ export default function App() {
   const [alertPreviewMode, setAlertPreviewMode] = useState("expanded");
   const [navigatorDestination, setNavigatorDestination] = useState("");
   const [googleNavigationOpen, setGoogleNavigationOpen] = useState(false);
+  const [navtestHandoff, setNavtestHandoff] = useState(null);
+  const navtestRouteActiveRef = useRef(false);
   const [iosRouteOpen, setIosRouteOpen] = useState(false);
   const [routeGuidance, setRouteGuidance] = useState(null);
   const [maneuver, setManeuver] = useState(null);
@@ -1601,6 +1605,25 @@ export default function App() {
     setManeuver(null);
   }
 
+  function handoffNearbyPlace(place) {
+    if (!isGoogleNavTestApp()) return;
+    const decision = nearbyHandoff(place, navtestRouteActiveRef.current);
+    if (decision.action === "ignore") return;
+    const open = () => {
+      setNavtestHandoff({ ...decision.destination, token: Date.now() });
+      setIosRouteOpen(true);
+    };
+    if (decision.action === "confirm") {
+      const copy = placesNearbyCopy(settings.language);
+      Alert.alert(copy.replaceTitle, copy.replaceBody, [
+        { text: copy.cancel, style: "cancel" },
+        { text: copy.replace, onPress: open },
+      ]);
+      return;
+    }
+    open();
+  }
+
   function openInAppRoute() {
     if (Platform.OS !== "ios") return;
     setModal(null);
@@ -1778,6 +1801,8 @@ export default function App() {
           }}
           onStopTrip={stopTracking}
           onClosePick={() => setIosRouteOpen(false)}
+          handoff={navtestHandoff}
+          onRouteActive={activeRoute => { navtestRouteActiveRef.current = !!activeRoute; }}
         />
         {renderBackgroundGuide()}
       </>
@@ -1898,9 +1923,9 @@ export default function App() {
         {!(tab === "drive" && !active) && <>
           <View style={s.screenHeader}>
             <PageBackButton language={settings.language} onPress={() => setTab("drive")} onLight={!isNight} />
-          <Text maxFontSizeMultiplier={1.25} numberOfLines={2} style={[s.title, {flex:1}, pad && { fontSize: 40, lineHeight: 50 }]}>{tab === "settings" ? (settings.language === "uk" ? "Країни та дані" : settings.language === "en" ? "Countries and data" : settings.language === "pl" ? "Kraje i dane" : "Страны и данные") : tab === "nearby" ? nearbyCopy.title : tab === "history" ? ui.history : t.title}</Text>
+          <Text maxFontSizeMultiplier={1.25} numberOfLines={2} style={[s.title, {flex:1}, pad && { fontSize: 40, lineHeight: 50 }]}>{tab === "settings" ? (settings.language === "uk" ? "Країни та дані" : settings.language === "en" ? "Countries and data" : settings.language === "pl" ? "Kraje i dane" : "Страны и данные") : tab === "nearby" ? (isGoogleNavTestApp() ? t.nearby : nearbyCopy.title) : tab === "history" ? ui.history : t.title}</Text>
           </View>
-          {tab !== "settings" && <Text style={s.subtitle}>{countryFlag(selectedCountry)} {countryDisplayName(selectedCountry,settings.language)}{cameraWarningsEnabled(settings) ? ` · ${visibleCameras().length} камер` : ""}</Text>}
+          {tab !== "settings" && !(tab === "nearby" && isGoogleNavTestApp()) && <Text style={s.subtitle}>{countryFlag(selectedCountry)} {countryDisplayName(selectedCountry,settings.language)}{cameraWarningsEnabled(settings) ? ` · ${visibleCameras().length} камер` : ""}</Text>}
         </>}
 
         {tab === "drive" && active && <>
@@ -1969,13 +1994,21 @@ export default function App() {
           onCountries={() => {setCountryScreenTab("countries");setTab("settings");}}
         />}
 
-        {tab === "nearby" && !cameraWarningsEnabled(settings) && (
+        {tab === "nearby" && isGoogleNavTestApp() && (
+          <NavtestNearby
+            language={settings.language}
+            coords={coords}
+            permission={locationPermissionStatus}
+            onGo={handoffNearbyPlace}
+          />
+        )}
+        {tab === "nearby" && !isGoogleNavTestApp() && !cameraWarningsEnabled(settings) && (
           <View style={s.card}>
             <Text style={s.label}>{(WARNING_UI[settings.language] || WARNING_UI.ru).off}</Text>
             <Text style={s.note}>{(WARNING_UI[settings.language] || WARNING_UI.ru).offMap}</Text>
           </View>
         )}
-        {tab === "nearby" && cameraWarningsEnabled(settings) && (
+        {tab === "nearby" && !isGoogleNavTestApp() && cameraWarningsEnabled(settings) && (
           <View style={s.list}>
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>{["all","speed_camera","red_light","speed_and_red_light","average_speed","checkpoint"].map(type=><FilterChip key={type} night={isNight} selected={nearbyType===type} onPress={()=>setNearbyType(type)}>{type==="all"?ui.all:`${cameraGlyph({type})} ${cameraTypeLabel({type},settings.language)}`}</FilterChip>)}</ScrollView>
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>{["all",...new Set(visibleCameras().map(c=>c.speed_limit).filter(v=>v!=null).map(Number).filter(Number.isFinite).sort((a,b)=>a-b)),"unknown"].map(limit=><FilterChip key={limit} night={isNight} selected={nearbyLimit===limit} onPress={()=>setNearbyLimit(limit)}>{limit==="all"?ui.all:limit==="unknown"?ui.unknown:`${limit} км/ч`}</FilterChip>)}</ScrollView>

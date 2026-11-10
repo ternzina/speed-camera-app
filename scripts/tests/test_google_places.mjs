@@ -3,7 +3,7 @@ import fs from "node:fs";
 import test from "node:test";
 import {
   AUTOCOMPLETE_FIELD_MASK, autocompletePlaces, createSessionToken, NAVTEST_BUNDLE,
-  parseAutocompleteSuggestions, parsePlaceLocation, PLACE_DETAILS_FIELD_MASK,
+  NEARBY_FIELD_MASK, parseAutocompleteSuggestions, parsePlaceLocation, PLACE_DETAILS_FIELD_MASK,
   placeDetailsLocation, PLACES_DEBOUNCE_MS, reduceSearchSchedule,
 } from "../../google-places.js";
 
@@ -95,9 +95,9 @@ test("autocomplete and place details use a session and the essentials location f
   assert.equal(PLACE_DETAILS_FIELD_MASK, "location");
   assert.match(details.url, /sessionToken=session-1/);
   assert.equal(details.url.includes("displayName"), false);
+  assert.equal(AUTOCOMPLETE_FIELD_MASK.includes("displayName"), false);
+  assert.equal(NEARBY_FIELD_MASK.includes("places.displayName"), true);
   const source = fs.readFileSync(new URL("../../google-places.js", import.meta.url), "utf8");
-  assert.equal(source.includes("displayName"), false);
-  assert.equal(source.includes("formattedAddress"), false);
   assert.equal(source.includes("MKDirections"), false);
   assert.equal(source.includes("GOOGLE_MAPS_ANDROID_API_KEY"), false);
   assert.equal(source.includes("AIza"), false);

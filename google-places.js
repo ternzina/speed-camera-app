@@ -1,12 +1,16 @@
-// Places API (New) for the navtest app. One Autocomplete session, then Place
-// Details Essentials with only the location field. No legacy Places and no
-// Geocoding. The place name comes from the suggestion, not from a Pro field.
+// Places API (New) for the navtest app. Autocomplete uses a session, then Place
+// Details Essentials with only the location field. Nearby Search is the same
+// API's searchNearby method. No legacy Places and no Geocoding.
 
 import { parseCoordinate } from "./google-nav-search.js";
 
 export const PLACES_DEBOUNCE_MS = 400;
 export const PLACES_AUTOCOMPLETE_URL = "https://places.googleapis.com/v1/places:autocomplete";
+export const PLACES_NEARBY_URL = "https://places.googleapis.com/v1/places:searchNearby";
 export const PLACE_DETAILS_FIELD_MASK = "location";
+export const NEARBY_FIELD_MASK = "places.id,places.displayName,places.formattedAddress,places.location,places.rating";
+export const NEARBY_MAX_RESULTS = 10;
+export const NEARBY_RADIUS_M = 5000;
 export const AUTOCOMPLETE_FIELD_MASK = [
   "suggestions.placePrediction.placeId",
   "suggestions.placePrediction.text.text",
@@ -14,6 +18,58 @@ export const AUTOCOMPLETE_FIELD_MASK = [
   "suggestions.placePrediction.structuredFormat.secondaryText.text",
 ].join(",");
 export const NAVTEST_BUNDLE = "com.21wek.camera.navtest";
+
+export const NEARBY_CATEGORIES = [
+  { id: "gas", types: ["gas_station"] },
+  { id: "parking", types: ["parking"] },
+  { id: "food", types: ["cafe", "restaurant"] },
+  { id: "repair", types: ["car_repair", "tire_shop"] },
+  { id: "hospital", types: ["hospital"] },
+  { id: "pharmacy", types: ["pharmacy"] },
+];
+
+export const NEARBY_COPY = {
+  ru: {
+    title: "Рядом", gas: "АЗС", parking: "Парковка", food: "Кафе и рестораны",
+    repair: "Ремонт и шиномонтаж", hospital: "Больница", pharmacy: "Аптека",
+    go: "Поехать", loading: "Ищем места…", empty: "Рядом ничего не найдено",
+    error: "Нет сети. Поиск не выполнен", denied: "Нет доступа к геолокации",
+    settings: "Открыть настройки", retry: "Повторить",
+    replaceTitle: "Заменить маршрут?", replaceBody: "Сейчас уже построен маршрут. Заменить его на это место?",
+    replace: "Заменить", cancel: "Отмена", meters: "м", km: "км",
+  },
+  uk: {
+    title: "Поруч", gas: "АЗС", parking: "Парковка", food: "Кафе і ресторани",
+    repair: "Ремонт і шиномонтаж", hospital: "Лікарня", pharmacy: "Аптека",
+    go: "Поїхати", loading: "Шукаємо місця…", empty: "Поруч нічого не знайдено",
+    error: "Немає мережі. Пошук не виконано", denied: "Немає доступу до геолокації",
+    settings: "Відкрити налаштування", retry: "Повторити",
+    replaceTitle: "Замінити маршрут?", replaceBody: "Зараз уже побудовано маршрут. Замінити його на це місце?",
+    replace: "Замінити", cancel: "Скасувати", meters: "м", km: "км",
+  },
+  en: {
+    title: "Nearby", gas: "Gas station", parking: "Parking", food: "Cafes and restaurants",
+    repair: "Car repair and tire service", hospital: "Hospital", pharmacy: "Pharmacy",
+    go: "Go", loading: "Searching nearby…", empty: "Nothing nearby",
+    error: "No network. The search did not run", denied: "Location permission is denied",
+    settings: "Open settings", retry: "Try again",
+    replaceTitle: "Replace the route?", replaceBody: "A route is already active. Replace it with this place?",
+    replace: "Replace", cancel: "Cancel", meters: "m", km: "km",
+  },
+  pl: {
+    title: "W pobliżu", gas: "Stacja paliw", parking: "Parking", food: "Kawiarnie i restauracje",
+    repair: "Naprawa i wulkanizacja", hospital: "Szpital", pharmacy: "Apteka",
+    go: "Jedź", loading: "Szukamy miejsc…", empty: "W pobliżu nic nie znaleziono",
+    error: "Brak sieci. Wyszukiwanie nie zostało wykonane", denied: "Brak dostępu do lokalizacji",
+    settings: "Otwórz ustawienia", retry: "Powtórz",
+    replaceTitle: "Zastąpić trasę?", replaceBody: "Trasa jest już wyznaczona. Zastąpić ją tym miejscem?",
+    replace: "Zastąp", cancel: "Anuluj", meters: "m", km: "km",
+  },
+};
+
+export function nearbyCopy(language) {
+  return NEARBY_COPY[placesLanguage(language)] || NEARBY_COPY.ru;
+}
 
 export function createSessionToken() {
   const bytes = new Uint8Array(16);
@@ -112,4 +168,98 @@ export async function placeDetailsLocation({ placeId, sessionToken, key, fetch, 
   const point = parsePlaceLocation(await response.json());
   if (!point) throw placesError("places-failed");
   return point;
+}
+
+function nearbyDistance(fromLat, fromLng, toLat, toLng) {
+  const rad = Math.PI / 180;
+  const dLat = (toLat - fromLat) * rad;
+  const dLng = (toLng - fromLng) * rad;
+  const a = Math.sin(dLat / 2) ** 2
+    + Math.cos(fromLat * rad) * Math.cos(toLat * rad) * Math.sin(dLng / 2) ** 2;
+  return Math.round(2 * 6371000 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a)));
+}
+
+export function formatNearbyDistance(meters, language) {
+  if (!Number.isFinite(meters) || meters < 0) return "";
+  const copy = nearbyCopy(language);
+  if (meters >= 1000) return `${Math.round(meters / 100) / 10} ${copy.km}`;
+  return `${Math.round(meters)} ${copy.meters}`;
+}
+
+export function parseNearbyPlaces(payload, origin) {
+  const places = Array.isArray(payload?.places) ? payload.places : [];
+  const fromLat = Number(origin?.latitude);
+  const fromLng = Number(origin?.longitude);
+  const originOk = Number.isFinite(fromLat) && Number.isFinite(fromLng);
+  const results = [];
+  for (const place of places) {
+    const name = typeof place?.displayName?.text === "string" ? place.displayName.text.trim() : "";
+    const lat = Number(place?.location?.latitude);
+    const lng = Number(place?.location?.longitude);
+    const id = typeof place?.id === "string" ? place.id : "";
+    if (!id || !name || !Number.isFinite(lat) || !Number.isFinite(lng) || Math.abs(lat) > 90 || Math.abs(lng) > 180) continue;
+    const address = typeof place.formattedAddress === "string" ? place.formattedAddress : "";
+    const rating = typeof place.rating === "number" && Number.isFinite(place.rating) ? place.rating : null;
+    results.push({
+      id,
+      name,
+      address,
+      latitude: lat,
+      longitude: lng,
+      rating,
+      distance: originOk ? nearbyDistance(fromLat, fromLng, lat, lng) : null,
+    });
+  }
+  return results.slice(0, NEARBY_MAX_RESULTS);
+}
+
+export function nearbyCategory(categoryId) {
+  return NEARBY_CATEGORIES.find(item => item.id === categoryId) || null;
+}
+
+export function nearbyFix(permission, coords) {
+  if (permission === "denied") return { ok: false, reason: "denied" };
+  if (permission !== "granted") return { ok: false, reason: "waiting" };
+  const latitude = Number(coords?.latitude);
+  const longitude = Number(coords?.longitude);
+  if (!Number.isFinite(latitude) || !Number.isFinite(longitude)) return { ok: false, reason: "waiting" };
+  return { ok: true, latitude, longitude };
+}
+
+export async function nearbyPlaces({ categoryId, latitude, longitude, languageCode, key, fetch, signal }) {
+  if (!key) throw placesError("missing-key");
+  const category = nearbyCategory(categoryId);
+  const lat = Number(latitude);
+  const lng = Number(longitude);
+  if (!category || !Number.isFinite(lat) || !Number.isFinite(lng)) throw placesError("places-failed");
+  const response = await fetch(PLACES_NEARBY_URL, {
+    method: "POST",
+    headers: placesHeaders(key, NEARBY_FIELD_MASK),
+    body: JSON.stringify({
+      includedTypes: category.types,
+      maxResultCount: NEARBY_MAX_RESULTS,
+      rankPreference: "DISTANCE",
+      languageCode: placesLanguage(languageCode),
+      locationRestriction: {
+        circle: { center: { latitude: lat, longitude: lng }, radius: NEARBY_RADIUS_M },
+      },
+    }),
+    signal,
+  });
+  if (!response.ok) throw placesError("places-failed");
+  return parseNearbyPlaces(await response.json(), { latitude: lat, longitude: lng });
+}
+
+export function nearbyHandoff(place, routeActive) {
+  const latitude = Number(place?.latitude);
+  const longitude = Number(place?.longitude);
+  if (!Number.isFinite(latitude) || !Number.isFinite(longitude)) return { action: "ignore" };
+  return {
+    action: routeActive ? "confirm" : "open",
+    destination: {
+      lat: latitude,
+      lng: longitude,
+      title: typeof place?.name === "string" ? place.name : "",
+    },
+  };
 }
