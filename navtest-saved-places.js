@@ -6,7 +6,8 @@ const COPY = {
     saveHome: "Адрес дома", saveWork: "Адрес работы", saveFavorite: "Адрес места",
     change: "Изменить", delete: "Удалить", cancel: "Отмена", close: "Закрыть",
     replaceTitle: "Заменить маршрут?", replaceBody: "Сейчас уже построен маршрут. Заменить его?", replace: "Заменить",
-    go: "Поехать", add: "Добавить", favorite: "В избранное",
+    go: "Поехать", add: "Добавить", favorite: "В избранное", unfavorite: "Убрать из избранного",
+    placesButton: "Поиск / Мои места",
     empty: "Избранных мест пока нет", duplicate: "Это место уже в избранном",
     saveFailed: "Не удалось сохранить адрес",
   },
@@ -15,7 +16,8 @@ const COPY = {
     saveHome: "Адреса дому", saveWork: "Адреса роботи", saveFavorite: "Адреса місця",
     change: "Змінити", delete: "Видалити", cancel: "Скасувати", close: "Закрити",
     replaceTitle: "Замінити маршрут?", replaceBody: "Маршрут уже побудовано. Замінити його?", replace: "Замінити",
-    go: "Поїхати", add: "Додати", favorite: "До обраного",
+    go: "Поїхати", add: "Додати", favorite: "До обраного", unfavorite: "Прибрати з обраного",
+    placesButton: "Пошук / Мої місця",
     empty: "Обраних місць поки немає", duplicate: "Це місце вже в обраному",
     saveFailed: "Не вдалося зберегти адресу",
   },
@@ -24,7 +26,8 @@ const COPY = {
     saveHome: "Home address", saveWork: "Work address", saveFavorite: "Place address",
     change: "Change", delete: "Delete", cancel: "Cancel", close: "Close",
     replaceTitle: "Replace the route?", replaceBody: "A route is already built. Replace it?", replace: "Replace",
-    go: "Go", add: "Add", favorite: "Add to favorites",
+    go: "Go", add: "Add", favorite: "Add to favorites", unfavorite: "Remove from favorites",
+    placesButton: "Search / My places",
     empty: "No favorite places yet", duplicate: "This place is already a favorite",
     saveFailed: "The address could not be saved",
   },
@@ -33,7 +36,8 @@ const COPY = {
     saveHome: "Adres domu", saveWork: "Adres pracy", saveFavorite: "Adres miejsca",
     change: "Zmień", delete: "Usuń", cancel: "Anuluj", close: "Zamknij",
     replaceTitle: "Zastąpić trasę?", replaceBody: "Trasa jest już zbudowana. Zastąpić ją?", replace: "Zastąp",
-    go: "Jedź", add: "Dodaj", favorite: "Do ulubionych",
+    go: "Jedź", add: "Dodaj", favorite: "Do ulubionych", unfavorite: "Usuń z ulubionych",
+    placesButton: "Szukaj / Moje miejsca",
     empty: "Nie ma jeszcze ulubionych miejsc", duplicate: "To miejsce jest już w ulubionych",
     saveFailed: "Nie udało się zapisać adresu",
   },
@@ -41,6 +45,45 @@ const COPY = {
 
 export function savedPlaceCopy(language) {
   return COPY[language] || COPY.ru;
+}
+
+export const NAV_PANEL = {
+  horizontalInset: 12,
+  cardPaddingHorizontal: 8,
+  cardPaddingVertical: 4,
+  cardMarginTop: 4,
+  cardGap: 4,
+  searchMinHeight: 32,
+  buttonMinHeight: 28,
+  buttonGap: 6,
+  guidanceButtonHeight: 30,
+  maneuverClearance: 108,
+};
+
+export function navPanelLayout({ width, guiding = false, placesOpen = false, safeBottom = 0 } = {}) {
+  const safeWidth = Number(width) || 0;
+  const inner = Math.max(0, safeWidth - NAV_PANEL.horizontalInset * 2 - NAV_PANEL.cardPaddingHorizontal * 2);
+  const buttonWidth = Math.floor((inner - NAV_PANEL.buttonGap * 2) / 3);
+  const idlePanel = NAV_PANEL.cardMarginTop + NAV_PANEL.cardPaddingVertical * 2 + NAV_PANEL.searchMinHeight + NAV_PANEL.cardGap + NAV_PANEL.buttonMinHeight;
+  const closedPanel = NAV_PANEL.cardMarginTop + NAV_PANEL.guidanceButtonHeight;
+  const open = !guiding || !!placesOpen;
+  const panelHeight = open ? idlePanel : closedPanel;
+  const bottom = Number(safeBottom) || 0;
+  return {
+    width: safeWidth,
+    inner,
+    buttonWidth,
+    searchVisible: open,
+    buttonsVisible: open,
+    compactButton: !!guiding && !placesOpen,
+    panelHeight,
+    maneuverClearance: guiding ? NAV_PANEL.maneuverClearance : 0,
+    top: (guiding ? NAV_PANEL.maneuverClearance : 0) + panelHeight,
+    safeBottom: bottom,
+    bottomBarUntouched: true,
+    coversBanner: false,
+    fitsThreeButtons: buttonWidth >= 90,
+  };
 }
 
 export function emptySavedPlaces() {
@@ -107,6 +150,22 @@ export function clearSavedSlot(store, slot) {
   const base = parseSavedPlaces(store);
   if (slot !== "home" && slot !== "work") return base;
   return { home: base.home, work: base.work, favorites: base.favorites, [slot]: null };
+}
+
+export function favoriteSaved(store, place) {
+  const base = parseSavedPlaces(store);
+  const clean = normalizeSavedPlace(place);
+  if (!clean) return false;
+  return isDuplicateFavorite(base.favorites, clean);
+}
+
+export function toggleFavorite(store, place) {
+  const base = parseSavedPlaces(store);
+  const clean = normalizeSavedPlace(place);
+  if (!clean) return { store: base, saved: false };
+  if (isDuplicateFavorite(base.favorites, clean)) return { store: removeFavorite(base, clean), saved: false };
+  const next = addFavorite(base, clean);
+  return { store: next.store, saved: !!next.added };
 }
 
 export function addFavorite(store, place) {

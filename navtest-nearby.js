@@ -1,11 +1,14 @@
 import React, { useEffect, useRef, useState } from "react";
 import { ActivityIndicator, Linking, Pressable, Text, View } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as Location from "expo-location";
 import {
   NEARBY_CATEGORIES, createNearbyController, formatNearbyDistance, nearbyCategory, nearbyCopy,
 } from "./google-places";
 import { readPlacesKey } from "./google-places-key";
-import { savedPlaceCopy } from "./navtest-saved-places";
+import {
+  emptySavedPlaces, favoriteSaved, loadSavedPlaces, savedPlaceCopy, savedPlaceFromNearby, toggleFavorite,
+} from "./navtest-saved-places";
 
 async function readNearbyFix() {
   const current = await Location.getForegroundPermissionsAsync();
@@ -28,6 +31,7 @@ export default function NavtestNearby({ language, coords, permission, onGo, onKi
   const [categoryId, setCategoryId] = useState(null);
   const [status, setStatus] = useState("idle");
   const [places, setPlaces] = useState([]);
+  const [saved, setSaved] = useState(emptySavedPlaces);
   const requests = useRef(null);
   if (!requests.current) requests.current = createNearbyController();
 
@@ -62,6 +66,22 @@ export default function NavtestNearby({ language, coords, permission, onGo, onKi
   }
 
   useEffect(() => () => requests.current?.stop(), []);
+
+  useEffect(() => {
+    let live = true;
+    loadSavedPlaces(AsyncStorage).then(value => {
+      if (live) setSaved(value);
+    }).catch(() => {
+      if (live) setSaved(emptySavedPlaces());
+    });
+    return () => { live = false; };
+  }, []);
+
+  function pressHeart(place) {
+    const outcome = toggleFavorite(saved, savedPlaceFromNearby(place));
+    setSaved(outcome.store);
+    onFavorite?.(place, outcome.store);
+  }
 
   return (
     <View style={styles.screen}>
@@ -112,8 +132,8 @@ export default function NavtestNearby({ language, coords, permission, onGo, onKi
           {!!place.address && <Text numberOfLines={2} maxFontSizeMultiplier={1.4} style={styles.address}>{place.address}</Text>}
           {!!distanceLabel && <Text maxFontSizeMultiplier={1.3} style={styles.meta}>{distanceLabel}</Text>}
           <View style={styles.actions}>
-            <Pressable accessibilityRole="button" accessibilityLabel={savedCopy.favorite} onPress={() => onFavorite?.(place)} style={styles.heart}>
-              <Text maxFontSizeMultiplier={1.3} style={styles.heartGlyph}>♡</Text>
+            <Pressable accessibilityRole="button" accessibilityLabel={favoriteSaved(saved, savedPlaceFromNearby(place)) ? savedCopy.unfavorite : savedCopy.favorite} accessibilityState={{ selected: favoriteSaved(saved, savedPlaceFromNearby(place)) }} onPress={() => pressHeart(place)} style={styles.heart}>
+              <Text maxFontSizeMultiplier={1.3} style={[styles.heartGlyph, favoriteSaved(saved, savedPlaceFromNearby(place)) && styles.heartOn]}>{favoriteSaved(saved, savedPlaceFromNearby(place)) ? "♥" : "♡"}</Text>
             </Pressable>
             <Pressable accessibilityRole="button" onPress={() => onGo?.(place)} style={styles.go}>
               <Text maxFontSizeMultiplier={1.3} style={styles.goText}>{copy.go}</Text>
@@ -148,6 +168,7 @@ const styles = {
   actions: { marginTop: 6, flexDirection: "row", flexWrap: "nowrap", alignItems: "center", gap: 8 },
   heart: { width: 44, height: 44, borderRadius: 14, borderWidth: 1, borderColor: "#e4e8ed", alignItems: "center", justifyContent: "center" },
   heartGlyph: { fontSize: 18, color: "#9A3412" },
+  heartOn: { color: "#E11D2E" },
   go: { flex: 1, minHeight: 44, borderRadius: 14, backgroundColor: "#1260E8", alignItems: "center", justifyContent: "center" },
   goText: { color: "#fff", fontWeight: "800" },
 };

@@ -12,7 +12,7 @@ import { lookupDestinations } from "./google-nav-search";
 import { autocompletePlaces, placeDetailsLocation, PLACES_DEBOUNCE_MS, placesLanguage, reduceSearchSchedule } from "./google-places";
 import { readPlacesKey } from "./google-places-key";
 import {
-  addFavorite, assignSavedSlot, clearSavedSlot, emptySavedPlaces, loadSavedPlaces, removeFavorite,
+  NAV_PANEL, addFavorite, assignSavedSlot, clearSavedSlot, emptySavedPlaces, loadSavedPlaces, removeFavorite,
   savedPlaceCopy, savedPlaceFromSuggestion, savedPlaceRoute, storeSavedPlaces,
 } from "./navtest-saved-places";
 import { withNavigationWindow } from "./navigation-readiness";
@@ -109,6 +109,7 @@ function GoogleNavBody({
   const [saved, setSaved] = useState(emptySavedPlaces);
   const [saveSlot, setSaveSlot] = useState(null);
   const [favoritesOpen, setFavoritesOpen] = useState(false);
+  const [placesOpen, setPlacesOpen] = useState(false);
   const savedRef = useRef(emptySavedPlaces());
   savedRef.current = saved;
   const navView = useRef(null);
@@ -163,7 +164,7 @@ function GoogleNavBody({
   }
 
   useEffect(() => {
-    if ((guiding && !saveSlot) || (suppressQuery.current && query === suppressQuery.current)) return undefined;
+    if ((guiding && !placesOpen && !saveSlot) || (suppressQuery.current && query === suppressQuery.current)) return undefined;
     const next = reduceSearchSchedule(schedule.current, query, Date.now());
     schedule.current = next;
     const local = lookupDestinations(query);
@@ -198,7 +199,7 @@ function GoogleNavBody({
       clearTimeout(handle);
       controller.abort();
     };
-  }, [copy.empty, copy.searchFailed, copy.searchKey, copy.searching, guiding, language, query, saveSlot]);
+  }, [copy.empty, copy.searchFailed, copy.searchKey, copy.searching, guiding, language, placesOpen, query, saveSlot]);
 
   useEffect(() => {
     setOnRemainingTimeOrDistanceChanged(value => {
@@ -311,6 +312,10 @@ function GoogleNavBody({
   }, [guiding, onRouteActive, routed]);
 
   useEffect(() => {
+    if (guiding) setPlacesOpen(false);
+  }, [guiding]);
+
+  useEffect(() => {
     if (!handoff || handoff.token == null || handoffToken.current === handoff.token) return;
     const lat = Number(handoff.lat);
     const lng = Number(handoff.lng);
@@ -378,6 +383,7 @@ function GoogleNavBody({
   }
 
   function beginSave(slot) {
+    setPlacesOpen(true);
     setSaveSlot(slot);
     setFavoritesOpen(slot === "favorite");
     setQuery("");
@@ -474,6 +480,15 @@ function GoogleNavBody({
     });
   }
 
+  function closePlaces() {
+    setPlacesOpen(false);
+    setSaveSlot(null);
+    setFavoritesOpen(false);
+    setSuggestions([]);
+    setSearchNote("");
+    dismissSearch();
+  }
+
   function remember(edge, event) {
     const height = Math.ceil(event.nativeEvent.layout.height);
     if (height < 1) return;
@@ -519,8 +534,18 @@ function GoogleNavBody({
       <SystemSafeArea pointerEvents="box-none" style={styles.overlay}>
         <View pointerEvents="box-none" onLayout={event => remember("top", event)}>
           {chrome.maneuver && <View pointerEvents="none" style={styles.maneuverClearance} />}
-          {(chrome.search || saveSlot) && (
+          {guiding && !placesOpen && !saveSlot && (
+            <Pressable accessibilityRole="button" accessibilityLabel={places.placesButton} onPress={() => setPlacesOpen(true)} style={[styles.placesToggle, { backgroundColor: palette.panel }]}>
+              <Text numberOfLines={1} maxFontSizeMultiplier={1.2} style={[styles.savedLabel, { color: palette.ink }]}>{places.placesButton}</Text>
+            </Pressable>
+          )}
+          {(!guiding || placesOpen || saveSlot) && (
             <View style={[styles.searchCard, { backgroundColor: palette.panel }]}>
+              {guiding && (
+                <Pressable accessibilityRole="button" accessibilityLabel={places.close} onPress={closePlaces} style={styles.placesClose}>
+                  <Text numberOfLines={1} maxFontSizeMultiplier={1.2} style={[styles.savedLabel, { color: palette.ink }]}>{places.close}</Text>
+                </Pressable>
+              )}
               <View style={styles.searchRow}>
                 <TextInput
                   ref={searchField}
@@ -562,25 +587,6 @@ function GoogleNavBody({
                 </ScrollView>
               )}
               {!!searchNote && <Text numberOfLines={2} maxFontSizeMultiplier={1.4} style={[styles.searchOff, { color: palette.muted }]}>{searchNote}</Text>}
-            </View>
-          )}
-          {!chrome.search && !saveSlot && (
-            <View style={[styles.searchCard, { backgroundColor: palette.panel }]}>
-              <SavedPlaceBar
-                places={places}
-                saved={saved}
-                compact={windowHeight < 700}
-                open={favoritesOpen}
-                saveSlot={saveSlot}
-                palette={palette}
-                onPress={pressSaved}
-                onHold={holdSaved}
-                onToggle={() => setFavoritesOpen(open => !open)}
-                onAdd={() => beginSave("favorite")}
-                onGo={openSaved}
-                onRemove={removeSavedFavorite}
-                onCancelSave={() => setSaveSlot(null)}
-              />
             </View>
           )}
           {banner && (
@@ -763,9 +769,11 @@ const DARK = { panel: "rgba(16,38,59,0.94)", ink: "#F5F8FB", muted: "#CAD7E7", b
 const styles = StyleSheet.create({
   root: { flex: 1, backgroundColor: "#0B1829" },
   overlay: { flex: 1, justifyContent: "space-between" },
-  searchCard: { marginHorizontal: 12, marginTop: 6, borderRadius: 16, paddingHorizontal: 10, paddingVertical: 8, gap: 6 },
+  searchCard: { marginHorizontal: NAV_PANEL.horizontalInset, marginTop: NAV_PANEL.cardMarginTop, borderRadius: 16, paddingHorizontal: NAV_PANEL.cardPaddingHorizontal, paddingVertical: NAV_PANEL.cardPaddingVertical, gap: NAV_PANEL.cardGap },
   searchRow: { flexDirection: "row", alignItems: "center", gap: 8 },
-  searchInput: { flex: 1, minHeight: 40, fontSize: 17, fontWeight: "700", paddingVertical: 0 },
+  searchInput: { flex: 1, minHeight: NAV_PANEL.searchMinHeight, fontSize: 16, fontWeight: "700", paddingVertical: 0 },
+  placesToggle: { marginHorizontal: NAV_PANEL.horizontalInset, marginTop: NAV_PANEL.cardMarginTop, minHeight: NAV_PANEL.guidanceButtonHeight, borderRadius: 12, alignItems: "center", justifyContent: "center", paddingHorizontal: 10 },
+  placesClose: { minHeight: NAV_PANEL.guidanceButtonHeight, alignItems: "flex-end", justifyContent: "center" },
   speaker: { width: 40, height: 40, borderRadius: 12, alignItems: "center", justifyContent: "center" },
   speakerOn: { backgroundColor: "#1260E8" },
   speakerGlyph: { fontSize: 16 },
@@ -782,7 +790,7 @@ const styles = StyleSheet.create({
   tools: { alignItems: "flex-end", alignSelf: "stretch", gap: 6 },
   toolRow: { flexDirection: "row", justifyContent: "flex-end", flexWrap: "nowrap", gap: 8 },
   toolsDock: { alignItems: "flex-end" },
-  maneuverClearance: { height: 108 },
+  maneuverClearance: { height: NAV_PANEL.maneuverClearance },
   camera: { alignSelf: "flex-start", maxWidth: "78%", flexDirection: "row", flexWrap: "nowrap", gap: 8, backgroundColor: "#8E2A22", borderRadius: 14, paddingHorizontal: 10, paddingVertical: 6, marginHorizontal: 12, marginTop: 6 },
   cameraDistance: { color: "#FFFFFF", fontSize: 18, fontWeight: "900", flexShrink: 0 },
   cameraType: { color: "#FFFFFF", fontSize: 14, fontWeight: "700", flexShrink: 1 },
@@ -805,9 +813,9 @@ const styles = StyleSheet.create({
   secondaryText: { fontSize: 16, fontWeight: "700" },
   savedBlock: { gap: 4 },
   savedRow: { flexDirection: "row", flexWrap: "nowrap", gap: 6 },
-  savedButton: { flex: 1, minHeight: 34, borderRadius: 10, alignItems: "center", justifyContent: "center", paddingHorizontal: 6 },
-  savedButtonCompact: { minHeight: 30 },
-  savedLabel: { fontSize: 13, fontWeight: "800" },
+  savedButton: { flex: 1, minHeight: NAV_PANEL.buttonMinHeight, borderRadius: 10, alignItems: "center", justifyContent: "center", paddingHorizontal: 6 },
+  savedButtonCompact: { minHeight: 26 },
+  savedLabel: { fontSize: 12, fontWeight: "800" },
   savedHint: { fontSize: 12, fontWeight: "600", flexShrink: 1 },
   savedPrompt: { flexDirection: "row", flexWrap: "nowrap", alignItems: "center", justifyContent: "space-between", gap: 8 },
   savedList: { maxHeight: 168, gap: 2 },

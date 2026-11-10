@@ -41,7 +41,7 @@ import IosRouteScreen from "./ios-route-screen";
 import { isGoogleNavTestApp } from "./google-nav-gate";
 import { nearbyCopy as placesNearbyCopy, nearbyHandoff } from "./google-places";
 import NavtestNearby from "./navtest-nearby";
-import { addFavorite, loadSavedPlaces, savedPlaceCopy, savedPlaceFromNearby, storeSavedPlaces } from "./navtest-saved-places";
+import { loadSavedPlaces, savedPlaceFromNearby, storeSavedPlaces, toggleFavorite } from "./navtest-saved-places";
 import { countryFeedsAfterDelivery, navtestCountryReady, navtestStoredCountryCodes } from "./navtest-country-store";
 import { noteNavtestCameraSpeech, resetNavtestCameraSpeech, skipRepeatedCameraSpeech, skipSharedNavtestSpeech } from "./navtest-speech";
 import GoogleNavTestScreen from "./google-nav-test";
@@ -1633,18 +1633,10 @@ export default function App() {
     setIosRouteOpen(true);
   }
 
-  async function rememberNearbyFavorite(place) {
+  async function rememberNearbyFavorite(place, next) {
     if (!isGoogleNavTestApp()) return;
-    const current = await loadSavedPlaces(AsyncStorage);
-    const outcome = addFavorite(current, savedPlaceFromNearby(place));
-    if (!outcome.added) {
-      if (outcome.reason === "duplicate") {
-        const copy = savedPlaceCopy(settings.language);
-        Alert.alert(copy.favorites, copy.duplicate);
-      }
-      return;
-    }
-    await storeSavedPlaces(AsyncStorage, outcome.store);
+    const store = next || toggleFavorite(await loadSavedPlaces(AsyncStorage), savedPlaceFromNearby(place)).store;
+    await storeSavedPlaces(AsyncStorage, store);
   }
 
   async function startRouteGuidance(packed) {

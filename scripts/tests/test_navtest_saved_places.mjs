@@ -2,9 +2,9 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import test from "node:test";
 import {
-  SAVED_PLACES_KEY, addFavorite, assignSavedSlot, clearSavedSlot, emptySavedPlaces, loadSavedPlaces,
-  normalizeSavedPlace, parseSavedPlaces, removeFavorite, savedPlaceCopy, savedPlaceFromNearby,
-  savedPlaceFromSuggestion, savedPlaceRoute, storeSavedPlaces,
+  NAV_PANEL, SAVED_PLACES_KEY, addFavorite, assignSavedSlot, clearSavedSlot, emptySavedPlaces, favoriteSaved,
+  loadSavedPlaces, navPanelLayout, normalizeSavedPlace, parseSavedPlaces, removeFavorite, savedPlaceCopy,
+  savedPlaceFromNearby, savedPlaceFromSuggestion, savedPlaceRoute, storeSavedPlaces, toggleFavorite,
 } from "../../navtest-saved-places.js";
 
 const root = new URL("../../", import.meta.url);
@@ -144,7 +144,7 @@ test("a saved place hands off to the route and asks before replacing an active o
 });
 
 test("labels, prompts, confirmations, errors, and empty states exist in four languages", () => {
-  const keys = ["home", "work", "favorites", "saveHome", "saveWork", "saveFavorite", "change", "delete", "cancel", "close", "replaceTitle", "replaceBody", "replace", "go", "add", "favorite", "empty", "duplicate", "saveFailed"];
+  const keys = ["home", "work", "favorites", "saveHome", "saveWork", "saveFavorite", "change", "delete", "cancel", "close", "replaceTitle", "replaceBody", "replace", "go", "add", "favorite", "unfavorite", "placesButton", "empty", "duplicate", "saveFailed"];
   for (const language of ["ru", "uk", "en", "pl"]) {
     const copy = savedPlaceCopy(language);
     for (const key of keys) {
@@ -160,6 +160,12 @@ test("labels, prompts, confirmations, errors, and empty states exist in four lan
   assert.equal(savedPlaceCopy("uk").go, "Поїхати");
   assert.equal(savedPlaceCopy("en").go, "Go");
   assert.equal(savedPlaceCopy("pl").go, "Jedź");
+  assert.equal(savedPlaceCopy("ru").placesButton, "Поиск / Мои места");
+  assert.equal(savedPlaceCopy("uk").placesButton, "Пошук / Мої місця");
+  assert.equal(savedPlaceCopy("en").placesButton, "Search / My places");
+  assert.equal(savedPlaceCopy("pl").placesButton, "Szukaj / Moje miejsca");
+  assert.equal(savedPlaceCopy("ru").unfavorite, "Убрать из избранного");
+  assert.equal(savedPlaceCopy("en").unfavorite, "Remove from favorites");
   assert.equal(savedPlaceCopy("de"), savedPlaceCopy("ru"));
   assert.notEqual(savedPlaceCopy("ru").empty, savedPlaceCopy("uk").empty);
   assert.notEqual(savedPlaceCopy("en").saveFailed, savedPlaceCopy("pl").saveFailed);
@@ -202,15 +208,91 @@ test("the Drive screen keeps the buttons under the search and routes through the
   assert.doesNotMatch(screen, /AsyncStorage\.(clear|setItem|removeItem)|watchPositionAsync|startTracking|sideButton|fetch\(|places\.googleapis/);
   assert.match(app, /isGoogleNavTestApp\(\) && \(iosRouteOpen \|\| \(tab === "drive" && active\)\)/);
   assert.match(app, /onFavorite=\{rememberNearbyFavorite\}/);
-  assert.match(favorite, /addFavorite\(current, savedPlaceFromNearby\(place\)\)/);
+  assert.match(favorite, /storeSavedPlaces\(AsyncStorage, store\)/);
   assert.match(favorite, /if \(!isGoogleNavTestApp\(\)\) return/);
-  assert.doesNotMatch(favorite, /startTracking|watchPositionAsync|startGuidance|setDestination|AsyncStorage\.clear/);
+  assert.doesNotMatch(favorite, /Alert\.alert|startTracking|watchPositionAsync|startGuidance|setDestination|AsyncStorage\.clear/);
   const card = nearby.slice(nearby.indexOf('status === "ready"'), nearby.indexOf("const styles"));
-  assert.match(card, /onFavorite\?\.\(place\)/);
+  const heart = nearby.slice(nearby.indexOf("function pressHeart"), nearby.indexOf('status === "loading"'));
+  assert.match(heart, /toggleFavorite\(saved, savedPlaceFromNearby\(place\)\)/);
+  assert.ok(heart.indexOf("setSaved(outcome.store)") < heart.indexOf("onFavorite?.(place, outcome.store)"));
+  assert.match(card, /pressHeart\(place\)/);
+  assert.match(card, /styles\.heartOn/);
+  assert.match(card, /♥/);
+  assert.match(card, /♡/);
+  assert.match(nearby, /loadSavedPlaces\(AsyncStorage\)/);
+  assert.match(nearby, /#E11D2E/);
   assert.match(nearby, /savedPlaceCopy\(language\)/);
-  assert.ok(card.indexOf("onFavorite") < card.indexOf("onGo"));
-  assert.doesNotMatch(card.slice(card.indexOf("onFavorite"), card.indexOf("onGo")), /onGo|watchPositionAsync|startTracking/);
+  assert.ok(card.indexOf("pressHeart") < card.indexOf("onGo"));
+  assert.doesNotMatch(card.slice(card.indexOf("pressHeart"), card.indexOf("onGo")), /onGo|watchPositionAsync|startTracking/);
+  assert.match(top, /guiding && !placesOpen && !saveSlot/);
+  assert.match(top, /places\.placesButton/);
+  assert.match(top, /places\.close/);
+  assert.match(screen, /function closePlaces/);
+  assert.match(screen, /minHeight: NAV_PANEL\.searchMinHeight/);
+  assert.match(screen, /minHeight: NAV_PANEL\.buttonMinHeight/);
+  assert.match(screen, /height: NAV_PANEL\.maneuverClearance/);
+  assert.match(screen, /bottom: \{ marginHorizontal: 12, marginBottom: 8, gap: 8 \}/);
+  assert.doesNotMatch(screen.slice(screen.indexOf("function RouteBar"), screen.indexOf("function finiteCoord")), /placesButton|heartOn/);
   assert.doesNotMatch(home, /SavedPlaceBar|savedPlaceCopy|SAVED_PLACES_KEY/);
   assert.doesNotMatch(map, /SavedPlaceBar|savedPlaceCopy|onFavorite/);
   assert.equal(normalizeSavedPlace({ name: "  Дом  ", lat: "50.1", lng: "30.2", placeId: " id " }).placeId, "id");
+});
+
+test("the Nearby heart fills on save, empties on the next tap, and stays aligned with Favorites", async () => {
+  const nearby = { id: "pharm", name: "Аптека", address: "ул. Межигорская, 2", latitude: 50.466, longitude: 30.511 };
+  const place = savedPlaceFromNearby(nearby);
+  assert.equal(favoriteSaved(emptySavedPlaces(), place), false);
+  const filled = toggleFavorite(emptySavedPlaces(), place);
+  assert.equal(filled.saved, true);
+  assert.equal(favoriteSaved(filled.store, place), true);
+  assert.deepEqual(filled.store.favorites, [place]);
+  const emptied = toggleFavorite(filled.store, place);
+  assert.equal(emptied.saved, false);
+  assert.deepEqual(emptied.store.favorites, []);
+  assert.equal(favoriteSaved(emptied.store, place), false);
+  const fromDrive = removeFavorite(filled.store, filled.store.favorites[0]);
+  assert.equal(favoriteSaved(fromDrive, place), false);
+  const again = addFavorite(filled.store, { ...place, name: "Другое" });
+  assert.equal(again.added, false);
+  assert.equal(again.store.favorites.length, 1);
+  const storage = memory({ camera_settings_v060: "keep" });
+  await storeSavedPlaces(storage, filled.store);
+  const restarted = await loadSavedPlaces(storage);
+  assert.equal(favoriteSaved(restarted, place), true);
+  assert.equal(storage.items.camera_settings_v060, "keep");
+  assert.deepEqual(storage.writes, [SAVED_PLACES_KEY]);
+});
+
+test("the top panel stays compact on 375, 393, and 430 and opens only during guidance", () => {
+  assert.equal(NAV_PANEL.maneuverClearance, 108);
+  assert.ok(NAV_PANEL.searchMinHeight < 40);
+  assert.ok(NAV_PANEL.buttonMinHeight < 34);
+  for (const width of [375, 393, 430]) {
+    const idle = navPanelLayout({ width, guiding: false, placesOpen: false, safeBottom: 34 });
+    const closed = navPanelLayout({ width, guiding: true, placesOpen: false, safeBottom: 34 });
+    const opened = navPanelLayout({ width, guiding: true, placesOpen: true, safeBottom: 34 });
+    assert.equal(idle.searchVisible, true, width);
+    assert.equal(idle.buttonsVisible, true, width);
+    assert.equal(idle.compactButton, false, width);
+    assert.equal(idle.maneuverClearance, 0, width);
+    assert.equal(idle.safeBottom, 34, width);
+    assert.equal(idle.top, navPanelLayout({ width, guiding: false, safeBottom: 0 }).top, width);
+    assert.equal(idle.fitsThreeButtons, true, width);
+    assert.ok(idle.buttonWidth >= 90, `${width} ${idle.buttonWidth}`);
+    assert.ok(idle.panelHeight <= 80, `${width} ${idle.panelHeight}`);
+    assert.equal(closed.compactButton, true, width);
+    assert.equal(closed.searchVisible, false, width);
+    assert.equal(closed.buttonsVisible, false, width);
+    assert.equal(closed.maneuverClearance, 108, width);
+    assert.ok(closed.panelHeight < idle.panelHeight, width);
+    assert.equal(closed.bottomBarUntouched, true, width);
+    assert.equal(closed.coversBanner, false, width);
+    assert.equal(opened.searchVisible, true, width);
+    assert.equal(opened.buttonsVisible, true, width);
+    assert.equal(opened.compactButton, false, width);
+    assert.ok(opened.top > closed.top, width);
+    assert.equal(opened.top, opened.maneuverClearance + opened.panelHeight, width);
+    assert.equal(opened.safeBottom, 34, width);
+  }
+  assert.ok(navPanelLayout({ width: 430, guiding: false }).buttonWidth > navPanelLayout({ width: 375, guiding: false }).buttonWidth);
 });
