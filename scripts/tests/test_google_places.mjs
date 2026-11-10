@@ -97,6 +97,7 @@ test("autocomplete and place details use a session and the essentials location f
   assert.equal(details.url.includes("displayName"), false);
   assert.equal(AUTOCOMPLETE_FIELD_MASK.includes("displayName"), false);
   assert.equal(NEARBY_FIELD_MASK.includes("places.displayName"), true);
+  assert.equal(NEARBY_FIELD_MASK.includes("rating"), false);
   const source = fs.readFileSync(new URL("../../google-places.js", import.meta.url), "utf8");
   assert.equal(source.includes("MKDirections"), false);
   assert.equal(source.includes("GOOGLE_MAPS_ANDROID_API_KEY"), false);

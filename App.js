@@ -609,6 +609,7 @@ export default function App() {
   const [navigatorDestination, setNavigatorDestination] = useState("");
   const [googleNavigationOpen, setGoogleNavigationOpen] = useState(false);
   const [navtestHandoff, setNavtestHandoff] = useState(null);
+  const [navtestNearbyKind, setNavtestNearbyKind] = useState(null);
   const navtestRouteActiveRef = useRef(false);
   const [iosRouteOpen, setIosRouteOpen] = useState(false);
   const [routeGuidance, setRouteGuidance] = useState(null);
@@ -1455,6 +1456,7 @@ export default function App() {
 
   useEffect(() => {
     if (tab !== "nearby" || active) return;
+    if (isGoogleNavTestApp() && navtestNearbyKind !== "cameras") return;
     let cancelled = false;
     let timer;
     setNearbyStatus("loading");
@@ -1481,7 +1483,7 @@ export default function App() {
     }
     locate();
     return () => {cancelled = true;clearTimeout(timer);};
-  }, [tab, active, nearbyRefresh]);
+  }, [tab, active, nearbyRefresh, navtestNearbyKind]);
 
   const nearbyOrigin = active ? coords : nearbyPosition;
   const nearbyCopy = ({
@@ -2000,15 +2002,16 @@ export default function App() {
             coords={coords}
             permission={locationPermissionStatus}
             onGo={handoffNearbyPlace}
+            onKind={setNavtestNearbyKind}
           />
         )}
-        {tab === "nearby" && !isGoogleNavTestApp() && !cameraWarningsEnabled(settings) && (
+        {tab === "nearby" && (!isGoogleNavTestApp() || navtestNearbyKind === "cameras") && !cameraWarningsEnabled(settings) && (
           <View style={s.card}>
             <Text style={s.label}>{(WARNING_UI[settings.language] || WARNING_UI.ru).off}</Text>
             <Text style={s.note}>{(WARNING_UI[settings.language] || WARNING_UI.ru).offMap}</Text>
           </View>
         )}
-        {tab === "nearby" && !isGoogleNavTestApp() && cameraWarningsEnabled(settings) && (
+        {tab === "nearby" && (!isGoogleNavTestApp() || navtestNearbyKind === "cameras") && cameraWarningsEnabled(settings) && (
           <View style={s.list}>
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>{["all","speed_camera","red_light","speed_and_red_light","average_speed","checkpoint"].map(type=><FilterChip key={type} night={isNight} selected={nearbyType===type} onPress={()=>setNearbyType(type)}>{type==="all"?ui.all:`${cameraGlyph({type})} ${cameraTypeLabel({type},settings.language)}`}</FilterChip>)}</ScrollView>
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>{["all",...new Set(visibleCameras().map(c=>c.speed_limit).filter(v=>v!=null).map(Number).filter(Number.isFinite).sort((a,b)=>a-b)),"unknown"].map(limit=><FilterChip key={limit} night={isNight} selected={nearbyLimit===limit} onPress={()=>setNearbyLimit(limit)}>{limit==="all"?ui.all:limit==="unknown"?ui.unknown:`${limit} км/ч`}</FilterChip>)}</ScrollView>

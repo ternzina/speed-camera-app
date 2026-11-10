@@ -22,8 +22,9 @@ function place(id, extra = {}) {
   };
 }
 
-test("six nearby categories use Places API (New) table A types", () => {
-  assert.deepEqual(NEARBY_CATEGORIES.map(item => item.id), ["gas", "parking", "food", "repair", "hospital", "pharmacy"]);
+test("place categories use Places API (New) table A types and cameras stays local", () => {
+  assert.deepEqual(NEARBY_CATEGORIES.map(item => item.id), ["gas", "parking", "food", "repair", "hospital", "pharmacy", "cameras"]);
+  assert.equal(nearbyCategory("cameras").types, undefined);
   assert.deepEqual(nearbyCategory("gas").types, ["gas_station"]);
   assert.deepEqual(nearbyCategory("parking").types, ["parking"]);
   assert.deepEqual(nearbyCategory("food").types, ["cafe", "restaurant"]);
@@ -34,7 +35,7 @@ test("six nearby categories use Places API (New) table A types", () => {
 });
 
 test("category labels and every nearby message exist in four languages", () => {
-  const keys = ["title", "gas", "parking", "food", "repair", "hospital", "pharmacy", "go", "loading", "empty", "error", "denied", "settings", "retry", "replaceTitle", "replaceBody", "replace", "cancel", "meters", "km"];
+  const keys = ["title", "gas", "parking", "food", "repair", "hospital", "pharmacy", "cameras", "go", "loading", "empty", "error", "denied", "settings", "retry", "replaceTitle", "replaceBody", "replace", "cancel", "meters", "km"];
   assert.deepEqual(Object.keys(NEARBY_COPY).sort(), ["en", "pl", "ru", "uk"]);
   for (const language of ["ru", "uk", "en", "pl"]) {
     const copy = nearbyCopy(language);
@@ -54,6 +55,10 @@ test("category labels and every nearby message exist in four languages", () => {
   assert.equal(nearbyCopy("ru").gas, "АЗС");
   assert.equal(nearbyCopy("uk").gas, "АЗС");
   assert.equal(nearbyCopy("pl").gas, "Stacja paliw");
+  assert.equal(nearbyCopy("ru").cameras, "Камеры рядом");
+  assert.equal(nearbyCopy("uk").cameras, "Камери поруч");
+  assert.equal(nearbyCopy("en").cameras, "Nearby cameras");
+  assert.equal(nearbyCopy("pl").cameras, "Kamery w pobliżu");
 });
 
 test("a granted fix can search and a denied or missing fix cannot", () => {
@@ -104,11 +109,12 @@ test("nearby search uses one fixture request and keeps only real fields", async 
   assert.equal(found.length, NEARBY_MAX_RESULTS);
   assert.equal(found[0].name, "АЗС");
   assert.equal(found[0].address, "вул. Тестова, 1");
-  assert.equal(found[0].rating, 4.2);
+  assert.equal("rating" in found[0], false);
+  assert.equal(calls[0].options.headers["X-Goog-FieldMask"].includes("rating"), false);
   assert.ok(found[0].distance > 0);
   assert.equal(found.some(item => item.id === "no-name" || item.id === "bad-point"), false);
   const unrated = found.find(item => item.id === "text-rating");
-  assert.equal(unrated.rating, null);
+  assert.equal("rating" in unrated, false);
   assert.equal(unrated.address, "");
   assert.equal(JSON.stringify(found).includes("invented"), false);
 });
@@ -146,6 +152,12 @@ test("no results, a network failure, and a missing key do not invent places", as
     error => error.code === "missing-key",
   );
   assert.equal(called, false);
+  let cameraCalled = false;
+  await assert.rejects(
+    () => nearbyPlaces({ categoryId: "cameras", ...ORIGIN, key: "test-key", fetch: () => { cameraCalled = true; } }),
+    error => error.code === "places-failed",
+  );
+  assert.equal(cameraCalled, false);
   assert.deepEqual(parseNearbyPlaces({ places: [{ id: "x", displayName: { text: "X" }, location: { latitude: "50.4", longitude: "30.5" }, distanceMeters: 12 }] }, ORIGIN)[0].name, "X");
   assert.equal(parseNearbyPlaces({ places: [{ id: "x", displayName: { text: "X" }, location: { latitude: "50.4", longitude: "30.5" } }] }, null)[0].distance, null);
 });
@@ -176,7 +188,12 @@ test("navtest nearby is list-only and hands the chosen point to the existing Goo
   const effect = screen.slice(screen.indexOf("if (!handoff || handoff.token"), screen.indexOf("function dismissSearch"));
   const build = screen.slice(screen.indexOf("function buildRoute"), screen.indexOf("function startGuidance"));
   assert.match(app, /tab === "nearby" && isGoogleNavTestApp\(\) && \([\s\S]*<NavtestNearby/);
-  assert.match(app, /tab === "nearby" && !isGoogleNavTestApp\(\) && cameraWarningsEnabled\(settings\)/);
+  assert.match(app, /navtestNearbyKind === "cameras"/);
+  assert.match(app, /onKind=\{setNavtestNearbyKind\}/);
+  assert.match(nearby, /status === "cameras"|!nearbyCategory\(id\)\?\.types/);
+  assert.doesNotMatch(nearby, /rating/);
+  assert.doesNotMatch(places, /rating/);
+  assert.match(app, /tab === "nearby" && \(!isGoogleNavTestApp\(\) \|\| navtestNearbyKind === "cameras"\) && cameraWarningsEnabled\(settings\)/);
   assert.match(app, /Камеры рядом/);
   assert.match(app, /isGoogleNavTestApp\(\) \? t\.nearby : nearbyCopy\.title/);
   assert.match(handoff, /nearbyHandoff\(place, navtestRouteActiveRef\.current\)/);

@@ -5,7 +5,7 @@ import {
 } from "./google-places";
 import { readPlacesKey } from "./google-places-key";
 
-export default function NavtestNearby({ language, coords, permission, onGo }) {
+export default function NavtestNearby({ language, coords, permission, onGo, onKind }) {
   const copy = nearbyCopy(language);
   const [categoryId, setCategoryId] = useState(null);
   const [status, setStatus] = useState("idle");
@@ -13,6 +13,19 @@ export default function NavtestNearby({ language, coords, permission, onGo }) {
   const waitRef = useRef(null);
   const abortRef = useRef(null);
   const point = nearbyFix(permission, coords);
+
+  function choose(id) {
+    setCategoryId(id);
+    onKind?.(id);
+    if (!nearbyCategory(id)?.types?.length) {
+      abortRef.current?.abort();
+      waitRef.current = null;
+      setPlaces([]);
+      setStatus("cameras");
+      return;
+    }
+    search(id);
+  }
 
   async function search(id, origin = point) {
     abortRef.current?.abort();
@@ -80,7 +93,7 @@ export default function NavtestNearby({ language, coords, permission, onGo }) {
               key={category.id}
               accessibilityRole="button"
               accessibilityState={{ selected }}
-              onPress={() => { setCategoryId(category.id); search(category.id); }}
+              onPress={() => choose(category.id)}
               style={[styles.category, selected && styles.categoryOn]}
             >
               <Text numberOfLines={2} maxFontSizeMultiplier={1.4} style={[styles.categoryText, selected && styles.categoryTextOn]}>{copy[category.id]}</Text>
@@ -111,19 +124,19 @@ export default function NavtestNearby({ language, coords, permission, onGo }) {
           </Pressable>
         </View>
       )}
-      {status === "ready" && places.map(place => (
+      {status === "ready" && places.map(place => {
+        const distanceLabel = formatNearbyDistance(place.distance, language);
+        return (
         <View key={place.id} style={styles.card}>
           <Text numberOfLines={2} maxFontSizeMultiplier={1.4} style={styles.name}>{place.name}</Text>
           {!!place.address && <Text numberOfLines={2} maxFontSizeMultiplier={1.4} style={styles.address}>{place.address}</Text>}
-          <Text maxFontSizeMultiplier={1.3} style={styles.meta}>
-            {formatNearbyDistance(place.distance, language)}
-            {place.rating != null ? ` · ${place.rating}` : ""}
-          </Text>
+          {!!distanceLabel && <Text maxFontSizeMultiplier={1.3} style={styles.meta}>{distanceLabel}</Text>}
           <Pressable accessibilityRole="button" onPress={() => onGo?.(place)} style={styles.go}>
             <Text maxFontSizeMultiplier={1.3} style={styles.goText}>{copy.go}</Text>
           </Pressable>
         </View>
-      ))}
+        );
+      })}
     </View>
   );
 }

@@ -8,7 +8,7 @@ export const PLACES_DEBOUNCE_MS = 400;
 export const PLACES_AUTOCOMPLETE_URL = "https://places.googleapis.com/v1/places:autocomplete";
 export const PLACES_NEARBY_URL = "https://places.googleapis.com/v1/places:searchNearby";
 export const PLACE_DETAILS_FIELD_MASK = "location";
-export const NEARBY_FIELD_MASK = "places.id,places.displayName,places.formattedAddress,places.location,places.rating";
+export const NEARBY_FIELD_MASK = "places.id,places.displayName,places.formattedAddress,places.location";
 export const NEARBY_MAX_RESULTS = 10;
 export const NEARBY_RADIUS_M = 5000;
 export const AUTOCOMPLETE_FIELD_MASK = [
@@ -26,12 +26,14 @@ export const NEARBY_CATEGORIES = [
   { id: "repair", types: ["car_repair", "tire_shop"] },
   { id: "hospital", types: ["hospital"] },
   { id: "pharmacy", types: ["pharmacy"] },
+  { id: "cameras" },
 ];
 
 export const NEARBY_COPY = {
   ru: {
     title: "Рядом", gas: "АЗС", parking: "Парковка", food: "Кафе и рестораны",
     repair: "Ремонт и шиномонтаж", hospital: "Больница", pharmacy: "Аптека",
+    cameras: "Камеры рядом",
     go: "Поехать", loading: "Ищем места…", empty: "Рядом ничего не найдено",
     error: "Нет сети. Поиск не выполнен", denied: "Нет доступа к геолокации",
     settings: "Открыть настройки", retry: "Повторить",
@@ -41,6 +43,7 @@ export const NEARBY_COPY = {
   uk: {
     title: "Поруч", gas: "АЗС", parking: "Парковка", food: "Кафе і ресторани",
     repair: "Ремонт і шиномонтаж", hospital: "Лікарня", pharmacy: "Аптека",
+    cameras: "Камери поруч",
     go: "Поїхати", loading: "Шукаємо місця…", empty: "Поруч нічого не знайдено",
     error: "Немає мережі. Пошук не виконано", denied: "Немає доступу до геолокації",
     settings: "Відкрити налаштування", retry: "Повторити",
@@ -50,6 +53,7 @@ export const NEARBY_COPY = {
   en: {
     title: "Nearby", gas: "Gas station", parking: "Parking", food: "Cafes and restaurants",
     repair: "Car repair and tire service", hospital: "Hospital", pharmacy: "Pharmacy",
+    cameras: "Nearby cameras",
     go: "Go", loading: "Searching nearby…", empty: "Nothing nearby",
     error: "No network. The search did not run", denied: "Location permission is denied",
     settings: "Open settings", retry: "Try again",
@@ -59,6 +63,7 @@ export const NEARBY_COPY = {
   pl: {
     title: "W pobliżu", gas: "Stacja paliw", parking: "Parking", food: "Kawiarnie i restauracje",
     repair: "Naprawa i wulkanizacja", hospital: "Szpital", pharmacy: "Apteka",
+    cameras: "Kamery w pobliżu",
     go: "Jedź", loading: "Szukamy miejsc…", empty: "W pobliżu nic nie znaleziono",
     error: "Brak sieci. Wyszukiwanie nie zostało wykonane", denied: "Brak dostępu do lokalizacji",
     settings: "Otwórz ustawienia", retry: "Powtórz",
@@ -199,14 +204,12 @@ export function parseNearbyPlaces(payload, origin) {
     const id = typeof place?.id === "string" ? place.id : "";
     if (!id || !name || !Number.isFinite(lat) || !Number.isFinite(lng) || Math.abs(lat) > 90 || Math.abs(lng) > 180) continue;
     const address = typeof place.formattedAddress === "string" ? place.formattedAddress : "";
-    const rating = typeof place.rating === "number" && Number.isFinite(place.rating) ? place.rating : null;
     results.push({
       id,
       name,
       address,
       latitude: lat,
       longitude: lng,
-      rating,
       distance: originOk ? nearbyDistance(fromLat, fromLng, lat, lng) : null,
     });
   }
@@ -231,7 +234,7 @@ export async function nearbyPlaces({ categoryId, latitude, longitude, languageCo
   const category = nearbyCategory(categoryId);
   const lat = Number(latitude);
   const lng = Number(longitude);
-  if (!category || !Number.isFinite(lat) || !Number.isFinite(lng)) throw placesError("places-failed");
+  if (!category?.types?.length || !Number.isFinite(lat) || !Number.isFinite(lng)) throw placesError("places-failed");
   const response = await fetch(PLACES_NEARBY_URL, {
     method: "POST",
     headers: placesHeaders(key, NEARBY_FIELD_MASK),
