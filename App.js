@@ -1614,6 +1614,7 @@ export default function App() {
     if (decision.action === "ignore") return;
     const open = () => {
       setNavtestHandoff({ ...decision.destination, token: Date.now() });
+      setTab("drive");
       setIosRouteOpen(true);
     };
     if (decision.action === "confirm") {
@@ -1630,6 +1631,7 @@ export default function App() {
   function openInAppRoute() {
     if (Platform.OS !== "ios") return;
     setModal(null);
+    setTab("drive");
     setIosRouteOpen(true);
   }
 
@@ -1748,6 +1750,18 @@ export default function App() {
     await finishOnboarding();
   }
 
+  function renderTabBar() {
+    return (
+      <View style={[s.nav, pad && { marginHorizontal: 28, marginBottom: 14, padding: 8, borderRadius: 24 }]}>
+        {nav.map(([key,icon,label]) => (
+          <Pressable accessibilityRole="tab" accessibilityState={{selected:tab===key || key==="map" && tab==="cameras" || key==="settings" && tab==="history"}} key={key} onPress={()=>{if(key!=="settings")setLawsOpen(false);if(key==="settings")setCountryScreenTab("settings");setTab(key);}} style={[s.navItem, pad && { minHeight: 64 }, (tab===key || key==="map" && tab==="cameras" || key==="settings" && tab==="history") && s.navActive]}>
+            <Text maxFontSizeMultiplier={1.3} style={[s.navIcon, pad && { fontSize: 22 }]}>{icon}</Text><Text maxFontSizeMultiplier={1.45} numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.72} style={[s.navLabel, pad && { fontSize: 16, lineHeight: 20 }]}>{label}</Text>
+          </Pressable>
+        ))}
+      </View>
+    );
+  }
+
   function renderBackgroundGuide() {
     if (!backgroundGuide) return null;
     const copy = backgroundGuideCopy(settings.language, Platform.OS);
@@ -1791,9 +1805,9 @@ export default function App() {
     );
   }
 
-  if (usesInAppGoogleNav() && (iosRouteOpen || (tab === "drive" && active))) {
+  if (usesInAppGoogleNav() && (tab === "drive" || iosRouteOpen)) {
     return (
-      <>
+      <View style={{ flex: 1, backgroundColor: "#0B1829" }}>
         <GoogleNavTestScreen
           language={settings.language}
           night={isNight}
@@ -1813,8 +1827,9 @@ export default function App() {
           handoff={navtestHandoff}
           onRouteActive={activeRoute => { navtestRouteActiveRef.current = !!activeRoute; }}
         />
+        <View style={{ paddingBottom: 28 }}>{renderTabBar()}</View>
         {renderBackgroundGuide()}
-      </>
+      </View>
     );
   }
 
@@ -1913,7 +1928,7 @@ export default function App() {
 
 
       <ScrollView style={{flex:1}} contentContainerStyle={[s.container, pad && { paddingHorizontal: 28, paddingBottom: 28, gap: 18 }, pad && tab === "drive" && !active && { flexGrow: 1 }]}>
-        {tab === "drive" && !active && (
+        {tab === "drive" && !active && !usesInAppGoogleNav() && (
           <DriveHome
             language={settings.language}
             country={selectedCountry}
@@ -1923,8 +1938,8 @@ export default function App() {
             onBack={() => {setOnboardingPage(2);setOnboardingState("new");}}
             onStart={startTracking}
             onOpenRoute={openInAppRoute}
-            onOpenExternal={isGoogleNavTestApp() ? null : (navigator) => launchNavigator(navigator, "")}
-            hideExternalNav={isGoogleNavTestApp()}
+            onOpenExternal={usesInAppGoogleNav() ? null : (navigator) => launchNavigator(navigator, "")}
+            hideExternalNav={usesInAppGoogleNav()}
             onSettings={() => { setCountryScreenTab("settings"); setTab("settings"); }}
             onCountry={() => { setCountryScreenTab("countries"); setTab("settings"); }}
           />
@@ -2217,13 +2232,7 @@ export default function App() {
         )}
       </ScrollView>
 
-      <View style={[s.nav, pad && { marginHorizontal: 28, marginBottom: 14, padding: 8, borderRadius: 24 }]}>
-        {nav.map(([key,icon,label]) => (
-          <Pressable accessibilityRole="tab" accessibilityState={{selected:tab===key || key==="map" && tab==="cameras" || key==="settings" && tab==="history"}} key={key} onPress={()=>{if(key!=="settings")setLawsOpen(false);if(key==="settings")setCountryScreenTab("settings");setTab(key);}} style={[s.navItem, pad && { minHeight: 64 }, (tab===key || key==="map" && tab==="cameras" || key==="settings" && tab==="history") && s.navActive]}>
-            <Text maxFontSizeMultiplier={1.3} style={[s.navIcon, pad && { fontSize: 22 }]}>{icon}</Text><Text maxFontSizeMultiplier={1.45} numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.72} style={[s.navLabel, pad && { fontSize: 16, lineHeight: 20 }]}>{label}</Text>
-          </Pressable>
-        ))}
-      </View>
+      {renderTabBar()}
 
       {renderBackgroundGuide()}
 

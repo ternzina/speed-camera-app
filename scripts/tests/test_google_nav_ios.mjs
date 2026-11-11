@@ -13,8 +13,10 @@ test("the store app and navtest both mount the Google map", () => {
   assert.match(gate, /com\.21wek\.camera\.navtest/);
   assert.match(gate, /function usesInAppGoogleNav/);
   assert.match(gate, /applicationId === STORE_BUNDLE \|\| applicationId === GOOGLE_NAV_TEST_BUNDLE/);
-  assert.match(app, /usesInAppGoogleNav\(\) && \(iosRouteOpen \|\| \(tab === "drive" && active\)\)/);
-  assert.match(app, /hideExternalNav=\{isGoogleNavTestApp\(\)\}/);
+  assert.match(app, /usesInAppGoogleNav\(\) && \(tab === "drive" \|\| iosRouteOpen\)/);
+  assert.match(app, /tab === "drive" && !active && !usesInAppGoogleNav\(\)/);
+  assert.match(app, /hideExternalNav=\{usesInAppGoogleNav\(\)\}/);
+  assert.doesNotMatch(app.slice(app.indexOf("usesInAppGoogleNav() && (tab === \"drive\" || iosRouteOpen)"), app.indexOf("if (iosRouteOpen)")), /DriveHome|Выберите навигацию|Apple Maps/);
   assert.match(app, /if \(foregroundTripRunning \|\| sub\.current\) return true/);
   assert.match(app, /isGoogleNavTestApp\(\) \? \[\] : \["UA","PL"\]/);
   assert.doesNotMatch(config, /platforms: \{ ios: null \}/);

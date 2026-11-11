@@ -158,8 +158,9 @@ test("the proven warning functions and background task stay on the full feed pat
   assert.match(app, /Начать поездку/);
   assert.match(app, /Куда едем\?/);
   assert.match(app, /onOpenRoute=\{openInAppRoute\}/);
-  assert.match(app, /onOpenExternal=\{isGoogleNavTestApp\(\) \? null : \(navigator\) => launchNavigator\(navigator, ""\)\}/);
-  assert.match(app, /hideExternalNav=\{isGoogleNavTestApp\(\)\}/);
+  assert.match(app, /onOpenExternal=\{usesInAppGoogleNav\(\) \? null : \(navigator\) => launchNavigator\(navigator, ""\)\}/);
+  assert.match(app, /hideExternalNav=\{usesInAppGoogleNav\(\)\}/);
+  assert.match(app, /tab === "drive" && !active && !usesInAppGoogleNav\(\)/);
   assert.doesNotMatch(app, /visible=\{modal === "navigator"\}/);
   const navEffect = app.slice(app.indexOf("if (!active || !routeGuidance || !coords)"), app.indexOf("const routeMapCameras"));
   assert.match(navEffect, /planNavAnnouncement/);

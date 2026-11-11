@@ -63,7 +63,7 @@ test("warnings stay on the phone GPS feed and ignore the Google route line", () 
   const tracking = app.slice(app.indexOf("async function startTracking"), app.indexOf("function stopTracking"));
   assert.match(tracking, /watchPositionAsync/);
   assert.match(tracking, /AppState\.currentState !== "active"/);
-  const mount = app.slice(app.indexOf("usesInAppGoogleNav() && (iosRouteOpen"), app.indexOf("if (iosRouteOpen)"));
+  const mount = app.slice(app.indexOf("usesInAppGoogleNav() && (tab === \"drive\" || iosRouteOpen)"), app.indexOf("if (iosRouteOpen)"));
   assert.match(mount, /camera=\{cameraWarningsEnabled\(settings\) \? ahead : null\}/);
   assert.match(mount, /if \(foregroundTripRunning \|\| sub\.current\) return true/);
   assert.doesNotMatch(mount, /watchPositionAsync|simulate/);
