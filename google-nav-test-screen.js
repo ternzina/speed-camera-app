@@ -591,7 +591,7 @@ function GoogleNavBody({
           )}
           {banner && (
             <View style={styles.camera}>
-              {banner.type && <Text numberOfLines={1} maxFontSizeMultiplier={1.4} style={styles.cameraType}>{banner.type}</Text>}
+              {banner.type && <Text numberOfLines={2} maxFontSizeMultiplier={1.4} style={styles.cameraType}>{banner.type}</Text>}
               {banner.distance != null && <Text numberOfLines={1} maxFontSizeMultiplier={1.4} style={styles.cameraDistance}>{banner.distance} {copy.meters}</Text>}
               {banner.limit != null && <Text numberOfLines={1} maxFontSizeMultiplier={1.4} style={styles.cameraDistance}>{banner.limit} {copy.speedUnit}</Text>}
             </View>
@@ -791,9 +791,9 @@ const styles = StyleSheet.create({
   toolRow: { flexDirection: "row", justifyContent: "flex-end", flexWrap: "nowrap", gap: 8 },
   toolsDock: { alignItems: "flex-end" },
   maneuverClearance: { height: NAV_PANEL.maneuverClearance },
-  camera: { alignSelf: "flex-start", maxWidth: "78%", flexDirection: "row", flexWrap: "nowrap", gap: 8, backgroundColor: "#8E2A22", borderRadius: 14, paddingHorizontal: 10, paddingVertical: 6, marginHorizontal: 12, marginTop: 6 },
+  camera: { alignSelf: "flex-start", maxWidth: "78%", flexDirection: "row", flexWrap: "wrap", gap: 8, backgroundColor: "#8E2A22", borderRadius: 14, paddingHorizontal: 10, paddingVertical: 6, marginHorizontal: 12, marginTop: 6 },
   cameraDistance: { color: "#FFFFFF", fontSize: 18, fontWeight: "900", flexShrink: 0 },
-  cameraType: { color: "#FFFFFF", fontSize: 14, fontWeight: "700", flexShrink: 1 },
+  cameraType: { color: "#FFFFFF", fontSize: 14, fontWeight: "700", flexShrink: 0 },
   note: { color: "#F5B64C", fontWeight: "700", marginHorizontal: 12, marginTop: 6 },
   error: { color: "#9A3412", backgroundColor: "#FFE8D6", borderRadius: 12, overflow: "hidden", fontWeight: "700", marginHorizontal: 12, marginTop: 6, paddingHorizontal: 10, paddingVertical: 8 },
   bottom: { marginHorizontal: 12, marginBottom: 8, gap: 8 },

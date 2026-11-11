@@ -337,6 +337,17 @@ function countryDisplayName(code, language) {
   };
   return names[language]?.[code] || COUNTRY_NAMES[code] || code;
 }
+function cameraCountLabel(count, language) {
+  const n = Math.abs(Math.trunc(Number(count)) || 0);
+  const mod10 = n % 10;
+  const mod100 = n % 100;
+  const few = mod10 >= 2 && mod10 <= 4 && (mod100 < 12 || mod100 > 14);
+  if (language === "en") return n === 1 ? "camera" : "cameras";
+  if (language === "pl") return n === 1 ? "kamera" : few ? "kamery" : "kamer";
+  const one = mod10 === 1 && mod100 !== 11;
+  if (language === "uk") return one ? "камера" : few ? "камери" : "камер";
+  return one ? "камера" : few ? "камеры" : "камер";
+}
 function findNearestAny(latitude, longitude, max = Infinity) {
   let best = null, bestDistance = Infinity;
   for (const cam of visibleCameras()) {
@@ -1949,7 +1960,7 @@ export default function App() {
             <PageBackButton language={settings.language} onPress={() => setTab("drive")} onLight={!isNight} />
           <Text maxFontSizeMultiplier={1.25} numberOfLines={2} style={[s.title, {flex:1}, pad && { fontSize: 40, lineHeight: 50 }]}>{tab === "settings" ? (settings.language === "uk" ? "Країни та дані" : settings.language === "en" ? "Countries and data" : settings.language === "pl" ? "Kraje i dane" : "Страны и данные") : tab === "nearby" ? (usesInAppGoogleNav() ? t.nearby : nearbyCopy.title) : tab === "history" ? ui.history : t.title}</Text>
           </View>
-          {tab !== "settings" && !(tab === "nearby" && usesInAppGoogleNav()) && <Text style={s.subtitle}>{countryFlag(selectedCountry)} {countryDisplayName(selectedCountry,settings.language)}{cameraWarningsEnabled(settings) ? ` · ${visibleCameras().length} камер` : ""}</Text>}
+          {tab !== "settings" && !(tab === "nearby" && usesInAppGoogleNav()) && <Text style={s.subtitle}>{countryFlag(selectedCountry)} {countryDisplayName(selectedCountry,settings.language)}{cameraWarningsEnabled(settings) ? ` · ${visibleCameras().length} ${cameraCountLabel(visibleCameras().length, settings.language)}` : ""}</Text>}
         </>}
 
         {tab === "drive" && active && <>
@@ -3198,7 +3209,7 @@ function RoadCamerasScreen({ country, language, feed, userCoords, onCountries, s
   const [layerEnabled, setLayerEnabled] = useState(true);
   const copy = ({
     ru: { map: "Карта камер", cameras: "камер", data: "Камеры из базы выбранной страны", note: "Точки контроля на дорогах. Видеотрансляции не подключены.", empty: "Нет загруженных камер этой страны", download: "Открыть страны и базы", list: "Камеры страны", location: "Расстояния появятся после получения GPS", previous: "Назад", next: "Далее", layer: "Камеры на карте", shown: "На карте и в списке", limit: "Ограничение", unit: "км/ч" },
-    uk: { map: "Карта камер", cameras: "камер", data: "Камери з бази вибраної країни", note: "Точки контролю на дорогах. Відеотрансляції не підключені.", empty: "Немає завантажених камер цієї країни", download: "Відкрити країни та бази", list: "Камери країни", location: "Відстані з’являться після отримання GPS", previous: "Назад", next: "Далі", layer: "Камери на карті", shown: "На карті та у списку", limit: "Обмеження", unit: "км/год" },
+    uk: { map: "Мапа камер", cameras: "камер", data: "Камери з бази вибраної країни", note: "Точки контролю на дорогах. Відеотрансляції не підключені.", empty: "Немає завантажених камер цієї країни", download: "Відкрити країни та бази", list: "Камери країни", location: "Відстані з’являться після отримання GPS", previous: "Назад", next: "Далі", layer: "Камери на карті", shown: "На карті та у списку", limit: "Обмеження", unit: "км/год" },
     en: { map: "Camera map", cameras: "cameras", data: "Cameras from the selected country database", note: "Road enforcement locations. Video feeds are not connected.", empty: "No cameras downloaded for this country", download: "Open countries and databases", list: "Country cameras", location: "Distances will appear when GPS is available", previous: "Previous", next: "Next", layer: "Cameras on map", shown: "On the map and in the list", limit: "Speed limit", unit: "km/h" },
     pl: { map: "Mapa fotoradarów", cameras: "kamer", data: "Kamery z bazy wybranego kraju", note: "Punkty kontroli drogowej. Transmisje wideo nie są podłączone.", empty: "Brak pobranych kamer tego kraju", download: "Otwórz kraje i bazy", list: "Kamery kraju", location: "Odległości pojawią się po uzyskaniu GPS", previous: "Wstecz", next: "Dalej", layer: "Kamery na mapie", shown: "Na mapie i na liście", limit: "Ograniczenie", unit: "km/h" },
   })[language] || null;
@@ -3264,7 +3275,7 @@ function RoadCamerasScreen({ country, language, feed, userCoords, onCountries, s
     <View style={rc.hero}>
       <View style={rc.heroTop}>
         <View style={rc.liveBadge}><Text style={rc.liveBadgeText}>{countryFlag(country)} {name}</Text></View>
-        <Text style={rc.heroCount}>{points.length.toLocaleString()} {labels.cameras}</Text>
+        <Text style={rc.heroCount}>{points.length.toLocaleString()} {cameraCountLabel(points.length, language)}</Text>
       </View>
       <Text style={rc.heroTitle}>{labels.map}</Text>
       <Text style={rc.heroCopy}>{labels.data}</Text>
