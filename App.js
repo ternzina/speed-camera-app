@@ -484,7 +484,7 @@ async function processBackgroundLocation({ data: taskData, error }) {
       } else {
         await saveSpeechStatus("requested");
         if (isGoogleNavTestApp()) noteNavtestCameraSpeech(cam);
-        const outcome = await Speech.speakAndWait(message.speech, { language: message.locale, rate: 0.95 });
+        const outcome = await Speech.speakCameraAlertAndWait(message.speech, message.locale);
         await saveSpeechStatus(outcome);
       }
     } catch {
@@ -1003,8 +1003,7 @@ export default function App() {
     if (decision.voice) {
       const message = cameraAlertCopy(settings.language, cam, currentSpeedKmh, currentSpeedAvailable);
       if (isGoogleNavTestApp()) noteNavtestCameraSpeech(cam);
-      Speech.stop();
-      Speech.speak(message.speech, { language: message.locale, rate: 0.95 });
+      void Speech.speakCameraAlert(message.speech, message.locale);
     }
     lastSpoken.current = { id: cam.id, distance: cam.distance };
     saveHistory({
@@ -1100,28 +1099,15 @@ export default function App() {
                   ? "Punkt kontroli"
                   : "Fotoradar";
 
-              Speech.stop();
-
-              Speech.speak(
-                settings.language === "pl"
-                  ? `${kind} za ${rounded} metrów.${point.speed_limit ? ` Ograniczenie ${point.speed_limit}.` : ""}`
-                  : settings.language === "uk"
-                  ? `Камера попереду через ${rounded} метрів.${point.speed_limit ? ` Обмеження ${point.speed_limit}.` : ""}`
-                  : settings.language === "en"
-                  ? `Camera ahead in ${rounded} meters.${point.speed_limit ? ` Speed limit ${point.speed_limit}.` : ""}`
-                  : `Камера впереди через ${rounded} метров.${point.speed_limit ? ` Ограничение ${point.speed_limit}.` : ""}`,
-                {
-                  language:
-                    settings.language === "pl"
-                      ? "pl-PL"
-                      : settings.language === "uk"
-                      ? "uk-UA"
-                      : settings.language === "en"
-                      ? "en-US"
-                      : "ru-RU",
-                  rate: 0.95
-                }
-              );
+              const cameraPhrase = settings.language === "pl"
+                ? `${kind} za ${rounded} metrów.${point.speed_limit ? ` Ograniczenie ${point.speed_limit}.` : ""}`
+                : settings.language === "uk"
+                ? `Камера попереду через ${rounded} метрів.${point.speed_limit ? ` Обмеження ${point.speed_limit}.` : ""}`
+                : settings.language === "en"
+                ? `Camera ahead in ${rounded} meters.${point.speed_limit ? ` Speed limit ${point.speed_limit}.` : ""}`
+                : `Камера впереди через ${rounded} метров.${point.speed_limit ? ` Ограничение ${point.speed_limit}.` : ""}`;
+              const cameraLocale = settings.language === "pl" ? "pl-PL" : settings.language === "uk" ? "uk-UA" : settings.language === "en" ? "en-US" : "ru-RU";
+              void Speech.speakCameraAlert(cameraPhrase, cameraLocale);
             }
           }
 
