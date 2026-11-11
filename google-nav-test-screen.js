@@ -93,6 +93,7 @@ function GoogleNavBody({
   const alive = useRef(true);
   const ready = useRef(false);
   const guidingRef = useRef(false);
+  const cameraSpeakingRef = useRef(false);
   const [point, setPoint] = useState(null);
   const [query, setQuery] = useState("");
   const [routed, setRouted] = useState(false);
@@ -218,6 +219,7 @@ function GoogleNavBody({
     if (!ready.current) return undefined;
     // Google turn prompts follow the iPhone language. SDK 10.13.0 exposes no language setter.
     return subscribeCameraSpeech(cameraSpeaking => {
+      cameraSpeakingRef.current = cameraSpeaking;
       const mode = googleAudioMode({ cameraSpeaking, guiding: guidingRef.current, voiceEnabled }) === "alerts-and-guidance"
         ? AudioGuidance.VOICE_ALERTS_AND_GUIDANCE
         : AudioGuidance.SILENT;
@@ -227,7 +229,11 @@ function GoogleNavBody({
 
   useEffect(() => {
     if (!ready.current) return;
-    const mode = guiding && voiceEnabled ? AudioGuidance.VOICE_ALERTS_AND_GUIDANCE : AudioGuidance.SILENT;
+    // A warning must leave guidance silent. Setting the same VOICE value again
+    // does not restart the Navigation SDK after the clip took the audio session.
+    const mode = googleAudioMode({ cameraSpeaking: cameraSpeakingRef.current, guiding, voiceEnabled }) === "alerts-and-guidance"
+      ? AudioGuidance.VOICE_ALERTS_AND_GUIDANCE
+      : AudioGuidance.SILENT;
     Promise.resolve(controller.setAudioGuidanceType(mode)).catch(() => {});
   }, [controller, guiding, voiceEnabled]);
 
@@ -352,7 +358,11 @@ function GoogleNavBody({
       guidingRef.current = true;
       setGuiding(true);
       setLayersOpen(false);
-      controllerRef.current.setAudioGuidanceType(voiceEnabled ? AudioGuidance.VOICE_ALERTS_AND_GUIDANCE : AudioGuidance.SILENT);
+      controllerRef.current.setAudioGuidanceType(googleAudioMode({
+        cameraSpeaking: cameraSpeakingRef.current,
+        guiding: true,
+        voiceEnabled,
+      }) === "alerts-and-guidance" ? AudioGuidance.VOICE_ALERTS_AND_GUIDANCE : AudioGuidance.SILENT);
       navView.current?.setNavigationUIEnabled?.(true);
       navView.current?.setFollowingPerspective?.(CameraPerspective.TILTED);
     });

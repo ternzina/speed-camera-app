@@ -26,6 +26,7 @@ test("camera speech pauses Google voice and the banner does not speak", () => {
   assert.equal(googleAudioMode({ cameraSpeaking: false, guiding: false, voiceEnabled: true }), "silent");
   const screen = read("google-nav-test-screen.js");
   assert.match(screen, /googleAudioMode\(/);
+  assert.match(screen, /googleAudioMode\(\{ cameraSpeaking: cameraSpeakingRef\.current, guiding, voiceEnabled \}\)/);
   assert.match(screen, /cameraBanner\(/);
   assert.doesNotMatch(screen, /Speech\.speak|GMSLocationSimulator|simulateLocations/);
 });
