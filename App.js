@@ -28,6 +28,7 @@ import WelcomeScreen from "./onboarding";
 import GoogleNavigationScreen from "./google-navigation";
 import { withNavigationWindow } from "./navigation-readiness";
 import { cameraAlertCopy } from "./camera-alert-copy";
+import { ukrainianClipPlan, ukrainianPlanFromPhrase } from "./uk-voice-clips";
 import { navigationCopy } from "./google-navigation-copy";
 import SystemSafeArea from "./system-safe-area";
 
@@ -395,7 +396,16 @@ async function speakNavtestPhrases(phrases, language) {
   const locale = navtestSpeechLocale(language);
   for (const phrase of phrases) {
     if (await Speech.isSpeakingAsync()) return false;
-    await Speech.speakAndWait(phrase, { language: locale, rate: 0.95 });
+    if (language === "uk") {
+      const plan = ukrainianPlanFromPhrase(phrase);
+      if (plan) Speech.queueUkrainianClip(plan);
+      const outcome = plan
+        ? await Speech.speakCameraAlertAndWait(phrase, locale)
+        : await Speech.speakAndWait(phrase, { language: locale, rate: 0.95 });
+      if (outcome === "stopped") return false;
+    } else {
+      await Speech.speakAndWait(phrase, { language: locale, rate: 0.95 });
+    }
   }
   return true;
 }
@@ -484,6 +494,15 @@ async function processBackgroundLocation({ data: taskData, error }) {
       } else {
         await saveSpeechStatus("requested");
         if (isGoogleNavTestApp()) noteNavtestCameraSpeech(cam);
+        const plan = bgSettings.language === "uk"
+          ? ukrainianClipPlan({
+              kind: session.country === "UA" ? "ua-camera" : "pl-camera",
+              distance: cam.distance,
+              limit: cam.speed_limit,
+              over: message.over,
+            })
+          : undefined;
+        if (plan) Speech.queueUkrainianClip(plan);
         const outcome = await Speech.speakCameraAlertAndWait(message.speech, message.locale);
         await saveSpeechStatus(outcome);
       }
@@ -1003,6 +1022,10 @@ export default function App() {
     if (decision.voice) {
       const message = cameraAlertCopy(settings.language, cam, currentSpeedKmh, currentSpeedAvailable);
       if (isGoogleNavTestApp()) noteNavtestCameraSpeech(cam);
+      const plan = settings.language === "uk"
+        ? ukrainianClipPlan({ kind: "ua-camera", distance: cam.distance, limit: cam.speed_limit, over: message.over })
+        : undefined;
+      if (plan) Speech.queueUkrainianClip(plan);
       void Speech.speakCameraAlert(message.speech, message.locale);
     }
     lastSpoken.current = { id: cam.id, distance: cam.distance };
@@ -1107,6 +1130,10 @@ export default function App() {
                 ? `Camera ahead in ${rounded} meters.${point.speed_limit ? ` Speed limit ${point.speed_limit}.` : ""}`
                 : `Камера впереди через ${rounded} метров.${point.speed_limit ? ` Ограничение ${point.speed_limit}.` : ""}`;
               const cameraLocale = settings.language === "pl" ? "pl-PL" : settings.language === "uk" ? "uk-UA" : settings.language === "en" ? "en-US" : "ru-RU";
+              const plan = settings.language === "uk"
+                ? ukrainianClipPlan({ kind: "pl-camera", distance: point.distance, limit: point.speed_limit, over: false })
+                : undefined;
+              if (plan) Speech.queueUkrainianClip(plan);
               void Speech.speakCameraAlert(cameraPhrase, cameraLocale);
             }
           }
@@ -1209,15 +1236,33 @@ export default function App() {
                 settings.language
               );
 
-              if (phrase && settings.voice) {
+              if (phrase && settings.voice && settings.language === "uk") {
+                const plan = ukrainianClipPlan({
+                  kind: sectionEvent.state === "approaching"
+                    ? "section-approaching"
+                    : sectionEvent.state === "entering"
+                    ? "section-entering"
+                    : sectionEvent.state === "ending"
+                    ? "section-ending"
+                    : sectionEvent.state === "over"
+                    ? "section-over"
+                    : "",
+                  distance: sectionEvent.distance,
+                  limit: sectionEvent.section?.speed_limit,
+                  over: sectionEvent.state === "over",
+                  averageKmh: sectionPaceRef.current?.averageKmh,
+                });
+                if (plan) {
+                  Speech.queueUkrainianClip(plan);
+                  void Speech.speakCameraAlert(phrase, "uk-UA");
+                }
+              } else if (phrase && settings.voice) {
                 Speech.stop();
 
                 Speech.speak(phrase, {
                   language:
                     settings.language === "pl"
                       ? "pl-PL"
-                      : settings.language === "uk"
-                      ? "uk-UA"
                       : settings.language === "en"
                       ? "en-US"
                       : "ru-RU",

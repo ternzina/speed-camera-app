@@ -1,6 +1,6 @@
 export function createSpeechCoordinator(engine, schedule = setTimeout, cancel = clearTimeout) {
   const listeners = new Set();
-  let speaking = false, sequence = 0, timer;
+  let speaking = false, sequence = 0, timer, clipStop = () => {};
   const publish = value => { speaking = value; for (const listener of listeners) listener(value); };
   const finish = id => {
     if (id !== sequence) return;
@@ -8,11 +8,23 @@ export function createSpeechCoordinator(engine, schedule = setTimeout, cancel = 
   };
   return {
     subscribe(listener) { listeners.add(listener); listener(speaking); return () => listeners.delete(listener); },
-    isSpeakingAsync: () => engine.isSpeakingAsync(),
+    isSpeakingAsync: () => speaking ? Promise.resolve(true) : engine.isSpeakingAsync(),
+    bindClipStop(fn) { clipStop = typeof fn === "function" ? fn : () => {}; },
+    // Local clips and system TTS share one generation so a newer warning
+    // cancels a queued one, and Google stays silent for the whole clip.
+    beginClip() {
+      const id = ++sequence;
+      cancel(timer); timer = undefined;
+      try { clipStop(); } catch {}
+      try { engine.stop(); } catch {}
+      publish(true);
+      return { current: () => id === sequence, end: () => finish(id) };
+    },
     stop() {
       const id = ++sequence;
       cancel(timer);
-      return engine.stop().finally(() => finish(id));
+      try { clipStop(); } catch {}
+      return Promise.resolve(engine.stop()).finally(() => finish(id));
     },
     speak(text, options = {}) {
       const id = ++sequence;
