@@ -1,4 +1,4 @@
-import { createAudioPlayer, setAudioModeAsync } from "expo-audio";
+import { createAudioPlayer, setAudioModeAsync, setIsAudioActiveAsync } from "expo-audio";
 import { ukVoiceSources } from "./uk-voice-assets";
 import {
   audibleSteps,
@@ -72,8 +72,10 @@ function watch(player, current, leadSeconds) {
 export async function playClipPlan(plan, current) {
   const steps = audibleSteps(plan, Object.keys(ukVoiceSources));
   if (!steps.length || !current()) return { played: 0, stopped: !current() };
+  let configured = false;
   try {
     await setAudioModeAsync(UK_CLIP_AUDIO_MODE);
+    configured = true;
   } catch {
     // A session error must not throw out of a location task.
   }
@@ -120,6 +122,10 @@ export async function playClipPlan(plan, current) {
     return { played, stopped: !current() };
   } finally {
     release(carry);
-    try { await setAudioModeAsync(UK_CLIP_RELEASE_MODE); } catch {}
+    if (configured) {
+      try { await setAudioModeAsync(UK_CLIP_RELEASE_MODE); } catch {}
+      // Navigation SDK voice does not resume while this session stays active.
+      try { await setIsAudioActiveAsync(false); } catch {}
+    }
   }
 }

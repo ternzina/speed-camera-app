@@ -6,6 +6,7 @@ import { fileURLToPath } from "node:url";
 import {
   UK_CLIP_IDS,
   UK_CLIP_AUDIO_MODE,
+  UK_CLIP_RELEASE_MODE,
   audibleSteps,
   createClipGate,
   ukrainianClipPlan,
@@ -81,6 +82,11 @@ test("bundled clips are local files and playback stays audible in the background
   assert.equal(UK_CLIP_AUDIO_MODE.playsInSilentMode, true);
   assert.equal(UK_CLIP_AUDIO_MODE.shouldPlayInBackground, true);
   assert.equal(UK_CLIP_AUDIO_MODE.interruptionMode, "doNotMix");
+  assert.equal(UK_CLIP_RELEASE_MODE.interruptionMode, "mixWithOthers");
+  const player = fs.readFileSync(path.join(root, "uk-voice-player.js"), "utf8");
+  const releaseAt = player.indexOf("setAudioModeAsync(UK_CLIP_RELEASE_MODE)");
+  const deactivateAt = player.indexOf("setIsAudioActiveAsync(false)");
+  assert.equal(releaseAt > 0 && deactivateAt > releaseAt, true);
   const plist = fs.readFileSync(path.join(root, "ios/CamAlert/Info.plist"), "utf8");
   assert.equal(plist.includes("<string>audio</string>"), true);
   assert.equal(plist.includes("<string>location</string>"), true);
