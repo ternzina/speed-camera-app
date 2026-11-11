@@ -3,6 +3,7 @@ import Foundation
 import React
 import ReactAppDependencyProvider
 import GoogleMaps
+import AVFoundation
 
 @main
 class AppDelegate: ExpoAppDelegate {
@@ -37,6 +38,7 @@ class AppDelegate: ExpoAppDelegate {
 #endif
 
     startTripClassLog()
+    startAudioSessionLog()
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }
 
@@ -97,6 +99,39 @@ class AppDelegate: ExpoAppDelegate {
       UInt(view.subviews.count)
     )
     appendClassLog(line)
+  }
+
+  // Observes the session only. It does not set the category or activate it.
+  private func startAudioSessionLog() {
+    let session = AVAudioSession.sharedInstance()
+    let center = NotificationCenter.default
+    center.addObserver(
+      forName: AVAudioSession.interruptionNotification,
+      object: session,
+      queue: .main
+    ) { note in
+      let type = (note.userInfo?[AVAudioSessionInterruptionTypeKey] as? UInt) ?? 0
+      let options = (note.userInfo?[AVAudioSessionInterruptionOptionKey] as? UInt) ?? 0
+      NSLog(
+        "CAMALERT_NAV_VOICE interruption type=%lu options=%lu category=%@",
+        type,
+        options,
+        session.category.rawValue
+      )
+    }
+    center.addObserver(
+      forName: AVAudioSession.routeChangeNotification,
+      object: session,
+      queue: .main
+    ) { note in
+      let reason = (note.userInfo?[AVAudioSessionRouteChangeReasonKey] as? UInt) ?? 0
+      NSLog(
+        "CAMALERT_NAV_VOICE route reason=%lu category=%@",
+        reason,
+        session.category.rawValue
+      )
+    }
+    NSLog("CAMALERT_NAV_VOICE session category=%@", session.category.rawValue)
   }
 
   private func appendClassLog(_ line: String) {

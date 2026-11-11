@@ -16,7 +16,32 @@ import {
   savedPlaceCopy, savedPlaceFromSuggestion, savedPlaceRoute, storeSavedPlaces,
 } from "./navtest-saved-places";
 import { withNavigationWindow } from "./navigation-readiness";
+import { nativeVoiceGuidance, traceNavVoice } from "./nav-voice-trace";
 import SystemSafeArea from "./system-safe-area";
+
+function requestVoiceGuidance(controller, index, reason) {
+  const guidance = nativeVoiceGuidance(index);
+  traceNavVoice("voice.request", { reason, index: Number(index), guidance });
+  const send = controller?.setAudioGuidanceType;
+  if (typeof send !== "function") {
+    traceNavVoice("voice.missing", { reason, guidance });
+    return Promise.resolve(false);
+  }
+  return Promise.resolve(send.call(controller, index)).then(
+    () => {
+      traceNavVoice("voice.accepted", { reason, guidance });
+      return true;
+    },
+    (error) => {
+      traceNavVoice("voice.rejected", {
+        reason,
+        guidance,
+        error: String(error?.message || error).slice(0, 120),
+      });
+      return false;
+    },
+  );
+}
 
 const COPY = {
   ru: {
@@ -223,7 +248,8 @@ function GoogleNavBody({
       const mode = googleAudioMode({ cameraSpeaking, guiding: guidingRef.current, voiceEnabled }) === "alerts-and-guidance"
         ? AudioGuidance.VOICE_ALERTS_AND_GUIDANCE
         : AudioGuidance.SILENT;
-      Promise.resolve(controllerRef.current.setAudioGuidanceType(mode)).catch(() => {});
+      traceNavVoice("warning.speech", { speaking: cameraSpeaking, guiding: guidingRef.current, voiceEnabled });
+      requestVoiceGuidance(controllerRef.current, mode, "warning");
     });
   }, [guiding, voiceEnabled]);
 
@@ -234,7 +260,7 @@ function GoogleNavBody({
     const mode = googleAudioMode({ cameraSpeaking: cameraSpeakingRef.current, guiding, voiceEnabled }) === "alerts-and-guidance"
       ? AudioGuidance.VOICE_ALERTS_AND_GUIDANCE
       : AudioGuidance.SILENT;
-    Promise.resolve(controller.setAudioGuidanceType(mode)).catch(() => {});
+    requestVoiceGuidance(controller, mode, "guiding");
   }, [controller, guiding, voiceEnabled]);
 
   async function ensureSession() {
@@ -249,7 +275,7 @@ function GoogleNavBody({
     if (status !== NavigationSessionStatus.OK) {
       throw new Error(status === NavigationSessionStatus.NOT_AUTHORIZED ? copy.auth : copy.failed);
     }
-    controllerRef.current.setAudioGuidanceType(AudioGuidance.SILENT);
+    requestVoiceGuidance(controllerRef.current, AudioGuidance.SILENT, "session");
     navView.current?.setNavigationUIEnabled?.(true);
     ready.current = true;
   }
@@ -358,11 +384,16 @@ function GoogleNavBody({
       guidingRef.current = true;
       setGuiding(true);
       setLayersOpen(false);
-      controllerRef.current.setAudioGuidanceType(googleAudioMode({
+      traceNavVoice("guidance.start", {
+        voiceEnabled,
+        cameraSpeaking: cameraSpeakingRef.current,
+        appState: AppState.currentState,
+      });
+      requestVoiceGuidance(controllerRef.current, googleAudioMode({
         cameraSpeaking: cameraSpeakingRef.current,
         guiding: true,
         voiceEnabled,
-      }) === "alerts-and-guidance" ? AudioGuidance.VOICE_ALERTS_AND_GUIDANCE : AudioGuidance.SILENT);
+      }) === "alerts-and-guidance" ? AudioGuidance.VOICE_ALERTS_AND_GUIDANCE : AudioGuidance.SILENT, "guidance");
       navView.current?.setNavigationUIEnabled?.(true);
       navView.current?.setFollowingPerspective?.(CameraPerspective.TILTED);
     });
@@ -380,7 +411,7 @@ function GoogleNavBody({
     try {
       await controllerRef.current.stopGuidance();
       await controllerRef.current.clearDestinations();
-      controllerRef.current.setAudioGuidanceType(AudioGuidance.SILENT);
+      requestVoiceGuidance(controllerRef.current, AudioGuidance.SILENT, "end");
       navView.current?.setNavigationUIEnabled?.(false);
       navView.current?.setFollowingPerspective?.(CameraPerspective.TOP_DOWN_NORTH_UP);
     } catch (_) {}

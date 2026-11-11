@@ -1,4 +1,5 @@
 import { createAudioPlayer, setAudioModeAsync, setIsAudioActiveAsync } from "expo-audio";
+import { traceNavVoice } from "./nav-voice-trace";
 import { ukVoiceSources } from "./uk-voice-assets";
 import {
   audibleSteps,
@@ -71,11 +72,15 @@ function watch(player, current, leadSeconds) {
 
 export async function playClipPlan(plan, current) {
   const steps = audibleSteps(plan, Object.keys(ukVoiceSources));
-  if (!steps.length || !current()) return { played: 0, stopped: !current() };
+  if (!steps.length || !current()) {
+    traceNavVoice("clip.skip", { steps: steps.length, current: current() });
+    return { played: 0, stopped: !current() };
+  }
   let configured = false;
   try {
     await setAudioModeAsync(UK_CLIP_AUDIO_MODE);
     configured = true;
+    traceNavVoice("clip.session", { interruption: "doNotMix", keepAudioSessionActive: true });
   } catch {
     // A session error must not throw out of a location task.
   }
@@ -123,6 +128,7 @@ export async function playClipPlan(plan, current) {
   } finally {
     release(carry);
     if (configured) {
+      traceNavVoice("clip.release", { interruption: "mixWithOthers", deactivate: true, played });
       try { await setAudioModeAsync(UK_CLIP_RELEASE_MODE); } catch {}
       // Navigation SDK voice does not resume while this session stays active.
       try { await setIsAudioActiveAsync(false); } catch {}

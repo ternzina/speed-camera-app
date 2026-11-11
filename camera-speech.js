@@ -4,6 +4,7 @@ import { createSpeechCoordinator } from './camera-speech-coordinator';
 import { cameraSpeechOptions } from './camera-speech-voice';
 import { playClipPlan, stopUkrainianClips } from './uk-voice-player';
 import { ukrainianPlanFromPhrase } from './uk-voice-clips';
+import { traceNavVoice } from './nav-voice-trace';
 const coordinator = createSpeechCoordinator(Engine);
 coordinator.bindClipStop(stopUkrainianClips);
 let speechSequence = 0;
@@ -98,6 +99,7 @@ function clipPlanFor(text, locale, plan) {
 // Clips first. If a file is missing the player skips it; if none play, the
 // installed uk-UA voice speaks the same line. A stale ticket never starts.
 async function playUkrainianClips(text, locale, plan, wait) {
+  traceNavVoice("warning.begin", { kind: "clips", steps: Array.isArray(plan) ? plan.length : 0 });
   const session = coordinator.beginClip();
   try {
     let result = { played: 0, stopped: false };
@@ -120,6 +122,7 @@ async function playUkrainianClips(text, locale, plan, wait) {
     return speakAndWait(text, speechRequest(options));
   } finally {
     session.end();
+    traceNavVoice("warning.end", { kind: "clips" });
   }
 }
 
@@ -133,6 +136,7 @@ export async function speakCameraAlert(text, locale, plan) {
   }
   const options = await resolveCameraSpeechOptions(locale);
   if (options.skip) return options.reason;
+  traceNavVoice("warning.begin", { kind: "speech" });
   await stop();
   speak(text, speechRequest(options));
   return 'requested';
