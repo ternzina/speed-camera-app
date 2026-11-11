@@ -14,6 +14,18 @@ export function voiceGuidanceChange(previous, index) {
   return { guidance, changed: previous !== guidance, next: guidance };
 }
 
+const listeners = new Set();
+let sink = null;
+
+export function subscribeNavVoice(listener) {
+  listeners.add(listener);
+  return () => listeners.delete(listener);
+}
+
+export function setNavVoiceSink(next) {
+  sink = typeof next === "function" ? next : null;
+}
+
 export function traceNavVoice(event, fields = {}) {
   const safe = {};
   for (const [key, value] of Object.entries(fields)) {
@@ -21,5 +33,12 @@ export function traceNavVoice(event, fields = {}) {
     if (typeof value === "string" && value.length > 160) continue;
     safe[key] = typeof value === "number" && !Number.isFinite(value) ? null : value;
   }
-  console.log(`CAMALERT_NAV_VOICE ${event} ${JSON.stringify(safe)}`);
+  const line = `CAMALERT_NAV_VOICE ${event} ${JSON.stringify(safe)}`;
+  console.log(line);
+  for (const listener of listeners) listener(event, safe);
+  try {
+    sink?.(line);
+  } catch {
+    // The journal must not change the guidance decision.
+  }
 }

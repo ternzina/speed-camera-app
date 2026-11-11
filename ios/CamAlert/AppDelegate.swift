@@ -112,6 +112,8 @@ class AppDelegate: ExpoAppDelegate {
     ) { note in
       let type = (note.userInfo?[AVAudioSessionInterruptionTypeKey] as? UInt) ?? 0
       let options = (note.userInfo?[AVAudioSessionInterruptionOptionKey] as? UInt) ?? 0
+      CamAlertVoiceDiagLog.noteInterruption(type: type, options: options)
+      CamAlertVoiceDiagLog.append("interruption type=\(type) options=\(options) category=\(session.category.rawValue)")
       NSLog(
         "CAMALERT_NAV_VOICE interruption type=%lu options=%lu category=%@",
         type,
@@ -125,12 +127,14 @@ class AppDelegate: ExpoAppDelegate {
       queue: .main
     ) { note in
       let reason = (note.userInfo?[AVAudioSessionRouteChangeReasonKey] as? UInt) ?? 0
+      CamAlertVoiceDiagLog.append("route reason=\(reason) ports=\(CamAlertVoiceDiagLog.routePorts()) category=\(session.category.rawValue)")
       NSLog(
         "CAMALERT_NAV_VOICE route reason=%lu category=%@",
         reason,
         session.category.rawValue
       )
     }
+    CamAlertVoiceDiagLog.append("launch location=\(CamAlertVoiceDiagLog.locationStatus()) ports=\(CamAlertVoiceDiagLog.routePorts()) category=\(session.category.rawValue)")
     NSLog("CAMALERT_NAV_VOICE session category=%@", session.category.rawValue)
   }
 

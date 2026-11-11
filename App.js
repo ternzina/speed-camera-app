@@ -40,6 +40,7 @@ import { cameraAlertDecision, cameraWarningsEnabled, mergeStoredSettings } from 
 import { searchLegalNotices, statusLabel } from "./legal-notices";
 import IosRouteScreen from "./ios-route-screen";
 import { isGoogleNavTestApp, usesInAppGoogleNav } from "./google-nav-gate";
+import { isVoiceDiagApp } from "./voice-diag-gate";
 import { nearbyCopy as placesNearbyCopy, nearbyHandoff } from "./google-places";
 import NavtestNearby from "./navtest-nearby";
 import { loadSavedPlaces, savedPlaceFromNearby, storeSavedPlaces, toggleFavorite } from "./navtest-saved-places";
@@ -1828,6 +1829,33 @@ export default function App() {
               </Pressable>
             </ScrollView>
           </View>
+      </View>
+    );
+  }
+
+  if (isVoiceDiagApp()) {
+    return (
+      <View style={{ flex: 1, backgroundColor: "#0B1829" }}>
+        <GoogleNavTestScreen
+          diagnostic
+          language={settings.language || "ru"}
+          night={isNight}
+          coords={coords}
+          camera={null}
+          cameraType=""
+          voiceEnabled={settings.voice !== false}
+          onToggleVoice={() => setSettings(current => ({ ...current, voice: current.voice === false }))}
+          picking={false}
+          tripActive={active}
+          onStartTrip={async () => {
+            if (foregroundTripRunning || sub.current) return true;
+            return !!(await startTracking());
+          }}
+          onStopTrip={stopTracking}
+          onClosePick={() => {}}
+          handoff={null}
+          onRouteActive={() => {}}
+        />
       </View>
     );
   }

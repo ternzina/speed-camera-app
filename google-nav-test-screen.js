@@ -17,6 +17,7 @@ import {
 } from "./navtest-saved-places";
 import { withNavigationWindow } from "./navigation-readiness";
 import { nativeVoiceGuidance, traceNavVoice } from "./nav-voice-trace";
+import { VoiceDiagPanel } from "./voice-diag-panel";
 import SystemSafeArea from "./system-safe-area";
 
 function requestVoiceGuidance(controller, index, reason) {
@@ -99,16 +100,33 @@ const MAPS = [
 ];
 
 export default function GoogleNavTestScreen(props) {
-  return (
+  const controllerRef = useRef(null);
+  const diagnosticBridge = useRef({ controllerRef, setGuiding: () => {} });
+  const [diagGuiding, setDiagGuiding] = useState(false);
+  diagnosticBridge.current.setGuiding = setDiagGuiding;
+  const body = (
     <NavigationProvider termsAndConditionsDialogOptions={terms} taskRemovedBehavior={TaskRemovedBehavior.QUIT_SERVICE}>
-      <GoogleNavBody {...props} />
+      <GoogleNavBody {...props} diagnosticBridge={props.diagnostic ? diagnosticBridge : null} />
     </NavigationProvider>
+  );
+  if (!props.diagnostic) return body;
+  return (
+    <View style={styles.diagnosticRoot}>
+      {body}
+      <VoiceDiagPanel
+        controllerRef={controllerRef}
+        guiding={diagGuiding}
+        voiceEnabled={props.voiceEnabled}
+        requestVoice={(index, reason) => requestVoiceGuidance(controllerRef.current, index, reason)}
+      />
+    </View>
   );
 }
 
 function GoogleNavBody({
   language, night, coords, camera, cameraType, voiceEnabled, onToggleVoice,
   picking, tripActive, onStartTrip, onStopTrip, onClosePick, handoff, onRouteActive,
+  diagnostic = false, diagnosticBridge = null,
 }) {
   const copy = COPY[language] || COPY.ru;
   const places = savedPlaceCopy(language);
@@ -123,6 +141,12 @@ function GoogleNavBody({
   const [query, setQuery] = useState("");
   const [routed, setRouted] = useState(false);
   const [guiding, setGuiding] = useState(false);
+  useEffect(() => {
+    const link = diagnosticBridge?.current;
+    if (!link) return;
+    link.controllerRef.current = controller;
+    link.setGuiding(guiding);
+  }, [controller, guiding, diagnosticBridge]);
   const [mapType, setMapType] = useState(MapType.NORMAL);
   const [layersOpen, setLayersOpen] = useState(false);
   const [busy, setBusy] = useState(false);
@@ -543,6 +567,7 @@ function GoogleNavBody({
     contentBottom: contentBottom || windowHeight,
     keyboardTop: keyboardFrame,
   });
+  const diagSpace = diagnostic ? 210 : 0;
   const listMax = suggestionViewport({
     windowHeight,
     keyboardHeight: Math.max(0, windowHeight - keyboardFrame),
@@ -557,7 +582,7 @@ function GoogleNavBody({
       <NavigationView
         style={StyleSheet.absoluteFill}
         mapType={mapType}
-        mapPadding={{ top: pads.top, right: 16, bottom: pads.bottom + lift, left: 16 }}
+        mapPadding={{ top: pads.top, right: 16, bottom: pads.bottom + lift + diagSpace, left: 16 }}
         navigationNightMode={night ? NavigationNightMode.FORCE_NIGHT : NavigationNightMode.FORCE_DAY}
         myLocationEnabled
         headerEnabled={chrome.maneuver}
@@ -639,7 +664,7 @@ function GoogleNavBody({
           )}
           {!!error && <Text accessibilityRole="alert" numberOfLines={3} maxFontSizeMultiplier={1.4} style={styles.error}>{error}</Text>}
         </View>
-        <View pointerEvents="box-none" style={[styles.bottom, { marginBottom: 8 + lift }]} onLayout={event => remember("bottom", event)}>
+        <View pointerEvents="box-none" style={[styles.bottom, { marginBottom: 8 + lift + diagSpace }]} onLayout={event => remember("bottom", event)}>
           {chrome.routeBar && (
             <RouteBar items={items} palette={palette} />
           )}
@@ -809,6 +834,7 @@ const DARK = { panel: "rgba(16,38,59,0.94)", ink: "#F5F8FB", muted: "#CAD7E7", b
 
 const styles = StyleSheet.create({
   root: { flex: 1, backgroundColor: "#0B1829" },
+  diagnosticRoot: { flex: 1 },
   overlay: { flex: 1, justifyContent: "space-between" },
   searchCard: { marginHorizontal: NAV_PANEL.horizontalInset, marginTop: NAV_PANEL.cardMarginTop, borderRadius: 16, paddingHorizontal: NAV_PANEL.cardPaddingHorizontal, paddingVertical: NAV_PANEL.cardPaddingVertical, gap: NAV_PANEL.cardGap },
   searchRow: { flexDirection: "row", alignItems: "center", gap: 8 },
