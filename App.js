@@ -28,6 +28,7 @@ import WelcomeScreen from "./onboarding";
 import GoogleNavigationScreen from "./google-navigation";
 import { withNavigationWindow } from "./navigation-readiness";
 import { cameraAlertCopy } from "./camera-alert-copy";
+import { showCarPlayAlert } from "./carplay-alert";
 import { ukrainianClipPlan, ukrainianPlanFromPhrase } from "./uk-voice-clips";
 import { navigationCopy } from "./google-navigation-copy";
 import SystemSafeArea from "./system-safe-area";
@@ -462,6 +463,7 @@ async function processBackgroundLocation({ data: taskData, error }) {
   bgLastAlert = { id: cam.id, at: now, distance: cam.distance, country: session.country };
 
   const message = cameraAlertCopy(bgSettings.language, cam, speedKmh);
+  showCarPlayAlert(message.title, message.body);
   try {
     await Notifications.scheduleNotificationAsync({
       content: {
@@ -1235,6 +1237,7 @@ export default function App() {
                 sectionEvent,
                 settings.language
               );
+              if (phrase) showCarPlayAlert(phrase, "");
 
               if (phrase && settings.voice && settings.language === "uk") {
                 const plan = ukrainianClipPlan({
@@ -1605,6 +1608,8 @@ export default function App() {
 
   function presentCameraAlert(cam, currentSpeedKmh, currentSpeedAvailable) {
     if (!cam) return;
+    const shown = cameraAlertCopy(settings.language, cam, currentSpeedKmh, currentSpeedAvailable);
+    showCarPlayAlert(shown.title, shown.body);
     if (cameraAlertDismissTimer.current) clearTimeout(cameraAlertDismissTimer.current);
     setCameraAlertPresentation({
       cameraId: String(cam.id),
