@@ -12,8 +12,8 @@ import "./voice-diag-log";
 const DESTINATION = { lat: 50.467, lng: 30.515 };
 const AUTO_SIM_SPEED = 8;
 const SAMPLE_MS = 5000;
-const BEFORE_LIMIT_MS = 120000;
-const AFTER_LIMIT_MS = 40000;
+const BEFORE_LIMIT_MS = 45000;
+const AFTER_LIMIT_MS = 25000;
 const TURN_GOAL = 3;
 const NAV_STATE_NAME = ["UNKNOWN", "ENROUTE", "REROUTING", "STOPPED"];
 
@@ -38,6 +38,13 @@ function stepCount(event) {
 function maneuverName(event) {
   const raw = event?.currentStep?.maneuver;
   return typeof raw === "string" ? raw.slice(0, 48) : "";
+}
+
+function turnStepCount(event) {
+  const steps = event?.getRemainingSteps;
+  if (!Array.isArray(steps)) return null;
+  return steps.filter(step => typeof step?.maneuver === "string"
+    && /TURN|ROUNDABOUT|FORK|RAMP|MERGE/i.test(step.maneuver)).length;
 }
 
 function wait(ms, cancelled) {
@@ -142,6 +149,8 @@ export async function runVoiceDiagAuto({
   let locationUpdates = 0;
   let movedMeters = 0;
   let lastFix = null;
+  let lastTurnSig = "";
+  let turnSteps = null;
   setOnTurnByTurn?.(events => {
     const list = Array.isArray(events) ? events : [];
     const bucket = phases[phase] || phases.before;
@@ -153,12 +162,19 @@ export async function runVoiceDiagAuto({
     for (const event of list) {
       bucket.events += 1;
       const maneuver = maneuverName(event);
+      const steps = stepCount(event);
+      const turnsAhead = turnStepCount(event);
+      if (turnsAhead != null) turnSteps = turnsAhead;
       if (maneuver) bucket.maneuvers.push(maneuver);
+      const signature = `${navStateName(event?.navState)}|${maneuver}|${steps}|${turnsAhead}`;
+      if (signature === lastTurnSig) continue;
+      lastTurnSig = signature;
       traceNavVoice("auto.turn", {
         phase,
         navState: navStateName(event?.navState),
         maneuver,
-        steps: stepCount(event),
+        steps,
+        turnSteps: turnsAhead,
         remainMeters: Math.round(Number(event?.distanceToFinalDestinationMeters) || 0),
         stepMeters: Math.round(Number(event?.distanceToCurrentStepMeters) || 0),
       });
@@ -203,13 +219,19 @@ export async function runVoiceDiagAuto({
       if (first == null && meters != null) first = meters;
       if (meters != null) last = meters;
       const bucket = phases[phase] || phases.before;
-      if (goal && bucket.events >= goal) break;
+      if (goal && bucket.events >= goal && turnSteps > 0) break;
       if (first != null && last != null && first - last > 30 && last < 80) break;
     }
     return { first, last, samples };
   }
   try {
     traceNavVoice("auto.begin", { test: true, bundle: applicationId || "none" });
+    try {
+      controllerRef.current?.setTurnByTurnLoggingEnabled?.(true);
+      traceNavVoice("auto.turnlog", { enabled: true });
+    } catch (error) {
+      traceNavVoice("auto.turnlog", { enabled: false, error: error?.code || "turnlog-failed" });
+    }
     await withTimeout(ensureSession(), 20000, "session-timeout");
     if (cancelled() || !await locationReady(cancelled)) return;
     const controller = controllerRef.current;

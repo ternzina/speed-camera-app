@@ -58,6 +58,7 @@ test("the automatic run builds a route before guidance and does not log coordina
   assert.doesNotMatch(auto, /simulateLocation\(/);
   assert.match(auto, /const AUTO_SIM_SPEED = 8/);
   assert.match(auto, /getCurrentTimeAndDistance/);
+  assert.match(auto, /setTurnByTurnLoggingEnabled/);
   assert.match(screen, /setOnLocationChanged/);
   assert.doesNotMatch(auto, /traceNavVoice\([\s\S]{0,80}latitude/);
   let cursor = 0;
