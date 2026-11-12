@@ -47,15 +47,15 @@ test("the automatic run builds a route before guidance and does not log coordina
   const auto = read("voice-diag-auto.js");
   const screen = read("google-nav-test-screen.js");
   const markers = [
-    "simulator.simulateLocation(ORIGIN)",
     "controller.setDestination(",
-    '"google-only"',
     "controller.startGuidance()",
-    "simulator.simulateLocationsAlongExistingRoute({ speedMultiplier: 1 })",
+    '"google-only"',
+    "simulateLocationsAlongExistingRoute",
     "speakCameraAlert(",
     'requestVoice(4, "restore")',
   ];
   assert.equal(markers.length, AUTO_ORDER.length);
+  assert.doesNotMatch(auto, /simulateLocation\(/);
   let cursor = 0;
   for (const marker of markers) {
     const at = auto.indexOf(marker);

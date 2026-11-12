@@ -17,7 +17,7 @@ export function restoreRequest() {
   return { silentIndex: 0, voiceIndex: 4, clip: "close" };
 }
 
-export const AUTO_ORDER = ["origin", "route", "google-only", "guidance", "simulation", "yevheniia", "restore"];
+export const AUTO_ORDER = ["route", "guidance", "google-only", "simulation", "yevheniia", "restore"];
 
 export function failureCode(error) {
   const text = String(error?.code || error?.message || "failed");

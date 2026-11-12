@@ -6,9 +6,9 @@ import { traceNavVoice } from "./nav-voice-trace";
 import { failureCode, yevheniiaOnlyPlan } from "./voice-diag-checks";
 import "./voice-diag-log";
 
-// Fixed road points for the diagnostic process only. They are never written
-// to the journal. The store bundle does not call this function.
-const ORIGIN = { lat: 50.4501, lng: 30.5234 };
+// One destination, as Nav 59 passes a single chosen point. The navigator uses
+// the device location it already has. This file never calls simulateLocation,
+// and it never writes the point to the journal.
 const DESTINATION = { lat: 50.467, lng: 30.515 };
 
 function wait(ms, cancelled) {
@@ -57,23 +57,48 @@ async function probe(label) {
   }
 }
 
-async function routeFromSimulatedOrigin(controller, simulator, cancelled) {
-  await Promise.resolve(simulator.simulateLocation(ORIGIN));
-  traceNavVoice("auto.origin", { ok: true });
-  if (!await wait(2000, cancelled)) return null;
-  let status = await withTimeout(controller.setDestination(
-    { title: "TEST", position: DESTINATION },
-    { routingOptions: { travelMode: TravelMode.DRIVING } },
-  ), 25000, "route-timeout");
-  if (status === RouteStatus.LOCATION_UNKNOWN || status === RouteStatus.LOCATION_DISABLED) {
-    await Promise.resolve(simulator.simulateLocation(ORIGIN));
-    if (!await wait(3000, cancelled)) return null;
-    status = await withTimeout(controller.setDestination(
+async function locationReady(cancelled) {
+  const read = NativeModules.CamAlertVoiceDiag?.audioProbe;
+  for (let attempt = 1; attempt <= 8; attempt += 1) {
+    let location = "";
+    if (typeof read === "function") {
+      try {
+        const snap = await read();
+        location = typeof snap?.location === "string" ? snap.location : "";
+      } catch {
+        location = "";
+      }
+    }
+    if (location === "authorizedWhenInUse" || location === "authorizedAlways") {
+      traceNavVoice("auto.ready", { location, attempt });
+      return true;
+    }
+    if (!await wait(500, cancelled)) return false;
+  }
+  traceNavVoice("auto.ready", { location: "pending", attempt: 8 });
+  return !cancelled();
+}
+
+async function requestRoute(controller, cancelled) {
+  const started = Date.now();
+  const ask = async (attempt) => {
+    const status = await withTimeout(controller.setDestination(
       { title: "TEST", position: DESTINATION },
       { routingOptions: { travelMode: TravelMode.DRIVING } },
     ), 25000, "route-timeout");
-  }
-  return status;
+    traceNavVoice("auto.route", {
+      status: String(status),
+      attempt,
+      ms: Date.now() - started,
+      travelMode: "DRIVING",
+      simulated: false,
+    });
+    return status;
+  };
+  let status = await ask(1);
+  const waiting = status === RouteStatus.LOCATION_UNKNOWN || status === RouteStatus.LOCATION_DISABLED;
+  if (!waiting || !await wait(3000, cancelled)) return status;
+  return ask(2);
 }
 
 export async function runVoiceDiagAuto({
@@ -90,19 +115,10 @@ export async function runVoiceDiagAuto({
   try {
     traceNavVoice("auto.begin", { test: true, bundle: applicationId || "none" });
     await withTimeout(ensureSession(), 20000, "session-timeout");
-    if (cancelled()) return;
+    if (cancelled() || !await locationReady(cancelled)) return;
     const controller = controllerRef.current;
-    const simulator = controller?.simulator;
-    if (typeof simulator?.simulateLocation !== "function" || typeof simulator?.simulateLocationsAlongExistingRoute !== "function") {
-      traceNavVoice("auto.origin", { ok: false, code: "missing" });
-      return;
-    }
-    const status = await routeFromSimulatedOrigin(controller, simulator, cancelled);
-    if (cancelled() || status == null) return;
-    traceNavVoice("auto.route", { status: String(status) });
-    if (status !== RouteStatus.OK) return;
-    await requestVoice(4, "google-only");
-    traceNavVoice("check.google-only", { playClip: false, auto: true });
+    const status = await requestRoute(controller, cancelled);
+    if (cancelled() || status !== RouteStatus.OK) return;
     try {
       await withTimeout(controller.startGuidance(), 15000, "guidance-timeout");
       markGuiding(true);
@@ -111,8 +127,15 @@ export async function runVoiceDiagAuto({
       traceNavVoice("auto.guidance", { started: false, code: failureCode(error) });
       return;
     }
+    await requestVoice(4, "google-only");
+    traceNavVoice("check.google-only", { playClip: false, auto: true });
+    const alongRoute = controller?.simulator?.simulateLocationsAlongExistingRoute;
+    if (typeof alongRoute !== "function") {
+      traceNavVoice("auto.simulation", { started: false, code: "missing" });
+      return;
+    }
     try {
-      await Promise.resolve(simulator.simulateLocationsAlongExistingRoute({ speedMultiplier: 1 }));
+      await Promise.resolve(alongRoute.call(controller.simulator, { speedMultiplier: 1 }));
       traceNavVoice("auto.simulation", { started: true, speedMultiplier: 1 });
     } catch (error) {
       traceNavVoice("auto.simulation", { started: false, code: failureCode(error) });
