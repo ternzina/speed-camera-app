@@ -41,6 +41,7 @@ import { searchLegalNotices, statusLabel } from "./legal-notices";
 import IosRouteScreen from "./ios-route-screen";
 import { isGoogleNavTestApp, usesInAppGoogleNav } from "./google-nav-gate";
 import { isVoiceDiagApp } from "./voice-diag-gate";
+import { runPreviewInstallCheck } from "./preview-install-check";
 import { nearbyCopy as placesNearbyCopy, nearbyHandoff } from "./google-places";
 import NavtestNearby from "./navtest-nearby";
 import { loadSavedPlaces, savedPlaceFromNearby, storeSavedPlaces, toggleFavorite } from "./navtest-saved-places";
@@ -789,6 +790,10 @@ export default function App() {
     AsyncStorage.getItem(ONBOARDING_KEY)
       .then(value => setOnboardingState(value === "done" ? "done" : "new"))
       .catch(() => setOnboardingState("new"));
+  }, []);
+
+  useEffect(() => {
+    runPreviewInstallCheck().catch(() => {});
   }, []);
 
   useEffect(() => {

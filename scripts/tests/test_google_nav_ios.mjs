@@ -12,7 +12,15 @@ test("the store app and navtest both mount the Google map", () => {
   assert.match(gate, /STORE_BUNDLE = "com\.21wek\.camera"/);
   assert.match(gate, /com\.21wek\.camera\.navtest/);
   assert.match(gate, /function usesInAppGoogleNav/);
-  assert.match(gate, /applicationId === STORE_BUNDLE \|\| applicationId === GOOGLE_NAV_TEST_BUNDLE/);
+  assert.match(gate, /STORE_PREVIEW_BUNDLE = "com\.21wek\.camera\.voicepreview"/);
+  assert.match(gate, /applicationId === STORE_BUNDLE/);
+  assert.match(gate, /applicationId === GOOGLE_NAV_TEST_BUNDLE/);
+  assert.match(gate, /applicationId === STORE_PREVIEW_BUNDLE/);
+  assert.doesNotMatch(gate, /voicediag/);
+  const check = read("preview-install-check.js");
+  assert.match(check, /STORE_PREVIEW_BUNDLE/);
+  assert.doesNotMatch(check, /speakCameraAlert|setDestination|watchPositionAsync/);
+  assert.match(app, /runPreviewInstallCheck\(/);
   assert.match(app, /usesInAppGoogleNav\(\) && \(tab === "drive" \|\| iosRouteOpen\)/);
   assert.match(app, /tab === "drive" && !active && !usesInAppGoogleNav\(\)/);
   assert.match(app, /hideExternalNav=\{usesInAppGoogleNav\(\)\}/);
@@ -44,7 +52,7 @@ test("the Google screen does not draw an Apple route or a second maps SDK", () =
 test("turn voice stays off until the guidance button", () => {
   const screen = read("google-nav-test-screen.js");
   const session = screen.slice(screen.indexOf("async function ensureSession"), screen.indexOf("async function run"));
-  assert.match(session, /setAudioGuidanceType\(AudioGuidance\.SILENT\)/);
+  assert.match(session, /requestVoiceGuidance\(controllerRef\.current, AudioGuidance\.SILENT, "session"\)/);
   assert.doesNotMatch(session, /startGuidance|VOICE_ALERTS_AND_GUIDANCE/);
   const build = screen.slice(screen.indexOf("function buildRoute"), screen.indexOf("function startGuidance"));
   assert.match(build, /setDestination\(/);
@@ -108,7 +116,7 @@ test("Google turn voice stays with the SDK because it has no language setter", (
   const screen = read("google-nav-test-screen.js");
   const header = read("ios/Pods/GoogleNavigation/Frameworks/GoogleNavigation.xcframework/ios-arm64/GoogleNavigation.framework/Headers/GMSNavigator.h");
   const bridge = read("node_modules/@googlemaps/react-native-navigation-sdk/ios/react-native-navigation-sdk/NavModule.mm");
-  assert.match(screen, /setAudioGuidanceType\(/);
+  assert.match(screen, /setAudioGuidanceType/);
   assert.match(screen, /SDK 10\.13\.0 exposes no language setter/);
   assert.doesNotMatch(screen, /Speech\.speak|setVoiceLanguage|setLocale\(/);
   assert.match(header, /voiceGuidance/);
