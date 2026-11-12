@@ -1,4 +1,5 @@
 import { NativeModules } from "react-native";
+import { applicationId } from "expo-application";
 import { RouteStatus, TravelMode } from "@googlemaps/react-native-navigation-sdk";
 import { speakCameraAlert } from "./camera-speech";
 import { traceNavVoice } from "./nav-voice-trace";
@@ -87,7 +88,7 @@ export async function runVoiceDiagAuto({
     if (typeof state === "number") navState = state;
   });
   try {
-    traceNavVoice("auto.begin", { test: true });
+    traceNavVoice("auto.begin", { test: true, bundle: applicationId || "none" });
     await withTimeout(ensureSession(), 20000, "session-timeout");
     if (cancelled()) return;
     const controller = controllerRef.current;

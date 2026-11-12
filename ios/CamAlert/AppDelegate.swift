@@ -134,7 +134,7 @@ class AppDelegate: ExpoAppDelegate {
         session.category.rawValue
       )
     }
-    CamAlertVoiceDiagLog.append("launch location=\(CamAlertVoiceDiagLog.locationStatus()) ports=\(CamAlertVoiceDiagLog.routePorts()) category=\(session.category.rawValue)")
+    CamAlertVoiceDiagLog.append("launch bundle=\(Bundle.main.bundleIdentifier ?? "none") location=\(CamAlertVoiceDiagLog.locationStatus()) ports=\(CamAlertVoiceDiagLog.routePorts()) category=\(session.category.rawValue)")
     NSLog("CAMALERT_NAV_VOICE session category=%@", session.category.rawValue)
   }
 

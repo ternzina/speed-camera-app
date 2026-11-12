@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { NativeModules, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import { applicationId } from "expo-application";
 import { playClipPlan } from "./uk-voice-player";
 import { subscribeNavVoice, traceNavVoice } from "./nav-voice-trace";
 import { googleOnlyRequest, restoreRequest, routeSimulationRequest, yevheniiaOnlyPlan } from "./voice-diag-checks";
@@ -105,6 +106,7 @@ export function VoiceDiagPanel({ controllerRef, guiding, voiceEnabled, requestVo
     <View pointerEvents="box-none" style={styles.wrap}>
       <View style={styles.card}>
         <Text style={styles.test}>TEST</Text>
+        <Text style={styles.line}>{applicationId || "bundle неизвестен"}</Text>
         <Text style={styles.line}>Ведение: {guiding ? "да" : "нет"}</Text>
         <Text style={styles.line}>Голос запрошен: {mode}</Text>
         <Text style={styles.line}>SDK: {sdk}</Text>
