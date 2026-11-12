@@ -39,9 +39,12 @@ import { MapCameraPin, MapMarkerLegend } from "./map-camera-pin";
 import { cameraAlertDecision, cameraWarningsEnabled, mergeStoredSettings } from "./camera-warning-gate";
 import { searchLegalNotices, statusLabel } from "./legal-notices";
 import IosRouteScreen from "./ios-route-screen";
-import { isGoogleNavTestApp, usesInAppGoogleNav } from "./google-nav-gate";
+import { applicationId } from "expo-application";
+import { isGoogleNavTestApp, STORE_PREVIEW_BUNDLE, usesInAppGoogleNav } from "./google-nav-gate";
 import { isVoiceDiagApp } from "./voice-diag-gate";
+import { nearestAhead, ukraineFixDecision } from "./camera-fix";
 import { runPreviewInstallCheck } from "./preview-install-check";
+import { runPreviewIntegration } from "./preview-integration";
 import { nearbyCopy as placesNearbyCopy, nearbyHandoff } from "./google-places";
 import NavtestNearby from "./navtest-nearby";
 import { loadSavedPlaces, savedPlaceFromNearby, storeSavedPlaces, toggleFavorite } from "./navtest-saved-places";
@@ -360,19 +363,7 @@ function findNearestAny(latitude, longitude, max = Infinity) {
   return best ? { ...best, distance: Math.round(bestDistance) } : null;
 }
 function findNearestAhead(latitude, longitude, movementHeading, maxDistance = 5000) {
-  if (movementHeading == null) return null;
-  let best = null, bestDistance = Infinity;
-  for (const cam of visibleCameras()) {
-    const d = distanceMeters(latitude, longitude, cam.latitude, cam.longitude);
-    if (d > maxDistance) continue;
-    if (cam.direction != null && /^\d+(\.\d+)?$/.test(String(cam.direction)) && angleDiff(movementHeading,Number(cam.direction))>60) continue;
-    const camBearing = bearingDegrees(latitude, longitude, cam.latitude, cam.longitude);
-    if (angleDiff(movementHeading, camBearing) <= FORWARD_ANGLE_DEGREES && d < bestDistance) {
-      bestDistance = d;
-      best = { ...cam, distance: Math.round(d) };
-    }
-  }
-  return best;
+  return nearestAhead(visibleCameras(), latitude, longitude, movementHeading, maxDistance, FORWARD_ANGLE_DEGREES);
 }
 
 Notifications.setNotificationHandler({
@@ -767,6 +758,9 @@ export default function App() {
   const sub = useRef(null);
   const timer = useRef(null);
   const lastSpoken = useRef({ id: null, distance: Infinity });
+  const previewGpsLogRef = useRef(0);
+  const previewRun = useRef(false);
+  const previewApi = useRef({});
   const catalogRef = useRef({ publishedAt: null, checkedAt: null });
   const settingsHydrated = useRef(false);
   const postponedRef = useRef(false);
@@ -794,6 +788,30 @@ export default function App() {
 
   useEffect(() => {
     runPreviewInstallCheck().catch(() => {});
+  }, []);
+
+  previewApi.current = {
+    handleFix: fix => handleUkraineFix({ ...fix, source: "simulated" }),
+    cameras: () => visibleCameras(),
+    startGps: startTracking,
+    stopGps: stopTracking,
+    gpsRunning: () => foregroundTripRunning || !!sub.current,
+    dismissGuide: postponeBackgroundGuide,
+    resetRepeat: () => { lastSpoken.current = { id: null, distance: Infinity }; },
+    clearAhead: () => setAhead(null),
+    clearAlert: () => dismissCameraAlert(),
+    armGpsLog: count => { previewGpsLogRef.current = count; },
+  };
+
+  useEffect(() => {
+    if (applicationId !== STORE_PREVIEW_BUNDLE || previewRun.current) return undefined;
+    previewRun.current = true;
+    const stop = { current: false };
+    runPreviewIntegration({
+      api: () => previewApi.current,
+      cancelled: () => stop.current,
+    }).catch(() => {});
+    return () => { stop.current = true; };
   }, []);
 
   useEffect(() => {
@@ -1012,20 +1030,21 @@ export default function App() {
     await AsyncStorage.setItem(HIDDEN_KEY, JSON.stringify(next));
   }
 
-  function speakWarning(cam, threshold, currentSpeedKmh, currentSpeedAvailable) {
+  function speakWarning(cam, threshold, currentSpeedKmh, currentSpeedAvailable, options = {}) {
     const decision = cameraAlertDecision(bgSettings, cam);
-    if (!decision.emit) return;
-    if (!cam || cam.distance > threshold) return;
+    if (!decision.emit) return Promise.resolve("off");
+    if (!cam || cam.distance > threshold) return Promise.resolve("distance");
     const last = lastSpoken.current;
-    if (last.id === cam.id && last.distance - cam.distance < 250) return;
-    if (isGoogleNavTestApp() && skipSharedNavtestSpeech(cam)) return;
+    if (last.id === cam.id && last.distance - cam.distance < 250) return Promise.resolve("repeat");
+    if (isGoogleNavTestApp() && skipSharedNavtestSpeech(cam)) return Promise.resolve("shared");
 
     const over = isSpeedOverLimit(currentSpeedKmh, currentSpeedAvailable, cam.speed_limit);
     presentCameraAlert(cam, currentSpeedKmh, currentSpeedAvailable);
-    if (decision.vibration) {
+    if (decision.vibration && options.vibrate !== false) {
       Vibration.vibrate(over ? [0, 250, 120, 250] : [0, 250]);
       Haptics.notificationAsync(over ? Haptics.NotificationFeedbackType.Warning : Haptics.NotificationFeedbackType.Success).catch(()=>{});
     }
+    let speech = Promise.resolve("quiet");
     if (decision.voice) {
       const message = cameraAlertCopy(settings.language, cam, currentSpeedKmh, currentSpeedAvailable);
       if (isGoogleNavTestApp()) noteNavtestCameraSpeech(cam);
@@ -1033,18 +1052,70 @@ export default function App() {
       // message.locale stays the interface language for the system-speech reserve.
       const plan = ukrainianClipPlan({ kind: "ua-camera", distance: cam.distance, limit: cam.speed_limit, over: message.over });
       if (plan) Speech.queueUkrainianClip(plan);
-      void Speech.speakCameraAlert(message.speech, message.locale);
+      speech = Promise.resolve(Speech.speakCameraAlert(message.speech, message.locale)).then(value => value || "spoken");
     }
     lastSpoken.current = { id: cam.id, distance: cam.distance };
-    saveHistory({
-      id: `${Date.now()}-${cam.id}`,
-      cameraId: cam.id,
-      when: new Date().toISOString(),
-      distance: cam.distance,
-      speed: speedKmh,
-      limit: cam.speed_limit,
-      location: cam.location || cam.road_index || cam.region,
+    if (options.recordHistory !== false) {
+      saveHistory({
+        id: `${Date.now()}-${cam.id}`,
+        cameraId: cam.id,
+        when: new Date().toISOString(),
+        distance: cam.distance,
+        speed: speedKmh,
+        limit: cam.speed_limit,
+        location: cam.location || cam.road_index || cam.region,
+      });
+    }
+    return speech;
+  }
+
+  function handleUkraineFix(fix) {
+    const source = fix?.source === "gps" ? "gps" : "simulated";
+    const kmh = Number(fix?.speedKmh);
+    const heading = Number.isFinite(Number(fix?.heading)) ? Number(fix.heading) : null;
+    const available = source === "gps"
+      ? fix?.speedAvailable === true
+      : Number.isFinite(kmh);
+    const logGps = (result) => {
+      if (source !== "gps" || previewGpsLogRef.current <= 0) return result;
+      previewGpsLogRef.current -= 1;
+      const line = `CAMALERT_PREVIEW gpsFix source=gps speed=${Number.isFinite(result.speedKmh) ? result.speedKmh : "none"} outcome=${result.outcome}`;
+      if (!/latitude|longitude|CamAlertGoogleNavKey|-?\d{1,3}\.\d{4,}/i.test(line)) {
+        NativeModules.CamAlertVoiceDiag?.append?.(line);
+      }
+      return result;
+    };
+    if (!(kmh >= MIN_MOVING_SPEED_KMH) || heading == null) {
+      if (source === "gps") setAhead(null);
+      return Promise.resolve(logGps({ source, speedKmh: Number.isFinite(kmh) ? Math.round(kmh) : null, outcome: "below-speed", speech: "none", distance: null, limit: null, cameraId: null }));
+    }
+    const ahead = findNearestAhead(fix.latitude, fix.longitude, heading);
+    if (source === "gps") setAhead(ahead);
+    const decision = ukraineFixDecision({
+      speedKmh: kmh,
+      heading,
+      ahead,
+      threshold: alertDistanceForSpeed(kmh, settings),
+      last: lastSpoken.current,
+      minSpeed: MIN_MOVING_SPEED_KMH,
     });
+    const finish = (outcome, speech) => {
+      const result = {
+        source,
+        speedKmh: Math.round(kmh),
+        outcome,
+        speech,
+        distance: decision.distance ?? ahead?.distance ?? null,
+        limit: decision.limit ?? ahead?.speed_limit ?? null,
+        cameraId: decision.cameraId ?? ahead?.id ?? null,
+      };
+      return logGps(result);
+    };
+    if (!decision.speak) return Promise.resolve(finish(decision.reason, "none"));
+    return speakWarning(ahead, alertDistanceForSpeed(kmh, settings), kmh, available, {
+      vibrate: source === "gps",
+      recordHistory: source === "gps",
+    }).then(speech => finish("spoken", speech || "spoken"));
   }
 
   async function startTracking() {
@@ -1290,17 +1361,14 @@ export default function App() {
 
         const n = findNearestAny(latitude, longitude);
         setNearest(n);
-
-        const a =
-          kmh >= MIN_MOVING_SPEED_KMH && h != null
-            ? findNearestAhead(latitude, longitude, h)
-            : null;
-
-        setAhead(a);
-
-        if (a) {
-          speakWarning(a, alertDistanceForSpeed(kmh, settings), kmh, typeof rs === "number" && Number.isFinite(rs) && rs >= 0);
-        }
+        void handleUkraineFix({
+          latitude,
+          longitude,
+          speedKmh: kmh,
+          heading: h,
+          speedAvailable: typeof rs === "number" && Number.isFinite(rs) && rs >= 0,
+          source: "gps",
+        });
         } finally {
           traceTrip("gps", "exit");
         }

@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { applicationId } from "expo-application";
 import { Alert, AppState, Keyboard, Pressable, ScrollView, StyleSheet, Text, TextInput, useWindowDimensions, View } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
@@ -7,6 +8,8 @@ import {
 } from "@googlemaps/react-native-navigation-sdk";
 import { subscribeCameraSpeech } from "./camera-speech";
 import { cameraBanner, googleAudioMode, googleBackgroundLocationEnabled, navChrome } from "./google-nav-banner";
+import { STORE_PREVIEW_BUNDLE } from "./google-nav-gate";
+import { registerPreviewNavigation } from "./preview-nav-bridge";
 import { keyboardClearance, routeSummary, suggestionViewport, summaryFit } from "./google-nav-chrome";
 import { lookupDestinations } from "./google-nav-search";
 import { autocompletePlaces, placeDetailsLocation, PLACES_DEBOUNCE_MS, placesLanguage, reduceSearchSchedule } from "./google-places";
@@ -143,6 +146,7 @@ function GoogleNavBody({
   const [query, setQuery] = useState("");
   const [routed, setRouted] = useState(false);
   const [guiding, setGuiding] = useState(false);
+  const [sessionReady, setSessionReady] = useState(false);
   useEffect(() => {
     const link = diagnosticBridge?.current;
     if (!link) return;
@@ -179,6 +183,32 @@ function GoogleNavBody({
     alive.current = true;
     return () => { alive.current = false; };
   }, []);
+
+  useEffect(() => {
+    if (diagnostic || applicationId !== STORE_PREVIEW_BUNDLE) return undefined;
+    registerPreviewNavigation({
+      getController: () => controllerRef.current,
+      markReady: () => {
+        ready.current = true;
+        setSessionReady(true);
+      },
+      setGuiding: (value) => {
+        guidingRef.current = !!value;
+        setGuiding(!!value);
+      },
+      requestVoice: (mode, reason) => requestVoiceGuidance(controllerRef.current, mode, reason),
+      stopGuidance: async () => {
+        guidingRef.current = false;
+        setGuiding(false);
+        ready.current = false;
+        setSessionReady(false);
+        try { await controllerRef.current?.stopGuidance?.(); } catch {}
+        try { await controllerRef.current?.clearDestinations?.(); } catch {}
+        try { await requestVoiceGuidance(controllerRef.current, AudioGuidance.SILENT, "end"); } catch {}
+      },
+    });
+    return () => registerPreviewNavigation(null);
+  }, [diagnostic]);
 
   useEffect(() => {
     let live = true;
@@ -267,7 +297,7 @@ function GoogleNavBody({
   }, [setOnRemainingTimeOrDistanceChanged, setOnReroutingRequestedByOffRoute]);
 
   useEffect(() => {
-    if (!ready.current) return undefined;
+    if (!sessionReady && !ready.current) return undefined;
     // Google turn prompts follow the iPhone language. SDK 10.13.0 exposes no language setter.
     return subscribeCameraSpeech(cameraSpeaking => {
       cameraSpeakingRef.current = cameraSpeaking;
@@ -277,17 +307,17 @@ function GoogleNavBody({
       traceNavVoice("warning.speech", { speaking: cameraSpeaking, guiding: guidingRef.current, voiceEnabled });
       requestVoiceGuidance(controllerRef.current, mode, "warning");
     });
-  }, [guiding, voiceEnabled]);
+  }, [guiding, voiceEnabled, sessionReady]);
 
   useEffect(() => {
-    if (!ready.current) return;
+    if (!sessionReady && !ready.current) return;
     // A warning must leave guidance silent. Setting the same VOICE value again
     // does not restart the Navigation SDK after the clip took the audio session.
     const mode = googleAudioMode({ cameraSpeaking: cameraSpeakingRef.current, guiding, voiceEnabled }) === "alerts-and-guidance"
       ? AudioGuidance.VOICE_ALERTS_AND_GUIDANCE
       : AudioGuidance.SILENT;
     requestVoiceGuidance(controller, mode, "guiding");
-  }, [controller, guiding, voiceEnabled]);
+  }, [controller, guiding, voiceEnabled, sessionReady]);
 
   useEffect(() => {
     if (!diagnostic || autoStarted.current) return undefined;

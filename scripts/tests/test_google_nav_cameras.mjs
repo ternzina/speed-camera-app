@@ -54,10 +54,10 @@ test("navigation chrome changes with the route and does not duplicate the maneuv
 
 test("warnings stay on the phone GPS feed and ignore the Google route line", () => {
   const app = read("App.js");
-  const aheadStart = app.indexOf("function findNearestAhead");
-  const ahead = app.slice(aheadStart, app.indexOf("return best;", aheadStart));
-  assert.match(ahead, /angleDiff\(movementHeading,Number\(cam\.direction\)\)>60/);
-  assert.match(ahead, /FORWARD_ANGLE_DEGREES/);
+  const ahead = read("camera-fix.js");
+  assert.match(ahead, /angleDiff\(movementHeading, Number\(cam\.direction\)\) > 60/);
+  assert.match(app, /nearestAhead\(visibleCameras\(\), latitude, longitude, movementHeading, maxDistance, FORWARD_ANGLE_DEGREES\)/);
+  assert.match(app, /source: "gps"/);
   assert.doesNotMatch(ahead, /polyline|narrowCamerasToRoute/);
   const speech = app.slice(app.indexOf("function speakWarning"), app.indexOf("async function startTracking"));
   assert.match(speech, /last\.distance - cam\.distance < 250/);
