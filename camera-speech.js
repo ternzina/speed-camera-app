@@ -2,7 +2,7 @@ import * as Engine from 'expo-speech';
 import { Platform } from 'react-native';
 import { createSpeechCoordinator } from './camera-speech-coordinator';
 import { cameraSpeechOptions } from './camera-speech-voice';
-import { playClipPlan, stopUkrainianClips } from './uk-voice-player';
+import { clipPlanMissing, playClipPlan, stopUkrainianClips } from './uk-voice-player';
 import { ukrainianPlanFromPhrase } from './uk-voice-clips';
 import { traceNavVoice } from './nav-voice-trace';
 const coordinator = createSpeechCoordinator(Engine);
@@ -90,26 +90,33 @@ export function queueUkrainianClip(plan) {
 function clipPlanFor(text, locale, plan) {
   const queued = queuedPlan;
   queuedPlan = undefined;
-  if (!ukrainianLocale(locale)) return undefined;
+  // An explicit Ukraine-camera plan plays in every interface language.
+  // Phrase parsing stays Ukrainian-only, so another country's sentence
+  // is never turned into a Yevheniia clip.
   if (plan !== undefined) return plan;
   if (queued !== undefined) return queued;
+  if (!ukrainianLocale(locale)) return undefined;
   return ukrainianPlanFromPhrase(text) || undefined;
 }
 
-// Clips first. If a file is missing the player skips it; if none play, the
-// installed uk-UA voice speaks the same line. A stale ticket never starts.
+// Clips first. A missing file or a player error leaves the warning to system
+// speech in the locale the caller asked for. A stale ticket never starts.
 async function playUkrainianClips(text, locale, plan, wait) {
   traceNavVoice("warning.begin", { kind: "clips", steps: Array.isArray(plan) ? plan.length : 0 });
   const session = coordinator.beginClip();
   try {
-    let result = { played: 0, stopped: false };
-    try {
-      result = await playClipPlan(plan, session.current);
-    } catch {
-      result = { played: 0, stopped: !session.current() };
+    let result = { played: 0, stopped: false, failed: false };
+    if (clipPlanMissing(plan)) {
+      result = { played: 0, stopped: false, failed: true };
+    } else {
+      try {
+        result = await playClipPlan(plan, session.current);
+      } catch {
+        result = { played: 0, stopped: !session.current(), failed: true };
+      }
     }
     if (!session.current() || result.stopped) return "stopped";
-    if (result.played > 0) return "done";
+    if (result.played > 0 && !result.failed) return "done";
     if (!text) return "silent";
     const options = await resolveCameraSpeechOptions(locale);
     if (!session.current()) return "stopped";
@@ -126,14 +133,20 @@ async function playUkrainianClips(text, locale, plan, wait) {
   }
 }
 
-// Ukrainian warnings play the bundled Yevheniia clips. With no installed
-// uk-UA voice and no clip, stay silent instead of a Russian or English voice.
-export async function speakCameraAlert(text, locale, plan) {
+// A queued or passed clip plan plays for any interface language. Without one,
+// only a Ukrainian sentence is matched to clips. Ukrainian system speech still
+// refuses a Russian or English voice when the clips cannot play.
+function beginCameraAlert(text, locale, plan) {
   const clips = clipPlanFor(text, locale, plan);
-  if (ukrainianLocale(locale) && clips !== undefined) {
-    if (!clips) return "silent";
-    return playUkrainianClips(text, locale, clips, false);
-  }
+  if (clips) return { clips };
+  if (clips === null && ukrainianLocale(locale)) return { silent: true };
+  return {};
+}
+
+export async function speakCameraAlert(text, locale, plan) {
+  const alert = beginCameraAlert(text, locale, plan);
+  if (alert.silent) return "silent";
+  if (alert.clips) return playUkrainianClips(text, locale, alert.clips, false);
   const options = await resolveCameraSpeechOptions(locale);
   if (options.skip) return options.reason;
   traceNavVoice("warning.begin", { kind: "speech" });
@@ -143,11 +156,9 @@ export async function speakCameraAlert(text, locale, plan) {
 }
 
 export async function speakCameraAlertAndWait(text, locale, plan) {
-  const clips = clipPlanFor(text, locale, plan);
-  if (ukrainianLocale(locale) && clips !== undefined) {
-    if (!clips) return "silent";
-    return playUkrainianClips(text, locale, clips, true);
-  }
+  const alert = beginCameraAlert(text, locale, plan);
+  if (alert.silent) return "silent";
+  if (alert.clips) return playUkrainianClips(text, locale, alert.clips, true);
   const options = await resolveCameraSpeechOptions(locale);
   if (options.skip) return options.reason;
   return speakAndWait(text, speechRequest(options));

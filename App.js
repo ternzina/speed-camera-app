@@ -495,9 +495,10 @@ async function processBackgroundLocation({ data: taskData, error }) {
       } else {
         await saveSpeechStatus("requested");
         if (isGoogleNavTestApp()) noteNavtestCameraSpeech(cam);
-        const plan = bgSettings.language === "uk"
+        const ukraineCamera = session.country === "UA";
+        const plan = ukraineCamera || bgSettings.language === "uk"
           ? ukrainianClipPlan({
-              kind: session.country === "UA" ? "ua-camera" : "pl-camera",
+              kind: ukraineCamera ? "ua-camera" : "pl-camera",
               distance: cam.distance,
               limit: cam.speed_limit,
               over: message.over,
@@ -1023,9 +1024,9 @@ export default function App() {
     if (decision.voice) {
       const message = cameraAlertCopy(settings.language, cam, currentSpeedKmh, currentSpeedAvailable);
       if (isGoogleNavTestApp()) noteNavtestCameraSpeech(cam);
-      const plan = settings.language === "uk"
-        ? ukrainianClipPlan({ kind: "ua-camera", distance: cam.distance, limit: cam.speed_limit, over: message.over })
-        : undefined;
+      // Ukraine cameras use the Yevheniia recordings in every interface language.
+      // message.locale stays the interface language for the system-speech reserve.
+      const plan = ukrainianClipPlan({ kind: "ua-camera", distance: cam.distance, limit: cam.speed_limit, over: message.over });
       if (plan) Speech.queueUkrainianClip(plan);
       void Speech.speakCameraAlert(message.speech, message.locale);
     }

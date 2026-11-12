@@ -70,11 +70,17 @@ function watch(player, current, leadSeconds) {
   });
 }
 
+export function clipPlanMissing(plan) {
+  const steps = Array.isArray(plan?.steps) ? plan.steps : [];
+  if (!steps.length) return true;
+  return steps.some((step) => !step?.id || ukVoiceSources[step.id] == null);
+}
+
 export async function playClipPlan(plan, current) {
   const steps = audibleSteps(plan, Object.keys(ukVoiceSources));
   if (!steps.length || !current()) {
     traceNavVoice("clip.skip", { steps: steps.length, current: current() });
-    return { played: 0, stopped: !current() };
+    return { played: 0, stopped: !current(), failed: false };
   }
   let configured = false;
   try {
@@ -88,14 +94,14 @@ export async function playClipPlan(plan, current) {
   let carry = null;
   try {
     for (let index = 0; index < steps.length; index += 1) {
-      if (!current()) return { played, stopped: true };
+      if (!current()) return { played, stopped: true, failed: false };
       const step = steps[index];
       const source = ukVoiceSources[step.id];
-      if (source == null) continue;
+      if (source == null) return { played, stopped: false, failed: true };
       if (step.join === "pause") {
         release(carry);
         carry = null;
-        if (!await delay(CLIP_SENTENCE_PAUSE_MS, current)) return { played, stopped: true };
+        if (!await delay(CLIP_SENTENCE_PAUSE_MS, current)) return { played, stopped: true, failed: false };
       } else if (step.join !== "crossfade") {
         release(carry);
         carry = null;
@@ -104,7 +110,8 @@ export async function playClipPlan(plan, current) {
       try {
         player = openPlayer(source);
       } catch {
-        continue;
+        release(carry);
+        return { played, stopped: false, failed: true };
       }
       played += 1;
       const next = steps[index + 1];
@@ -113,7 +120,7 @@ export async function playClipPlan(plan, current) {
       if (mark === "stopped" || !current()) {
         release(player);
         release(carry);
-        return { played, stopped: true };
+        return { played, stopped: true, failed: false };
       }
       if (cross && mark === "near") {
         release(carry);
@@ -124,7 +131,7 @@ export async function playClipPlan(plan, current) {
         carry = null;
       }
     }
-    return { played, stopped: !current() };
+    return { played, stopped: !current(), failed: false };
   } finally {
     release(carry);
     if (configured) {
