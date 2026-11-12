@@ -16,6 +16,20 @@ function wait(ms, cancelled) {
   });
 }
 
+function withTimeout(promise, ms, code) {
+  return new Promise((resolve, reject) => {
+    const timer = setTimeout(() => {
+      const error = new Error(code);
+      error.code = code;
+      reject(error);
+    }, ms);
+    Promise.resolve(promise).then(
+      value => { clearTimeout(timer); resolve(value); },
+      error => { clearTimeout(timer); reject(error); },
+    );
+  });
+}
+
 async function probe(label) {
   const read = NativeModules.CamAlertVoiceDiag?.audioProbe;
   if (typeof read !== "function") {
@@ -46,17 +60,17 @@ async function routeFromSimulatedOrigin(controller, simulator, cancelled) {
   await Promise.resolve(simulator.simulateLocation(ORIGIN));
   traceNavVoice("auto.origin", { ok: true });
   if (!await wait(2000, cancelled)) return null;
-  let status = await controller.setDestination(
+  let status = await withTimeout(controller.setDestination(
     { title: "TEST", position: DESTINATION },
     { routingOptions: { travelMode: TravelMode.DRIVING } },
-  );
+  ), 25000, "route-timeout");
   if (status === RouteStatus.LOCATION_UNKNOWN || status === RouteStatus.LOCATION_DISABLED) {
     await Promise.resolve(simulator.simulateLocation(ORIGIN));
     if (!await wait(3000, cancelled)) return null;
-    status = await controller.setDestination(
+    status = await withTimeout(controller.setDestination(
       { title: "TEST", position: DESTINATION },
       { routingOptions: { travelMode: TravelMode.DRIVING } },
-    );
+    ), 25000, "route-timeout");
   }
   return status;
 }
@@ -74,7 +88,7 @@ export async function runVoiceDiagAuto({
   });
   try {
     traceNavVoice("auto.begin", { test: true });
-    await ensureSession();
+    await withTimeout(ensureSession(), 20000, "session-timeout");
     if (cancelled()) return;
     const controller = controllerRef.current;
     const simulator = controller?.simulator;
@@ -89,7 +103,7 @@ export async function runVoiceDiagAuto({
     await requestVoice(4, "google-only");
     traceNavVoice("check.google-only", { playClip: false, auto: true });
     try {
-      await controller.startGuidance();
+      await withTimeout(controller.startGuidance(), 15000, "guidance-timeout");
       markGuiding(true);
       traceNavVoice("auto.guidance", { started: true });
     } catch (error) {

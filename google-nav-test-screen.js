@@ -301,7 +301,25 @@ function GoogleNavBody({
         guidingRef.current = value;
         setGuiding(value);
       },
-      ensureSession,
+      ensureSession: async () => {
+        if (ready.current) return;
+        const foreground = () => alive.current && AppState.currentState === "active";
+        const accepted = await controllerRef.current.areTermsAccepted();
+        traceNavVoice("auto.terms", { accepted: accepted === true });
+        if (accepted !== true) {
+          const error = new Error("terms");
+          error.code = "terms";
+          throw error;
+        }
+        const status = await withNavigationWindow(() => controllerRef.current.init(), foreground);
+        if (status !== NavigationSessionStatus.OK) {
+          const error = new Error("session");
+          error.code = String(status || "session");
+          throw error;
+        }
+        requestVoiceGuidance(controllerRef.current, AudioGuidance.SILENT, "session");
+        ready.current = true;
+      },
       cancelled: () => stop || !alive.current,
     });
     return () => { stop = true; };
