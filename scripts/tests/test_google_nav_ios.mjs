@@ -19,7 +19,9 @@ test("the store app and navtest both mount the Google map", () => {
   assert.doesNotMatch(gate, /voicediag/);
   const check = read("preview-install-check.js");
   assert.match(check, /STORE_PREVIEW_BUNDLE/);
-  assert.doesNotMatch(check, /speakCameraAlert|setDestination|watchPositionAsync/);
+  assert.match(check, /queueUkrainianClip\(plan\)/);
+  assert.match(check, /speakCameraAlert\(message\.speech, message\.locale\)/);
+  assert.doesNotMatch(check, /createAudioPlayer|setDestination|watchPositionAsync/);
   assert.match(app, /runPreviewInstallCheck\(/);
   assert.match(app, /usesInAppGoogleNav\(\) && \(tab === "drive" \|\| iosRouteOpen\)/);
   assert.match(app, /tab === "drive" && !active && !usesInAppGoogleNav\(\)/);

@@ -7,8 +7,12 @@ import { cameraPoints, countryFeed } from "./camera-data";
 import { STORE_PREVIEW_BUNDLE } from "./google-nav-gate";
 import { ukrainianClipPlan } from "./uk-voice-clips";
 import { ukVoiceSources } from "./uk-voice-assets";
+import { cameraAlertCopy } from "./camera-alert-copy";
+import { queueUkrainianClip, speakCameraAlert } from "./camera-speech";
+import "./voice-diag-log";
 
 const SETTINGS_KEY = "camera_settings_v060";
+const PLAYED_KEY = "preview_voice_played_v61";
 const FORWARD_ANGLE_DEGREES = 45;
 
 function note(line) {
@@ -97,8 +101,9 @@ function simulatedApproach(points) {
   return null;
 }
 
-// Runs only in the separate preview install. It does not start a trip, play
-// audio, write camera settings, or read a route.
+// Runs only in the separate preview install. It does not start a trip, write
+// camera settings, or read a route. One launch speaks through the normal
+// camera-warning player. The journal does not claim the sound was heard.
 export async function runPreviewInstallCheck() {
   if (applicationId !== STORE_PREVIEW_BUNDLE) return;
   try {
@@ -120,9 +125,26 @@ export async function runPreviewInstallCheck() {
       note("CAMALERT_PREVIEW approach=none audioPlayed=false");
       return;
     }
-    note(`CAMALERT_PREVIEW approach distance=${approach.distance} limit=${approach.limit} route=none audioPlayed=false`);
+    note(`CAMALERT_PREVIEW approach distance=${approach.distance} limit=${approach.limit} route=none`);
     note(`CAMALERT_PREVIEW clips=${approach.clips.join(",")} missing=${approach.missing.length}`);
     note("CAMALERT_PREVIEW below8=no-search");
+    const already = await AsyncStorage.getItem(PLAYED_KEY);
+    if (already || approach.missing.length) {
+      note(`CAMALERT_PREVIEW playback=skipped reason=${already ? "already" : "missing"}`);
+      return;
+    }
+    const message = cameraAlertCopy("ru", { distance: approach.distance, speed_limit: approach.limit }, 40, true);
+    const plan = ukrainianClipPlan({
+      kind: "ua-camera",
+      distance: approach.distance,
+      limit: approach.limit,
+      over: message.over,
+    });
+    queueUkrainianClip(plan);
+    note("CAMALERT_PREVIEW playback=standard-player heard=unmeasured");
+    const outcome = await speakCameraAlert(message.speech, message.locale);
+    if (outcome === "done") await AsyncStorage.setItem(PLAYED_KEY, "1");
+    note(`CAMALERT_PREVIEW playbackOutcome=${outcome} heard=unmeasured`);
   } catch {
     note("CAMALERT_PREVIEW check=failed audioPlayed=false");
   }
