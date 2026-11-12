@@ -16,7 +16,7 @@ test("the store app and navtest both mount the Google map", () => {
   assert.match(gate, /applicationId === STORE_BUNDLE/);
   assert.match(gate, /applicationId === GOOGLE_NAV_TEST_BUNDLE/);
   assert.match(gate, /applicationId === STORE_PREVIEW_BUNDLE/);
-  assert.doesNotMatch(gate, /voicediag/);
+  assert.match(gate, /applicationId === VOICE_DIAG_BUNDLE/);
   const check = read("preview-install-check.js");
   assert.match(check, /STORE_PREVIEW_BUNDLE/);
   assert.match(check, /playback=integration/);

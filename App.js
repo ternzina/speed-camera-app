@@ -634,6 +634,7 @@ export default function App() {
   const [navtestHandoff, setNavtestHandoff] = useState(null);
   const [navtestNearbyKind, setNavtestNearbyKind] = useState(null);
   const navtestRouteActiveRef = useRef(false);
+  const voiceDiagTripBoot = useRef(false);
   const [iosRouteOpen, setIosRouteOpen] = useState(false);
   const [routeGuidance, setRouteGuidance] = useState(null);
   const [maneuver, setManeuver] = useState(null);
@@ -780,8 +781,8 @@ export default function App() {
 
   useEffect(() => {
     AsyncStorage.getItem(ONBOARDING_KEY)
-      .then(value => setOnboardingState(value === "done" ? "done" : "new"))
-      .catch(() => setOnboardingState("new"));
+      .then(value => setOnboardingState(value === "done" || isVoiceDiagApp() ? "done" : "new"))
+      .catch(() => setOnboardingState(isVoiceDiagApp() ? "done" : "new"));
   }, []);
 
   useEffect(() => {
@@ -1924,35 +1925,13 @@ export default function App() {
     );
   }
 
-  if (isVoiceDiagApp()) {
-    return (
-      <View style={{ flex: 1, backgroundColor: "#0B1829" }}>
-        <GoogleNavTestScreen
-          diagnostic
-          language={settings.language || "ru"}
-          night={isNight}
-          coords={coords}
-          camera={null}
-          cameras={data}
-          onNavigationFix={handleUkraineFix}
-          onResetRepeat={() => { lastSpoken.current = { id: null, distance: Infinity }; }}
-          cameraType=""
-          voiceEnabled={settings.voice !== false}
-          onToggleVoice={() => setSettings(current => ({ ...current, voice: current.voice === false }))}
-          picking={false}
-          tripActive={active}
-          onStartTrip={async () => {
-            if (foregroundTripRunning || sub.current) return true;
-            return !!(await startTracking());
-          }}
-          onStopTrip={stopTracking}
-          onClosePick={() => {}}
-          handoff={null}
-          onRouteActive={() => {}}
-        />
-      </View>
-    );
-  }
+  useEffect(() => {
+    if (!isVoiceDiagApp() || onboardingState !== "done" || voiceDiagTripBoot.current) return undefined;
+    voiceDiagTripBoot.current = true;
+    if (foregroundTripRunning || sub.current) return undefined;
+    void startTracking();
+    return undefined;
+  }, [onboardingState]);
 
   if (onboardingState !== "done") {
     if (onboardingState === "loading") {

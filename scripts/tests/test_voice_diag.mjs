@@ -38,16 +38,18 @@ test("simulation waits for guidance and the three sound checks stay separate", (
   }
 });
 
-test("the diagnostic screen is gated and does not join the store navigator", () => {
+test("the trip install uses the navigator and does not show the diagnostic panel", () => {
   const screen = read("google-nav-test-screen.js");
   const app = read("App.js");
-  const gate = read("voice-diag-gate.js");
-  assert.match(gate, /com\.21wek\.camera\.voicediag/);
-  assert.doesNotMatch(read("google-nav-gate.js"), /voicediag/);
+  const gate = read("google-nav-gate.js");
+  assert.match(read("voice-diag-gate.js"), /com\.21wek\.camera\.voicediag/);
+  assert.match(gate, /VOICE_DIAG_BUNDLE/);
   assert.match(screen, /if \(!props\.diagnostic\) return body/);
   assert.match(screen, /<VoiceDiagPanel/);
   assert.doesNotMatch(screen, /simulateLocations|GMSLocationSimulator/);
-  assert.match(app, /if \(isVoiceDiagApp\(\)\)/);
+  assert.match(app, /isVoiceDiagApp\(\)/);
+  assert.doesNotMatch(app, /onNavigationFix=|<GoogleNavTestScreen[\s\S]{0,500}\bdiagnostic\b/);
+  assert.match(app, /void startTracking\(\)/);
   const store = app.slice(app.indexOf('if (usesInAppGoogleNav() && (tab === "drive"'));
   assert.doesNotMatch(store.slice(0, 900), /\bdiagnostic\b/);
   for (const name of ["App.js", "google-nav-test-screen.js", "voice-diag-panel.js", "voice-diag-log.js", "voice-diag-gate.js"]) {
@@ -75,7 +77,8 @@ test("the automatic run builds a route before guidance and does not log coordina
   assert.match(auto, /setTurnByTurnLoggingEnabled/);
   assert.match(screen, /navigationSample\(/);
   assert.match(screen, /onNavigationFixRef/);
-  assert.match(read("App.js"), /onNavigationFix=\{handleUkraineFix\}/);
+  assert.match(read("App.js"), /void handleUkraineFix\(\{[\s\S]*source: "gps"/);
+  assert.doesNotMatch(read("App.js"), /onNavigationFix=/);
   assert.doesNotMatch(auto, /traceNavVoice\([\s\S]{0,120}latitude/);
   let cursor = 0;
   for (const marker of markers) {
