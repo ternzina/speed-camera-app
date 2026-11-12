@@ -154,7 +154,9 @@ export function buildPreviewCases(cameras) {
 export function diagnosticApproach(cameras) {
   const plan = buildPreviewCases(cameras)?.primary;
   if (!plan?.at500 || !plan.camera) return null;
-  const beyond = movePoint(Number(plan.camera.latitude), Number(plan.camera.longitude), plan.bearing, 350);
+  // The destination stays past the camera so guidance still has a later
+  // instruction after the warning. The warning itself uses the camera ahead.
+  const beyond = movePoint(Number(plan.camera.latitude), Number(plan.camera.longitude), plan.bearing, 2500);
   const distance = Math.round(distanceMeters(
     plan.at500.latitude,
     plan.at500.longitude,

@@ -393,8 +393,15 @@ function GoogleNavBody({
           alive: alive.current === true,
         });
         const foreground = () => alive.current && AppState.currentState === "active";
-        const accepted = await controllerRef.current.areTermsAccepted();
+        let accepted = await controllerRef.current.areTermsAccepted();
         traceNavVoice("auto.terms", { accepted: accepted === true });
+        if (accepted !== true) {
+          accepted = await withNavigationWindow(
+            () => controllerRef.current.showTermsAndConditionsDialog(),
+            foreground,
+          );
+          traceNavVoice("auto.terms", { accepted: accepted === true, dialog: true });
+        }
         if (accepted !== true) {
           const error = new Error("terms");
           error.code = "terms";

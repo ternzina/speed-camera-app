@@ -15,7 +15,7 @@ let approachTask = null;
 let finishedApproaches = 0;
 const SAMPLE_MS = 5000;
 const BEFORE_LIMIT_MS = 45000;
-const AFTER_LIMIT_MS = 25000;
+const AFTER_LIMIT_MS = 75000;
 const TURN_GOAL = 3;
 const NAV_STATE_NAME = ["UNKNOWN", "ENROUTE", "REROUTING", "STOPPED"];
 
@@ -193,10 +193,10 @@ async function requestRoute(controller, cancelled, approach) {
   return ask(2);
 }
 
-async function rollApproach(controller, approach, onNavigationFix, cancelled) {
-  const place = controller?.simulator?.simulateLocation;
-  if (!approach?.start || typeof place !== "function") {
-    traceNavVoice("camera.roll", { started: false });
+async function rollApproach(controller, approach, onNavigationFix, cancelled, keepRoute) {
+  const place = keepRoute ? null : controller?.simulator?.simulateLocation;
+  if (!approach?.start || (!keepRoute && typeof place !== "function")) {
+    traceNavVoice("camera.roll", { started: false, keepRoute: keepRoute === true });
     return;
   }
   let lat = approach.start.lat;
@@ -208,11 +208,13 @@ async function rollApproach(controller, approach, onNavigationFix, cancelled) {
     lat = next.lat;
     lng = next.lon;
     const now = Date.now();
-    try {
-      await Promise.resolve(place.call(controller.simulator, { lat, lng }));
-    } catch {
-      traceNavVoice("camera.roll", { started: false, step });
-      return;
+    if (typeof place === "function") {
+      try {
+        await Promise.resolve(place.call(controller.simulator, { lat, lng }));
+      } catch {
+        traceNavVoice("camera.roll", { started: false, step });
+        return;
+      }
     }
     const sample = navigationSample({
       lat,
@@ -225,7 +227,7 @@ async function rollApproach(controller, approach, onNavigationFix, cancelled) {
     if (sample?.fix) await Promise.resolve(onNavigationFix?.(sample.fix));
     if (!await wait(1000, cancelled)) return;
   }
-  traceNavVoice("camera.roll", { started: true, steps: 6, speedKmh: 58 });
+  traceNavVoice("camera.roll", { started: true, steps: 6, speedKmh: 58, keepRoute: keepRoute === true });
 }
 
 export async function runVoiceDiagAuto({
@@ -371,7 +373,7 @@ export async function runVoiceDiagAuto({
     } catch (error) {
       traceNavVoice("auto.legs", { error: error?.code || "segments-failed" });
     }
-    const before = await watch(8000, 1);
+    const before = await watch(20000, 1);
     if (!cancelled()) {
       await autoApproach({
         controller,
@@ -450,7 +452,7 @@ async function waitForScreen(cancelled) {
   return false;
 }
 
-async function approachAfterVoice({ controller, approach, onNavigationFix, onResetRepeat, cancelled, reason, turnAt }) {
+async function approachAfterVoice({ controller, approach, onNavigationFix, onResetRepeat, cancelled, reason, turnAt, keepRoute }) {
   const screen = await waitForScreen(cancelled);
   const started = Date.now();
   while (!(turnAt?.() > 0) && Date.now() - started < 15000) {
@@ -471,7 +473,7 @@ async function approachAfterVoice({ controller, approach, onNavigationFix, onRes
   }
   if (remain > 0 && !await wait(remain, cancelled)) return;
   onResetRepeat?.();
-  await rollApproach(controller, approach, onNavigationFix, cancelled);
+  await rollApproach(controller, approach, onNavigationFix, cancelled, keepRoute === true);
 }
 
 export function runCameraApproach(args) {
@@ -486,5 +488,7 @@ export function runCameraApproach(args) {
 
 function autoApproach(args) {
   if (finishedApproaches > 0) return Promise.resolve();
-  return runCameraApproach(args);
+  // The route simulation keeps moving. The warning uses the same handler
+  // without a one-shot location that would stop Google's guidance.
+  return runCameraApproach({ ...args, keepRoute: true });
 }
