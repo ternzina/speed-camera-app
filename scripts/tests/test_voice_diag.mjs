@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import test from "node:test";
 import { ukrainianClipPlan } from "../../uk-voice-clips.js";
-import { approachDelayMs, AUTO_ORDER, cameraVoiceCheckPlan, failureCode, googleOnlyRequest, restoreRequest, routeSimulationRequest, yevheniiaOnlyPlan } from "../../voice-diag-checks.js";
+import { approachDelayMs, AUTO_ORDER, cameraVoiceCheckPlan, failureCode, googleOnlyRequest, phoneGpsEnabled, restoreRequest, routeSimulationRequest, yevheniiaOnlyPlan } from "../../voice-diag-checks.js";
 import { setNavVoiceSink, traceNavVoice } from "../../nav-voice-trace.js";
 
 const read = (name) => readFileSync(new URL(`../../${name}`, import.meta.url), "utf8");
@@ -48,7 +48,12 @@ test("the trip install uses the navigator and does not show the diagnostic panel
   assert.match(screen, /<VoiceDiagPanel/);
   assert.doesNotMatch(screen, /simulateLocations|GMSLocationSimulator/);
   assert.match(app, /isVoiceDiagApp\(\)/);
-  assert.doesNotMatch(app, /onNavigationFix=|<GoogleNavTestScreen[\s\S]{0,500}\bdiagnostic\b/);
+  assert.doesNotMatch(app, /<GoogleNavTestScreen[\s\S]{0,800}\bdiagnostic\b/);
+  assert.match(app, /armedTrip=\{isVoiceDiagApp\(\) && diagTrip === true\}/);
+  assert.match(app, /phoneGpsEnabled\(diagTrip\)/);
+  assert.equal(phoneGpsEnabled(false), true);
+  assert.equal(phoneGpsEnabled(true), false);
+  assert.equal(phoneGpsEnabled(null), false);
   assert.match(app, /void startTracking\(\)/);
   const store = app.slice(app.indexOf('if (usesInAppGoogleNav() && (tab === "drive"'));
   assert.doesNotMatch(store.slice(0, 900), /\bdiagnostic\b/);
@@ -78,7 +83,7 @@ test("the automatic run builds a route before guidance and does not log coordina
   assert.match(screen, /navigationSample\(/);
   assert.match(screen, /onNavigationFixRef/);
   assert.match(read("App.js"), /void handleUkraineFix\(\{[\s\S]*source: "gps"/);
-  assert.doesNotMatch(read("App.js"), /onNavigationFix=/);
+  assert.match(read("App.js"), /onNavigationFix=\{isVoiceDiagApp\(\) && diagTrip === true \? handleUkraineFix : undefined\}/);
   assert.doesNotMatch(auto, /traceNavVoice\([\s\S]{0,120}latitude/);
   let cursor = 0;
   for (const marker of markers) {
@@ -86,7 +91,9 @@ test("the automatic run builds a route before guidance and does not log coordina
     assert.ok(at > cursor, marker);
     cursor = at;
   }
-  assert.match(screen, /if \(!diagnostic \|\| autoStarted\.current\) return undefined/);
+  assert.match(screen, /if \(!simulateTrip \|\| autoStarted\.current\) return undefined/);
+  assert.match(screen, /const simulateTrip = diagnostic === true \|\| armedTrip === true/);
+  assert.match(screen, /if \(!props\.diagnostic\) return body/);
   assert.doesNotMatch(screen, /simulateLocations/);
   assert.equal(failureCode({ message: "50.4501,30.5234" }), "failed");
   assert.equal(failureCode({ code: "LOCATION_UNKNOWN" }), "LOCATION_UNKNOWN");

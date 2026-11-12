@@ -38,4 +38,9 @@ RCT_EXPORT_METHOD(readiness:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRe
   resolve([CamAlertVoiceDiagLog readiness]);
 }
 
+RCT_EXPORT_METHOD(tripArmed:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject)
+{
+  resolve(@([CamAlertVoiceDiagLog tripArmed]));
+}
+
 @end

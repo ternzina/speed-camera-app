@@ -134,7 +134,7 @@ export default function GoogleNavTestScreen(props) {
 function GoogleNavBody({
   language, night, coords, camera, cameraType, voiceEnabled, onToggleVoice,
   picking, tripActive, onStartTrip, onStopTrip, onClosePick, handoff, onRouteActive,
-  diagnostic = false, diagnosticBridge = null, cameras = null, onNavigationFix = null, onResetRepeat = null,
+  diagnostic = false, armedTrip = false, diagnosticBridge = null, cameras = null, onNavigationFix = null, onResetRepeat = null,
 }) {
   const copy = COPY[language] || COPY.ru;
   const places = savedPlaceCopy(language);
@@ -337,6 +337,7 @@ function GoogleNavBody({
     return pending;
   };
   const approachRef = useRef(undefined);
+  const simulateTrip = diagnostic === true || armedTrip === true;
   if (diagnosticBridge?.current) {
     diagnosticBridge.current.startApproach = () => runCameraApproach({
       controller: controllerRef.current,
@@ -347,11 +348,11 @@ function GoogleNavBody({
       reason: "button",
     });
   }
-  if (diagnostic && approachRef.current === undefined) {
+  if (simulateTrip && approachRef.current === undefined) {
     approachRef.current = diagnosticApproach(cameraPoints(cameras));
   }
   useEffect(() => {
-    if (!diagnostic) return undefined;
+    if (!simulateTrip) return undefined;
     setOnLocationChanged(location => {
       locationSink.current(location);
       const sample = navigationSample(location, previousNav.current);
@@ -364,10 +365,10 @@ function GoogleNavBody({
       }, () => {});
     });
     return () => setOnLocationChanged(null);
-  }, [diagnostic, setOnLocationChanged]);
+  }, [simulateTrip, setOnLocationChanged]);
 
   useEffect(() => {
-    if (!diagnostic || autoStarted.current) return undefined;
+    if (!simulateTrip || autoStarted.current) return undefined;
     autoStarted.current = true;
     let stop = false;
     runVoiceDiagAuto({
@@ -419,7 +420,7 @@ function GoogleNavBody({
       cancelled: () => stop || !alive.current,
     });
     return () => { stop = true; };
-  }, [diagnostic, setOnTurnByTurn]);
+  }, [simulateTrip, setOnTurnByTurn]);
 
   async function ensureSession() {
     if (ready.current) return;

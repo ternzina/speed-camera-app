@@ -42,6 +42,7 @@ import IosRouteScreen from "./ios-route-screen";
 import { applicationId } from "expo-application";
 import { isGoogleNavTestApp, STORE_PREVIEW_BUNDLE, usesInAppGoogleNav } from "./google-nav-gate";
 import { isVoiceDiagApp } from "./voice-diag-gate";
+import { phoneGpsEnabled } from "./voice-diag-checks";
 import { nearestAhead, settleUkraineLast, ukraineFixDecision, warningDistanceForSpeed } from "./camera-fix";
 import { cameraDecisionJournal, speechTrace } from "./nav-sim-camera";
 import { traceNavVoice } from "./nav-voice-trace";
@@ -635,6 +636,7 @@ export default function App() {
   const [navtestNearbyKind, setNavtestNearbyKind] = useState(null);
   const navtestRouteActiveRef = useRef(false);
   const voiceDiagTripBoot = useRef(false);
+  const [diagTrip, setDiagTrip] = useState(null);
   const [iosRouteOpen, setIosRouteOpen] = useState(false);
   const [routeGuidance, setRouteGuidance] = useState(null);
   const [maneuver, setManeuver] = useState(null);
@@ -1926,12 +1928,31 @@ export default function App() {
   }
 
   useEffect(() => {
-    if (!isVoiceDiagApp() || onboardingState !== "done" || voiceDiagTripBoot.current) return undefined;
+    if (!isVoiceDiagApp()) {
+      setDiagTrip(false);
+      return undefined;
+    }
+    const read = NativeModules.CamAlertVoiceDiag?.tripArmed;
+    if (typeof read !== "function") {
+      setDiagTrip(false);
+      return undefined;
+    }
+    let live = true;
+    Promise.resolve(read()).then(value => {
+      if (live) setDiagTrip(value === true);
+    }).catch(() => {
+      if (live) setDiagTrip(false);
+    });
+    return () => { live = false; };
+  }, []);
+
+  useEffect(() => {
+    if (!isVoiceDiagApp() || onboardingState !== "done" || !phoneGpsEnabled(diagTrip) || voiceDiagTripBoot.current) return undefined;
     voiceDiagTripBoot.current = true;
     if (foregroundTripRunning || sub.current) return undefined;
     void startTracking();
     return undefined;
-  }, [onboardingState]);
+  }, [onboardingState, diagTrip]);
 
   if (onboardingState !== "done") {
     if (onboardingState === "loading") {
@@ -1969,6 +1990,10 @@ export default function App() {
           onClosePick={() => setIosRouteOpen(false)}
           handoff={navtestHandoff}
           onRouteActive={activeRoute => { navtestRouteActiveRef.current = !!activeRoute; }}
+          armedTrip={isVoiceDiagApp() && diagTrip === true}
+          cameras={isVoiceDiagApp() && diagTrip === true ? data : undefined}
+          onNavigationFix={isVoiceDiagApp() && diagTrip === true ? handleUkraineFix : undefined}
+          onResetRepeat={isVoiceDiagApp() && diagTrip === true ? () => { lastSpoken.current = { id: null, distance: Infinity }; } : undefined}
         />
         <View style={{ paddingBottom: 28 }}>{renderTabBar()}</View>
         {renderBackgroundGuide()}

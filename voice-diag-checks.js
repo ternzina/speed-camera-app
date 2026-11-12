@@ -40,6 +40,12 @@ export function approachDelayMs({ screen, firstTurnAt, now }) {
   return Math.max(0, GOOGLE_BEFORE_CAMERA_MS - (now - firstTurnAt));
 }
 
+// Real GPS runs only after the launch flag is known and the simulated trip
+// is off. null is still unknown, so the watch stays down.
+export function phoneGpsEnabled(armedTrip) {
+  return armedTrip === false;
+}
+
 export function failureCode(error) {
   const text = String(error?.code || error?.message || "failed");
   if (/-?\d{1,3}\.\d{4,}/.test(text) || /key|token|secret/i.test(text)) return "failed";

@@ -89,6 +89,13 @@ public class CamAlertVoiceDiagLog: NSObject {
     return names.sorted()
   }
 
+  // Armed only for this process, by the launch environment. A later launch
+  // without the variable keeps the phone GPS.
+  @objc public static func tripArmed() -> Bool {
+    guard Bundle.main.bundleIdentifier == "com.21wek.camera.voicediag" else { return false }
+    return ProcessInfo.processInfo.environment["CAMALERT_DIAG_TRIP"] == "1"
+  }
+
   @objc public static func markScreen() {
     screenUp = true
   }
