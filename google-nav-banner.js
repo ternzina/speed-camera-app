@@ -18,6 +18,12 @@ export function googleAudioMode({ cameraSpeaking, guiding, voiceEnabled }) {
   return "alerts-and-guidance";
 }
 
+// The first spoken step is emitted when guidance becomes active. The navigator
+// must already be in this mode; setting it afterwards does not repeat the step.
+export function voiceModeBeforeGuidance({ cameraSpeaking, voiceEnabled }) {
+  return googleAudioMode({ cameraSpeaking, guiding: true, voiceEnabled });
+}
+
 export function googleBackgroundLocationEnabled({ guiding, tripActive } = {}) {
   return !!(guiding && tripActive);
 }

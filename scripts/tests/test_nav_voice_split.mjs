@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import fs from "node:fs";
 import test from "node:test";
-import { googleAudioMode } from "../../google-nav-banner.js";
+import { googleAudioMode, voiceModeBeforeGuidance } from "../../google-nav-banner.js";
 import { nativeVoiceGuidance, voiceGuidanceChange } from "../../nav-voice-trace.js";
 import { audibleSteps } from "../../uk-voice-clips.js";
 
@@ -30,8 +30,19 @@ test("Google voice without a camera assigns AlertsAndGuidance once", () => {
   assert.match(start, /guidanceActive = YES/);
   assert.doesNotMatch(start, /setVoiceGuidance/);
 
+  assert.equal(
+    voiceModeBeforeGuidance({ cameraSpeaking: false, voiceEnabled: true }),
+    "alerts-and-guidance",
+  );
+  assert.equal(
+    voiceModeBeforeGuidance({ cameraSpeaking: true, voiceEnabled: true }),
+    "silent",
+  );
   const screen = read("google-nav-test-screen.js");
-  assert.match(screen, /requestVoiceGuidance\(controllerRef\.current, googleAudioMode\(/);
+  const screenStart = screen.slice(screen.indexOf("function startGuidance()"), screen.indexOf("async function endRoute()"));
+  const voiceAt = screenStart.indexOf('"before-start"');
+  const goAt = screenStart.indexOf("controllerRef.current.startGuidance()");
+  assert.ok(voiceAt > 0 && goAt > voiceAt, "voice mode is set before guidance becomes active");
   assert.match(screen, /requestVoiceGuidance\(controllerRef\.current, AudioGuidance\.SILENT, "session"\)/);
   assert.doesNotMatch(screen, /MIN_MOVING_SPEED/);
   const app = read("App.js");

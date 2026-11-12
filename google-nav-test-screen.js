@@ -7,7 +7,7 @@ import {
   NavigationView, RouteStatus, TaskRemovedBehavior, TravelMode, useNavigation,
 } from "@googlemaps/react-native-navigation-sdk";
 import { subscribeCameraSpeech } from "./camera-speech";
-import { cameraBanner, googleAudioMode, googleBackgroundLocationEnabled, navChrome } from "./google-nav-banner";
+import { cameraBanner, googleAudioMode, googleBackgroundLocationEnabled, navChrome, voiceModeBeforeGuidance } from "./google-nav-banner";
 import { STORE_PREVIEW_BUNDLE } from "./google-nav-gate";
 import { registerPreviewNavigation } from "./preview-nav-bridge";
 import { keyboardClearance, routeSummary, suggestionViewport, summaryFit } from "./google-nav-chrome";
@@ -479,6 +479,15 @@ function GoogleNavBody({
       await ensureSession();
       if (!(await onStartTrip())) return;
       const foreground = () => alive.current && AppState.currentState === "active";
+      const before = voiceModeBeforeGuidance({
+        cameraSpeaking: cameraSpeakingRef.current,
+        voiceEnabled,
+      });
+      await requestVoiceGuidance(
+        controllerRef.current,
+        before === "alerts-and-guidance" ? AudioGuidance.VOICE_ALERTS_AND_GUIDANCE : AudioGuidance.SILENT,
+        "before-start",
+      );
       await withNavigationWindow(() => controllerRef.current.startGuidance(), foreground);
       if (!alive.current) return;
       guidingRef.current = true;
@@ -488,12 +497,8 @@ function GoogleNavBody({
         voiceEnabled,
         cameraSpeaking: cameraSpeakingRef.current,
         appState: AppState.currentState,
+        voiceBeforeStart: before,
       });
-      requestVoiceGuidance(controllerRef.current, googleAudioMode({
-        cameraSpeaking: cameraSpeakingRef.current,
-        guiding: true,
-        voiceEnabled,
-      }) === "alerts-and-guidance" ? AudioGuidance.VOICE_ALERTS_AND_GUIDANCE : AudioGuidance.SILENT, "guidance");
       navView.current?.setNavigationUIEnabled?.(true);
       navView.current?.setFollowingPerspective?.(CameraPerspective.TILTED);
     });

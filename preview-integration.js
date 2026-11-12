@@ -118,6 +118,7 @@ async function tryGuidance(cancelled) {
     return false;
   }
   try {
+    await nav.requestVoice(AudioGuidance.VOICE_ALERTS_AND_GUIDANCE, "before-start");
     await withNavigationWindow(() => controller.startGuidance(), foreground);
     nav.setGuiding(true);
     note("CAMALERT_PREVIEW navGuidance=started source=sdk");
@@ -126,7 +127,6 @@ async function tryGuidance(cancelled) {
     await nav.stopGuidance?.();
     return false;
   }
-  await nav.requestVoice(AudioGuidance.VOICE_ALERTS_AND_GUIDANCE, "guidance");
   await wait(300);
   return true;
 }
