@@ -20,7 +20,7 @@ function portsOf(route) {
   return route.filter(port => typeof port === "string").join(", ");
 }
 
-export function VoiceDiagPanel({ controllerRef, guiding, voiceEnabled, requestVoice }) {
+export function VoiceDiagPanel({ controllerRef, guiding, voiceEnabled, requestVoice, onStartApproach }) {
   const [mode, setMode] = useState("—");
   const [sdk, setSdk] = useState("нет команды");
   const [status, setStatus] = useState(null);
@@ -130,6 +130,11 @@ export function VoiceDiagPanel({ controllerRef, guiding, voiceEnabled, requestVo
     await logOutput("after-check");
   }
 
+  async function onApproach() {
+    traceNavVoice("camera.approach.button", { directClip: false });
+    await onStartApproach?.();
+  }
+
   async function onRestore() {
     const request = restoreRequest();
     traceNavVoice("check.restore", { clip: request.clip });
@@ -166,6 +171,9 @@ export function VoiceDiagPanel({ controllerRef, guiding, voiceEnabled, requestVo
           </Pressable>
           <Pressable accessibilityRole="button" onPress={onCheckCameraVoice} style={styles.button}>
             <Text style={styles.buttonText}>Проверить голос камеры</Text>
+          </Pressable>
+          <Pressable accessibilityRole="button" onPress={onApproach} style={styles.button}>
+            <Text style={styles.buttonText}>Симуляция приближения</Text>
           </Pressable>
           <Pressable accessibilityRole="button" onPress={onYevheniia} style={styles.button}>
             <Text style={styles.buttonText}>Yevheniia</Text>

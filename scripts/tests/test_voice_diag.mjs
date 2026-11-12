@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import test from "node:test";
 import { ukrainianClipPlan } from "../../uk-voice-clips.js";
-import { AUTO_ORDER, cameraVoiceCheckPlan, failureCode, googleOnlyRequest, restoreRequest, routeSimulationRequest, yevheniiaOnlyPlan } from "../../voice-diag-checks.js";
+import { approachDelayMs, AUTO_ORDER, cameraVoiceCheckPlan, failureCode, googleOnlyRequest, restoreRequest, routeSimulationRequest, yevheniiaOnlyPlan } from "../../voice-diag-checks.js";
 import { setNavVoiceSink, traceNavVoice } from "../../nav-voice-trace.js";
 
 const read = (name) => readFileSync(new URL(`../../${name}`, import.meta.url), "utf8");
@@ -20,7 +20,14 @@ test("simulation waits for guidance and the three sound checks stay separate", (
   const panel = read("voice-diag-panel.js");
   assert.match(panel, /Проверить голос камеры/);
   assert.match(panel, /onCheckCameraVoice[\s\S]*speakCameraAlert\(/);
-  assert.doesNotMatch(panel.slice(panel.indexOf("async function onCheckCameraVoice"), panel.indexOf("async function onRestore")), /simulateLocations|requestVoice\(/);
+  assert.doesNotMatch(panel.slice(panel.indexOf("async function onCheckCameraVoice"), panel.indexOf("async function onApproach")), /simulateLocations|requestVoice\(/);
+  const approach = panel.slice(panel.indexOf("async function onApproach"), panel.indexOf("async function onRestore"));
+  assert.match(approach, /onStartApproach/);
+  assert.doesNotMatch(approach, /speakCameraAlert|playClipPlan/);
+  assert.equal(approachDelayMs({ screen: false, firstTurnAt: 1000, now: 9000 }), null);
+  assert.equal(approachDelayMs({ screen: true, firstTurnAt: 0, now: 9000 }), null);
+  assert.equal(approachDelayMs({ screen: true, firstTurnAt: 1000, now: 3000 }), 4000);
+  assert.equal(approachDelayMs({ screen: true, firstTurnAt: 1000, now: 9000 }), 0);
   assert.match(panel, /onSimulate[\s\S]*simulateLocationsAlongExistingRoute/);
   assert.match(panel, /onGoogleOnly[\s\S]*requestVoice\(request\.index/);
   assert.doesNotMatch(panel.slice(panel.indexOf("async function onGoogleOnly"), panel.indexOf("async function onYevheniia")), /playClipPlan/);
@@ -57,7 +64,8 @@ test("the automatic run builds a route before guidance and does not log coordina
     'requestVoice(4, "before-start")',
     "controller.startGuidance()",
     "simulateLocationsAlongExistingRoute",
-    "auto.approach",
+    "camera.audible",
+    "await rollApproach(",
   ];
   assert.equal(markers.length, AUTO_ORDER.length);
   assert.match(auto, /const CAMERA_SIM_SPEED = 1/);

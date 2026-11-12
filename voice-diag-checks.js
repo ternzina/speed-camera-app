@@ -29,7 +29,16 @@ export function restoreRequest() {
   return { silentIndex: 0, voiceIndex: 4, clip: "close" };
 }
 
-export const AUTO_ORDER = ["place", "route", "before-start", "guidance", "simulation", "approach"];
+export const AUTO_ORDER = ["place", "route", "before-start", "guidance", "simulation", "audible", "approach"];
+
+// The camera phrase waits until the window is up and Google has had this long
+// after its first turn. A null delay means the warning must not start yet.
+export const GOOGLE_BEFORE_CAMERA_MS = 6000;
+
+export function approachDelayMs({ screen, firstTurnAt, now }) {
+  if (screen !== true || !(firstTurnAt > 0)) return null;
+  return Math.max(0, GOOGLE_BEFORE_CAMERA_MS - (now - firstTurnAt));
+}
 
 export function failureCode(error) {
   const text = String(error?.code || error?.message || "failed");

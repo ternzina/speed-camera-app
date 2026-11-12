@@ -33,4 +33,9 @@ RCT_EXPORT_METHOD(audioProbe:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseR
   resolve([CamAlertVoiceDiagLog audioProbe]);
 }
 
+RCT_EXPORT_METHOD(readiness:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject)
+{
+  resolve([CamAlertVoiceDiagLog readiness]);
+}
+
 @end

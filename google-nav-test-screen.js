@@ -23,7 +23,7 @@ import { cameraPoints } from "./camera-data";
 import { diagnosticApproach } from "./camera-fix";
 import { navigationSample } from "./nav-sim-camera";
 import { nativeVoiceGuidance, traceNavVoice } from "./nav-voice-trace";
-import { runVoiceDiagAuto } from "./voice-diag-auto";
+import { runCameraApproach, runVoiceDiagAuto } from "./voice-diag-auto";
 import { VoiceDiagPanel } from "./voice-diag-panel";
 import SystemSafeArea from "./system-safe-area";
 
@@ -125,6 +125,7 @@ export default function GoogleNavTestScreen(props) {
         guiding={diagGuiding}
         voiceEnabled={props.voiceEnabled}
         requestVoice={(index, reason) => requestVoiceGuidance(controllerRef.current, index, reason)}
+        onStartApproach={() => diagnosticBridge.current.startApproach?.()}
       />
     </View>
   );
@@ -133,7 +134,7 @@ export default function GoogleNavTestScreen(props) {
 function GoogleNavBody({
   language, night, coords, camera, cameraType, voiceEnabled, onToggleVoice,
   picking, tripActive, onStartTrip, onStopTrip, onClosePick, handoff, onRouteActive,
-  diagnostic = false, diagnosticBridge = null, cameras = null, onNavigationFix = null,
+  diagnostic = false, diagnosticBridge = null, cameras = null, onNavigationFix = null, onResetRepeat = null,
 }) {
   const copy = COPY[language] || COPY.ru;
   const places = savedPlaceCopy(language);
@@ -327,7 +328,25 @@ function GoogleNavBody({
   const onNavigationFixRef = useRef(onNavigationFix);
   onNavigationFixRef.current = onNavigationFix;
   const decisionRef = useRef(null);
+  const deliverFix = fix => {
+    const pending = onNavigationFixRef.current?.(fix);
+    Promise.resolve(pending).then(result => {
+      if (!result || typeof result !== "object") return;
+      if (result.outcome === "spoken" || decisionRef.current?.outcome !== "spoken") decisionRef.current = result;
+    }, () => {});
+    return pending;
+  };
   const approachRef = useRef(undefined);
+  if (diagnosticBridge?.current) {
+    diagnosticBridge.current.startApproach = () => runCameraApproach({
+      controller: controllerRef.current,
+      approach: approachRef.current,
+      onNavigationFix: deliverFix,
+      onResetRepeat,
+      cancelled: () => !alive.current,
+      reason: "button",
+    });
+  }
   if (diagnostic && approachRef.current === undefined) {
     approachRef.current = diagnosticApproach(cameraPoints(cameras));
   }
@@ -358,14 +377,8 @@ function GoogleNavBody({
       observeLocation: listener => { locationSink.current = typeof listener === "function" ? listener : () => {}; },
       decisionRef,
       approach: approachRef.current,
-      onNavigationFix: fix => {
-        const pending = onNavigationFixRef.current?.(fix);
-        Promise.resolve(pending).then(result => {
-          if (!result || typeof result !== "object") return;
-          if (result.outcome === "spoken" || decisionRef.current?.outcome !== "spoken") decisionRef.current = result;
-        }, () => {});
-        return pending;
-      },
+      onNavigationFix: deliverFix,
+      onResetRepeat,
       markGuiding: (value) => {
         guidingRef.current = value;
         setGuiding(value);

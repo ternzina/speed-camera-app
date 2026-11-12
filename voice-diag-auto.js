@@ -4,12 +4,15 @@ import { RouteStatus, TravelMode } from "@googlemaps/react-native-navigation-sdk
 import { movePoint } from "./camera-fix";
 import { navigationSample } from "./nav-sim-camera";
 import { traceNavVoice } from "./nav-voice-trace";
-import { failureCode } from "./voice-diag-checks";
+import { approachDelayMs, failureCode } from "./voice-diag-checks";
 import "./voice-diag-log";
 
 // The simulated car starts beside a real camera and then moves along the
 // route. The point stays in the navigator. This file does not write it down.
 const CAMERA_SIM_SPEED = 1;
+let sharedTurnAt = 0;
+let approachTask = null;
+let finishedApproaches = 0;
 const SAMPLE_MS = 5000;
 const BEFORE_LIMIT_MS = 45000;
 const AFTER_LIMIT_MS = 25000;
@@ -226,7 +229,7 @@ async function rollApproach(controller, approach, onNavigationFix, cancelled) {
 }
 
 export async function runVoiceDiagAuto({
-  controllerRef, requestVoice, setOnTurnByTurn, observeLocation, decisionRef, approach, onNavigationFix, markGuiding, ensureSession, cancelled,
+  controllerRef, requestVoice, setOnTurnByTurn, observeLocation, decisionRef, approach, onNavigationFix, onResetRepeat, markGuiding, ensureSession, cancelled,
 }) {
   const phases = {
     before: { events: 0, maneuvers: [] },
@@ -239,6 +242,7 @@ export async function runVoiceDiagAuto({
   let lastFix = null;
   let lastTurnSig = "";
   let turnSteps = null;
+  let firstTurnAt = 0;
   let loggedShape = false;
   setOnTurnByTurn?.(events => {
     const list = Array.isArray(events) ? events : [];
@@ -254,6 +258,10 @@ export async function runVoiceDiagAuto({
       const steps = stepCount(event);
       const turnsAhead = turnStepCount(event);
       if (turnsAhead != null) turnSteps = turnsAhead;
+      if (!firstTurnAt && maneuver) {
+        firstTurnAt = Date.now();
+        sharedTurnAt = firstTurnAt;
+      }
       if (maneuver) bucket.maneuvers.push(maneuver);
       if (!loggedShape && Array.isArray(event?.getRemainingSteps)) {
         loggedShape = true;
@@ -345,8 +353,6 @@ export async function runVoiceDiagAuto({
       traceNavVoice("auto.guidance", { started: false, code: failureCode(error) });
       return;
     }
-    await rollApproach(controller, approach, onNavigationFix, cancelled);
-    if (cancelled()) return;
     const alongRoute = controller?.simulator?.simulateLocationsAlongExistingRoute;
     if (typeof alongRoute !== "function") {
       traceNavVoice("auto.simulation", { started: false, code: "missing" });
@@ -365,7 +371,18 @@ export async function runVoiceDiagAuto({
     } catch (error) {
       traceNavVoice("auto.legs", { error: error?.code || "segments-failed" });
     }
-    const before = await watch(BEFORE_LIMIT_MS, TURN_GOAL);
+    const before = await watch(8000, 1);
+    if (!cancelled()) {
+      await autoApproach({
+        controller,
+        approach,
+        onNavigationFix,
+        onResetRepeat,
+        cancelled,
+        reason: "auto",
+        turnAt: () => firstTurnAt,
+      });
+    }
     let approachDecision = decisionRef?.current || null;
     const approachStarted = Date.now();
     while (approachDecision?.outcome !== "spoken" && Date.now() - approachStarted < 20000) {
@@ -413,4 +430,61 @@ export async function runVoiceDiagAuto({
   } catch (error) {
     traceNavVoice("auto.failed", { code: failureCode(error) });
   }
+}
+
+async function waitForScreen(cancelled) {
+  const read = NativeModules.CamAlertVoiceDiag?.readiness;
+  for (let attempt = 1; attempt <= 30; attempt += 1) {
+    let screen = false;
+    if (typeof read === "function") {
+      try {
+        const snap = await read();
+        screen = snap?.screen === true;
+      } catch {
+        screen = false;
+      }
+    }
+    if (screen) return true;
+    if (!await wait(400, cancelled)) return false;
+  }
+  return false;
+}
+
+async function approachAfterVoice({ controller, approach, onNavigationFix, onResetRepeat, cancelled, reason, turnAt }) {
+  const screen = await waitForScreen(cancelled);
+  const started = Date.now();
+  while (!(turnAt?.() > 0) && Date.now() - started < 15000) {
+    if (!await wait(250, cancelled)) return;
+  }
+  const firstTurnAt = turnAt?.() || 0;
+  const remain = approachDelayMs({ screen, firstTurnAt, now: Date.now() });
+  traceNavVoice("camera.audible", {
+    reason,
+    screen,
+    turn: firstTurnAt > 0,
+    remain: remain == null ? null : remain,
+    directClip: false,
+  });
+  if (remain == null) {
+    traceNavVoice("camera.roll", { started: false, reason: screen ? "turn" : "screen" });
+    return;
+  }
+  if (remain > 0 && !await wait(remain, cancelled)) return;
+  onResetRepeat?.();
+  await rollApproach(controller, approach, onNavigationFix, cancelled);
+}
+
+export function runCameraApproach(args) {
+  if (approachTask) return approachTask;
+  const turnAt = args.turnAt || (() => sharedTurnAt);
+  approachTask = approachAfterVoice({ ...args, turnAt }).finally(() => {
+    approachTask = null;
+    finishedApproaches += 1;
+  });
+  return approachTask;
+}
+
+function autoApproach(args) {
+  if (finishedApproaches > 0) return Promise.resolve();
+  return runCameraApproach(args);
 }

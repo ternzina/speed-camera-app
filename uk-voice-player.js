@@ -114,10 +114,12 @@ export async function playClipPlan(plan, current) {
         return { played, stopped: false, failed: true };
       }
       played += 1;
+      const opened = Date.now();
       traceNavVoice("clip.open", { index, id: step.id });
       const next = steps[index + 1];
       const cross = next?.join === "crossfade" && ukVoiceSources[next.id] != null;
       const mark = await watch(player, current, cross ? CLIP_CROSSFADE_MS / 1000 : 0.01);
+      traceNavVoice("clip.closed", { index, id: step.id, ms: Date.now() - opened, mark });
       if (mark === "stopped" || !current()) {
         release(player);
         release(carry);

@@ -150,11 +150,24 @@ class AppDelegate: ExpoAppDelegate, ExpoReactNativeFactoryProvider {
       )
     }
     CamAlertVoiceDiagLog.append("launch bundle=\(Bundle.main.bundleIdentifier ?? "none") location=\(CamAlertVoiceDiagLog.locationStatus()) ports=\(CamAlertVoiceDiagLog.routePorts()) category=\(session.category.rawValue)")
-    DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
-      let bounds = self?.window?.bounds ?? .zero
+    func publishScreen() -> Bool {
+      let bounds = self.window?.bounds ?? .zero
       let scenes = UIApplication.shared.connectedScenes.count
-      let key = self?.window?.isKeyWindow == true
+      let key = self.window?.isKeyWindow == true
+      guard bounds.width > 1, bounds.height > 1, key else { return false }
+      CamAlertVoiceDiagLog.markScreen()
       CamAlertVoiceDiagLog.append("screen scenes=\(scenes) key=\(key) window=\(Int(bounds.width))x\(Int(bounds.height))")
+      return true
+    }
+    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+      guard self != nil else { return }
+      if publishScreen() { return }
+      DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+        if publishScreen() { return }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+          _ = publishScreen()
+        }
+      }
     }
     NSLog("CAMALERT_NAV_VOICE session category=%@", session.category.rawValue)
   }

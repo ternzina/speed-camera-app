@@ -33,6 +33,7 @@ export function traceNavVoice(event, fields = {}) {
     if (typeof value === "string" && value.length > 160) continue;
     safe[key] = typeof value === "number" && !Number.isFinite(value) ? null : value;
   }
+  if (safe.ms == null) safe.ms = Date.now();
   const line = `CAMALERT_NAV_VOICE ${event} ${JSON.stringify(safe)}`;
   console.log(line);
   for (const listener of listeners) listener(event, safe);

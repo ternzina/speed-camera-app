@@ -11,6 +11,7 @@ public class CamAlertVoiceDiagLog: NSObject {
   private static let queue = DispatchQueue(label: "camalert.voice.diag")
   private static var interruption = "none"
   private static var interrupted = false
+  private static var screenUp = false
 
   private static func allowed() -> Bool {
     let bundle = Bundle.main.bundleIdentifier
@@ -48,7 +49,8 @@ public class CamAlertVoiceDiagLog: NSObject {
     guard allowed() else { return }
     if line.contains("CamAlertGoogleNavKey") { return }
     if line.range(of: #"-?\d{1,3}\.\d{4,}"#, options: .regularExpression) != nil { return }
-    let row = Data((line + "\n").utf8)
+    let ms = Int(Date().timeIntervalSince1970 * 1000)
+    let row = Data((line + " ms=\(ms)\n").utf8)
     queue.sync {
       let url = fileURL()
       if FileManager.default.fileExists(atPath: url.path), let handle = try? FileHandle(forWritingTo: url) {
@@ -85,6 +87,17 @@ public class CamAlertVoiceDiagLog: NSObject {
       }
     }
     return names.sorted()
+  }
+
+  @objc public static func markScreen() {
+    screenUp = true
+  }
+
+  @objc public static func readiness() -> NSDictionary {
+    [
+      "screen": screenUp,
+      "ms": Int(Date().timeIntervalSince1970 * 1000),
+    ]
   }
 
   @objc public static func audioProbe() -> NSDictionary {

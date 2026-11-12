@@ -1936,6 +1936,7 @@ export default function App() {
           camera={null}
           cameras={data}
           onNavigationFix={handleUkraineFix}
+          onResetRepeat={() => { lastSpoken.current = { id: null, distance: Infinity }; }}
           cameraType=""
           voiceEnabled={settings.voice !== false}
           onToggleVoice={() => setSettings(current => ({ ...current, voice: current.voice === false }))}
