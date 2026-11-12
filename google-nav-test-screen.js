@@ -17,6 +17,7 @@ import {
 } from "./navtest-saved-places";
 import { withNavigationWindow } from "./navigation-readiness";
 import { nativeVoiceGuidance, traceNavVoice } from "./nav-voice-trace";
+import { runVoiceDiagAuto } from "./voice-diag-auto";
 import { VoiceDiagPanel } from "./voice-diag-panel";
 import SystemSafeArea from "./system-safe-area";
 
@@ -130,12 +131,13 @@ function GoogleNavBody({
 }) {
   const copy = COPY[language] || COPY.ru;
   const places = savedPlaceCopy(language);
-  const { navigationController: controller, setOnRemainingTimeOrDistanceChanged, setOnReroutingRequestedByOffRoute } = useNavigation();
+  const { navigationController: controller, setOnRemainingTimeOrDistanceChanged, setOnReroutingRequestedByOffRoute, setOnTurnByTurn } = useNavigation();
   const controllerRef = useRef(controller);
   controllerRef.current = controller;
   const alive = useRef(true);
   const ready = useRef(false);
   const guidingRef = useRef(false);
+  const autoStarted = useRef(false);
   const cameraSpeakingRef = useRef(false);
   const [point, setPoint] = useState(null);
   const [query, setQuery] = useState("");
@@ -286,6 +288,24 @@ function GoogleNavBody({
       : AudioGuidance.SILENT;
     requestVoiceGuidance(controller, mode, "guiding");
   }, [controller, guiding, voiceEnabled]);
+
+  useEffect(() => {
+    if (!diagnostic || autoStarted.current) return undefined;
+    autoStarted.current = true;
+    let stop = false;
+    runVoiceDiagAuto({
+      controllerRef,
+      requestVoice: (index, reason) => requestVoiceGuidance(controllerRef.current, index, reason),
+      setOnTurnByTurn,
+      markGuiding: (value) => {
+        guidingRef.current = value;
+        setGuiding(value);
+      },
+      ensureSession,
+      cancelled: () => stop || !alive.current,
+    });
+    return () => { stop = true; };
+  }, [diagnostic, setOnTurnByTurn]);
 
   async function ensureSession() {
     if (ready.current) return;

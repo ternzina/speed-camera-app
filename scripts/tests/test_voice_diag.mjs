@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import test from "node:test";
-import { googleOnlyRequest, restoreRequest, routeSimulationRequest, yevheniiaOnlyPlan } from "../../voice-diag-checks.js";
+import { AUTO_ORDER, failureCode, googleOnlyRequest, restoreRequest, routeSimulationRequest, yevheniiaOnlyPlan } from "../../voice-diag-checks.js";
 import { setNavVoiceSink, traceNavVoice } from "../../nav-voice-trace.js";
 
 const read = (name) => readFileSync(new URL(`../../${name}`, import.meta.url), "utf8");
@@ -41,6 +41,32 @@ test("the diagnostic screen is gated and does not join the store navigator", () 
   for (const name of ["App.js", "google-nav-test-screen.js", "voice-diag-panel.js", "voice-diag-log.js", "voice-diag-gate.js"]) {
     assert.doesNotMatch(read(name), /territorial-resolver/);
   }
+});
+
+test("the automatic run builds a route before guidance and does not log coordinates", () => {
+  const auto = read("voice-diag-auto.js");
+  const screen = read("google-nav-test-screen.js");
+  const markers = [
+    "simulator.simulateLocation(ORIGIN)",
+    "controller.setDestination(",
+    '"google-only"',
+    "controller.startGuidance()",
+    "simulator.simulateLocationsAlongExistingRoute({ speedMultiplier: 1 })",
+    "speakCameraAlert(",
+    'requestVoice(4, "restore")',
+  ];
+  assert.equal(markers.length, AUTO_ORDER.length);
+  let cursor = 0;
+  for (const marker of markers) {
+    const at = auto.indexOf(marker);
+    assert.ok(at > cursor, marker);
+    cursor = at;
+  }
+  assert.match(screen, /if \(!diagnostic \|\| autoStarted\.current\) return undefined/);
+  assert.doesNotMatch(screen, /simulateLocations/);
+  assert.equal(failureCode({ message: "50.4501,30.5234" }), "failed");
+  assert.equal(failureCode({ code: "LOCATION_UNKNOWN" }), "LOCATION_UNKNOWN");
+  assert.doesNotMatch(auto, /territorial-resolver/);
 });
 
 test("the journal drops coordinates and the key", () => {

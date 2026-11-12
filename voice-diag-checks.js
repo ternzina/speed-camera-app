@@ -16,3 +16,11 @@ export function yevheniiaOnlyPlan() {
 export function restoreRequest() {
   return { silentIndex: 0, voiceIndex: 4, clip: "close" };
 }
+
+export const AUTO_ORDER = ["origin", "route", "google-only", "guidance", "simulation", "yevheniia", "restore"];
+
+export function failureCode(error) {
+  const text = String(error?.code || error?.message || "failed");
+  if (/-?\d{1,3}\.\d{4,}/.test(text) || /key|token|secret/i.test(text)) return "failed";
+  return text.slice(0, 80);
+}

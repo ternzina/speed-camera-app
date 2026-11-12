@@ -59,6 +59,47 @@ public class CamAlertVoiceDiagLog: NSObject {
     }
   }
 
+  @objc public static func voicePackNames() -> [String] {
+    let root = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
+      .appendingPathComponent("CannedSpeechBundles", isDirectory: true)
+    guard let languages = try? FileManager.default.contentsOfDirectory(
+      at: root,
+      includingPropertiesForKeys: [.isDirectoryKey],
+      options: [.skipsHiddenFiles]
+    ) else { return [] }
+    var names: [String] = []
+    for language in languages {
+      let units = (try? FileManager.default.contentsOfDirectory(
+        at: language,
+        includingPropertiesForKeys: nil,
+        options: [.skipsHiddenFiles]
+      )) ?? []
+      if units.isEmpty {
+        names.append(language.lastPathComponent)
+        continue
+      }
+      for unit in units {
+        names.append("\(language.lastPathComponent)/\(unit.lastPathComponent)")
+      }
+    }
+    return names.sorted()
+  }
+
+  @objc public static func audioProbe() -> NSDictionary {
+    let session = AVAudioSession.sharedInstance()
+    return [
+      "category": session.category.rawValue,
+      "route": session.currentRoute.outputs.map { $0.portType.rawValue },
+      "volume": session.outputVolume,
+      "otherAudio": session.isOtherAudioPlaying,
+      "silenced": session.secondaryAudioShouldBeSilencedHint,
+      "packs": voicePackNames(),
+      "interruption": interruption,
+      "interrupted": interrupted,
+      "location": locationStatus(),
+    ]
+  }
+
   @objc public static func snapshot() -> NSDictionary {
     [
       "route": AVAudioSession.sharedInstance().currentRoute.outputs.map { $0.portType.rawValue },
