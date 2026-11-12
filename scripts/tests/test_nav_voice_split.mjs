@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import fs from "node:fs";
 import test from "node:test";
+import { createSpeechCoordinator } from "../../camera-speech-coordinator.js";
 import { googleAudioMode, voiceModeBeforeGuidance } from "../../google-nav-banner.js";
 import { nativeVoiceGuidance, voiceGuidanceChange } from "../../nav-voice-trace.js";
 import { audibleSteps } from "../../uk-voice-clips.js";
@@ -74,7 +75,7 @@ test("Yevheniia leaves the audio session alone when no clip plays", () => {
   assert.match(audio, /interruptionMode: InterruptionMode = \.mixWithOthers/);
 });
 
-test("after Yevheniia the native value changes from Silent to AlertsAndGuidance", () => {
+test("after Yevheniia the native value changes from Silent to AlertsAndGuidance", async () => {
   assert.equal(googleAudioMode({ cameraSpeaking: true, guiding: true, voiceEnabled: true }), "silent");
   assert.equal(googleAudioMode({ cameraSpeaking: false, guiding: true, voiceEnabled: true }), "alerts-and-guidance");
   const during = voiceGuidanceChange(undefined, SILENT);
@@ -83,6 +84,22 @@ test("after Yevheniia the native value changes from Silent to AlertsAndGuidance"
   assert.equal(after.changed, true);
   assert.equal(after.guidance, "AlertsAndGuidance");
   assert.equal(voiceGuidanceChange("AlertsAndGuidance", VOICE).changed, false);
+
+  const heard = [];
+  const coordinator = createSpeechCoordinator({
+    stop: () => Promise.resolve(),
+    isSpeakingAsync: () => Promise.resolve(false),
+    speak() {},
+  });
+  coordinator.subscribe(speaking => {
+    heard.push(googleAudioMode({ cameraSpeaking: speaking, guiding: true, voiceEnabled: true }));
+  });
+  const session = coordinator.beginClip();
+  assert.equal(heard.at(-1), "silent");
+  await coordinator.stop();
+  assert.equal(session.current(), false);
+  assert.equal(heard.at(-1), "alerts-and-guidance");
+  assert.match(read("App.js"), /function stopTracking\(\)[\s\S]*Speech\.stop\(\)/);
 
   const screen = read("google-nav-test-screen.js");
   assert.match(screen, /traceNavVoice\("warning\.speech"/);

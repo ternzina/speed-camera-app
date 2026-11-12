@@ -92,7 +92,7 @@ test("the automatic run builds a route before guidance and does not log coordina
     cursor = at;
   }
   assert.match(screen, /if \(!simulateTrip \|\| autoStarted\.current\) return undefined/);
-  assert.match(screen, /const simulateTrip = diagnostic === true \|\| armedTrip === true/);
+  assert.match(screen, /const simulateTrip = isVoiceDiagApp\(\) && \(diagnostic === true \|\| armedTrip === true\)/);
   assert.match(screen, /if \(!props\.diagnostic\) return body/);
   assert.doesNotMatch(screen, /simulateLocations/);
   assert.equal(failureCode({ message: "50.4501,30.5234" }), "failed");

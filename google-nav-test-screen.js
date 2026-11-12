@@ -25,6 +25,7 @@ import { navigationSample } from "./nav-sim-camera";
 import { nativeVoiceGuidance, traceNavVoice } from "./nav-voice-trace";
 import { runCameraApproach, runVoiceDiagAuto } from "./voice-diag-auto";
 import { VoiceDiagPanel } from "./voice-diag-panel";
+import { isVoiceDiagApp } from "./voice-diag-gate";
 import SystemSafeArea from "./system-safe-area";
 
 function requestVoiceGuidance(controller, index, reason) {
@@ -53,7 +54,7 @@ function requestVoiceGuidance(controller, index, reason) {
 
 const COPY = {
   ru: {
-    where: "Куда едем?", build: "Построить маршрут", go: "В путь", endRoute: "Завершить маршрут",
+    where: "Куда едем?", build: "Построить маршрут", go: "В путь", startTrip: "Начать поездку", endRoute: "Завершить маршрут",
     endTrip: "Завершить поездку", road: "Схема", satellite: "Спутник", hybrid: "Гибрид",
     voice: "Голос", voiceOff: "Без голоса", layers: "Слои карты", locate: "Моё место",
     pick: "Долгое нажатие выбирает точку", routed: "Маршрут построен. Ведение начнётся после «В путь».",
@@ -65,7 +66,7 @@ const COPY = {
     searchKey: "Поиск адреса сейчас недоступен", point: "Точка", meters: "м", speedUnit: "км/ч",
   },
   uk: {
-    where: "Куди їдемо?", build: "Побудувати маршрут", go: "У дорогу", endRoute: "Завершити маршрут",
+    where: "Куди їдемо?", build: "Побудувати маршрут", go: "У дорогу", startTrip: "Почати поїздку", endRoute: "Завершити маршрут",
     endTrip: "Завершити поїздку", road: "Схема", satellite: "Супутник", hybrid: "Гібрид",
     voice: "Голос", voiceOff: "Без голосу", layers: "Шари карти", locate: "Моє місце",
     pick: "Довге натискання вибирає точку", routed: "Маршрут побудовано. Ведення почнеться після «У дорогу».",
@@ -76,7 +77,7 @@ const COPY = {
     searchKey: "Пошук адреси зараз недоступний", point: "Точка", meters: "м", speedUnit: "км/год",
   },
   en: {
-    where: "Where to?", build: "Build route", go: "Start guidance", endRoute: "End route",
+    where: "Where to?", build: "Build route", go: "Start guidance", startTrip: "Start trip", endRoute: "End route",
     endTrip: "End trip", road: "Road", satellite: "Satellite", hybrid: "Hybrid",
     voice: "Voice", voiceOff: "Voice off", layers: "Map layers", locate: "My location",
     pick: "Long-press the map to pick a point", routed: "Route ready. Guidance starts after the button.",
@@ -87,7 +88,7 @@ const COPY = {
     searchKey: "Address search is unavailable", point: "Point", meters: "m", speedUnit: "km/h",
   },
   pl: {
-    where: "Dokąd jedziemy?", build: "Wyznacz trasę", go: "W drogę", endRoute: "Zakończ trasę",
+    where: "Dokąd jedziemy?", build: "Wyznacz trasę", go: "W drogę", startTrip: "Rozpocznij przejazd", endRoute: "Zakończ trasę",
     endTrip: "Zakończ przejazd", road: "Mapa", satellite: "Satelita", hybrid: "Hybryda",
     voice: "Głos", voiceOff: "Bez głosu", layers: "Warstwy mapy", locate: "Moja pozycja",
     pick: "Przytrzymaj mapę, aby wybrać punkt", routed: "Trasa gotowa. Prowadzenie zacznie się po przycisku.",
@@ -337,7 +338,7 @@ function GoogleNavBody({
     return pending;
   };
   const approachRef = useRef(undefined);
-  const simulateTrip = diagnostic === true || armedTrip === true;
+  const simulateTrip = isVoiceDiagApp() && (diagnostic === true || armedTrip === true);
   if (diagnosticBridge?.current) {
     diagnosticBridge.current.startApproach = () => runCameraApproach({
       controller: controllerRef.current,
@@ -714,7 +715,7 @@ function GoogleNavBody({
     topChrome: 148,
     bottomChrome: pads.bottom + 16,
   });
-  const chrome = navChrome({ guiding, routed, hasPoint: !!point });
+  const chrome = navChrome({ guiding, routed, hasPoint: !!point, tripActive });
   const banner = cameraBanner(camera, cameraType);
 
   return (
@@ -811,6 +812,11 @@ function GoogleNavBody({
           {chrome.go && (
             <Pressable accessibilityRole="button" disabled={busy} onPress={startGuidance} style={[styles.go, busy && styles.dim]}>
               <Text numberOfLines={1} maxFontSizeMultiplier={1.4} adjustsFontSizeToFit minimumFontScale={0.7} style={styles.goText}>{copy.go}</Text>
+            </Pressable>
+          )}
+          {chrome.startTrip && (
+            <Pressable accessibilityRole="button" disabled={busy} onPress={() => { void onStartTrip?.(); }} style={[styles.go, busy && styles.dim]}>
+              <Text numberOfLines={1} maxFontSizeMultiplier={1.4} adjustsFontSizeToFit minimumFontScale={0.7} style={styles.goText}>{copy.startTrip}</Text>
             </Pressable>
           )}
           {chrome.build && (

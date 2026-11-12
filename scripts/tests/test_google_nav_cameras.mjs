@@ -34,6 +34,11 @@ test("camera speech pauses Google voice and the banner does not speak", () => {
 test("navigation chrome changes with the route and does not duplicate the maneuver", () => {
   const map = navChrome({});
   assert.equal(map.search, true);
+  assert.equal(map.startTrip, true);
+  assert.equal(map.go, false);
+  assert.equal(navChrome({ tripActive: true }).startTrip, false);
+  assert.equal(navChrome({ routed: true }).startTrip, false);
+  assert.equal(navChrome({ guiding: true }).startTrip, false);
   assert.equal(map.maneuver, false);
   assert.equal(map.ordinaryMap, true);
   assert.equal(map.routeBar, false);
@@ -68,7 +73,12 @@ test("warnings stay on the phone GPS feed and ignore the Google route line", () 
   assert.match(mount, /camera=\{cameraWarningsEnabled\(settings\) \? ahead : null\}/);
   assert.match(mount, /if \(foregroundTripRunning \|\| sub\.current\) return true/);
   assert.doesNotMatch(mount, /watchPositionAsync|simulate/);
+  assert.match(mount, /onNavigationFix=\{isVoiceDiagApp\(\) && diagTrip === true \? handleUkraineFix : undefined\}/);
   const screen = read("google-nav-test-screen.js");
+  const screenStart = screen.slice(screen.indexOf("{chrome.startTrip && ("), screen.indexOf("{chrome.build && ("));
+  assert.match(screenStart, /onStartTrip\?\.\(\)/);
+  assert.doesNotMatch(screenStart, /startGuidance|simulateLocation/);
+  assert.match(screen, /const simulateTrip = isVoiceDiagApp\(\) && \(diagnostic === true \|\| armedTrip === true\)/);
   assert.match(screen, /headerEnabled=\{chrome\.maneuver\}/);
   assert.match(screen, /recenterButtonEnabled=\{false\}/);
   assert.match(screen, /setFollowingPerspective\?\.\(CameraPerspective\.TILTED\)/);

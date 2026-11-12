@@ -28,12 +28,14 @@ export function googleBackgroundLocationEnabled({ guiding, tripActive } = {}) {
   return !!(guiding && tripActive);
 }
 
-export function navChrome({ guiding = false, routed = false, hasPoint = false } = {}) {
+export function navChrome({ guiding = false, routed = false, hasPoint = false, tripActive = false } = {}) {
   return {
     search: !guiding,
     maneuver: !!guiding,
     routeBar: !!(routed || guiding),
     go: !!(routed && !guiding),
+    // A trip without a route uses the phone GPS. It does not start guidance.
+    startTrip: !!(!routed && !guiding && !tripActive),
     build: !!(!routed && !guiding && hasPoint),
     endRoute: !!(routed || guiding),
     following: !!guiding,
