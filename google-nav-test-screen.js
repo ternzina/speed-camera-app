@@ -656,7 +656,7 @@ function GoogleNavBody({
   return (
     <View style={styles.root}>
       <NavigationView
-        style={StyleSheet.absoluteFill}
+        style={[StyleSheet.absoluteFill, { zIndex: 0 }]}
         mapType={mapType}
         mapPadding={{ top: pads.top, right: 16, bottom: pads.bottom + lift + diagSpace, left: 16 }}
         navigationNightMode={night ? NavigationNightMode.FORCE_NIGHT : NavigationNightMode.FORCE_DAY}
@@ -673,7 +673,7 @@ function GoogleNavBody({
         }}
         initialCameraPosition={target ? { target, zoom: 15 } : undefined}
       />
-      <SystemSafeArea pointerEvents="box-none" style={styles.overlay}>
+      <SystemSafeArea pointerEvents="box-none" style={[styles.overlay, { zIndex: 2 }]}>
         <View pointerEvents="box-none" onLayout={event => remember("top", event)}>
           {chrome.maneuver && <View pointerEvents="none" style={styles.maneuverClearance} />}
           {guiding && !placesOpen && !saveSlot && (

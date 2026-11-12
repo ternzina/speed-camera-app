@@ -6,7 +6,7 @@ import GoogleMaps
 import AVFoundation
 
 @main
-class AppDelegate: ExpoAppDelegate {
+class AppDelegate: ExpoAppDelegate, ExpoReactNativeFactoryProvider {
   var window: UIWindow?
 
   var reactNativeDelegate: ExpoReactNativeFactoryDelegate?
@@ -28,18 +28,33 @@ class AppDelegate: ExpoAppDelegate {
 
     reactNativeDelegate = delegate
     reactNativeFactory = factory
+    // Referenced so the window scene delegate is not stripped from the binary.
+    _ = ExpoAppSceneDelegate.self
 
 #if os(iOS) || os(tvOS)
-    window = UIWindow(frame: UIScreen.main.bounds)
-    factory.startReactNative(
-      withModuleName: "main",
-      in: window,
-      launchOptions: launchOptions)
+    // A scene manifest without a window scene leaves the phone on a black
+    // window: UIKit never displays the app-delegate window. The scene
+    // delegate creates the visible window and starts React Native.
+    if !Self.hasWindowScene {
+      window = UIWindow(frame: UIScreen.main.bounds)
+      factory.startReactNative(
+        withModuleName: "main",
+        in: window,
+        launchOptions: launchOptions)
+    }
 #endif
 
     startTripClassLog()
     startAudioSessionLog()
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
+  }
+
+  private static var hasWindowScene: Bool {
+    guard let manifest = Bundle.main.object(forInfoDictionaryKey: "UIApplicationSceneManifest") as? [String: Any],
+          let configurations = manifest["UISceneConfigurations"] as? [String: Any],
+          let windows = configurations["UIWindowSceneSessionRoleApplication"] as? [Any]
+    else { return false }
+    return !windows.isEmpty
   }
 
   // Reads the trip screen's UIView classes. It does not change touches, location, speech, or alerts.
@@ -135,6 +150,12 @@ class AppDelegate: ExpoAppDelegate {
       )
     }
     CamAlertVoiceDiagLog.append("launch bundle=\(Bundle.main.bundleIdentifier ?? "none") location=\(CamAlertVoiceDiagLog.locationStatus()) ports=\(CamAlertVoiceDiagLog.routePorts()) category=\(session.category.rawValue)")
+    DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
+      let bounds = self?.window?.bounds ?? .zero
+      let scenes = UIApplication.shared.connectedScenes.count
+      let key = self?.window?.isKeyWindow == true
+      CamAlertVoiceDiagLog.append("screen scenes=\(scenes) key=\(key) window=\(Int(bounds.width))x\(Int(bounds.height))")
+    }
     NSLog("CAMALERT_NAV_VOICE session category=%@", session.category.rawValue)
   }
 
