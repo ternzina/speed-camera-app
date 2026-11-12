@@ -304,6 +304,13 @@ function GoogleNavBody({
       },
       ensureSession: async () => {
         if (ready.current) return;
+        for (let tick = 0; tick < 40 && !(alive.current && AppState.currentState === "active"); tick += 1) {
+          await new Promise(resolve => setTimeout(resolve, 250));
+        }
+        traceNavVoice("auto.window", {
+          state: String(AppState.currentState || ""),
+          alive: alive.current === true,
+        });
         const foreground = () => alive.current && AppState.currentState === "active";
         const accepted = await controllerRef.current.areTermsAccepted();
         traceNavVoice("auto.terms", { accepted: accepted === true });
