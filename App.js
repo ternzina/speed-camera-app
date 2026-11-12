@@ -42,7 +42,7 @@ import IosRouteScreen from "./ios-route-screen";
 import { applicationId } from "expo-application";
 import { isGoogleNavTestApp, STORE_PREVIEW_BUNDLE, usesInAppGoogleNav } from "./google-nav-gate";
 import { isVoiceDiagApp } from "./voice-diag-gate";
-import { nearestAhead, ukraineFixDecision } from "./camera-fix";
+import { nearestAhead, settleUkraineLast, ukraineFixDecision, warningDistanceForSpeed } from "./camera-fix";
 import { cameraDecisionJournal, speechTrace } from "./nav-sim-camera";
 import { traceNavVoice } from "./nav-voice-trace";
 import { runPreviewInstallCheck } from "./preview-install-check";
@@ -319,11 +319,7 @@ function bearingDegrees(lat1, lon1, lat2, lon2) {
   return norm(toDeg(Math.atan2(y, x)));
 }
 function alertDistanceForSpeed(speedKmh, settings) {
-  if (!settings.smartDistance) return settings.roadDistance;
-  if (speedKmh < 60) return settings.cityDistance;
-  if (speedKmh < 90) return settings.roadDistance;
-  if (speedKmh < 120) return settings.highwayDistance;
-  return settings.fastDistance;
+  return warningDistanceForSpeed(speedKmh, settings);
 }
 function visibleCameras() {
   return cameraPoints(countryFeed(bgCameraFeeds, bgSettings.country, data, plData))
@@ -1129,7 +1125,10 @@ export default function App() {
       };
       return result;
     };
-    if (!decision.speak) return Promise.resolve(publish(finish(decision.reason, "none"), false, false, decision.angle));
+    if (!decision.speak) {
+      lastSpoken.current = settleUkraineLast(lastSpoken.current, decision);
+      return Promise.resolve(publish(finish(decision.reason, "none"), false, false, decision.angle));
+    }
     return speakWarning(ahead, alertDistanceForSpeed(kmh, settings), kmh, available, {
       vibrate: source === "gps",
       recordHistory: source === "gps",

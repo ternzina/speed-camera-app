@@ -63,6 +63,14 @@ export function nearestAhead(cameras, latitude, longitude, movementHeading, maxD
   return best;
 }
 
+export function warningDistanceForSpeed(speedKmh, settings) {
+  if (!settings?.smartDistance) return settings?.roadDistance;
+  if (speedKmh < 60) return settings.cityDistance;
+  if (speedKmh < 90) return settings.roadDistance;
+  if (speedKmh < 120) return settings.highwayDistance;
+  return settings.fastDistance;
+}
+
 export function ukraineFixDecision({ speedKmh, heading, ahead, threshold, last, minSpeed = 8 }) {
   if (!(Number(speedKmh) >= minSpeed) || heading == null || !Number.isFinite(Number(heading))) {
     return { speak: false, reason: "below-speed" };
@@ -79,6 +87,19 @@ export function ukraineFixDecision({ speedKmh, heading, ahead, threshold, last, 
     return { speak: false, reason: "repeat", ...fields };
   }
   return { speak: true, reason: "warn", ...fields };
+}
+
+// A warning inside one approach repeats only after the car is 250 m closer.
+// Leaving the zone, or having no camera ahead, arms the next approach.
+// A stop or a missing heading does not: those decisions never reach this.
+export function settleUkraineLast(last, decision) {
+  const current = last && last.id != null ? last : { id: null, distance: Infinity };
+  if (decision?.speak) return { id: decision.cameraId, distance: decision.distance };
+  if (decision?.reason === "none-ahead") return { id: null, distance: Infinity };
+  if (decision?.reason === "distance" && current.id != null && current.id === decision.cameraId) {
+    return { id: null, distance: Infinity };
+  }
+  return current;
 }
 
 function place(camera, bearing, distance) {
