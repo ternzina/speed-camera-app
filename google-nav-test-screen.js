@@ -131,7 +131,7 @@ function GoogleNavBody({
 }) {
   const copy = COPY[language] || COPY.ru;
   const places = savedPlaceCopy(language);
-  const { navigationController: controller, setOnRemainingTimeOrDistanceChanged, setOnReroutingRequestedByOffRoute, setOnTurnByTurn } = useNavigation();
+  const { navigationController: controller, setOnRemainingTimeOrDistanceChanged, setOnReroutingRequestedByOffRoute, setOnTurnByTurn, setOnLocationChanged } = useNavigation();
   const controllerRef = useRef(controller);
   controllerRef.current = controller;
   const alive = useRef(true);
@@ -297,6 +297,7 @@ function GoogleNavBody({
       controllerRef,
       requestVoice: (index, reason) => requestVoiceGuidance(controllerRef.current, index, reason),
       setOnTurnByTurn,
+      setOnLocationChanged,
       markGuiding: (value) => {
         guidingRef.current = value;
         setGuiding(value);
@@ -323,7 +324,7 @@ function GoogleNavBody({
       cancelled: () => stop || !alive.current,
     });
     return () => { stop = true; };
-  }, [diagnostic, setOnTurnByTurn]);
+  }, [diagnostic, setOnTurnByTurn, setOnLocationChanged]);
 
   async function ensureSession() {
     if (ready.current) return;

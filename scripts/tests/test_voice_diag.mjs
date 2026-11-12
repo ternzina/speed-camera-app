@@ -56,6 +56,10 @@ test("the automatic run builds a route before guidance and does not log coordina
   ];
   assert.equal(markers.length, AUTO_ORDER.length);
   assert.doesNotMatch(auto, /simulateLocation\(/);
+  assert.match(auto, /const AUTO_SIM_SPEED = 5/);
+  assert.match(auto, /getCurrentTimeAndDistance/);
+  assert.match(screen, /setOnLocationChanged/);
+  assert.doesNotMatch(auto, /traceNavVoice\([\s\S]{0,80}latitude/);
   let cursor = 0;
   for (const marker of markers) {
     const at = auto.indexOf(marker);
