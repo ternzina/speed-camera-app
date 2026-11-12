@@ -10,10 +10,10 @@ import "./voice-diag-log";
 // the device location it already has. This file never calls simulateLocation,
 // and it never writes the point to the journal.
 const DESTINATION = { lat: 50.467, lng: 30.515 };
-const AUTO_SIM_SPEED = 5;
+const AUTO_SIM_SPEED = 8;
 const SAMPLE_MS = 5000;
-const BEFORE_LIMIT_MS = 90000;
-const AFTER_LIMIT_MS = 30000;
+const BEFORE_LIMIT_MS = 120000;
+const AFTER_LIMIT_MS = 40000;
 const TURN_GOAL = 3;
 const NAV_STATE_NAME = ["UNKNOWN", "ENROUTE", "REROUTING", "STOPPED"];
 
