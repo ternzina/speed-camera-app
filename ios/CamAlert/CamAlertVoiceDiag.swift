@@ -2,7 +2,8 @@ import AVFoundation
 import CoreLocation
 import Foundation
 
-// Documents journal for the diagnostic bundle only. It records port types,
+// Documents journal for the diagnostic bundle and the separate store-interface
+// preview. The store app and navtest do not write it. It records port types,
 // interruption flags, and the location authorization name. It does not record
 // coordinates, device names, or the API key.
 @objc(CamAlertVoiceDiagLog)
@@ -12,7 +13,8 @@ public class CamAlertVoiceDiagLog: NSObject {
   private static var interrupted = false
 
   private static func allowed() -> Bool {
-    Bundle.main.bundleIdentifier == "com.21wek.camera.voicediag"
+    let bundle = Bundle.main.bundleIdentifier
+    return bundle == "com.21wek.camera.voicediag" || bundle == "com.21wek.camera.voicepreview"
   }
 
   private static func fileURL() -> URL {
