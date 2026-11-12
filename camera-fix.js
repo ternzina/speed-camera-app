@@ -54,9 +54,10 @@ export function nearestAhead(cameras, latitude, longitude, movementHeading, maxD
     if (d > maxDistance) continue;
     if (cam.direction != null && /^\d+(\.\d+)?$/.test(String(cam.direction)) && angleDiff(movementHeading, Number(cam.direction)) > 60) continue;
     const camBearing = bearingDegrees(latitude, longitude, cam.latitude, cam.longitude);
-    if (angleDiff(movementHeading, camBearing) <= forwardAngle && d < bestDistance) {
+    const angle = angleDiff(movementHeading, camBearing);
+    if (angle <= forwardAngle && d < bestDistance) {
       bestDistance = d;
-      best = { ...cam, distance: Math.round(d) };
+      best = { ...cam, distance: Math.round(d), angle: Math.round(angle) };
     }
   }
   return best;
@@ -66,14 +67,18 @@ export function ukraineFixDecision({ speedKmh, heading, ahead, threshold, last, 
   if (!(Number(speedKmh) >= minSpeed) || heading == null || !Number.isFinite(Number(heading))) {
     return { speak: false, reason: "below-speed" };
   }
-  if (!ahead) return { speak: false, reason: "none-ahead" };
-  if (ahead.distance > threshold) {
-    return { speak: false, reason: "distance", distance: ahead.distance, limit: ahead.speed_limit ?? null, cameraId: ahead.id };
-  }
+  const fields = {
+    distance: ahead?.distance,
+    limit: ahead?.speed_limit ?? null,
+    cameraId: ahead?.id ?? null,
+    angle: Number.isFinite(ahead?.angle) ? ahead.angle : null,
+  };
+  if (!ahead) return { speak: false, reason: "none-ahead", ...fields, distance: null };
+  if (ahead.distance > threshold) return { speak: false, reason: "distance", ...fields };
   if (last && last.id === ahead.id && last.distance - ahead.distance < 250) {
-    return { speak: false, reason: "repeat", distance: ahead.distance, limit: ahead.speed_limit ?? null, cameraId: ahead.id };
+    return { speak: false, reason: "repeat", ...fields };
   }
-  return { speak: true, reason: "warn", distance: ahead.distance, limit: ahead.speed_limit ?? null, cameraId: ahead.id };
+  return { speak: true, reason: "warn", ...fields };
 }
 
 function place(camera, bearing, distance) {
@@ -121,4 +126,26 @@ export function buildPreviewCases(cameras) {
     if (second) break;
   }
   return { primary, second };
+}
+
+// A simulated drive starts inside the city warning distance, with the camera
+// ahead, and ends past that camera. Callers must not write the points down.
+export function diagnosticApproach(cameras) {
+  const plan = buildPreviewCases(cameras)?.primary;
+  if (!plan?.at500 || !plan.camera) return null;
+  const beyond = movePoint(Number(plan.camera.latitude), Number(plan.camera.longitude), plan.bearing, 350);
+  const distance = Math.round(distanceMeters(
+    plan.at500.latitude,
+    plan.at500.longitude,
+    Number(plan.camera.latitude),
+    Number(plan.camera.longitude),
+  ));
+  return {
+    start: { lat: plan.at500.latitude, lng: plan.at500.longitude },
+    destination: { lat: beyond.lat, lng: beyond.lon },
+    heading: plan.bearing,
+    cameraId: plan.id,
+    limit: plan.limit,
+    distance,
+  };
 }

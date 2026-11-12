@@ -1,7 +1,8 @@
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import test from "node:test";
-import { AUTO_ORDER, failureCode, googleOnlyRequest, restoreRequest, routeSimulationRequest, yevheniiaOnlyPlan } from "../../voice-diag-checks.js";
+import { ukrainianClipPlan } from "../../uk-voice-clips.js";
+import { AUTO_ORDER, cameraVoiceCheckPlan, failureCode, googleOnlyRequest, restoreRequest, routeSimulationRequest, yevheniiaOnlyPlan } from "../../voice-diag-checks.js";
 import { setNavVoiceSink, traceNavVoice } from "../../nav-voice-trace.js";
 
 const read = (name) => readFileSync(new URL(`../../${name}`, import.meta.url), "utf8");
@@ -13,9 +14,13 @@ test("simulation waits for guidance and the three sound checks stay separate", (
   assert.equal(googleOnlyRequest().index, 4);
   assert.equal(yevheniiaOnlyPlan().changeVoice, false);
   assert.equal(yevheniiaOnlyPlan().steps[0].id, "close");
+  assert.deepEqual(cameraVoiceCheckPlan(), ukrainianClipPlan({ kind: "ua-camera", distance: 500, limit: 50, over: false }));
   assert.deepEqual(restoreRequest(), { silentIndex: 0, voiceIndex: 4, clip: "close" });
 
   const panel = read("voice-diag-panel.js");
+  assert.match(panel, /Проверить голос камеры/);
+  assert.match(panel, /onCheckCameraVoice[\s\S]*speakCameraAlert\(/);
+  assert.doesNotMatch(panel.slice(panel.indexOf("async function onCheckCameraVoice"), panel.indexOf("async function onRestore")), /simulateLocations|requestVoice\(/);
   assert.match(panel, /onSimulate[\s\S]*simulateLocationsAlongExistingRoute/);
   assert.match(panel, /onGoogleOnly[\s\S]*requestVoice\(request\.index/);
   assert.doesNotMatch(panel.slice(panel.indexOf("async function onGoogleOnly"), panel.indexOf("async function onYevheniia")), /playClipPlan/);
@@ -47,20 +52,23 @@ test("the automatic run builds a route before guidance and does not log coordina
   const auto = read("voice-diag-auto.js");
   const screen = read("google-nav-test-screen.js");
   const markers = [
+    "simulateLocation",
     "controller.setDestination(",
+    'requestVoice(4, "before-start")',
     "controller.startGuidance()",
-    '"google-only"',
     "simulateLocationsAlongExistingRoute",
-    "speakCameraAlert(",
-    'requestVoice(4, "restore")',
+    "auto.approach",
   ];
   assert.equal(markers.length, AUTO_ORDER.length);
-  assert.doesNotMatch(auto, /simulateLocation\(/);
-  assert.match(auto, /const AUTO_SIM_SPEED = 8/);
+  assert.match(auto, /const CAMERA_SIM_SPEED = 1/);
+  assert.doesNotMatch(auto, /speakCameraAlert\(/);
+  assert.match(auto, /onNavigationFix\?\.\(sample\.fix\)/);
   assert.match(auto, /getCurrentTimeAndDistance/);
   assert.match(auto, /setTurnByTurnLoggingEnabled/);
-  assert.match(screen, /setOnLocationChanged/);
-  assert.doesNotMatch(auto, /traceNavVoice\([\s\S]{0,80}latitude/);
+  assert.match(screen, /navigationSample\(/);
+  assert.match(screen, /onNavigationFixRef/);
+  assert.match(read("App.js"), /onNavigationFix=\{handleUkraineFix\}/);
+  assert.doesNotMatch(auto, /traceNavVoice\([\s\S]{0,120}latitude/);
   let cursor = 0;
   for (const marker of markers) {
     const at = auto.indexOf(marker);

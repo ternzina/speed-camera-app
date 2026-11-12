@@ -1,16 +1,15 @@
 import { NativeModules } from "react-native";
 import { applicationId } from "expo-application";
 import { RouteStatus, TravelMode } from "@googlemaps/react-native-navigation-sdk";
-import { speakCameraAlert } from "./camera-speech";
+import { movePoint } from "./camera-fix";
+import { navigationSample } from "./nav-sim-camera";
 import { traceNavVoice } from "./nav-voice-trace";
-import { failureCode, yevheniiaOnlyPlan } from "./voice-diag-checks";
+import { failureCode } from "./voice-diag-checks";
 import "./voice-diag-log";
 
-// One destination, as Nav 59 passes a single chosen point. The navigator uses
-// the device location it already has. This file never calls simulateLocation,
-// and it never writes the point to the journal.
-const DESTINATION = { lat: 50.467, lng: 30.515 };
-const AUTO_SIM_SPEED = 8;
+// The simulated car starts beside a real camera and then moves along the
+// route. The point stays in the navigator. This file does not write it down.
+const CAMERA_SIM_SPEED = 1;
 const SAMPLE_MS = 5000;
 const BEFORE_LIMIT_MS = 45000;
 const AFTER_LIMIT_MS = 25000;
@@ -151,11 +150,29 @@ async function locationReady(cancelled) {
   return !cancelled();
 }
 
-async function requestRoute(controller, cancelled) {
+async function requestRoute(controller, cancelled, approach) {
+  const place = controller?.simulator?.simulateLocation;
+  if (approach?.start && typeof place === "function") {
+    await withTimeout(
+      Promise.resolve(place.call(controller.simulator, approach.start)),
+      8000,
+      "place-timeout",
+    );
+    traceNavVoice("camera.route", {
+      placed: true,
+      cameraId: approach.cameraId || "none",
+      distance: approach.distance ?? null,
+      heading: approach.heading == null ? null : Math.round(approach.heading),
+    });
+    if (!await wait(500, cancelled)) return "cancelled";
+  } else {
+    traceNavVoice("camera.route", { placed: false, cameraId: approach?.cameraId || "none" });
+    return "no-camera";
+  }
   const started = Date.now();
   const ask = async (attempt) => {
     const status = await withTimeout(controller.setDestination(
-      { title: "TEST", position: DESTINATION },
+      { title: "TEST", position: approach.destination },
       { routingOptions: { travelMode: TravelMode.DRIVING } },
     ), 25000, "route-timeout");
     traceNavVoice("auto.route", {
@@ -173,8 +190,43 @@ async function requestRoute(controller, cancelled) {
   return ask(2);
 }
 
+async function rollApproach(controller, approach, onNavigationFix, cancelled) {
+  const place = controller?.simulator?.simulateLocation;
+  if (!approach?.start || typeof place !== "function") {
+    traceNavVoice("camera.roll", { started: false });
+    return;
+  }
+  let lat = approach.start.lat;
+  let lng = approach.start.lng;
+  let previous = null;
+  for (let step = 0; step < 6; step += 1) {
+    if (cancelled()) return;
+    const next = movePoint(lat, lng, approach.heading, 16);
+    lat = next.lat;
+    lng = next.lon;
+    const now = Date.now();
+    try {
+      await Promise.resolve(place.call(controller.simulator, { lat, lng }));
+    } catch {
+      traceNavVoice("camera.roll", { started: false, step });
+      return;
+    }
+    const sample = navigationSample({
+      lat,
+      lng,
+      speed: 16,
+      bearing: approach.heading,
+      time: now,
+    }, previous, now);
+    previous = sample?.previous || previous;
+    if (sample?.fix) await Promise.resolve(onNavigationFix?.(sample.fix));
+    if (!await wait(1000, cancelled)) return;
+  }
+  traceNavVoice("camera.roll", { started: true, steps: 6, speedKmh: 58 });
+}
+
 export async function runVoiceDiagAuto({
-  controllerRef, requestVoice, setOnTurnByTurn, setOnLocationChanged, markGuiding, ensureSession, cancelled,
+  controllerRef, requestVoice, setOnTurnByTurn, observeLocation, decisionRef, approach, onNavigationFix, markGuiding, ensureSession, cancelled,
 }) {
   const phases = {
     before: { events: 0, maneuvers: [] },
@@ -226,7 +278,7 @@ export async function runVoiceDiagAuto({
       });
     }
   });
-  setOnLocationChanged?.(location => {
+  observeLocation?.(location => {
     locationUpdates += 1;
     const lat = Number(location?.lat);
     const lng = Number(location?.lng);
@@ -281,8 +333,10 @@ export async function runVoiceDiagAuto({
     await withTimeout(ensureSession(), 20000, "session-timeout");
     if (cancelled() || !await locationReady(cancelled)) return;
     const controller = controllerRef.current;
-    const status = await requestRoute(controller, cancelled);
+    const status = await requestRoute(controller, cancelled, approach);
     if (cancelled() || status !== RouteStatus.OK) return;
+    await requestVoice(4, "before-start");
+    traceNavVoice("check.google-only", { playClip: false, auto: true, when: "before-start" });
     try {
       await withTimeout(controller.startGuidance(), 15000, "guidance-timeout");
       markGuiding(true);
@@ -291,16 +345,16 @@ export async function runVoiceDiagAuto({
       traceNavVoice("auto.guidance", { started: false, code: failureCode(error) });
       return;
     }
-    await requestVoice(4, "google-only");
-    traceNavVoice("check.google-only", { playClip: false, auto: true });
+    await rollApproach(controller, approach, onNavigationFix, cancelled);
+    if (cancelled()) return;
     const alongRoute = controller?.simulator?.simulateLocationsAlongExistingRoute;
     if (typeof alongRoute !== "function") {
       traceNavVoice("auto.simulation", { started: false, code: "missing" });
       return;
     }
     try {
-      await Promise.resolve(alongRoute.call(controller.simulator, { speedMultiplier: AUTO_SIM_SPEED }));
-      traceNavVoice("auto.simulation", { started: true, speedMultiplier: AUTO_SIM_SPEED });
+      await Promise.resolve(alongRoute.call(controller.simulator, { speedMultiplier: CAMERA_SIM_SPEED }));
+      traceNavVoice("auto.simulation", { started: true, speedMultiplier: CAMERA_SIM_SPEED });
     } catch (error) {
       traceNavVoice("auto.simulation", { started: false, code: failureCode(error) });
       return;
@@ -312,7 +366,20 @@ export async function runVoiceDiagAuto({
       traceNavVoice("auto.legs", { error: error?.code || "segments-failed" });
     }
     const before = await watch(BEFORE_LIMIT_MS, TURN_GOAL);
-    await probe("before-clip");
+    let approachDecision = decisionRef?.current || null;
+    const approachStarted = Date.now();
+    while (approachDecision?.outcome !== "spoken" && Date.now() - approachStarted < 20000) {
+      if (!await wait(500, cancelled)) break;
+      approachDecision = decisionRef?.current || approachDecision;
+    }
+    await probe("approach");
+    traceNavVoice("auto.approach", {
+      outcome: approachDecision?.outcome || "none",
+      cameraId: approachDecision?.cameraId ?? "none",
+      distance: approachDecision?.distance ?? null,
+      speed: approachDecision?.speedKmh ?? null,
+      speech: typeof approachDecision?.speech === "string" ? approachDecision.speech : "none",
+    });
     traceNavVoice("auto.maneuvers", {
       phase: "before",
       count: phases.before.events,
@@ -322,17 +389,7 @@ export async function runVoiceDiagAuto({
       movedMeters: Math.round(movedMeters),
       locationUpdates,
     });
-    traceNavVoice("check.yevheniia", { clip: "close", auto: true });
-    phase = "clip";
-    try {
-      await speakCameraAlert("", "uk", yevheniiaOnlyPlan());
-      traceNavVoice("check.yevheniia.done", { clip: "close", auto: true });
-    } catch {
-      traceNavVoice("check.failed", { check: "yevheniia" });
-    }
     phase = "after";
-    await requestVoice(4, "restore");
-    traceNavVoice("check.restore.done", { clip: "close", auto: true });
     const after = await watch(AFTER_LIMIT_MS, 0);
     await probe("after-restore");
     traceNavVoice("auto.maneuvers", {

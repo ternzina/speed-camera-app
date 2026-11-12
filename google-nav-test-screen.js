@@ -19,6 +19,9 @@ import {
   savedPlaceCopy, savedPlaceFromSuggestion, savedPlaceRoute, storeSavedPlaces,
 } from "./navtest-saved-places";
 import { withNavigationWindow } from "./navigation-readiness";
+import { cameraPoints } from "./camera-data";
+import { diagnosticApproach } from "./camera-fix";
+import { navigationSample } from "./nav-sim-camera";
 import { nativeVoiceGuidance, traceNavVoice } from "./nav-voice-trace";
 import { runVoiceDiagAuto } from "./voice-diag-auto";
 import { VoiceDiagPanel } from "./voice-diag-panel";
@@ -130,7 +133,7 @@ export default function GoogleNavTestScreen(props) {
 function GoogleNavBody({
   language, night, coords, camera, cameraType, voiceEnabled, onToggleVoice,
   picking, tripActive, onStartTrip, onStopTrip, onClosePick, handoff, onRouteActive,
-  diagnostic = false, diagnosticBridge = null,
+  diagnostic = false, diagnosticBridge = null, cameras = null, onNavigationFix = null,
 }) {
   const copy = COPY[language] || COPY.ru;
   const places = savedPlaceCopy(language);
@@ -319,6 +322,31 @@ function GoogleNavBody({
     requestVoiceGuidance(controller, mode, "guiding");
   }, [controller, guiding, voiceEnabled, sessionReady]);
 
+  const locationSink = useRef(() => {});
+  const previousNav = useRef(null);
+  const onNavigationFixRef = useRef(onNavigationFix);
+  onNavigationFixRef.current = onNavigationFix;
+  const decisionRef = useRef(null);
+  const approachRef = useRef(undefined);
+  if (diagnostic && approachRef.current === undefined) {
+    approachRef.current = diagnosticApproach(cameraPoints(cameras));
+  }
+  useEffect(() => {
+    if (!diagnostic) return undefined;
+    setOnLocationChanged(location => {
+      locationSink.current(location);
+      const sample = navigationSample(location, previousNav.current);
+      if (!sample) return;
+      previousNav.current = sample.previous;
+      const pending = onNavigationFixRef.current?.(sample.fix);
+      Promise.resolve(pending).then(result => {
+        if (!result || typeof result !== "object") return;
+        if (result.outcome === "spoken" || decisionRef.current?.outcome !== "spoken") decisionRef.current = result;
+      }, () => {});
+    });
+    return () => setOnLocationChanged(null);
+  }, [diagnostic, setOnLocationChanged]);
+
   useEffect(() => {
     if (!diagnostic || autoStarted.current) return undefined;
     autoStarted.current = true;
@@ -327,7 +355,17 @@ function GoogleNavBody({
       controllerRef,
       requestVoice: (index, reason) => requestVoiceGuidance(controllerRef.current, index, reason),
       setOnTurnByTurn,
-      setOnLocationChanged,
+      observeLocation: listener => { locationSink.current = typeof listener === "function" ? listener : () => {}; },
+      decisionRef,
+      approach: approachRef.current,
+      onNavigationFix: fix => {
+        const pending = onNavigationFixRef.current?.(fix);
+        Promise.resolve(pending).then(result => {
+          if (!result || typeof result !== "object") return;
+          if (result.outcome === "spoken" || decisionRef.current?.outcome !== "spoken") decisionRef.current = result;
+        }, () => {});
+        return pending;
+      },
       markGuiding: (value) => {
         guidingRef.current = value;
         setGuiding(value);
@@ -361,7 +399,7 @@ function GoogleNavBody({
       cancelled: () => stop || !alive.current,
     });
     return () => { stop = true; };
-  }, [diagnostic, setOnTurnByTurn, setOnLocationChanged]);
+  }, [diagnostic, setOnTurnByTurn]);
 
   async function ensureSession() {
     if (ready.current) return;

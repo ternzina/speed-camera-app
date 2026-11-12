@@ -43,6 +43,8 @@ import { applicationId } from "expo-application";
 import { isGoogleNavTestApp, STORE_PREVIEW_BUNDLE, usesInAppGoogleNav } from "./google-nav-gate";
 import { isVoiceDiagApp } from "./voice-diag-gate";
 import { nearestAhead, ukraineFixDecision } from "./camera-fix";
+import { cameraDecisionJournal, speechTrace } from "./nav-sim-camera";
+import { traceNavVoice } from "./nav-voice-trace";
 import { runPreviewInstallCheck } from "./preview-install-check";
 import { runPreviewIntegration } from "./preview-integration";
 import { nearbyCopy as placesNearbyCopy, nearbyHandoff } from "./google-places";
@@ -1085,9 +1087,25 @@ export default function App() {
       }
       return result;
     };
+    const publish = (result, requested, eligible, angle) => {
+      const logged = logGps(result);
+      if (source === "simulated") {
+        traceNavVoice("camera.decision", cameraDecisionJournal({
+          cameraId: logged.cameraId,
+          distance: logged.distance,
+          speed: logged.speedKmh,
+          heading,
+          angle,
+          eligible,
+          suppressedReason: eligible ? "none" : logged.outcome,
+          ...speechTrace(logged.speech, requested),
+        }));
+      }
+      return logged;
+    };
     if (!(kmh >= MIN_MOVING_SPEED_KMH) || heading == null) {
       if (source === "gps") setAhead(null);
-      return Promise.resolve(logGps({ source, speedKmh: Number.isFinite(kmh) ? Math.round(kmh) : null, outcome: "below-speed", speech: "none", distance: null, limit: null, cameraId: null }));
+      return Promise.resolve(publish({ source, speedKmh: Number.isFinite(kmh) ? Math.round(kmh) : null, outcome: "below-speed", speech: "none", distance: null, limit: null, cameraId: null }, false, false, null));
     }
     const ahead = findNearestAhead(fix.latitude, fix.longitude, heading);
     if (source === "gps") setAhead(ahead);
@@ -1109,13 +1127,13 @@ export default function App() {
         limit: decision.limit ?? ahead?.speed_limit ?? null,
         cameraId: decision.cameraId ?? ahead?.id ?? null,
       };
-      return logGps(result);
+      return result;
     };
-    if (!decision.speak) return Promise.resolve(finish(decision.reason, "none"));
+    if (!decision.speak) return Promise.resolve(publish(finish(decision.reason, "none"), false, false, decision.angle));
     return speakWarning(ahead, alertDistanceForSpeed(kmh, settings), kmh, available, {
       vibrate: source === "gps",
       recordHistory: source === "gps",
-    }).then(speech => finish("spoken", speech || "spoken"));
+    }).then(speech => publish(finish("spoken", speech || "spoken"), true, true, decision.angle));
   }
 
   async function startTracking() {
@@ -1916,6 +1934,8 @@ export default function App() {
           night={isNight}
           coords={coords}
           camera={null}
+          cameras={data}
+          onNavigationFix={handleUkraineFix}
           cameraType=""
           voiceEnabled={settings.voice !== false}
           onToggleVoice={() => setSettings(current => ({ ...current, voice: current.voice === false }))}

@@ -13,11 +13,23 @@ export function yevheniiaOnlyPlan() {
   return { steps: [{ id: "close", join: "none" }], changeVoice: false };
 }
 
+// The same sentence ukrainianClipPlan builds for a camera 500 m ahead at 50.
+// The button plays this plan and does not start a trip.
+export function cameraVoiceCheckPlan() {
+  return {
+    steps: [
+      { id: "lead-kamera-cherez", join: "none" },
+      { id: "dist-0500", join: "crossfade" },
+      { id: "limit-50", join: "pause" },
+    ],
+  };
+}
+
 export function restoreRequest() {
   return { silentIndex: 0, voiceIndex: 4, clip: "close" };
 }
 
-export const AUTO_ORDER = ["route", "guidance", "google-only", "simulation", "yevheniia", "restore"];
+export const AUTO_ORDER = ["place", "route", "before-start", "guidance", "simulation", "approach"];
 
 export function failureCode(error) {
   const text = String(error?.code || error?.message || "failed");

@@ -102,7 +102,8 @@ function clipPlanFor(text, locale, plan) {
 // Clips first. A missing file or a player error leaves the warning to system
 // speech in the locale the caller asked for. A stale ticket never starts.
 async function playUkrainianClips(text, locale, plan, wait) {
-  traceNavVoice("warning.begin", { kind: "clips", steps: Array.isArray(plan) ? plan.length : 0 });
+  const stepCount = Array.isArray(plan) ? plan.length : (Array.isArray(plan?.steps) ? plan.steps.length : 0);
+  traceNavVoice("warning.begin", { kind: "clips", steps: stepCount });
   const session = coordinator.beginClip();
   try {
     let result = { played: 0, stopped: false, failed: false };

@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { NativeModules, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { applicationId } from "expo-application";
-import { playClipPlan } from "./uk-voice-player";
+import { speakCameraAlert } from "./camera-speech";
+import { playClipPlan, clipPlanMissing } from "./uk-voice-player";
 import { subscribeNavVoice, traceNavVoice } from "./nav-voice-trace";
-import { googleOnlyRequest, restoreRequest, routeSimulationRequest, yevheniiaOnlyPlan } from "./voice-diag-checks";
+import { cameraVoiceCheckPlan, googleOnlyRequest, restoreRequest, routeSimulationRequest, yevheniiaOnlyPlan } from "./voice-diag-checks";
 import "./voice-diag-log";
 
 const LOCATION = {
@@ -86,6 +87,49 @@ export function VoiceDiagPanel({ controllerRef, guiding, voiceEnabled, requestVo
     }
   }
 
+  async function logOutput(label) {
+    const read = NativeModules.CamAlertVoiceDiag?.audioProbe;
+    if (typeof read !== "function") {
+      traceNavVoice("camera.output", { label, probe: false });
+      return;
+    }
+    try {
+      const snap = await read();
+      const ports = Array.isArray(snap?.route) ? snap.route.filter(port => typeof port === "string") : [];
+      traceNavVoice("camera.output", {
+        label,
+        category: typeof snap?.category === "string" ? snap.category : "",
+        ports: ports.join(","),
+        volume: typeof snap?.volume === "number" ? Math.round(snap.volume * 100) / 100 : null,
+        otherAudio: snap?.otherAudio === true,
+      });
+    } catch {
+      traceNavVoice("camera.output", { label, probe: false });
+    }
+  }
+
+  async function onCheckCameraVoice() {
+    const plan = cameraVoiceCheckPlan();
+    const steps = Array.isArray(plan?.steps) ? plan.steps.map(step => step.id).filter(Boolean) : [];
+    traceNavVoice("camera.voice.check", {
+      trip: false,
+      steps: steps.join(","),
+      missing: clipPlanMissing(plan) === true,
+    });
+    await logOutput("before-check");
+    try {
+      const speech = await speakCameraAlert("Камера через 500 метрів. Обмеження 50.", "uk-UA", plan);
+      traceNavVoice("camera.voice.check.done", {
+        speechRequested: true,
+        speechCompleted: speech === "done",
+        speechError: speech === "error" || speech === "silent" ? speech : "none",
+      });
+    } catch {
+      traceNavVoice("camera.voice.check.done", { speechRequested: true, speechCompleted: false, speechError: "error" });
+    }
+    await logOutput("after-check");
+  }
+
   async function onRestore() {
     const request = restoreRequest();
     traceNavVoice("check.restore", { clip: request.clip });
@@ -119,6 +163,9 @@ export function VoiceDiagPanel({ controllerRef, guiding, voiceEnabled, requestVo
           </Pressable>
           <Pressable accessibilityRole="button" onPress={onGoogleOnly} style={styles.button}>
             <Text style={styles.buttonText}>Google без камер</Text>
+          </Pressable>
+          <Pressable accessibilityRole="button" onPress={onCheckCameraVoice} style={styles.button}>
+            <Text style={styles.buttonText}>Проверить голос камеры</Text>
           </Pressable>
           <Pressable accessibilityRole="button" onPress={onYevheniia} style={styles.button}>
             <Text style={styles.buttonText}>Yevheniia</Text>
