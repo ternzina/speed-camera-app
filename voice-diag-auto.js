@@ -35,16 +35,52 @@ function stepCount(event) {
   return Array.isArray(steps) ? steps.length : null;
 }
 
-function maneuverName(event) {
-  const raw = event?.currentStep?.maneuver;
+const MANEUVER = [
+  "UNKNOWN", "DEPART", "DESTINATION", "DESTINATION_LEFT", "DESTINATION_RIGHT", "STRAIGHT",
+  "TURN_LEFT", "TURN_RIGHT", "KEEP_LEFT", "KEEP_RIGHT", "SLIGHT_LEFT", "SLIGHT_RIGHT",
+  "SHARP_LEFT", "SHARP_RIGHT", "UTURN_CLOCKWISE", "UTURN_COUNTER",
+  "MERGE", "MERGE_LEFT", "MERGE_RIGHT", "FORK_LEFT", "FORK_RIGHT",
+  "ON_RAMP", "ON_RAMP_LEFT", "ON_RAMP_RIGHT", "ON_RAMP_KEEP_LEFT", "ON_RAMP_KEEP_RIGHT",
+  "ON_RAMP_SLIGHT_LEFT", "ON_RAMP_SLIGHT_RIGHT", "ON_RAMP_SHARP_LEFT", "ON_RAMP_SHARP_RIGHT",
+  "ON_RAMP_UTURN_CLOCKWISE", "ON_RAMP_UTURN_COUNTER",
+  "OFF_RAMP", "OFF_RAMP_LEFT", "OFF_RAMP_RIGHT", "OFF_RAMP_KEEP_LEFT", "OFF_RAMP_KEEP_RIGHT",
+  "OFF_RAMP_SLIGHT_LEFT", "OFF_RAMP_SLIGHT_RIGHT", "OFF_RAMP_SHARP_LEFT", "OFF_RAMP_SHARP_RIGHT",
+  "OFF_RAMP_UTURN_CLOCKWISE", "OFF_RAMP_UTURN_COUNTER",
+  "ROUNDABOUT_CLOCKWISE", "ROUNDABOUT_COUNTER",
+  "ROUNDABOUT_STRAIGHT_CLOCKWISE", "ROUNDABOUT_STRAIGHT_COUNTER",
+  "ROUNDABOUT_LEFT_CLOCKWISE", "ROUNDABOUT_LEFT_COUNTER",
+  "ROUNDABOUT_RIGHT_CLOCKWISE", "ROUNDABOUT_RIGHT_COUNTER",
+  "ROUNDABOUT_SLIGHT_LEFT_CLOCKWISE", "ROUNDABOUT_SLIGHT_LEFT_COUNTER",
+  "ROUNDABOUT_SLIGHT_RIGHT_CLOCKWISE", "ROUNDABOUT_SLIGHT_RIGHT_COUNTER",
+  "ROUNDABOUT_SHARP_LEFT_CLOCKWISE", "ROUNDABOUT_SHARP_LEFT_COUNTER",
+  "ROUNDABOUT_SHARP_RIGHT_CLOCKWISE", "ROUNDABOUT_SHARP_RIGHT_COUNTER",
+  "ROUNDABOUT_UTURN_CLOCKWISE", "ROUNDABOUT_UTURN_COUNTER",
+  "ROUNDABOUT_EXIT_CLOCKWISE", "ROUNDABOUT_EXIT_COUNTER",
+  "FERRY", "FERRY_TRAIN", "NAME_CHANGE",
+];
+
+function maneuverCode(raw) {
+  const code = typeof raw === "number" ? raw : Number(raw);
+  return Number.isInteger(code) ? code : null;
+}
+
+function maneuverLabel(raw) {
+  const code = maneuverCode(raw);
+  if (code != null && MANEUVER[code]) return MANEUVER[code];
   return typeof raw === "string" ? raw.slice(0, 48) : "";
+}
+
+function maneuverName(event) {
+  return maneuverLabel(event?.currentStep?.maneuver);
 }
 
 function turnStepCount(event) {
   const steps = event?.getRemainingSteps;
   if (!Array.isArray(steps)) return null;
-  return steps.filter(step => typeof step?.maneuver === "string"
-    && /TURN|ROUNDABOUT|FORK|RAMP|MERGE/i.test(step.maneuver)).length;
+  return steps.filter(step => {
+    const code = maneuverCode(step?.maneuver);
+    return code != null && code >= 6 && code <= 62;
+  }).length;
 }
 
 function wait(ms, cancelled) {
@@ -151,6 +187,7 @@ export async function runVoiceDiagAuto({
   let lastFix = null;
   let lastTurnSig = "";
   let turnSteps = null;
+  let loggedShape = false;
   setOnTurnByTurn?.(events => {
     const list = Array.isArray(events) ? events : [];
     const bucket = phases[phase] || phases.before;
@@ -166,6 +203,15 @@ export async function runVoiceDiagAuto({
       const turnsAhead = turnStepCount(event);
       if (turnsAhead != null) turnSteps = turnsAhead;
       if (maneuver) bucket.maneuvers.push(maneuver);
+      if (!loggedShape && Array.isArray(event?.getRemainingSteps)) {
+        loggedShape = true;
+        const labels = event.getRemainingSteps.map(step => maneuverLabel(step?.maneuver)).filter(Boolean);
+        traceNavVoice("auto.shape", {
+          steps: labels.length,
+          turns: labels.filter(label => !/^(DEPART|DESTINATION|STRAIGHT|UNKNOWN|NAME_CHANGE)/.test(label)).length,
+          sample: [...new Set(labels)].slice(0, 8).join(","),
+        });
+      }
       const signature = `${navStateName(event?.navState)}|${maneuver}|${steps}|${turnsAhead}`;
       if (signature === lastTurnSig) continue;
       lastTurnSig = signature;
