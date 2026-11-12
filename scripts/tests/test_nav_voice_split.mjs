@@ -11,6 +11,18 @@ const read = (name) => fs.readFileSync(new URL(name, root), "utf8");
 const VOICE = 4;
 const SILENT = 0;
 
+test("Android sets turn voice before guidance and silences it for a camera clip", () => {
+  const screen = read("google-navigation-screen.js");
+  const start = screen.slice(screen.indexOf("function start()"), screen.indexOf("const button ="));
+  const voiceAt = start.indexOf("setAudioGuidanceType(androidNavigationVoice(before))");
+  const goAt = start.indexOf("controller.startGuidance()");
+  assert.ok(voiceAt > 0 && goAt > voiceAt);
+  assert.match(screen, /subscribeCameraSpeech\(cameraSpeaking =>/);
+  assert.match(screen, /AudioGuidance\.SILENT/);
+  assert.match(screen, /AudioGuidance\.BLUETOOTH_AUDIO/);
+  assert.doesNotMatch(screen, /simulateLocation|CAMALERT_DIAG_TRIP|VoiceDiagPanel/);
+});
+
 test("Google voice without a camera assigns AlertsAndGuidance once", () => {
   assert.equal(
     googleAudioMode({ cameraSpeaking: false, guiding: true, voiceEnabled: true }),

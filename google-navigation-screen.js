@@ -6,6 +6,7 @@ import MapView, { Marker } from 'react-native-maps';
 import * as Location from 'expo-location';
 import { NavigationProvider, NavigationView, useNavigation, TaskRemovedBehavior, NavigationNightMode, NavigationSessionStatus, RouteStatus, TravelMode, AudioGuidance, CameraPerspective } from '@googlemaps/react-native-navigation-sdk';
 import { subscribeCameraSpeech } from './camera-speech';
+import { voiceModeBeforeGuidance } from './google-nav-banner';
 import { navigationCopy } from './google-navigation-copy';
 import { withNavigationWindow } from './navigation-readiness';
 import { parseDestination } from './navigator-links';
@@ -19,6 +20,13 @@ function serial(operation) {
   return result;
 }
 const terms = { title: 'Google Navigation', companyName: 'CamAlert', showOnlyDisclaimer: false };
+
+// Android turn voice uses the same decision as iOS, plus the car Bluetooth bit.
+function androidNavigationVoice(mode) {
+  return mode === 'alerts-and-guidance'
+    ? AudioGuidance.VOICE_ALERTS_AND_GUIDANCE | AudioGuidance.BLUETOOTH_AUDIO
+    : AudioGuidance.SILENT;
+}
 const navigationHeaderStyle = {
   primaryDayModeThemeColor: '#1260E8',
   primaryNightModeThemeColor: '#10263B',
@@ -51,6 +59,7 @@ function RouteScreen({ language, initialDestination, coords, night, mapStyle, vo
   const controllerRef = useRef(controller);
   controllerRef.current = controller;
   const alive = useRef(true);
+  const cameraSpeakingRef = useRef(false);
   const initialized = useRef(false);
   const busyRef = useRef(false);
   const mapRef = useRef(null);
@@ -97,9 +106,8 @@ function RouteScreen({ language, initialDestination, coords, night, mapStyle, vo
   useEffect(() => {
     if (stage === 'choose') return;
     return subscribeCameraSpeech(cameraSpeaking => {
-      const mode = voiceEnabled && !cameraSpeaking
-        ? AudioGuidance.VOICE_ALERTS_AND_GUIDANCE | AudioGuidance.BLUETOOTH_AUDIO
-        : AudioGuidance.SILENT;
+      cameraSpeakingRef.current = cameraSpeaking;
+      const mode = androidNavigationVoice(voiceModeBeforeGuidance({ cameraSpeaking, voiceEnabled }));
       Promise.resolve(controller.setAudioGuidanceType(mode)).catch(() => {});
     });
   }, [controller, stage, voiceEnabled]);
@@ -213,6 +221,11 @@ function RouteScreen({ language, initialDestination, coords, night, mapStyle, vo
       if (!alive.current) return;
       if (!(await onStartTrip())) return;
       const inForeground = () => alive.current && AppState.currentState === 'active';
+      const before = voiceModeBeforeGuidance({
+        cameraSpeaking: cameraSpeakingRef.current,
+        voiceEnabled,
+      });
+      await Promise.resolve(controller.setAudioGuidanceType(androidNavigationVoice(before))).catch(() => {});
       await withNavigationWindow(() => controller.startGuidance(), inForeground);
       if (alive.current) {
         stageRef.current = 'guiding';

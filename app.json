@@ -29,7 +29,7 @@
         "ACCESS_COARSE_LOCATION"
       ],
       "package": "com.camera21wek",
-      "versionCode": 25
+      "versionCode": 49
     },
     "plugins": [
       "expo-status-bar",
