@@ -90,7 +90,17 @@ test("the premium screen copy exists in every CamAlert language and names the tr
     assert.match(copy.trial, /3/);
     assert.match(copy.continue, /\S/);
     assert.match(copy.restore, /\S/);
+    assert.match(copy.trialEnds, /\S/);
+    assert.match(copy.afterTrial, /\S/);
   }
   assert.match(read("premium-screen.js"), /camalert_premium_yearly/);
   assert.match(read("premium-screen.js"), /onRestore/);
+  assert.match(read("premium-manage-screen.js"), /apps.apple.com\/account\/subscriptions/);
+  assert.doesNotMatch(read("premium-manage-screen.js"), /\$\d|consoleUsd/);
+  assert.doesNotMatch(read("App.js"), /premium-manage-screen|CamAlertPremiumStore/);
+  const store = read("ios/CamAlert/CamAlertPremiumStore.swift");
+  assert.match(store, /Product\.products/);
+  assert.match(store, /product\.purchase/);
+  assert.match(store, /Transaction\.currentEntitlements/);
+  assert.doesNotMatch(store, /1\.49|3\.49|27\.99|44\.99/);
 });
