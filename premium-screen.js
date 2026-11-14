@@ -1,7 +1,7 @@
 import React from "react";
 import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { PREMIUM_PLANS, storePriceLabel } from "./premium-catalog.js";
-import { premiumCopy, selectedPlanTerms } from "./premium-copy.js";
+import { premiumCopy, selectedPlanTerms, settingsCardCopy } from "./premium-copy.js";
 
 const INK = "#E7EEF6";
 const MUTED = "#9BB0C7";
@@ -11,12 +11,12 @@ const LINE = "#1E3D5C";
 const YEAR = "#F5B64C";
 const ACTION = "#1260E8";
 
-export function PremiumEntryCard({ language = "ru", night = true, onPress }) {
-  const copy = premiumCopy(language);
+export function PremiumEntryCard({ language = "ru", night = true, entitlement = null, now, onPress }) {
+  const card = settingsCardCopy(entitlement, language, now);
   return (
     <Pressable
       accessibilityRole="button"
-      accessibilityLabel={`${copy.open}. ${copy.cardSubtitle}`}
+      accessibilityLabel={`${card.title}. ${card.subtitle}`}
       onPress={onPress}
       style={[styles.entry, night ? styles.entryNight : styles.entryDay]}
     >
@@ -24,8 +24,8 @@ export function PremiumEntryCard({ language = "ru", night = true, onPress }) {
         <Text style={styles.entryStar}>★</Text>
       </View>
       <View style={styles.entryCopy}>
-        <Text maxFontSizeMultiplier={1.3} style={styles.entryTitle}>{copy.open}</Text>
-        <Text maxFontSizeMultiplier={1.3} style={styles.entrySub}>{copy.cardSubtitle}</Text>
+        <Text maxFontSizeMultiplier={1.3} style={styles.entryTitle}>{card.title}</Text>
+        <Text maxFontSizeMultiplier={1.3} style={styles.entrySub}>{card.subtitle}</Text>
       </View>
       <Text style={styles.entryArrow}>›</Text>
     </Pressable>

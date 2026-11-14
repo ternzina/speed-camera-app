@@ -849,7 +849,10 @@ function GoogleNavBody({
               guidanceArmed.current = false;
               setRoadSnapBackground(false);
               onStopTrip();
-              if (finishedNavigation) onCompletedNavigation?.();
+              if (finishedNavigation) {
+                onCompletedNavigation?.();
+                void endRoute();
+              }
             }} style={styles.endTrip}>
               <Text numberOfLines={1} maxFontSizeMultiplier={1} adjustsFontSizeToFit minimumFontScale={0.8} style={styles.endTripText}>{copy.endTrip}</Text>
             </Pressable>

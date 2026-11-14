@@ -20,8 +20,8 @@ import { createNavtestSectionStore } from "./navtest-section";
 import { cameraPoints, countryFeed, loadCameraCache, saveCameraCache } from "./camera-data";
 import PremiumScreen, { PremiumEntryCard } from "./premium-screen";
 import PremiumManageScreen from "./premium-manage-screen";
-import { offerReasonLines, premiumCopy } from "./premium-copy";
-import { cacheVerifiedEntitlement, loadPremiumCatalog, openAppStoreReview, purchasePremium, readCachedEntitlement, refreshPremiumEntitlements, rememberLegacy, requestAppReview, restorePremium } from "./premium-store";
+import { offerReasonLines, premiumCopy, settingsCardCopy } from "./premium-copy";
+import { cacheVerifiedEntitlement, loadPremiumCatalog, openAppStoreReview, purchasePremium, readCachedEntitlement, refreshPremiumEntitlements, rememberLegacy, restorePremium } from "./premium-store";
 import { chooseRestoredEntitlement, restoreOutcome } from "./premium-access";
 import { hasPaidPremium, offerDecision, promptSettled, recordCompletedTrip, recordSuccessfulLaunch, COMPLETED_TRIP_KEY, LAUNCH_COUNT_KEY, PREMIUM_PROMPT_KEY, REVIEW_PROMPT_KEY, TRIP_PREMIUM_KEY, TRIP_REVIEW_KEY } from "./launch-prompts";
 import { COUNTRY_NAMES, countryFlag } from "./countries";
@@ -1927,6 +1927,7 @@ export default function App() {
         trialEligible = false;
       }
       if (!live) return;
+      if (cached) setPremiumEntitlement(cached);
       setLaunchFacts({
         count,
         trips,
@@ -2041,7 +2042,7 @@ export default function App() {
   }
 
   function openPremiumEntry() {
-    if (premiumEntitlement) {
+    if (settingsCardCopy(premiumEntitlement, settings.language).open === "manage") {
       setPremiumStatus("");
       setPremiumView("manage");
       return;
@@ -2101,6 +2102,7 @@ export default function App() {
       if (decision.verified) {
         setPremiumEntitlement(decision.entitlement);
         setLaunchFacts(current => current ? { ...current, entitlement: decision.entitlement } : current);
+        if (settingsCardCopy(decision.entitlement, settings.language).open === "manage") setPremiumView("manage");
       }
       setPremiumStatus(restoredNotice(decision));
     } finally {
@@ -2213,8 +2215,9 @@ export default function App() {
               accessibilityRole="button"
               onPress={() => {
                 if (kind === "review") {
-                  dismissLaunchPrompt("review");
-                  requestAppReview().catch(() => {});
+                  openAppStoreReview().then(() => dismissLaunchPrompt("review")).catch(() => {
+                    Alert.alert("CamAlert", premiumCopy(settings.language).rateFailed);
+                  });
                 } else {
                   dismissLaunchPrompt("premium");
                   openPremium("camalert_premium_yearly");
@@ -2618,7 +2621,7 @@ export default function App() {
             <SettingSwitch label={(WARNING_UI[settings.language] || WARNING_UI.ru).switchLabel} value={settings.cameraWarnings !== false} onChange={v=>setSettings({...settings,cameraWarnings:v})}/>
             <Pressable accessibilityRole="button" onPress={() => {setLawsQuery("");setLawsOpen(true);}} style={[s.action, pad && { flex: 0 }]}><Text style={s.actionText}>{(WARNING_UI[settings.language] || WARNING_UI.ru).laws} →</Text></Pressable>
             <Text style={s.note}>{(WARNING_UI[settings.language] || WARNING_UI.ru).lawsNote}</Text>
-            <PremiumEntryCard language={settings.language} night={isNight} onPress={openPremiumEntry} />
+            <PremiumEntryCard language={settings.language} night={isNight} entitlement={premiumEntitlement} onPress={openPremiumEntry} />
             <Pressable accessibilityRole="button" onPress={() => {setOnboardingPage(0);setOnboardingState("new");}} style={s.alertDemoButton}>
               <Text style={s.alertDemoButtonTitle}>{({ru:"Посмотреть приветствие",uk:"Переглянути привітання",en:"View welcome",pl:"Zobacz powitanie"})[settings.language] || "View welcome"}</Text>
             </Pressable>

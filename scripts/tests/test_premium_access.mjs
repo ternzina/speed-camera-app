@@ -19,7 +19,7 @@ import {
   restoreOutcome,
   subscriptionStatus,
 } from "../../premium-access.js";
-import { PREMIUM_COPY, selectedPlanTerms } from "../../premium-copy.js";
+import { PREMIUM_COPY, selectedPlanTerms, settingsCardCopy, statusLines } from "../../premium-copy.js";
 import { chooseLaunchPrompt, hasPaidPremium, offerDecision, promptSettled, recordCompletedTrip, recordSuccessfulLaunch, shouldCountTrip } from "../../launch-prompts.js";
 
 const now = Date.parse("2026-11-13T18:00:00Z");
@@ -261,4 +261,30 @@ test("the fifth launch offers Premium and does not buy, and a trip hides both pr
   assert.match(read("ios/CamAlert/CamAlertPremiumStore.swift"), /AppStore\.sync/);
   assert.match(read("google-nav-test-screen.js"), /backgroundColor: "#FFFFFF"/);
   assert.match(read("google-nav-test-screen.js"), /color: "#10263B"/);
+  assert.match(read("google-nav-test-screen.js"), /void endRoute\(\)/);
+  assert.match(read("App.js"), /openAppStoreReview\(\)\.then/);
+  assert.doesNotMatch(read("App.js"), /requestAppReview/);
+  const lifetimeCard = settingsCardCopy({ productId: "camalert_premium_lifetime", period: "lifetime" }, "ru", now);
+  assert.equal(lifetimeCard.subtitle, "Активен навсегда ✓");
+  assert.equal(lifetimeCard.open, "manage");
+  const trialCard = settingsCardCopy({ productId: "camalert_premium_yearly", period: "year", expiresAt: now + week, trial: true }, "ru", now);
+  assert.equal(trialCard.subtitle.startsWith("Пробный период до "), true);
+  assert.equal(trialCard.open, "manage");
+  const activeCard = settingsCardCopy({ productId: "camalert_premium_monthly", period: "month", expiresAt: now + week, willAutoRenew: true }, "ru", now);
+  assert.equal(activeCard.subtitle.startsWith("Подписка активна до "), true);
+  assert.equal(settingsCardCopy(null, "ru", now).subtitle, "Больше возможностей в каждой поездке");
+  assert.equal(settingsCardCopy(null, "ru", now).open, "plans");
+  const lifeLines = statusLines({ productId: "camalert_premium_lifetime", period: "lifetime", purchaseDate: now, environment: "sandbox" }, "ru", now);
+  assert.equal(lifeLines.manage, false);
+  assert.equal(lifeLines.lines.includes("CamAlert Premium навсегда"), true);
+  assert.equal(lifeLines.lines.includes("Активен"), true);
+  assert.equal(lifeLines.lines.includes("Разовая покупка. Без продления"), true);
+  assert.equal(lifeLines.lines.includes("Тестовая покупка"), true);
+  assert.equal(lifeLines.lines.some(line => line.startsWith("Дата покупки:")), true);
+  const subLines = statusLines({ productId: "camalert_premium_weekly", period: "week", expiresAt: now + week, willAutoRenew: true }, "ru", now);
+  assert.equal(subLines.manage, true);
+  assert.equal(subLines.lines.includes("Тестовая покупка"), false);
+  const stored = entitlementFromStore({ productId: "camalert_premium_lifetime", purchaseDate: now, environment: "sandbox" });
+  assert.equal(stored.environment, "sandbox");
+  assert.equal(stored.purchaseDate, now);
 });

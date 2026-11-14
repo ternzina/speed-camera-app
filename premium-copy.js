@@ -1,3 +1,5 @@
+import { subscriptionStatus } from "./premium-access.js";
+
 export const PREMIUM_COPY = {
   ru: {
     title: "CamAlert Premium",
@@ -27,6 +29,13 @@ export const PREMIUM_COPY = {
     noRenew: "Дальше списаний нет",
     open: "CamAlert Premium",
     cardSubtitle: "Больше возможностей в каждой поездке",
+    cardLifetime: "Активен навсегда ✓",
+    cardActiveUntil: "Подписка активна до {date}",
+    cardTrialUntil: "Пробный период до {date}",
+    mySubscription: "Моя подписка",
+    lifetimeStanding: "Активен",
+    purchasedOn: "Дата покупки: {date}",
+    sandboxNote: "Тестовая покупка",
     offerTitle: "Попробуйте Premium бесплатно",
     offerPlain: "Попробуйте CamAlert Premium",
     offerSub: "3 дня бесплатно с годовой подпиской",
@@ -114,6 +123,13 @@ export const PREMIUM_COPY = {
     noRenew: "Далі списань немає",
     open: "CamAlert Premium",
     cardSubtitle: "Більше можливостей у кожній поїздці",
+    cardLifetime: "Активний назавжди ✓",
+    cardActiveUntil: "Підписка активна до {date}",
+    cardTrialUntil: "Пробний період до {date}",
+    mySubscription: "Моя підписка",
+    lifetimeStanding: "Активний",
+    purchasedOn: "Дата покупки: {date}",
+    sandboxNote: "Тестова покупка",
     offerTitle: "Спробуйте Premium безкоштовно",
     offerPlain: "Спробуйте CamAlert Premium",
     offerSub: "3 дні безкоштовно з річною підпискою",
@@ -201,6 +217,13 @@ export const PREMIUM_COPY = {
     noRenew: "No further charges",
     open: "CamAlert Premium",
     cardSubtitle: "More in every drive",
+    cardLifetime: "Active forever ✓",
+    cardActiveUntil: "Subscription active until {date}",
+    cardTrialUntil: "Free trial until {date}",
+    mySubscription: "My subscription",
+    lifetimeStanding: "Active",
+    purchasedOn: "Purchase date: {date}",
+    sandboxNote: "Test purchase",
     offerTitle: "Try Premium free",
     offerPlain: "Try CamAlert Premium",
     offerSub: "3 days free with the yearly plan",
@@ -288,6 +311,13 @@ export const PREMIUM_COPY = {
     noRenew: "Kolejnych obciążeń nie będzie",
     open: "CamAlert Premium",
     cardSubtitle: "Więcej możliwości w każdej jeździe",
+    cardLifetime: "Aktywny na zawsze ✓",
+    cardActiveUntil: "Subskrypcja aktywna do {date}",
+    cardTrialUntil: "Okres próbny do {date}",
+    mySubscription: "Moja subskrypcja",
+    lifetimeStanding: "Aktywny",
+    purchasedOn: "Data zakupu: {date}",
+    sandboxNote: "Zakup testowy",
     offerTitle: "Wypróbuj Premium za darmo",
     offerPlain: "Wypróbuj CamAlert Premium",
     offerSub: "3 dni za darmo z planem rocznym",
@@ -405,4 +435,65 @@ export function selectedPlanTerms({ period, price, trialEligible, copy }) {
   if (period === "month") return withPrice(copy.monthTerms, label);
   if (period === "week") return withPrice(copy.weekTerms, label);
   return withPrice(copy.lifeTerms, label);
+}
+
+function dated(template, value) {
+  if (!Number.isFinite(Number(value))) return "";
+  return template.split("{date}").join(new Date(Number(value)).toLocaleDateString());
+}
+
+// The settings card follows a verified entitlement. A missing date stays off
+// the card. An active purchase opens the subscription page; anything else
+// opens the plans.
+export function settingsCardCopy(entitlement, language, now = Date.now()) {
+  const copy = premiumCopy(language);
+  const status = subscriptionStatus(entitlement, now);
+  if (status?.code === "lifetime") {
+    return { title: copy.open, subtitle: copy.cardLifetime, open: "manage" };
+  }
+  if (status?.code === "trial" && Number.isFinite(status.endsAt)) {
+    return { title: copy.open, subtitle: dated(copy.cardTrialUntil, status.endsAt), open: "manage" };
+  }
+  const until = status?.renewsAt || status?.endsAt;
+  if ((status?.code === "active" || status?.code === "renewal-cancelled") && Number.isFinite(until)) {
+    return { title: copy.open, subtitle: dated(copy.cardActiveUntil, until), open: "manage" };
+  }
+  return { title: copy.open, subtitle: copy.cardSubtitle, open: "plans" };
+}
+
+function extraLines(entitlement, copy) {
+  const lines = [];
+  const bought = dated(copy.purchasedOn, entitlement?.purchaseDate);
+  if (bought) lines.push(bought);
+  if (entitlement?.environment === "sandbox") lines.push(copy.sandboxNote);
+  return lines;
+}
+
+export function statusLines(entitlement, language, now = Date.now()) {
+  const copy = premiumCopy(language);
+  const status = subscriptionStatus(entitlement, now);
+  if (!status) return null;
+  const period = entitlement?.period && copy.periods[entitlement.period] ? copy.periods[entitlement.period] : "";
+  const price = typeof entitlement?.displayPrice === "string" ? entitlement.displayPrice : "";
+  if (status.code === "lifetime") {
+    return {
+      title: copy.mySubscription,
+      lines: [copy.lifetimeTitle, copy.lifetimeStanding, copy.lifetimeOnce, ...extraLines(entitlement, copy)].filter(Boolean),
+      manage: false,
+    };
+  }
+  const title = {
+    active: copy.statusActive,
+    trial: copy.statusTrial,
+    "renewal-cancelled": copy.statusRenewalCancelled,
+    expired: copy.statusExpired,
+    revoked: copy.statusRevoked,
+  }[status.code] || "";
+  const lines = [];
+  if (period) lines.push(period);
+  if (price) lines.push(price);
+  if (status.renewsAt) lines.push(dated(copy.renewsOn, status.renewsAt));
+  else if (status.endsAt) lines.push(dated(copy.accessUntil, status.endsAt));
+  lines.push(...extraLines(entitlement, copy));
+  return { title: copy.mySubscription, lines: [title, ...lines].filter(Boolean), manage: true };
 }

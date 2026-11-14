@@ -228,6 +228,15 @@ public final class CamAlertPremiumStoreKit: NSObject {
     if transaction.offerType == .introductory {
       value["trial"] = true
     }
+    value["purchaseDate"] = transaction.purchaseDate.timeIntervalSince1970 * 1000
+    switch transaction.environment {
+    case .sandbox, .xcode:
+      value["environment"] = "sandbox"
+    case .production:
+      value["environment"] = "production"
+    default:
+      break
+    }
     return value
   }
 
