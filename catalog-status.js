@@ -44,6 +44,7 @@ const COPY = {
     androidSteps: ["1. Нажмите «Открыть настройки»", "2. Разрешения → Местоположение → В любом режиме"],
     openSettings: "Открыть настройки",
     later: "Позже",
+    decline: "Не включать",
     always: "Доступ «Всегда» включён.",
     whenInUse: "Сейчас геолокация только при использовании. Фон выключен.",
     denied: "Доступ к геолокации не включён. Фон выключен.",
@@ -67,6 +68,7 @@ const COPY = {
     androidSteps: ["1. Натисніть «Відкрити налаштування»", "2. Дозволи → Місцезнаходження → У будь-якому режимі"],
     openSettings: "Відкрити налаштування",
     later: "Пізніше",
+    decline: "Не вмикати",
     always: "Доступ «Завжди» ввімкнено.",
     whenInUse: "Зараз геолокація лише під час використання. Фон вимкнено.",
     denied: "Доступ до геолокації не ввімкнено. Фон вимкнено.",
@@ -90,6 +92,7 @@ const COPY = {
     androidSteps: ["1. Tap Open Settings", "2. Permissions → Location → Allow all the time"],
     openSettings: "Open Settings",
     later: "Later",
+    decline: "Don't turn on",
     always: "Always access is on.",
     whenInUse: "Location is allowed only while using the app. Background is off.",
     denied: "Location access is off. Background is off.",
@@ -113,6 +116,7 @@ const COPY = {
     androidSteps: ["1. Stuknij Otwórz ustawienia", "2. Uprawnienia → Lokalizacja → Zezwól cały czas"],
     openSettings: "Otwórz ustawienia",
     later: "Później",
+    decline: "Nie włączaj",
     always: "Dostęp Zawsze jest włączony.",
     whenInUse: "Lokalizacja działa tylko podczas używania aplikacji. Tło jest wyłączone.",
     denied: "Brak dostępu do lokalizacji. Tło jest wyłączone.",
@@ -139,6 +143,7 @@ export function backgroundGuideCopy(language = "ru", platform = "ios") {
     steps: platform === "android" ? pack.androidSteps : pack.iosSteps,
     openSettings: pack.openSettings,
     later: pack.later,
+    decline: pack.decline,
   };
 }
 

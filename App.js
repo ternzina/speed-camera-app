@@ -27,6 +27,7 @@ import { hasPaidPremium, offerDecision, promptSettled, recordCompletedTrip, reco
 import { COUNTRY_NAMES, countryFlag } from "./countries";
 import { refreshCountryDelivery } from "./camera-delivery";
 import { catalogTimestamps, shouldShowBackgroundGuide, describeLocationAccess, formatCatalogDate, backgroundGuideCopy, backgroundAccessMessage, backgroundFailureCopy } from "./catalog-status";
+import { BACKGROUND_CHOICE_KEY, VOICE_NOTICE_KEY, backgroundSwitchOn, isExistingInstall, resolveBackgroundChoice, shouldRunBackgroundGps, voiceNoticeCopy, voiceNoticeForLaunch } from "./install-defaults";
 import { distanceBetweenMeters } from "./road-cameras";
 import { isSpeedOverLimit } from "./drive-alert-logic";
 import { buildNavigatorLinks } from "./navigator-links";
@@ -786,6 +787,12 @@ export default function App() {
   const postponedRef = useRef(false);
   const pendingBackgroundRef = useRef(false);
   const backgroundEnabledRef = useRef(false);
+  const backgroundAccessRef = useRef("missing");
+  const backgroundChoiceRef = useRef(null);
+  const [backgroundChoice, setBackgroundChoice] = useState(null);
+  const [voiceNotice, setVoiceNotice] = useState(false);
+  const [offerDiagOpen, setOfferDiagOpen] = useState(false);
+  const offerDiagTaps = useRef(0);
   const onAppActiveRef = useRef(async () => {});
   const { pad, height: windowHeight } = usePadLayout();
 
@@ -798,7 +805,9 @@ export default function App() {
 
   useEffect(() => {
     backgroundEnabledRef.current = backgroundEnabled;
-  }, [backgroundEnabled]);
+    backgroundAccessRef.current = backgroundAccess;
+    backgroundChoiceRef.current = backgroundChoice;
+  }, [backgroundEnabled, backgroundAccess, backgroundChoice]);
 
   useEffect(() => {
     AsyncStorage.getItem(ONBOARDING_KEY)
@@ -838,6 +847,22 @@ export default function App() {
     (async () => {
       try {
         const s = await AsyncStorage.getItem(SETTINGS_KEY);
+        const onboardingRaw = await AsyncStorage.getItem(ONBOARDING_KEY);
+        const launchRaw = await AsyncStorage.getItem(LAUNCH_COUNT_KEY);
+        const historyRaw = await AsyncStorage.getItem(HISTORY_KEY);
+        const storedChoice = await AsyncStorage.getItem(BACKGROUND_CHOICE_KEY);
+        const storedNotice = await AsyncStorage.getItem(VOICE_NOTICE_KEY);
+        const sessionRaw = await AsyncStorage.getItem(BACKGROUND_SESSION_KEY);
+        let sessionEnabled = false;
+        try { sessionEnabled = JSON.parse(sessionRaw)?.enabled === true; } catch { sessionEnabled = false; }
+        const existingInstall = isExistingInstall({ settings: s, onboarding: onboardingRaw, launches: launchRaw, history: historyRaw });
+        const choiceDecision = resolveBackgroundChoice({ storedChoice, existingInstall, sessionEnabled });
+        if (choiceDecision.write) await AsyncStorage.setItem(BACKGROUND_CHOICE_KEY, choiceDecision.write);
+        backgroundChoiceRef.current = choiceDecision.choice;
+        setBackgroundChoice(choiceDecision.choice);
+        const noticeDecision = voiceNoticeForLaunch({ existingInstall, storedNotice });
+        if (noticeDecision.write) await AsyncStorage.setItem(VOICE_NOTICE_KEY, noticeDecision.write);
+        setVoiceNotice(noticeDecision.show);
         const loadedSettings = mergeStoredSettings(DEFAULT_SETTINGS, s ? JSON.parse(s) : null);
         bgSettings = loadedSettings;
         settingsHydrated.current = true;
@@ -874,8 +899,8 @@ export default function App() {
         const initialCountry = s ? String(JSON.parse(s).country || "ua").toUpperCase() : "UA";
         await refreshRemoteData(true, initialCountry);
         const started = await Location.hasStartedLocationUpdatesAsync(BACKGROUND_LOCATION_TASK);
-        const session = JSON.parse(await AsyncStorage.getItem(BACKGROUND_SESSION_KEY) || "null");
-        setBackgroundEnabled(started && !!session?.enabled);
+        if (started && !foregroundTripRunning) await stopBackground().catch(() => {});
+        else setBackgroundEnabled(started && sessionEnabled);
         const [foregroundPermission, backgroundPermission] = await Promise.all([
           Location.getForegroundPermissionsAsync(),
           Location.getBackgroundPermissionsAsync(),
@@ -1167,10 +1192,13 @@ export default function App() {
       Alert.alert("GPS", "Разреши приложению использовать местоположение.");
       return;
     }
-    // Always is optional. Foreground GPS, sound, the map, and the catalog keep working.
+    // Always is optional. Foreground GPS for this trip keeps working.
+    // Background location starts only for a wanted trip, never from a cold launch.
     const backgroundPermission = await Location.getBackgroundPermissionsAsync().catch(() => null);
-    if (backgroundPermission?.granted) await startBackgroundSession({ quiet: true });
-    else if (shouldShowBackgroundGuide({ backgroundGranted: false, postponed: postponedRef.current })) {
+    const backgroundAccessNow = backgroundPermission?.granted ? "always" : "missing";
+    if (shouldRunBackgroundGps({ choice: backgroundChoiceRef.current, access: backgroundAccessNow, tripActive: true })) {
+      await startBackgroundSession({ quiet: true });
+    } else if (backgroundChoiceRef.current === "on" && shouldShowBackgroundGuide({ backgroundGranted: backgroundPermission?.granted === true, postponed: postponedRef.current })) {
       setGuideReturned(false);
       setBackgroundGuide(true);
     }
@@ -1479,6 +1507,25 @@ export default function App() {
     await AsyncStorage.setItem(BACKGROUND_GUIDE_KEY, "1").catch(() => {});
   }
 
+  async function declineBackground() {
+    postponedRef.current = true;
+    pendingBackgroundRef.current = false;
+    setGuideReturned(false);
+    setBackgroundGuide(false);
+    await rememberBackgroundChoice("off");
+    await AsyncStorage.setItem(BACKGROUND_GUIDE_KEY, "1").catch(() => {});
+    await stopBackground().catch(() => {});
+  }
+
+  async function dismissVoiceNotice() {
+    setVoiceNotice(false);
+    await AsyncStorage.setItem(VOICE_NOTICE_KEY, "seen").catch(() => {});
+    if (backgroundChoiceRef.current === "on" && backgroundAccessRef.current !== "always" && shouldShowBackgroundGuide({ backgroundGranted: false, postponed: postponedRef.current })) {
+      setGuideReturned(false);
+      setBackgroundGuide(true);
+    }
+  }
+
   async function openBackgroundSettings() {
     pendingBackgroundRef.current = true;
     try {
@@ -1575,18 +1622,39 @@ export default function App() {
       setLocationPermissionStatus(foreground.status);
     }
     const access = await readLocationAccess();
-    if (access === "always") return startBackgroundSession();
+    if (access === "always") {
+      if (foregroundTripRunning) return startBackgroundSession();
+      return true;
+    }
+    if (backgroundChoiceRef.current === "off") return false;
     if (!shouldShowBackgroundGuide({ backgroundGranted: false, postponed: postponedRef.current })) return false;
     setGuideReturned(false);
     setBackgroundGuide(true);
     return false;
   }
 
+  async function rememberBackgroundChoice(choice) {
+    backgroundChoiceRef.current = choice;
+    setBackgroundChoice(choice);
+    await AsyncStorage.setItem(BACKGROUND_CHOICE_KEY, choice);
+  }
+
   async function toggleBackground() {
     if (backgroundBusy.current) return;
-    if (backgroundEnabled) {
-      try {await stopBackground();} catch(error) {Alert.alert(backgroundFailureCopy(settings.language).title, error.message);}
-    } else await requestBackground();
+    const shown = backgroundSwitchOn({
+      choice: backgroundChoiceRef.current,
+      access: backgroundAccessRef.current,
+      sessionRunning: backgroundEnabledRef.current,
+    });
+    if (shown) {
+      try {
+        await rememberBackgroundChoice("off");
+        await stopBackground();
+      } catch (error) { Alert.alert(backgroundFailureCopy(settings.language).title, error.message); }
+      return;
+    }
+    await rememberBackgroundChoice("on");
+    await requestBackground();
   }
 
   onAppActiveRef.current = async () => {
@@ -1597,7 +1665,7 @@ export default function App() {
       await AsyncStorage.removeItem(BACKGROUND_GUIDE_KEY).catch(() => {});
       setGuideReturned(false);
       setBackgroundGuide(false);
-      if (pendingBackgroundRef.current && !backgroundEnabledRef.current) {
+      if (pendingBackgroundRef.current && backgroundChoiceRef.current === "on" && foregroundTripRunning) {
         pendingBackgroundRef.current = false;
         await startBackgroundSession();
       } else pendingBackgroundRef.current = false;
@@ -2149,6 +2217,7 @@ export default function App() {
     if (!backgroundGuide) return null;
     const copy = backgroundGuideCopy(settings.language, Platform.OS);
     return (
+      <Modal visible transparent animationType="fade" onRequestClose={postponeBackgroundGuide}>
       <View style={[StyleSheet.absoluteFill, s.modalShade]}>
           <Pressable accessibilityRole="button" accessibilityLabel={copy.later} onPress={postponeBackgroundGuide} style={StyleSheet.absoluteFill} />
           <View style={[s.guideCard, {maxHeight: Math.max(240, Math.min(windowHeight * 0.62, 460))}]}>
@@ -2167,9 +2236,13 @@ export default function App() {
               <Pressable accessibilityRole="button" onPress={postponeBackgroundGuide} style={s.guideLater}>
                 <Text maxFontSizeMultiplier={1.4} style={s.guideLaterText}>{copy.later}</Text>
               </Pressable>
+              <Pressable accessibilityRole="button" onPress={declineBackground} style={s.guideLater}>
+                <Text maxFontSizeMultiplier={1.4} style={s.guideLaterText}>{copy.decline}</Text>
+              </Pressable>
             </ScrollView>
           </View>
       </View>
+      </Modal>
     );
   }
 
@@ -2199,6 +2272,19 @@ export default function App() {
     void startTracking();
     return undefined;
   }, [onboardingState, diagTrip]);
+
+  function renderVoiceNotice() {
+    if (!voiceNotice || backgroundGuide || active) return null;
+    const text = voiceNoticeCopy(settings.language);
+    return (
+      <View pointerEvents="box-none" style={{ position: "absolute", top: 62, left: 16, right: 16, zIndex: 50 }}>
+        <Pressable accessibilityRole="button" accessibilityLabel={text} onPress={dismissVoiceNotice} style={{ minHeight: 44, backgroundColor: "#10263B", borderRadius: 14, paddingHorizontal: 14, paddingVertical: 12, flexDirection: "row", alignItems: "center", gap: 10 }}>
+          <Text maxFontSizeMultiplier={1.3} style={{ color: "#F7FBFF", fontSize: 15, lineHeight: 20, flex: 1 }}>{text}</Text>
+          <Text maxFontSizeMultiplier={1.2} style={{ color: "#8EEAFF", fontWeight: "800" }}>OK</Text>
+        </Pressable>
+      </View>
+    );
+  }
 
   function renderLaunchPrompt() {
     const kind = currentOffer().kind;
@@ -2323,6 +2409,7 @@ export default function App() {
           onNavigationFix={isVoiceDiagApp() && diagTrip === true ? handleUkraineFix : undefined}
           onResetRepeat={isVoiceDiagApp() && diagTrip === true ? () => { lastSpoken.current = { id: null, distance: Infinity }; } : undefined}
         />
+        {renderVoiceNotice()}
         {renderLaunchPrompt()}
         {renderPremiumLayer()}
         <View style={{ paddingBottom: 28 }}>{renderTabBar()}</View>
@@ -2668,7 +2755,7 @@ export default function App() {
                 if (Platform.OS === "android" && NativeModules.CamAlertLocale) NativeModules.CamAlertLocale.setLanguage(l).catch(()=>{});
               }} style={[s.lang,settings.language===l&&s.langActive]}><Text style={s.settingLabel}>{l==="uk"?"UA":l.toUpperCase()}</Text></Pressable>)}
             </View>
-            <SettingSwitch label={t.background} value={backgroundEnabled} onChange={toggleBackground}/>
+            <SettingSwitch label={t.background} value={backgroundSwitchOn({ choice: backgroundChoice, access: backgroundAccess, sessionRunning: backgroundEnabled })} onChange={toggleBackground}/>
             <Text maxFontSizeMultiplier={1.5} style={s.note}>{backgroundAccessMessage(settings.language, backgroundAccess)}</Text>
             <Pressable accessibilityRole="button" onPress={openBackgroundSettings} style={s.locationButton}>
               <Text maxFontSizeMultiplier={1.4} style={s.locationButtonText}>{backgroundGuideCopy(settings.language, Platform.OS).openSettings}</Text>
@@ -2723,11 +2810,13 @@ export default function App() {
               <Text style={s.aboutLabel}>{premiumCopy(settings.language).rateSettings}</Text>
               <Text style={s.chev}>›</Text>
             </Pressable>
-            <View style={{ gap: 2 }}>
+            {(typeof __DEV__ !== "undefined" && __DEV__) || offerDiagOpen ? <View style={{ gap: 2 }}>
               <Text style={s.note}>{premiumCopy(settings.language).diagTitle}</Text>
               {offerReasonLines(currentOffer(), premiumCopy(settings.language)).map(line => <Text key={line} style={s.note}>{line}</Text>)}
-            </View>
-            <Text style={s.sectionTitle}>{t.about}</Text>
+            </View> : null}
+            <Pressable accessibilityRole="button" onPress={() => { offerDiagTaps.current += 1; if (offerDiagTaps.current >= 7) setOfferDiagOpen(true); }}>
+              <Text style={s.sectionTitle}>{t.about}</Text>
+            </Pressable>
             <AboutLink label={t.privacy} url={URLS.privacy}/>
             <AboutLink label={t.safety} url={URLS.safety}/>
             <AboutLink label={t.sources} url={URLS.sources}/>
@@ -2744,6 +2833,7 @@ export default function App() {
 
       {renderTabBar()}
 
+      {renderVoiceNotice()}
       {renderLaunchPrompt()}
 
       {renderBackgroundGuide()}
