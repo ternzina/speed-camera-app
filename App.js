@@ -18,10 +18,11 @@ import plData from "./cameras-pl.json";
 import { nearestPolandPoint, detectAverageSpeedSection, averageSectionSpeech, measureSectionProgress, advanceSectionPace } from "./poland-engine";
 import { createNavtestSectionStore } from "./navtest-section";
 import { cameraPoints, countryFeed, loadCameraCache, saveCameraCache } from "./camera-data";
-import PremiumScreen from "./premium-screen";
+import PremiumScreen, { PremiumEntryCard } from "./premium-screen";
 import PremiumManageScreen from "./premium-manage-screen";
 import { premiumCopy } from "./premium-copy";
-import { loadPremiumPrices, purchasePremium, rememberLegacy, restorePremium } from "./premium-store";
+import { loadPremiumCatalog, purchasePremium, readCachedEntitlement, rememberLegacy, requestAppReview, restorePremium } from "./premium-store";
+import { chooseLaunchPrompt, hasPaidPremium, promptSettled, recordSuccessfulLaunch, LAUNCH_COUNT_KEY, PREMIUM_PROMPT_KEY, REVIEW_PROMPT_KEY } from "./launch-prompts";
 import { COUNTRY_NAMES, countryFlag } from "./countries";
 import { refreshCountryDelivery } from "./camera-delivery";
 import { catalogTimestamps, shouldShowBackgroundGuide, describeLocationAccess, formatCatalogDate, backgroundGuideCopy, backgroundAccessMessage, backgroundFailureCopy } from "./catalog-status";
@@ -639,6 +640,12 @@ export default function App() {
   const [premiumEntitlement, setPremiumEntitlement] = useState(null);
   const [premiumStatus, setPremiumStatus] = useState("");
   const [legacyAccess, setLegacyAccess] = useState(false);
+  const [yearTrialEligible, setYearTrialEligible] = useState(false);
+  const [coverageOpen, setCoverageOpen] = useState(false);
+  const [routeActive, setRouteActive] = useState(false);
+  const [launchFacts, setLaunchFacts] = useState(null);
+  const launchCounted = useRef(false);
+  const promptDeclineRef = useRef(null);
   const [alertPreviewMode, setAlertPreviewMode] = useState("expanded");
   const [navigatorDestination, setNavigatorDestination] = useState("");
   const [googleNavigationOpen, setGoogleNavigationOpen] = useState(false);
@@ -1874,6 +1881,80 @@ export default function App() {
     rememberLegacy().then(setLegacyAccess).catch(() => {});
   }, []);
 
+  useEffect(() => {
+    if (onboardingState !== "done") return undefined;
+    let live = true;
+    const readPermission = () => {
+      Location.getForegroundPermissionsAsync().then(permission => {
+        if (live && permission?.status) setLocationPermissionStatus(permission.status);
+      }).catch(() => {});
+    };
+    readPermission();
+    const subscription = AppState.addEventListener("change", state => {
+      if (state === "active") readPermission();
+    });
+    return () => {
+      live = false;
+      subscription.remove();
+    };
+  }, [onboardingState, tab]);
+
+  useEffect(() => {
+    if (onboardingState !== "done" || launchCounted.current) return undefined;
+    launchCounted.current = true;
+    let live = true;
+    (async () => {
+      const previous = await AsyncStorage.getItem(LAUNCH_COUNT_KEY);
+      const count = recordSuccessfulLaunch(previous);
+      await AsyncStorage.setItem(LAUNCH_COUNT_KEY, String(count)).catch(() => {});
+      const premiumDismissed = promptSettled(await AsyncStorage.getItem(PREMIUM_PROMPT_KEY), count);
+      const reviewDismissed = promptSettled(await AsyncStorage.getItem(REVIEW_PROMPT_KEY), count);
+      const cached = premiumEntitlement || await readCachedEntitlement();
+      let trialEligible = false;
+      try {
+        const catalog = await loadPremiumCatalog();
+        if (!live) return;
+        setPremiumPrices(catalog.prices);
+        trialEligible = catalog.introEligible.camalert_premium_yearly === true;
+        setYearTrialEligible(trialEligible);
+      } catch {
+        trialEligible = false;
+      }
+      if (!live) return;
+      setLaunchFacts({
+        count,
+        premiumDismissed,
+        reviewDismissed,
+        trialEligible,
+        entitlement: cached,
+      });
+    })().catch(() => {});
+    return () => { live = false; };
+  }, [onboardingState]);
+
+  useEffect(() => {
+    if (!launchFacts) return undefined;
+    const permissionBlocked = locationPermissionStatus === "unknown" || locationPermissionStatus === "undetermined";
+    const navigating = active || routeActive || iosRouteOpen || googleNavigationOpen;
+    const blocked = navigating || !!modal || backgroundGuide || lawsOpen || !!premiumView || permissionBlocked;
+    const kind = chooseLaunchPrompt({
+      launches: launchFacts.count,
+      premiumDismissed: launchFacts.premiumDismissed,
+      reviewDismissed: launchFacts.reviewDismissed,
+      hasPremium: hasPaidPremium(launchFacts.entitlement || premiumEntitlement),
+      navigating,
+      blocked,
+    });
+    if (!kind || promptDeclineRef.current === kind) return undefined;
+    const key = kind === "review" ? REVIEW_PROMPT_KEY : PREMIUM_PROMPT_KEY;
+    const shown = String(launchFacts.count);
+    AsyncStorage.getItem(key).then(existing => {
+      if (existing || promptDeclineRef.current === kind) return null;
+      return AsyncStorage.setItem(key, shown);
+    }).catch(() => {});
+    return undefined;
+  }, [launchFacts, active, routeActive, iosRouteOpen, googleNavigationOpen, modal, backgroundGuide, lawsOpen, premiumView, locationPermissionStatus, premiumEntitlement]);
+
   useEffect(() => () => {
     if (cameraAlertDismissTimer.current) clearTimeout(cameraAlertDismissTimer.current);
   }, []);
@@ -1896,14 +1977,28 @@ export default function App() {
     return copy.storeUnavailable;
   }
 
-  async function openPremium() {
+  async function openPremium(planId) {
+    if (typeof planId === "string") setPremiumPlan(planId);
     setPremiumStatus("");
     setPremiumView("plans");
     try {
-      setPremiumPrices(await loadPremiumPrices());
+      const catalog = await loadPremiumCatalog();
+      setPremiumPrices(catalog.prices);
+      setYearTrialEligible(catalog.introEligible.camalert_premium_yearly === true);
     } catch {
       setPremiumPrices({});
     }
+  }
+
+  async function dismissLaunchPrompt(kind) {
+    promptDeclineRef.current = kind;
+    const key = kind === "review" ? REVIEW_PROMPT_KEY : PREMIUM_PROMPT_KEY;
+    await AsyncStorage.setItem(key, "later").catch(() => {});
+    setLaunchFacts(current => current ? {
+      ...current,
+      premiumDismissed: kind === "premium" ? true : current.premiumDismissed,
+      reviewDismissed: kind === "review" ? true : current.reviewDismissed,
+    } : current);
   }
 
   async function buyPremium(productId) {
@@ -2000,6 +2095,92 @@ export default function App() {
     return undefined;
   }, [onboardingState, diagTrip]);
 
+  function renderLaunchPrompt() {
+    const permissionBlocked = locationPermissionStatus === "unknown" || locationPermissionStatus === "undetermined";
+    const navigating = active || routeActive || iosRouteOpen || googleNavigationOpen;
+    const blocked = navigating || !!modal || backgroundGuide || lawsOpen || !!premiumView || permissionBlocked;
+    const kind = chooseLaunchPrompt({
+      launches: launchFacts?.count,
+      premiumDismissed: launchFacts?.premiumDismissed,
+      reviewDismissed: launchFacts?.reviewDismissed,
+      hasPremium: hasPaidPremium(launchFacts?.entitlement || premiumEntitlement),
+      navigating,
+      blocked,
+    });
+    if (!kind) return null;
+    const copy = premiumCopy(settings.language);
+    const trial = kind === "premium" && launchFacts?.trialEligible === true;
+    return (
+      <View pointerEvents="box-none" style={{ position: "absolute", left: 16, right: 16, bottom: 200, zIndex: 40 }}>
+        <View style={{ backgroundColor: "#1A3270", borderRadius: 18, borderWidth: 1, borderColor: "#E2B657", padding: 14, gap: 8 }}>
+          <Text maxFontSizeMultiplier={1.3} style={{ color: "#F7FBFF", fontSize: 17, fontWeight: "800" }}>{kind === "review" ? copy.rate : copy.offerPlain}</Text>
+          <Text maxFontSizeMultiplier={1.3} style={{ color: trial ? "#F5B64C" : "#D7E2F2", fontSize: 14, lineHeight: 20 }}>{kind === "review" ? copy.ratePrompt : (trial ? copy.offerSub : copy.offerPlainSub)}</Text>
+          <View style={{ flexDirection: "row", gap: 10 }}>
+            <Pressable
+              accessibilityRole="button"
+              onPress={() => {
+                if (kind === "review") {
+                  dismissLaunchPrompt("review");
+                  requestAppReview().catch(() => {});
+                } else {
+                  dismissLaunchPrompt("premium");
+                  openPremium("camalert_premium_yearly");
+                }
+              }}
+              style={{ flex: 1, minHeight: 44, borderRadius: 12, backgroundColor: "#1260E8", alignItems: "center", justifyContent: "center", paddingHorizontal: 8 }}
+            >
+              <Text maxFontSizeMultiplier={1.2} style={{ color: "#fff", fontWeight: "800", textAlign: "center" }}>{kind === "review" ? copy.rateNow : (trial ? copy.tryFree : copy.tryPlans)}</Text>
+            </Pressable>
+            <Pressable accessibilityRole="button" onPress={() => dismissLaunchPrompt(kind)} style={{ flex: 1, minHeight: 44, borderRadius: 12, alignItems: "center", justifyContent: "center" }}>
+              <Text maxFontSizeMultiplier={1.2} style={{ color: "#F7FBFF", fontWeight: "700" }}>{kind === "review" ? copy.rateLater : copy.later}</Text>
+            </Pressable>
+          </View>
+        </View>
+      </View>
+    );
+  }
+
+  function renderPremiumLayer() {
+    if (premiumView === "plans") {
+      return (
+        <View style={s.premiumLayer}>
+          <SystemSafeArea style={{ flex: 1, backgroundColor: "#071525" }}>
+            <PremiumScreen
+              language={settings.language}
+              prices={premiumPrices}
+              selectedId={premiumPlan}
+              trialEligible={yearTrialEligible}
+              onSelect={setPremiumPlan}
+              onContinue={buyPremium}
+              onRestore={restorePremiumPurchases}
+              onManage={() => setPremiumView("manage")}
+              onBack={() => setPremiumView(null)}
+              onTerms={() => Linking.openURL("https://camera.21wek.com/terms.html")}
+              onPrivacy={() => Linking.openURL("https://camera.21wek.com/privacy.html")}
+              status={premiumStatus}
+              legacy={legacyAccess}
+            />
+          </SystemSafeArea>
+        </View>
+      );
+    }
+    if (premiumView === "manage") {
+      return (
+        <View style={s.premiumLayer}>
+          <SystemSafeArea style={{ flex: 1, backgroundColor: "#071525" }}>
+            <PremiumManageScreen
+              language={settings.language}
+              entitlement={premiumEntitlement}
+              onRestore={restorePremiumPurchases}
+              onBack={() => setPremiumView("plans")}
+            />
+          </SystemSafeArea>
+        </View>
+      );
+    }
+    return null;
+  }
+
   if (onboardingState !== "done") {
     if (onboardingState === "loading") {
       return <View style={{flex:1,backgroundColor:"#071525"}}><StatusBar style="light" /></View>;
@@ -2035,12 +2216,14 @@ export default function App() {
           onStopTrip={stopTracking}
           onClosePick={() => setIosRouteOpen(false)}
           handoff={navtestHandoff}
-          onRouteActive={activeRoute => { navtestRouteActiveRef.current = !!activeRoute; }}
+          onRouteActive={activeRoute => { navtestRouteActiveRef.current = !!activeRoute; setRouteActive(!!activeRoute); }}
           armedTrip={isVoiceDiagApp() && diagTrip === true}
           cameras={isVoiceDiagApp() && diagTrip === true ? data : undefined}
           onNavigationFix={isVoiceDiagApp() && diagTrip === true ? handleUkraineFix : undefined}
           onResetRepeat={isVoiceDiagApp() && diagTrip === true ? () => { lastSpoken.current = { id: null, distance: Infinity }; } : undefined}
         />
+        {renderLaunchPrompt()}
+        {renderPremiumLayer()}
         <View style={{ paddingBottom: 28 }}>{renderTabBar()}</View>
         {renderBackgroundGuide()}
       </View>
@@ -2337,7 +2520,7 @@ export default function App() {
             <SettingSwitch label={(WARNING_UI[settings.language] || WARNING_UI.ru).switchLabel} value={settings.cameraWarnings !== false} onChange={v=>setSettings({...settings,cameraWarnings:v})}/>
             <Pressable accessibilityRole="button" onPress={() => {setLawsQuery("");setLawsOpen(true);}} style={[s.action, pad && { flex: 0 }]}><Text style={s.actionText}>{(WARNING_UI[settings.language] || WARNING_UI.ru).laws} →</Text></Pressable>
             <Text style={s.note}>{(WARNING_UI[settings.language] || WARNING_UI.ru).lawsNote}</Text>
-            <Pressable accessibilityRole="button" onPress={openPremium} style={s.action}><Text style={s.actionText}>{premiumCopy(settings.language).open} →</Text></Pressable>
+            <PremiumEntryCard language={settings.language} night={isNight} onPress={() => openPremium()} />
             <Pressable accessibilityRole="button" onPress={() => {setOnboardingPage(0);setOnboardingState("new");}} style={s.alertDemoButton}>
               <Text style={s.alertDemoButtonTitle}>{({ru:"Посмотреть приветствие",uk:"Переглянути привітання",en:"View welcome",pl:"Zobacz powitanie"})[settings.language] || "View welcome"}</Text>
             </Pressable>
@@ -2395,7 +2578,7 @@ export default function App() {
             <SettingSwitch label={t.smartDistanceLabel} value={settings.smartDistance} onChange={v=>setSettings({...settings,smartDistance:v})}/>
             <Pressable accessibilityRole="button" accessibilityState={{expanded:advancedOpen}} onPress={()=>setAdvancedOpen(!advancedOpen)} style={[s.action, pad && { flex: 0 }]}><Text style={s.actionText}>{ui.advanced} {advancedOpen?"−":"＋"}</Text></Pressable>
             {advancedOpen && <>
-            <Text style={s.sectionTitle}>{t.distancesLabel}</Text>
+            <Text style={s.sectionTitle}>{premiumCopy(settings.language).distanceTitle}</Text>
             {[
               [t.band1,"cityDistance"],[t.band2,"roadDistance"],
               [t.band3,"highwayDistance"],[t.band4,"fastDistance"]
@@ -2419,8 +2602,11 @@ export default function App() {
               </Pressable>
             </View>
 
-            <Text style={s.sectionTitle}>{t.coverage}</Text>
-            <View style={s.coverageCard}>
+            <Pressable accessibilityRole="button" accessibilityState={{ expanded: coverageOpen }} onPress={() => setCoverageOpen(open => !open)} style={{ minHeight: 48, flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
+              <Text style={s.sectionTitle}>{t.coverage}</Text>
+              <Text style={s.sectionTitle}>{coverageOpen ? "▴" : "▾"}</Text>
+            </Pressable>
+            {coverageOpen && <View style={s.coverageCard}>
               {pad ? <ScrollView style={{ maxHeight: 420 }} nestedScrollEnabled>
                 {countryCoverage.map(item=><Text key={item.country_code} style={[s.coverageLine, { fontSize: 16, lineHeight: 24 }]}>{countryFlag(item.country_code)} {COUNTRY_NAMES[item.country_code]||item.country_code}: {item.record_count ?? item.total}</Text>)}
                 <Pressable onPress={()=>Linking.openURL("https://www.openstreetmap.org/copyright")}><Text style={s.coverageLine}>© OpenStreetMap contributors · ODbL 1.0</Text></Pressable>
@@ -2428,10 +2614,14 @@ export default function App() {
                 {countryCoverage.map(item=><Text key={item.country_code} style={s.coverageLine}>{countryFlag(item.country_code)} {COUNTRY_NAMES[item.country_code]||item.country_code}: {item.record_count ?? item.total}</Text>)}
                 <Pressable onPress={()=>Linking.openURL("https://www.openstreetmap.org/copyright")}><Text style={s.coverageLine}>© OpenStreetMap contributors · ODbL 1.0</Text></Pressable>
               </>}
-            </View>
+            </View>}
 
 
             <Pressable accessibilityRole="button" onPress={()=>active && (!speedAvailable || speedKmh>0) ? Alert.alert("CamAlert",ui.stop) : setModal("new")} style={[s.action, pad && { flex: 0 }]}><Text style={s.actionText}>＋ {t.report}</Text></Pressable>
+            <Pressable accessibilityRole="button" onPress={() => { requestAppReview().catch(() => {}); }} style={s.aboutRow}>
+              <Text style={s.aboutLabel}>{premiumCopy(settings.language).rate}</Text>
+              <Text style={s.chev}>›</Text>
+            </Pressable>
             <Text style={s.sectionTitle}>{t.about}</Text>
             <AboutLink label={t.privacy} url={URLS.privacy}/>
             <AboutLink label={t.safety} url={URLS.safety}/>
@@ -2448,6 +2638,8 @@ export default function App() {
       </ScrollView>
 
       {renderTabBar()}
+
+      {renderLaunchPrompt()}
 
       {renderBackgroundGuide()}
 
@@ -2511,31 +2703,7 @@ export default function App() {
           </View>
         </View>
       </Modal>}
-      {premiumView === "plans" && <View style={s.premiumLayer}>
-        <PremiumScreen
-          language={settings.language}
-          prices={premiumPrices}
-          selectedId={premiumPlan}
-          onSelect={setPremiumPlan}
-          onContinue={buyPremium}
-          onRestore={restorePremiumPurchases}
-          onManage={() => setPremiumView("manage")}
-          onBack={() => setPremiumView(null)}
-          onTerms={() => Linking.openURL("https://camera.21wek.com/terms.html")}
-          onPrivacy={() => Linking.openURL("https://camera.21wek.com/privacy.html")}
-          renewal={premiumEntitlement}
-          status={premiumStatus}
-          legacy={legacyAccess}
-        />
-      </View>}
-      {premiumView === "manage" && <View style={s.premiumLayer}>
-        <PremiumManageScreen
-          language={settings.language}
-          entitlement={premiumEntitlement}
-          onRestore={restorePremiumPurchases}
-          onBack={() => setPremiumView("plans")}
-        />
-      </View>}
+      {renderPremiumLayer()}
     </SystemSafeArea>
     </ThemeContext.Provider>
   );

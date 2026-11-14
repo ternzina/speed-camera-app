@@ -1,8 +1,7 @@
 import React from "react";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { PREMIUM_PLANS, storePriceLabel } from "./premium-catalog.js";
-import { premiumCopy } from "./premium-copy.js";
-import { renewalDescription } from "./premium-access.js";
+import { premiumCopy, selectedPlanTerms } from "./premium-copy.js";
 
 const INK = "#E7EEF6";
 const MUTED = "#9BB0C7";
@@ -12,10 +11,32 @@ const LINE = "#1E3D5C";
 const YEAR = "#F5B64C";
 const ACTION = "#1260E8";
 
+export function PremiumEntryCard({ language = "ru", night = true, onPress }) {
+  const copy = premiumCopy(language);
+  return (
+    <Pressable
+      accessibilityRole="button"
+      accessibilityLabel={`${copy.open}. ${copy.cardSubtitle}`}
+      onPress={onPress}
+      style={[styles.entry, night ? styles.entryNight : styles.entryDay]}
+    >
+      <View style={styles.entryMark}>
+        <Text style={styles.entryStar}>★</Text>
+      </View>
+      <View style={styles.entryCopy}>
+        <Text maxFontSizeMultiplier={1.3} style={styles.entryTitle}>{copy.open}</Text>
+        <Text maxFontSizeMultiplier={1.3} style={styles.entrySub}>{copy.cardSubtitle}</Text>
+      </View>
+      <Text style={styles.entryArrow}>›</Text>
+    </Pressable>
+  );
+}
+
 export default function PremiumScreen({
   language = "ru",
   prices = {},
   selectedId = "camalert_premium_yearly",
+  trialEligible = false,
   onSelect,
   onContinue,
   onRestore,
@@ -23,29 +44,29 @@ export default function PremiumScreen({
   onTerms,
   onPrivacy,
   onBack,
-  renewal,
   status,
   legacy,
 }) {
   const copy = premiumCopy(language);
   const selected = PREMIUM_PLANS.find(plan => plan.id === selectedId) || PREMIUM_PLANS[2];
-  const renew = renewalDescription({
-    productId: selected.id,
-    trial: renewal?.trial,
-    renewsAt: renewal?.renewsAt,
-    cancelled: renewal?.cancelled,
+  const yearlyOffer = trialEligible === true;
+  const terms = selectedPlanTerms({
+    period: selected.period,
+    price: storePriceLabel(prices[selected.id]),
+    trialEligible: selected.id === "camalert_premium_yearly" && yearlyOffer,
+    copy,
   });
   return (
     <ScrollView style={styles.root} contentContainerStyle={styles.content}>
-      {onBack ? <Pressable accessibilityRole="button" onPress={onBack}><Text style={styles.link}>{copy.back}</Text></Pressable> : null}
-      <Text style={styles.kicker}>CamAlert</Text>
-      <Text style={styles.title}>{copy.title}</Text>
-      <Text style={styles.lead}>{copy.lead}</Text>
-      <View style={styles.benefits}>
-        {copy.benefits.map(item => (
-          <Text key={item} style={styles.benefit}>{item}</Text>
-        ))}
-      </View>
+      {onBack ? (
+        <Pressable accessibilityRole="button" onPress={onBack} style={styles.backHit}>
+          <Text style={styles.back}>{copy.back}</Text>
+        </Pressable>
+      ) : null}
+      <Text maxFontSizeMultiplier={1.25} style={styles.title}>{yearlyOffer ? copy.offerTitle : copy.offerPlain}</Text>
+      <Text maxFontSizeMultiplier={1.25} style={yearlyOffer ? styles.offer : styles.lead}>
+        {yearlyOffer ? copy.offerSub : copy.offerPlainSub}
+      </Text>
       <View style={styles.plans}>
         {PREMIUM_PLANS.map(plan => {
           const price = storePriceLabel(prices[plan.id]);
@@ -58,26 +79,24 @@ export default function PremiumScreen({
               onPress={() => onSelect?.(plan.id)}
               style={[styles.plan, plan.highlighted && styles.planYear, active && styles.planOn]}
             >
-              <View style={styles.planMain}>
-                <Text style={styles.period}>{copy.periods[plan.period]}</Text>
-                {plan.highlighted ? <Text style={styles.yearMark}>{copy.highlighted}</Text> : null}
-              </View>
-              <Text style={styles.price}>{price || copy.priceWait}</Text>
+              <Text maxFontSizeMultiplier={1.2} style={styles.period}>{copy.periods[plan.period]}</Text>
+              <Text maxFontSizeMultiplier={1.2} style={styles.price}>{price || copy.priceWait}</Text>
             </Pressable>
           );
         })}
       </View>
-      {legacy ? <Text style={styles.note}>{copy.legacy}</Text> : null}
-      {status ? <Text style={styles.note}>{status}</Text> : null}
-      {selected.id === "camalert_premium_yearly" ? <Text style={styles.note}>{copy.trial}</Text> : null}
-      <Text style={styles.note}>{copy.charge}</Text>
-      <Text style={styles.note}>
-        {renew.renews ? copy.nextCharge : copy.noRenew}
-        {renew.renewsAt ? ` · ${new Date(renew.renewsAt).toLocaleDateString()}` : ""}
-      </Text>
       <Pressable accessibilityRole="button" onPress={() => onContinue?.(selected.id)} style={styles.continue}>
         <Text style={styles.continueText}>{copy.continue}</Text>
       </Pressable>
+      <Text maxFontSizeMultiplier={1.3} style={styles.terms}>{terms}</Text>
+      <View style={styles.benefits}>
+        {copy.benefits.map(item => (
+          <Text key={item} maxFontSizeMultiplier={1.3} style={styles.benefit}>{item}</Text>
+        ))}
+      </View>
+      {legacy ? <Text style={styles.note}>{copy.legacy}</Text> : null}
+      {status ? <Text style={styles.note}>{status}</Text> : null}
+      <Text style={styles.note}>{copy.charge}</Text>
       <Pressable accessibilityRole="button" onPress={onRestore} style={styles.linkHit}>
         <Text style={styles.link}>{copy.restore}</Text>
       </Pressable>
@@ -94,25 +113,35 @@ export default function PremiumScreen({
 
 const styles = StyleSheet.create({
   root: { flex: 1, backgroundColor: NIGHT },
-  content: { paddingHorizontal: 22, paddingTop: 28, paddingBottom: 36, gap: 14 },
-  kicker: { color: YEAR, fontSize: 15, fontWeight: "700" },
-  title: { color: INK, fontSize: 34, lineHeight: 40, fontWeight: "800" },
-  lead: { color: MUTED, fontSize: 17, lineHeight: 24 },
-  benefits: { gap: 8, paddingVertical: 4 },
-  benefit: { color: INK, fontSize: 16, lineHeight: 22 },
-  plans: { gap: 8 },
-  plan: { backgroundColor: CARD, borderRadius: 16, borderWidth: 1, borderColor: LINE, paddingHorizontal: 16, paddingVertical: 14, flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: 12 },
+  content: { paddingHorizontal: 20, paddingTop: 6, paddingBottom: 28, gap: 8 },
+  backHit: { minHeight: 44, alignSelf: "flex-start", justifyContent: "center", paddingRight: 12 },
+  back: { color: INK, fontSize: 17, fontWeight: "700" },
+  title: { color: INK, fontSize: 26, lineHeight: 32, fontWeight: "800" },
+  offer: { color: YEAR, fontSize: 16, lineHeight: 22, fontWeight: "700" },
+  lead: { color: MUTED, fontSize: 16, lineHeight: 22 },
+  plans: { gap: 6, marginTop: 4 },
+  plan: { minHeight: 46, backgroundColor: CARD, borderRadius: 14, borderWidth: 1, borderColor: LINE, paddingHorizontal: 14, flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: 12 },
   planYear: { borderColor: YEAR },
   planOn: { backgroundColor: "#17324E" },
-  planMain: { flexGrow: 1, flexShrink: 1, gap: 2 },
-  period: { color: INK, fontSize: 18, fontWeight: "700" },
-  yearMark: { color: YEAR, fontSize: 13, fontWeight: "700" },
-  price: { color: INK, fontSize: 16, fontWeight: "700", flexShrink: 1, textAlign: "right" },
-  note: { color: MUTED, fontSize: 14, lineHeight: 20 },
-  continue: { backgroundColor: ACTION, minHeight: 52, borderRadius: 16, alignItems: "center", justifyContent: "center" },
+  period: { color: INK, fontSize: 17, fontWeight: "700", flexShrink: 1 },
+  price: { color: INK, fontSize: 16, fontWeight: "700", textAlign: "right" },
+  continue: { backgroundColor: ACTION, minHeight: 50, borderRadius: 16, alignItems: "center", justifyContent: "center", marginTop: 2 },
   continueText: { color: "#FFFFFF", fontSize: 18, fontWeight: "800" },
+  terms: { color: INK, fontSize: 15, lineHeight: 20, fontWeight: "600" },
+  benefits: { gap: 6, paddingTop: 8 },
+  benefit: { color: MUTED, fontSize: 15, lineHeight: 20 },
+  note: { color: MUTED, fontSize: 14, lineHeight: 20 },
   linkHit: { minHeight: 44, alignItems: "center", justifyContent: "center" },
   link: { color: INK, fontSize: 16, fontWeight: "700" },
   legal: { flexDirection: "row", justifyContent: "space-between", gap: 12 },
   legalText: { color: MUTED, fontSize: 13 },
+  entry: { minHeight: 76, borderRadius: 18, paddingHorizontal: 14, paddingVertical: 12, flexDirection: "row", alignItems: "center", gap: 12, borderWidth: 1 },
+  entryDay: { backgroundColor: "#1A3270", borderColor: "#C9A15B" },
+  entryNight: { backgroundColor: "#2A2460", borderColor: "#E2B657" },
+  entryMark: { width: 40, height: 40, borderRadius: 20, alignItems: "center", justifyContent: "center", backgroundColor: "rgba(226,182,87,0.16)" },
+  entryStar: { color: YEAR, fontSize: 22, lineHeight: 26 },
+  entryCopy: { flex: 1, gap: 2 },
+  entryTitle: { color: "#F7FBFF", fontSize: 17, fontWeight: "800" },
+  entrySub: { color: "#D7E2F2", fontSize: 13, lineHeight: 18 },
+  entryArrow: { color: YEAR, fontSize: 28, fontWeight: "500", marginTop: -2 },
 });

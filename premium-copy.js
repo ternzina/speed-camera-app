@@ -26,6 +26,24 @@ export const PREMIUM_COPY = {
     nextCharge: "Следующее списание",
     noRenew: "Дальше списаний нет",
     open: "CamAlert Premium",
+    cardSubtitle: "Больше возможностей в каждой поездке",
+    offerTitle: "Попробуйте Premium бесплатно",
+    offerPlain: "Попробуйте CamAlert Premium",
+    offerSub: "3 дня бесплатно с годовой подпиской",
+    offerPlainSub: "Неделя, месяц, год или навсегда",
+    yearTrial: "3 дня бесплатно, затем {price}/год",
+    yearTerms: "{price} в год",
+    weekTerms: "{price} в неделю",
+    monthTerms: "{price} в месяц",
+    lifeTerms: "{price}, один раз и без продления",
+    tryFree: "Попробовать бесплатно",
+    tryPlans: "Открыть тарифы",
+    later: "Позже",
+    rate: "Оценить CamAlert",
+    ratePrompt: "Оцените CamAlert, если он полезен в дороге",
+    rateNow: "Оценить",
+    rateLater: "Не сейчас",
+    distanceTitle: "Настройки дистанции и предупреждений",
     legacy: "Доступ из уже установленной версии сохраняется.",
     purchased: "Магазин подтвердил покупку.",
     restored: "Магазин вернул активные покупки.",
@@ -62,6 +80,24 @@ export const PREMIUM_COPY = {
     nextCharge: "Наступне списання",
     noRenew: "Далі списань немає",
     open: "CamAlert Premium",
+    cardSubtitle: "Більше можливостей у кожній поїздці",
+    offerTitle: "Спробуйте Premium безкоштовно",
+    offerPlain: "Спробуйте CamAlert Premium",
+    offerSub: "3 дні безкоштовно з річною підпискою",
+    offerPlainSub: "Тиждень, місяць, рік або назавжди",
+    yearTrial: "3 дні безкоштовно, далі {price}/рік",
+    yearTerms: "{price} на рік",
+    weekTerms: "{price} на тиждень",
+    monthTerms: "{price} на місяць",
+    lifeTerms: "{price}, один раз і без поновлення",
+    tryFree: "Спробувати безкоштовно",
+    tryPlans: "Відкрити тарифи",
+    later: "Пізніше",
+    rate: "Оцінити CamAlert",
+    ratePrompt: "Оцініть CamAlert, якщо він корисний у дорозі",
+    rateNow: "Оцінити",
+    rateLater: "Не зараз",
+    distanceTitle: "Налаштування дистанції і попереджень",
     legacy: "Доступ із уже встановленої версії зберігається.",
     purchased: "Магазин підтвердив покупку.",
     restored: "Магазин повернув активні покупки.",
@@ -98,6 +134,24 @@ export const PREMIUM_COPY = {
     nextCharge: "Next charge",
     noRenew: "No further charges",
     open: "CamAlert Premium",
+    cardSubtitle: "More in every drive",
+    offerTitle: "Try Premium free",
+    offerPlain: "Try CamAlert Premium",
+    offerSub: "3 days free with the yearly plan",
+    offerPlainSub: "Week, month, year, or lifetime",
+    yearTrial: "3 days free, then {price}/year",
+    yearTerms: "{price} per year",
+    weekTerms: "{price} per week",
+    monthTerms: "{price} per month",
+    lifeTerms: "{price}, once, with no renewal",
+    tryFree: "Try free",
+    tryPlans: "See the plans",
+    later: "Later",
+    rate: "Rate CamAlert",
+    ratePrompt: "Rate CamAlert if it helps on the road",
+    rateNow: "Rate",
+    rateLater: "Not now",
+    distanceTitle: "Warning distance and alert settings",
     legacy: "Access from the version already installed stays.",
     purchased: "The store confirmed the purchase.",
     restored: "The store returned the active purchases.",
@@ -134,6 +188,24 @@ export const PREMIUM_COPY = {
     nextCharge: "Następne obciążenie",
     noRenew: "Kolejnych obciążeń nie będzie",
     open: "CamAlert Premium",
+    cardSubtitle: "Więcej możliwości w każdej jeździe",
+    offerTitle: "Wypróbuj Premium za darmo",
+    offerPlain: "Wypróbuj CamAlert Premium",
+    offerSub: "3 dni za darmo z planem rocznym",
+    offerPlainSub: "Tydzień, miesiąc, rok albo na zawsze",
+    yearTrial: "3 dni za darmo, potem {price}/rok",
+    yearTerms: "{price} rocznie",
+    weekTerms: "{price} tygodniowo",
+    monthTerms: "{price} miesięcznie",
+    lifeTerms: "{price}, jednorazowo, bez odnowienia",
+    tryFree: "Wypróbuj za darmo",
+    tryPlans: "Zobacz plany",
+    later: "Później",
+    rate: "Oceń CamAlert",
+    ratePrompt: "Oceń CamAlert, jeśli pomaga w drodze",
+    rateNow: "Oceń",
+    rateLater: "Nie teraz",
+    distanceTitle: "Ustawienia odległości i ostrzeżeń",
     legacy: "Dostęp z już zainstalowanej wersji zostaje.",
     purchased: "Sklep potwierdził zakup.",
     restored: "Sklep zwrócił aktywne zakupy.",
@@ -147,4 +219,21 @@ export const PREMIUM_COPY = {
 
 export function premiumCopy(language) {
   return PREMIUM_COPY[language] || PREMIUM_COPY.ru;
+}
+
+function withPrice(template, price) {
+  return template.split("{price}").join(price);
+}
+
+// The price string comes from the store. A missing price is not replaced
+// with a fixed dollar amount. Free days are named only for the yearly plan
+// when the store says this person can start the introductory offer.
+export function selectedPlanTerms({ period, price, trialEligible, copy }) {
+  const label = typeof price === "string" ? price.trim() : "";
+  if (!label) return copy.priceWait;
+  if (period === "year" && trialEligible === true) return withPrice(copy.yearTrial, label);
+  if (period === "year") return withPrice(copy.yearTerms, label);
+  if (period === "month") return withPrice(copy.monthTerms, label);
+  if (period === "week") return withPrice(copy.weekTerms, label);
+  return withPrice(copy.lifeTerms, label);
 }

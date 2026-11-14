@@ -17,7 +17,8 @@ import {
   renewalDescription,
   resolveLegacy,
 } from "../../premium-access.js";
-import { PREMIUM_COPY } from "../../premium-copy.js";
+import { PREMIUM_COPY, selectedPlanTerms } from "../../premium-copy.js";
+import { chooseLaunchPrompt, hasPaidPremium, promptSettled, recordSuccessfulLaunch } from "../../launch-prompts.js";
 
 const now = Date.parse("2026-11-13T18:00:00Z");
 const week = 7 * 24 * 60 * 60 * 1000;
@@ -181,10 +182,52 @@ test("the premium screen copy exists in every CamAlert language and names the tr
   assert.doesNotMatch(read("premium-manage-screen.js"), /\$\d|consoleUsd/);
   assert.match(read("App.js"), /premium-manage-screen/);
   assert.match(read("premium-store.js"), /CamAlertPremiumStore/);
+  assert.match(read("premium-store.js"), /requestReview/);
   assert.doesNotMatch(read("premium-store.js"), /1\.49|3\.49|27\.99|44\.99/);
+  assert.match(read("App.js"), /distanceTitle/);
+  assert.match(read("App.js"), /coverageOpen/);
+  assert.doesNotMatch(read("launch-prompts.js"), /purchase|Product\.purchase/);
+  assert.match(read("ios/CamAlert/CamAlertPremiumStore.swift"), /isEligibleForIntroOffer/);
+  assert.match(read("ios/CamAlert/CamAlertPremiumStore.swift"), /SKStoreReviewController/);
   const store = read("ios/CamAlert/CamAlertPremiumStore.swift");
   assert.match(store, /Product\.products/);
   assert.match(store, /product\.purchase/);
   assert.match(store, /Transaction\.currentEntitlements/);
   assert.doesNotMatch(store, /1\.49|3\.49|27\.99|44\.99/);
+});
+
+test("plan terms name the yearly trial only when the store allows it", () => {
+  const copy = PREMIUM_COPY.ru;
+  const year = selectedPlanTerms({ period: "year", price: "27,99 USD", trialEligible: true, copy });
+  assert.equal(year, "3 дня бесплатно, затем 27,99 USD/год");
+  const yearPaid = selectedPlanTerms({ period: "year", price: "27,99 USD", trialEligible: false, copy });
+  assert.equal(yearPaid.includes("бесплат"), false);
+  const week = selectedPlanTerms({ period: "week", price: "1,49 USD", trialEligible: true, copy });
+  assert.equal(week.includes("бесплат"), false);
+  assert.equal(selectedPlanTerms({ period: "month", price: "", trialEligible: false, copy }), copy.priceWait);
+  assert.equal(copy.distanceTitle, "Настройки дистанции и предупреждений");
+  assert.equal(copy.cardSubtitle, "Больше возможностей в каждой поездке");
+});
+
+test("the fifth launch offers Premium and does not buy, and a trip hides both prompts", () => {
+  assert.equal(recordSuccessfulLaunch(null), 1);
+  assert.equal(recordSuccessfulLaunch("4"), 5);
+  assert.equal(recordSuccessfulLaunch("9"), 10);
+  assert.equal(chooseLaunchPrompt({ launches: 4 }), null);
+  assert.equal(chooseLaunchPrompt({ launches: 5 }), "premium");
+  assert.equal(chooseLaunchPrompt({ launches: 5, navigating: true }), null);
+  assert.equal(chooseLaunchPrompt({ launches: 5, blocked: true }), null);
+  assert.equal(chooseLaunchPrompt({ launches: 5, hasPremium: true }), null);
+  assert.equal(chooseLaunchPrompt({ launches: 10, premiumDismissed: true }), "review");
+  assert.equal(chooseLaunchPrompt({ launches: 10, premiumDismissed: true, reviewDismissed: true }), null);
+  assert.equal(chooseLaunchPrompt({ launches: 10, navigating: true, premiumDismissed: true }), null);
+  assert.equal(promptSettled("later", 8), true);
+  assert.equal(promptSettled("5", 5), false);
+  assert.equal(promptSettled("5", 6), true);
+  assert.equal(promptSettled(null, 6), false);
+  assert.equal(hasPaidPremium({ period: "lifetime" }, now), true);
+  assert.equal(hasPaidPremium({ period: "year", expiresAt: now + week }, now), true);
+  assert.equal(hasPaidPremium({ period: "year", expiresAt: now - 1 }, now), false);
+  assert.equal(hasPaidPremium(null, now), false);
+  assert.equal(PREMIUM_ENFORCEMENT, false);
 });

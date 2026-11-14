@@ -1,10 +1,11 @@
-import { NativeModules, Platform } from "react-native";
+import { Linking, NativeModules, Platform } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { acceptRestored, acceptVerifiedPurchase, resolveLegacy } from "./premium-access.js";
 
 const LEGACY_KEY = "camalert_legacy_access_v1";
 const CACHE_KEY = "camalert_premium_verified_v1";
 const PRIOR_KEYS = ["camalert_onboarding_v1", "camera_history_v060"];
+export const APP_STORE_REVIEW_URL = "https://apps.apple.com/app/id6818647205?action=write-review";
 
 // Local keys disappear on reinstall. A "no" saved from their absence would
 // then block someone whose earlier access can no longer be seen. Only a
@@ -54,15 +55,50 @@ function storeModule() {
   return NativeModules.CamAlertPremiumStore || null;
 }
 
-export async function loadPremiumPrices() {
-  const native = storeModule();
-  if (!native?.loadProducts) return {};
-  const rows = await native.loadProducts();
-  const prices = {};
-  for (const row of rows || []) {
-    if (row?.id && row.displayPrice) prices[row.id] = row.displayPrice;
+export async function readCachedEntitlement(storage = AsyncStorage) {
+  const raw = await storage.getItem(CACHE_KEY);
+  if (!raw) return null;
+  try {
+    const parsed = JSON.parse(raw);
+    return parsed?.verified === true ? parsed.entitlement || null : null;
+  } catch {
+    return null;
   }
-  return prices;
+}
+
+export async function loadPremiumCatalog() {
+  const native = storeModule();
+  const prices = {};
+  const introEligible = {};
+  if (!native?.loadProducts) return { prices, introEligible };
+  const rows = await native.loadProducts();
+  for (const row of rows || []) {
+    if (!row?.id) continue;
+    if (row.displayPrice) prices[row.id] = row.displayPrice;
+    if (row.introEligible === true) introEligible[row.id] = true;
+  }
+  return { prices, introEligible };
+}
+
+export async function loadPremiumPrices() {
+  const catalog = await loadPremiumCatalog();
+  return catalog.prices;
+}
+
+// The system review request is the first path. Apple may not show it.
+// The store page is used only when the request cannot be made.
+export async function requestAppReview() {
+  const native = storeModule();
+  if (native?.requestReview) {
+    try {
+      const asked = await native.requestReview();
+      if (asked === true || asked === 1) return "system";
+    } catch {
+      /* the store page is the fallback */
+    }
+  }
+  await Linking.openURL(APP_STORE_REVIEW_URL);
+  return "store";
 }
 
 async function saveVerified(storage, decision, now) {

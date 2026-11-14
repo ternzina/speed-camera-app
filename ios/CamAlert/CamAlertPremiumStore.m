@@ -41,6 +41,13 @@ RCT_EXPORT_METHOD(rememberLegacyYes:(RCTPromiseResolveBlock)resolve reject:(RCTP
   }];
 }
 
+RCT_EXPORT_METHOD(requestReview:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject)
+{
+  [CamAlertPremiumStoreKit requestReview:^(NSNumber *asked) {
+    resolve(asked);
+  }];
+}
+
 RCT_EXPORT_METHOD(restore:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject)
 {
   [CamAlertPremiumStoreKit restore:^(NSArray<NSDictionary *> *rows) {

@@ -1,6 +1,7 @@
 import Foundation
 import Security
 import StoreKit
+import UIKit
 
 // StoreKit is the only place a purchase can start. The module does not
 // decide that a feature is locked; that stays off until access is an
@@ -17,7 +18,11 @@ public final class CamAlertPremiumStoreKit: NSObject {
   @objc public static func loadProducts(_ done: @escaping ([[String: Any]]) -> Void) {
     Task {
       let products = (try? await Product.products(for: Set(productIds))) ?? []
-      done(products.map(row))
+      var rows: [[String: Any]] = []
+      for product in products {
+        rows.append(await row(product))
+      }
+      done(rows)
     }
   }
 
@@ -69,6 +74,20 @@ public final class CamAlertPremiumStoreKit: NSObject {
     done(writeKeychainYes())
   }
 
+  @objc public static func requestReview(_ done: @escaping (NSNumber) -> Void) {
+    DispatchQueue.main.async {
+      let scene = UIApplication.shared.connectedScenes
+        .compactMap { $0 as? UIWindowScene }
+        .first { $0.activationState == .foregroundActive }
+      guard let scene else {
+        done(false)
+        return
+      }
+      SKStoreReviewController.requestReview(in: scene)
+      done(true)
+    }
+  }
+
   @objc public static func restore(_ done: @escaping ([[String: Any]]) -> Void) {
     Task {
       try? await AppStore.sync()
@@ -81,20 +100,24 @@ public final class CamAlertPremiumStoreKit: NSObject {
     }
   }
 
-  private static func row(_ product: Product) -> [String: Any] {
+  private static func row(_ product: Product) async -> [String: Any] {
     var value: [String: Any] = [
       "id": product.id,
       "displayPrice": product.displayPrice,
     ]
     if let subscription = product.subscription {
       value["period"] = unitName(subscription.subscriptionPeriod.unit)
+      var eligible = false
       if let offer = subscription.introductoryOffer, offer.paymentMode == .freeTrial {
         value["trial"] = true
         value["trialPeriod"] = unitName(offer.period.unit)
         value["trialCount"] = offer.period.value
+        eligible = (try? await subscription.isEligibleForIntroOffer) ?? false
       }
+      value["introEligible"] = eligible
     } else {
       value["period"] = "lifetime"
+      value["introEligible"] = false
     }
     return value
   }
