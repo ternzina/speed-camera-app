@@ -62,4 +62,11 @@ RCT_EXPORT_METHOD(refresh:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseReje
   }];
 }
 
+RCT_EXPORT_METHOD(presentOfferCode:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject)
+{
+  [CamAlertPremiumStoreKit presentOfferCode:^(NSNumber *presented) {
+    resolve(presented);
+  }];
+}
+
 @end

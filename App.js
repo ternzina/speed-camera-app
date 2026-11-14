@@ -21,8 +21,8 @@ import { cameraPoints, countryFeed, loadCameraCache, saveCameraCache } from "./c
 import PremiumScreen, { PremiumEntryCard } from "./premium-screen";
 import PremiumManageScreen from "./premium-manage-screen";
 import { offerReasonLines, premiumCopy, settingsCardCopy } from "./premium-copy";
-import { cacheVerifiedEntitlement, loadPremiumCatalog, openAppStoreReview, purchasePremium, readCachedEntitlement, refreshPremiumEntitlements, rememberLegacy, restorePremium } from "./premium-store";
-import { chooseRestoredEntitlement, restoreOutcome } from "./premium-access";
+import { cacheVerifiedEntitlement, loadPremiumCatalog, openAppStoreReview, presentOfferCodeSheet, purchasePremium, readCachedEntitlement, refreshPremiumEntitlements, rememberLegacy, restorePremium } from "./premium-store";
+import { chooseRestoredEntitlement, offerRedemptionResult, restoreOutcome } from "./premium-access";
 import { hasPaidPremium, offerDecision, promptSettled, recordCompletedTrip, recordSuccessfulLaunch, COMPLETED_TRIP_KEY, LAUNCH_COUNT_KEY, PREMIUM_PROMPT_KEY, REVIEW_PROMPT_KEY, TRIP_PREMIUM_KEY, TRIP_REVIEW_KEY } from "./launch-prompts";
 import { COUNTRY_NAMES, countryFlag } from "./countries";
 import { refreshCountryDelivery } from "./camera-delivery";
@@ -2161,6 +2161,44 @@ export default function App() {
     }
   }
 
+  async function applyVerifiedEntitlements(rows) {
+    if (!Array.isArray(rows)) return null;
+    const chosen = chooseRestoredEntitlement(rows, Date.now());
+    await cacheVerifiedEntitlement(chosen);
+    setPremiumEntitlement(chosen);
+    setLaunchFacts(current => current ? { ...current, entitlement: chosen } : current);
+    return chosen;
+  }
+
+  async function redeemOfferCode() {
+    if (premiumBusy || Platform.OS !== "ios") return;
+    setPremiumBusy(true);
+    setPremiumStatus("");
+    try {
+      const before = await refreshPremiumEntitlements();
+      const presented = await presentOfferCodeSheet();
+      const after = await refreshPremiumEntitlements();
+      const result = offerRedemptionResult({ presented, before, after });
+      const copy = premiumCopy(settings.language);
+      if (result.code === "confirmed" || result.code === "unchanged" || result.code === "uncompared") {
+        const chosen = await applyVerifiedEntitlements(after);
+        if (result.code === "confirmed" && chosen && settingsCardCopy(chosen, settings.language).open === "manage") {
+          setPremiumView("manage");
+        }
+      }
+      if (result.code === "confirmed") {
+        setPremiumStatus(copy.purchased);
+        Alert.alert("CamAlert", copy.purchased);
+      } else if (result.code === "unchanged") {
+        Alert.alert("CamAlert", copy.redeemUnchanged);
+      } else if (result.code === "unavailable" || result.code === "failed") {
+        Alert.alert("CamAlert", copy.restoreFailed);
+      }
+    } finally {
+      setPremiumBusy(false);
+    }
+  }
+
   async function restorePremiumPurchases() {
     if (premiumBusy) return;
     setPremiumBusy(true);
@@ -2709,6 +2747,11 @@ export default function App() {
             <Pressable accessibilityRole="button" onPress={() => {setLawsQuery("");setLawsOpen(true);}} style={[s.action, pad && { flex: 0 }]}><Text style={s.actionText}>{(WARNING_UI[settings.language] || WARNING_UI.ru).laws} →</Text></Pressable>
             <Text style={s.note}>{(WARNING_UI[settings.language] || WARNING_UI.ru).lawsNote}</Text>
             <PremiumEntryCard language={settings.language} night={isNight} entitlement={premiumEntitlement} onPress={openPremiumEntry} />
+            {Platform.OS === "ios" ? (
+              <Pressable accessibilityRole="button" onPress={redeemOfferCode} style={[s.action, pad && { flex: 0 }]}>
+                <Text style={s.actionText}>{premiumCopy(settings.language).redeemCode} →</Text>
+              </Pressable>
+            ) : null}
             <Pressable accessibilityRole="button" onPress={() => {setOnboardingPage(0);setOnboardingState("new");}} style={s.alertDemoButton}>
               <Text style={s.alertDemoButtonTitle}>{({ru:"Посмотреть приветствие",uk:"Переглянути привітання",en:"View welcome",pl:"Zobacz powitanie"})[settings.language] || "View welcome"}</Text>
             </Pressable>

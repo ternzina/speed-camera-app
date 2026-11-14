@@ -149,6 +149,27 @@ export function acceptVerifiedPurchase(result, now) {
   return { verified: true, reason: premiumAllows(entitlement, now, true).reason, entitlement };
 }
 
+function offerSignature(row) {
+  if (!row || row.revoked === true || !row.productId) return null;
+  const expires = Number.isFinite(Number(row.expiresAt)) ? Number(row.expiresAt) : "";
+  return [row.productId, row.period || "", expires, row.trial === true ? "trial" : ""].join("|");
+}
+
+// The system sheet does not say whether a code was accepted.
+// A result is reliable only when the verified purchases before and after can be compared.
+export function offerRedemptionResult({ presented, before, after } = {}) {
+  if (presented !== true) return { code: "unavailable" };
+  if (!Array.isArray(after)) return { code: "failed" };
+  if (!Array.isArray(before)) return { code: "uncompared" };
+  const seen = new Set(before.map(offerSignature).filter(Boolean));
+  const added = after.filter(row => {
+    const signature = offerSignature(row);
+    return signature && !seen.has(signature);
+  });
+  if (!added.length) return { code: "unchanged" };
+  return { code: "confirmed", added };
+}
+
 export function acceptRestored(rows, now) {
   const list = (Array.isArray(rows) ? rows : []).map(entitlementFromStore).filter(Boolean);
   const entitlement = chooseRestoredEntitlement(list, now);

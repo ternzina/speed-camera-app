@@ -16,6 +16,7 @@ import {
   premiumAllows,
   renewalDescription,
   resolveLegacy,
+  offerRedemptionResult,
   restoreOutcome,
   subscriptionStatus,
 } from "../../premium-access.js";
@@ -287,4 +288,29 @@ test("the fifth launch offers Premium and does not buy, and a trip hides both pr
   const stored = entitlementFromStore({ productId: "camalert_premium_lifetime", purchaseDate: now, environment: "sandbox" });
   assert.equal(stored.environment, "sandbox");
   assert.equal(stored.purchaseDate, now);
+});
+
+test("an offer code is Apple's sheet, and a result needs a verified change", () => {
+  const before = [{ productId: "camalert_premium_monthly", period: "month", expiresAt: now + week }];
+  const same = offerRedemptionResult({ presented: true, before, after: before });
+  assert.equal(same.code, "unchanged");
+  const added = offerRedemptionResult({
+    presented: true,
+    before,
+    after: [...before, { productId: "camalert_premium_lifetime", period: "lifetime" }],
+  });
+  assert.equal(added.code, "confirmed");
+  assert.equal(offerRedemptionResult({ presented: false, before, after: before }).code, "unavailable");
+  assert.equal(offerRedemptionResult({ presented: true, before, after: null }).code, "failed");
+  assert.equal(offerRedemptionResult({ presented: true, before: null, after: before }).code, "uncompared");
+  assert.equal(PREMIUM_COPY.ru.redeemCode, "Активировать промокод");
+  for (const language of ["ru", "uk", "en", "pl"]) {
+    assert.match(PREMIUM_COPY[language].redeemCode, /\S/);
+    assert.match(PREMIUM_COPY[language].redeemUnchanged, /\S/);
+  }
+  assert.match(read("App.js"), /redeemCode/);
+  assert.match(read("App.js"), /presentOfferCodeSheet/);
+  assert.match(read("premium-store.js"), /presentOfferCode/);
+  assert.match(read("ios/CamAlert/CamAlertPremiumStore.swift"), /presentOfferCodeRedeemSheet/);
+  assert.doesNotMatch(read("premium-store.js"), /offerCode\.match|validateCode|promoCode ===/);
 });

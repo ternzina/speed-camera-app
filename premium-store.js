@@ -125,6 +125,18 @@ export async function cacheVerifiedEntitlement(entitlement, storage = AsyncStora
   await storage.setItem(CACHE_KEY, JSON.stringify({ verified: true, entitlement, at: now }));
 }
 
+// Opens Apple's offer-code sheet. This app does not read or check the code.
+export async function presentOfferCodeSheet() {
+  const native = storeModule();
+  if (!native?.presentOfferCode) return false;
+  try {
+    const presented = await native.presentOfferCode();
+    return presented === true || presented === 1;
+  } catch {
+    return false;
+  }
+}
+
 export async function refreshPremiumEntitlements() {
   const native = storeModule();
   if (!native?.refresh) return null;

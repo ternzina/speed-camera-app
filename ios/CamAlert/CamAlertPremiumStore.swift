@@ -122,6 +122,26 @@ public final class CamAlertPremiumStoreKit: NSObject {
     }
   }
 
+  // Apple presents the code sheet and validates the code. The return value
+  // only says whether that sheet was shown.
+  @objc public static func presentOfferCode(_ done: @escaping (NSNumber) -> Void) {
+    ensureUpdates()
+    Task { @MainActor in
+      let scenes = UIApplication.shared.connectedScenes.compactMap { $0 as? UIWindowScene }
+      let scene = scenes.first { $0.activationState == .foregroundActive } ?? scenes.first
+      guard let scene else {
+        done(false)
+        return
+      }
+      do {
+        try await AppStore.presentOfferCodeRedeemSheet(in: scene)
+        done(true)
+      } catch {
+        done(false)
+      }
+    }
+  }
+
   @objc public static func restore(_ done: @escaping ([[String: Any]]) -> Void) {
     ensureUpdates()
     Task {
