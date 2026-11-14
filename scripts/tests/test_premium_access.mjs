@@ -16,9 +16,11 @@ import {
   premiumAllows,
   renewalDescription,
   resolveLegacy,
+  restoreOutcome,
+  subscriptionStatus,
 } from "../../premium-access.js";
 import { PREMIUM_COPY, selectedPlanTerms } from "../../premium-copy.js";
-import { chooseLaunchPrompt, hasPaidPremium, promptSettled, recordSuccessfulLaunch } from "../../launch-prompts.js";
+import { chooseLaunchPrompt, hasPaidPremium, offerDecision, promptSettled, recordCompletedTrip, recordSuccessfulLaunch, shouldCountTrip } from "../../launch-prompts.js";
 
 const now = Date.parse("2026-11-13T18:00:00Z");
 const week = 7 * 24 * 60 * 60 * 1000;
@@ -230,4 +232,33 @@ test("the fifth launch offers Premium and does not buy, and a trip hides both pr
   assert.equal(hasPaidPremium({ period: "year", expiresAt: now - 1 }, now), false);
   assert.equal(hasPaidPremium(null, now), false);
   assert.equal(PREMIUM_ENFORCEMENT, false);
+  assert.equal(shouldCountTrip({ guidanceStarted: false, endedTrip: true }), false);
+  assert.equal(shouldCountTrip({ guidanceStarted: true, endedTrip: false }), false);
+  assert.equal(shouldCountTrip({ guidanceStarted: true, endedTrip: true }), true);
+  assert.equal(recordCompletedTrip("4"), 5);
+  assert.equal(offerDecision({ launches: 1, trips: 4 }).kind, null);
+  assert.equal(offerDecision({ launches: 1, trips: 5 }).kind, "premium");
+  assert.equal(offerDecision({ launches: 1, trips: 5, navigationOpen: true }).kind, null);
+  assert.equal(offerDecision({ launches: 1, trips: 5, moving: true }).kind, null);
+  assert.equal(offerDecision({ launches: 1, trips: 10, tripPremiumSettled: true }).kind, "review");
+  assert.equal(offerDecision({ launches: 5, trips: 5 }).kind, "premium");
+  assert.equal(offerDecision({ launches: 12, trips: 0, launchPremiumSettled: true }).kind, "review");
+  assert.equal(offerDecision({ launches: 12, trips: 0, launchPremiumSettled: true, launchReviewSettled: true }).kind, null);
+  assert.equal(offerDecision({ launches: 1, trips: 5, hasPremium: true }).kind, null);
+  assert.equal(offerDecision({ launches: 1, trips: 5, tripPremiumSettled: true }).kind, null);
+  const activeCancelled = subscriptionStatus({ productId: "camalert_premium_yearly", period: "year", expiresAt: now + week, willAutoRenew: false }, now);
+  assert.equal(activeCancelled.code, "renewal-cancelled");
+  assert.equal(subscriptionStatus({ productId: "camalert_premium_lifetime", period: "lifetime" }, now).code, "lifetime");
+  assert.equal(subscriptionStatus({ productId: "camalert_premium_yearly", period: "year", expiresAt: now - 1 }, now).code, "expired");
+  const restored = restoreOutcome({ verified: true, entitlement: { productId: "camalert_premium_yearly", period: "year", expiresAt: now + week, willAutoRenew: false } }, now);
+  assert.equal(restored.code, "restored");
+  assert.equal(restoreOutcome({ verified: true, reason: "none", entitlement: null }, now).code, "none");
+  assert.equal(restoreOutcome({ verified: false, reason: "failed" }, now).code, "failed");
+  assert.match(read("App.js"), /openAppStoreReview/);
+  assert.match(read("App.js"), /rateSettings/);
+  assert.match(read("App.js"), /onCompletedNavigation/);
+  assert.match(read("ios/CamAlert/CamAlertPremiumStore.swift"), /Transaction\.updates/);
+  assert.match(read("ios/CamAlert/CamAlertPremiumStore.swift"), /AppStore\.sync/);
+  assert.match(read("google-nav-test-screen.js"), /backgroundColor: "#FFFFFF"/);
+  assert.match(read("google-nav-test-screen.js"), /color: "#10263B"/);
 });

@@ -1,6 +1,6 @@
 import { Linking, NativeModules, Platform } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { acceptRestored, acceptVerifiedPurchase, resolveLegacy } from "./premium-access.js";
+import { acceptRestored, acceptVerifiedPurchase, entitlementFromStore, resolveLegacy } from "./premium-access.js";
 
 const LEGACY_KEY = "camalert_legacy_access_v1";
 const CACHE_KEY = "camalert_premium_verified_v1";
@@ -85,8 +85,15 @@ export async function loadPremiumPrices() {
   return catalog.prices;
 }
 
-// The system review request is the first path. Apple may not show it.
-// The store page is used only when the request cannot be made.
+// The settings row opens the App Store review page itself.
+// It does not report that a review was sent.
+export function openAppStoreReview() {
+  return Linking.openURL(APP_STORE_REVIEW_URL);
+}
+
+// The automatic offer may ask the system. Apple may decline to show it.
+// This function does not report success. The store page is used only when
+// the request cannot be made.
 export async function requestAppReview() {
   const native = storeModule();
   if (native?.requestReview) {
@@ -110,6 +117,26 @@ async function saveVerified(storage, decision, now) {
   }));
 }
 
+export async function cacheVerifiedEntitlement(entitlement, storage = AsyncStorage, now = Date.now()) {
+  if (!entitlement) {
+    await storage.removeItem(CACHE_KEY);
+    return;
+  }
+  await storage.setItem(CACHE_KEY, JSON.stringify({ verified: true, entitlement, at: now }));
+}
+
+export async function refreshPremiumEntitlements() {
+  const native = storeModule();
+  if (!native?.refresh) return null;
+  try {
+    const rows = await native.refresh();
+    if (!Array.isArray(rows)) return null;
+    return rows.map(entitlementFromStore).filter(Boolean);
+  } catch {
+    return null;
+  }
+}
+
 export async function purchasePremium(productId, now = Date.now(), storage = AsyncStorage) {
   const native = storeModule();
   if (!native?.purchase) return { verified: false, reason: "store-unavailable", entitlement: null };
@@ -121,8 +148,16 @@ export async function purchasePremium(productId, now = Date.now(), storage = Asy
 
 export async function restorePremium(now = Date.now(), storage = AsyncStorage) {
   const native = storeModule();
-  if (!native?.restore) return { verified: false, reason: "store-unavailable", entitlement: null };
-  const rows = await native.restore();
+  if (!native?.restore) return { verified: false, reason: "failed", entitlement: null };
+  let rows;
+  try {
+    rows = await native.restore();
+  } catch {
+    return { verified: false, reason: "failed", entitlement: null };
+  }
+  if (Array.isArray(rows) && rows[0]?.status === "failed") {
+    return { verified: false, reason: "failed", entitlement: null };
+  }
   const decision = acceptRestored(rows, now);
   await saveVerified(storage, decision, now);
   return decision;

@@ -20,9 +20,10 @@ import { createNavtestSectionStore } from "./navtest-section";
 import { cameraPoints, countryFeed, loadCameraCache, saveCameraCache } from "./camera-data";
 import PremiumScreen, { PremiumEntryCard } from "./premium-screen";
 import PremiumManageScreen from "./premium-manage-screen";
-import { premiumCopy } from "./premium-copy";
-import { loadPremiumCatalog, purchasePremium, readCachedEntitlement, rememberLegacy, requestAppReview, restorePremium } from "./premium-store";
-import { chooseLaunchPrompt, hasPaidPremium, promptSettled, recordSuccessfulLaunch, LAUNCH_COUNT_KEY, PREMIUM_PROMPT_KEY, REVIEW_PROMPT_KEY } from "./launch-prompts";
+import { offerReasonLines, premiumCopy } from "./premium-copy";
+import { cacheVerifiedEntitlement, loadPremiumCatalog, openAppStoreReview, purchasePremium, readCachedEntitlement, refreshPremiumEntitlements, rememberLegacy, requestAppReview, restorePremium } from "./premium-store";
+import { chooseRestoredEntitlement, restoreOutcome } from "./premium-access";
+import { hasPaidPremium, offerDecision, promptSettled, recordCompletedTrip, recordSuccessfulLaunch, COMPLETED_TRIP_KEY, LAUNCH_COUNT_KEY, PREMIUM_PROMPT_KEY, REVIEW_PROMPT_KEY, TRIP_PREMIUM_KEY, TRIP_REVIEW_KEY } from "./launch-prompts";
 import { COUNTRY_NAMES, countryFlag } from "./countries";
 import { refreshCountryDelivery } from "./camera-delivery";
 import { catalogTimestamps, shouldShowBackgroundGuide, describeLocationAccess, formatCatalogDate, backgroundGuideCopy, backgroundAccessMessage, backgroundFailureCopy } from "./catalog-status";
@@ -639,6 +640,7 @@ export default function App() {
   const [premiumPrices, setPremiumPrices] = useState({});
   const [premiumEntitlement, setPremiumEntitlement] = useState(null);
   const [premiumStatus, setPremiumStatus] = useState("");
+  const [premiumBusy, setPremiumBusy] = useState(false);
   const [legacyAccess, setLegacyAccess] = useState(false);
   const [yearTrialEligible, setYearTrialEligible] = useState(false);
   const [coverageOpen, setCoverageOpen] = useState(false);
@@ -1907,8 +1909,12 @@ export default function App() {
       const previous = await AsyncStorage.getItem(LAUNCH_COUNT_KEY);
       const count = recordSuccessfulLaunch(previous);
       await AsyncStorage.setItem(LAUNCH_COUNT_KEY, String(count)).catch(() => {});
-      const premiumDismissed = promptSettled(await AsyncStorage.getItem(PREMIUM_PROMPT_KEY), count);
-      const reviewDismissed = promptSettled(await AsyncStorage.getItem(REVIEW_PROMPT_KEY), count);
+      const tripRaw = Number(await AsyncStorage.getItem(COMPLETED_TRIP_KEY));
+      const trips = Number.isInteger(tripRaw) && tripRaw >= 0 ? tripRaw : 0;
+      const launchPremiumStored = await AsyncStorage.getItem(PREMIUM_PROMPT_KEY);
+      const launchReviewStored = await AsyncStorage.getItem(REVIEW_PROMPT_KEY);
+      const tripPremiumStored = await AsyncStorage.getItem(TRIP_PREMIUM_KEY);
+      const tripReviewStored = await AsyncStorage.getItem(TRIP_REVIEW_KEY);
       const cached = premiumEntitlement || await readCachedEntitlement();
       let trialEligible = false;
       try {
@@ -1923,37 +1929,47 @@ export default function App() {
       if (!live) return;
       setLaunchFacts({
         count,
-        premiumDismissed,
-        reviewDismissed,
+        trips,
+        launchPremiumStored,
+        launchReviewStored,
+        tripPremiumStored,
+        tripReviewStored,
         trialEligible,
         entitlement: cached,
       });
+      const rows = await refreshPremiumEntitlements();
+      if (!live || !rows) return;
+      const chosen = chooseRestoredEntitlement(rows, Date.now());
+      await cacheVerifiedEntitlement(chosen);
+      setPremiumEntitlement(chosen);
+      setLaunchFacts(current => current ? { ...current, entitlement: chosen } : current);
     })().catch(() => {});
     return () => { live = false; };
   }, [onboardingState]);
 
   useEffect(() => {
     if (!launchFacts) return undefined;
-    const permissionBlocked = locationPermissionStatus === "unknown" || locationPermissionStatus === "undetermined";
-    const navigating = active || routeActive || iosRouteOpen || googleNavigationOpen;
-    const blocked = navigating || !!modal || backgroundGuide || lawsOpen || !!premiumView || permissionBlocked;
-    const kind = chooseLaunchPrompt({
-      launches: launchFacts.count,
-      premiumDismissed: launchFacts.premiumDismissed,
-      reviewDismissed: launchFacts.reviewDismissed,
-      hasPremium: hasPaidPremium(launchFacts.entitlement || premiumEntitlement),
-      navigating,
-      blocked,
-    });
+    const decision = currentOffer();
+    const kind = decision.kind;
     if (!kind || promptDeclineRef.current === kind) return undefined;
-    const key = kind === "review" ? REVIEW_PROMPT_KEY : PREMIUM_PROMPT_KEY;
-    const shown = String(launchFacts.count);
-    AsyncStorage.getItem(key).then(existing => {
-      if (existing || promptDeclineRef.current === kind) return null;
-      return AsyncStorage.setItem(key, shown);
-    }).catch(() => {});
+    const writes = [];
+    if (kind === "premium") {
+      if (decision.launchPremiumDue) writes.push([PREMIUM_PROMPT_KEY, String(decision.launches), "launchPremiumStored"]);
+      if (decision.tripPremiumDue) writes.push([TRIP_PREMIUM_KEY, String(decision.trips), "tripPremiumStored"]);
+    } else {
+      if (decision.launchReviewDue) writes.push([REVIEW_PROMPT_KEY, String(decision.launches), "launchReviewStored"]);
+      if (decision.tripReviewDue) writes.push([TRIP_REVIEW_KEY, String(decision.trips), "tripReviewStored"]);
+    }
+    for (const [key, shown, field] of writes) {
+      AsyncStorage.getItem(key).then(existing => {
+        if (existing || promptDeclineRef.current === kind) return null;
+        return AsyncStorage.setItem(key, shown).then(() => {
+          setLaunchFacts(current => current ? { ...current, [field]: shown } : current);
+        });
+      }).catch(() => {});
+    }
     return undefined;
-  }, [launchFacts, active, routeActive, iosRouteOpen, googleNavigationOpen, modal, backgroundGuide, lawsOpen, premiumView, locationPermissionStatus, premiumEntitlement]);
+  }, [launchFacts, active, routeActive, iosRouteOpen, googleNavigationOpen, modal, backgroundGuide, lawsOpen, premiumView, locationPermissionStatus, premiumEntitlement, tab]);
 
   useEffect(() => () => {
     if (cameraAlertDismissTimer.current) clearTimeout(cameraAlertDismissTimer.current);
@@ -1967,14 +1983,42 @@ export default function App() {
     ["drive","🚗",t.drive], ["map","🗺️",t.map], ["nearby","📍",t.nearby], ["settings","⚙️",t.settings]
   ];
 
-  function premiumStatusText(reason) {
+  function currentOffer() {
+    const permissionBlocked = locationPermissionStatus === "unknown" || locationPermissionStatus === "undetermined";
+    return offerDecision({
+      launches: launchFacts?.count,
+      trips: launchFacts?.trips,
+      launchPremiumSettled: promptSettled(launchFacts?.launchPremiumStored, launchFacts?.count),
+      launchReviewSettled: promptSettled(launchFacts?.launchReviewStored, launchFacts?.count),
+      tripPremiumSettled: promptSettled(launchFacts?.tripPremiumStored, launchFacts?.trips),
+      tripReviewSettled: promptSettled(launchFacts?.tripReviewStored, launchFacts?.trips),
+      hasPremium: hasPaidPremium(launchFacts?.entitlement || premiumEntitlement),
+      moving: active,
+      navigationOpen: iosRouteOpen || googleNavigationOpen || (tab === "drive" && routeActive),
+      blocked: permissionBlocked || !!modal || backgroundGuide || lawsOpen || !!premiumView,
+    });
+  }
+
+  function purchaseNotice(decision) {
     const copy = premiumCopy(settings.language);
-    if (reason === "active" || reason === "trial" || reason === "lifetime") return copy.purchased;
-    if (reason === "none") return copy.noneRestored;
-    if (reason === "cancelled") return copy.cancelled;
-    if (reason === "revoked") return copy.revoked;
-    if (reason === "expired") return copy.expired;
-    return copy.storeUnavailable;
+    if (decision?.reason === "lifetime") return copy.lifetimeActive;
+    if (decision?.reason === "pending") return copy.purchasePending;
+    if (decision?.reason === "cancelled") return copy.purchaseCancelled;
+    if (decision?.reason === "active" || decision?.reason === "trial") return copy.purchased;
+    if (decision?.reason === "revoked") return copy.revoked;
+    return copy.purchaseUnverified;
+  }
+
+  function restoredNotice(decision) {
+    const copy = premiumCopy(settings.language);
+    const outcome = restoreOutcome(decision);
+    if (outcome.code === "failed") return copy.restoreFailed;
+    if (outcome.code !== "restored") return copy.noneFound;
+    const period = outcome.entitlement?.period;
+    const name = period && copy.periods[period] ? copy.periods[period] : "";
+    const price = outcome.entitlement?.displayPrice || "";
+    const detail = [name, price].filter(Boolean).join(", ");
+    return detail ? `${copy.restoredWith}: ${detail}` : copy.restoredWith;
   }
 
   async function openPremium(planId) {
@@ -1988,29 +2032,88 @@ export default function App() {
     } catch {
       setPremiumPrices({});
     }
+    const rows = await refreshPremiumEntitlements();
+    if (!rows) return;
+    const chosen = chooseRestoredEntitlement(rows, Date.now());
+    await cacheVerifiedEntitlement(chosen);
+    setPremiumEntitlement(chosen);
+    if (chosen?.period === "lifetime" && chosen.revoked !== true) setPremiumView("manage");
+  }
+
+  function openPremiumEntry() {
+    if (premiumEntitlement) {
+      setPremiumStatus("");
+      setPremiumView("manage");
+      return;
+    }
+    openPremium();
   }
 
   async function dismissLaunchPrompt(kind) {
     promptDeclineRef.current = kind;
-    const key = kind === "review" ? REVIEW_PROMPT_KEY : PREMIUM_PROMPT_KEY;
-    await AsyncStorage.setItem(key, "later").catch(() => {});
-    setLaunchFacts(current => current ? {
-      ...current,
-      premiumDismissed: kind === "premium" ? true : current.premiumDismissed,
-      reviewDismissed: kind === "review" ? true : current.reviewDismissed,
-    } : current);
+    const fields = kind === "review"
+      ? [[REVIEW_PROMPT_KEY, "launchReviewStored"], [TRIP_REVIEW_KEY, "tripReviewStored"]]
+      : [[PREMIUM_PROMPT_KEY, "launchPremiumStored"], [TRIP_PREMIUM_KEY, "tripPremiumStored"]];
+    for (const [key] of fields) await AsyncStorage.setItem(key, "later").catch(() => {});
+    setLaunchFacts(current => {
+      if (!current) return current;
+      const next = { ...current };
+      for (const [, field] of fields) next[field] = "later";
+      return next;
+    });
+  }
+
+  async function recordFinishedNavigation() {
+    const previous = await AsyncStorage.getItem(COMPLETED_TRIP_KEY);
+    const trips = recordCompletedTrip(previous);
+    await AsyncStorage.setItem(COMPLETED_TRIP_KEY, String(trips)).catch(() => {});
+    setLaunchFacts(current => current ? { ...current, trips } : { count: 0, trips, launchPremiumStored: null, launchReviewStored: null, tripPremiumStored: null, tripReviewStored: null });
   }
 
   async function buyPremium(productId) {
-    const decision = await purchasePremium(productId);
-    setPremiumEntitlement(decision.entitlement);
-    setPremiumStatus(premiumStatusText(decision.reason));
+    if (premiumBusy) return;
+    if (productId === "camalert_premium_lifetime" && premiumEntitlement?.period === "lifetime" && premiumEntitlement?.revoked !== true) {
+      setPremiumStatus(premiumCopy(settings.language).lifetimeActive);
+      setPremiumView("manage");
+      return;
+    }
+    setPremiumBusy(true);
+    setPremiumStatus("");
+    try {
+      const decision = await purchasePremium(productId);
+      if (decision.entitlement) {
+        setPremiumEntitlement(decision.entitlement);
+        setLaunchFacts(current => current ? { ...current, entitlement: decision.entitlement } : current);
+      }
+      setPremiumStatus(purchaseNotice(decision));
+      if (decision.reason === "lifetime") setPremiumView("manage");
+    } finally {
+      setPremiumBusy(false);
+    }
   }
 
   async function restorePremiumPurchases() {
-    const decision = await restorePremium();
-    setPremiumEntitlement(decision.entitlement);
-    setPremiumStatus(decision.reason === "none" ? premiumCopy(settings.language).noneRestored : decision.verified && decision.entitlement ? premiumCopy(settings.language).restored : premiumStatusText(decision.reason));
+    if (premiumBusy) return;
+    setPremiumBusy(true);
+    setPremiumStatus("");
+    try {
+      const decision = await restorePremium();
+      if (decision.verified) {
+        setPremiumEntitlement(decision.entitlement);
+        setLaunchFacts(current => current ? { ...current, entitlement: decision.entitlement } : current);
+      }
+      setPremiumStatus(restoredNotice(decision));
+    } finally {
+      setPremiumBusy(false);
+    }
+  }
+
+  async function rateInAppStore() {
+    try {
+      await openAppStoreReview();
+    } catch {
+      Alert.alert("CamAlert", premiumCopy(settings.language).rateFailed);
+    }
   }
 
   async function finishOnboarding() {
@@ -2096,17 +2199,7 @@ export default function App() {
   }, [onboardingState, diagTrip]);
 
   function renderLaunchPrompt() {
-    const permissionBlocked = locationPermissionStatus === "unknown" || locationPermissionStatus === "undetermined";
-    const navigating = active || routeActive || iosRouteOpen || googleNavigationOpen;
-    const blocked = navigating || !!modal || backgroundGuide || lawsOpen || !!premiumView || permissionBlocked;
-    const kind = chooseLaunchPrompt({
-      launches: launchFacts?.count,
-      premiumDismissed: launchFacts?.premiumDismissed,
-      reviewDismissed: launchFacts?.reviewDismissed,
-      hasPremium: hasPaidPremium(launchFacts?.entitlement || premiumEntitlement),
-      navigating,
-      blocked,
-    });
+    const kind = currentOffer().kind;
     if (!kind) return null;
     const copy = premiumCopy(settings.language);
     const trial = kind === "premium" && launchFacts?.trialEligible === true;
@@ -2150,6 +2243,8 @@ export default function App() {
               prices={premiumPrices}
               selectedId={premiumPlan}
               trialEligible={yearTrialEligible}
+              busy={premiumBusy}
+              lifetimeOwned={premiumEntitlement?.period === "lifetime" && premiumEntitlement?.revoked !== true}
               onSelect={setPremiumPlan}
               onContinue={buyPremium}
               onRestore={restorePremiumPurchases}
@@ -2171,8 +2266,10 @@ export default function App() {
             <PremiumManageScreen
               language={settings.language}
               entitlement={premiumEntitlement}
+              busy={premiumBusy}
+              notice={premiumStatus}
               onRestore={restorePremiumPurchases}
-              onBack={() => setPremiumView("plans")}
+              onBack={() => setPremiumView(null)}
             />
           </SystemSafeArea>
         </View>
@@ -2214,6 +2311,7 @@ export default function App() {
             return !!(await startTracking());
           }}
           onStopTrip={stopTracking}
+          onCompletedNavigation={recordFinishedNavigation}
           onClosePick={() => setIosRouteOpen(false)}
           handoff={navtestHandoff}
           onRouteActive={activeRoute => { navtestRouteActiveRef.current = !!activeRoute; setRouteActive(!!activeRoute); }}
@@ -2520,7 +2618,7 @@ export default function App() {
             <SettingSwitch label={(WARNING_UI[settings.language] || WARNING_UI.ru).switchLabel} value={settings.cameraWarnings !== false} onChange={v=>setSettings({...settings,cameraWarnings:v})}/>
             <Pressable accessibilityRole="button" onPress={() => {setLawsQuery("");setLawsOpen(true);}} style={[s.action, pad && { flex: 0 }]}><Text style={s.actionText}>{(WARNING_UI[settings.language] || WARNING_UI.ru).laws} →</Text></Pressable>
             <Text style={s.note}>{(WARNING_UI[settings.language] || WARNING_UI.ru).lawsNote}</Text>
-            <PremiumEntryCard language={settings.language} night={isNight} onPress={() => openPremium()} />
+            <PremiumEntryCard language={settings.language} night={isNight} onPress={openPremiumEntry} />
             <Pressable accessibilityRole="button" onPress={() => {setOnboardingPage(0);setOnboardingState("new");}} style={s.alertDemoButton}>
               <Text style={s.alertDemoButtonTitle}>{({ru:"Посмотреть приветствие",uk:"Переглянути привітання",en:"View welcome",pl:"Zobacz powitanie"})[settings.language] || "View welcome"}</Text>
             </Pressable>
@@ -2602,9 +2700,9 @@ export default function App() {
               </Pressable>
             </View>
 
-            <Pressable accessibilityRole="button" accessibilityState={{ expanded: coverageOpen }} onPress={() => setCoverageOpen(open => !open)} style={{ minHeight: 48, flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-              <Text style={s.sectionTitle}>{t.coverage}</Text>
-              <Text style={s.sectionTitle}>{coverageOpen ? "▴" : "▾"}</Text>
+            <Pressable accessibilityRole="button" accessibilityState={{ expanded: coverageOpen }} onPress={() => setCoverageOpen(open => !open)} style={s.aboutRow}>
+              <Text style={s.aboutLabel}>{t.coverage}</Text>
+              <Text style={s.chev}>{coverageOpen ? "↓" : "→"}</Text>
             </Pressable>
             {coverageOpen && <View style={s.coverageCard}>
               {pad ? <ScrollView style={{ maxHeight: 420 }} nestedScrollEnabled>
@@ -2618,10 +2716,14 @@ export default function App() {
 
 
             <Pressable accessibilityRole="button" onPress={()=>active && (!speedAvailable || speedKmh>0) ? Alert.alert("CamAlert",ui.stop) : setModal("new")} style={[s.action, pad && { flex: 0 }]}><Text style={s.actionText}>＋ {t.report}</Text></Pressable>
-            <Pressable accessibilityRole="button" onPress={() => { requestAppReview().catch(() => {}); }} style={s.aboutRow}>
-              <Text style={s.aboutLabel}>{premiumCopy(settings.language).rate}</Text>
+            <Pressable accessibilityRole="button" onPress={rateInAppStore} style={s.aboutRow}>
+              <Text style={s.aboutLabel}>{premiumCopy(settings.language).rateSettings}</Text>
               <Text style={s.chev}>›</Text>
             </Pressable>
+            <View style={{ gap: 2 }}>
+              <Text style={s.note}>{premiumCopy(settings.language).diagTitle}</Text>
+              {offerReasonLines(currentOffer(), premiumCopy(settings.language)).map(line => <Text key={line} style={s.note}>{line}</Text>)}
+            </View>
             <Text style={s.sectionTitle}>{t.about}</Text>
             <AboutLink label={t.privacy} url={URLS.privacy}/>
             <AboutLink label={t.safety} url={URLS.safety}/>

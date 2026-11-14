@@ -55,4 +55,11 @@ RCT_EXPORT_METHOD(restore:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseReje
   }];
 }
 
+RCT_EXPORT_METHOD(refresh:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject)
+{
+  [CamAlertPremiumStoreKit refresh:^(NSArray<NSDictionary *> *rows) {
+    resolve(rows);
+  }];
+}
+
 @end

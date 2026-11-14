@@ -100,13 +100,39 @@ export function accessWithLegacy({ legacy, entitlement, now, enforcement = PREMI
 export function entitlementFromStore(row) {
   const plan = knownPlan(row?.productId);
   if (!plan) return null;
-  return {
+  const entitlement = {
     productId: plan.id,
-    period: plan.period,
-    expiresAt: plan.period === "lifetime" ? null : Number(row.expiresAt),
+    period: row?.period || plan.period,
+    expiresAt: (row?.period || plan.period) === "lifetime" ? null : Number(row.expiresAt),
     trial: row.trial === true && plan.trialDays > 0,
     revoked: row.revoked === true,
   };
+  if (row?.willAutoRenew === true || row?.willAutoRenew === false) entitlement.willAutoRenew = row.willAutoRenew;
+  if (typeof row?.displayPrice === "string" && row.displayPrice.trim()) entitlement.displayPrice = row.displayPrice.trim();
+  if (typeof row?.renewalState === "string" && row.renewalState) entitlement.renewalState = row.renewalState;
+  return entitlement;
+}
+
+// Status comes only from fields the store already verified. A missing date
+// or a missing renewal flag is left unknown instead of being filled in.
+export function subscriptionStatus(entitlement, now = Date.now()) {
+  if (!entitlement || !knownPlan(entitlement.productId)) return null;
+  if (entitlement.revoked === true || entitlement.renewalState === "revoked") return { code: "revoked" };
+  if (entitlement.period === "lifetime") return { code: "lifetime" };
+  const expires = Number(entitlement.expiresAt);
+  if (!Number.isFinite(expires)) return null;
+  if (expires <= now || entitlement.renewalState === "expired") return { code: "expired", endsAt: expires };
+  if (entitlement.trial === true) return { code: "trial", endsAt: expires };
+  if (entitlement.willAutoRenew === false) return { code: "renewal-cancelled", endsAt: expires };
+  if (entitlement.willAutoRenew === true) return { code: "active", renewsAt: expires };
+  return { code: "active", endsAt: expires };
+}
+
+export function restoreOutcome(decision, now = Date.now()) {
+  if (!decision || decision.verified !== true) return { code: "failed" };
+  const status = subscriptionStatus(decision.entitlement, now);
+  if (!status || status.code === "expired" || status.code === "revoked") return { code: "none" };
+  return { code: "restored", status, entitlement: decision.entitlement };
 }
 
 // A purchase counts only after StoreKit reports the transaction as verified.

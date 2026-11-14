@@ -15,7 +15,27 @@ public final class CamAlertPremiumStoreKit: NSObject {
     "camalert_premium_lifetime",
   ]
 
+  private static let updatesLock = NSLock()
+  private static var updatesStarted = false
+
+  // Unfinished transactions stay invisible until something listens here.
+  // The listener only finishes a verified transaction. It does not start one.
+  private static func ensureUpdates() {
+    updatesLock.lock()
+    let start = !updatesStarted
+    updatesStarted = true
+    updatesLock.unlock()
+    guard start else { return }
+    Task {
+      for await result in Transaction.updates {
+        guard case .verified(let transaction) = result else { continue }
+        await transaction.finish()
+      }
+    }
+  }
+
   @objc public static func loadProducts(_ done: @escaping ([[String: Any]]) -> Void) {
+    ensureUpdates()
     Task {
       let products = (try? await Product.products(for: Set(productIds))) ?? []
       var rows: [[String: Any]] = []
@@ -26,8 +46,22 @@ public final class CamAlertPremiumStoreKit: NSObject {
     }
   }
 
-  @objc public static func purchase(_ productId: String, done: @escaping ([String: Any]) -> Void) {
+  @objc public static func refresh(_ done: @escaping ([[String: Any]]) -> Void) {
+    ensureUpdates()
     Task {
+      done(await verifiedEntitlements())
+    }
+  }
+
+  @objc public static func purchase(_ productId: String, done: @escaping ([String: Any]) -> Void) {
+    ensureUpdates()
+    Task {
+      if let owned = await ownedEntitlement(productId) {
+        var payload = owned
+        payload["status"] = "verified"
+        done(payload)
+        return
+      }
       guard let product = try? await Product.products(for: [productId]).first else {
         done(["status": "unavailable"])
         return
@@ -41,7 +75,7 @@ public final class CamAlertPremiumStoreKit: NSObject {
             return
           }
           await transaction.finish()
-          var payload = entitlement(transaction)
+          var payload = await described(transaction)
           payload["status"] = "verified"
           done(payload)
         case .userCancelled:
@@ -89,15 +123,74 @@ public final class CamAlertPremiumStoreKit: NSObject {
   }
 
   @objc public static func restore(_ done: @escaping ([[String: Any]]) -> Void) {
+    ensureUpdates()
     Task {
-      try? await AppStore.sync()
-      var rows: [[String: Any]] = []
-      for await result in Transaction.currentEntitlements {
-        guard case .verified(let transaction) = result else { continue }
-        rows.append(entitlement(transaction))
+      do {
+        try await AppStore.sync()
+      } catch {
+        done([["status": "failed"]])
+        return
       }
-      done(rows)
+      done(await verifiedEntitlements())
     }
+  }
+
+  private static func ownedEntitlement(_ productId: String) async -> [String: Any]? {
+    let now = Date().timeIntervalSince1970 * 1000
+    for row in await verifiedEntitlements() {
+      guard (row["productId"] as? String) == productId else { continue }
+      if (row["revoked"] as? Bool) == true { continue }
+      if productId == "camalert_premium_lifetime" { return row }
+      if let expires = row["expiresAt"] as? Double, expires > now { return row }
+    }
+    return nil
+  }
+
+  private static func verifiedEntitlements() async -> [[String: Any]] {
+    let products = (try? await Product.products(for: Set(productIds))) ?? []
+    let byId = Dictionary(uniqueKeysWithValues: products.map { ($0.id, $0) })
+    var rows: [[String: Any]] = []
+    for await result in Transaction.currentEntitlements {
+      guard case .verified(let transaction) = result else { continue }
+      rows.append(await described(transaction, product: byId[transaction.productID]))
+    }
+    return rows
+  }
+
+  private static func described(_ transaction: Transaction, product: Product? = nil) async -> [String: Any] {
+    var value = entitlement(transaction)
+    var resolved = product
+    if resolved == nil {
+      resolved = (try? await Product.products(for: [transaction.productID]))?.first
+    }
+    if let resolved {
+      value["displayPrice"] = resolved.displayPrice
+      if let subscription = resolved.subscription {
+        value["period"] = unitName(subscription.subscriptionPeriod.unit)
+        if let statuses = try? await subscription.status {
+          for status in statuses {
+            guard case .verified = status.transaction else { continue }
+            if case .verified(let renewal) = status.renewalInfo {
+              value["willAutoRenew"] = renewal.willAutoRenew
+            }
+            switch status.state {
+            case .subscribed, .inGracePeriod, .inBillingRetryPeriod:
+              value["renewalState"] = "subscribed"
+            case .expired:
+              value["renewalState"] = "expired"
+            case .revoked:
+              value["renewalState"] = "revoked"
+            default:
+              break
+            }
+            break
+          }
+        }
+      } else {
+        value["period"] = "lifetime"
+      }
+    }
+    return value
   }
 
   private static func row(_ product: Product) async -> [String: Any] {

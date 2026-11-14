@@ -1,5 +1,5 @@
 import React from "react";
-import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { PREMIUM_PLANS, storePriceLabel } from "./premium-catalog.js";
 import { premiumCopy, selectedPlanTerms } from "./premium-copy.js";
 
@@ -46,6 +46,8 @@ export default function PremiumScreen({
   onBack,
   status,
   legacy,
+  busy = false,
+  lifetimeOwned = false,
 }) {
   const copy = premiumCopy(language);
   const selected = PREMIUM_PLANS.find(plan => plan.id === selectedId) || PREMIUM_PLANS[2];
@@ -85,8 +87,16 @@ export default function PremiumScreen({
           );
         })}
       </View>
-      <Pressable accessibilityRole="button" onPress={() => onContinue?.(selected.id)} style={styles.continue}>
-        <Text style={styles.continueText}>{copy.continue}</Text>
+      <Pressable
+        accessibilityRole="button"
+        accessibilityState={{ disabled: busy || (lifetimeOwned && selected.period === "lifetime"), busy }}
+        disabled={busy || (lifetimeOwned && selected.period === "lifetime")}
+        onPress={() => onContinue?.(selected.id)}
+        style={styles.continue}
+      >
+        {busy ? <ActivityIndicator color="#FFFFFF" /> : (
+          <Text style={styles.continueText}>{lifetimeOwned && selected.period === "lifetime" ? copy.lifetimeActive : copy.continue}</Text>
+        )}
       </Pressable>
       <Text maxFontSizeMultiplier={1.3} style={styles.terms}>{terms}</Text>
       <View style={styles.benefits}>

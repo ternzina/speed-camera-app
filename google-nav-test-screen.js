@@ -134,7 +134,7 @@ export default function GoogleNavTestScreen(props) {
 
 function GoogleNavBody({
   language, night, coords, camera, cameraType, voiceEnabled, onToggleVoice,
-  picking, tripActive, onStartTrip, onStopTrip, onClosePick, handoff, onRouteActive,
+  picking, tripActive, onStartTrip, onStopTrip, onClosePick, handoff, onRouteActive, onCompletedNavigation,
   diagnostic = false, armedTrip = false, diagnosticBridge = null, cameras = null, onNavigationFix = null, onResetRepeat = null,
 }) {
   const copy = COPY[language] || COPY.ru;
@@ -145,6 +145,7 @@ function GoogleNavBody({
   const alive = useRef(true);
   const ready = useRef(false);
   const guidingRef = useRef(false);
+  const guidanceArmed = useRef(false);
   const autoStarted = useRef(false);
   const cameraSpeakingRef = useRef(false);
   const [point, setPoint] = useState(null);
@@ -551,6 +552,7 @@ function GoogleNavBody({
       await withNavigationWindow(() => controllerRef.current.startGuidance(), foreground);
       if (!alive.current) return;
       guidingRef.current = true;
+      guidanceArmed.current = true;
       setGuiding(true);
       setLayersOpen(false);
       traceNavVoice("guidance.start", {
@@ -842,8 +844,14 @@ function GoogleNavBody({
             </Pressable>
           )}
           {tripActive && (
-            <Pressable accessibilityRole="button" onPress={() => { setRoadSnapBackground(false); onStopTrip(); }} style={styles.endTrip}>
-              <Text numberOfLines={1} maxFontSizeMultiplier={1} adjustsFontSizeToFit minimumFontScale={0.8} style={[styles.secondaryText, { color: palette.ink }]}>{copy.endTrip}</Text>
+            <Pressable accessibilityRole="button" onPress={() => {
+              const finishedNavigation = guidanceArmed.current;
+              guidanceArmed.current = false;
+              setRoadSnapBackground(false);
+              onStopTrip();
+              if (finishedNavigation) onCompletedNavigation?.();
+            }} style={styles.endTrip}>
+              <Text numberOfLines={1} maxFontSizeMultiplier={1} adjustsFontSizeToFit minimumFontScale={0.8} style={styles.endTripText}>{copy.endTrip}</Text>
             </Pressable>
           )}
         </View>
@@ -1021,7 +1029,8 @@ const styles = StyleSheet.create({
   dim: { opacity: 0.45 },
   end: { minHeight: 40, alignItems: "center", justifyContent: "center" },
   endText: { color: "#9A3412", fontSize: 16, fontWeight: "800" },
-  endTrip: { minHeight: 44, marginTop: 6, marginBottom: 16, paddingHorizontal: 8, alignItems: "center", justifyContent: "center" },
+  endTrip: { minHeight: 44, marginTop: 6, marginBottom: 16, paddingHorizontal: 16, alignItems: "center", justifyContent: "center", backgroundColor: "#FFFFFF", borderRadius: 14, borderWidth: 1, borderColor: "#10263B" },
+  endTripText: { color: "#10263B", fontSize: 16, fontWeight: "800" },
   secondary: { minHeight: 44, alignItems: "center", justifyContent: "center" },
   secondaryText: { fontSize: 16, fontWeight: "700" },
   savedBlock: { gap: 4 },

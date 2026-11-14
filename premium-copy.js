@@ -52,6 +52,39 @@ export const PREMIUM_COPY = {
     revoked: "Магазин вернул оплату по этой покупке.",
     expired: "Срок этой покупки закончился.",
     storeUnavailable: "Магазин сейчас не ответил. Покупка не прошла.",
+    lifetimeActive: "Premium навсегда активен",
+    lifetimeTitle: "CamAlert Premium навсегда",
+    lifetimeOnce: "Разовая покупка. Без продления",
+    statusActive: "Подписка активна",
+    statusTrial: "Пробный период",
+    statusRenewalCancelled: "Продление отменено",
+    statusExpired: "Подписка истекла",
+    statusRevoked: "Оплата возвращена",
+    accessUntil: "Доступ до {date}",
+    renewsOn: "Продление {date}",
+    restoredWith: "Покупки восстановлены",
+    noneFound: "Активных покупок не найдено",
+    restoreFailed: "Не удалось проверить покупки. Повторите попытку",
+    purchasePending: "Покупка обрабатывается",
+    purchaseUnverified: "Не удалось проверить покупку. Повторите попытку",
+    purchaseCancelled: "Покупка не завершена",
+    rateSettings: "Оценить приложение",
+    rateFailed: "Не удалось открыть страницу отзыва.",
+    checking: "Проверяем покупки…",
+    diagTitle: "Счётчики предложений",
+    diagLaunches: "Запуски",
+    diagTrips: "Завершённые поездки",
+    diagPremium: "Premium",
+    diagReview: "Оценка",
+    reasonMoving: "Скрыто во время поездки",
+    reasonNavigation: "Скрыто, пока открыт экран навигации",
+    reasonBlocked: "Скрыто, пока открыто другое окно",
+    reasonAccess: "Уже есть доступ, покупку не предлагаем",
+    reasonSettled: "Уже показано или закрыто",
+    reasonWaiting: "Ещё рано: запусков {launches} из 5, поездок {trips} из 5",
+    reasonReviewWaiting: "Ещё рано: запусков {launches} из 10, поездок {trips} из 10",
+    reasonReady: "Можно показать",
+    reasonHidden: "Условия выполнены, но показ отложен",
   },
   uk: {
     title: "CamAlert Premium",
@@ -106,6 +139,39 @@ export const PREMIUM_COPY = {
     revoked: "Магазин повернув оплату за цю покупку.",
     expired: "Строк цієї покупки закінчився.",
     storeUnavailable: "Магазин зараз не відповів. Покупка не пройшла.",
+    lifetimeActive: "Premium назавжди активний",
+    lifetimeTitle: "CamAlert Premium назавжди",
+    lifetimeOnce: "Разова покупка. Без продовження.",
+    statusActive: "Підписка активна",
+    statusTrial: "Пробний період",
+    statusRenewalCancelled: "Продовження скасовано",
+    statusExpired: "Підписка закінчилась",
+    statusRevoked: "Оплату повернено",
+    accessUntil: "Доступ до {date}",
+    renewsOn: "Продовження {date}",
+    restoredWith: "Покупки відновлено",
+    noneFound: "Активних покупок не знайдено",
+    restoreFailed: "Не вдалося перевірити покупки. Спробуйте ще раз",
+    purchasePending: "Покупка обробляється",
+    purchaseUnverified: "Не вдалося перевірити покупку. Спробуйте ще раз",
+    purchaseCancelled: "Покупку не завершено",
+    rateSettings: "Оцінити застосунок",
+    rateFailed: "Не вдалося відкрити сторінку відгуку.",
+    checking: "Перевіряємо покупки…",
+    diagTitle: "Лічильники пропозицій",
+    diagLaunches: "Запуски",
+    diagTrips: "Завершені поїздки",
+    diagPremium: "Premium",
+    diagReview: "Оцінка",
+    reasonMoving: "Сховано під час поїздки",
+    reasonNavigation: "Сховано, поки відкритий екран навігації",
+    reasonBlocked: "Сховано, поки відкрите інше вікно",
+    reasonAccess: "Доступ уже є, покупку не пропонуємо",
+    reasonSettled: "Уже показано або закрито",
+    reasonWaiting: "Ще рано: запусків {launches} з 5, поїздок {trips} з 5",
+    reasonReviewWaiting: "Ще рано: запусків {launches} з 10, поїздок {trips} з 10",
+    reasonReady: "Можна показати",
+    reasonHidden: "Умови виконані, але показ відкладено",
   },
   en: {
     title: "CamAlert Premium",
@@ -160,6 +226,39 @@ export const PREMIUM_COPY = {
     revoked: "The store refunded this purchase.",
     expired: "This purchase has expired.",
     storeUnavailable: "The store did not answer. The purchase did not go through.",
+    lifetimeActive: "Premium forever is active",
+    lifetimeTitle: "CamAlert Premium forever",
+    lifetimeOnce: "One-time purchase. No renewal.",
+    statusActive: "Subscription active",
+    statusTrial: "Trial",
+    statusRenewalCancelled: "Renewal cancelled",
+    statusExpired: "Subscription expired",
+    statusRevoked: "Payment refunded",
+    accessUntil: "Access until {date}",
+    renewsOn: "Renews {date}",
+    restoredWith: "Purchases restored",
+    noneFound: "No active purchases found",
+    restoreFailed: "Couldn't verify purchases. Try again",
+    purchasePending: "The purchase is processing",
+    purchaseUnverified: "Couldn't verify the purchase. Try again",
+    purchaseCancelled: "The purchase was not completed",
+    rateSettings: "Rate the app",
+    rateFailed: "The review page could not be opened.",
+    checking: "Checking purchases…",
+    diagTitle: "Offer counters",
+    diagLaunches: "Launches",
+    diagTrips: "Finished trips",
+    diagPremium: "Premium",
+    diagReview: "Rating",
+    reasonMoving: "Hidden during a trip",
+    reasonNavigation: "Hidden while navigation is open",
+    reasonBlocked: "Hidden while another window is open",
+    reasonAccess: "Access is already active, so no offer",
+    reasonSettled: "Already shown or dismissed",
+    reasonWaiting: "Not yet: {launches} of 5 launches, {trips} of 5 trips",
+    reasonReviewWaiting: "Not yet: {launches} of 10 launches, {trips} of 10 trips",
+    reasonReady: "Ready to show",
+    reasonHidden: "The count is reached, and the offer is waiting",
   },
   pl: {
     title: "CamAlert Premium",
@@ -214,6 +313,39 @@ export const PREMIUM_COPY = {
     revoked: "Sklep zwrócił płatność za ten zakup.",
     expired: "Okres tego zakupu minął.",
     storeUnavailable: "Sklep teraz nie odpowiedział. Zakup nie przeszedł.",
+    lifetimeActive: "Premium na zawsze jest aktywne",
+    lifetimeTitle: "CamAlert Premium na zawsze",
+    lifetimeOnce: "Zakup jednorazowy. Bez odnowienia.",
+    statusActive: "Subskrypcja aktywna",
+    statusTrial: "Okres próbny",
+    statusRenewalCancelled: "Odnowienie anulowane",
+    statusExpired: "Subskrypcja wygasła",
+    statusRevoked: "Płatność zwrócona",
+    accessUntil: "Dostęp do {date}",
+    renewsOn: "Odnowienie {date}",
+    restoredWith: "Zakupy przywrócone",
+    noneFound: "Nie znaleziono aktywnych zakupów",
+    restoreFailed: "Nie udało się sprawdzić zakupów. Spróbuj ponownie",
+    purchasePending: "Zakup jest przetwarzany",
+    purchaseUnverified: "Nie udało się sprawdzić zakupu. Spróbuj ponownie",
+    purchaseCancelled: "Zakupu nie dokończono",
+    rateSettings: "Oceń aplikację",
+    rateFailed: "Nie udało się otworzyć strony opinii.",
+    checking: "Sprawdzamy zakupy…",
+    diagTitle: "Liczniki propozycji",
+    diagLaunches: "Uruchomienia",
+    diagTrips: "Zakończone trasy",
+    diagPremium: "Premium",
+    diagReview: "Ocena",
+    reasonMoving: "Ukryte podczas jazdy",
+    reasonNavigation: "Ukryte, gdy nawigacja jest otwarta",
+    reasonBlocked: "Ukryte, gdy otwarte jest inne okno",
+    reasonAccess: "Dostęp już jest, więc bez propozycji",
+    reasonSettled: "Już pokazane albo zamknięte",
+    reasonWaiting: "Jeszcze nie: uruchomień {launches} z 5, tras {trips} z 5",
+    reasonReviewWaiting: "Jeszcze nie: uruchomień {launches} z 10, tras {trips} z 10",
+    reasonReady: "Można pokazać",
+    reasonHidden: "Licznik osiągnięty, propozycja czeka",
   },
 };
 
@@ -223,6 +355,43 @@ export function premiumCopy(language) {
 
 function withPrice(template, price) {
   return template.split("{price}").join(price);
+}
+
+function fillCounts(template, launches, trips) {
+  return template.split("{launches}").join(String(launches)).split("{trips}").join(String(trips));
+}
+
+function hideText(decision, copy) {
+  if (decision.hide === "moving") return copy.reasonMoving;
+  if (decision.hide === "navigation") return copy.reasonNavigation;
+  if (decision.hide === "blocked") return copy.reasonBlocked;
+  return null;
+}
+
+export function offerReasonLines(decision, copy) {
+  const hidden = hideText(decision, copy);
+  const premiumDue = decision.launchPremiumDue || decision.tripPremiumDue;
+  const reviewDue = decision.launchReviewDue || decision.tripReviewDue;
+  let premium;
+  if (decision.hasPremium) premium = copy.reasonAccess;
+  else if (hidden && premiumDue) premium = hidden;
+  else if (decision.kind === "premium") premium = copy.reasonReady;
+  else if (!premiumDue && decision.trips < 5) premium = fillCounts(copy.reasonWaiting, decision.launches, decision.trips);
+  else if (!premiumDue) premium = copy.reasonSettled;
+  else premium = copy.reasonHidden;
+  let review;
+  if (hidden && reviewDue && decision.kind !== "premium") review = hidden;
+  else if (decision.kind === "review") review = copy.reasonReady;
+  else if (decision.kind === "premium" && reviewDue) review = copy.reasonHidden;
+  else if (!reviewDue && decision.trips < 10 && decision.launches < 10) review = fillCounts(copy.reasonReviewWaiting, decision.launches, decision.trips);
+  else if (!reviewDue) review = copy.reasonSettled;
+  else review = copy.reasonHidden;
+  return [
+    `${copy.diagLaunches}: ${decision.launches}`,
+    `${copy.diagTrips}: ${decision.trips}`,
+    `${copy.diagPremium}: ${premium}`,
+    `${copy.diagReview}: ${review}`,
+  ];
 }
 
 // The price string comes from the store. A missing price is not replaced
