@@ -59,9 +59,41 @@ export function entitlementWithoutNetwork(cache, now) {
   return { allowed: true, reason: "offline-cache", entitlement: cache.entitlement };
 }
 
+// 1.0.6 is the last version already on sale. A person whose first App Store
+// download is this version or older already has the published access.
+export const PUBLISHED_RIGHTS_VERSION = "1.0.6";
+
+function versionParts(version) {
+  if (typeof version !== "string") return null;
+  const parts = version.trim().split(".");
+  if (parts.length < 3) return null;
+  const nums = parts.slice(0, 3).map(part => (/^\d+$/.test(part) ? Number(part) : NaN));
+  if (nums.some(part => !Number.isFinite(part))) return null;
+  return nums;
+}
+
+// "1.0" is what StoreKit sandbox always reports, so it is not evidence.
+// A missing or unreadable version is not evidence either.
+export function legacyFromOriginalVersion(version, ceiling = PUBLISHED_RIGHTS_VERSION) {
+  const got = versionParts(version);
+  const cap = versionParts(ceiling);
+  if (!got || !cap) return null;
+  for (let i = 0; i < 3; i += 1) {
+    if (got[i] < cap[i]) return true;
+    if (got[i] > cap[i]) return false;
+  }
+  return true;
+}
+
+export function resolveLegacy({ stored, priorLocal, originalVersion } = {}) {
+  if (stored === true || stored === "yes" || priorLocal === true) return true;
+  return legacyFromOriginalVersion(originalVersion);
+}
+
 export function accessWithLegacy({ legacy, entitlement, now, enforcement = PREMIUM_ENFORCEMENT }) {
   if (enforcement !== true) return { allowed: true, reason: "published-rights" };
   if (legacy === true) return { allowed: true, reason: "legacy" };
+  if (legacy == null) return { allowed: true, reason: "unconfirmed" };
   return premiumAllows(entitlement, now, true);
 }
 

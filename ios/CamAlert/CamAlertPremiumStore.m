@@ -27,6 +27,20 @@ RCT_EXPORT_METHOD(purchase:(NSString *)productId resolve:(RCTPromiseResolveBlock
   }];
 }
 
+RCT_EXPORT_METHOD(legacyEvidence:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject)
+{
+  [CamAlertPremiumStoreKit legacyEvidence:^(NSDictionary *result) {
+    resolve(result);
+  }];
+}
+
+RCT_EXPORT_METHOD(rememberLegacyYes:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject)
+{
+  [CamAlertPremiumStoreKit rememberLegacyYes:^(BOOL ok) {
+    resolve(@(ok));
+  }];
+}
+
 RCT_EXPORT_METHOD(restore:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject)
 {
   [CamAlertPremiumStoreKit restore:^(NSArray<NSDictionary *> *rows) {

@@ -1,4 +1,5 @@
 import Foundation
+import Security
 import StoreKit
 
 // StoreKit is the only place a purchase can start. The module does not
@@ -51,6 +52,23 @@ public final class CamAlertPremiumStoreKit: NSObject {
     }
   }
 
+  @objc public static func legacyEvidence(_ done: @escaping ([String: Any]) -> Void) {
+    Task {
+      var payload: [String: Any] = [:]
+      if keychainLegacy() == "yes" {
+        payload["keychain"] = "yes"
+      }
+      if let version = await originalAppVersion() {
+        payload["originalVersion"] = version
+      }
+      done(payload)
+    }
+  }
+
+  @objc public static func rememberLegacyYes(_ done: @escaping (Bool) -> Void) {
+    done(writeKeychainYes())
+  }
+
   @objc public static func restore(_ done: @escaping ([[String: Any]]) -> Void) {
     Task {
       try? await AppStore.sync()
@@ -95,6 +113,46 @@ public final class CamAlertPremiumStoreKit: NSObject {
       value["trial"] = true
     }
     return value
+  }
+
+  private static func keychainQuery() -> [String: Any] {
+    [
+      kSecClass as String: kSecClassGenericPassword,
+      kSecAttrService as String: "com.21wek.camera.premium",
+      kSecAttrAccount as String: "legacy-access",
+    ]
+  }
+
+  private static func keychainLegacy() -> String? {
+    var query = keychainQuery()
+    query[kSecReturnData as String] = true
+    query[kSecMatchLimit as String] = kSecMatchLimitOne
+    var item: CFTypeRef?
+    let status = SecItemCopyMatching(query as CFDictionary, &item)
+    guard status == errSecSuccess, let data = item as? Data, let text = String(data: data, encoding: .utf8) else {
+      return nil
+    }
+    return text == "yes" ? "yes" : nil
+  }
+
+  private static func writeKeychainYes() -> Bool {
+    let data = Data("yes".utf8)
+    var query = keychainQuery()
+    let updated = SecItemUpdate(query as CFDictionary, [kSecValueData as String: data] as CFDictionary)
+    if updated == errSecSuccess { return true }
+    query[kSecValueData as String] = data
+    query[kSecAttrAccessible as String] = kSecAttrAccessibleAfterFirstUnlock
+    return SecItemAdd(query as CFDictionary, nil) == errSecSuccess
+  }
+
+  private static func originalAppVersion() async -> String? {
+    do {
+      let result = try await AppTransaction.shared
+      guard case .verified(let transaction) = result else { return nil }
+      return transaction.originalAppVersion
+    } catch {
+      return nil
+    }
   }
 
   private static func unitName(_ unit: Product.SubscriptionPeriod.Unit) -> String {

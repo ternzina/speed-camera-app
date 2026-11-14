@@ -12,8 +12,10 @@ import {
   chooseRestoredEntitlement,
   entitlementFromStore,
   entitlementWithoutNetwork,
+  legacyFromOriginalVersion,
   premiumAllows,
   renewalDescription,
+  resolveLegacy,
 } from "../../premium-access.js";
 import { PREMIUM_COPY } from "../../premium-copy.js";
 
@@ -92,8 +94,34 @@ test("offline access follows the last verified entitlement", () => {
 test("legacy access stays when enforcement is on, and published access stays while it is off", () => {
   assert.equal(accessWithLegacy({ legacy: false, entitlement: null, now, enforcement: false }).reason, "published-rights");
   assert.equal(accessWithLegacy({ legacy: true, entitlement: null, now, enforcement: true }).reason, "legacy");
+  assert.equal(accessWithLegacy({ legacy: null, entitlement: null, now, enforcement: true }).reason, "unconfirmed");
+  assert.equal(accessWithLegacy({ legacy: null, entitlement: null, now, enforcement: true }).allowed, true);
   const life = { productId: "camalert_premium_lifetime", period: "lifetime", revoked: false };
   assert.equal(accessWithLegacy({ legacy: false, entitlement: life, now, enforcement: true }).reason, "lifetime");
+  assert.equal(accessWithLegacy({ legacy: false, entitlement: null, now, enforcement: true }).reason, "none");
+});
+
+test("a reinstall without a reliable record is not treated as a new locked user", () => {
+  assert.equal(legacyFromOriginalVersion("1.0.6"), true);
+  assert.equal(legacyFromOriginalVersion("1.0.3"), true);
+  assert.equal(legacyFromOriginalVersion("1.0.7"), false);
+  assert.equal(legacyFromOriginalVersion("1.0"), null);
+  assert.equal(legacyFromOriginalVersion("49"), null);
+  assert.equal(legacyFromOriginalVersion(null), null);
+  assert.equal(resolveLegacy({ stored: "yes", priorLocal: false, originalVersion: null }), true);
+  assert.equal(resolveLegacy({ stored: "no", priorLocal: true, originalVersion: null }), true);
+  assert.equal(resolveLegacy({ stored: "no", priorLocal: false, originalVersion: "1.0.5" }), true);
+  assert.equal(resolveLegacy({ stored: "no", priorLocal: false, originalVersion: "1.0" }), null);
+  assert.equal(resolveLegacy({ stored: null, priorLocal: false, originalVersion: "1.0.8" }), false);
+  const store = read("premium-store.js");
+  assert.match(store, /resolveLegacy/);
+  assert.match(store, /legacyEvidence/);
+  assert.match(store, /rememberLegacyYes/);
+  assert.match(store, /removeItem\(LEGACY_KEY\)/);
+  assert.doesNotMatch(store, /setItem\(LEGACY_KEY,\s*(prior \? "yes" : "no"|"no")\)/);
+  const swift = read("ios/CamAlert/CamAlertPremiumStore.swift");
+  assert.match(swift, /AppTransaction\.shared/);
+  assert.match(swift, /kSecClassGenericPassword/);
 });
 
 test("only a verified store transaction is accepted, and a refund or expiry ends it", () => {

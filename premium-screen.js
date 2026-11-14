@@ -58,8 +58,10 @@ export default function PremiumScreen({
               onPress={() => onSelect?.(plan.id)}
               style={[styles.plan, plan.highlighted && styles.planYear, active && styles.planOn]}
             >
-              <Text style={styles.period}>{copy.periods[plan.period]}</Text>
-              {plan.highlighted ? <Text style={styles.yearMark}>{copy.highlighted}</Text> : null}
+              <View style={styles.planMain}>
+                <Text style={styles.period}>{copy.periods[plan.period]}</Text>
+                {plan.highlighted ? <Text style={styles.yearMark}>{copy.highlighted}</Text> : null}
+              </View>
               <Text style={styles.price}>{price || copy.priceWait}</Text>
             </Pressable>
           );
@@ -99,12 +101,13 @@ const styles = StyleSheet.create({
   benefits: { gap: 8, paddingVertical: 4 },
   benefit: { color: INK, fontSize: 16, lineHeight: 22 },
   plans: { gap: 8 },
-  plan: { backgroundColor: CARD, borderRadius: 16, borderWidth: 1, borderColor: LINE, paddingHorizontal: 16, paddingVertical: 14, flexDirection: "row", alignItems: "center", justifyContent: "space-between" },
+  plan: { backgroundColor: CARD, borderRadius: 16, borderWidth: 1, borderColor: LINE, paddingHorizontal: 16, paddingVertical: 14, flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: 12 },
   planYear: { borderColor: YEAR },
   planOn: { backgroundColor: "#17324E" },
+  planMain: { flexGrow: 1, flexShrink: 1, gap: 2 },
   period: { color: INK, fontSize: 18, fontWeight: "700" },
   yearMark: { color: YEAR, fontSize: 13, fontWeight: "700" },
-  price: { color: INK, fontSize: 18, fontWeight: "700" },
+  price: { color: INK, fontSize: 16, fontWeight: "700", flexShrink: 1, textAlign: "right" },
   note: { color: MUTED, fontSize: 14, lineHeight: 20 },
   continue: { backgroundColor: ACTION, minHeight: 52, borderRadius: 16, alignItems: "center", justifyContent: "center" },
   continueText: { color: "#FFFFFF", fontSize: 18, fontWeight: "800" },
