@@ -22,7 +22,10 @@ export default function PremiumScreen({
   onManage,
   onTerms,
   onPrivacy,
+  onBack,
   renewal,
+  status,
+  legacy,
 }) {
   const copy = premiumCopy(language);
   const selected = PREMIUM_PLANS.find(plan => plan.id === selectedId) || PREMIUM_PLANS[2];
@@ -34,6 +37,7 @@ export default function PremiumScreen({
   });
   return (
     <ScrollView style={styles.root} contentContainerStyle={styles.content}>
+      {onBack ? <Pressable accessibilityRole="button" onPress={onBack}><Text style={styles.link}>{copy.back}</Text></Pressable> : null}
       <Text style={styles.kicker}>CamAlert</Text>
       <Text style={styles.title}>{copy.title}</Text>
       <Text style={styles.lead}>{copy.lead}</Text>
@@ -61,6 +65,8 @@ export default function PremiumScreen({
           );
         })}
       </View>
+      {legacy ? <Text style={styles.note}>{copy.legacy}</Text> : null}
+      {status ? <Text style={styles.note}>{status}</Text> : null}
       {selected.id === "camalert_premium_yearly" ? <Text style={styles.note}>{copy.trial}</Text> : null}
       <Text style={styles.note}>{copy.charge}</Text>
       <Text style={styles.note}>

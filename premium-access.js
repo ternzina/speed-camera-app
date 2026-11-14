@@ -59,6 +59,43 @@ export function entitlementWithoutNetwork(cache, now) {
   return { allowed: true, reason: "offline-cache", entitlement: cache.entitlement };
 }
 
+export function accessWithLegacy({ legacy, entitlement, now, enforcement = PREMIUM_ENFORCEMENT }) {
+  if (enforcement !== true) return { allowed: true, reason: "published-rights" };
+  if (legacy === true) return { allowed: true, reason: "legacy" };
+  return premiumAllows(entitlement, now, true);
+}
+
+export function entitlementFromStore(row) {
+  const plan = knownPlan(row?.productId);
+  if (!plan) return null;
+  return {
+    productId: plan.id,
+    period: plan.period,
+    expiresAt: plan.period === "lifetime" ? null : Number(row.expiresAt),
+    trial: row.trial === true && plan.trialDays > 0,
+    revoked: row.revoked === true,
+  };
+}
+
+// A purchase counts only after StoreKit reports the transaction as verified.
+// That verification is Apple's signed transaction. Refunds arrive as revoked.
+export function acceptVerifiedPurchase(result, now) {
+  if (!result || result.status !== "verified") {
+    return { verified: false, reason: result?.status || "unverified", entitlement: null };
+  }
+  const entitlement = entitlementFromStore(result);
+  if (!entitlement) return { verified: false, reason: "unknown-product", entitlement: null };
+  if (entitlement.revoked) return { verified: true, reason: "revoked", entitlement };
+  return { verified: true, reason: premiumAllows(entitlement, now, true).reason, entitlement };
+}
+
+export function acceptRestored(rows, now) {
+  const list = (Array.isArray(rows) ? rows : []).map(entitlementFromStore).filter(Boolean);
+  const entitlement = chooseRestoredEntitlement(list, now);
+  if (!entitlement) return { verified: true, reason: "none", entitlement: null };
+  return { verified: true, reason: premiumAllows(entitlement, now, true).reason, entitlement };
+}
+
 export function applyPlanChange(current, next, now) {
   const plan = knownPlan(next?.productId);
   if (!plan) return current || null;

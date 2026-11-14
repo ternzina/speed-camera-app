@@ -4,9 +4,13 @@ import test from "node:test";
 import { PREMIUM_PLANS, storePriceLabel } from "../../premium-catalog.js";
 import {
   PREMIUM_ENFORCEMENT,
+  acceptRestored,
+  acceptVerifiedPurchase,
+  accessWithLegacy,
   applyPlanChange,
   canStartTrial,
   chooseRestoredEntitlement,
+  entitlementFromStore,
   entitlementWithoutNetwork,
   premiumAllows,
   renewalDescription,
@@ -21,7 +25,10 @@ test("published rights stay available while enforcement is off", () => {
   assert.equal(PREMIUM_ENFORCEMENT, false);
   assert.equal(premiumAllows(null, now).reason, "published-rights");
   assert.equal(premiumAllows(null, now).allowed, true);
-  assert.doesNotMatch(read("App.js"), /premium-screen|PREMIUM_ENFORCEMENT|premiumAllows/);
+  assert.match(read("App.js"), /premium-screen/);
+  assert.match(read("App.js"), /premium-store/);
+  assert.doesNotMatch(read("App.js"), /PREMIUM_ENFORCEMENT\s*=\s*true/);
+  assert.doesNotMatch(read("App.js"), /premiumAllows\(/);
   assert.doesNotMatch(read("premium-screen.js"), /\$\d|consoleUsd/);
 });
 
@@ -82,6 +89,53 @@ test("offline access follows the last verified entitlement", () => {
   assert.equal(entitlementWithoutNetwork(null, now).reason, "offline-unknown");
 });
 
+test("legacy access stays when enforcement is on, and published access stays while it is off", () => {
+  assert.equal(accessWithLegacy({ legacy: false, entitlement: null, now, enforcement: false }).reason, "published-rights");
+  assert.equal(accessWithLegacy({ legacy: true, entitlement: null, now, enforcement: true }).reason, "legacy");
+  const life = { productId: "camalert_premium_lifetime", period: "lifetime", revoked: false };
+  assert.equal(accessWithLegacy({ legacy: false, entitlement: life, now, enforcement: true }).reason, "lifetime");
+});
+
+test("only a verified store transaction is accepted, and a refund or expiry ends it", () => {
+  const active = acceptVerifiedPurchase({
+    status: "verified",
+    productId: "camalert_premium_monthly",
+    expiresAt: now + week,
+  }, now);
+  assert.equal(active.reason, "active");
+  assert.equal(acceptVerifiedPurchase({ status: "unverified", productId: "camalert_premium_monthly" }, now).verified, false);
+  assert.equal(acceptVerifiedPurchase({ status: "cancelled" }, now).reason, "cancelled");
+  const refunded = acceptVerifiedPurchase({
+    status: "verified",
+    productId: "camalert_premium_lifetime",
+    revoked: true,
+  }, now);
+  assert.equal(refunded.reason, "revoked");
+  const expired = acceptVerifiedPurchase({
+    status: "verified",
+    productId: "camalert_premium_weekly",
+    expiresAt: now - 1,
+  }, now);
+  assert.equal(expired.reason, "expired");
+  const fromStore = entitlementFromStore({ productId: "camalert_premium_yearly", expiresAt: now + week, trial: true });
+  assert.equal(fromStore.period, "year");
+  assert.equal(fromStore.trial, true);
+});
+
+test("restore keeps lifetime and an active subscription, and drops a refunded one", () => {
+  const restored = acceptRestored([
+    { productId: "camalert_premium_monthly", expiresAt: now + week },
+    { productId: "camalert_premium_lifetime", revoked: false },
+  ], now);
+  assert.equal(restored.entitlement.productId, "camalert_premium_lifetime");
+  const refundedLife = acceptRestored([
+    { productId: "camalert_premium_lifetime", revoked: true },
+    { productId: "camalert_premium_yearly", expiresAt: now - 1 },
+  ], now);
+  assert.equal(refundedLife.entitlement, null);
+  assert.equal(refundedLife.reason, "none");
+});
+
 test("the premium screen copy exists in every CamAlert language and names the trial", () => {
   for (const language of ["ru", "uk", "en", "pl"]) {
     const copy = PREMIUM_COPY[language];
@@ -97,7 +151,9 @@ test("the premium screen copy exists in every CamAlert language and names the tr
   assert.match(read("premium-screen.js"), /onRestore/);
   assert.match(read("premium-manage-screen.js"), /apps.apple.com\/account\/subscriptions/);
   assert.doesNotMatch(read("premium-manage-screen.js"), /\$\d|consoleUsd/);
-  assert.doesNotMatch(read("App.js"), /premium-manage-screen|CamAlertPremiumStore/);
+  assert.match(read("App.js"), /premium-manage-screen/);
+  assert.match(read("premium-store.js"), /CamAlertPremiumStore/);
+  assert.doesNotMatch(read("premium-store.js"), /1\.49|3\.49|27\.99|44\.99/);
   const store = read("ios/CamAlert/CamAlertPremiumStore.swift");
   assert.match(store, /Product\.products/);
   assert.match(store, /product\.purchase/);

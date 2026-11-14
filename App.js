@@ -18,6 +18,10 @@ import plData from "./cameras-pl.json";
 import { nearestPolandPoint, detectAverageSpeedSection, averageSectionSpeech, measureSectionProgress, advanceSectionPace } from "./poland-engine";
 import { createNavtestSectionStore } from "./navtest-section";
 import { cameraPoints, countryFeed, loadCameraCache, saveCameraCache } from "./camera-data";
+import PremiumScreen from "./premium-screen";
+import PremiumManageScreen from "./premium-manage-screen";
+import { premiumCopy } from "./premium-copy";
+import { loadPremiumPrices, purchasePremium, rememberLegacy, restorePremium } from "./premium-store";
 import { COUNTRY_NAMES, countryFlag } from "./countries";
 import { refreshCountryDelivery } from "./camera-delivery";
 import { catalogTimestamps, shouldShowBackgroundGuide, describeLocationAccess, formatCatalogDate, backgroundGuideCopy, backgroundAccessMessage, backgroundFailureCopy } from "./catalog-status";
@@ -629,6 +633,12 @@ export default function App() {
   const [backgroundAccess,setBackgroundAccess]=useState("missing");
   const [tab, setTab] = useState("drive");
   const [modal, setModal] = useState(null);
+  const [premiumView, setPremiumView] = useState(null);
+  const [premiumPlan, setPremiumPlan] = useState("camalert_premium_yearly");
+  const [premiumPrices, setPremiumPrices] = useState({});
+  const [premiumEntitlement, setPremiumEntitlement] = useState(null);
+  const [premiumStatus, setPremiumStatus] = useState("");
+  const [legacyAccess, setLegacyAccess] = useState(false);
   const [alertPreviewMode, setAlertPreviewMode] = useState("expanded");
   const [navigatorDestination, setNavigatorDestination] = useState("");
   const [googleNavigationOpen, setGoogleNavigationOpen] = useState(false);
@@ -1860,6 +1870,10 @@ export default function App() {
     );
   }
 
+  useEffect(() => {
+    rememberLegacy().then(setLegacyAccess).catch(() => {});
+  }, []);
+
   useEffect(() => () => {
     if (cameraAlertDismissTimer.current) clearTimeout(cameraAlertDismissTimer.current);
   }, []);
@@ -1871,6 +1885,38 @@ export default function App() {
   const nav = [
     ["drive","🚗",t.drive], ["map","🗺️",t.map], ["nearby","📍",t.nearby], ["settings","⚙️",t.settings]
   ];
+
+  function premiumStatusText(reason) {
+    const copy = premiumCopy(settings.language);
+    if (reason === "active" || reason === "trial" || reason === "lifetime") return copy.purchased;
+    if (reason === "none") return copy.noneRestored;
+    if (reason === "cancelled") return copy.cancelled;
+    if (reason === "revoked") return copy.revoked;
+    if (reason === "expired") return copy.expired;
+    return copy.storeUnavailable;
+  }
+
+  async function openPremium() {
+    setPremiumStatus("");
+    setPremiumView("plans");
+    try {
+      setPremiumPrices(await loadPremiumPrices());
+    } catch {
+      setPremiumPrices({});
+    }
+  }
+
+  async function buyPremium(productId) {
+    const decision = await purchasePremium(productId);
+    setPremiumEntitlement(decision.entitlement);
+    setPremiumStatus(premiumStatusText(decision.reason));
+  }
+
+  async function restorePremiumPurchases() {
+    const decision = await restorePremium();
+    setPremiumEntitlement(decision.entitlement);
+    setPremiumStatus(decision.reason === "none" ? premiumCopy(settings.language).noneRestored : decision.verified && decision.entitlement ? premiumCopy(settings.language).restored : premiumStatusText(decision.reason));
+  }
 
   async function finishOnboarding() {
     await AsyncStorage.setItem(ONBOARDING_KEY, "done").catch(() => {});
@@ -2291,6 +2337,7 @@ export default function App() {
             <SettingSwitch label={(WARNING_UI[settings.language] || WARNING_UI.ru).switchLabel} value={settings.cameraWarnings !== false} onChange={v=>setSettings({...settings,cameraWarnings:v})}/>
             <Pressable accessibilityRole="button" onPress={() => {setLawsQuery("");setLawsOpen(true);}} style={[s.action, pad && { flex: 0 }]}><Text style={s.actionText}>{(WARNING_UI[settings.language] || WARNING_UI.ru).laws} →</Text></Pressable>
             <Text style={s.note}>{(WARNING_UI[settings.language] || WARNING_UI.ru).lawsNote}</Text>
+            <Pressable accessibilityRole="button" onPress={openPremium} style={s.action}><Text style={s.actionText}>{premiumCopy(settings.language).open} →</Text></Pressable>
             <Pressable accessibilityRole="button" onPress={() => {setOnboardingPage(0);setOnboardingState("new");}} style={s.alertDemoButton}>
               <Text style={s.alertDemoButtonTitle}>{({ru:"Посмотреть приветствие",uk:"Переглянути привітання",en:"View welcome",pl:"Zobacz powitanie"})[settings.language] || "View welcome"}</Text>
             </Pressable>
@@ -2464,6 +2511,31 @@ export default function App() {
           </View>
         </View>
       </Modal>}
+      {premiumView === "plans" && <View style={s.premiumLayer}>
+        <PremiumScreen
+          language={settings.language}
+          prices={premiumPrices}
+          selectedId={premiumPlan}
+          onSelect={setPremiumPlan}
+          onContinue={buyPremium}
+          onRestore={restorePremiumPurchases}
+          onManage={() => setPremiumView("manage")}
+          onBack={() => setPremiumView(null)}
+          onTerms={() => Linking.openURL("https://camera.21wek.com/terms.html")}
+          onPrivacy={() => Linking.openURL("https://camera.21wek.com/privacy.html")}
+          renewal={premiumEntitlement}
+          status={premiumStatus}
+          legacy={legacyAccess}
+        />
+      </View>}
+      {premiumView === "manage" && <View style={s.premiumLayer}>
+        <PremiumManageScreen
+          language={settings.language}
+          entitlement={premiumEntitlement}
+          onRestore={restorePremiumPurchases}
+          onBack={() => setPremiumView("plans")}
+        />
+      </View>}
     </SystemSafeArea>
     </ThemeContext.Provider>
   );
@@ -3816,6 +3888,7 @@ const driveStyles = StyleSheet.create({
 
 const baseAppStyles = StyleSheet.create({
   safe:{flex:1,backgroundColor:"#f5f6f8"},
+  premiumLayer:{position:"absolute",top:0,right:0,bottom:0,left:0,zIndex:30,backgroundColor:"#071525"},
   container:{padding:18,paddingBottom:24,gap:14},
   nav:{flexShrink:0,marginHorizontal:12,marginBottom:8,backgroundColor:"#fff",borderRadius:20,flexDirection:"row",padding:6,shadowOpacity:.12,shadowRadius:15},
   navItem:{minHeight:48,minWidth:0,flex:1,alignItems:"center",justifyContent:"center",paddingVertical:6,paddingHorizontal:2,borderRadius:13},navActive:{backgroundColor:"#eef0f3"},
