@@ -2180,7 +2180,7 @@ export default function App() {
       const after = await refreshPremiumEntitlements();
       const result = offerRedemptionResult({ presented, before, after });
       const copy = premiumCopy(settings.language);
-      if (result.code === "confirmed" || result.code === "unchanged" || result.code === "uncompared") {
+      if (result.code === "confirmed" || result.code === "unchanged" || result.code === "uncompared" || result.code === "kept") {
         const chosen = await applyVerifiedEntitlements(after);
         if (result.code === "confirmed" && chosen && settingsCardCopy(chosen, settings.language).open === "manage") {
           setPremiumView("manage");

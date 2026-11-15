@@ -292,12 +292,18 @@ test("the fifth launch offers Premium and does not buy, and a trip hides both pr
 
 test("an offer code is Apple's sheet, and a result needs a verified change", () => {
   const before = [{ productId: "camalert_premium_monthly", period: "month", expiresAt: now + week }];
-  const same = offerRedemptionResult({ presented: true, before, after: before });
-  assert.equal(same.code, "unchanged");
+  const same = offerRedemptionResult({ presented: true, before, after: before, now });
+  assert.equal(same.code, "kept");
+  const trial = [{ productId: "camalert_premium_yearly", period: "year", expiresAt: now + 3 * 24 * 60 * 60 * 1000, trial: true }];
+  assert.equal(offerRedemptionResult({ presented: true, before: trial, after: trial, now }).code, "kept");
+  assert.equal(offerRedemptionResult({ presented: true, before: [], after: [], now }).code, "unchanged");
+  const expired = [{ productId: "camalert_premium_monthly", period: "month", expiresAt: now - 1 }];
+  assert.equal(offerRedemptionResult({ presented: true, before: expired, after: expired, now }).code, "unchanged");
   const added = offerRedemptionResult({
     presented: true,
     before,
     after: [...before, { productId: "camalert_premium_lifetime", period: "lifetime" }],
+    now,
   });
   assert.equal(added.code, "confirmed");
   assert.equal(offerRedemptionResult({ presented: false, before, after: before }).code, "unavailable");
@@ -309,6 +315,8 @@ test("an offer code is Apple's sheet, and a result needs a verified change", () 
     assert.match(PREMIUM_COPY[language].redeemUnchanged, /\S/);
   }
   assert.match(read("App.js"), /redeemCode/);
+  assert.match(read("App.js"), /result\.code === "kept"/);
+  assert.equal((read("App.js").match(/redeemUnchanged/g) || []).length, 1);
   assert.match(read("App.js"), /presentOfferCodeSheet/);
   assert.match(read("premium-store.js"), /presentOfferCode/);
   assert.match(read("ios/CamAlert/CamAlertPremiumStore.swift"), /presentOfferCodeRedeemSheet/);

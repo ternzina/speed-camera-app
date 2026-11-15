@@ -155,9 +155,15 @@ function offerSignature(row) {
   return [row.productId, row.period || "", expires, row.trial === true ? "trial" : ""].join("|");
 }
 
+function activeOffer(row, now) {
+  const entitlement = entitlementFromStore(row);
+  return Boolean(entitlement && premiumAllows(entitlement, now, true).allowed);
+}
+
 // The system sheet does not say whether a code was accepted.
 // A result is reliable only when the verified purchases before and after can be compared.
-export function offerRedemptionResult({ presented, before, after } = {}) {
+// An unchanged active purchase is not a failed sale: Apple did not sell anything new.
+export function offerRedemptionResult({ presented, before, after, now = Date.now() } = {}) {
   if (presented !== true) return { code: "unavailable" };
   if (!Array.isArray(after)) return { code: "failed" };
   if (!Array.isArray(before)) return { code: "uncompared" };
@@ -166,8 +172,9 @@ export function offerRedemptionResult({ presented, before, after } = {}) {
     const signature = offerSignature(row);
     return signature && !seen.has(signature);
   });
-  if (!added.length) return { code: "unchanged" };
-  return { code: "confirmed", added };
+  if (added.length) return { code: "confirmed", added };
+  if (after.some(row => activeOffer(row, now))) return { code: "kept" };
+  return { code: "unchanged" };
 }
 
 export function acceptRestored(rows, now) {
