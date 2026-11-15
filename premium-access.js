@@ -149,6 +149,7 @@ export function entitlementFromStore(row) {
   };
   if (row?.willAutoRenew === true || row?.willAutoRenew === false) entitlement.willAutoRenew = row.willAutoRenew;
   if (typeof row?.displayPrice === "string" && row.displayPrice.trim()) entitlement.displayPrice = row.displayPrice.trim();
+  if (typeof row?.displayName === "string" && row.displayName.trim()) entitlement.displayName = row.displayName.trim();
   if (typeof row?.renewalState === "string" && row.renewalState) entitlement.renewalState = row.renewalState;
   if (Number.isFinite(Number(row?.purchaseDate))) entitlement.purchaseDate = Number(row.purchaseDate);
   if (row?.environment === "sandbox" || row?.environment === "production") entitlement.environment = row.environment;

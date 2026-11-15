@@ -138,6 +138,30 @@ public final class CamAlertPremiumStoreKit: NSObject {
 
   // Apple presents the code sheet and validates the code. The return value
   // only says whether that sheet was shown.
+  // The sheet belongs to the same StoreKit environment as the app.
+  // TestFlight therefore shows Sandbox subscriptions. A missing scene or an
+  // older system reports unavailable; a store error reports failed.
+  @objc public static func showManageSubscriptions(_ done: @escaping (NSString) -> Void) {
+    if #available(iOS 15.0, *) {
+      Task { @MainActor in
+        let scenes = UIApplication.shared.connectedScenes.compactMap { $0 as? UIWindowScene }
+        let scene = scenes.first { $0.activationState == .foregroundActive } ?? scenes.first
+        guard let scene else {
+          done("unavailable" as NSString)
+          return
+        }
+        do {
+          try await AppStore.showManageSubscriptions(in: scene)
+          done("shown" as NSString)
+        } catch {
+          done("failed" as NSString)
+        }
+      }
+    } else {
+      done("unavailable" as NSString)
+    }
+  }
+
   @objc public static func presentOfferCode(_ done: @escaping (NSNumber) -> Void) {
     ensureUpdates()
     Task { @MainActor in
@@ -199,6 +223,9 @@ public final class CamAlertPremiumStoreKit: NSObject {
     }
     if let resolved {
       value["displayPrice"] = resolved.displayPrice
+      if !resolved.displayName.isEmpty {
+        value["displayName"] = resolved.displayName
+      }
       if let subscription = resolved.subscription {
         value["period"] = unitName(subscription.subscriptionPeriod.unit)
         if let statuses = try? await subscription.status {

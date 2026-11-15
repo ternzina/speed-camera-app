@@ -1,4 +1,4 @@
-import { subscriptionStatus } from "./premium-access.js";
+import { restoreOutcome, subscriptionStatus } from "./premium-access.js";
 
 export const PREMIUM_COPY = {
   ru: {
@@ -21,6 +21,9 @@ export const PREMIUM_COPY = {
     proBenefits: ["Навигация", "Камеры", "Голос", "Дистанция", "Звуки", "Персонализация"],
     unlock: "Разблокировать PRO",
     share: "Поделиться CamAlert",
+    previewPro: "Посмотреть экран PRO",
+    previewOnly: "Это просмотр экрана. Покупка не начинается.",
+    manageUnavailable: "Не удалось открыть управление подпиской.",
     back: "Назад",
     access: "Доступ действует до даты, которую сообщил магазин.",
     trialEnds: "Пробный период заканчивается",
@@ -122,6 +125,9 @@ export const PREMIUM_COPY = {
     proBenefits: ["Навігація", "Камери", "Голос", "Дистанція", "Звуки", "Персоналізація"],
     unlock: "Розблокувати PRO",
     share: "Поділитися CamAlert",
+    previewPro: "Переглянути екран PRO",
+    previewOnly: "Це перегляд екрана. Покупка не починається.",
+    manageUnavailable: "Не вдалося відкрити керування підпискою.",
     back: "Назад",
     access: "Доступ діє до дати, яку повідомив магазин.",
     trialEnds: "Пробний період закінчується",
@@ -223,6 +229,9 @@ export const PREMIUM_COPY = {
     proBenefits: ["Navigation", "Cameras", "Voice", "Distance", "Sounds", "Personalisation"],
     unlock: "Unlock PRO",
     share: "Share CamAlert",
+    previewPro: "View the PRO screen",
+    previewOnly: "This is a preview. A purchase does not start.",
+    manageUnavailable: "Couldn't open subscription management.",
     back: "Back",
     access: "Access lasts until the date the store reports.",
     trialEnds: "The trial ends",
@@ -324,6 +333,9 @@ export const PREMIUM_COPY = {
     proBenefits: ["Nawigacja", "Kamery", "Głos", "Odległość", "Dźwięki", "Personalizacja"],
     unlock: "Odblokuj PRO",
     share: "Udostępnij CamAlert",
+    previewPro: "Zobacz ekran PRO",
+    previewOnly: "To podgląd ekranu. Zakup się nie rozpoczyna.",
+    manageUnavailable: "Nie udało się otworzyć zarządzania subskrypcją.",
     back: "Wstecz",
     access: "Dostęp trwa do daty podanej przez sklep.",
     trialEnds: "Okres próbny kończy się",
@@ -524,4 +536,32 @@ export function statusLines(entitlement, language, now = Date.now()) {
   else if (status.endsAt) lines.push(dated(copy.accessUntil, status.endsAt));
   lines.push(...extraLines(entitlement, copy));
   return { title: copy.mySubscription, lines: [title, ...lines].filter(Boolean), manage: true };
+}
+
+// The restore reply names the store product, marks a Sandbox purchase, and
+// gives the end date the store already verified. A lifetime purchase has no end date.
+export function restoredPurchaseLines(entitlement, language) {
+  const copy = premiumCopy(language);
+  if (!entitlement) return [];
+  const lines = [];
+  const named = typeof entitlement.displayName === "string" ? entitlement.displayName.trim() : "";
+  const period = entitlement.period && copy.periods[entitlement.period] ? copy.periods[entitlement.period] : "";
+  if (named) lines.push(named);
+  else if (period) lines.push(period);
+  if (entitlement.environment === "sandbox") lines.push(copy.sandboxNote);
+  const expires = Number(entitlement.expiresAt);
+  if (entitlement.period !== "lifetime" && Number.isFinite(expires)) {
+    const until = dated(copy.accessUntil, expires);
+    if (until) lines.push(until);
+  }
+  return lines;
+}
+
+export function restoredNoticeText(decision, language, now = Date.now()) {
+  const copy = premiumCopy(language);
+  const outcome = restoreOutcome(decision, now);
+  if (outcome.code === "failed") return copy.restoreFailed;
+  if (outcome.code !== "restored") return copy.noneFound;
+  const lines = restoredPurchaseLines(outcome.entitlement, language);
+  return lines.length ? `${copy.restoredWith}: ${lines.join(". ")}.` : copy.restoredWith;
 }

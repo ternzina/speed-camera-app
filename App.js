@@ -20,9 +20,9 @@ import { createNavtestSectionStore } from "./navtest-section";
 import { cameraPoints, countryFeed, loadCameraCache, saveCameraCache } from "./camera-data";
 import PremiumScreen, { PremiumEntryCard } from "./premium-screen";
 import PremiumManageScreen from "./premium-manage-screen";
-import { offerReasonLines, premiumCopy, settingsCardCopy } from "./premium-copy";
+import { offerReasonLines, premiumCopy, restoredNoticeText, settingsCardCopy } from "./premium-copy";
 import { cacheVerifiedEntitlement, cachedFeatureAccess, loadPremiumCatalog, openAppStoreReview, presentOfferCodeSheet, purchasePremium, readCachedEntitlement, refreshPremiumEntitlements, rememberLegacy, resolveFeatureAccess, restorePremium } from "./premium-store";
-import { chooseRestoredEntitlement, offerRedemptionResult, restoreOutcome } from "./premium-access";
+import { chooseRestoredEntitlement, offerRedemptionResult } from "./premium-access";
 import { hasPaidPremium, offerDecision, promptSettled, recordCompletedTrip, recordSuccessfulLaunch, COMPLETED_TRIP_KEY, LAUNCH_COUNT_KEY, PREMIUM_PROMPT_KEY, REVIEW_PROMPT_KEY, TRIP_PREMIUM_KEY, TRIP_REVIEW_KEY } from "./launch-prompts";
 import { COUNTRY_NAMES, countryFlag } from "./countries";
 import { refreshCountryDelivery } from "./camera-delivery";
@@ -643,6 +643,7 @@ export default function App() {
   const [tab, setTab] = useState("drive");
   const [modal, setModal] = useState(null);
   const [premiumView, setPremiumView] = useState(null);
+  const [premiumPreview, setPremiumPreview] = useState(false);
   const [premiumPlan, setPremiumPlan] = useState("camalert_premium_yearly");
   const [premiumPrices, setPremiumPrices] = useState({});
   const [premiumEntitlement, setPremiumEntitlement] = useState(null);
@@ -1873,6 +1874,7 @@ export default function App() {
 
   function denyPaid() {
     if (Platform.OS !== "ios" || paidOpenRef.current) return false;
+    setPremiumPreview(false);
     setPremiumStatus("");
     setPremiumView("plans");
     return true;
@@ -2046,7 +2048,10 @@ export default function App() {
       if (Platform.OS === "ios") {
         const access = await applyFeatureAccess(chosen);
         if (!live) return;
-        if (access && !access.allowed) setPremiumView("plans");
+        if (access && !access.allowed) {
+          setPremiumPreview(false);
+          setPremiumView("plans");
+        }
       }
     })().catch(() => {});
     return () => { live = false; };
@@ -2115,18 +2120,15 @@ export default function App() {
   }
 
   function restoredNotice(decision) {
-    const copy = premiumCopy(settings.language);
-    const outcome = restoreOutcome(decision);
-    if (outcome.code === "failed") return copy.restoreFailed;
-    if (outcome.code !== "restored") return copy.noneFound;
-    const period = outcome.entitlement?.period;
-    const name = period && copy.periods[period] ? copy.periods[period] : "";
-    const price = outcome.entitlement?.displayPrice || "";
-    const detail = [name, price].filter(Boolean).join(", ");
-    return detail ? `${copy.restoredWith}: ${detail}` : copy.restoredWith;
+    return restoredNoticeText(decision, settings.language);
+  }
+
+  function keepPremiumPreview() {
+    setPremiumStatus(premiumCopy(settings.language).previewOnly);
   }
 
   async function openPremium(planId) {
+    setPremiumPreview(false);
     if (typeof planId === "string") setPremiumPlan(planId);
     setPremiumStatus("");
     setPremiumView("plans");
@@ -2146,6 +2148,7 @@ export default function App() {
   }
 
   function openPremiumEntry() {
+    setPremiumPreview(false);
     if (settingsCardCopy(premiumEntitlement, settings.language).open === "manage") {
       setPremiumStatus("");
       setPremiumView("manage");
@@ -2217,6 +2220,19 @@ export default function App() {
     return chosen;
   }
 
+  async function viewPremiumScreen() {
+    setPremiumStatus(premiumCopy(settings.language).previewOnly);
+    setPremiumPreview(true);
+    setPremiumView("plans");
+    try {
+      const catalog = await loadPremiumCatalog();
+      setPremiumPrices(catalog.prices);
+      setYearTrialEligible(catalog.introEligible.camalert_premium_yearly === true);
+    } catch {
+      setPremiumPrices({});
+    }
+  }
+
   async function shareCamAlert() {
     try {
       await Share.share({ url: "https://apps.apple.com/app/id6818647205" });
@@ -2259,6 +2275,7 @@ export default function App() {
     setPremiumBusy(true);
     setPremiumStatus("");
     try {
+      setPremiumPreview(false);
       const decision = await restorePremium();
       if (decision.verified) {
         setPremiumEntitlement(decision.entitlement);
@@ -2426,14 +2443,14 @@ export default function App() {
               prices={premiumPrices}
               selectedId={premiumPlan}
               trialEligible={yearTrialEligible}
-              busy={premiumBusy}
-              lifetimeOwned={premiumEntitlement?.period === "lifetime" && premiumEntitlement?.revoked !== true}
+              busy={premiumPreview ? false : premiumBusy}
+              lifetimeOwned={premiumPreview ? false : premiumEntitlement?.period === "lifetime" && premiumEntitlement?.revoked !== true}
               onSelect={setPremiumPlan}
-              onContinue={buyPremium}
-              onRestore={restorePremiumPurchases}
-              onRedeem={Platform.OS === "ios" ? redeemOfferCode : undefined}
-              onManage={() => setPremiumView("manage")}
-              onBack={() => setPremiumView(null)}
+              onContinue={premiumPreview ? keepPremiumPreview : buyPremium}
+              onRestore={premiumPreview ? keepPremiumPreview : restorePremiumPurchases}
+              onRedeem={Platform.OS === "ios" ? (premiumPreview ? keepPremiumPreview : redeemOfferCode) : undefined}
+              onManage={premiumPreview ? keepPremiumPreview : () => setPremiumView("manage")}
+              onBack={() => { setPremiumPreview(false); setPremiumView(null); }}
               onTerms={() => Linking.openURL("https://camera.21wek.com/terms.html")}
               onPrivacy={() => Linking.openURL("https://camera.21wek.com/privacy.html")}
               status={premiumStatus}
@@ -2453,7 +2470,7 @@ export default function App() {
               busy={premiumBusy}
               notice={premiumStatus}
               onRestore={restorePremiumPurchases}
-              onBack={() => setPremiumView(null)}
+              onBack={() => { setPremiumPreview(false); setPremiumView(null); }}
             />
           </SystemSafeArea>
         </View>
@@ -2808,6 +2825,9 @@ export default function App() {
               <>
               <Pressable accessibilityRole="button" onPress={redeemOfferCode} style={[s.action, pad && { flex: 0 }]}>
                 <Text style={s.actionText}>{premiumCopy(settings.language).redeemCode} →</Text>
+              </Pressable>
+              <Pressable accessibilityRole="button" onPress={viewPremiumScreen} style={[s.action, pad && { flex: 0 }]}>
+                <Text style={s.actionText}>{premiumCopy(settings.language).previewPro}</Text>
               </Pressable>
               <Pressable accessibilityRole="button" onPress={shareCamAlert} style={[s.action, pad && { flex: 0 }]}>
                 <Text style={s.actionText}>{premiumCopy(settings.language).share}</Text>

@@ -24,7 +24,7 @@ import {
   restoreOutcome,
   subscriptionStatus,
 } from "../../premium-access.js";
-import { PREMIUM_COPY, selectedPlanTerms, settingsCardCopy, statusLines } from "../../premium-copy.js";
+import { PREMIUM_COPY, restoredNoticeText, selectedPlanTerms, settingsCardCopy, statusLines } from "../../premium-copy.js";
 import { chooseLaunchPrompt, hasPaidPremium, offerDecision, promptSettled, recordCompletedTrip, recordSuccessfulLaunch, shouldCountTrip } from "../../launch-prompts.js";
 
 const now = Date.parse("2026-11-13T18:00:00Z");
@@ -176,6 +176,8 @@ test("introductory access is 72 hours from the first launch, and an earlier inst
   assert.equal(ru.proSubtitle, "Предупреждения о камерах, удобная навигация и уверенность в дороге.");
   assert.equal(ru.unlock, "Разблокировать PRO");
   assert.equal(ru.share, "Поделиться CamAlert");
+  assert.equal(ru.previewPro, "Посмотреть экран PRO");
+  assert.equal(ru.sandboxNote, "Тестовая покупка");
   assert.equal(ru.proBenefits.length, 6);
   for (const language of ["ru", "uk", "en", "pl"]) {
     const copy = PREMIUM_COPY[language];
@@ -221,6 +223,44 @@ test("only a verified store transaction is accepted, and a refund or expiry ends
   assert.equal(fromStore.trial, true);
 });
 
+test("a restored sandbox year names the product, the test purchase, and the end date", () => {
+  const decision = acceptRestored([{
+    productId: "camalert_premium_yearly",
+    displayName: "CamAlert Premium",
+    expiresAt: now + week,
+    environment: "sandbox",
+    willAutoRenew: true,
+    renewalState: "subscribed",
+  }], now);
+  const text = restoredNoticeText(decision, "ru", now);
+  assert.match(text, /^Покупки восстановлены: CamAlert Premium\. Тестовая покупка\. Доступ до .+\.$/);
+  assert.match(text, /2026/);
+  const production = acceptRestored([{
+    productId: "camalert_premium_yearly",
+    displayName: "CamAlert Premium",
+    expiresAt: now + week,
+    environment: "production",
+  }], now);
+  assert.doesNotMatch(restoredNoticeText(production, "ru", now), /Тестовая покупка/);
+  const life = acceptRestored([{
+    productId: "camalert_premium_lifetime",
+    displayName: "CamAlert Premium",
+    environment: "sandbox",
+  }], now);
+  const lifeText = restoredNoticeText(life, "ru", now);
+  assert.match(lifeText, /Тестовая покупка/);
+  assert.doesNotMatch(lifeText, /Доступ до /);
+  const app = read("App.js");
+  const start = app.indexOf("async function viewPremiumScreen");
+  const body = app.slice(start, app.indexOf("async function shareCamAlert", start));
+  assert.match(body, /loadPremiumCatalog/);
+  assert.match(body, /setPremiumPreview\(true\)/);
+  assert.doesNotMatch(body, /purchasePremium|restorePremium|rememberLegacy|rememberIntroductoryStart|cacheVerifiedEntitlement|resolveFeatureAccess/);
+  assert.match(app, /onContinue=\{premiumPreview \? keepPremiumPreview : buyPremium\}/);
+  assert.match(app, /previewPro/);
+  assert.equal(entitlementFromStore({ productId: "camalert_premium_yearly", displayName: "CamAlert Premium", expiresAt: now + week, environment: "sandbox" }).displayName, "CamAlert Premium");
+});
+
 test("restore keeps lifetime and an active subscription, and drops a refunded one", () => {
   const restored = acceptRestored([
     { productId: "camalert_premium_monthly", expiresAt: now + week },
@@ -248,7 +288,12 @@ test("the premium screen copy exists in every CamAlert language and names the tr
   }
   assert.match(read("premium-screen.js"), /camalert_premium_yearly/);
   assert.match(read("premium-screen.js"), /onRestore/);
-  assert.match(read("premium-manage-screen.js"), /apps.apple.com\/account\/subscriptions/);
+  assert.match(read("premium-manage-screen.js"), /showManageSubscriptions/);
+  assert.match(read("premium-manage-screen.js"), /Platform\.OS !== "ios"/);
+  assert.match(read("ios/CamAlert/CamAlertPremiumStore.swift"), /AppStore\.showManageSubscriptions/);
+  assert.match(read("ios/CamAlert/CamAlertPremiumStore.swift"), /done\("unavailable" as NSString\)/);
+  assert.match(read("ios/CamAlert/CamAlertPremiumStore.swift"), /done\("failed" as NSString\)/);
+  assert.match(read("ios/CamAlert/CamAlertPremiumStore.m"), /showManageSubscriptions/);
   assert.doesNotMatch(read("premium-manage-screen.js"), /\$\d|consoleUsd/);
   assert.match(read("App.js"), /premium-manage-screen/);
   assert.match(read("premium-store.js"), /CamAlertPremiumStore/);

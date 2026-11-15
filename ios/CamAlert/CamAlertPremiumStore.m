@@ -69,6 +69,13 @@ RCT_EXPORT_METHOD(refresh:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseReje
   }];
 }
 
+RCT_EXPORT_METHOD(showManageSubscriptions:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject)
+{
+  [CamAlertPremiumStoreKit showManageSubscriptions:^(NSString *result) {
+    resolve(result);
+  }];
+}
+
 RCT_EXPORT_METHOD(presentOfferCode:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject)
 {
   [CamAlertPremiumStoreKit presentOfferCode:^(NSNumber *presented) {
