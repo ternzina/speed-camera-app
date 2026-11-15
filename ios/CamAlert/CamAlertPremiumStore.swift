@@ -116,10 +116,10 @@ public final class CamAlertPremiumStoreKit: NSObject {
   // not start another 72 hours.
   @objc public static func rememberIntroductoryStart(_ millis: Double, done: @escaping (NSNumber) -> Void) {
     if readIntroductoryStart() != nil {
-      done(true)
+      done(NSNumber(value: true))
       return
     }
-    done(writeIntroductoryStart(millis))
+    done(NSNumber(value: writeIntroductoryStart(millis)))
   }
 
   @objc public static func requestReview(_ done: @escaping (NSNumber) -> Void) {
