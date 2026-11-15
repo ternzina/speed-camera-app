@@ -21,7 +21,7 @@ import { cameraPoints, countryFeed, loadCameraCache, saveCameraCache } from "./c
 import PremiumScreen, { PremiumEntryCard } from "./premium-screen";
 import PremiumManageScreen from "./premium-manage-screen";
 import { offerReasonLines, premiumCopy, settingsCardCopy } from "./premium-copy";
-import { cacheVerifiedEntitlement, loadPremiumCatalog, openAppStoreReview, presentOfferCodeSheet, purchasePremium, readCachedEntitlement, refreshPremiumEntitlements, rememberLegacy, resolveFeatureAccess, restorePremium } from "./premium-store";
+import { cacheVerifiedEntitlement, cachedFeatureAccess, loadPremiumCatalog, openAppStoreReview, presentOfferCodeSheet, purchasePremium, readCachedEntitlement, refreshPremiumEntitlements, rememberLegacy, resolveFeatureAccess, restorePremium } from "./premium-store";
 import { chooseRestoredEntitlement, offerRedemptionResult, restoreOutcome } from "./premium-access";
 import { hasPaidPremium, offerDecision, promptSettled, recordCompletedTrip, recordSuccessfulLaunch, COMPLETED_TRIP_KEY, LAUNCH_COUNT_KEY, PREMIUM_PROMPT_KEY, REVIEW_PROMPT_KEY, TRIP_PREMIUM_KEY, TRIP_REVIEW_KEY } from "./launch-prompts";
 import { COUNTRY_NAMES, countryFlag } from "./countries";
@@ -418,7 +418,11 @@ async function processBackgroundLocation({ data: taskData, error }) {
   if (AppState.currentState === "active" && foregroundTripRunning) return;
   const session = JSON.parse(await AsyncStorage.getItem(BACKGROUND_SESSION_KEY) || "null");
   if (!session?.enabled) return;
-  if (await AsyncStorage.getItem(FEATURE_OPEN_KEY) === "no") return;
+  const backgroundAccess = await cachedFeatureAccess(Date.now());
+  if (!backgroundAccess.allowed) {
+    await AsyncStorage.setItem(FEATURE_OPEN_KEY, "no").catch(() => {});
+    return;
+  }
   try {
     const sraw = await AsyncStorage.getItem(SETTINGS_KEY);
     bgSettings = {...mergeStoredSettings(DEFAULT_SETTINGS, sraw ? JSON.parse(sraw) : null), country:session.country};

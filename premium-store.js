@@ -4,14 +4,14 @@ import { acceptRestored, acceptVerifiedPurchase, chooseIntroductoryStart, entitl
 
 const LEGACY_KEY = "camalert_legacy_access_v1";
 const CACHE_KEY = "camalert_premium_verified_v1";
-const PRIOR_KEYS = ["camalert_onboarding_v1", "camera_history_v060"];
+const INTRO_KEY = "camalert_introductory_start_v1";
+const PRIOR_KEYS = ["camalert_onboarding_v1", "camera_history_v060", "camera_settings_v060"];
 export const APP_STORE_REVIEW_URL = "https://apps.apple.com/app/id6818647205?action=write-review";
 
 // Local keys disappear on reinstall. A "no" saved from their absence would
 // then block someone whose earlier access can no longer be seen. Only a
-// positive record is kept, in storage and in the iOS keychain. The keychain
-// and the App Store original version survive reinstall. When neither says
-// anything reliable, the result is unknown and access stays open.
+// positive record is kept. The App Store version is not that record: a new
+// download of the published 1.0.6 carries the same number.
 export async function rememberLegacy(storage = AsyncStorage) {
   const saved = await storage.getItem(LEGACY_KEY);
   if (saved === "no") await storage.removeItem(LEGACY_KEY);
@@ -25,26 +25,35 @@ export async function rememberLegacy(storage = AsyncStorage) {
   }
   const native = storeModule();
   let keychain = null;
-  let originalVersion = null;
+  let introductoryStart = finiteInstant(await storage.getItem(INTRO_KEY));
   if (native?.legacyEvidence) {
     try {
       const evidence = await native.legacyEvidence();
       keychain = evidence?.keychain || null;
-      originalVersion = evidence?.originalVersion || null;
+      const keychainStart = finiteInstant(evidence?.introductoryStart);
+      if (keychainStart != null) introductoryStart = introductoryStart == null ? keychainStart : Math.min(introductoryStart, keychainStart);
     } catch {
       keychain = null;
-      originalVersion = null;
     }
   }
   const decision = resolveLegacy({
     stored: saved === "yes" || keychain === "yes",
     priorLocal: prior,
-    originalVersion,
+    introductoryStart,
   });
   if (decision === true) {
     await storage.setItem(LEGACY_KEY, "yes");
     if (native?.rememberLegacyYes) {
       try { await native.rememberLegacyYes(); } catch { /* the positive local record still stands */ }
+    }
+  }
+  // Record the one grant after the decision. Onboarding finished later in
+  // this same version is then not a previous installation.
+  if (introductoryStart == null) {
+    const startedAt = Date.now();
+    await storage.setItem(INTRO_KEY, String(startedAt)).catch(() => {});
+    if (native?.rememberIntroductoryStart) {
+      try { await native.rememberIntroductoryStart(startedAt); } catch { /* the local instant still stands */ }
     }
   }
   return decision;
@@ -60,26 +69,44 @@ function finiteInstant(value) {
   return Number.isFinite(number) && number > 0 ? number : null;
 }
 
-// The keychain item is the first launch of this version. It is not the
-// App Store download date: an update without Legacy Access still receives
-// 72 hours from the first time this version is opened.
-export async function resolveFeatureAccess({ entitlement, now = Date.now() } = {}) {
-  const legacy = await rememberLegacy();
+// The grant is written once. An update reads the same keychain item and the
+// same local instant, and the earlier of them wins. Neither is moved forward.
+export async function resolveFeatureAccess({ entitlement, now = Date.now(), storage = AsyncStorage } = {}) {
+  const legacy = await rememberLegacy(storage);
   const native = storeModule();
-  let storedStart = null;
+  const found = [];
+  const localStart = finiteInstant(await storage.getItem(INTRO_KEY));
+  if (localStart != null) found.push(localStart);
   if (native?.legacyEvidence) {
     try {
       const evidence = await native.legacyEvidence();
-      storedStart = finiteInstant(evidence?.introductoryStart);
-    } catch {
-      storedStart = null;
-    }
+      const keychainStart = finiteInstant(evidence?.introductoryStart);
+      if (keychainStart != null) found.push(keychainStart);
+    } catch { /* the local instant still counts */ }
   }
-  const startedAt = chooseIntroductoryStart({ storedStart, now });
-  if (storedStart == null && native?.rememberIntroductoryStart) {
-    try { await native.rememberIntroductoryStart(startedAt); } catch { /* the next launch writes it */ }
+  const startedAt = chooseIntroductoryStart({ storedStart: found, now });
+  if (localStart == null || startedAt < localStart) {
+    await storage.setItem(INTRO_KEY, String(Math.round(startedAt))).catch(() => {});
+  }
+  if (native?.rememberIntroductoryStart) {
+    try { await native.rememberIntroductoryStart(startedAt); } catch { /* the saved instant still stands */ }
   }
   return { ...featureAccess({ legacy, entitlement, startedAt, now }), legacy, startedAt };
+}
+
+// The background task cannot ask StoreKit. It uses the stored clock, the
+// positive legacy record, and the last verified purchase.
+export async function cachedFeatureAccess(now = Date.now(), storage = AsyncStorage) {
+  const legacySaved = await storage.getItem(LEGACY_KEY);
+  const startedAt = finiteInstant(await storage.getItem(INTRO_KEY));
+  const entitlement = await readCachedEntitlement(storage);
+  if (legacySaved !== "yes" && startedAt == null) return { allowed: true, reason: "unconfirmed", entitlement };
+  return featureAccess({
+    legacy: legacySaved === "yes",
+    entitlement,
+    startedAt,
+    now,
+  });
 }
 
 export async function readCachedEntitlement(storage = AsyncStorage) {

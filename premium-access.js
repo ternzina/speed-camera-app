@@ -6,8 +6,8 @@ import { PREMIUM_PLANS } from "./premium-catalog.js";
 // would take those features away.
 export const PREMIUM_ENFORCEMENT = false;
 
-// A full 72 hours from the stored first launch of this version.
-// The window ends at that instant, not at the next midnight.
+// One grant of 72 hours, measured from the first recorded launch.
+// A later update keeps that instant. The window ends then, not at midnight.
 export const INTRODUCTORY_MS = 72 * 60 * 60 * 1000;
 
 const PLAN_IDS = new Set(PREMIUM_PLANS.map(plan => plan.id));
@@ -63,8 +63,8 @@ export function entitlementWithoutNetwork(cache, now) {
   return { allowed: true, reason: "offline-cache", entitlement: cache.entitlement };
 }
 
-// 1.0.6 is the last version already on sale. A person whose first App Store
-// download is this version or older already has the published access.
+// Kept so a version string can still be parsed. It does not grant access:
+// a new install of the published 1.0.6 has this number too.
 export const PUBLISHED_RIGHTS_VERSION = "1.0.6";
 
 function versionParts(version) {
@@ -89,9 +89,15 @@ export function legacyFromOriginalVersion(version, ceiling = PUBLISHED_RIGHTS_VE
   return true;
 }
 
-export function resolveLegacy({ stored, priorLocal, originalVersion } = {}) {
-  if (stored === true || stored === "yes" || priorLocal === true) return true;
-  return legacyFromOriginalVersion(originalVersion);
+// A version number is not a previous installation. The published 1.0.6
+// receipt belongs to new downloads as well. Access stays only for a positive
+// record, or for app data that was already on the phone before this clock
+// was written. Data created after the clock starts does not become legacy.
+export function resolveLegacy({ stored, priorLocal, introductoryStart } = {}) {
+  if (stored === true || stored === "yes") return true;
+  const start = Number(introductoryStart);
+  if (priorLocal === true && !(Number.isFinite(start) && start > 0)) return true;
+  return false;
 }
 
 export function accessWithLegacy({ legacy, entitlement, now, enforcement = PREMIUM_ENFORCEMENT }) {
@@ -101,11 +107,13 @@ export function accessWithLegacy({ legacy, entitlement, now, enforcement = PREMI
   return premiumAllows(entitlement, now, true);
 }
 
-// The stored instant is kept. A missing record is this launch, and the caller
-// writes it once. A later clock change does not move the stored instant forward.
+// The earliest stored instant wins. A missing record is this launch.
+// Passing a later update time cannot move the grant forward.
 export function chooseIntroductoryStart({ storedStart, now }) {
-  const stored = Number(storedStart);
-  if (Number.isFinite(stored) && stored > 0) return stored;
+  const values = (Array.isArray(storedStart) ? storedStart : [storedStart])
+    .map(value => Number(value))
+    .filter(value => Number.isFinite(value) && value > 0);
+  if (values.length) return Math.min(...values);
   return now;
 }
 
