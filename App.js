@@ -2436,8 +2436,8 @@ export default function App() {
   function renderPremiumLayer() {
     if (premiumView === "plans") {
       return (
-        <View style={s.premiumLayer}>
-          <SystemSafeArea style={{ flex: 1, backgroundColor: "#071525" }}>
+        <View style={[s.premiumLayer, Platform.OS === "ios" && { backgroundColor: "#160A24" }]}>
+          <SystemSafeArea style={{ flex: 1, backgroundColor: Platform.OS === "ios" ? "#160A24" : "#071525" }}>
             <PremiumScreen
               language={settings.language}
               prices={premiumPrices}

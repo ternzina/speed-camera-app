@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import fs from "node:fs";
 import test from "node:test";
-import { PREMIUM_PLANS, storePriceLabel } from "../../premium-catalog.js";
+import { PREMIUM_PLANS, storePriceLabel, yearlySavingsPercent } from "../../premium-catalog.js";
 import {
   PREMIUM_ENFORCEMENT,
   acceptRestored,
@@ -288,6 +288,27 @@ test("the premium screen copy exists in every CamAlert language and names the tr
   }
   assert.match(read("premium-screen.js"), /camalert_premium_yearly/);
   assert.match(read("premium-screen.js"), /onRestore/);
+  assert.match(read("premium-screen.js"), /yearlySavingsPercent/);
+  assert.match(read("premium-screen.js"), /proSlides/);
+  assert.match(read("premium-screen.js"), /Platform\.OS === "android"/);
+  assert.doesNotMatch(read("premium-screen.js"), /60%|−60/);
+  assert.equal(yearlySavingsPercent({}), null);
+  assert.equal(yearlySavingsPercent({ camalert_premium_yearly: "$27.99" }), null);
+  assert.equal(yearlySavingsPercent({
+    camalert_premium_weekly: "$1.49",
+    camalert_premium_yearly: "$27.99",
+  }), 64);
+  assert.equal(yearlySavingsPercent({
+    camalert_premium_weekly: "€5.00",
+    camalert_premium_yearly: "€104.00",
+  }), 60);
+  assert.equal(yearlySavingsPercent({
+    camalert_premium_weekly: "$5.00",
+    camalert_premium_yearly: "€104.00",
+  }), null);
+  for (const language of ["ru", "uk", "en", "pl"]) {
+    assert.deepEqual(PREMIUM_COPY[language].proSlides.map(slide => slide.id), ["cameras", "navigation", "voice", "background", "settings"]);
+  }
   assert.match(read("premium-manage-screen.js"), /showManageSubscriptions/);
   assert.match(read("premium-manage-screen.js"), /Platform\.OS !== "ios"/);
   assert.match(read("ios/CamAlert/CamAlertPremiumStore.swift"), /AppStore\.showManageSubscriptions/);
