@@ -10,8 +10,12 @@ import {
   applyPlanChange,
   canStartTrial,
   chooseRestoredEntitlement,
+  chooseIntroductoryStart,
   entitlementFromStore,
   entitlementWithoutNetwork,
+  featureAccess,
+  introductoryAllows,
+  INTRODUCTORY_MS,
   legacyFromOriginalVersion,
   premiumAllows,
   renewalDescription,
@@ -126,6 +130,56 @@ test("a reinstall without a reliable record is not treated as a new locked user"
   const swift = read("ios/CamAlert/CamAlertPremiumStore.swift");
   assert.match(swift, /AppTransaction\.shared/);
   assert.match(swift, /kSecClassGenericPassword/);
+  assert.match(swift, /introductory-start/);
+});
+
+test("introductory access is 72 hours from the first launch, and an earlier install keeps Legacy Access", () => {
+  const hour = 60 * 60 * 1000;
+  assert.equal(INTRODUCTORY_MS, 72 * hour);
+  const start = now - INTRODUCTORY_MS + 1;
+  assert.equal(introductoryAllows(start, now).allowed, true);
+  assert.equal(introductoryAllows(start, now).reason, "introductory");
+  assert.equal(introductoryAllows(now - INTRODUCTORY_MS, now).allowed, false);
+  assert.equal(introductoryAllows(now - INTRODUCTORY_MS, now).reason, "introductory-ended");
+  assert.equal(introductoryAllows(now + hour, now).allowed, false);
+  assert.equal(chooseIntroductoryStart({ storedStart: now - hour, now }), now - hour);
+  assert.equal(chooseIntroductoryStart({ storedStart: null, now }), now);
+  const oldStart = now - 10 * INTRODUCTORY_MS;
+  assert.equal(featureAccess({ legacy: true, entitlement: null, startedAt: oldStart, now }).reason, "legacy");
+  assert.equal(featureAccess({ legacy: true, entitlement: null, startedAt: oldStart, now }).allowed, true);
+  assert.equal(featureAccess({ legacy: resolveLegacy({ originalVersion: "1.0.6" }), entitlement: null, startedAt: oldStart, now }).reason, "legacy");
+  assert.equal(featureAccess({ legacy: resolveLegacy({ stored: "yes" }), entitlement: null, startedAt: oldStart, now }).allowed, true);
+  assert.equal(featureAccess({ legacy: null, entitlement: null, startedAt: oldStart, now }).reason, "unconfirmed");
+  assert.equal(featureAccess({ legacy: false, entitlement: null, startedAt: now - hour, now }).reason, "introductory");
+  assert.equal(featureAccess({ legacy: resolveLegacy({ originalVersion: "1.0.7" }), entitlement: null, startedAt: now, now }).reason, "introductory");
+  assert.equal(featureAccess({ legacy: false, entitlement: null, startedAt: now - INTRODUCTORY_MS, now }).reason, "introductory-ended");
+  const life = { productId: "camalert_premium_lifetime", period: "lifetime", revoked: false };
+  assert.equal(featureAccess({ legacy: false, entitlement: life, startedAt: oldStart, now }).reason, "lifetime");
+  const active = { productId: "camalert_premium_yearly", period: "year", expiresAt: now + hour, trial: true };
+  assert.equal(featureAccess({ legacy: false, entitlement: active, startedAt: oldStart, now }).reason, "trial");
+  assert.equal(PREMIUM_ENFORCEMENT, false);
+  const ru = PREMIUM_COPY.ru;
+  assert.equal(ru.proTitle, "Штрафы в прошлом. CamAlert PRO.");
+  assert.equal(ru.proSubtitle, "Предупреждения о камерах, удобная навигация и уверенность в дороге.");
+  assert.equal(ru.unlock, "Разблокировать PRO");
+  assert.equal(ru.share, "Поделиться CamAlert");
+  assert.equal(ru.proBenefits.length, 6);
+  for (const language of ["ru", "uk", "en", "pl"]) {
+    const copy = PREMIUM_COPY[language];
+    assert.equal(copy.proBenefits.length, 6);
+    assert.match(copy.unlock, /\S/);
+    assert.match(copy.share, /\S/);
+    assert.doesNotMatch(`${copy.proTitle} ${copy.proSubtitle} ${copy.unlock}`, /без штраф|штрафов не будет|no fines|nie będzie mandatu/i);
+  }
+  assert.match(read("premium-screen.js"), /proTitle/);
+  assert.match(read("premium-screen.js"), /copy\.unlock/);
+  assert.match(read("premium-screen.js"), /onRedeem/);
+  assert.doesNotMatch(read("premium-screen.js"), /1\.49|3\.49|27\.99|44\.99|без штраф/);
+  assert.match(read("App.js"), /resolveFeatureAccess/);
+  assert.match(read("App.js"), /Share\.share/);
+  assert.match(read("App.js"), /FEATURE_OPEN_KEY/);
+  assert.doesNotMatch(read("App.js"), /PREMIUM_ENFORCEMENT\s*=\s*true/);
+  assert.match(read("premium-store.js"), /rememberIntroductoryStart/);
 });
 
 test("only a verified store transaction is accepted, and a refund or expiry ends it", () => {

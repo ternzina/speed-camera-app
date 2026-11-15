@@ -6,6 +6,10 @@ import { PREMIUM_PLANS } from "./premium-catalog.js";
 // would take those features away.
 export const PREMIUM_ENFORCEMENT = false;
 
+// A full 72 hours from the stored first launch of this version.
+// The window ends at that instant, not at the next midnight.
+export const INTRODUCTORY_MS = 72 * 60 * 60 * 1000;
+
 const PLAN_IDS = new Set(PREMIUM_PLANS.map(plan => plan.id));
 const YEARLY_ID = "camalert_premium_yearly";
 
@@ -95,6 +99,34 @@ export function accessWithLegacy({ legacy, entitlement, now, enforcement = PREMI
   if (legacy === true) return { allowed: true, reason: "legacy" };
   if (legacy == null) return { allowed: true, reason: "unconfirmed" };
   return premiumAllows(entitlement, now, true);
+}
+
+// The stored instant is kept. A missing record is this launch, and the caller
+// writes it once. A later clock change does not move the stored instant forward.
+export function chooseIntroductoryStart({ storedStart, now }) {
+  const stored = Number(storedStart);
+  if (Number.isFinite(stored) && stored > 0) return stored;
+  return now;
+}
+
+export function introductoryAllows(startedAt, now) {
+  const start = Number(startedAt);
+  if (!Number.isFinite(start)) return { allowed: true, reason: "introductory" };
+  if (!(now >= start && now - start < INTRODUCTORY_MS)) {
+    return { allowed: false, reason: "introductory-ended", endsAt: start + INTRODUCTORY_MS };
+  }
+  return { allowed: true, reason: "introductory", endsAt: start + INTRODUCTORY_MS };
+}
+
+// People who already had CamAlert keep that right. Everyone else gets the
+// 72-hour window, then a verified purchase. The published flag stays off:
+// this decision is separate from turning that flag on.
+export function featureAccess({ legacy, entitlement, startedAt, now }) {
+  if (legacy === true) return { allowed: true, reason: "legacy" };
+  if (legacy == null) return { allowed: true, reason: "unconfirmed" };
+  const paid = premiumAllows(entitlement, now, true);
+  if (paid.allowed) return { allowed: true, reason: paid.reason };
+  return introductoryAllows(startedAt, now);
 }
 
 export function entitlementFromStore(row) {

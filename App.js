@@ -2,7 +2,7 @@
 import React, { useEffect, useMemo, useRef, useState, useContext, createContext } from "react";
 import {
   View, Text, StyleSheet, Pressable, Alert, ScrollView,
-  Modal, TextInput, Switch, Vibration, Linking, Image, ImageBackground, ActivityIndicator,
+  Modal, TextInput, Switch, Vibration, Linking, Image, ImageBackground, ActivityIndicator, Share,
   Animated, Platform, AppState, NativeModules, useWindowDimensions, useColorScheme
 } from "react-native";
 import * as Location from "expo-location";
@@ -21,7 +21,7 @@ import { cameraPoints, countryFeed, loadCameraCache, saveCameraCache } from "./c
 import PremiumScreen, { PremiumEntryCard } from "./premium-screen";
 import PremiumManageScreen from "./premium-manage-screen";
 import { offerReasonLines, premiumCopy, settingsCardCopy } from "./premium-copy";
-import { cacheVerifiedEntitlement, loadPremiumCatalog, openAppStoreReview, presentOfferCodeSheet, purchasePremium, readCachedEntitlement, refreshPremiumEntitlements, rememberLegacy, restorePremium } from "./premium-store";
+import { cacheVerifiedEntitlement, loadPremiumCatalog, openAppStoreReview, presentOfferCodeSheet, purchasePremium, readCachedEntitlement, refreshPremiumEntitlements, rememberLegacy, resolveFeatureAccess, restorePremium } from "./premium-store";
 import { chooseRestoredEntitlement, offerRedemptionResult, restoreOutcome } from "./premium-access";
 import { hasPaidPremium, offerDecision, promptSettled, recordCompletedTrip, recordSuccessfulLaunch, COMPLETED_TRIP_KEY, LAUNCH_COUNT_KEY, PREMIUM_PROMPT_KEY, REVIEW_PROMPT_KEY, TRIP_PREMIUM_KEY, TRIP_REVIEW_KEY } from "./launch-prompts";
 import { COUNTRY_NAMES, countryFlag } from "./countries";
@@ -114,6 +114,7 @@ function usePadLayout() {
 
 const BACKGROUND_LOCATION_TASK = "camera-background-location-v060";
 const BACKGROUND_SESSION_KEY = "camalert_background_session_v1";
+const FEATURE_OPEN_KEY = "camalert_feature_open_v1";
 const BACKGROUND_LAST_ALERT_KEY = "camalert_background_last_alert_v1";
 const BACKGROUND_GUIDE_KEY = "camalert_background_guide_postponed_v1";
 let foregroundTripRunning = false;
@@ -417,6 +418,7 @@ async function processBackgroundLocation({ data: taskData, error }) {
   if (AppState.currentState === "active" && foregroundTripRunning) return;
   const session = JSON.parse(await AsyncStorage.getItem(BACKGROUND_SESSION_KEY) || "null");
   if (!session?.enabled) return;
+  if (await AsyncStorage.getItem(FEATURE_OPEN_KEY) === "no") return;
   try {
     const sraw = await AsyncStorage.getItem(SETTINGS_KEY);
     bgSettings = {...mergeStoredSettings(DEFAULT_SETTINGS, sraw ? JSON.parse(sraw) : null), country:session.country};
@@ -643,6 +645,9 @@ export default function App() {
   const [premiumStatus, setPremiumStatus] = useState("");
   const [premiumBusy, setPremiumBusy] = useState(false);
   const [legacyAccess, setLegacyAccess] = useState(false);
+  const [paidOpen, setPaidOpen] = useState(true);
+  const paidOpenRef = useRef(true);
+  const alertsOn = (Platform.OS !== "ios" || paidOpen) && cameraWarningsEnabled(settings);
   const [yearTrialEligible, setYearTrialEligible] = useState(false);
   const [coverageOpen, setCoverageOpen] = useState(false);
   const [routeActive, setRouteActive] = useState(false);
@@ -1183,6 +1188,7 @@ export default function App() {
   }
 
   async function startTracking() {
+    if (denyPaid()) return false;
     traceTrip("startTracking", "enter");
     try {
     const fg = await Location.requestForegroundPermissionsAsync();
@@ -1448,6 +1454,15 @@ export default function App() {
       traceTrip("startTracking", "exit");
     }
   }
+
+  useEffect(() => {
+    paidOpenRef.current = paidOpen;
+    if (Platform.OS !== "ios" || paidOpen) return undefined;
+    stopTracking();
+    setIosRouteOpen(false);
+    setGoogleNavigationOpen(false);
+    return undefined;
+  }, [paidOpen]);
 
   function stopTracking() {
     traceTrip("endTrip", "enter");
@@ -1809,7 +1824,7 @@ export default function App() {
   useEffect(() => {
     traceTrip("warningsEffect", "enter");
     try {
-    if (cameraWarningsEnabled(settings)) return;
+    if (alertsOn) return;
     Speech.stop();
     dismissCameraAlert();
     polandVisualAlertCameraId.current = null;
@@ -1825,7 +1840,7 @@ export default function App() {
     } finally {
       traceTrip("warningsEffect", "exit");
     }
-  }, [settings.cameraWarnings]);
+  }, [alertsOn]);
 
   function endRouteOnly() {
     setRouteGuidance(null);
@@ -1833,7 +1848,7 @@ export default function App() {
   }
 
   function handoffNearbyPlace(place) {
-    if (!usesInAppGoogleNav()) return;
+    if (!usesInAppGoogleNav() || denyPaid()) return;
     const decision = nearbyHandoff(place, navtestRouteActiveRef.current);
     if (decision.action === "ignore") return;
     const open = () => {
@@ -1852,8 +1867,15 @@ export default function App() {
     open();
   }
 
+  function denyPaid() {
+    if (Platform.OS !== "ios" || paidOpenRef.current) return false;
+    setPremiumStatus("");
+    setPremiumView("plans");
+    return true;
+  }
+
   function openInAppRoute() {
-    if (Platform.OS !== "ios") return;
+    if (Platform.OS !== "ios" || denyPaid()) return;
     setModal(null);
     setTab("drive");
     setIosRouteOpen(true);
@@ -1866,6 +1888,7 @@ export default function App() {
   }
 
   async function startRouteGuidance(packed) {
+    if (denyPaid()) return false;
     if (!packed?.polyline || packed.polyline.length < 2) return false;
     setRouteGuidance(packed);
     setIosRouteOpen(false);
@@ -1889,6 +1912,7 @@ export default function App() {
   }
 
   async function launchNavigator(navigator, destination) {
+    if (denyPaid()) return;
     if (navigator === "inapp") {
       if (Platform.OS !== "ios") return;
       setModal(null);
@@ -2007,11 +2031,19 @@ export default function App() {
         entitlement: cached,
       });
       const rows = await refreshPremiumEntitlements();
-      if (!live || !rows) return;
-      const chosen = chooseRestoredEntitlement(rows, Date.now());
-      await cacheVerifiedEntitlement(chosen);
-      setPremiumEntitlement(chosen);
-      setLaunchFacts(current => current ? { ...current, entitlement: chosen } : current);
+      if (!live) return;
+      let chosen = cached;
+      if (rows) {
+        chosen = chooseRestoredEntitlement(rows, Date.now());
+        await cacheVerifiedEntitlement(chosen);
+        setPremiumEntitlement(chosen);
+        setLaunchFacts(current => current ? { ...current, entitlement: chosen } : current);
+      }
+      if (Platform.OS === "ios") {
+        const access = await applyFeatureAccess(chosen);
+        if (!live) return;
+        if (access && !access.allowed) setPremiumView("plans");
+      }
     })().catch(() => {});
     return () => { live = false; };
   }, [onboardingState]);
@@ -2061,7 +2093,7 @@ export default function App() {
       launchReviewSettled: promptSettled(launchFacts?.launchReviewStored, launchFacts?.count),
       tripPremiumSettled: promptSettled(launchFacts?.tripPremiumStored, launchFacts?.trips),
       tripReviewSettled: promptSettled(launchFacts?.tripReviewStored, launchFacts?.trips),
-      hasPremium: hasPaidPremium(launchFacts?.entitlement || premiumEntitlement),
+      hasPremium: hasPaidPremium(launchFacts?.entitlement || premiumEntitlement) || (Platform.OS === "ios" && paidOpen),
       moving: active,
       navigationOpen: iosRouteOpen || googleNavigationOpen || (tab === "drive" && routeActive),
       blocked: permissionBlocked || !!modal || backgroundGuide || lawsOpen || !!premiumView,
@@ -2154,11 +2186,21 @@ export default function App() {
         setPremiumEntitlement(decision.entitlement);
         setLaunchFacts(current => current ? { ...current, entitlement: decision.entitlement } : current);
       }
+      await applyFeatureAccess(decision.entitlement || premiumEntitlement);
       setPremiumStatus(purchaseNotice(decision));
       if (decision.reason === "lifetime") setPremiumView("manage");
     } finally {
       setPremiumBusy(false);
     }
+  }
+
+  async function applyFeatureAccess(entitlement) {
+    if (Platform.OS !== "ios") return null;
+    const access = await resolveFeatureAccess({ entitlement, now: Date.now() });
+    setLegacyAccess(access.legacy === true);
+    setPaidOpen(access.allowed);
+    await AsyncStorage.setItem(FEATURE_OPEN_KEY, access.allowed ? "yes" : "no").catch(() => {});
+    return access;
   }
 
   async function applyVerifiedEntitlements(rows) {
@@ -2167,7 +2209,16 @@ export default function App() {
     await cacheVerifiedEntitlement(chosen);
     setPremiumEntitlement(chosen);
     setLaunchFacts(current => current ? { ...current, entitlement: chosen } : current);
+    await applyFeatureAccess(chosen);
     return chosen;
+  }
+
+  async function shareCamAlert() {
+    try {
+      await Share.share({ url: "https://apps.apple.com/app/id6818647205" });
+    } catch {
+      /* Closing the system sheet is not a failed purchase. */
+    }
   }
 
   async function redeemOfferCode() {
@@ -2210,6 +2261,7 @@ export default function App() {
         setLaunchFacts(current => current ? { ...current, entitlement: decision.entitlement } : current);
         if (settingsCardCopy(decision.entitlement, settings.language).open === "manage") setPremiumView("manage");
       }
+      await applyFeatureAccess(decision.verified ? decision.entitlement : premiumEntitlement);
       setPremiumStatus(restoredNotice(decision));
     } finally {
       setPremiumBusy(false);
@@ -2375,6 +2427,7 @@ export default function App() {
               onSelect={setPremiumPlan}
               onContinue={buyPremium}
               onRestore={restorePremiumPurchases}
+              onRedeem={Platform.OS === "ios" ? redeemOfferCode : undefined}
               onManage={() => setPremiumView("manage")}
               onBack={() => setPremiumView(null)}
               onTerms={() => Linking.openURL("https://camera.21wek.com/terms.html")}
@@ -2427,9 +2480,9 @@ export default function App() {
           language={settings.language}
           night={isNight}
           coords={coords}
-          camera={cameraWarningsEnabled(settings) ? ahead : null}
-          cameraType={cameraWarningsEnabled(settings) && ahead ? cameraTypeLabel(ahead, settings.language) : ""}
-          voiceEnabled={cameraWarningsEnabled(settings) && settings.voice}
+          camera={alertsOn ? ahead : null}
+          cameraType={alertsOn && ahead ? cameraTypeLabel(ahead, settings.language) : ""}
+          voiceEnabled={alertsOn && settings.voice}
           onToggleVoice={() => setSettings((current) => ({ ...current, voice: !current.voice }))}
           picking={iosRouteOpen}
           tripActive={active}
@@ -2483,8 +2536,8 @@ export default function App() {
       <GoogleNavigationScreen
         language={settings.language} initialDestination={navigatorDestination}
         coords={coords} night={isNight} voiceEnabled={settings.voice} mapStyle={NIGHT_MAP_STYLE}
-        camera={cameraWarningsEnabled(settings) ? ahead : null} gpsFixReceived={gpsFixReceived} speedKmh={speedKmh} speedAvailable={speedAvailable}
-        averageSection={cameraWarningsEnabled(settings) ? averageSectionUi : null}
+        camera={alertsOn ? ahead : null} gpsFixReceived={gpsFixReceived} speedKmh={speedKmh} speedAvailable={speedAvailable}
+        averageSection={alertsOn ? averageSectionUi : null}
         onStartTrip={async () => {
           if (active) return true;
           if (!databaseReady.current || !selectedDatabaseReady(remoteFeedsRef.current, selectedCountry)) {
@@ -2511,12 +2564,12 @@ export default function App() {
         speedKmh={speedKmh}
         speedAvailable={speedAvailable}
         heading={heading}
-        camera={cameraWarningsEnabled(settings) ? ahead : null}
+        camera={alertsOn ? ahead : null}
         currentThreshold={currentThreshold}
-        danger={cameraWarningsEnabled(settings) && danger}
-        warningsEnabled={cameraWarningsEnabled(settings)}
-        voiceEnabled={cameraWarningsEnabled(settings) && settings.voice}
-        vibrationEnabled={cameraWarningsEnabled(settings) && settings.vibration}
+        danger={alertsOn && danger}
+        warningsEnabled={alertsOn}
+        voiceEnabled={alertsOn && settings.voice}
+        vibrationEnabled={alertsOn && settings.vibration}
         backgroundEnabled={backgroundEnabled}
         averageSection={averageSectionUi}
         warningPresentation={cameraAlertPresentation}
@@ -2572,7 +2625,7 @@ export default function App() {
             <PageBackButton language={settings.language} onPress={() => setTab("drive")} onLight={!isNight} />
           <Text maxFontSizeMultiplier={1.25} numberOfLines={2} style={[s.title, {flex:1}, pad && { fontSize: 40, lineHeight: 50 }]}>{tab === "settings" ? (settings.language === "uk" ? "Країни та дані" : settings.language === "en" ? "Countries and data" : settings.language === "pl" ? "Kraje i dane" : "Страны и данные") : tab === "nearby" ? (usesInAppGoogleNav() ? t.nearby : nearbyCopy.title) : tab === "history" ? ui.history : t.title}</Text>
           </View>
-          {tab !== "settings" && !(tab === "nearby" && usesInAppGoogleNav()) && <Text style={s.subtitle}>{countryFlag(selectedCountry)} {countryDisplayName(selectedCountry,settings.language)}{cameraWarningsEnabled(settings) ? ` · ${visibleCameras().length} ${cameraCountLabel(visibleCameras().length, settings.language)}` : ""}</Text>}
+          {tab !== "settings" && !(tab === "nearby" && usesInAppGoogleNav()) && <Text style={s.subtitle}>{countryFlag(selectedCountry)} {countryDisplayName(selectedCountry,settings.language)}{alertsOn ? ` · ${visibleCameras().length} ${cameraCountLabel(visibleCameras().length, settings.language)}` : ""}</Text>}
         </>}
 
         {tab === "drive" && active && <>
@@ -2618,14 +2671,14 @@ export default function App() {
           </View>
         </>}
 
-        {tab === "map" && cameraWarningsEnabled(settings) && <Pressable onPress={()=>setTab("cameras")} style={s.action}><Text style={s.actionText}>{ui.catalog} →</Text></Pressable>}
-        {tab === "map" && cameraWarningsEnabled(settings) && <MapMarkerLegend night={isNight} labelStyle={s.note} items={["speed_camera","red_light","speed_and_red_light","average_speed","checkpoint"].map(type=>({type,label:cameraTypeLabel({type},settings.language)}))} />}
-        {tab === "map" && !cameraWarningsEnabled(settings) && <Text style={s.note}>{(WARNING_UI[settings.language] || WARNING_UI.ru).offMap}</Text>}
+        {tab === "map" && alertsOn && <Pressable onPress={()=>setTab("cameras")} style={s.action}><Text style={s.actionText}>{ui.catalog} →</Text></Pressable>}
+        {tab === "map" && alertsOn && <MapMarkerLegend night={isNight} labelStyle={s.note} items={["speed_camera","red_light","speed_and_red_light","average_speed","checkpoint"].map(type=>({type,label:cameraTypeLabel({type},settings.language)}))} />}
+        {tab === "map" && !alertsOn && <Text style={s.note}>{(WARNING_UI[settings.language] || WARNING_UI.ru).offMap}</Text>}
         {tab === "map" && <BrowseMap
           key={selectedCountry}
           coords={coords}
           cameras={cameraPoints(countryFeed(remoteFeeds,selectedCountry,data,plData))}
-          showCameras={cameraWarningsEnabled(settings)}
+          showCameras={alertsOn}
           showLocation={locationPermissionStatus === "granted"}
           currentThreshold={currentThreshold}
           active={active}
@@ -2636,7 +2689,7 @@ export default function App() {
           country={selectedCountry}
           language={settings.language}
           feed={countryFeed(remoteFeeds,selectedCountry,data,plData)}
-          showCameras={cameraWarningsEnabled(settings)}
+          showCameras={alertsOn}
           userCoords={coords}
           onCountries={() => {setCountryScreenTab("countries");setTab("settings");}}
         />}
@@ -2651,13 +2704,13 @@ export default function App() {
             onKind={setNavtestNearbyKind}
           />
         )}
-        {tab === "nearby" && (!usesInAppGoogleNav() || navtestNearbyKind === "cameras") && !cameraWarningsEnabled(settings) && (
+        {tab === "nearby" && (!usesInAppGoogleNav() || navtestNearbyKind === "cameras") && !alertsOn && (
           <View style={s.card}>
             <Text style={s.label}>{(WARNING_UI[settings.language] || WARNING_UI.ru).off}</Text>
             <Text style={s.note}>{(WARNING_UI[settings.language] || WARNING_UI.ru).offMap}</Text>
           </View>
         )}
-        {tab === "nearby" && (!usesInAppGoogleNav() || navtestNearbyKind === "cameras") && cameraWarningsEnabled(settings) && (
+        {tab === "nearby" && (!usesInAppGoogleNav() || navtestNearbyKind === "cameras") && alertsOn && (
           <View style={s.list}>
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>{["all","speed_camera","red_light","speed_and_red_light","average_speed","checkpoint"].map(type=><FilterChip key={type} night={isNight} selected={nearbyType===type} onPress={()=>setNearbyType(type)}>{type==="all"?ui.all:`${cameraGlyph({type})} ${cameraTypeLabel({type},settings.language)}`}</FilterChip>)}</ScrollView>
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>{["all",...new Set(visibleCameras().map(c=>c.speed_limit).filter(v=>v!=null).map(Number).filter(Number.isFinite).sort((a,b)=>a-b)),"unknown"].map(limit=><FilterChip key={limit} night={isNight} selected={nearbyLimit===limit} onPress={()=>setNearbyLimit(limit)}>{limit==="all"?ui.all:limit==="unknown"?ui.unknown:`${limit} км/ч`}</FilterChip>)}</ScrollView>
@@ -2743,14 +2796,19 @@ export default function App() {
               ))}
             </View>
             <View style={pad ? { width: "46%", gap: 12, alignSelf: "flex-start" } : { gap: 12 }}>
-            <SettingSwitch label={(WARNING_UI[settings.language] || WARNING_UI.ru).switchLabel} value={settings.cameraWarnings !== false} onChange={v=>setSettings({...settings,cameraWarnings:v})}/>
+            <SettingSwitch label={(WARNING_UI[settings.language] || WARNING_UI.ru).switchLabel} value={settings.cameraWarnings !== false} onChange={v => { if (denyPaid()) return; setSettings({...settings,cameraWarnings:v}); }}/>
             <Pressable accessibilityRole="button" onPress={() => {setLawsQuery("");setLawsOpen(true);}} style={[s.action, pad && { flex: 0 }]}><Text style={s.actionText}>{(WARNING_UI[settings.language] || WARNING_UI.ru).laws} →</Text></Pressable>
             <Text style={s.note}>{(WARNING_UI[settings.language] || WARNING_UI.ru).lawsNote}</Text>
             <PremiumEntryCard language={settings.language} night={isNight} entitlement={premiumEntitlement} onPress={openPremiumEntry} />
             {Platform.OS === "ios" ? (
+              <>
               <Pressable accessibilityRole="button" onPress={redeemOfferCode} style={[s.action, pad && { flex: 0 }]}>
                 <Text style={s.actionText}>{premiumCopy(settings.language).redeemCode} →</Text>
               </Pressable>
+              <Pressable accessibilityRole="button" onPress={shareCamAlert} style={[s.action, pad && { flex: 0 }]}>
+                <Text style={s.actionText}>{premiumCopy(settings.language).share}</Text>
+              </Pressable>
+              </>
             ) : null}
             <Pressable accessibilityRole="button" onPress={() => {setOnboardingPage(0);setOnboardingState("new");}} style={s.alertDemoButton}>
               <Text style={s.alertDemoButtonTitle}>{({ru:"Посмотреть приветствие",uk:"Переглянути привітання",en:"View welcome",pl:"Zobacz powitanie"})[settings.language] || "View welcome"}</Text>
@@ -2780,14 +2838,14 @@ export default function App() {
                   accessibilityRole="radio"
                   accessibilityLabel={label}
                   accessibilityState={{ selected: settings.driveTheme === value }}
-                  onPress={() => setSettings({ ...settings, driveTheme: value })}
+                  onPress={() => { if (denyPaid()) return; setSettings({ ...settings, driveTheme: value }); }}
                   style={[s.driveThemeOption, settings.driveTheme === value && s.driveThemeOptionActive]}
                 >
                   <Text maxFontSizeMultiplier={1.4} numberOfLines={2} style={[s.driveThemeOptionText, settings.driveTheme === value && s.driveThemeOptionTextActive]}>{label}</Text>
                 </Pressable>
               );})}
             </View>
-            <Pressable accessibilityRole="button" onPress={() => setModal("alertDemo")} style={s.alertDemoButton}>
+            <Pressable accessibilityRole="button" onPress={() => { if (denyPaid()) return; setModal("alertDemo"); }} style={s.alertDemoButton}>
               <Text maxFontSizeMultiplier={1.4} style={s.alertDemoButtonTitle}>{(ALERT_PREVIEW_COPY[settings.language] || ALERT_PREVIEW_COPY.ru).title}</Text>
               <Text maxFontSizeMultiplier={1.4} style={s.alertDemoButtonSub}>{(ALERT_PREVIEW_COPY[settings.language] || ALERT_PREVIEW_COPY.ru).sub}</Text>
             </Pressable>
@@ -2798,22 +2856,22 @@ export default function App() {
                 if (Platform.OS === "android" && NativeModules.CamAlertLocale) NativeModules.CamAlertLocale.setLanguage(l).catch(()=>{});
               }} style={[s.lang,settings.language===l&&s.langActive]}><Text style={s.settingLabel}>{l==="uk"?"UA":l.toUpperCase()}</Text></Pressable>)}
             </View>
-            <SettingSwitch label={t.background} value={backgroundSwitchOn({ choice: backgroundChoice, access: backgroundAccess, sessionRunning: backgroundEnabled })} onChange={toggleBackground}/>
+            <SettingSwitch label={t.background} value={backgroundSwitchOn({ choice: backgroundChoice, access: backgroundAccess, sessionRunning: backgroundEnabled })} onChange={() => { if (denyPaid()) return; toggleBackground(); }}/>
             <Text maxFontSizeMultiplier={1.5} style={s.note}>{backgroundAccessMessage(settings.language, backgroundAccess)}</Text>
             <Pressable accessibilityRole="button" onPress={openBackgroundSettings} style={s.locationButton}>
               <Text maxFontSizeMultiplier={1.4} style={s.locationButtonText}>{backgroundGuideCopy(settings.language, Platform.OS).openSettings}</Text>
             </Pressable>
             <Text maxFontSizeMultiplier={1.5} style={s.note}>{BACKGROUND_NOTE[settings.language] || BACKGROUND_NOTE.ru}</Text>
-            <SettingSwitch label={t.voiceLabel} value={settings.voice} onChange={v=>setSettings({...settings,voice:v})}/>
-            <SettingSwitch label={t.vibrationLabel} value={settings.vibration} onChange={v=>setSettings({...settings,vibration:v})}/>
-            <SettingSwitch label={t.smartDistanceLabel} value={settings.smartDistance} onChange={v=>setSettings({...settings,smartDistance:v})}/>
-            <Pressable accessibilityRole="button" accessibilityState={{expanded:advancedOpen}} onPress={()=>setAdvancedOpen(!advancedOpen)} style={[s.action, pad && { flex: 0 }]}><Text style={s.actionText}>{ui.advanced} {advancedOpen?"−":"＋"}</Text></Pressable>
+            <SettingSwitch label={t.voiceLabel} value={settings.voice} onChange={v => { if (denyPaid()) return; setSettings({...settings,voice:v}); }}/>
+            <SettingSwitch label={t.vibrationLabel} value={settings.vibration} onChange={v => { if (denyPaid()) return; setSettings({...settings,vibration:v}); }}/>
+            <SettingSwitch label={t.smartDistanceLabel} value={settings.smartDistance} onChange={v => { if (denyPaid()) return; setSettings({...settings,smartDistance:v}); }}/>
+            <Pressable accessibilityRole="button" accessibilityState={{expanded:advancedOpen}} onPress={() => { if (denyPaid()) return; setAdvancedOpen(!advancedOpen); }} style={[s.action, pad && { flex: 0 }]}><Text style={s.actionText}>{ui.advanced} {advancedOpen?"−":"＋"}</Text></Pressable>
             {advancedOpen && <>
             <Text style={s.sectionTitle}>{premiumCopy(settings.language).distanceTitle}</Text>
             {[
               [t.band1,"cityDistance"],[t.band2,"roadDistance"],
               [t.band3,"highwayDistance"],[t.band4,"fastDistance"]
-            ].map(([label,key]) => <DistanceRow key={key} label={label} value={settings[key]} setValue={v=>setSettings({...settings,[key]:v})}/>)}
+            ].map(([label,key]) => <DistanceRow key={key} label={label} value={settings[key]} setValue={v => { if (denyPaid()) return; setSettings({...settings,[key]:v}); }}/>)}
             </>}
             </View>
             <View style={pad ? { width: "46%", gap: 12, alignSelf: "flex-start" } : { gap: 12 }}>

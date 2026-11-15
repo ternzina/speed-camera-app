@@ -1,6 +1,6 @@
 import { Linking, NativeModules, Platform } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { acceptRestored, acceptVerifiedPurchase, entitlementFromStore, resolveLegacy } from "./premium-access.js";
+import { acceptRestored, acceptVerifiedPurchase, chooseIntroductoryStart, entitlementFromStore, featureAccess, resolveLegacy } from "./premium-access.js";
 
 const LEGACY_KEY = "camalert_legacy_access_v1";
 const CACHE_KEY = "camalert_premium_verified_v1";
@@ -53,6 +53,33 @@ export async function rememberLegacy(storage = AsyncStorage) {
 function storeModule() {
   if (Platform.OS !== "ios") return null;
   return NativeModules.CamAlertPremiumStore || null;
+}
+
+function finiteInstant(value) {
+  const number = Number(value);
+  return Number.isFinite(number) && number > 0 ? number : null;
+}
+
+// The keychain item is the first launch of this version. It is not the
+// App Store download date: an update without Legacy Access still receives
+// 72 hours from the first time this version is opened.
+export async function resolveFeatureAccess({ entitlement, now = Date.now() } = {}) {
+  const legacy = await rememberLegacy();
+  const native = storeModule();
+  let storedStart = null;
+  if (native?.legacyEvidence) {
+    try {
+      const evidence = await native.legacyEvidence();
+      storedStart = finiteInstant(evidence?.introductoryStart);
+    } catch {
+      storedStart = null;
+    }
+  }
+  const startedAt = chooseIntroductoryStart({ storedStart, now });
+  if (storedStart == null && native?.rememberIntroductoryStart) {
+    try { await native.rememberIntroductoryStart(startedAt); } catch { /* the next launch writes it */ }
+  }
+  return { ...featureAccess({ legacy, entitlement, startedAt, now }), legacy, startedAt };
 }
 
 export async function readCachedEntitlement(storage = AsyncStorage) {

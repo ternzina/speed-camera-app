@@ -70,7 +70,7 @@ test("warnings stay on the phone GPS feed and ignore the Google route line", () 
   assert.match(tracking, /watchPositionAsync/);
   assert.match(tracking, /AppState\.currentState !== "active"/);
   const mount = app.slice(app.indexOf("usesInAppGoogleNav() && (tab === \"drive\" || iosRouteOpen)"), app.indexOf("if (iosRouteOpen)"));
-  assert.match(mount, /camera=\{cameraWarningsEnabled\(settings\) \? ahead : null\}/);
+  assert.match(mount, /camera=\{alertsOn \? ahead : null\}/);
   assert.match(mount, /if \(foregroundTripRunning \|\| sub\.current\) return true/);
   assert.doesNotMatch(mount, /watchPositionAsync|simulate/);
   assert.match(mount, /onNavigationFix=\{isVoiceDiagApp\(\) && diagTrip === true \? handleUkraineFix : undefined\}/);

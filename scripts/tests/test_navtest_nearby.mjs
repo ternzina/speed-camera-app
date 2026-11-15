@@ -320,7 +320,7 @@ test("navtest nearby is list-only and hands the chosen point to the existing Goo
   assert.match(nearby, /status === "cameras"|!nearbyCategory\(id\)\?\.types/);
   assert.doesNotMatch(nearby, /rating/);
   assert.doesNotMatch(places, /rating/);
-  assert.match(app, /tab === "nearby" && \(!usesInAppGoogleNav\(\) \|\| navtestNearbyKind === "cameras"\) && cameraWarningsEnabled\(settings\)/);
+  assert.match(app, /tab === "nearby" && \(!usesInAppGoogleNav\(\) \|\| navtestNearbyKind === "cameras"\) && alertsOn/);
   assert.match(app, /Камеры рядом/);
   assert.match(app, /usesInAppGoogleNav\(\) \? t\.nearby : nearbyCopy\.title/);
   assert.match(handoff, /nearbyHandoff\(place, navtestRouteActiveRef\.current\)/);

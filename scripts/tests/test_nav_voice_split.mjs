@@ -59,7 +59,7 @@ test("Google voice without a camera assigns AlertsAndGuidance once", () => {
   assert.match(screen, /requestVoiceGuidance\(controllerRef\.current, AudioGuidance\.SILENT, "session"\)/);
   assert.doesNotMatch(screen, /MIN_MOVING_SPEED/);
   const app = read("App.js");
-  assert.match(app, /voiceEnabled=\{cameraWarningsEnabled\(settings\) && settings\.voice\}/);
+  assert.match(app, /voiceEnabled=\{alertsOn && settings\.voice\}/);
 });
 
 test("Yevheniia leaves the audio session alone when no clip plays", () => {

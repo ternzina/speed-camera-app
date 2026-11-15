@@ -100,12 +100,26 @@ public final class CamAlertPremiumStoreKit: NSObject {
       if let version = await originalAppVersion() {
         payload["originalVersion"] = version
       }
+      if let start = readIntroductoryStart() {
+        payload["introductoryStart"] = start
+      }
       done(payload)
     }
   }
 
   @objc public static func rememberLegacyYes(_ done: @escaping (Bool) -> Void) {
     done(writeKeychainYes())
+  }
+
+  // The first launch of this version is written once. A later call cannot
+  // move it forward, so a reinstall that still has the keychain item does
+  // not start another 72 hours.
+  @objc public static func rememberIntroductoryStart(_ millis: Double, done: @escaping (NSNumber) -> Void) {
+    if readIntroductoryStart() != nil {
+      done(true)
+      return
+    }
+    done(writeIntroductoryStart(millis))
   }
 
   @objc public static func requestReview(_ done: @escaping (NSNumber) -> Void) {
@@ -278,6 +292,35 @@ public final class CamAlertPremiumStoreKit: NSObject {
       return nil
     }
     return text == "yes" ? "yes" : nil
+  }
+
+  private static func introductoryQuery() -> [String: Any] {
+    [
+      kSecClass as String: kSecClassGenericPassword,
+      kSecAttrService as String: "com.21wek.camera.premium",
+      kSecAttrAccount as String: "introductory-start",
+    ]
+  }
+
+  private static func readIntroductoryStart() -> Double? {
+    var query = introductoryQuery()
+    query[kSecReturnData as String] = true
+    query[kSecMatchLimit as String] = kSecMatchLimitOne
+    var item: CFTypeRef?
+    let status = SecItemCopyMatching(query as CFDictionary, &item)
+    guard status == errSecSuccess, let data = item as? Data, let text = String(data: data, encoding: .utf8), let value = Double(text), value > 0 else {
+      return nil
+    }
+    return value
+  }
+
+  private static func writeIntroductoryStart(_ millis: Double) -> Bool {
+    guard millis > 0, readIntroductoryStart() == nil else { return readIntroductoryStart() != nil }
+    let text = String(format: "%.0f", millis)
+    var query = introductoryQuery()
+    query[kSecValueData as String] = Data(text.utf8)
+    query[kSecAttrAccessible as String] = kSecAttrAccessibleAfterFirstUnlock
+    return SecItemAdd(query as CFDictionary, nil) == errSecSuccess
   }
 
   private static func writeKeychainYes() -> Bool {

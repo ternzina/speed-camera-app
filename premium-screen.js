@@ -40,6 +40,7 @@ export default function PremiumScreen({
   onSelect,
   onContinue,
   onRestore,
+  onRedeem,
   onManage,
   onTerms,
   onPrivacy,
@@ -65,10 +66,8 @@ export default function PremiumScreen({
           <Text style={styles.back}>{copy.back}</Text>
         </Pressable>
       ) : null}
-      <Text maxFontSizeMultiplier={1.25} style={styles.title}>{yearlyOffer ? copy.offerTitle : copy.offerPlain}</Text>
-      <Text maxFontSizeMultiplier={1.25} style={yearlyOffer ? styles.offer : styles.lead}>
-        {yearlyOffer ? copy.offerSub : copy.offerPlainSub}
-      </Text>
+      <Text maxFontSizeMultiplier={1.25} style={styles.title}>{copy.proTitle}</Text>
+      <Text maxFontSizeMultiplier={1.25} style={styles.lead}>{copy.proSubtitle}</Text>
       <View style={styles.plans}>
         {PREMIUM_PLANS.map(plan => {
           const price = storePriceLabel(prices[plan.id]);
@@ -95,12 +94,12 @@ export default function PremiumScreen({
         style={styles.continue}
       >
         {busy ? <ActivityIndicator color="#FFFFFF" /> : (
-          <Text style={styles.continueText}>{lifetimeOwned && selected.period === "lifetime" ? copy.lifetimeActive : copy.continue}</Text>
+          <Text style={styles.continueText}>{lifetimeOwned && selected.period === "lifetime" ? copy.lifetimeActive : copy.unlock}</Text>
         )}
       </Pressable>
       <Text maxFontSizeMultiplier={1.3} style={styles.terms}>{terms}</Text>
       <View style={styles.benefits}>
-        {copy.benefits.map(item => (
+        {copy.proBenefits.map(item => (
           <Text key={item} maxFontSizeMultiplier={1.3} style={styles.benefit}>{item}</Text>
         ))}
       </View>
@@ -110,6 +109,11 @@ export default function PremiumScreen({
       <Pressable accessibilityRole="button" onPress={onRestore} style={styles.linkHit}>
         <Text style={styles.link}>{copy.restore}</Text>
       </Pressable>
+      {onRedeem ? (
+        <Pressable accessibilityRole="button" onPress={onRedeem} style={styles.linkHit}>
+          <Text style={styles.link}>{copy.redeemCode}</Text>
+        </Pressable>
+      ) : null}
       <Pressable accessibilityRole="button" onPress={onManage} style={styles.linkHit}>
         <Text style={styles.link}>{copy.manage}</Text>
       </Pressable>
