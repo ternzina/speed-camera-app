@@ -16,6 +16,11 @@
 		C30000000000000000000043 /* CamAlertSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = C30000000000000000000013 /* CamAlertSession.swift */; };
 		C30000000000000000000044 /* CamAlertScreens.swift in Sources */ = {isa = PBXBuildFile; fileRef = C30000000000000000000014 /* CamAlertScreens.swift */; };
 		C30000000000000000000054 /* CamAlertProScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = C30000000000000000000024 /* CamAlertProScreen.swift */; };
+		C30000000000000000000055 /* CamAlertShell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C30000000000000000000025 /* CamAlertShell.swift */; };
+		C30000000000000000000059 /* UkrainianVoice.swift in Sources */ = {isa = PBXBuildFile; fileRef = C30000000000000000000029 /* UkrainianVoice.swift */; };
+		C30000000000000000000058 /* uk-voice in Resources */ = {isa = PBXBuildFile; fileRef = C30000000000000000000028 /* uk-voice */; };
+		C30000000000000000000056 /* onboarding-night.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C30000000000000000000026 /* onboarding-night.jpg */; };
+		C30000000000000000000057 /* onboarding-drive-loop.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = C30000000000000000000027 /* onboarding-drive-loop.mp4 */; };
 		C30000000000000000000045 /* cameras-ua.json in Resources */ = {isa = PBXBuildFile; fileRef = C30000000000000000000015 /* cameras-ua.json */; };
 		C30000000000000000000046 /* cameras-pl.json in Resources */ = {isa = PBXBuildFile; fileRef = C30000000000000000000016 /* cameras-pl.json */; };
 		C30000000000000000000047 /* country-names.json in Resources */ = {isa = PBXBuildFile; fileRef = C30000000000000000000017 /* country-names.json */; };
@@ -43,6 +48,11 @@
 		C30000000000000000000013 /* CamAlertSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CamAlertSession.swift; sourceTree = "<group>"; };
 		C30000000000000000000014 /* CamAlertScreens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CamAlertScreens.swift; sourceTree = "<group>"; };
 		C30000000000000000000024 /* CamAlertProScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CamAlertProScreen.swift; sourceTree = "<group>"; };
+		C30000000000000000000025 /* CamAlertShell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CamAlertShell.swift; sourceTree = "<group>"; };
+		C30000000000000000000029 /* UkrainianVoice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UkrainianVoice.swift; sourceTree = "<group>"; };
+		C30000000000000000000028 /* uk-voice */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Resources/uk-voice; sourceTree = "<group>"; };
+		C30000000000000000000026 /* onboarding-night.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Resources/onboarding-night.jpg"; sourceTree = "<group>"; };
+		C30000000000000000000027 /* onboarding-drive-loop.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Resources/onboarding-drive-loop.mp4"; sourceTree = "<group>"; };
 		C30000000000000000000015 /* cameras-ua.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "Resources/cameras-ua.json"; sourceTree = "<group>"; };
 		C30000000000000000000016 /* cameras-pl.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "Resources/cameras-pl.json"; sourceTree = "<group>"; };
 		C30000000000000000000017 /* country-names.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "Resources/country-names.json"; sourceTree = "<group>"; };
@@ -101,6 +111,11 @@
 				C30000000000000000000013 /* CamAlertSession.swift */,
 				C30000000000000000000014 /* CamAlertScreens.swift */,
 				C30000000000000000000024 /* CamAlertProScreen.swift */,
+				C30000000000000000000025 /* CamAlertShell.swift */,
+				C30000000000000000000029 /* UkrainianVoice.swift */,
+				C30000000000000000000028 /* uk-voice */,
+				C30000000000000000000026 /* onboarding-night.jpg */,
+				C30000000000000000000027 /* onboarding-drive-loop.mp4 */,
 				C30000000000000000000015 /* cameras-ua.json */,
 				C30000000000000000000016 /* cameras-pl.json */,
 				C30000000000000000000017 /* country-names.json */,
@@ -201,6 +216,9 @@
 				C30000000000000000000051 /* onboarding-first-frame.jpg in Resources */,
 				C30000000000000000000052 /* onboarding-coastal.png in Resources */,
 				C30000000000000000000053 /* onboarding-world.jpg in Resources */,
+				C30000000000000000000056 /* onboarding-night.jpg in Resources */,
+				C30000000000000000000057 /* onboarding-drive-loop.mp4 in Resources */,
+				C30000000000000000000058 /* uk-voice in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -261,6 +279,8 @@
 				C30000000000000000000043 /* CamAlertSession.swift in Sources */,
 				C30000000000000000000044 /* CamAlertScreens.swift in Sources */,
 				C30000000000000000000054 /* CamAlertProScreen.swift in Sources */,
+				C30000000000000000000055 /* CamAlertShell.swift in Sources */,
+				C30000000000000000000059 /* UkrainianVoice.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -273,7 +293,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 87;
 				DEVELOPMENT_TEAM = FA62L7F5T7;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = NO;
@@ -282,13 +302,13 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.21wek.camera.native;
+				MARKETING_VERSION = 1.0.8;
+				PRODUCT_BUNDLE_IDENTIFIER = com.21wek.camera;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -298,7 +318,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 87;
 				DEVELOPMENT_TEAM = FA62L7F5T7;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = NO;
@@ -307,13 +327,13 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.21wek.camera.native;
+				MARKETING_VERSION = 1.0.8;
+				PRODUCT_BUNDLE_IDENTIFIER = com.21wek.camera;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

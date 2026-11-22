@@ -10,10 +10,16 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
   ) {
     guard let windowScene = scene as? UIWindowScene else { return }
     let window = UIWindow(windowScene: windowScene)
-    let navigation = UINavigationController(rootViewController: HomeViewController())
-    navigation.navigationBar.tintColor = UIColor(red: 0.08, green: 0.35, blue: 0.93, alpha: 1)
-    window.rootViewController = navigation
+    if UserDefaults.standard.bool(forKey: "camalert.welcome.done") || ProcessInfo.processInfo.arguments.contains("--voice-check") {
+      window.rootViewController = CamAlertShellController()
+    } else {
+      window.rootViewController = WelcomeViewController()
+    }
     window.makeKeyAndVisible()
     self.window = window
+  }
+
+  func showApp() {
+    window?.rootViewController = CamAlertShellController()
   }
 }

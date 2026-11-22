@@ -24,6 +24,9 @@ final class PremiumViewController: UIViewController {
   private let dots = UIStackView()
   private var cardWidth: CGFloat = 280
   private var topGap: NSLayoutConstraint?
+  private var stagePage = 0
+  private var stageTimer: Timer?
+  private var carouselLinked = false
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -65,19 +68,19 @@ final class PremiumViewController: UIViewController {
     terms.numberOfLines = 0
     terms.textAlignment = .center
     terms.textColor = cream
-    terms.font = .systemFont(ofSize: 13, weight: .semibold)
+    terms.font = .camalert(13, weight: .semibold)
     stack.addArrangedSubview(terms)
     note.numberOfLines = 0
     note.textAlignment = .center
     note.textColor = UIColor(red: 213 / 255, green: 217 / 255, blue: 232 / 255, alpha: 1)
-    note.font = .systemFont(ofSize: 11)
+    note.font = .camalert(11)
     note.text = ""
     stack.addArrangedSubview(note)
     stack.addArrangedSubview(unlockButton())
     let charge = UILabel()
     charge.text = "CamAlert деньги не списывает. Оплату проводит Apple или Google."
     charge.textColor = UIColor(red: 197 / 255, green: 203 / 255, blue: 222 / 255, alpha: 1)
-    charge.font = .systemFont(ofSize: 11)
+    charge.font = .camalert(11)
     charge.textAlignment = .center
     charge.numberOfLines = 0
     stack.addArrangedSubview(charge)
@@ -91,6 +94,24 @@ final class PremiumViewController: UIViewController {
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     navigationController?.setNavigationBarHidden(true, animated: animated)
+  }
+
+  override func viewDidAppear(_ animated: Bool) {
+    super.viewDidAppear(animated)
+    if !carouselLinked, let outer = view.subviews.first as? UIScrollView {
+      outer.panGestureRecognizer.require(toFail: stage.panGestureRecognizer)
+      carouselLinked = true
+    }
+    if cardWidth > 0, stage.subviews.isEmpty { layoutCards() }
+    stageTimer?.invalidate()
+    stageTimer = Timer.scheduledTimer(withTimeInterval: 4.5, repeats: true) { [weak self] _ in
+      self?.advanceStage()
+    }
+  }
+
+  override func viewWillDisappear(_ animated: Bool) {
+    super.viewWillDisappear(animated)
+    stageTimer?.invalidate()
   }
 
   override func viewDidLayoutSubviews() {
@@ -111,26 +132,27 @@ final class PremiumViewController: UIViewController {
     let shade = UIView()
     shade.backgroundColor = UIColor(red: 4 / 255, green: 10 / 255, blue: 31 / 255, alpha: 0.24)
     shade.translatesAutoresizingMaskIntoConstraints = false
+    image.isUserInteractionEnabled = true
     let close = UIButton(type: .system)
     close.setTitle("×", for: .normal)
     close.setTitleColor(cream, for: .normal)
-    close.titleLabel?.font = .systemFont(ofSize: 28, weight: .light)
-    close.layer.cornerRadius = 18
+    close.titleLabel?.font = .camalert(28, weight: .light)
+    close.layer.cornerRadius = 22
     close.layer.borderWidth = 1
     close.layer.borderColor = UIColor(white: 1, alpha: 0.45).cgColor
-    close.backgroundColor = UIColor(red: 6 / 255, green: 12 / 255, blue: 34 / 255, alpha: 0.35)
+    close.backgroundColor = UIColor(red: 6 / 255, green: 12 / 255, blue: 34 / 255, alpha: 0.55)
     close.addTarget(self, action: #selector(goBack), for: .touchUpInside)
     close.translatesAutoresizingMaskIntoConstraints = false
     let camera = cameraMark()
     let logo = UILabel()
     logo.text = "CamAlert"
     logo.textColor = cream
-    logo.font = .systemFont(ofSize: 23, weight: .heavy)
+    logo.font = .camalert(23, weight: .heavy)
     let pro = UILabel()
     pro.text = " PRO "
     pro.textColor = UIColor(red: 9 / 255, green: 14 / 255, blue: 35 / 255, alpha: 1)
     pro.backgroundColor = gold
-    pro.font = .systemFont(ofSize: 18, weight: .black)
+    pro.font = .camalert(18, weight: .black)
     pro.layer.cornerRadius = 12
     pro.clipsToBounds = true
     let brand = UIStackView(arrangedSubviews: [camera, logo, pro])
@@ -152,7 +174,7 @@ final class PremiumViewController: UIViewController {
     let lead = UILabel()
     lead.text = "Предупреждения о камерах, удобная навигация и уверенность в дороге."
     lead.textColor = cream
-    lead.font = .systemFont(ofSize: 14, weight: .medium)
+    lead.font = .camalert(14, weight: .medium)
     lead.textAlignment = .center
     lead.numberOfLines = 2
     let column = UIStackView(arrangedSubviews: [brand, title, swoosh, lead])
@@ -160,18 +182,14 @@ final class PremiumViewController: UIViewController {
     column.alignment = .center
     column.spacing = 6
     column.translatesAutoresizingMaskIntoConstraints = false
+    column.isUserInteractionEnabled = false
     image.addSubview(shade)
-    image.addSubview(close)
     image.addSubview(column)
     NSLayoutConstraint.activate([
       shade.topAnchor.constraint(equalTo: image.topAnchor),
       shade.leadingAnchor.constraint(equalTo: image.leadingAnchor),
       shade.trailingAnchor.constraint(equalTo: image.trailingAnchor),
       shade.bottomAnchor.constraint(equalTo: image.bottomAnchor),
-      close.topAnchor.constraint(equalTo: image.topAnchor, constant: 10),
-      close.leadingAnchor.constraint(equalTo: image.leadingAnchor, constant: 14),
-      close.widthAnchor.constraint(equalToConstant: 36),
-      close.heightAnchor.constraint(equalToConstant: 36),
       column.centerXAnchor.constraint(equalTo: image.centerXAnchor),
       column.topAnchor.constraint(equalTo: image.topAnchor, constant: 15),
       column.leadingAnchor.constraint(greaterThanOrEqualTo: image.leadingAnchor, constant: 24),
@@ -181,11 +199,16 @@ final class PremiumViewController: UIViewController {
     let wrap = UIView()
     wrap.translatesAutoresizingMaskIntoConstraints = false
     wrap.addSubview(image)
+    wrap.addSubview(close)
     NSLayoutConstraint.activate([
       image.topAnchor.constraint(equalTo: wrap.topAnchor),
       image.leadingAnchor.constraint(equalTo: wrap.leadingAnchor, constant: -16),
       image.trailingAnchor.constraint(equalTo: wrap.trailingAnchor, constant: 16),
       image.bottomAnchor.constraint(equalTo: wrap.bottomAnchor),
+      close.topAnchor.constraint(equalTo: wrap.topAnchor, constant: 8),
+      close.leadingAnchor.constraint(equalTo: wrap.leadingAnchor, constant: -2),
+      close.widthAnchor.constraint(equalToConstant: 44),
+      close.heightAnchor.constraint(equalToConstant: 44),
     ])
     return wrap
   }
@@ -222,6 +245,8 @@ final class PremiumViewController: UIViewController {
     frame.translatesAutoresizingMaskIntoConstraints = false
     frame.heightAnchor.constraint(equalToConstant: 190).isActive = true
     stage.showsHorizontalScrollIndicator = false
+    stage.alwaysBounceHorizontal = true
+    stage.isDirectionalLockEnabled = true
     stage.delegate = self
     stage.translatesAutoresizingMaskIntoConstraints = false
     dots.axis = .horizontal
@@ -266,7 +291,7 @@ final class PremiumViewController: UIViewController {
     let button = UIButton(type: .system)
     button.setTitle("Разблокировать PRO  ›", for: .normal)
     button.setTitleColor(UIColor(red: 17 / 255, green: 16 / 255, blue: 26 / 255, alpha: 1), for: .normal)
-    button.titleLabel?.font = .systemFont(ofSize: 18, weight: .black)
+    button.titleLabel?.font = .camalert(18, weight: .black)
     button.backgroundColor = gold
     button.layer.cornerRadius = 25
     button.layer.borderWidth = 1
@@ -295,7 +320,7 @@ final class PremiumViewController: UIViewController {
     let button = UIButton(type: .system)
     button.setTitle(title, for: .normal)
     button.setTitleColor(cream, for: .normal)
-    button.titleLabel?.font = .systemFont(ofSize: 13, weight: .semibold)
+    button.titleLabel?.font = .camalert(13, weight: .semibold)
     button.addTarget(self, action: action, for: .touchUpInside)
     button.heightAnchor.constraint(equalToConstant: 32).isActive = true
     return button
@@ -306,7 +331,7 @@ final class PremiumViewController: UIViewController {
     let text = NSAttributedString(string: title, attributes: [
       .underlineStyle: NSUnderlineStyle.single.rawValue,
       .foregroundColor: UIColor(red: 213 / 255, green: 217 / 255, blue: 232 / 255, alpha: 1),
-      .font: UIFont.systemFont(ofSize: 11),
+      .font: UIFont.camalert(11),
     ])
     button.setAttributedTitle(text, for: .normal)
     button.addAction(UIAction { _ in
@@ -338,12 +363,12 @@ final class PremiumViewController: UIViewController {
       let period = UILabel()
       period.text = names[id] ?? id
       period.textColor = cream
-      period.font = .systemFont(ofSize: 13, weight: .heavy)
+      period.font = .camalert(13, weight: .heavy)
       period.textAlignment = .center
       let priceLabel = UILabel()
       priceLabel.text = price
       priceLabel.textColor = cream
-      priceLabel.font = .systemFont(ofSize: 13, weight: .heavy)
+      priceLabel.font = .camalert(13, weight: .heavy)
       priceLabel.textAlignment = .center
       priceLabel.adjustsFontSizeToFitWidth = true
       priceLabel.minimumScaleFactor = 0.25
@@ -409,7 +434,20 @@ final class PremiumViewController: UIViewController {
     if let url = URL(string: "https://apps.apple.com/account/subscriptions") { UIApplication.shared.open(url) }
   }
 
-  @objc private func goBack() { navigationController?.popViewController(animated: true) }
+  private func advanceStage() {
+    guard slides.count > 1, cardWidth > 0, stage.isDragging == false, stage.isTracking == false else { return }
+    stagePage = (stagePage + 1) % slides.count
+    stage.setContentOffset(CGPoint(x: CGFloat(stagePage) * (cardWidth + 12), y: 0), animated: true)
+  }
+
+  @objc private func goBack() {
+    if let navigationController, navigationController.viewControllers.count > 1 {
+      navigationController.popViewController(animated: true)
+      return
+    }
+    dismiss(animated: true)
+    NotificationCenter.default.post(name: .camalertShowTab, object: "settings")
+  }
 }
 
 extension PremiumViewController: UIScrollViewDelegate {
@@ -417,6 +455,7 @@ extension PremiumViewController: UIScrollViewDelegate {
     guard cardWidth > 0 else { return }
     let page = Int(round(scrollView.contentOffset.x / (cardWidth + 12)))
     let index = min(max(page, 0), slides.count - 1)
+    stagePage = index
     for case let dot as UIView in dots.arrangedSubviews {
       let on = dot.tag == index
       dot.backgroundColor = on ? gold : UIColor(white: 1, alpha: 0.35)
@@ -444,11 +483,11 @@ private final class ProSlideCard: UIView {
     let title = UILabel()
     title.text = slide.title
     title.textColor = cream
-    title.font = .systemFont(ofSize: 18, weight: .black)
+    title.font = .camalert(18, weight: .black)
     let body = UILabel()
     body.text = slide.text
     body.textColor = cream
-    body.font = .systemFont(ofSize: 12)
+    body.font = .camalert(12)
     body.numberOfLines = 2
     let copy = UIStackView(arrangedSubviews: [title, body])
     copy.axis = .vertical
@@ -520,7 +559,11 @@ private final class ProSlideArt: UIView {
         context.fillEllipse(in: CGRect(x: knobX, y: y - 8, width: 16, height: 16))
       }
     default:
-      break
+      context.setLineWidth(3)
+      context.stroke(CGRect(x: rect.midX - 28, y: 30, width: 56, height: 36))
+      context.fillEllipse(in: CGRect(x: rect.midX - 10, y: 38, width: 20, height: 20))
+      context.setFillColor(UIColor(red: 8 / 255, green: 15 / 255, blue: 41 / 255, alpha: 1).cgColor)
+      context.fillEllipse(in: CGRect(x: rect.midX - 5, y: 43, width: 10, height: 10))
     }
   }
 }

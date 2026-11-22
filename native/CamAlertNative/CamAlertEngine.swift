@@ -383,3 +383,154 @@ enum PremiumAccess {
     return false
   }
 }
+
+/// Places API (New), the same calls as google-places.js. The legacy Places SDK
+/// is not used: the app key answers the new autocomplete and nearby endpoints.
+struct PlacesError: Error { var code: String }
+
+enum PlacesClient {
+  struct Suggestion {
+    var placeId: String
+    var title: String
+    var address: String
+    var latitude: Double?
+    var longitude: Double?
+  }
+
+  struct NearbyPlace {
+    var id: String
+    var name: String
+    var address: String
+    var latitude: Double
+    var longitude: Double
+    var distance: Int
+  }
+
+  static func coordinate(in query: String) -> (latitude: Double, longitude: Double)? {
+    let parts = query.split { $0 == "," || $0 == ";" }.map { $0.trimmingCharacters(in: .whitespaces) }
+    guard parts.count == 2, let latitude = Double(parts[0].replacingOccurrences(of: ",", with: ".")), let longitude = Double(parts[1].replacingOccurrences(of: ",", with: ".")) else { return nil }
+    guard abs(latitude) <= 90, abs(longitude) <= 180 else { return nil }
+    return (latitude, longitude)
+  }
+
+  static func autocomplete(input: String, token: String, language: String, done: @escaping (Result<[Suggestion], PlacesError>) -> Void) {
+    send(
+      url: URL(string: "https://places.googleapis.com/v1/places:autocomplete")!,
+      method: "POST",
+      mask: "suggestions.placePrediction.placeId,suggestions.placePrediction.text.text,suggestions.placePrediction.structuredFormat.mainText.text,suggestions.placePrediction.structuredFormat.secondaryText.text",
+      body: ["input": input, "sessionToken": token, "languageCode": languageCode(language)],
+      done: { result in
+        switch result {
+        case .failure(let code): done(.failure(code))
+        case .success(let json):
+          let suggestions = (json["suggestions"] as? [[String: Any]] ?? []).compactMap { item -> Suggestion? in
+            guard let place = item["placePrediction"] as? [String: Any] else { return nil }
+            let placeId = place["placeId"] as? String ?? ""
+            let format = place["structuredFormat"] as? [String: Any]
+            let main = (format?["mainText"] as? [String: Any])?["text"] as? String
+            let secondary = (format?["secondaryText"] as? [String: Any])?["text"] as? String
+            let full = (place["text"] as? [String: Any])?["text"] as? String
+            let title = (main?.isEmpty == false ? main : full) ?? ""
+            guard !placeId.isEmpty, !title.isEmpty else { return nil }
+            return Suggestion(placeId: placeId, title: title, address: secondary ?? "")
+          }
+          done(.success(Array(suggestions.prefix(5))))
+        }
+      }
+    )
+  }
+
+  static func location(placeId: String, token: String, done: @escaping (Result<(Double, Double), PlacesError>) -> Void) {
+    var parts = URLComponents(string: "https://places.googleapis.com/v1/places/\(placeId)")!
+    parts.queryItems = [URLQueryItem(name: "sessionToken", value: token)]
+    guard let url = parts.url else { done(.failure(PlacesError(code: "places-failed"))); return }
+    send(url: url, method: "GET", mask: "location", body: nil) { result in
+      switch result {
+      case .failure(let code): done(.failure(code))
+      case .success(let json):
+        let location = json["location"] as? [String: Any]
+        guard let latitude = number(location?["latitude"]), let longitude = number(location?["longitude"]), abs(latitude) <= 90, abs(longitude) <= 180 else {
+          done(.failure(PlacesError(code: "places-failed")))
+          return
+        }
+        done(.success((latitude, longitude)))
+      }
+    }
+  }
+
+  static func nearby(types: [String], latitude: Double, longitude: Double, language: String, done: @escaping (Result<[NearbyPlace], PlacesError>) -> Void) {
+    let body: [String: Any] = [
+      "includedTypes": types,
+      "maxResultCount": 10,
+      "rankPreference": "DISTANCE",
+      "languageCode": languageCode(language),
+      "locationRestriction": [
+        "circle": [
+          "center": ["latitude": latitude, "longitude": longitude],
+          "radius": 5000,
+        ],
+      ],
+    ]
+    send(
+      url: URL(string: "https://places.googleapis.com/v1/places:searchNearby")!,
+      method: "POST",
+      mask: "places.id,places.displayName,places.formattedAddress,places.location",
+      body: body
+    ) { result in
+      switch result {
+      case .failure(let code): done(.failure(code))
+      case .success(let json):
+        let places = (json["places"] as? [[String: Any]] ?? []).compactMap { place -> NearbyPlace? in
+          let name = (place["displayName"] as? [String: Any])?["text"] as? String ?? ""
+          let id = place["id"] as? String ?? ""
+          let point = place["location"] as? [String: Any]
+          guard let placeLatitude = number(point?["latitude"]), let placeLongitude = number(point?["longitude"]), !id.isEmpty, !name.isEmpty else { return nil }
+          let distance = Int(CamAlertGeo.distanceMeters(latitude, longitude, placeLatitude, placeLongitude).rounded())
+          return NearbyPlace(
+            id: id,
+            name: name.trimmingCharacters(in: .whitespacesAndNewlines),
+            address: place["formattedAddress"] as? String ?? "",
+            latitude: placeLatitude,
+            longitude: placeLongitude,
+            distance: distance
+          )
+        }
+        done(.success(places))
+      }
+    }
+  }
+
+  private static func number(_ value: Any?) -> Double? {
+    if let value = value as? Double { return value }
+    if let value = value as? NSNumber { return value.doubleValue }
+    return nil
+  }
+
+  private static func languageCode(_ language: String) -> String {
+    ["uk", "en", "pl", "ru"].contains(language) ? language : "ru"
+  }
+
+  private static func send(url: URL, method: String, mask: String, body: [String: Any]?, done: @escaping (Result<[String: Any], PlacesError>) -> Void) {
+    guard let key = Bundle.main.object(forInfoDictionaryKey: "CamAlertNativeAPIKey") as? String, !key.isEmpty, !key.contains("$(") else {
+      done(.failure(PlacesError(code: "missing-key")))
+      return
+    }
+    var request = URLRequest(url: url, timeoutInterval: 12)
+    request.httpMethod = method
+    request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+    request.setValue(key, forHTTPHeaderField: "X-Goog-Api-Key")
+    request.setValue(mask, forHTTPHeaderField: "X-Goog-FieldMask")
+    request.setValue(Bundle.main.bundleIdentifier ?? "com.21wek.camera.native", forHTTPHeaderField: "X-Ios-Bundle-Identifier")
+    if let body {
+      request.httpBody = try? JSONSerialization.data(withJSONObject: body)
+    }
+    URLSession.shared.dataTask(with: request) { data, response, _ in
+      let status = (response as? HTTPURLResponse)?.statusCode ?? 0
+      guard (200..<300).contains(status), let data, let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any] else {
+        DispatchQueue.main.async { done(.failure(PlacesError(code: "places-failed"))) }
+        return
+      }
+      DispatchQueue.main.async { done(.success(json)) }
+    }.resume()
+  }
+}

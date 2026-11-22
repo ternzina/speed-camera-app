@@ -17,6 +17,8 @@ final class CameraCatalog {
   private(set) var sections: [String: [CameraRecord]] = [:]
   private(set) var countries: [CountryListing] = []
   private(set) var totalRecords = 0
+  private(set) var publishedAt: Date?
+  private(set) var checkedAt: Date?
   private var names: [String: String] = [:]
   private let queue = DispatchQueue(label: "camalert.cameras", qos: .userInitiated)
   private var grids: [String: [String: [CameraRecord]]] = [:]
@@ -31,10 +33,65 @@ final class CameraCatalog {
     if let feed = parse(data(named: "cameras-pl"), country: "PL") {
       store(feed, code: "PL")
     }
+    if let cached = try? Data(contentsOf: cacheURL("manifest.json")),
+       let parsed = parseManifest(cached) {
+      countries = parsed.listings
+      totalRecords = parsed.total
+      publishedAt = parsed.publishedAt
+      checkedAt = (try? FileManager.default.attributesOfItem(atPath: cacheURL("manifest.json").path))?[.modificationDate] as? Date
+    }
   }
 
   func cameras(for code: String) -> [CameraRecord] { feeds[code] ?? [] }
   func sections(for code: String) -> [CameraRecord] { sections[code] ?? [] }
+  func isStored(_ code: String) -> Bool { feeds[code] != nil }
+  var storedCodes: [String] { Array(feeds.keys) }
+
+  /// Ukraine and Poland first, then every country from the delivery manifest,
+  /// then any remaining name from the original country list.
+  func directory() -> [CountryListing] {
+    var rows: [CountryListing] = []
+    var seen = Set<String>()
+    func add(_ code: String, listing: CountryListing?) {
+      let upper = code.uppercased()
+      guard !seen.contains(upper) else { return }
+      seen.insert(upper)
+      if let listing {
+        rows.append(listing)
+        return
+      }
+      rows.append(CountryListing(
+        code: upper,
+        name: names[upper] ?? upper,
+        recordCount: feeds[upper]?.count ?? 0,
+        version: nil,
+        path: nil,
+        sizeBytes: nil,
+        checksum: nil
+      ))
+    }
+    for code in ["UA", "PL"] {
+      add(code, listing: countries.first { $0.code == code })
+    }
+    for listing in countries { add(listing.code, listing: listing) }
+    if countries.isEmpty {
+      for code in names.keys.sorted() { add(code, listing: nil) }
+    }
+    return rows
+  }
+
+  func removeStored(_ code: String) {
+    let upper = code.uppercased()
+    feeds[upper] = nil
+    sections[upper] = nil
+    grids[upper] = nil
+    UserDefaults.standard.removeObject(forKey: "camalert.feed.\(upper)")
+    let root = cacheURL("manifest.json").deletingLastPathComponent()
+    guard let files = try? FileManager.default.contentsOfDirectory(at: root, includingPropertiesForKeys: nil) else { return }
+    for file in files where file.lastPathComponent.hasPrefix("\(upper)-") {
+      try? FileManager.default.removeItem(at: file)
+    }
+  }
 
   func nearby(_ code: String, latitude: Double, longitude: Double, radius: Double) -> [CameraRecord] {
     let cell = 0.05
@@ -56,29 +113,12 @@ final class CameraCatalog {
     do {
       let (data, response) = try await URLSession.shared.data(from: Self.deliveryURL.appendingPathComponent("production/v1/manifest.json"))
       guard (response as? HTTPURLResponse)?.statusCode == 200 else { return "База недоступна" }
-      let manifest = try JSONSerialization.jsonObject(with: data) as? [String: Any]
-      guard let rows = manifest?["countries"] as? [[String: Any]] else { return "База недоступна" }
-      let listings: [CountryListing] = rows.compactMap { row in
-        guard let code = row["country_code"] as? String else { return nil }
-        func whole(_ key: String) -> Int {
-          if let value = row[key] as? Int { return value }
-          if let value = row[key] as? NSNumber { return value.intValue }
-          return 0
-        }
-        return CountryListing(
-          code: code,
-          name: names[code] ?? code,
-          recordCount: whole("record_count"),
-          version: row["checksum"] as? String,
-          path: row["path"] as? String,
-          sizeBytes: whole("size_bytes"),
-          checksum: row["checksum"] as? String
-        )
-      }
-      let total = listings.reduce(0) { $0 + $1.recordCount }
+      guard let parsed = parseManifest(data) else { return "База недоступна" }
       await MainActor.run {
-        countries = listings.sorted { $0.name < $1.name }
-        totalRecords = total
+        countries = parsed.listings
+        totalRecords = parsed.total
+        publishedAt = parsed.publishedAt
+        checkedAt = Date()
       }
       try? data.write(to: cacheURL("manifest.json"), options: .atomic)
       return nil
@@ -87,28 +127,88 @@ final class CameraCatalog {
     }
   }
 
-  func ensureCountry(_ code: String) async -> String? {
-    if feeds[code] != nil, code != "UA", code != "PL" { return nil }
-    let listing = countries.first { $0.code == code }
-    guard let listing, let path = listing.path, let checksum = listing.checksum else {
-      return feeds[code] == nil ? "Страна ещё не загружена" : nil
+  private func parseManifest(_ data: Data) -> (listings: [CountryListing], total: Int, publishedAt: Date?)? {
+    guard let manifest = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
+          let rows = manifest["countries"] as? [[String: Any]] else { return nil }
+    let listings: [CountryListing] = rows.compactMap { row in
+      guard let code = (row["country_code"] as? String)?.uppercased() else { return nil }
+      func whole(_ key: String) -> Int {
+        if let value = row[key] as? Int { return value }
+        if let value = row[key] as? NSNumber { return value.intValue }
+        return 0
+      }
+      return CountryListing(
+        code: code,
+        name: names[code] ?? code,
+        recordCount: whole("record_count"),
+        version: row["checksum"] as? String,
+        path: row["path"] as? String,
+        sizeBytes: whole("size_bytes"),
+        checksum: row["checksum"] as? String
+      )
     }
-    if let cached = cachedFeed(code, checksum: checksum) {
-      await MainActor.run { store(cached, code: code) }
+    guard !listings.isEmpty else { return nil }
+    let published = Self.catalogDate(manifest["generated_at"] as? String)
+    return (listings, listings.reduce(0) { $0 + $1.recordCount }, published)
+  }
+
+  func updateStored(_ code: String) async -> String? {
+    let upper = code.uppercased()
+    guard let listing = countries.first(where: { $0.code == upper }), let checksum = listing.checksum else {
+      return await ensureCountry(upper)
+    }
+    let saved = UserDefaults.standard.string(forKey: "camalert.feed.\(upper)")
+    if feeds[upper] != nil, saved == checksum { return "current" }
+    return await ensureCountry(upper, force: true)
+  }
+
+  func ensureCountry(_ code: String, force: Bool = false) async -> String? {
+    let upper = code.uppercased()
+    if !force, feeds[upper] != nil { return nil }
+    let listing = countries.first { $0.code == upper }
+    guard let listing, let path = listing.path, let checksum = listing.checksum else {
+      if let bundled = bundledFeed(upper) {
+        await MainActor.run { store(bundled, code: upper) }
+        return nil
+      }
+      return "Страна ещё не загружена"
+    }
+    if !force, let cached = cachedFeed(upper, checksum: checksum) {
+      await MainActor.run { store(cached, code: upper) }
       return nil
     }
     do {
       let (data, response) = try await URLSession.shared.data(from: Self.deliveryURL.appendingPathComponent(path))
-      guard (response as? HTTPURLResponse)?.statusCode == 200 else { return "Не удалось загрузить \(code)" }
+      guard (response as? HTTPURLResponse)?.statusCode == 200 else { return "Не удалось загрузить \(upper)" }
       let digest = SHA256.hash(data: data).map { String(format: "%02x", $0) }.joined()
-      guard digest == checksum, let feed = parse(data, country: code) else { return "Файл \(code) не прошёл проверку" }
-      try data.write(to: cacheURL("\(code)-\(checksum).json"), options: .atomic)
-      UserDefaults.standard.set(checksum, forKey: "camalert.feed.\(code)")
-      await MainActor.run { store(feed, code: code) }
+      guard digest == checksum, let feed = parse(data, country: upper) else { return "Файл \(upper) не прошёл проверку" }
+      try data.write(to: cacheURL("\(upper)-\(checksum).json"), options: .atomic)
+      UserDefaults.standard.set(checksum, forKey: "camalert.feed.\(upper)")
+      await MainActor.run { store(feed, code: upper) }
       return nil
     } catch {
-      return feeds[code] == nil ? "Нет сети, осталась сохранённая база" : nil
+      if let bundled = bundledFeed(upper) {
+        await MainActor.run { store(bundled, code: upper) }
+        return nil
+      }
+      return feeds[upper] == nil ? "Нет сети, осталась сохранённая база" : nil
     }
+  }
+
+  private static func catalogDate(_ value: String?) -> Date? {
+    guard let value else { return nil }
+    let formatter = ISO8601DateFormatter()
+    formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+    if let date = formatter.date(from: value) { return date }
+    formatter.formatOptions = [.withInternetDateTime]
+    let trimmed = value.replacingOccurrences(of: #"\.\d+"#, with: "", options: .regularExpression)
+    return formatter.date(from: trimmed)
+  }
+
+  private func bundledFeed(_ code: String) -> (cameras: [CameraRecord], sections: [CameraRecord])? {
+    let file = code == "UA" ? "cameras-ua" : code == "PL" ? "cameras-pl" : nil
+    guard let file else { return nil }
+    return parse(data(named: file), country: code)
   }
 
   private func cachedFeed(_ code: String, checksum: String) -> (cameras: [CameraRecord], sections: [CameraRecord])? {
