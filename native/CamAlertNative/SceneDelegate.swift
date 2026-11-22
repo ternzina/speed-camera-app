@@ -10,11 +10,7 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
   ) {
     guard let windowScene = scene as? UIWindowScene else { return }
     let window = UIWindow(windowScene: windowScene)
-    if UserDefaults.standard.bool(forKey: "camalert.welcome.done") || ProcessInfo.processInfo.arguments.contains("--voice-check") {
-      window.rootViewController = CamAlertShellController()
-    } else {
-      window.rootViewController = WelcomeViewController()
-    }
+    window.rootViewController = CamAlertShellController()
     window.makeKeyAndVisible()
     self.window = window
   }

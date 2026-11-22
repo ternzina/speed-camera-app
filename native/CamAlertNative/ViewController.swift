@@ -302,7 +302,6 @@ final class ViewController: UIViewController, CLLocationManagerDelegate, GMSMapV
         return
       }
       self.mapView.isNavigationEnabled = true
-      self.prepareNavigationVoice()
       self.liftChrome()
       if self.destination != nil {
         self.buildRoute()
@@ -739,18 +738,6 @@ final class ViewController: UIViewController, CLLocationManagerDelegate, GMSMapV
       return "Точка маршрута не принята"
     default:
       return "Маршрут не построен: \(status.rawValue)"
-    }
-  }
-
-  /// Gives Google time to load its voice after a fresh install, before «В путь».
-  private func prepareNavigationVoice() {
-    let speak = session.settings.voice ? GMSNavigationVoiceGuidance.alertsAndGuidance : .silent
-    if mapView.navigator != nil {
-      mapView.navigator?.voiceGuidance = speak
-      return
-    }
-    DispatchQueue.main.async { [weak self] in
-      self?.mapView.navigator?.voiceGuidance = speak
     }
   }
 

@@ -164,7 +164,6 @@ final class CamAlertShellController: UIViewController {
   private let bar = UIStackView()
   private var tabButtons: [UIButton] = []
   private var current = "drive"
-  private var welcomeShown = false
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -202,11 +201,7 @@ final class CamAlertShellController: UIViewController {
     super.viewDidAppear(animated)
     if ProcessInfo.processInfo.arguments.contains("--voice-check") {
       show("drive")
-      return
     }
-    guard !welcomeShown, presentedViewController == nil, !UserDefaults.standard.bool(forKey: "camalert.welcome.done") else { return }
-    welcomeShown = true
-    presentWelcome()
   }
 
   private func nav(_ root: UIViewController) -> UINavigationController {
