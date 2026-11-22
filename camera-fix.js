@@ -45,7 +45,7 @@ export function movePoint(lat, lon, bearingDeg, distanceM) {
   return { lat: (phi2 * 180) / Math.PI, lon: (lambda2 * 180) / Math.PI };
 }
 
-export function nearestAhead(cameras, latitude, longitude, movementHeading, maxDistance = 5000, forwardAngle = 45) {
+export function nearestAhead(cameras, latitude, longitude, movementHeading, maxDistance = 5000, forwardAngle = 45, crossTrackMax = Infinity) {
   if (movementHeading == null) return null;
   let best = null;
   let bestDistance = Infinity;
@@ -55,12 +55,82 @@ export function nearestAhead(cameras, latitude, longitude, movementHeading, maxD
     if (cam.direction != null && /^\d+(\.\d+)?$/.test(String(cam.direction)) && angleDiff(movementHeading, Number(cam.direction)) > 60) continue;
     const camBearing = bearingDegrees(latitude, longitude, cam.latitude, cam.longitude);
     const angle = angleDiff(movementHeading, camBearing);
+    const lateral = d * Math.sin(toRad(angle));
+    if (lateral > crossTrackMax) continue;
     if (angle <= forwardAngle && d < bestDistance) {
       bestDistance = d;
       best = { ...cam, distance: Math.round(d), angle: Math.round(angle) };
     }
   }
   return best;
+}
+
+// A stop has no usable GPS course. These limits apply only below the moving
+// threshold. The moving search keeps its own distance, cone, and repeat rule.
+export const IDLE_WARNING_DISTANCE_M = 150;
+export const IDLE_CONE_DEGREES = 30;
+export const IDLE_CROSS_TRACK_M = 25;
+export const IDLE_COURSE_DRIFT_M = 40;
+
+export function rememberReliableCourse(previous, fix, minSpeed = 8) {
+  const speed = Number(fix?.speedKmh);
+  const heading = Number(fix?.heading);
+  const latitude = Number(fix?.latitude);
+  const longitude = Number(fix?.longitude);
+  if (!(speed >= minSpeed) || !Number.isFinite(heading) || !Number.isFinite(latitude) || !Number.isFinite(longitude)) {
+    return previous || null;
+  }
+  return { heading: norm(heading), latitude, longitude };
+}
+
+export function idleWarningDecision({
+  speedKmh,
+  latitude,
+  longitude,
+  reliable,
+  cameras,
+  idleSpokenId = null,
+  minSpeed = 8,
+  maxDistance = IDLE_WARNING_DISTANCE_M,
+  cone = IDLE_CONE_DEGREES,
+  crossTrack = IDLE_CROSS_TRACK_M,
+  maxDrift = IDLE_COURSE_DRIFT_M,
+} = {}) {
+  const speed = Number(speedKmh);
+  if (speed >= minSpeed) return { speak: false, reason: "moving", camera: null, cameraId: null, distance: null, limit: null, angle: null };
+  if (!reliable || !Number.isFinite(Number(reliable.heading)) || !Number.isFinite(Number(latitude)) || !Number.isFinite(Number(longitude))) {
+    return { speak: false, reason: "no-course", camera: null, cameraId: null, distance: null, limit: null, angle: null };
+  }
+  if (distanceMeters(latitude, longitude, reliable.latitude, reliable.longitude) > maxDrift) {
+    return { speak: false, reason: "course-stale", camera: null, cameraId: null, distance: null, limit: null, angle: null };
+  }
+  const camera = nearestAhead(cameras, latitude, longitude, reliable.heading, maxDistance, cone, crossTrack);
+  if (!camera) return { speak: false, reason: "none-ahead", camera: null, cameraId: null, distance: null, limit: null, angle: null };
+  const same = idleSpokenId != null && String(idleSpokenId) === String(camera.id);
+  return {
+    speak: !same,
+    reason: same ? "idle-repeat" : "idle-warn",
+    camera,
+    cameraId: camera.id,
+    distance: camera.distance,
+    limit: camera.speed_limit ?? null,
+    angle: camera.angle,
+  };
+}
+
+// The camera announced while stopped stays quiet when the car pulls away,
+// until that camera leaves the moving warning distance. Other cameras are unchanged.
+export function settleIdleLatch(latchId, { moving = false, aheadId = null, aheadDistance = null, threshold = Infinity } = {}) {
+  if (latchId == null) return null;
+  if (!moving) return latchId;
+  const same = aheadId != null && String(aheadId) === String(latchId);
+  if (same && Number(aheadDistance) <= Number(threshold)) return latchId;
+  return null;
+}
+
+export function holdMovingSpeech(decision, latchId) {
+  if (!decision?.speak || latchId == null || String(decision.cameraId) !== String(latchId)) return decision;
+  return { ...decision, speak: false, reason: "idle-already" };
 }
 
 export function warningDistanceForSpeed(speedKmh, settings) {

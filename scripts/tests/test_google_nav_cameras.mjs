@@ -118,7 +118,17 @@ test("background road-snap updates run only while guidance and the trip are both
   const screen = read("google-nav-test-screen.js");
   assert.match(screen, /setBackgroundLocationUpdatesEnabled/);
   assert.match(screen, /googleBackgroundLocationEnabled\(\{ guiding, tripActive \}\)/);
-  assert.match(screen, /setRoadSnapBackground\(false\); onStopTrip\(\)/);
+  const stopTrip = screen.slice(screen.indexOf("{tripActive && ("), screen.indexOf("style={styles.endTrip}"));
+  assert.match(stopTrip, /setRoadSnapBackground\(false\)/);
+  assert.match(stopTrip, /onStopTrip\(\)/);
+  const go = screen.slice(screen.indexOf("function startGuidance"), screen.indexOf("async function endRoute"));
+  assert.match(go, /onStartTrip\(\)/);
+  assert.match(go, /VOICE_ALERTS_AND_GUIDANCE/);
+  assert.match(go, /startGuidance\(\)/);
+  assert.doesNotMatch(go, /MIN_MOVING_SPEED|requestPermissionsAsync|requestBackgroundPermissionsAsync/);
+  const noRoute = screen.slice(screen.indexOf("{chrome.startTrip && ("), screen.indexOf("{chrome.build && ("));
+  assert.match(noRoute, /onStartTrip\?\.\(\)/);
+  assert.doesNotMatch(noRoute, /startGuidance|setBackgroundLocationUpdatesEnabled/);
   const end = screen.slice(screen.indexOf("async function endRoute"), screen.indexOf("function showLocation"));
   assert.match(end, /setRoadSnapBackground\(false\)/);
   assert.doesNotMatch(screen, /simulateLocations|GMSLocationSimulator/);

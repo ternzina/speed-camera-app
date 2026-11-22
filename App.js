@@ -20,7 +20,7 @@ import { createNavtestSectionStore } from "./navtest-section";
 import { cameraPoints, countryFeed, loadCameraCache, saveCameraCache } from "./camera-data";
 import PremiumScreen, { PremiumEntryCard } from "./premium-screen";
 import PremiumManageScreen from "./premium-manage-screen";
-import { offerReasonLines, premiumCopy, restoredNoticeText, settingsCardCopy } from "./premium-copy";
+import { offerReasonLines, premiumCopy, purchaseNoticeText, restoredNoticeText, settingsCardCopy } from "./premium-copy";
 import { cacheVerifiedEntitlement, cachedFeatureAccess, loadPremiumCatalog, openAppStoreReview, presentOfferCodeSheet, purchasePremium, readCachedEntitlement, refreshPremiumEntitlements, rememberLegacy, resolveFeatureAccess, restorePremium } from "./premium-store";
 import { chooseRestoredEntitlement, offerRedemptionResult } from "./premium-access";
 import { hasPaidPremium, offerDecision, promptSettled, recordCompletedTrip, recordSuccessfulLaunch, COMPLETED_TRIP_KEY, LAUNCH_COUNT_KEY, PREMIUM_PROMPT_KEY, REVIEW_PROMPT_KEY, TRIP_PREMIUM_KEY, TRIP_REVIEW_KEY } from "./launch-prompts";
@@ -28,6 +28,11 @@ import { COUNTRY_NAMES, countryFlag } from "./countries";
 import { refreshCountryDelivery } from "./camera-delivery";
 import { catalogTimestamps, shouldShowBackgroundGuide, describeLocationAccess, formatCatalogDate, backgroundGuideCopy, backgroundAccessMessage, backgroundFailureCopy } from "./catalog-status";
 import { BACKGROUND_CHOICE_KEY, VOICE_NOTICE_KEY, backgroundSwitchOn, isExistingInstall, resolveBackgroundChoice, shouldRunBackgroundGps, voiceNoticeCopy, voiceNoticeForLaunch } from "./install-defaults";
+import { howToUseCopy } from "./how-to-use";
+import { locationPermissionCopy, voiceReadyLine } from "./location-permission";
+import { resumeAfterAuthorization } from "./voice-resume";
+import { rememberScreen, restoreScreen, SCREEN_RESUME_KEY } from "./screen-resume";
+import LocationPermissionScreen from "./location-permission-screen";
 import { distanceBetweenMeters } from "./road-cameras";
 import { isSpeedOverLimit } from "./drive-alert-logic";
 import { buildNavigatorLinks } from "./navigator-links";
@@ -50,7 +55,7 @@ import { applicationId } from "expo-application";
 import { isGoogleNavTestApp, STORE_PREVIEW_BUNDLE, usesInAppGoogleNav } from "./google-nav-gate";
 import { isVoiceDiagApp } from "./voice-diag-gate";
 import { phoneGpsEnabled } from "./voice-diag-checks";
-import { nearestAhead, settleUkraineLast, ukraineFixDecision, warningDistanceForSpeed } from "./camera-fix";
+import { holdMovingSpeech, IDLE_WARNING_DISTANCE_M, idleWarningDecision, nearestAhead, rememberReliableCourse, settleIdleLatch, settleUkraineLast, ukraineFixDecision, warningDistanceForSpeed } from "./camera-fix";
 import { cameraDecisionJournal, speechTrace } from "./nav-sim-camera";
 import { traceNavVoice } from "./nav-voice-trace";
 import { runPreviewInstallCheck } from "./preview-install-check";
@@ -154,7 +159,7 @@ const I18N = {
     saved: "Сохранено", cancel: "Отмена", send: "Сохранить сообщение",
     reportTitle: "Новая камера", removedTitle: "Камеры больше нет",
     note: "Сообщения пока сохраняются на телефоне. Сервер синхронизации подключим отдельно.",
-    about: "О приложении", privacy: "Политика конфиденциальности", safety: "Безопасность",
+    about: "О приложении", privacy: "Политика конфиденциальности", safety: "Безопасность", leaveFeedback: "Оставить пожелания",
     sources: "Источники данных", support: "Поддержка", terms: "Условия использования",
     reportHelp: "Как сообщить о камере", website: "Сайт приложения", coverage: "Покрытие", dataUpdate: "Обновление базы", lastUpdate: "Последнее обновление", databaseVersion: "Версия базы", lastCheck: "Последняя проверка обновлений", updateNow: "Обновить сейчас", updated: "База обновлена", databaseCurrent: "Новых данных нет. Версия базы не изменилась.", reportSent: "Сообщение отправлено на проверку", reportFailed: "Не удалось отправить, сохранено на телефоне", country: "Страна", ukraine: "Украина", poland: "Польша", languageLabel: "Язык", voiceLabel: "Голос", vibrationLabel: "Вибрация", smartDistanceLabel: "Умная дистанция по скорости", distancesLabel: "Дистанции предупреждения", band1: "До 60 км/ч", band2: "60–89 км/ч", band3: "90–119 км/ч", band4: "120+ км/ч"
   },
@@ -170,7 +175,7 @@ const I18N = {
     saved: "Збережено", cancel: "Скасувати", send: "Зберегти повідомлення",
     reportTitle: "Нова камера", removedTitle: "Камери більше немає",
     note: "Повідомлення поки зберігаються на телефоні. Сервер синхронізації підключимо окремо.",
-    about: "Про застосунок", privacy: "Політика конфіденційності", safety: "Безпека",
+    about: "Про застосунок", privacy: "Політика конфіденційності", safety: "Безпека", leaveFeedback: "Залишити побажання",
     sources: "Джерела даних", support: "Підтримка", terms: "Умови використання",
     reportHelp: "Як повідомити про камеру", website: "Сайт застосунку", coverage: "Покриття", dataUpdate: "Оновлення бази", lastUpdate: "Останнє оновлення", databaseVersion: "Версія бази", lastCheck: "Остання перевірка оновлень", updateNow: "Оновити зараз", updated: "Базу оновлено", databaseCurrent: "Нових даних немає. Версія бази не змінилася.", reportSent: "Повідомлення надіслано на перевірку", reportFailed: "Не вдалося надіслати, збережено на телефоні", country: "Країна", ukraine: "Україна", poland: "Польща", languageLabel: "Мова", voiceLabel: "Голос", vibrationLabel: "Вібрація", smartDistanceLabel: "Розумна дистанція за швидкістю", distancesLabel: "Дистанції попередження", band1: "До 60 км/год", band2: "60–89 км/год", band3: "90–119 км/год", band4: "120+ км/год"
   },
@@ -186,7 +191,7 @@ const I18N = {
     saved: "Saved", cancel: "Cancel", send: "Save report",
     reportTitle: "New camera", removedTitle: "Camera is gone",
     note: "Reports are stored on this phone for now. Server sync will be connected separately.",
-    about: "About", privacy: "Privacy Policy", safety: "Safety",
+    about: "About", privacy: "Privacy Policy", safety: "Safety", leaveFeedback: "Send feedback",
     sources: "Data sources", support: "Support", terms: "Terms of Use",
     reportHelp: "How to report a camera", website: "App website", coverage: "Coverage", dataUpdate: "Database update", lastUpdate: "Last update", databaseVersion: "Database version", lastCheck: "Last update check", updateNow: "Update now", updated: "Database updated", databaseCurrent: "No new data. The database version is unchanged.", reportSent: "Report sent for review", reportFailed: "Could not send; saved on this phone", country: "Country", ukraine: "Ukraine", poland: "Poland", languageLabel: "Language", voiceLabel: "Voice", vibrationLabel: "Vibration", smartDistanceLabel: "Smart distance by speed", distancesLabel: "Alert distances", band1: "Up to 60 km/h", band2: "60–89 km/h", band3: "90–119 km/h", band4: "120+ km/h"
   },
@@ -215,6 +220,7 @@ const I18N = {
     localOnly: "Zgłoszenie zapisano na tym telefonie.",
     noHistory: "Brak ostrzeżeń.",
     about: "O aplikacji",
+    leaveFeedback: "Prześlij opinię",
     privacy: "Polityka prywatności",
     safety: "Bezpieczeństwo",
     sources: "Źródła danych",
@@ -301,6 +307,8 @@ const WARNING_UI = {
 let bgSettings = DEFAULT_SETTINGS;
 let bgHiddenIds = new Set();
 let bgLastAlert = { id: null, at: 0, distance: Infinity };
+let bgReliableCourse = null;
+let bgIdleAnnouncedId = null;
 let bgCameraFeeds = {};
 
 const toRad = v => (v * Math.PI) / 180;
@@ -452,6 +460,18 @@ async function processBackgroundLocation({ data: taskData, error }) {
     speak: phrases => bgSettings.voice ? speakNavtestPhrases(phrases, bgSettings.language) : Promise.resolve(true),
   } : null;
   try {
+  bgReliableCourse = rememberReliableCourse(bgReliableCourse, { speedKmh, heading, latitude, longitude }, MIN_MOVING_SPEED_KMH);
+  if (speedKmh < MIN_MOVING_SPEED_KMH) {
+    const idle = idleWarningDecision({
+      speedKmh, latitude, longitude, reliable: bgReliableCourse, cameras: visibleCameras(),
+      idleSpokenId: bgIdleAnnouncedId, minSpeed: MIN_MOVING_SPEED_KMH,
+    });
+    if (idle.speak && idle.camera) {
+      bgIdleAnnouncedId = idle.camera.id;
+      await deliverBackgroundCameraAlert(idle.camera, speedKmh, session);
+    }
+    return;
+  }
   if (speedKmh < MIN_MOVING_SPEED_KMH || heading == null) return;
 
   const threshold = alertDistanceForSpeed(speedKmh, bgSettings);
@@ -459,7 +479,11 @@ async function processBackgroundLocation({ data: taskData, error }) {
   const cam = session.country === "UA"
     ? findNearestAhead(latitude, longitude, heading, Math.max(5000, threshold + 1000))
     : nearestPolandPoint(feed, latitude, longitude, heading, Math.max(5000, threshold + 1000));
+  bgIdleAnnouncedId = settleIdleLatch(bgIdleAnnouncedId, {
+    moving: true, aheadId: cam?.id ?? null, aheadDistance: cam?.distance ?? null, threshold,
+  });
   if (!cam || cam.distance > threshold) return;
+  if (!holdMovingSpeech({ speak: true, cameraId: cam.id }, bgIdleAnnouncedId).speak) return;
 
   const now = Date.now();
   if (bgLastAlert.country === session.country && bgLastAlert.id === cam.id && now - bgLastAlert.at < 45000 && bgLastAlert.distance - cam.distance < 250) return;
@@ -519,6 +543,42 @@ async function processBackgroundLocation({ data: taskData, error }) {
   }
   } finally {
     if (sectionFix) await navtestSectionStore().apply(sectionFix).catch(() => {});
+  }
+}
+
+async function deliverBackgroundCameraAlert(cam, speedKmh, session) {
+  const message = cameraAlertCopy(bgSettings.language, cam, speedKmh);
+  try {
+    await Notifications.scheduleNotificationAsync({
+      content: {
+        title: message.title,
+        body: message.body,
+        sound: bgSettings.voice ? "default" : false,
+      },
+      trigger: Platform.OS === "android" ? {channelId:`camera-alerts-${bgSettings.voice ? "sound" : "silent"}-${bgSettings.vibration ? "vibrate" : "still"}`} : null,
+    });
+  } catch {
+    // Notification delivery and spoken warnings are independent channels.
+  }
+  if (!bgSettings.voice) return;
+  try {
+    const current = JSON.parse(await AsyncStorage.getItem(BACKGROUND_SESSION_KEY) || "null");
+    if (!current?.enabled || current.country !== session.country) return;
+    if (await Speech.isSpeakingAsync()) return;
+    if (isGoogleNavTestApp()) noteNavtestCameraSpeech(cam);
+    const ukraineCamera = session.country === "UA";
+    const plan = ukraineCamera || bgSettings.language === "uk"
+      ? ukrainianClipPlan({
+          kind: ukraineCamera ? "ua-camera" : "pl-camera",
+          distance: cam.distance,
+          limit: cam.speed_limit,
+          over: message.over,
+        })
+      : undefined;
+    if (plan) Speech.queueUkrainianClip(plan);
+    await Speech.speakCameraAlertAndWait(message.speech, message.locale);
+  } catch {
+    // The stopped announcement is not part of the moving repeat memory.
   }
 }
 
@@ -590,6 +650,9 @@ export default function App() {
   const [onboardingState, setOnboardingState] = useState("loading");
   const [onboardingPage, setOnboardingPage] = useState(0);
   const [lawsOpen, setLawsOpen] = useState(false);
+  const [helpOpen, setHelpOpen] = useState(false);
+  const [permissionScreen, setPermissionScreen] = useState(null);
+  const [voiceConfirm, setVoiceConfirm] = useState(false);
   const [lawsQuery, setLawsQuery] = useState("");
 
   const [coords, setCoords] = useState(null);
@@ -789,6 +852,8 @@ export default function App() {
   const sub = useRef(null);
   const timer = useRef(null);
   const lastSpoken = useRef({ id: null, distance: Infinity });
+  const reliableCourse = useRef(null);
+  const idleAnnouncedId = useRef(null);
   const previewGpsLogRef = useRef(0);
   const previewRun = useRef(false);
   const previewApi = useRef({});
@@ -804,6 +869,7 @@ export default function App() {
   const [offerDiagOpen, setOfferDiagOpen] = useState(false);
   const offerDiagTaps = useRef(0);
   const onAppActiveRef = useRef(async () => {});
+  const watchChain = useRef(Promise.resolve());
   const { pad, height: windowHeight } = usePadLayout();
 
   useEffect(() => {
@@ -819,11 +885,42 @@ export default function App() {
     backgroundChoiceRef.current = backgroundChoice;
   }, [backgroundEnabled, backgroundAccess, backgroundChoice]);
 
+  const screenReady = useRef(false);
   useEffect(() => {
-    AsyncStorage.getItem(ONBOARDING_KEY)
-      .then(value => setOnboardingState(value === "done" || isVoiceDiagApp() ? "done" : "new"))
-      .catch(() => setOnboardingState(isVoiceDiagApp() ? "done" : "new"));
+    let live = true;
+    (async () => {
+      const [onboardingRaw, resumeRaw] = await Promise.all([
+        AsyncStorage.getItem(ONBOARDING_KEY).catch(() => null),
+        AsyncStorage.getItem(SCREEN_RESUME_KEY).catch(() => null),
+      ]);
+      if (!live) return;
+      const done = onboardingRaw === "done" || isVoiceDiagApp();
+      let saved = null;
+      try { saved = resumeRaw ? JSON.parse(resumeRaw) : null; } catch { saved = null; }
+      const restored = restoreScreen(saved, { onboardingDone: done });
+      setOnboardingPage(restored.onboardingPage);
+      setPermissionScreen(restored.permissionScreen);
+      setTab(restored.tab);
+      setPremiumView(restored.premiumView);
+      setBackgroundGuide(restored.guide);
+      setOnboardingState(done ? "done" : "new");
+      screenReady.current = true;
+    })();
+    return () => { live = false; };
   }, []);
+
+  useEffect(() => {
+    if (!screenReady.current || onboardingState === "loading") return;
+    const snap = rememberScreen({
+      onboarding: onboardingState,
+      page: onboardingPage,
+      permission: permissionScreen,
+      tab,
+      premium: premiumView,
+      guide: backgroundGuide,
+    });
+    AsyncStorage.setItem(SCREEN_RESUME_KEY, JSON.stringify(snap)).catch(() => {});
+  }, [onboardingState, onboardingPage, permissionScreen, tab, premiumView, backgroundGuide]);
 
   useEffect(() => {
     runPreviewInstallCheck().catch(() => {});
@@ -836,7 +933,7 @@ export default function App() {
     stopGps: stopTracking,
     gpsRunning: () => foregroundTripRunning || !!sub.current,
     dismissGuide: postponeBackgroundGuide,
-    resetRepeat: () => { lastSpoken.current = { id: null, distance: Infinity }; },
+    resetRepeat: () => { lastSpoken.current = { id: null, distance: Infinity }; reliableCourse.current = null; idleAnnouncedId.current = null; },
     clearAhead: () => setAhead(null),
     clearAlert: () => dismissCameraAlert(),
     armGpsLog: count => { previewGpsLogRef.current = count; },
@@ -1090,7 +1187,8 @@ export default function App() {
     if (!decision.emit) return Promise.resolve("off");
     if (!cam || cam.distance > threshold) return Promise.resolve("distance");
     const last = lastSpoken.current;
-    if (last.id === cam.id && last.distance - cam.distance < 250) return Promise.resolve("repeat");
+    // The moving approach repeats only after 250 m. A stop has its own latch and does not use that window.
+    if (options.rememberApproach !== false && last.id === cam.id && last.distance - cam.distance < 250) return Promise.resolve("repeat");
     if (isGoogleNavTestApp() && skipSharedNavtestSpeech(cam)) return Promise.resolve("shared");
 
     const over = isSpeedOverLimit(currentSpeedKmh, currentSpeedAvailable, cam.speed_limit);
@@ -1109,7 +1207,7 @@ export default function App() {
       if (plan) Speech.queueUkrainianClip(plan);
       speech = Promise.resolve(Speech.speakCameraAlert(message.speech, message.locale)).then(value => value || "spoken");
     }
-    lastSpoken.current = { id: cam.id, distance: cam.distance };
+    if (options.rememberApproach !== false) lastSpoken.current = { id: cam.id, distance: cam.distance };
     if (options.recordHistory !== false) {
       saveHistory({
         id: `${Date.now()}-${cam.id}`,
@@ -1156,20 +1254,47 @@ export default function App() {
       }
       return logged;
     };
-    if (!(kmh >= MIN_MOVING_SPEED_KMH) || heading == null) {
+    reliableCourse.current = rememberReliableCourse(reliableCourse.current, {
+      speedKmh: kmh, heading, latitude: fix.latitude, longitude: fix.longitude,
+    }, MIN_MOVING_SPEED_KMH);
+    if (!(kmh >= MIN_MOVING_SPEED_KMH)) {
+      const idle = idleWarningDecision({
+        speedKmh: kmh, latitude: fix.latitude, longitude: fix.longitude,
+        reliable: reliableCourse.current, cameras: visibleCameras(),
+        idleSpokenId: idleAnnouncedId.current, minSpeed: MIN_MOVING_SPEED_KMH,
+      });
+      if (source === "gps") setAhead(idle.camera || null);
+      if (!idle.speak) {
+        return Promise.resolve(publish({ source, speedKmh: Number.isFinite(kmh) ? Math.round(kmh) : null, outcome: idle.reason, speech: "none", distance: idle.distance, limit: idle.limit, cameraId: idle.cameraId }, false, false, idle.angle));
+      }
+      idleAnnouncedId.current = idle.cameraId;
+      return speakWarning(idle.camera, IDLE_WARNING_DISTANCE_M, kmh, available, {
+        vibrate: source === "gps", recordHistory: source === "gps", rememberApproach: false,
+      }).then(speech => {
+        const announced = speech !== "off" && speech !== "distance" && speech !== "repeat" && speech !== "shared";
+        if (!announced && String(idleAnnouncedId.current) === String(idle.cameraId)) idleAnnouncedId.current = null;
+        return publish({ source, speedKmh: Math.round(kmh), outcome: announced ? "spoken" : idle.reason, speech: speech || "none", distance: idle.distance, limit: idle.limit, cameraId: idle.cameraId }, announced, announced, idle.angle);
+      });
+    }
+    if (heading == null) {
       if (source === "gps") setAhead(null);
       return Promise.resolve(publish({ source, speedKmh: Number.isFinite(kmh) ? Math.round(kmh) : null, outcome: "below-speed", speech: "none", distance: null, limit: null, cameraId: null }, false, false, null));
     }
     const ahead = findNearestAhead(fix.latitude, fix.longitude, heading);
     if (source === "gps") setAhead(ahead);
-    const decision = ukraineFixDecision({
+    const movingThreshold = alertDistanceForSpeed(kmh, settings);
+    const movingDecision = ukraineFixDecision({
       speedKmh: kmh,
       heading,
       ahead,
-      threshold: alertDistanceForSpeed(kmh, settings),
+      threshold: movingThreshold,
       last: lastSpoken.current,
       minSpeed: MIN_MOVING_SPEED_KMH,
     });
+    idleAnnouncedId.current = settleIdleLatch(idleAnnouncedId.current, {
+      moving: true, aheadId: movingDecision.cameraId, aheadDistance: movingDecision.distance, threshold: movingThreshold,
+    });
+    const decision = holdMovingSpeech(movingDecision, idleAnnouncedId.current);
     const finish = (outcome, speech) => {
       const result = {
         source,
@@ -1192,10 +1317,21 @@ export default function App() {
     }).then(speech => publish(finish("spoken", speech || "spoken"), true, true, decision.angle));
   }
 
-  async function startTracking() {
-    if (denyPaid()) return false;
+  function runForegroundWatch(task) {
+    const run = watchChain.current.then(task, task);
+    watchChain.current = run.then(() => undefined, () => undefined);
+    return run;
+  }
+
+  async function startTracking(options) {
+    const replaceOnly = options?.replaceOnly === true;
+    return runForegroundWatch(async () => {
+    if (replaceOnly) {
+      if (!foregroundTripRunning || !sub.current) return false;
+    } else if (denyPaid()) return false;
     traceTrip("startTracking", "enter");
     try {
+    if (!replaceOnly) {
     const fg = await Location.requestForegroundPermissionsAsync();
     setLocationPermissionStatus(fg.status);
     if (fg.status !== "granted") {
@@ -1209,13 +1345,16 @@ export default function App() {
     const backgroundAccessNow = backgroundPermission?.granted ? "always" : "missing";
     if (shouldRunBackgroundGps({ choice: backgroundChoiceRef.current, access: backgroundAccessNow, tripActive: true })) {
       await startBackgroundSession({ quiet: true });
-    } else if (backgroundChoiceRef.current === "on" && shouldShowBackgroundGuide({ backgroundGranted: backgroundPermission?.granted === true, postponed: postponedRef.current })) {
-      setGuideReturned(false);
-      setBackgroundGuide(true);
+    }
     }
     if (sub.current) sub.current.remove();
+    sub.current = null;
+    if (!replaceOnly) {
     setGpsFixReceived(false);
     setSpeedAvailable(false);
+    reliableCourse.current = null;
+    idleAnnouncedId.current = null;
+    }
     sub.current = await Location.watchPositionAsync(
       { accuracy: Location.Accuracy.BestForNavigation, timeInterval: 1000, distanceInterval: 5 },
       async pos => {
@@ -1250,13 +1389,44 @@ export default function App() {
         }
 
         if (selectedCountry !== "UA") {
+          reliableCourse.current = rememberReliableCourse(reliableCourse.current, {
+            speedKmh: kmh, heading: h, latitude, longitude,
+          }, MIN_MOVING_SPEED_KMH);
+          if (!(kmh >= MIN_MOVING_SPEED_KMH)) {
+            const idle = idleWarningDecision({
+              speedKmh: kmh, latitude, longitude, reliable: reliableCourse.current,
+              cameras: visibleCameras(), idleSpokenId: idleAnnouncedId.current, minSpeed: MIN_MOVING_SPEED_KMH,
+            });
+            setNearest(idle.camera || null);
+            setAhead(idle.camera || null);
+            if (idle.speak && idle.camera) {
+              idleAnnouncedId.current = idle.cameraId;
+              void speakWarning(idle.camera, IDLE_WARNING_DISTANCE_M, kmh, typeof rs === "number" && Number.isFinite(rs) && rs >= 0, {
+                vibrate: true, rememberApproach: false,
+              }).then(speech => {
+                if ((speech === "off" || speech === "distance" || speech === "repeat" || speech === "shared") && String(idleAnnouncedId.current) === String(idle.cameraId)) {
+                  idleAnnouncedId.current = null;
+                }
+              });
+            }
+          }
           const point =
             kmh >= MIN_MOVING_SPEED_KMH && h != null
               ? nearestPolandPoint(activeCountryFeedRef.current, latitude, longitude, h, 5000)
               : null;
 
-          setNearest(point);
-          setAhead(point);
+          if (kmh >= MIN_MOVING_SPEED_KMH) {
+            setNearest(point);
+            setAhead(point);
+          }
+          const movingThreshold = alertDistanceForSpeed(kmh, settings);
+          idleAnnouncedId.current = settleIdleLatch(idleAnnouncedId.current, {
+            moving: kmh >= MIN_MOVING_SPEED_KMH,
+            aheadId: point?.id ?? null,
+            aheadDistance: point?.distance ?? null,
+            threshold: movingThreshold,
+          });
+          const resumeHeld = point && idleAnnouncedId.current != null && String(point.id) === String(idleAnnouncedId.current);
 
           if (point) {
             const threshold = alertDistanceForSpeed(kmh, settings);
@@ -1267,6 +1437,9 @@ export default function App() {
 
             const repeatedNavtestSpeech = isGoogleNavTestApp() && (skipRepeatedCameraSpeech(navtestPolandSpoken.current, point) || skipSharedNavtestSpeech(point));
             if (point.distance <= threshold && settings.voice && !repeatedNavtestSpeech) {
+              if (resumeHeld) {
+                // The stop already said this camera. The moving phrase waits for the next approach.
+              } else {
               if (isGoogleNavTestApp()) navtestPolandSpoken.current = { id: String(point.id), distance: point.distance };
               if (isGoogleNavTestApp()) noteNavtestCameraSpeech(point);
               const rounded = Math.max(100, Math.round(point.distance / 100) * 100);
@@ -1291,6 +1464,7 @@ export default function App() {
                 : undefined;
               if (plan) Speech.queueUkrainianClip(plan);
               void Speech.speakCameraAlert(cameraPhrase, cameraLocale);
+              }
             }
           }
 
@@ -1458,6 +1632,7 @@ export default function App() {
     } finally {
       traceTrip("startTracking", "exit");
     }
+    });
   }
 
   useEffect(() => {
@@ -1489,6 +1664,8 @@ export default function App() {
     sectionPaceRef.current = null;
     if (averageSectionEndTimer.current) clearTimeout(averageSectionEndTimer.current);
     averageSectionUiRef.current = null;
+    reliableCourse.current = null;
+    idleAnnouncedId.current = null;
     setActive(false); setAhead(null); setHeading(null); setGpsFixReceived(false); setSpeedAvailable(false); setAverageSectionUi(null);
     } catch (error) {
       traceTrip("error", "error");
@@ -1540,26 +1717,18 @@ export default function App() {
   async function dismissVoiceNotice() {
     setVoiceNotice(false);
     await AsyncStorage.setItem(VOICE_NOTICE_KEY, "seen").catch(() => {});
-    if (backgroundChoiceRef.current === "on" && backgroundAccessRef.current !== "always" && shouldShowBackgroundGuide({ backgroundGranted: false, postponed: postponedRef.current })) {
-      setGuideReturned(false);
-      setBackgroundGuide(true);
-    }
   }
 
   async function openBackgroundSettings() {
     pendingBackgroundRef.current = true;
     try {
-      if (Platform.OS === "android") {
-        const asked = await Location.requestBackgroundPermissionsAsync();
-        const access = await readLocationAccess();
-        if (access === "always") {
-          pendingBackgroundRef.current = false;
-          setGuideReturned(false);
-          setBackgroundGuide(false);
-          await startBackgroundSession();
-          return;
-        }
-        if (asked.canAskAgain === false) {
+      const currentForeground = await Location.getForegroundPermissionsAsync();
+      const foreground = currentForeground.granted || currentForeground.canAskAgain === false
+        ? currentForeground
+        : await Location.requestForegroundPermissionsAsync();
+      setLocationPermissionStatus(foreground.status);
+      if (!foreground.granted) {
+        if (foreground.canAskAgain === false) {
           await Linking.openSettings();
           return;
         }
@@ -1568,7 +1737,23 @@ export default function App() {
         setBackgroundGuide(true);
         return;
       }
-      await Linking.openSettings();
+
+      const asked = await Location.requestBackgroundPermissionsAsync();
+      const access = await readLocationAccess();
+      if (access === "always") {
+        pendingBackgroundRef.current = false;
+        setGuideReturned(false);
+        setBackgroundGuide(false);
+        if (foregroundTripRunning) await startBackgroundSession();
+        return;
+      }
+      if (asked.canAskAgain === false) {
+        await Linking.openSettings();
+        return;
+      }
+      pendingBackgroundRef.current = false;
+      setGuideReturned(true);
+      setBackgroundGuide(true);
     } catch {
       pendingBackgroundRef.current = false;
       setGuideReturned(true);
@@ -1674,12 +1859,22 @@ export default function App() {
       return;
     }
     await rememberBackgroundChoice("on");
+    postponedRef.current = false;
+    await AsyncStorage.removeItem(BACKGROUND_GUIDE_KEY).catch(() => {});
     await requestBackground();
   }
 
   onAppActiveRef.current = async () => {
+    const previousAccess = backgroundAccessRef.current;
     const access = await readLocationAccess().catch(() => null);
     if (!access) return;
+    const plan = resumeAfterAuthorization({
+      previousAccess,
+      nextAccess: access,
+      foregroundWatchActive: foregroundTripRunning && !!sub.current,
+      guiding: false,
+    });
+    if (plan.replaceForegroundWatch) await startTracking({ replaceOnly: true });
     if (access === "always") {
       postponedRef.current = false;
       await AsyncStorage.removeItem(BACKGROUND_GUIDE_KEY).catch(() => {});
@@ -2079,7 +2274,7 @@ export default function App() {
       }).catch(() => {});
     }
     return undefined;
-  }, [launchFacts, active, routeActive, iosRouteOpen, googleNavigationOpen, modal, backgroundGuide, lawsOpen, premiumView, locationPermissionStatus, premiumEntitlement, tab]);
+  }, [launchFacts, active, routeActive, iosRouteOpen, googleNavigationOpen, modal, backgroundGuide, lawsOpen, helpOpen, premiumView, locationPermissionStatus, premiumEntitlement, tab]);
 
   useEffect(() => () => {
     if (cameraAlertDismissTimer.current) clearTimeout(cameraAlertDismissTimer.current);
@@ -2105,18 +2300,12 @@ export default function App() {
       hasPremium: hasPaidPremium(launchFacts?.entitlement || premiumEntitlement) || (Platform.OS === "ios" && paidOpen),
       moving: active,
       navigationOpen: iosRouteOpen || googleNavigationOpen || (tab === "drive" && routeActive),
-      blocked: permissionBlocked || !!modal || backgroundGuide || lawsOpen || !!premiumView,
+      blocked: permissionBlocked || !!modal || backgroundGuide || lawsOpen || helpOpen || !!premiumView,
     });
   }
 
   function purchaseNotice(decision) {
-    const copy = premiumCopy(settings.language);
-    if (decision?.reason === "lifetime") return copy.lifetimeActive;
-    if (decision?.reason === "pending") return copy.purchasePending;
-    if (decision?.reason === "cancelled") return copy.purchaseCancelled;
-    if (decision?.reason === "active" || decision?.reason === "trial") return copy.purchased;
-    if (decision?.reason === "revoked") return copy.revoked;
-    return copy.purchaseUnverified;
+    return purchaseNoticeText(decision, settings.language);
   }
 
   function restoredNotice(decision) {
@@ -2220,24 +2409,19 @@ export default function App() {
     return chosen;
   }
 
-  async function viewPremiumScreen() {
-    setPremiumStatus(premiumCopy(settings.language).previewOnly);
-    setPremiumPreview(true);
-    setPremiumView("plans");
-    try {
-      const catalog = await loadPremiumCatalog();
-      setPremiumPrices(catalog.prices);
-      setYearTrialEligible(catalog.introEligible.camalert_premium_yearly === true);
-    } catch {
-      setPremiumPrices({});
-    }
-  }
-
   async function shareCamAlert() {
     try {
       await Share.share({ url: "https://apps.apple.com/app/id6818647205" });
     } catch {
       /* Closing the system sheet is not a failed purchase. */
+    }
+  }
+
+  async function openFeedback() {
+    try {
+      await Linking.openURL(URLS.support);
+    } catch {
+      Alert.alert("CamAlert", settings.language === "ru" ? "Не удалось открыть страницу пожеланий." : settings.language === "uk" ? "Не вдалося відкрити сторінку побажань." : settings.language === "pl" ? "Nie udało się otworzyć strony opinii." : "Could not open the feedback page.");
     }
   }
 
@@ -2302,14 +2486,60 @@ export default function App() {
     setOnboardingState("done");
   }
 
-  async function continueFromOnboarding() {
+  function showPermissionScreen(source) {
+    setVoiceConfirm(false);
+    setPermissionScreen(source);
+    void readLocationAccess();
+  }
+
+  function closePermissionScreen() {
+    setVoiceConfirm(false);
+    setPermissionScreen(null);
+  }
+
+  async function continuePermissionScreen() {
+    if (permissionScreen === "launch" && voiceConfirm) {
+      await finishOnboarding();
+      setVoiceConfirm(false);
+      setPermissionScreen(null);
+      return;
+    }
+    let permission = null;
     try {
-      // Informational welcome pages never read location or start a trip.
-      // Request permission only after Continue on the final page.
-      const permission = await Location.requestForegroundPermissionsAsync();
+      permission = await Location.requestForegroundPermissionsAsync();
       setLocationPermissionStatus(permission.status);
     } catch (_) {}
-    await finishOnboarding();
+    const access = await readLocationAccess().catch(() => "missing");
+    const granted = !!(permission && (permission.granted || permission.status === "granted")) || access === "when-in-use" || access === "always";
+    const ready = voiceReadyLine(settings.language, { voiceEnabled: alertsOn && settings.voice, granted });
+    setVoiceConfirm(!!ready);
+    if (permissionScreen === "launch" && !ready) {
+      await finishOnboarding();
+      setPermissionScreen(null);
+    }
+  }
+
+  function renderPermissionScreen() {
+    if (permissionScreen !== "launch" && permissionScreen !== "settings") return null;
+    const ready = voiceConfirm
+      ? voiceReadyLine(settings.language, { voiceEnabled: alertsOn && settings.voice, granted: true })
+      : "";
+    const backgroundOn = backgroundSwitchOn({
+      choice: backgroundChoice,
+      access: backgroundAccess,
+      sessionRunning: backgroundEnabled,
+    });
+    return (
+      <LocationPermissionScreen
+        language={settings.language}
+        launch={permissionScreen === "launch"}
+        voiceReady={ready}
+        backgroundOn={backgroundOn}
+        onBack={closePermissionScreen}
+        onContinue={continuePermissionScreen}
+        onEnableBackground={() => { if (denyPaid()) return; toggleBackground(); }}
+      />
+    );
   }
 
   function renderTabBar() {
@@ -2483,11 +2713,19 @@ export default function App() {
     if (onboardingState === "loading") {
       return <View style={{flex:1,backgroundColor:"#071525"}}><StatusBar style="light" /></View>;
     }
+    if (permissionScreen === "launch") {
+      return (
+        <View style={{ flex: 1 }}>
+          {renderPermissionScreen()}
+          {renderBackgroundGuide()}
+        </View>
+      );
+    }
     return (
       <WelcomeScreen
         language={settings.language}
         page={onboardingPage}
-        onNext={() => onboardingPage < 2 ? setOnboardingPage(onboardingPage + 1) : continueFromOnboarding()}
+        onNext={() => onboardingPage < 2 ? setOnboardingPage(onboardingPage + 1) : showPermissionScreen("launch")}
         onBack={() => onboardingPage > 0 ? setOnboardingPage(onboardingPage - 1) : finishOnboarding()}
         onSkip={finishOnboarding}
       />
@@ -2504,6 +2742,8 @@ export default function App() {
           camera={alertsOn ? ahead : null}
           cameraType={alertsOn && ahead ? cameraTypeLabel(ahead, settings.language) : ""}
           voiceEnabled={alertsOn && settings.voice}
+          locationAccess={backgroundAccess}
+          onOpenPermissionDetails={() => showPermissionScreen("settings")}
           onToggleVoice={() => setSettings((current) => ({ ...current, voice: !current.voice }))}
           picking={iosRouteOpen}
           tripActive={active}
@@ -2519,13 +2759,18 @@ export default function App() {
           armedTrip={isVoiceDiagApp() && diagTrip === true}
           cameras={isVoiceDiagApp() && diagTrip === true ? data : undefined}
           onNavigationFix={isVoiceDiagApp() && diagTrip === true ? handleUkraineFix : undefined}
-          onResetRepeat={isVoiceDiagApp() && diagTrip === true ? () => { lastSpoken.current = { id: null, distance: Infinity }; } : undefined}
+          onResetRepeat={isVoiceDiagApp() && diagTrip === true ? () => { lastSpoken.current = { id: null, distance: Infinity }; reliableCourse.current = null; idleAnnouncedId.current = null; } : undefined}
         />
         {renderVoiceNotice()}
         {renderLaunchPrompt()}
         {renderPremiumLayer()}
         <View style={{ paddingBottom: 28 }}>{renderTabBar()}</View>
         {renderBackgroundGuide()}
+        {permissionScreen === "settings" && (
+          <View style={[StyleSheet.absoluteFill, { zIndex: 80 }]}>
+            {renderPermissionScreen()}
+          </View>
+        )}
       </View>
     );
   }
@@ -2780,7 +3025,11 @@ export default function App() {
           />
         )}
 
-        {tab === "settings" && !lawsOpen && countryScreenTab === "countries" && (
+        {tab === "settings" && helpOpen && !lawsOpen && (
+          <HowToUsePage language={settings.language} night={isNight} onBack={() => setHelpOpen(false)} />
+        )}
+
+        {tab === "settings" && !lawsOpen && !helpOpen && countryScreenTab === "countries" && (
           <View style={countriesStyles.screen}>
             <View style={countriesStyles.segment}>
               {[["countries",settings.language==="uk"?"Країни":settings.language==="en"?"Countries":settings.language==="pl"?"Kraje":"Страны"],["settings",t.settings]].map(([key,label])=>(
@@ -2807,7 +3056,7 @@ export default function App() {
           </View>
         )}
 
-        {tab === "settings" && !lawsOpen && countryScreenTab === "settings" && (
+        {tab === "settings" && !lawsOpen && !helpOpen && countryScreenTab === "settings" && (
           <View style={[s.settingsCard, pad && { flexDirection: "row", flexWrap: "wrap", alignItems: "flex-start" }]}>
             <View style={[countriesStyles.segment, pad && { width: "100%", minHeight: 52 }]}>
               {[["countries",settings.language==="uk"?"Країни":settings.language==="en"?"Countries":settings.language==="pl"?"Kraje":"Страны"],["settings",t.settings]].map(([key,label])=>(
@@ -2826,9 +3075,6 @@ export default function App() {
               <Pressable accessibilityRole="button" onPress={redeemOfferCode} style={[s.action, pad && { flex: 0 }]}>
                 <Text style={s.actionText}>{premiumCopy(settings.language).redeemCode} →</Text>
               </Pressable>
-              <Pressable accessibilityRole="button" onPress={viewPremiumScreen} style={[s.action, pad && { flex: 0 }]}>
-                <Text style={s.actionText}>{premiumCopy(settings.language).previewPro}</Text>
-              </Pressable>
               <Pressable accessibilityRole="button" onPress={shareCamAlert} style={[s.action, pad && { flex: 0 }]}>
                 <Text style={s.actionText}>{premiumCopy(settings.language).share}</Text>
               </Pressable>
@@ -2836,6 +3082,9 @@ export default function App() {
             ) : null}
             <Pressable accessibilityRole="button" onPress={() => {setOnboardingPage(0);setOnboardingState("new");}} style={s.alertDemoButton}>
               <Text style={s.alertDemoButtonTitle}>{({ru:"Посмотреть приветствие",uk:"Переглянути привітання",en:"View welcome",pl:"Zobacz powitanie"})[settings.language] || "View welcome"}</Text>
+            </Pressable>
+            <Pressable accessibilityRole="button" onPress={openFeedback} style={[s.action, pad && { flex: 0 }]}>
+              <Text style={s.actionText}>{t.leaveFeedback} →</Text>
             </Pressable>
             <Pressable onPress={()=>setTab("history")} style={[s.action, pad && { flex: 0 }]}><Text style={s.actionText}>{ui.history} →</Text></Pressable>
             <Text style={s.sectionTitle}>{t.country}</Text>
@@ -2939,6 +3188,14 @@ export default function App() {
               <Text style={s.note}>{premiumCopy(settings.language).diagTitle}</Text>
               {offerReasonLines(currentOffer(), premiumCopy(settings.language)).map(line => <Text key={line} style={s.note}>{line}</Text>)}
             </View> : null}
+            <Pressable accessibilityRole="button" onPress={() => showPermissionScreen("settings")} style={s.aboutRow}>
+              <Text style={s.aboutLabel}>{locationPermissionCopy(settings.language).settingsTitle}</Text>
+              <Text style={s.chev}>›</Text>
+            </Pressable>
+            <Pressable accessibilityRole="button" onPress={() => setHelpOpen(true)} style={s.aboutRow}>
+              <Text style={s.aboutLabel}>{howToUseCopy(settings.language).title}</Text>
+              <Text style={s.chev}>›</Text>
+            </Pressable>
             <Pressable accessibilityRole="button" onPress={() => { offerDiagTaps.current += 1; if (offerDiagTaps.current >= 7) setOfferDiagOpen(true); }}>
               <Text style={s.sectionTitle}>{t.about}</Text>
             </Pressable>
@@ -3025,6 +3282,11 @@ export default function App() {
       </Modal>}
       {renderPremiumLayer()}
     </SystemSafeArea>
+    {permissionScreen === "settings" && (
+      <View style={[StyleSheet.absoluteFill, { zIndex: 80 }]}>
+        {renderPermissionScreen()}
+      </View>
+    )}
     </ThemeContext.Provider>
   );
 }
@@ -4068,6 +4330,30 @@ function cameraTypeLabel(cam, language="ru"){
   return (labels[language]||labels.ru)[type] || type;
 }
 
+function HowToUsePage({ language, night, onBack }) {
+  const copy = howToUseCopy(language);
+  const { pad } = usePadLayout();
+  const text = night ? "#CAD7E7" : "#10263B";
+  const muted = night ? "#8FA6BE" : "#4E6478";
+  const card = night ? "#172A40" : "#FFFFFF";
+  return (
+    <View style={{ width: "100%", maxWidth: 980, alignSelf: "center", gap: 14 }}>
+      <Pressable accessibilityRole="button" onPress={onBack} style={{ minHeight: 44, justifyContent: "center" }}>
+        <Text style={{ color: "#1260E8", fontSize: 17, fontWeight: "700" }}>{copy.back}</Text>
+      </Pressable>
+      <Text style={{ fontSize: pad ? 32 : 24, fontWeight: "800", color: text }}>{copy.title}</Text>
+      {copy.sections.map(section => (
+        <View key={section.title} style={{ backgroundColor: card, borderRadius: 18, padding: 16, gap: 8, borderWidth: 1, borderColor: night ? "#29435A" : "#E4EAF1" }}>
+          <Text style={{ color: text, fontSize: 18, fontWeight: "700" }}>{section.title}</Text>
+          {section.paragraphs.map(paragraph => (
+            <Text key={paragraph} style={{ color: muted, fontSize: 15, lineHeight: 22 }}>{paragraph}</Text>
+          ))}
+        </View>
+      ))}
+    </View>
+  );
+}
+
 function LawsPage({ language, night, query, onQuery, onBack }) {
   const copy = WARNING_UI[language] || WARNING_UI.ru;
   const { pad } = usePadLayout();
@@ -4230,7 +4516,7 @@ const driveStyles = StyleSheet.create({
   dayRoot: { backgroundColor: "#DDE8F0" },
   safeOverlay: { flex: 1, paddingTop: 7, position: "relative" },
   floatTop: { marginHorizontal: 12, gap: 8 },
-  floatSide: { position: "absolute", right: 12, top: "28%", gap: 8, alignItems: "flex-end" },
+  floatSide: { position: "absolute", right: 48, top: "28%", gap: 8, alignItems: "flex-end" },
   floatBottom: { marginTop: "auto", marginHorizontal: 12, marginBottom: 8, gap: 8 },
   maneuverCard: { minHeight: 64, borderRadius: 18, borderWidth: 1, paddingHorizontal: 14, paddingVertical: 10, flexDirection: "row", alignItems: "center", gap: 10 },
   maneuverDistance: { fontSize: 28, lineHeight: 32, fontWeight: "900" },

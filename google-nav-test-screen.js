@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { applicationId } from "expo-application";
-import { Alert, AppState, Keyboard, Pressable, ScrollView, StyleSheet, Text, TextInput, useWindowDimensions, View } from "react-native";
+import { Alert, AppState, Keyboard, NativeModules, Pressable, ScrollView, StyleSheet, Text, TextInput, useWindowDimensions, View } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
   AudioGuidance, CameraPerspective, MapType, NavigationNightMode, NavigationProvider, NavigationSessionStatus,
@@ -8,6 +8,8 @@ import {
 } from "@googlemaps/react-native-navigation-sdk";
 import { subscribeCameraSpeech } from "./camera-speech";
 import { cameraBanner, googleAudioMode, googleBackgroundLocationEnabled, navChrome, voiceModeBeforeGuidance } from "./google-nav-banner";
+import { locationPermissionCopy, shouldShowTripLocationHint } from "./location-permission";
+import { locationPermissionDisruption, prepareNavigatorForGuidance, resumeAfterAuthorization } from "./voice-resume";
 import { STORE_PREVIEW_BUNDLE } from "./google-nav-gate";
 import { registerPreviewNavigation } from "./preview-nav-bridge";
 import { keyboardClearance, routeSummary, suggestionViewport, summaryFit } from "./google-nav-chrome";
@@ -27,6 +29,10 @@ import { runCameraApproach, runVoiceDiagAuto } from "./voice-diag-auto";
 import { VoiceDiagPanel } from "./voice-diag-panel";
 import { isVoiceDiagApp } from "./voice-diag-gate";
 import SystemSafeArea from "./system-safe-area";
+
+// Survives a remount of the screen. A new trip never reuses an earlier number
+// in this JavaScript runtime, so an old timer cannot match the current trip.
+let nextDiagnosticTrip = 0;
 
 function requestVoiceGuidance(controller, index, reason) {
   const guidance = nativeVoiceGuidance(index);
@@ -134,6 +140,7 @@ export default function GoogleNavTestScreen(props) {
 
 function GoogleNavBody({
   language, night, coords, camera, cameraType, voiceEnabled, onToggleVoice,
+  locationAccess = null, onOpenPermissionDetails = null,
   picking, tripActive, onStartTrip, onStopTrip, onClosePick, handoff, onRouteActive, onCompletedNavigation,
   diagnostic = false, armedTrip = false, diagnosticBridge = null, cameras = null, onNavigationFix = null, onResetRepeat = null,
 }) {
@@ -144,6 +151,9 @@ function GoogleNavBody({
   controllerRef.current = controller;
   const alive = useRef(true);
   const ready = useRef(false);
+  const cleanNavigator = useRef(false);
+  const locationDisruption = useRef(false);
+  const routeRef = useRef(null);
   const guidingRef = useRef(false);
   const guidanceArmed = useRef(false);
   const autoStarted = useRef(false);
@@ -178,6 +188,9 @@ function GoogleNavBody({
   const searchField = useRef(null);
   const handoffToken = useRef(null);
   const probeRef = useRef(null);
+  const diagnosticTrip = useRef(0);
+  const diagnosticTimer = useRef(null);
+  const cancelDiagnosticActivationRef = useRef(() => {});
   const schedule = useRef({ text: "", token: null, sendAt: null });
   const suppressQuery = useRef("");
   const palette = night ? DARK : LIGHT;
@@ -187,7 +200,14 @@ function GoogleNavBody({
 
   useEffect(() => {
     alive.current = true;
-    return () => { alive.current = false; };
+    const subscription = AppState.addEventListener("change", (state) => {
+      if (state === "background") cancelDiagnosticActivationRef.current("background");
+    });
+    return () => {
+      alive.current = false;
+      subscription.remove();
+      cancelDiagnosticActivationRef.current("unmount");
+    };
   }, []);
 
   useEffect(() => {
@@ -204,6 +224,7 @@ function GoogleNavBody({
       },
       requestVoice: (mode, reason) => requestVoiceGuidance(controllerRef.current, mode, reason),
       stopGuidance: async () => {
+        cancelDiagnosticActivationRef.current("end");
         guidingRef.current = false;
         setGuiding(false);
         ready.current = false;
@@ -243,6 +264,34 @@ function GoogleNavBody({
     });
     return () => frame.remove();
   }, []);
+
+  const locationAccessRef = useRef(locationAccess);
+  useEffect(() => {
+    const previousAccess = locationAccessRef.current;
+    if (locationPermissionDisruption({
+      previous: previousAccess,
+      next: locationAccess,
+      navigatorReady: ready.current,
+    })) {
+      locationDisruption.current = true;
+    }
+    const plan = resumeAfterAuthorization({
+      previousAccess,
+      nextAccess: locationAccess,
+      foregroundWatchActive: false,
+      guiding: guidingRef.current && ready.current,
+    });
+    locationAccessRef.current = locationAccess;
+    if (!plan.restartRoadSnappedLocation) return undefined;
+    let cancelled = false;
+    const navigation = controllerRef.current;
+    (async () => {
+      try { await navigation?.stopUpdatingLocation?.(); } catch {}
+      if (cancelled || !guidingRef.current || !ready.current) return;
+      try { await navigation?.startUpdatingLocation?.(); } catch {}
+    })();
+    return () => { cancelled = true; };
+  }, [locationAccess]);
 
   function measureProbe() {
     probeRef.current?.measureInWindow((_x, y) => {
@@ -441,6 +490,90 @@ function GoogleNavBody({
     ready.current = true;
   }
 
+  function cancelDiagnosticActivation(reason) {
+    if (diagnosticTimer.current != null) {
+      clearTimeout(diagnosticTimer.current);
+      diagnosticTimer.current = null;
+    }
+    const trip = diagnosticTrip.current;
+    if (!trip) return;
+    diagnosticTrip.current = 0;
+    NativeModules.CamAlertVoiceDiag?.cancelDiagnosticActivation?.(trip, reason);
+  }
+  cancelDiagnosticActivationRef.current = cancelDiagnosticActivation;
+
+  // One diagnostic setActive per trip, 2.5s after startGuidance returns.
+  // Not a Google prompt boundary. Cancelled when the trip ends, the navigator
+  // is released, or the app leaves the foreground.
+  function armDiagnosticActivation() {
+    cancelDiagnosticActivation("replace");
+    nextDiagnosticTrip += 1;
+    const trip = nextDiagnosticTrip;
+    diagnosticTrip.current = trip;
+    NativeModules.CamAlertVoiceDiag?.noteDiagnosticStartGuidance?.(trip);
+    diagnosticTimer.current = setTimeout(() => {
+      diagnosticTimer.current = null;
+      if (diagnosticTrip.current !== trip) return;
+      if (!alive.current || AppState.currentState !== "active") {
+        cancelDiagnosticActivation(AppState.currentState === "background" ? "background" : "inactive");
+        return;
+      }
+      NativeModules.CamAlertVoiceDiag?.activateDiagnosticSession?.(trip);
+    }, 2500);
+  }
+
+  async function releaseNavigator() {
+    cancelDiagnosticActivation("release");
+    try { await controllerRef.current?.cleanup?.(); } catch {}
+    ready.current = false;
+    setSessionReady(false);
+  }
+
+  async function restoreRoute(destination) {
+    if (!destination || !Number.isFinite(destination.lat) || !Number.isFinite(destination.lng)) return;
+    const foreground = () => alive.current && AppState.currentState === "active";
+    const status = await withNavigationWindow(() => controllerRef.current.setDestination(
+      { title: destination.title || copy.where, position: { lat: destination.lat, lng: destination.lng } },
+      { routingOptions: { travelMode: TravelMode.DRIVING } },
+    ), foreground);
+    if (status !== RouteStatus.OK) throw new Error(status === RouteStatus.NO_ROUTE_FOUND ? copy.noRoute : copy.failed);
+  }
+
+  async function renewNavigatorIfDisrupted() {
+    // Diagnostic experiment only. The navigator created for the route stays
+    // in place; startGuidance below is unchanged.
+    return false;
+    if (guidingRef.current) return false;
+    let audio = false;
+    try {
+      const value = await NativeModules.CamAlertVoiceDiag?.takeAudioDisruption?.();
+      audio = value === true || value === 1;
+    } catch { audio = false; }
+    const plan = prepareNavigatorForGuidance({
+      disruption: audio || locationDisruption.current === true,
+      guiding: false,
+      navigatorReady: ready.current,
+      cleanNavigator: cleanNavigator.current,
+    });
+    if (!plan.replace) return false;
+    try {
+      if (ready.current) await releaseNavigator();
+      await ensureSession();
+      if (plan.discardFreshSession) {
+        await releaseNavigator();
+        await ensureSession();
+      }
+      cleanNavigator.current = true;
+      setSessionReady(true);
+      await restoreRoute(routeRef.current);
+      locationDisruption.current = false;
+      return true;
+    } catch (error) {
+      locationDisruption.current = true;
+      throw error;
+    }
+  }
+
   async function run(action) {
     if (busy) return;
     setBusy(true);
@@ -460,6 +593,7 @@ function GoogleNavBody({
     const lng = Number(latLng?.lng);
     if (!Number.isFinite(lat) || !Number.isFinite(lng)) return;
     setPoint({ lat, lng });
+    routeRef.current = null;
     setQuery(`${lat.toFixed(5)}, ${lng.toFixed(5)}`);
     setRouted(false);
     setProgress(null);
@@ -492,6 +626,7 @@ function GoogleNavBody({
       if (alive.current) {
         if (remaining) setProgress(remaining);
         setPoint({ lat: next.lat, lng: next.lng });
+        routeRef.current = { lat: next.lat, lng: next.lng, title: next.title || "" };
         setRouted(true);
         setRerouting(false);
         setLayersOpen(false);
@@ -537,7 +672,11 @@ function GoogleNavBody({
 
   function startGuidance() {
     run(async () => {
-      await ensureSession();
+      const replaced = await renewNavigatorIfDisrupted();
+      if (!replaced) {
+        await ensureSession();
+        cleanNavigator.current = true;
+      }
       if (!(await onStartTrip())) return;
       const foreground = () => alive.current && AppState.currentState === "active";
       const before = voiceModeBeforeGuidance({
@@ -553,6 +692,7 @@ function GoogleNavBody({
       if (!alive.current) return;
       guidingRef.current = true;
       guidanceArmed.current = true;
+      armDiagnosticActivation();
       setGuiding(true);
       setLayersOpen(false);
       traceNavVoice("guidance.start", {
@@ -567,12 +707,14 @@ function GoogleNavBody({
   }
 
   async function endRoute() {
+    cancelDiagnosticActivation("end");
     guidingRef.current = false;
     setRoadSnapBackground(false);
     setGuiding(false);
     setRouted(false);
     setPoint(null);
     setQuery("");
+    routeRef.current = null;
     setProgress(null);
     setRerouting(false);
     try {
@@ -811,6 +953,16 @@ function GoogleNavBody({
           {chrome.routeBar && (
             <RouteBar items={items} palette={palette} />
           )}
+          {(chrome.go || chrome.startTrip) && shouldShowTripLocationHint(locationAccess) && (
+            <View style={[styles.locationHint, { backgroundColor: palette.panel }]}>
+              <Text maxFontSizeMultiplier={1.4} style={[styles.locationHintTitle, { color: palette.ink }]}>{locationPermissionCopy(language).hint}</Text>
+              {!!onOpenPermissionDetails && (
+                <Pressable accessibilityRole="button" onPress={onOpenPermissionDetails} style={styles.locationHintButton}>
+                  <Text maxFontSizeMultiplier={1.3} style={styles.locationHintAction}>{locationPermissionCopy(language).more}</Text>
+                </Pressable>
+              )}
+            </View>
+          )}
           {chrome.go && (
             <Pressable accessibilityRole="button" disabled={busy} onPress={startGuidance} style={[styles.go, busy && styles.dim]}>
               <Text numberOfLines={1} maxFontSizeMultiplier={1.4} adjustsFontSizeToFit minimumFontScale={0.7} style={styles.goText}>{copy.go}</Text>
@@ -1002,7 +1154,7 @@ const styles = StyleSheet.create({
   speakerOn: { backgroundColor: "#1260E8" },
   speakerGlyph: { fontSize: 16 },
   layerGlyph: { fontSize: 18, fontWeight: "700" },
-  menu: { alignSelf: "flex-end", width: 168, borderRadius: 12, overflow: "hidden" },
+  menu: { alignSelf: "flex-start", width: 168, borderRadius: 12, overflow: "hidden" },
   menuRow: { minHeight: 40, justifyContent: "center", paddingHorizontal: 12 },
   menuText: { fontSize: 15, fontWeight: "700" },
   result: { minHeight: 40, justifyContent: "center" },
@@ -1011,9 +1163,9 @@ const styles = StyleSheet.create({
   searchOff: { fontSize: 13, fontWeight: "600" },
   results: { flexGrow: 0 },
   probe: { position: "absolute", left: 0, right: 0, bottom: 0, height: 0 },
-  tools: { alignItems: "flex-end", alignSelf: "stretch", gap: 6 },
-  toolRow: { flexDirection: "row", justifyContent: "flex-end", flexWrap: "nowrap", gap: 8 },
-  toolsDock: { alignItems: "flex-end" },
+  tools: { alignItems: "flex-start", alignSelf: "stretch", gap: 6, paddingLeft: 8 },
+  toolRow: { flexDirection: "row", justifyContent: "flex-start", flexWrap: "nowrap", gap: 8 },
+  toolsDock: { alignItems: "flex-start" },
   maneuverClearance: { height: NAV_PANEL.maneuverClearance },
   camera: { alignSelf: "flex-start", maxWidth: "78%", flexDirection: "row", flexWrap: "wrap", gap: 8, backgroundColor: "#8E2A22", borderRadius: 14, paddingHorizontal: 10, paddingVertical: 6, marginHorizontal: 12, marginTop: 6 },
   cameraDistance: { color: "#FFFFFF", fontSize: 18, fontWeight: "900", flexShrink: 0 },
@@ -1027,6 +1179,10 @@ const styles = StyleSheet.create({
   summaryCopy: { alignItems: "center", justifyContent: "center" },
   summaryValue: { fontSize: 18, fontWeight: "800" },
   summaryCaption: { fontSize: 11, fontWeight: "600", marginTop: 1 },
+  locationHint: { borderRadius: 16, paddingHorizontal: 12, paddingVertical: 10, gap: 2 },
+  locationHintTitle: { fontSize: 14, lineHeight: 18, fontWeight: "700" },
+  locationHintButton: { minHeight: 44, justifyContent: "center", alignSelf: "flex-start" },
+  locationHintAction: { color: "#1260E8", fontSize: 14, fontWeight: "800" },
   go: { minHeight: 52, borderRadius: 16, backgroundColor: "#1260E8", alignItems: "center", justifyContent: "center", paddingHorizontal: 16 },
   goText: { color: "#FFFFFF", fontSize: 22, fontWeight: "900" },
   dim: { opacity: 0.45 },

@@ -1,8 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
-import { AccessibilityInfo, ActivityIndicator, Platform, Pressable, ScrollView, StyleSheet, Text, useWindowDimensions, View } from "react-native";
+import { AccessibilityInfo, ActivityIndicator, ImageBackground, Platform, Pressable, ScrollView, StyleSheet, Text, useWindowDimensions, View } from "react-native";
 import { PREMIUM_PLANS, storePriceLabel, yearlySavingsPercent } from "./premium-catalog.js";
 import { premiumCopy, selectedPlanTerms, settingsCardCopy } from "./premium-copy.js";
-import { EveningRoad, SlideArt, SlideIcon } from "./premium-pro-art.js";
+import { SlideArt, SlideIcon } from "./premium-pro-art.js";
+import { stagePlacement } from "./premium-stage.js";
 
 const INK = "#E7EEF6";
 const MUTED = "#9BB0C7";
@@ -11,9 +12,9 @@ const CARD = "#10263B";
 const LINE = "#1E3D5C";
 const YEAR = "#F5B64C";
 const ACTION = "#1260E8";
-const EVENING = "#160A24";
-const GOLD = "#E4B15A";
-const CREAM = "#F6EFE2";
+const EVENING = "#080F29";
+const GOLD = "#FFC629";
+const CREAM = "#F6F4F1";
 const STAGE_MS = 4500;
 
 export function PremiumEntryCard({ language = "ru", night = true, entitlement = null, now, onPress }) {
@@ -66,7 +67,7 @@ function IosPremiumScreen({
 }) {
   const copy = premiumCopy(language);
   const { height } = useWindowDimensions();
-  const compact = height < 700;
+  const compact = height < 740;
   const slides = Array.isArray(copy.proSlides) ? copy.proSlides : [];
   const selected = PREMIUM_PLANS.find(plan => plan.id === selectedId) || PREMIUM_PLANS[2];
   const yearlyOffer = trialEligible === true;
@@ -83,21 +84,24 @@ function IosPremiumScreen({
   return (
     <View style={styles.evening}>
       <ScrollView style={styles.scroll} contentContainerStyle={[styles.eveningContent, compact && styles.eveningCompact]} showsVerticalScrollIndicator={false}>
-        <View style={styles.roadBleed}>
-          <EveningRoad />
+        <ImageBackground source={require("./assets/pro-evening-road.png")} resizeMode="cover" style={[styles.hero, compact && styles.heroCompact]} imageStyle={styles.heroImage}>
+          <View style={styles.heroShade} />
           {onBack ? (
             <Pressable accessibilityRole="button" onPress={onBack} style={styles.backOnRoad}>
-              <Text style={styles.backGold}>{copy.back}</Text>
+              <Text style={styles.close}>×</Text>
             </Pressable>
           ) : null}
-        </View>
-        <Text maxFontSizeMultiplier={1.2} style={styles.logo} accessibilityRole="header">
-          CamAlert <Text style={styles.logoPro}>PRO</Text>
-        </Text>
-        <Text maxFontSizeMultiplier={1.2} style={[styles.headline, compact && styles.headlineCompact]}>{proHeadline(copy.proTitle)}</Text>
-        <Text maxFontSizeMultiplier={1.25} style={styles.eveningLead}>{copy.proSubtitle}</Text>
+          <View style={styles.brandLine}>
+            <View style={styles.brandCamera}><View style={styles.brandLens} /></View>
+            <Text maxFontSizeMultiplier={1.2} style={styles.logo} accessibilityRole="header">CamAlert</Text>
+            <Text style={styles.logoPro}>PRO</Text>
+          </View>
+          <Text maxFontSizeMultiplier={1.2} style={[styles.headline, compact && styles.headlineCompact]}>{proHeadline(copy.proTitle)}</Text>
+          <View style={styles.titleSwoosh} />
+          <Text maxFontSizeMultiplier={1.25} style={styles.eveningLead}>{copy.proSubtitle}</Text>
+        </ImageBackground>
         <ProStage slides={slides} compact={compact} />
-        <View style={styles.plans}>
+        <View style={styles.plansRow}>
           {PREMIUM_PLANS.map(plan => {
             const price = storePriceLabel(prices[plan.id]);
             const active = plan.id === selected.id;
@@ -110,65 +114,64 @@ function IosPremiumScreen({
                 accessibilityRole="button"
                 accessibilityState={{ selected: active }}
                 onPress={() => onSelect?.(plan.id)}
-                style={[styles.eveningPlan, active && styles.eveningPlanOn]}
+                style={[styles.eveningPlan, compact && styles.eveningPlanCompact, active && styles.eveningPlanOn, plan.period === "year" && styles.yearPlan]}
               >
                 <View style={styles.planCopy}>
-                  <View style={styles.planTitleRow}>
-                    <Text maxFontSizeMultiplier={1.2} style={styles.eveningPeriod}>{copy.periods[plan.period]}</Text>
-                    {plan.period === "year" && saveText ? <Text maxFontSizeMultiplier={1.1} style={styles.save}>{saveText}</Text> : null}
-                  </View>
-                  {trialLine ? <Text maxFontSizeMultiplier={1.2} style={styles.trialLine}>{trialLine}</Text> : null}
+                  {plan.period === "year" && saveText ? <Text maxFontSizeMultiplier={1.05} numberOfLines={1} style={styles.save}>{saveText}</Text> : null}
+                  <Text maxFontSizeMultiplier={1.1} numberOfLines={1} style={styles.eveningPeriod}>{copy.periods[plan.period]}</Text>
                 </View>
-                <Text maxFontSizeMultiplier={1.2} style={styles.eveningPrice}>{price || copy.priceWait}</Text>
+                <Text maxFontSizeMultiplier={1.05} numberOfLines={1} adjustsFontSizeToFit style={styles.eveningPrice}>{price || copy.priceWait}</Text>
               </Pressable>
             );
           })}
         </View>
         {legacy ? <Text style={styles.eveningNote}>{copy.legacy}</Text> : null}
         {status ? <Text style={styles.eveningNote}>{status}</Text> : null}
-        <Pressable accessibilityRole="button" onPress={onRestore} style={styles.linkHit}>
-          <Text style={styles.eveningLink}>{copy.restore}</Text>
-        </Pressable>
-        {onRedeem ? (
-          <Pressable accessibilityRole="button" onPress={onRedeem} style={styles.linkHit}>
-            <Text style={styles.eveningLink}>{copy.redeemCode}</Text>
-          </Pressable>
-        ) : null}
-        <Pressable accessibilityRole="button" onPress={onManage} style={styles.linkHit}>
-          <Text style={styles.eveningLink}>{copy.manage}</Text>
-        </Pressable>
-        <View style={styles.legal}>
-          <Pressable accessibilityRole="link" onPress={onTerms}><Text style={styles.eveningLegal}>{copy.terms}</Text></Pressable>
-          <Pressable accessibilityRole="link" onPress={onPrivacy}><Text style={styles.eveningLegal}>{copy.privacy}</Text></Pressable>
-        </View>
-      </ScrollView>
-      <View style={styles.buyBar}>
         <Text maxFontSizeMultiplier={1.2} style={styles.eveningTerms}>{terms}</Text>
         <Pressable
           accessibilityRole="button"
           accessibilityState={{ disabled: busy || lockedLifetime, busy }}
           disabled={busy || lockedLifetime}
           onPress={() => onContinue?.(selected.id)}
-          style={styles.unlock}
+          style={[styles.unlock, compact && styles.unlockCompact]}
         >
           {busy ? <ActivityIndicator color="#2A1608" /> : (
-            <Text style={styles.unlockText}>{lockedLifetime ? copy.lifetimeActive : copy.unlock}</Text>
+            <Text style={styles.unlockText}>{lockedLifetime ? copy.lifetimeActive : `${copy.unlock}  ›`}</Text>
           )}
         </Pressable>
         <Text maxFontSizeMultiplier={1.2} style={styles.charge}>{copy.charge}</Text>
-      </View>
+        <View style={styles.utilityRow}>
+          <Pressable accessibilityRole="button" onPress={onRestore} style={styles.utilityLink}><Text style={[styles.utilityGlyph, compact && styles.utilityGlyphCompact]}>↻</Text><Text numberOfLines={1} style={[styles.eveningLink, compact && styles.eveningLinkCompact]}>{copy.restore}</Text></Pressable>
+          {onRedeem ? <Pressable accessibilityRole="button" onPress={onRedeem} style={styles.utilityLink}><Text style={[styles.utilityGlyph, compact && styles.utilityGlyphCompact]}>◇</Text><Text numberOfLines={1} style={[styles.eveningLink, compact && styles.eveningLinkCompact]}>{copy.redeemCode}</Text></Pressable> : null}
+        </View>
+        <Pressable accessibilityRole="button" onPress={onManage} style={styles.manageLink}><Text style={styles.eveningLink}>{copy.manage}</Text></Pressable>
+        <View style={styles.legal}>
+          <Pressable accessibilityRole="link" onPress={onTerms}><Text style={styles.eveningLegal}>{copy.terms}</Text></Pressable>
+          <Pressable accessibilityRole="link" onPress={onPrivacy}><Text style={styles.eveningLegal}>{copy.privacy}</Text></Pressable>
+        </View>
+      </ScrollView>
     </View>
   );
 }
 
+function loopedSlides(slides) {
+  if (slides.length < 2) return slides;
+  return [slides[slides.length - 1], ...slides, slides[0]];
+}
+
 function ProStage({ slides, compact }) {
   const scroller = useRef(null);
-  const indexRef = useRef(0);
+  const positionRef = useRef(slides.length > 1 ? 1 : 0);
   const dragging = useRef(false);
-  const [index, setIndex] = useState(0);
-  const [pageWidth, setPageWidth] = useState(0);
+  const jumping = useRef(false);
+  const resetTimer = useRef(null);
+  const [page, setPage] = useState(0);
+  const [frameWidth, setFrameWidth] = useState(0);
   const [reduceMotion, setReduceMotion] = useState(false);
+  const cardWidth = Math.max(230, frameWidth - 62);
+  const interval = cardWidth + 12;
   const count = slides.length;
+  const cards = loopedSlides(slides);
 
   useEffect(() => {
     let live = true;
@@ -179,78 +182,106 @@ function ProStage({ slides, compact }) {
     return () => {
       live = false;
       subscription?.remove?.();
+      if (resetTimer.current) clearTimeout(resetTimer.current);
     };
   }, []);
 
+  function clearReset() {
+    if (resetTimer.current) {
+      clearTimeout(resetTimer.current);
+      resetTimer.current = null;
+    }
+  }
+
+  function recenter(fromSlot) {
+    const placement = stagePlacement(count, fromSlot);
+    if (placement.recenter == null || positionRef.current !== fromSlot) return;
+    jumping.current = true;
+    positionRef.current = placement.recenter;
+    setPage(stagePlacement(count, placement.recenter).page);
+    scroller.current?.scrollTo({ x: placement.recenter * interval, animated: false });
+    requestAnimationFrame(() => { jumping.current = false; });
+  }
+
+  function moveTo(slot, animated) {
+    if (!frameWidth) return;
+    const placement = stagePlacement(count, slot);
+    clearReset();
+    positionRef.current = placement.slot;
+    setPage(placement.page);
+    scroller.current?.scrollTo({ x: placement.slot * interval, animated });
+    if (placement.recenter != null) {
+      const fromSlot = placement.slot;
+      resetTimer.current = setTimeout(() => recenter(fromSlot), animated ? 750 : 0);
+    }
+  }
+
   useEffect(() => {
-    if (!pageWidth || reduceMotion || count < 2) return undefined;
+    if (!frameWidth || reduceMotion || count < 2) return undefined;
     const timer = setInterval(() => {
-      if (dragging.current) return;
-      const next = (indexRef.current + 1) % count;
-      indexRef.current = next;
-      setIndex(next);
-      scroller.current?.scrollTo({ x: next * pageWidth, animated: true });
+      if (dragging.current || jumping.current) return;
+      moveTo(positionRef.current + 1, true);
     }, STAGE_MS);
     return () => clearInterval(timer);
-  }, [pageWidth, reduceMotion, count]);
-
-  function go(next) {
-    if (!pageWidth) return;
-    const bounded = Math.max(0, Math.min(count - 1, next));
-    indexRef.current = bounded;
-    setIndex(bounded);
-    scroller.current?.scrollTo({ x: bounded * pageWidth, animated: !reduceMotion });
-  }
+  }, [frameWidth, interval, reduceMotion, count]);
 
   function settle(offset) {
     dragging.current = false;
-    if (!pageWidth) return;
-    go(Math.round(offset / pageWidth));
+    if (!frameWidth || jumping.current) return;
+    const placement = stagePlacement(count, Math.round(offset / interval));
+    clearReset();
+    positionRef.current = placement.slot;
+    setPage(placement.page);
+    if (placement.recenter != null) recenter(placement.slot);
   }
 
   return (
     <View
       style={[styles.stageFrame, compact && styles.stageFrameCompact]}
-      onLayout={event => {
-        const frame = Math.round(event.nativeEvent.layout.width);
-        const inner = Math.max(0, frame - (compact ? 16 : 24));
-        if (inner > 0 && inner !== pageWidth) setPageWidth(inner);
-      }}
+      onLayout={event => setFrameWidth(Math.round(event.nativeEvent.layout.width))}
     >
-      <ScrollView
-        ref={scroller}
-        horizontal
-        pagingEnabled
-        bounces={false}
-        showsHorizontalScrollIndicator={false}
-        onScrollBeginDrag={() => { dragging.current = true; }}
-        onMomentumScrollEnd={event => settle(event.nativeEvent.contentOffset.x)}
-        onScrollEndDrag={event => {
-          if (!event.nativeEvent.velocity?.x) settle(event.nativeEvent.contentOffset.x);
-        }}
-      >
-        {slides.map(slide => (
-          <View key={slide.id} style={{ width: pageWidth || "100%" }} accessibilityLabel={`${slide.title}. ${slide.text}`}>
-            <SlideArt id={slide.id} />
-            <View style={styles.slideCopy}>
-              <SlideIcon id={slide.id} />
-              <View style={styles.slideText}>
-                <Text maxFontSizeMultiplier={1.2} style={styles.slideTitle}>{slide.title}</Text>
-                <Text maxFontSizeMultiplier={1.2} numberOfLines={2} style={[styles.slideBody, pageWidth ? { width: Math.max(120, pageWidth - 64) } : null]}>{slide.text}</Text>
+      {frameWidth > 0 ? (
+        <ScrollView
+          key={String(interval)}
+          ref={scroller}
+          horizontal
+          snapToInterval={interval}
+          decelerationRate="fast"
+          bounces={false}
+          showsHorizontalScrollIndicator={false}
+          contentOffset={{ x: (count > 1 ? 1 : 0) * interval }}
+          contentContainerStyle={{ paddingHorizontal: Math.max(0, (frameWidth - cardWidth) / 2) }}
+          onScrollBeginDrag={() => { dragging.current = true; }}
+          onMomentumScrollEnd={event => settle(event.nativeEvent.contentOffset.x)}
+          onScrollEndDrag={event => {
+            if (!event.nativeEvent.velocity?.x) settle(event.nativeEvent.contentOffset.x);
+          }}
+        >
+          {cards.map((slide, slot) => (
+            <View key={`${slot}-${slide.id}`} style={{ width: cardWidth, marginRight: 12 }} accessibilityLabel={`${slide.title}. ${slide.text}`}>
+              <View style={[styles.slideCard, compact && styles.slideCardCompact]}>
+                <SlideArt id={slide.id} />
+                <View style={styles.slideCopy}>
+                  <SlideIcon id={slide.id} />
+                  <View style={styles.slideText}>
+                    <Text maxFontSizeMultiplier={1.2} style={styles.slideTitle}>{slide.title}</Text>
+                    <Text maxFontSizeMultiplier={1.2} numberOfLines={2} style={styles.slideBody}>{slide.text}</Text>
+                  </View>
+                </View>
               </View>
             </View>
-          </View>
-        ))}
-      </ScrollView>
+          ))}
+        </ScrollView>
+      ) : null}
       <View style={styles.dots}>
         {slides.map((slide, dot) => (
           <Pressable
             key={slide.id}
             accessibilityRole="button"
-            accessibilityState={{ selected: dot === index }}
+            accessibilityState={{ selected: dot === page }}
             accessibilityLabel={slide.title}
-            onPress={() => go(dot)}
-            style={[styles.dot, dot === index && styles.dotOn]}
+            onPress={() => moveTo(count > 1 ? dot + 1 : dot, !reduceMotion)}
+            style={[styles.dot, dot === page && styles.dotOn]}
           />
         ))}
       </View>
@@ -385,39 +416,59 @@ const styles = StyleSheet.create({
   entryArrow: { color: YEAR, fontSize: 28, fontWeight: "500", marginTop: -2 },
   evening: { flex: 1, backgroundColor: EVENING },
   scroll: { flex: 1 },
-  eveningContent: { paddingHorizontal: 20, paddingTop: 0, paddingBottom: 16, gap: 8 },
-  roadBleed: { marginHorizontal: -20 },
-  backOnRoad: { position: "absolute", top: 6, left: 16, minHeight: 44, justifyContent: "center", paddingRight: 12 },
-  eveningCompact: { gap: 4 },
-  backGold: { color: GOLD, fontSize: 17, fontWeight: "700" },
-  logo: { color: CREAM, fontSize: 15, letterSpacing: 1.4, fontWeight: "700" },
-  logoPro: { color: GOLD, fontWeight: "800" },
-  headline: { color: CREAM, fontSize: 34, lineHeight: 38, fontWeight: "800" },
-  headlineCompact: { fontSize: 28, lineHeight: 32 },
-  eveningLead: { color: "#E4D3BE", fontSize: 15, lineHeight: 20 },
-  stageFrame: { marginTop: 6, borderRadius: 18, borderWidth: 1, borderColor: "rgba(228,177,90,0.55)", backgroundColor: "#1A1028", padding: 12, gap: 10 },
-  stageFrameCompact: { padding: 8, gap: 6 },
-  slideCopy: { flexDirection: "row", alignItems: "center", gap: 10, paddingTop: 10 },
-  slideText: { flex: 1, minWidth: 0, gap: 2 },
-  slideTitle: { color: CREAM, fontSize: 17, fontWeight: "800" },
-  slideBody: { color: "#E4D3BE", fontSize: 14, lineHeight: 18 },
-  dots: { flexDirection: "row", justifyContent: "center", gap: 8 },
-  dot: { width: 8, height: 8, borderRadius: 4, backgroundColor: "rgba(246,239,226,0.35)" },
-  dotOn: { width: 22, backgroundColor: GOLD },
-  eveningPeriod: { color: CREAM, fontSize: 17, fontWeight: "700", flexShrink: 1 },
-  eveningPrice: { color: CREAM, fontSize: 16, fontWeight: "700", textAlign: "right" },
-  eveningTerms: { color: CREAM, fontSize: 14, lineHeight: 18, fontWeight: "600", textAlign: "center" },
-  eveningNote: { color: "#D5C7B4", fontSize: 14, lineHeight: 20 },
-  eveningLink: { color: CREAM, fontSize: 16, fontWeight: "700" },
-  eveningLegal: { color: "#D5C7B4", fontSize: 13 },
-  eveningPlan: { minHeight: 46, borderRadius: 16, borderWidth: 1, borderColor: "rgba(228,177,90,0.35)", backgroundColor: "#241433", paddingHorizontal: 14, paddingVertical: 6, flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: 12 },
+  eveningContent: { paddingHorizontal: 16, paddingTop: 0, paddingBottom: 14, gap: 7 },
+  eveningCompact: { gap: 5, paddingBottom: 10 },
+  hero: { height: 184, marginHorizontal: -16, paddingHorizontal: 24, alignItems: "center", justifyContent: "flex-start", overflow: "hidden" },
+  heroCompact: { height: 148, paddingHorizontal: 18 },
+  heroImage: { opacity: 0.95 },
+  heroShade: { ...StyleSheet.absoluteFillObject, backgroundColor: "rgba(4,10,31,0.24)" },
+  backOnRoad: { position: "absolute", top: 10, left: 14, width: 36, height: 36, borderRadius: 18, borderWidth: 1, borderColor: "rgba(245,244,255,0.45)", backgroundColor: "rgba(6,12,34,0.35)", alignItems: "center", justifyContent: "center", zIndex: 2 },
+  close: { color: CREAM, fontSize: 29, lineHeight: 32, fontWeight: "300", marginTop: -2 },
+  brandLine: { flexDirection: "row", alignItems: "center", justifyContent: "center", gap: 7, marginTop: 15 },
+  brandCamera: { width: 31, height: 28, borderRadius: 8, borderWidth: 2, borderColor: GOLD, backgroundColor: "rgba(8,15,41,0.7)", alignItems: "center", justifyContent: "center", shadowColor: GOLD, shadowOpacity: 0.55, shadowRadius: 9, elevation: 6 },
+  brandLens: { width: 12, height: 12, borderRadius: 6, borderWidth: 3, borderColor: GOLD },
+  logo: { color: CREAM, fontSize: 23, letterSpacing: 0.1, fontWeight: "800", textShadowColor: "rgba(0,0,0,0.6)", textShadowRadius: 8 },
+  logoPro: { overflow: "hidden", color: "#090E23", backgroundColor: GOLD, paddingHorizontal: 9, paddingVertical: 1, borderRadius: 14, fontSize: 18, fontWeight: "900" },
+  headline: { color: "#FFE59A", fontSize: 28, lineHeight: 33, fontStyle: "italic", fontWeight: "900", textAlign: "center", marginTop: 9, textShadowColor: "rgba(255,185,59,0.8)", textShadowRadius: 14, elevation: 5 },
+  headlineCompact: { fontSize: 23, lineHeight: 27, marginTop: 6 },
+  titleSwoosh: { width: "65%", height: 4, borderRadius: 4, backgroundColor: GOLD, transform: [{ rotate: "-3deg" }], alignSelf: "flex-end", marginRight: 15, marginTop: -1, shadowColor: GOLD, shadowOpacity: 0.7, shadowRadius: 8 },
+  eveningLead: { color: CREAM, fontSize: 14, lineHeight: 17, textAlign: "center", marginTop: 3, maxWidth: 350, textShadowColor: "#071020", textShadowRadius: 6 },
+  stageFrame: { height: 190, marginHorizontal: -16, paddingVertical: 6, justifyContent: "center", borderTopWidth: 1, borderBottomWidth: 1, borderColor: "rgba(111,48,197,0.9)", backgroundColor: "rgba(31,20,72,0.64)" },
+  stageFrameCompact: { height: 160 },
+  slideCard: { height: 166, borderRadius: 20, overflow: "hidden", borderWidth: 1.5, borderColor: "#FFD978", backgroundColor: "#101A3A", shadowColor: GOLD, shadowOpacity: 0.28, shadowRadius: 13, elevation: 7 },
+  slideCardCompact: { height: 136 },
+  slideCopy: { position: "absolute", left: 13, right: 12, bottom: 9, flexDirection: "row", alignItems: "center", gap: 8 },
+  slideText: { flex: 1, minWidth: 0, gap: 1 },
+  slideTitle: { color: CREAM, fontSize: 18, lineHeight: 21, fontWeight: "900", textShadowColor: "#030916", textShadowRadius: 7 },
+  slideBody: { color: CREAM, fontSize: 12, lineHeight: 14, textShadowColor: "#030916", textShadowRadius: 7 },
+  dots: { position: "absolute", bottom: 3, left: 0, right: 0, flexDirection: "row", justifyContent: "center", alignItems: "center", gap: 8 },
+  dot: { width: 8, height: 8, borderRadius: 4, backgroundColor: "rgba(246,244,241,0.35)" },
+  dotOn: { width: 18, backgroundColor: GOLD },
+  plansRow: { flexDirection: "row", gap: 6, marginTop: 8 },
+  eveningPlan: { flex: 1, minWidth: 0, height: 74, borderRadius: 15, borderWidth: 1.2, borderColor: "rgba(200,207,244,0.4)", backgroundColor: "rgba(19,28,62,0.82)", paddingHorizontal: 4, paddingVertical: 5, alignItems: "center", justifyContent: "center", gap: 1 },
+  eveningPlanCompact: { height: 66, borderRadius: 12 },
   eveningPlanOn: { borderWidth: 2, borderColor: GOLD },
-  planCopy: { flex: 1, gap: 2 },
+  yearPlan: { backgroundColor: "rgba(142,95,24,0.48)", borderColor: "#FFC629" },
+  planCopy: { alignItems: "center", justifyContent: "center", minWidth: 0 },
   planTitleRow: { flexDirection: "row", alignItems: "center", gap: 8 },
-  save: { color: "#2A1608", backgroundColor: GOLD, overflow: "hidden", borderRadius: 8, paddingHorizontal: 6, paddingVertical: 1, fontSize: 12, fontWeight: "800" },
-  trialLine: { color: GOLD, fontSize: 12, lineHeight: 16, fontWeight: "700" },
-  buyBar: { paddingHorizontal: 20, paddingTop: 8, paddingBottom: 8, gap: 6, backgroundColor: "rgba(22,10,36,0.94)", borderTopWidth: 1, borderTopColor: "rgba(228,177,90,0.28)" },
-  unlock: { backgroundColor: GOLD, minHeight: 52, borderRadius: 16, alignItems: "center", justifyContent: "center" },
-  unlockText: { color: "#2A1608", fontSize: 18, fontWeight: "800" },
-  charge: { color: "#D5C7B4", fontSize: 12, lineHeight: 16, textAlign: "center" },
+  eveningPeriod: { color: CREAM, fontSize: 13, lineHeight: 16, fontWeight: "800", textAlign: "center" },
+  eveningPrice: { color: CREAM, fontSize: 13, lineHeight: 16, fontWeight: "800", textAlign: "center", alignSelf: "stretch" },
+  save: { color: "#201200", backgroundColor: GOLD, overflow: "hidden", borderRadius: 7, paddingHorizontal: 5, paddingVertical: 1, fontSize: 9, fontWeight: "900", marginBottom: 1 },
+  trialLine: { color: GOLD, fontSize: 8.5, lineHeight: 10, fontWeight: "700", textAlign: "center" },
+  eveningTerms: { color: CREAM, fontSize: 13, lineHeight: 16, fontWeight: "600", textAlign: "center", marginTop: 2 },
+  eveningNote: { color: "#D5D9E8", fontSize: 11, lineHeight: 14, textAlign: "center" },
+  utilityRow: { flexDirection: "row", alignItems: "center", justifyContent: "center", gap: 6, minHeight: 32 },
+  utilityLink: { flex: 1, flexDirection: "row", justifyContent: "center", alignItems: "center", gap: 5, minHeight: 32 },
+  utilityGlyph: { color: "#D6DCEF", fontSize: 20, fontWeight: "600" },
+  utilityGlyphCompact: { fontSize: 16 },
+  manageLink: { alignSelf: "center", paddingVertical: 1, minHeight: 20 },
+  eveningLink: { color: CREAM, fontSize: 11.5, fontWeight: "600", flexShrink: 1 },
+  eveningLinkCompact: { fontSize: 9.5 },
+  eveningLegal: { color: "#D5D9E8", fontSize: 10.5, textDecorationLine: "underline" },
+  legal: { flexDirection: "row", justifyContent: "center", gap: 14, paddingBottom: 8 },
+  eveningPlanYear: { borderColor: GOLD },
+  unlock: { backgroundColor: GOLD, minHeight: 50, borderRadius: 28, alignItems: "center", justifyContent: "center", borderWidth: 1, borderColor: "#FFE47D", shadowColor: GOLD, shadowOpacity: 0.28, shadowRadius: 10, elevation: 4, marginTop: 1 },
+  unlockCompact: { minHeight: 44 },
+  unlockText: { color: "#11101A", fontSize: 18, fontWeight: "900" },
+  charge: { color: "#C5CBDE", fontSize: 10.5, lineHeight: 13, textAlign: "center" },
 });

@@ -94,6 +94,7 @@ export const PREMIUM_COPY = {
     redeemUnchanged: "Магазин не подтвердил новую покупку",
     purchasePending: "Покупка обрабатывается",
     purchaseUnverified: "Не удалось проверить покупку. Повторите попытку",
+    purchasesUnavailable: "Покупки сейчас недоступны в магазине. Повторите попытку позже",
     purchaseCancelled: "Покупка не завершена",
     rateSettings: "Оценить приложение",
     rateFailed: "Не удалось открыть страницу отзыва.",
@@ -206,6 +207,7 @@ export const PREMIUM_COPY = {
     redeemUnchanged: "Магазин не підтвердив нову покупку",
     purchasePending: "Покупка обробляється",
     purchaseUnverified: "Не вдалося перевірити покупку. Спробуйте ще раз",
+    purchasesUnavailable: "Покупки зараз недоступні в магазині. Спробуйте пізніше",
     purchaseCancelled: "Покупку не завершено",
     rateSettings: "Оцінити застосунок",
     rateFailed: "Не вдалося відкрити сторінку відгуку.",
@@ -318,6 +320,7 @@ export const PREMIUM_COPY = {
     redeemUnchanged: "The store did not confirm a new purchase",
     purchasePending: "The purchase is processing",
     purchaseUnverified: "Couldn't verify the purchase. Try again",
+    purchasesUnavailable: "Purchases are unavailable in the store right now. Try again later",
     purchaseCancelled: "The purchase was not completed",
     rateSettings: "Rate the app",
     rateFailed: "The review page could not be opened.",
@@ -430,6 +433,7 @@ export const PREMIUM_COPY = {
     redeemUnchanged: "Sklep nie potwierdził nowego zakupu",
     purchasePending: "Zakup jest przetwarzany",
     purchaseUnverified: "Nie udało się sprawdzić zakupu. Spróbuj ponownie",
+    purchasesUnavailable: "Zakupy są teraz niedostępne w sklepie. Spróbuj później",
     purchaseCancelled: "Zakupu nie dokończono",
     rateSettings: "Oceń aplikację",
     rateFailed: "Nie udało się otworzyć strony opinii.",
@@ -587,6 +591,19 @@ export function restoredPurchaseLines(entitlement, language) {
     if (until) lines.push(until);
   }
   return lines;
+}
+
+// An empty store catalog is not a failed receipt check. Verification stays
+// reserved for a transaction StoreKit actually returned and could not verify.
+export function purchaseNoticeText(decision, language) {
+  const copy = premiumCopy(language);
+  if (decision?.reason === "lifetime") return copy.lifetimeActive;
+  if (decision?.reason === "pending") return copy.purchasePending;
+  if (decision?.reason === "cancelled") return copy.purchaseCancelled;
+  if (decision?.reason === "active" || decision?.reason === "trial") return copy.purchased;
+  if (decision?.reason === "revoked") return copy.revoked;
+  if (decision?.reason === "unavailable" || decision?.reason === "store-unavailable") return copy.purchasesUnavailable;
+  return copy.purchaseUnverified;
 }
 
 export function restoredNoticeText(decision, language, now = Date.now()) {

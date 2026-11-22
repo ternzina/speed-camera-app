@@ -11,7 +11,69 @@ public class CamAlertVoiceDiagLog: NSObject {
   private static let queue = DispatchQueue(label: "camalert.voice.diag")
   private static var interruption = "none"
   private static var interrupted = false
+  private static var audioDisruption = false
   private static var screenUp = false
+  private static var navigationSession = false
+  // The trip whose delayed diagnostic activation is still pending. Zero means
+  // none. A new trip id may try again; this does not last for the process.
+  private static var diagnosticTrip = 0
+
+  // True only while a Google navigation session object exists.
+  @objc public static func noteNavigationSession() {
+    navigationSession = true
+    NSLog("CAMALERT_NAV_VOICE navigation session exists=1")
+  }
+
+  @objc public static func clearNavigationSession() {
+    navigationSession = false
+    NSLog("CAMALERT_NAV_VOICE navigation session exists=0")
+  }
+
+  @objc public static func navigationSessionExists() -> Bool {
+    navigationSession
+  }
+
+  @objc public static func logSessionActivation(source: String, performed: Bool) {
+    NSLog("CAMALERT_NAV_VOICE session activate source=%@ performed=%d", source, performed ? 1 : 0)
+  }
+
+  // Diagnostic only. Called when the public startGuidance call has returned.
+  // The unified-log timestamp is the startGuidance time. This is not a signal
+  // that a Google prompt finished.
+  @objc public static func noteDiagnosticStartGuidance(_ trip: Int) {
+    diagnosticTrip = trip
+    NSLog("CAMALERT_NAV_VOICE diag event=startGuidance trip=%ld", CLong(trip))
+  }
+
+  @objc public static func cancelDiagnosticActivation(_ trip: Int, reason: String) {
+    guard trip != 0, trip == diagnosticTrip else { return }
+    diagnosticTrip = 0
+    NSLog("CAMALERT_NAV_VOICE diag event=cancel trip=%ld reason=%@", CLong(trip), reason)
+  }
+
+  // One attempt for this trip id. setActive is deferred to the next main-queue
+  // turn so a cancel or a newer trip already queued behind this call is applied
+  // first. The NSError is logged and not discarded.
+  @objc public static func activateDiagnosticSession(_ trip: Int) -> String {
+    DispatchQueue.main.async {
+      guard trip != 0, trip == diagnosticTrip else {
+        NSLog("CAMALERT_NAV_VOICE diag event=activate trip=%ld result=skipped", CLong(trip))
+        return
+      }
+      diagnosticTrip = 0
+      do {
+        try AVAudioSession.sharedInstance().setActive(true)
+        NSLog("CAMALERT_NAV_VOICE diag event=activate trip=%ld result=ok", CLong(trip))
+      } catch {
+        let ns = error as NSError
+        NSLog(
+          "CAMALERT_NAV_VOICE diag event=activate trip=%ld result=error domain=%@ code=%ld description=%@",
+          CLong(trip), ns.domain, CLong(ns.code), ns.localizedDescription
+        )
+      }
+    }
+    return "queued"
+  }
 
   private static func allowed() -> Bool {
     let bundle = Bundle.main.bundleIdentifier
@@ -25,7 +87,17 @@ public class CamAlertVoiceDiagLog: NSObject {
 
   @objc public static func noteInterruption(type: UInt, options: UInt) {
     interruption = "type=\(type) options=\(options)"
-    interrupted = type == AVAudioSession.InterruptionType.began.rawValue
+    let began = type == AVAudioSession.InterruptionType.began.rawValue
+    interrupted = began
+    if began { audioDisruption = true }
+  }
+
+  // Stays set until the next route start reads it. Ending the interruption
+  // does not clear it: the navigator created across that break stays mute.
+  @objc public static func takeAudioDisruption() -> Bool {
+    let value = audioDisruption
+    audioDisruption = false
+    return value
   }
 
   @objc public static func routePorts() -> String {

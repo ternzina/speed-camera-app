@@ -1,5 +1,5 @@
-// Defaults for a new installation. A stored "off" is a choice.
-// A missing key is not a choice. This module does not read location.
+// Defaults for background GPS. A stored "off" is a user choice.
+// A missing key defaults to on. This module does not read location.
 
 export const BACKGROUND_CHOICE_KEY = "camalert_background_choice_v1";
 export const VOICE_NOTICE_KEY = "camalert_voice_notice_v1";
@@ -24,14 +24,13 @@ function choiceValue(value) {
   return value === "on" || value === "off" ? value : null;
 }
 
-// An update keeps a missing choice missing. A new install wants background.
-// Someone who already had the session on keeps that wish. A stored off wins.
+// Background mode is opted in by default unless the user explicitly turned it off.
+// The operating system still controls whether Always location is available.
 export function resolveBackgroundChoice({ storedChoice, existingInstall, sessionEnabled }) {
   const choice = choiceValue(storedChoice);
   if (choice) return { choice, write: null };
   if (sessionEnabled === true) return { choice: "on", write: "on" };
-  if (!existingInstall) return { choice: "on", write: "on" };
-  return { choice: null, write: null };
+  return { choice: "on", write: "on" };
 }
 
 // The switch is on only when background is wanted and Always is granted.

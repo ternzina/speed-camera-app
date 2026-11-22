@@ -1,0 +1,4 @@
+"NSLocationWhenInUseUsageDescription" = "Location is used to follow your route and warn you about road cameras during a trip.";
+"NSLocationAlwaysAndWhenInUseUsageDescription" = "Allow location access all the time so route guidance and camera warnings continue when the screen is off.";
+"NSLocationAlwaysUsageDescription" = "Allow CamAlert to access your location all the time so route guidance and camera warnings continue when the screen is off.";
+"NSMotionUsageDescription" = "Allow CamAlert to detect your current motion activity.";

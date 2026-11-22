@@ -40,7 +40,9 @@ master-db/backups/
 __pycache__/
 *.pyc
 
-# Local prebuild output. Cloud builds generate native projects from app.json
-# so a stale 1.0.2 android/ or ios/ tree cannot override version 1.0.3.
+# Android is generated on the cloud. The iOS project is the store app, so it is
+# uploaded. Pods are installed during the build. The spare tree is not.
 android/
-ios/
+ios/Pods/
+ios/build/
+ios 2/

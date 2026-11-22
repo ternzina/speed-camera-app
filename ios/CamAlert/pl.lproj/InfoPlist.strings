@@ -1,0 +1,4 @@
+"NSLocationWhenInUseUsageDescription" = "Lokalizacja jest potrzebna, aby prowadzić trasę i ostrzegać o fotoradarach podczas podróży.";
+"NSLocationAlwaysAndWhenInUseUsageDescription" = "Zezwól na lokalizację przez cały czas, aby prowadzenie trasy i ostrzeżenia o kamerach działały przy wyłączonym ekranie.";
+"NSLocationAlwaysUsageDescription" = "Zezwól CamAlert na dostęp do lokalizacji przez cały czas, aby prowadzenie trasy i ostrzeżenia o kamerach działały przy wyłączonym ekranie.";
+"NSMotionUsageDescription" = "Pozwól CamAlert wykrywać bieżący rodzaj ruchu.";

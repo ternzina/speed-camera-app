@@ -24,7 +24,8 @@ import {
   restoreOutcome,
   subscriptionStatus,
 } from "../../premium-access.js";
-import { PREMIUM_COPY, restoredNoticeText, selectedPlanTerms, settingsCardCopy, statusLines } from "../../premium-copy.js";
+import { PREMIUM_COPY, purchaseNoticeText, restoredNoticeText, selectedPlanTerms, settingsCardCopy, statusLines } from "../../premium-copy.js";
+import { stagePlacement } from "../../premium-stage.js";
 import { chooseLaunchPrompt, hasPaidPremium, offerDecision, promptSettled, recordCompletedTrip, recordSuccessfulLaunch, shouldCountTrip } from "../../launch-prompts.js";
 
 const now = Date.parse("2026-11-13T18:00:00Z");
@@ -251,13 +252,10 @@ test("a restored sandbox year names the product, the test purchase, and the end 
   assert.match(lifeText, /Тестовая покупка/);
   assert.doesNotMatch(lifeText, /Доступ до /);
   const app = read("App.js");
-  const start = app.indexOf("async function viewPremiumScreen");
-  const body = app.slice(start, app.indexOf("async function shareCamAlert", start));
-  assert.match(body, /loadPremiumCatalog/);
-  assert.match(body, /setPremiumPreview\(true\)/);
-  assert.doesNotMatch(body, /purchasePremium|restorePremium|rememberLegacy|rememberIntroductoryStart|cacheVerifiedEntitlement|resolveFeatureAccess/);
+  assert.equal(app.indexOf("function viewPremiumScreen"), -1);
+  assert.match(app, /loadPremiumCatalog/);
   assert.match(app, /onContinue=\{premiumPreview \? keepPremiumPreview : buyPremium\}/);
-  assert.match(app, /previewPro/);
+  assert.match(app, /buyPremium/);
   assert.equal(entitlementFromStore({ productId: "camalert_premium_yearly", displayName: "CamAlert Premium", expiresAt: now + week, environment: "sandbox" }).displayName, "CamAlert Premium");
 });
 
@@ -454,4 +452,40 @@ test("an offer code is Apple's sheet, and a result needs a verified change", () 
   assert.match(read("premium-store.js"), /presentOfferCode/);
   assert.match(read("ios/CamAlert/CamAlertPremiumStore.swift"), /presentOfferCodeRedeemSheet/);
   assert.doesNotMatch(read("premium-store.js"), /offerCode\.match|validateCode|promoCode ===/);
+});
+
+test("an empty store catalog is not described as a failed purchase check", () => {
+  assert.equal(purchaseNoticeText({ reason: "unavailable" }, "ru"), PREMIUM_COPY.ru.purchasesUnavailable);
+  assert.equal(purchaseNoticeText({ reason: "store-unavailable" }, "ru"), PREMIUM_COPY.ru.purchasesUnavailable);
+  assert.equal(purchaseNoticeText({ reason: "unverified" }, "ru"), PREMIUM_COPY.ru.purchaseUnverified);
+  assert.equal(purchaseNoticeText({ reason: "failed" }, "ru"), PREMIUM_COPY.ru.purchaseUnverified);
+  assert.equal(purchaseNoticeText({ reason: "cancelled" }, "ru"), PREMIUM_COPY.ru.purchaseCancelled);
+  for (const language of ["ru", "uk", "en", "pl"]) {
+    assert.match(PREMIUM_COPY[language].purchasesUnavailable, /\S/);
+    assert.notEqual(PREMIUM_COPY[language].purchasesUnavailable, PREMIUM_COPY[language].purchaseUnverified);
+  }
+  assert.match(read("App.js"), /purchaseNoticeText/);
+  assert.doesNotMatch(read("premium-screen.js"), /proFeatureLabels|Без ограничений|Работает в фоне/);
+});
+
+test("the pro carousel recenters on a copy instead of jumping across the row", () => {
+  const count = 5;
+  assert.deepEqual(stagePlacement(count, 1), { slot: 1, page: 0, recenter: null });
+  assert.deepEqual(stagePlacement(count, count), { slot: count, page: count - 1, recenter: null });
+  assert.deepEqual(stagePlacement(count, count + 1), { slot: count + 1, page: 0, recenter: 1 });
+  assert.deepEqual(stagePlacement(count, 0), { slot: 0, page: count - 1, recenter: count });
+  assert.equal(stagePlacement(count, count + 1).page, stagePlacement(count, 1).page);
+  assert.equal(stagePlacement(count, 0).page, stagePlacement(count, count).page);
+  let slot = 1;
+  for (let turn = 0; turn < count * 3; turn += 1) {
+    const next = stagePlacement(count, slot + 1);
+    slot = next.recenter == null ? next.slot : next.recenter;
+  }
+  assert.equal(stagePlacement(count, slot).page, 0);
+  slot = 1;
+  for (let turn = 0; turn < count * 2; turn += 1) {
+    const next = stagePlacement(count, slot - 1);
+    slot = next.recenter == null ? next.slot : next.recenter;
+  }
+  assert.equal(stagePlacement(count, slot).page, 0);
 });

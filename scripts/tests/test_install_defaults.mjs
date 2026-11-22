@@ -13,15 +13,16 @@ import { mergeStoredSettings } from "../../camera-warning-gate.js";
 
 const read = name => readFileSync(new URL(`../../${name}`, import.meta.url), "utf8");
 
-test("a new install wants background, and an update does not invent that wish", () => {
+test("a missing background choice stays on, and a stored off stays off", () => {
   const fresh = resolveBackgroundChoice({ storedChoice: null, existingInstall: false, sessionEnabled: false });
   assert.equal(fresh.choice, "on");
   assert.equal(fresh.write, "on");
   const updated = resolveBackgroundChoice({ storedChoice: null, existingInstall: true, sessionEnabled: false });
-  assert.equal(updated.choice, null);
-  assert.equal(updated.write, null);
+  assert.equal(updated.choice, "on");
+  assert.equal(updated.write, "on");
   const alreadyOn = resolveBackgroundChoice({ storedChoice: null, existingInstall: true, sessionEnabled: true });
   assert.equal(alreadyOn.choice, "on");
+  assert.equal(alreadyOn.write, "on");
   const refused = resolveBackgroundChoice({ storedChoice: "off", existingInstall: false, sessionEnabled: true });
   assert.equal(refused.choice, "off");
   assert.equal(refused.write, null);
@@ -39,6 +40,8 @@ test("background looks off without Always permission and does not run outside a 
   assert.equal(shouldRunBackgroundGps({ choice: "on", access: "always", tripActive: true }), true);
   assert.equal(shouldRunBackgroundGps({ choice: "off", access: "always", tripActive: true }), false);
   assert.equal(shouldRunBackgroundGps({ choice: null, access: "always", tripActive: true }), false);
+  assert.equal(shouldRunBackgroundGps({ choice: "on", access: "when-in-use", tripActive: true }), false);
+  assert.equal(shouldRunBackgroundGps({ choice: "off", access: "when-in-use", tripActive: true }), false);
 });
 
 test("the first-launch voice line is only for a new install", () => {

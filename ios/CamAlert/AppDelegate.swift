@@ -186,6 +186,19 @@ class AppDelegate: ExpoAppDelegate, ExpoReactNativeFactoryProvider {
     }
   }
 
+  public override func applicationDidBecomeActive(_ application: UIApplication) {
+    super.applicationDidBecomeActive(application)
+    // Settings deactivates the audio session. It stays inactive for the rest
+    // of this process unless it is activated again. No utterance is started.
+    // Diagnostic: do not activate before a Google navigation session exists.
+    if CamAlertVoiceDiagLog.navigationSessionExists() {
+      try? AVAudioSession.sharedInstance().setActive(true)
+      CamAlertVoiceDiagLog.logSessionActivation(source: "become-active", performed: true)
+    } else {
+      CamAlertVoiceDiagLog.logSessionActivation(source: "become-active", performed: false)
+    }
+  }
+
   // Linking API
   public override func application(
     _ app: UIApplication,

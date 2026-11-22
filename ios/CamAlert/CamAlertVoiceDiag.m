@@ -23,6 +23,11 @@ RCT_EXPORT_METHOD(append:(NSString *)line)
   [CamAlertVoiceDiagLog append:line];
 }
 
+RCT_EXPORT_METHOD(takeAudioDisruption:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject)
+{
+  resolve(@([CamAlertVoiceDiagLog takeAudioDisruption]));
+}
+
 RCT_EXPORT_METHOD(snapshot:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject)
 {
   resolve([CamAlertVoiceDiagLog snapshot]);
@@ -41,6 +46,23 @@ RCT_EXPORT_METHOD(readiness:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRe
 RCT_EXPORT_METHOD(tripArmed:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject)
 {
   resolve(@([CamAlertVoiceDiagLog tripArmed]));
+}
+
+RCT_EXPORT_METHOD(noteDiagnosticStartGuidance:(NSInteger)trip)
+{
+  [CamAlertVoiceDiagLog noteDiagnosticStartGuidance:trip];
+}
+
+RCT_EXPORT_METHOD(cancelDiagnosticActivation:(NSInteger)trip reason:(NSString *)reason)
+{
+  [CamAlertVoiceDiagLog cancelDiagnosticActivation:trip reason:reason ?: @""];
+}
+
+RCT_EXPORT_METHOD(activateDiagnosticSession:(NSInteger)trip
+                  resolve:(RCTPromiseResolveBlock)resolve
+                  reject:(RCTPromiseRejectBlock)reject)
+{
+  resolve([CamAlertVoiceDiagLog activateDiagnosticSession:trip]);
 }
 
 @end
