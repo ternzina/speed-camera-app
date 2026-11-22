@@ -218,6 +218,7 @@ struct AlertSettings: Equatable {
   var highwayDistance = 1200.0
   var fastDistance = 1500.0
   var nightDrive = false
+  var driveTheme = "auto"
 }
 
 enum CameraSurfaces {

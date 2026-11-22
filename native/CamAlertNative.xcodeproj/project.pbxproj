@@ -18,6 +18,12 @@
 		C30000000000000000000045 /* cameras-ua.json in Resources */ = {isa = PBXBuildFile; fileRef = C30000000000000000000015 /* cameras-ua.json */; };
 		C30000000000000000000046 /* cameras-pl.json in Resources */ = {isa = PBXBuildFile; fileRef = C30000000000000000000016 /* cameras-pl.json */; };
 		C30000000000000000000047 /* country-names.json in Resources */ = {isa = PBXBuildFile; fileRef = C30000000000000000000017 /* country-names.json */; };
+		C30000000000000000000048 /* laws.json in Resources */ = {isa = PBXBuildFile; fileRef = C30000000000000000000018 /* laws.json */; };
+		C30000000000000000000049 /* onboarding-window-view.png in Resources */ = {isa = PBXBuildFile; fileRef = C30000000000000000000019 /* onboarding-window-view.png */; };
+		C30000000000000000000050 /* pro-evening-road.png in Resources */ = {isa = PBXBuildFile; fileRef = C30000000000000000000020 /* pro-evening-road.png */; };
+		C30000000000000000000051 /* onboarding-first-frame.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C30000000000000000000021 /* onboarding-first-frame.jpg */; };
+		C30000000000000000000052 /* onboarding-coastal.png in Resources */ = {isa = PBXBuildFile; fileRef = C30000000000000000000022 /* onboarding-coastal.png */; };
+		C30000000000000000000053 /* onboarding-world.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C30000000000000000000023 /* onboarding-world.jpg */; };
 		BD6B5C3727F2A22004F412D0 /* Pods_CamAlertNative.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 848716928BF6C56A930D4A45 /* Pods_CamAlertNative.framework */; };
 /* End PBXBuildFile section */
 
@@ -38,6 +44,12 @@
 		C30000000000000000000015 /* cameras-ua.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "Resources/cameras-ua.json"; sourceTree = "<group>"; };
 		C30000000000000000000016 /* cameras-pl.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "Resources/cameras-pl.json"; sourceTree = "<group>"; };
 		C30000000000000000000017 /* country-names.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "Resources/country-names.json"; sourceTree = "<group>"; };
+		C30000000000000000000018 /* laws.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "Resources/laws.json"; sourceTree = "<group>"; };
+		C30000000000000000000019 /* onboarding-window-view.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Resources/onboarding-window-view.png"; sourceTree = "<group>"; };
+		C30000000000000000000020 /* pro-evening-road.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Resources/pro-evening-road.png"; sourceTree = "<group>"; };
+		C30000000000000000000021 /* onboarding-first-frame.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Resources/onboarding-first-frame.jpg"; sourceTree = "<group>"; };
+		C30000000000000000000022 /* onboarding-coastal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Resources/onboarding-coastal.png"; sourceTree = "<group>"; };
+		C30000000000000000000023 /* onboarding-world.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Resources/onboarding-world.jpg"; sourceTree = "<group>"; };
 		BFA12AC4F7B10333C537780E /* Pods-CamAlertNative.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CamAlertNative.debug.xcconfig"; path = "Target Support Files/Pods-CamAlertNative/Pods-CamAlertNative.debug.xcconfig"; sourceTree = "<group>"; };
 		CA327834BD6004FECEA58897 /* Pods-CamAlertNative.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CamAlertNative.release.xcconfig"; path = "Target Support Files/Pods-CamAlertNative/Pods-CamAlertNative.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -89,6 +101,12 @@
 				C30000000000000000000015 /* cameras-ua.json */,
 				C30000000000000000000016 /* cameras-pl.json */,
 				C30000000000000000000017 /* country-names.json */,
+				C30000000000000000000018 /* laws.json */,
+				C30000000000000000000019 /* onboarding-window-view.png */,
+				C30000000000000000000020 /* pro-evening-road.png */,
+				C30000000000000000000021 /* onboarding-first-frame.jpg */,
+				C30000000000000000000022 /* onboarding-coastal.png */,
+				C30000000000000000000023 /* onboarding-world.jpg */,
 			);
 			path = CamAlertNative;
 			sourceTree = "<group>";
@@ -174,6 +192,12 @@
 				C30000000000000000000045 /* cameras-ua.json in Resources */,
 				C30000000000000000000046 /* cameras-pl.json in Resources */,
 				C30000000000000000000047 /* country-names.json in Resources */,
+				C30000000000000000000048 /* laws.json in Resources */,
+				C30000000000000000000049 /* onboarding-window-view.png in Resources */,
+				C30000000000000000000050 /* pro-evening-road.png in Resources */,
+				C30000000000000000000051 /* onboarding-first-frame.jpg in Resources */,
+				C30000000000000000000052 /* onboarding-coastal.png in Resources */,
+				C30000000000000000000053 /* onboarding-world.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

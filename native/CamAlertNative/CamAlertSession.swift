@@ -22,6 +22,11 @@ final class CamAlertSession {
     if defaults.object(forKey: "camalert.vibration") != nil { settings.vibration = defaults.bool(forKey: "camalert.vibration") }
     if defaults.object(forKey: "camalert.warnings") != nil { settings.cameraWarnings = defaults.bool(forKey: "camalert.warnings") }
     if defaults.object(forKey: "camalert.smart") != nil { settings.smartDistance = defaults.bool(forKey: "camalert.smart") }
+    if let theme = defaults.string(forKey: "camalert.theme") { settings.driveTheme = theme }
+    if defaults.object(forKey: "camalert.city") != nil { settings.cityDistance = defaults.double(forKey: "camalert.city") }
+    if defaults.object(forKey: "camalert.road") != nil { settings.roadDistance = defaults.double(forKey: "camalert.road") }
+    if defaults.object(forKey: "camalert.highway") != nil { settings.highwayDistance = defaults.double(forKey: "camalert.highway") }
+    if defaults.object(forKey: "camalert.fast") != nil { settings.fastDistance = defaults.double(forKey: "camalert.fast") }
     catalog.loadBundled()
   }
 
@@ -32,6 +37,11 @@ final class CamAlertSession {
     defaults.set(settings.vibration, forKey: "camalert.vibration")
     defaults.set(settings.cameraWarnings, forKey: "camalert.warnings")
     defaults.set(settings.smartDistance, forKey: "camalert.smart")
+    defaults.set(settings.driveTheme, forKey: "camalert.theme")
+    defaults.set(settings.cityDistance, forKey: "camalert.city")
+    defaults.set(settings.roadDistance, forKey: "camalert.road")
+    defaults.set(settings.highwayDistance, forKey: "camalert.highway")
+    defaults.set(settings.fastDistance, forKey: "camalert.fast")
   }
 
   func evaluate(latitude: Double, longitude: Double, speedKmh: Double, heading: Double?) -> WarningDecision? {
