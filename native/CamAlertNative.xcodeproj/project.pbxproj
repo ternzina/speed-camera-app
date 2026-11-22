@@ -15,6 +15,7 @@
 		C30000000000000000000042 /* CameraCatalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = C30000000000000000000012 /* CameraCatalog.swift */; };
 		C30000000000000000000043 /* CamAlertSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = C30000000000000000000013 /* CamAlertSession.swift */; };
 		C30000000000000000000044 /* CamAlertScreens.swift in Sources */ = {isa = PBXBuildFile; fileRef = C30000000000000000000014 /* CamAlertScreens.swift */; };
+		C30000000000000000000054 /* CamAlertProScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = C30000000000000000000024 /* CamAlertProScreen.swift */; };
 		C30000000000000000000045 /* cameras-ua.json in Resources */ = {isa = PBXBuildFile; fileRef = C30000000000000000000015 /* cameras-ua.json */; };
 		C30000000000000000000046 /* cameras-pl.json in Resources */ = {isa = PBXBuildFile; fileRef = C30000000000000000000016 /* cameras-pl.json */; };
 		C30000000000000000000047 /* country-names.json in Resources */ = {isa = PBXBuildFile; fileRef = C30000000000000000000017 /* country-names.json */; };
@@ -41,6 +42,7 @@
 		C30000000000000000000012 /* CameraCatalog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraCatalog.swift; sourceTree = "<group>"; };
 		C30000000000000000000013 /* CamAlertSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CamAlertSession.swift; sourceTree = "<group>"; };
 		C30000000000000000000014 /* CamAlertScreens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CamAlertScreens.swift; sourceTree = "<group>"; };
+		C30000000000000000000024 /* CamAlertProScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CamAlertProScreen.swift; sourceTree = "<group>"; };
 		C30000000000000000000015 /* cameras-ua.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "Resources/cameras-ua.json"; sourceTree = "<group>"; };
 		C30000000000000000000016 /* cameras-pl.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "Resources/cameras-pl.json"; sourceTree = "<group>"; };
 		C30000000000000000000017 /* country-names.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "Resources/country-names.json"; sourceTree = "<group>"; };
@@ -98,6 +100,7 @@
 				C30000000000000000000012 /* CameraCatalog.swift */,
 				C30000000000000000000013 /* CamAlertSession.swift */,
 				C30000000000000000000014 /* CamAlertScreens.swift */,
+				C30000000000000000000024 /* CamAlertProScreen.swift */,
 				C30000000000000000000015 /* cameras-ua.json */,
 				C30000000000000000000016 /* cameras-pl.json */,
 				C30000000000000000000017 /* country-names.json */,
@@ -257,6 +260,7 @@
 				C30000000000000000000042 /* CameraCatalog.swift in Sources */,
 				C30000000000000000000043 /* CamAlertSession.swift in Sources */,
 				C30000000000000000000044 /* CamAlertScreens.swift in Sources */,
+				C30000000000000000000054 /* CamAlertProScreen.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
