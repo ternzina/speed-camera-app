@@ -1,0 +1,2 @@
+#include "Pods/Target Support Files/Pods-CamAlertNative/Pods-CamAlertNative.debug.xcconfig"
+#include "Secrets.xcconfig"

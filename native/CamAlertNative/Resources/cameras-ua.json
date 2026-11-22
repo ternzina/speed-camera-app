@@ -1,0 +1,4267 @@
+{
+  "source": "https://patrolpolice.gov.ua/automatic_fixation/informatsiya-pro-vstanovleni-kaf/",
+  "retrieved_at": "2026-10-02",
+  "count": 426,
+  "cameras": [
+    {
+      "id": 1,
+      "road_index": "",
+      "region": "м. Київ",
+      "km": "",
+      "location": "вул. Олени Теліги, 37",
+      "speed_limit": 50,
+      "latitude": 50.479648646,
+      "longitude": 30.45352909
+    },
+    {
+      "id": 2,
+      "road_index": "",
+      "region": "м. Київ",
+      "km": "",
+      "location": "Набережне шосе, 4",
+      "speed_limit": 50,
+      "latitude": 50.456731,
+      "longitude": 30.530181
+    },
+    {
+      "id": 3,
+      "road_index": "",
+      "region": "м. Київ",
+      "km": "",
+      "location": "Дніпровська набережна / вул. Причальна",
+      "speed_limit": 50,
+      "latitude": 50.417382,
+      "longitude": 30.593149
+    },
+    {
+      "id": 4,
+      "road_index": "",
+      "region": "м. Київ",
+      "km": "",
+      "location": "вул. Братиславська, 18",
+      "speed_limit": 50,
+      "latitude": 50.46747729,
+      "longitude": 30.625613486
+    },
+    {
+      "id": 5,
+      "road_index": "",
+      "region": "м. Київ",
+      "km": "",
+      "location": "Чоколівський бульвар, 24",
+      "speed_limit": 50,
+      "latitude": 50.431336111,
+      "longitude": 30.455482947
+    },
+    {
+      "id": 6,
+      "road_index": "",
+      "region": "м. Київ",
+      "km": "",
+      "location": "міст Північний на лівий берег",
+      "speed_limit": 50,
+      "latitude": 50.492109248,
+      "longitude": 30.540926185
+    },
+    {
+      "id": 7,
+      "road_index": "",
+      "region": "м. Київ",
+      "km": "",
+      "location": "Броварський пр./ вул. Будівельників",
+      "speed_limit": 50,
+      "latitude": 50.455611515,
+      "longitude": 30.610071374
+    },
+    {
+      "id": 8,
+      "road_index": "",
+      "region": "м. Київ",
+      "km": "",
+      "location": "Броварський пр./ ст. м. Лівобережна",
+      "speed_limit": 50,
+      "latitude": 50.452832458,
+      "longitude": 30.601344401
+    },
+    {
+      "id": 9,
+      "road_index": "",
+      "region": "м. Київ",
+      "km": "",
+      "location": "міст Північний на правий берег",
+      "speed_limit": 50,
+      "latitude": 50.492321811,
+      "longitude": 30.540825865
+    },
+    {
+      "id": 10,
+      "road_index": "",
+      "region": "м. Київ",
+      "km": "",
+      "location": "міст Південний на лівий берег",
+      "speed_limit": 50,
+      "latitude": 50.394648576,
+      "longitude": 30.591239436
+    },
+    {
+      "id": 11,
+      "road_index": "",
+      "region": "м. Київ",
+      "km": "",
+      "location": "міст Південний на правий берег",
+      "speed_limit": 50,
+      "latitude": 50.395008881,
+      "longitude": 30.590516559
+    },
+    {
+      "id": 12,
+      "road_index": "",
+      "region": "м. Київ",
+      "km": "",
+      "location": "просп. Володимира Івасюка, 25",
+      "speed_limit": 50,
+      "latitude": 50.507666,
+      "longitude": 30.508167333
+    },
+    {
+      "id": 13,
+      "road_index": "",
+      "region": "м. Київ",
+      "km": "",
+      "location": "просп.Червоної Калини, 56",
+      "speed_limit": 50,
+      "latitude": 50.521646619,
+      "longitude": 30.619629217
+    },
+    {
+      "id": 14,
+      "road_index": "",
+      "region": "м. Київ",
+      "km": "",
+      "location": "просп.Червоної Калини, 65",
+      "speed_limit": 50,
+      "latitude": 50.515083812,
+      "longitude": 30.616043072
+    },
+    {
+      "id": 15,
+      "road_index": "",
+      "region": "м. Київ",
+      "km": "",
+      "location": "бульв. Миколи Міхновського, 36",
+      "speed_limit": 50,
+      "latitude": 50.420327553,
+      "longitude": 30.54907276
+    },
+    {
+      "id": 16,
+      "road_index": "",
+      "region": "м. Київ",
+      "km": "",
+      "location": "бульв. Миколи Міхновського, 27",
+      "speed_limit": 50,
+      "latitude": 50.419049234,
+      "longitude": 30.546285188
+    },
+    {
+      "id": 17,
+      "road_index": "",
+      "region": "м. Київ",
+      "km": "",
+      "location": "Столичне шосе, 58",
+      "speed_limit": 50,
+      "latitude": 50.327938943,
+      "longitude": 30.561003554
+    },
+    {
+      "id": 18,
+      "road_index": "",
+      "region": "м. Київ",
+      "km": "",
+      "location": "Столичне шосе, 58",
+      "speed_limit": 50,
+      "latitude": 50.328135411,
+      "longitude": 30.560799546
+    },
+    {
+      "id": 19,
+      "road_index": "",
+      "region": "м. Київ",
+      "km": "",
+      "location": "Харківська площа (лівий проїзд)",
+      "speed_limit": 50,
+      "latitude": 50.402691682,
+      "longitude": 30.681791267
+    },
+    {
+      "id": 20,
+      "road_index": "",
+      "region": "м. Київ",
+      "km": "",
+      "location": "Харківська площа (правий проїзд)",
+      "speed_limit": 50,
+      "latitude": 50.402308433,
+      "longitude": 30.68278043
+    },
+    {
+      "id": 21,
+      "road_index": "",
+      "region": "м. Київ",
+      "km": "",
+      "location": "вул. Братиславська, 9-Г",
+      "speed_limit": 50,
+      "latitude": 50.478137805,
+      "longitude": 30.617633744
+    },
+    {
+      "id": 22,
+      "road_index": "",
+      "region": "м. Київ",
+      "km": "",
+      "location": "вул. Рональда Рейгана (ст. назва Теодора Драйзера), 32",
+      "speed_limit": 50,
+      "latitude": 50.510666741,
+      "longitude": 30.596805241
+    },
+    {
+      "id": 23,
+      "road_index": "",
+      "region": "м. Київ",
+      "km": "",
+      "location": "вул. Наталії Ужвій, 1",
+      "speed_limit": 50,
+      "latitude": 50.504209271,
+      "longitude": 30.439399278
+    },
+    {
+      "id": 24,
+      "road_index": "",
+      "region": "м. Київ",
+      "km": "",
+      "location": "просп. Правди, 58",
+      "speed_limit": 50,
+      "latitude": 50.504728999,
+      "longitude": 30.438247938
+    },
+    {
+      "id": 25,
+      "road_index": "",
+      "region": "м. Київ",
+      "km": "",
+      "location": "вул. Ярослава Івашкевича, 5",
+      "speed_limit": 50,
+      "latitude": 50.505157303,
+      "longitude": 30.458702045
+    },
+    {
+      "id": 26,
+      "road_index": "",
+      "region": "м. Київ",
+      "km": "",
+      "location": "вул. Автозаводська, 24/1",
+      "speed_limit": 50,
+      "latitude": 50.505090685,
+      "longitude": 30.459498267
+    },
+    {
+      "id": 27,
+      "road_index": "",
+      "region": "м. Київ",
+      "km": "",
+      "location": "просп. Голосіївський, 96",
+      "speed_limit": 50,
+      "latitude": 50.390342531,
+      "longitude": 30.500533836
+    },
+    {
+      "id": 28,
+      "road_index": "",
+      "region": "м. Київ",
+      "km": "",
+      "location": "вул. Рональда Рейгана (ст. назва Теодора Драйзера), 4",
+      "speed_limit": 50,
+      "latitude": 50.501488561,
+      "longitude": 30.604526899
+    },
+    {
+      "id": 29,
+      "road_index": "",
+      "region": "м. Київ",
+      "km": "",
+      "location": "вул. Рональда Рейгана (ст. назва Теодора Драйзера), 9",
+      "speed_limit": 50,
+      "latitude": 50.501701456,
+      "longitude": 30.603790585
+    },
+    {
+      "id": 30,
+      "road_index": "",
+      "region": "м. Київ",
+      "km": "",
+      "location": "просп. Голосііївський, 96",
+      "speed_limit": 50,
+      "latitude": 50.390329409,
+      "longitude": 30.500937599
+    },
+    {
+      "id": 31,
+      "road_index": "",
+      "region": "м. Бердичів",
+      "km": "",
+      "location": "вул. Одеська, 27",
+      "speed_limit": 50,
+      "latitude": 49.882843453,
+      "longitude": 28.592221285
+    },
+    {
+      "id": 32,
+      "road_index": "",
+      "region": "м. Бориспіль",
+      "km": "",
+      "location": "вул. Броварська, 1-А",
+      "speed_limit": 50,
+      "latitude": 50.366257674,
+      "longitude": 30.920631618
+    },
+    {
+      "id": 33,
+      "road_index": "",
+      "region": "м. Бориспіль",
+      "km": "",
+      "location": "вул. Київський шлях, 2-Б",
+      "speed_limit": 50,
+      "latitude": 50.366314,
+      "longitude": 30.920041
+    },
+    {
+      "id": 34,
+      "road_index": "",
+      "region": "м. Біла Церква",
+      "km": "",
+      "location": "просп. Незалежності (ст. назва вул. Леваневського), 48",
+      "speed_limit": 50,
+      "latitude": 49.784826651,
+      "longitude": 30.15964129
+    },
+    {
+      "id": 35,
+      "road_index": "",
+      "region": "м. Біла Церква",
+      "km": "",
+      "location": "просп. Князя Володимира (біля вул. Надрічна, 96)",
+      "speed_limit": 50,
+      "latitude": 49.7851693,
+      "longitude": 30.1235142
+    },
+    {
+      "id": 36,
+      "road_index": "",
+      "region": "м. Біла Церква",
+      "km": "",
+      "location": "бульв. Олександрійський, 54",
+      "speed_limit": 50,
+      "latitude": 49.809675405,
+      "longitude": 30.095856195
+    },
+    {
+      "id": 37,
+      "road_index": "",
+      "region": "Київська область",
+      "km": "",
+      "location": "с. Білогородка, вул. Володимирська (біля вул. Завальна 2) (в напрямку вул. Київська)",
+      "speed_limit": 50,
+      "latitude": 50.397032,
+      "longitude": 30.23241
+    },
+    {
+      "id": 38,
+      "road_index": "",
+      "region": "м. Дніпро",
+      "km": "",
+      "location": "вул. Набережна Заводська, 64",
+      "speed_limit": 50,
+      "latitude": 48.490806,
+      "longitude": 34.971194
+    },
+    {
+      "id": 39,
+      "road_index": "",
+      "region": "м. Дніпро",
+      "km": "",
+      "location": "вул. Набережна Перемоги, 38-А",
+      "speed_limit": 50,
+      "latitude": 48.444639,
+      "longitude": 35.073028
+    },
+    {
+      "id": 40,
+      "road_index": "",
+      "region": "м. Вінниця",
+      "km": "",
+      "location": "вул. Келецька, 30",
+      "speed_limit": 50,
+      "latitude": 49.225992416,
+      "longitude": 28.438422039
+    },
+    {
+      "id": 41,
+      "road_index": "",
+      "region": "м. Вінниця",
+      "km": "",
+      "location": "вул. Київська, 126",
+      "speed_limit": 50,
+      "latitude": 49.26233354,
+      "longitude": 28.473140515
+    },
+    {
+      "id": 42,
+      "road_index": "",
+      "region": "м. Вінниця",
+      "km": "",
+      "location": "вул. Київська, 65",
+      "speed_limit": 50,
+      "latitude": 49.253494995,
+      "longitude": 28.472799408
+    },
+    {
+      "id": 43,
+      "road_index": "",
+      "region": "м. Вінниця",
+      "km": "",
+      "location": "вул. Пирогова, 61",
+      "speed_limit": 50,
+      "latitude": 49.223971451,
+      "longitude": 28.444260532
+    },
+    {
+      "id": 44,
+      "road_index": "",
+      "region": "м. Вінниця",
+      "km": "",
+      "location": "просп. Юності, 46",
+      "speed_limit": 50,
+      "latitude": 49.220940695,
+      "longitude": 28.41011404
+    },
+    {
+      "id": 45,
+      "road_index": "",
+      "region": "м. Житомир",
+      "km": "",
+      "location": "Чуднівський міст в напрямку вул. Качинського",
+      "speed_limit": 50,
+      "latitude": 50.246407813,
+      "longitude": 28.653959287
+    },
+    {
+      "id": 46,
+      "road_index": "",
+      "region": "м. Житомир",
+      "km": "",
+      "location": "Чуднівський міст в напрямку Радивилівська",
+      "speed_limit": 50,
+      "latitude": 50.247304887,
+      "longitude": 28.655245563
+    },
+    {
+      "id": 47,
+      "road_index": "",
+      "region": "м. Житомир",
+      "km": "",
+      "location": "вул. Перемоги, 86",
+      "speed_limit": 50,
+      "latitude": 50.274130846,
+      "longitude": 28.647820431
+    },
+    {
+      "id": 48,
+      "road_index": "",
+      "region": "м. Івано-Франківськ",
+      "km": "",
+      "location": "вул. Галицька, 144",
+      "speed_limit": 50,
+      "latitude": 48.949949711,
+      "longitude": 24.697047247
+    },
+    {
+      "id": 49,
+      "road_index": "",
+      "region": "м. Івано-Франківськ",
+      "km": "",
+      "location": "вул. Крихівецька, 216",
+      "speed_limit": 50,
+      "latitude": 48.893246317,
+      "longitude": 24.656172588
+    },
+    {
+      "id": 50,
+      "road_index": "",
+      "region": "м. Івано-Франківськ",
+      "km": "",
+      "location": "вул. Тисменицька, 311",
+      "speed_limit": 50,
+      "latitude": 48.911474177,
+      "longitude": 24.765657901
+    },
+    {
+      "id": 51,
+      "road_index": "",
+      "region": "м. Івано-Франківськ",
+      "km": "",
+      "location": "вул. Євгена Коновальця, 320",
+      "speed_limit": 50,
+      "latitude": 48.876089098,
+      "longitude": 24.706557984
+    },
+    {
+      "id": 52,
+      "road_index": "",
+      "region": "м. Івано-Франківськ",
+      "km": "",
+      "location": "вул. Євгена Коновальця, 411",
+      "speed_limit": 50,
+      "latitude": 48.875342748,
+      "longitude": 24.706662233
+    },
+    {
+      "id": 53,
+      "road_index": "",
+      "region": "м. Кременчук",
+      "km": "",
+      "location": "274-й квартал, 4",
+      "speed_limit": 50,
+      "latitude": 49.109669119,
+      "longitude": 33.437302785
+    },
+    {
+      "id": 54,
+      "road_index": "",
+      "region": "м. Кременчук",
+      "km": "",
+      "location": "просп. Свободи, 120/25",
+      "speed_limit": 50,
+      "latitude": 49.096119485,
+      "longitude": 33.431755901
+    },
+    {
+      "id": 55,
+      "road_index": "",
+      "region": "м. Кременчук",
+      "km": "",
+      "location": "просп. Полтавський, 265",
+      "speed_limit": 50,
+      "latitude": 49.116751537,
+      "longitude": 33.487266647
+    },
+    {
+      "id": 56,
+      "road_index": "",
+      "region": "м. Кременчук",
+      "km": "",
+      "location": "вул. Вадима Пугачова, 6-Д",
+      "speed_limit": 50,
+      "latitude": 49.09627079,
+      "longitude": 33.446887608
+    },
+    {
+      "id": 57,
+      "road_index": "",
+      "region": "м. Кременчук",
+      "km": "",
+      "location": "вул. Андрія Ковальова, 17",
+      "speed_limit": 50,
+      "latitude": 49.110197156,
+      "longitude": 33.437328367
+    },
+    {
+      "id": 58,
+      "road_index": "",
+      "region": "м. Кременчук",
+      "km": "",
+      "location": "просп. Свободи, 69-А",
+      "speed_limit": 50,
+      "latitude": 49.096474833,
+      "longitude": 33.431396787
+    },
+    {
+      "id": 59,
+      "road_index": "",
+      "region": "м. Кривий Ріг",
+      "km": "",
+      "location": "вул. Нікопольське шосе, 22 у напрямку вул. 21-ї бригади Національної гвардії",
+      "speed_limit": 50,
+      "latitude": 47.92614,
+      "longitude": 33.430032
+    },
+    {
+      "id": 60,
+      "road_index": "",
+      "region": "м. Кривий Ріг",
+      "km": "",
+      "location": "вул. Нікопольське шосе, 22 у напрямку Дніпровського шосе",
+      "speed_limit": 50,
+      "latitude": 47.926388,
+      "longitude": 33.4305
+    },
+    {
+      "id": 61,
+      "road_index": "",
+      "region": "м. Кривий Ріг",
+      "km": "",
+      "location": "вул. Вільної Ічкерії, 11",
+      "speed_limit": 50,
+      "latitude": 47.926452908,
+      "longitude": 33.387491642
+    },
+    {
+      "id": 62,
+      "road_index": "",
+      "region": "м. Кривий Ріг",
+      "km": "",
+      "location": "вул. Вільної Ічкерії, 13",
+      "speed_limit": 50,
+      "latitude": 47.924042572,
+      "longitude": 33.387548028
+    },
+    {
+      "id": 63,
+      "road_index": "",
+      "region": "м. Кривий Ріг",
+      "km": "",
+      "location": "просп. 200-річчя Кривого Рогу, 14 (навпроти) у напрямку вул. Співдружності",
+      "speed_limit": 50,
+      "latitude": 47.960027,
+      "longitude": 33.435972
+    },
+    {
+      "id": 64,
+      "road_index": "",
+      "region": "м. Кривий Ріг",
+      "km": "",
+      "location": "просп. 200-річчя Кривого Рогу, 14 у напрямку вул. Виноградна",
+      "speed_limit": 50,
+      "latitude": 47.960972,
+      "longitude": 33.435722
+    },
+    {
+      "id": 65,
+      "road_index": "",
+      "region": "м. Кропивницький",
+      "km": "",
+      "location": "вул. Габдрахманова, 50",
+      "speed_limit": 50,
+      "latitude": 48.507277511,
+      "longitude": 32.242755242
+    },
+    {
+      "id": 66,
+      "road_index": "",
+      "region": "м. Кропивницький",
+      "km": "",
+      "location": "вул. Габдрахманова, 35-А",
+      "speed_limit": 50,
+      "latitude": 48.506885696,
+      "longitude": 32.24270834
+    },
+    {
+      "id": 67,
+      "road_index": "",
+      "region": "м. Кропивницький",
+      "km": "",
+      "location": "вул. Яновського, 65",
+      "speed_limit": 50,
+      "latitude": 48.492737,
+      "longitude": 32.25648
+    },
+    {
+      "id": 68,
+      "road_index": "",
+      "region": "м. Кропивницький",
+      "km": "",
+      "location": "вул. Холодноярська, 196",
+      "speed_limit": 50,
+      "latitude": 48.577228,
+      "longitude": 32.24194
+    },
+    {
+      "id": 69,
+      "road_index": "",
+      "region": "м. Кропивницький",
+      "km": "",
+      "location": "вул. Полтавська, 40",
+      "speed_limit": 50,
+      "latitude": 48.52071,
+      "longitude": 32.286923
+    },
+    {
+      "id": 70,
+      "road_index": "",
+      "region": "м. Калуш",
+      "km": "",
+      "location": "просп. Лесі Українки, 27",
+      "speed_limit": 50,
+      "latitude": 49.027196,
+      "longitude": 24.361472
+    },
+    {
+      "id": 71,
+      "road_index": "",
+      "region": "м. Калуш",
+      "km": "",
+      "location": "вул. Богдана Хмельницького, 19",
+      "speed_limit": 50,
+      "latitude": 49.039757,
+      "longitude": 24.354834
+    },
+    {
+      "id": 72,
+      "road_index": "",
+      "region": "м. Луцьк",
+      "km": "",
+      "location": "вул. Ковельська, 147",
+      "speed_limit": 50,
+      "latitude": 50.754948239,
+      "longitude": 25.289081907
+    },
+    {
+      "id": 73,
+      "road_index": "",
+      "region": "м. Луцьк",
+      "km": "",
+      "location": "вул. В'ячеслава Чорновола, 17",
+      "speed_limit": 50,
+      "latitude": 50.748918937,
+      "longitude": 25.359178172
+    },
+    {
+      "id": 74,
+      "road_index": "",
+      "region": "м. Луцьк",
+      "km": "",
+      "location": "вул. Ковельська, 144",
+      "speed_limit": 50,
+      "latitude": 50.754411425,
+      "longitude": 25.289685076
+    },
+    {
+      "id": 75,
+      "road_index": "",
+      "region": "м. Луцьк",
+      "km": "",
+      "location": "вул. Конякіна, 18-А",
+      "speed_limit": 50,
+      "latitude": 50.769657767,
+      "longitude": 25.357070027
+    },
+    {
+      "id": 76,
+      "road_index": "",
+      "region": "м. Львів",
+      "km": "",
+      "location": "просп. Святого Івана Павла ІІ, 8",
+      "speed_limit": 50,
+      "latitude": 49.800429,
+      "longitude": 24.029371
+    },
+    {
+      "id": 77,
+      "road_index": "",
+      "region": "м. Львів",
+      "km": "",
+      "location": "просп. Святого Івана Павла ІІ, 35",
+      "speed_limit": 50,
+      "latitude": 49.800535,
+      "longitude": 24.031119
+    },
+    {
+      "id": 78,
+      "road_index": "",
+      "region": "м. Львів",
+      "km": "",
+      "location": "вул. Стрийська, 292",
+      "speed_limit": 50,
+      "latitude": 49.788716112,
+      "longitude": 24.014850132
+    },
+    {
+      "id": 79,
+      "road_index": "",
+      "region": "м. Львів",
+      "km": "",
+      "location": "вул. Стрийська, 35",
+      "speed_limit": 50,
+      "latitude": 49.816769857,
+      "longitude": 24.020148318
+    },
+    {
+      "id": 80,
+      "road_index": "",
+      "region": "м. Львів",
+      "km": "",
+      "location": "вул. Княгині Ольги, 100-К",
+      "speed_limit": 50,
+      "latitude": 49.817723712,
+      "longitude": 24.003101422
+    },
+    {
+      "id": 81,
+      "road_index": "",
+      "region": "м. Львів",
+      "km": "",
+      "location": "вул. Василя Стуса, 39",
+      "speed_limit": 50,
+      "latitude": 49.819003167,
+      "longitude": 24.042046833
+    },
+    {
+      "id": 82,
+      "road_index": "",
+      "region": "м. Львів",
+      "km": "",
+      "location": "вул. Володимира Великого, 18",
+      "speed_limit": 50,
+      "latitude": 49.810272721,
+      "longitude": 24.002662224
+    },
+    {
+      "id": 83,
+      "road_index": "",
+      "region": "м. Львів",
+      "km": "",
+      "location": "вул. Сихівська, 16А",
+      "speed_limit": 50,
+      "latitude": 49.794809743,
+      "longitude": 24.064363983
+    },
+    {
+      "id": 84,
+      "road_index": "",
+      "region": "м. Львів",
+      "km": "",
+      "location": "вул. Шевченка, 313",
+      "speed_limit": 50,
+      "latitude": 49.870329546,
+      "longitude": 23.945802112
+    },
+    {
+      "id": 85,
+      "road_index": "",
+      "region": "м. Львів",
+      "km": "",
+      "location": "вул. Любінська, 89",
+      "speed_limit": 50,
+      "latitude": 49.823763,
+      "longitude": 23.97674
+    },
+    {
+      "id": 86,
+      "road_index": "",
+      "region": "м. Львів",
+      "km": "",
+      "location": "вул. Любінська, 92",
+      "speed_limit": 50,
+      "latitude": 49.82457,
+      "longitude": 23.97782
+    },
+    {
+      "id": 87,
+      "road_index": "",
+      "region": "м. Львів",
+      "km": "",
+      "location": "вул. Богданівська, 44",
+      "speed_limit": 50,
+      "latitude": 49.856024,
+      "longitude": 24.075212
+    },
+    {
+      "id": 88,
+      "road_index": "",
+      "region": "м. Львів",
+      "km": "",
+      "location": "вул. Кульпарківська, 93",
+      "speed_limit": 50,
+      "latitude": 49.821078,
+      "longitude": 23.988639
+    },
+    {
+      "id": 89,
+      "road_index": "",
+      "region": "м. Львів",
+      "km": "",
+      "location": "вул. Кульпарківська, 64-А",
+      "speed_limit": 50,
+      "latitude": 49.826139,
+      "longitude": 23.989828
+    },
+    {
+      "id": 90,
+      "road_index": "",
+      "region": "м. Мукачево",
+      "km": "",
+      "location": "вул. Великогірна, 51",
+      "speed_limit": 50,
+      "latitude": 48.428169358,
+      "longitude": 22.743246101
+    },
+    {
+      "id": 91,
+      "road_index": "",
+      "region": "м. Миколаїв",
+      "km": "",
+      "location": "просп. Героїв України, 9-Т у напрямку пров. Парковий",
+      "speed_limit": 50,
+      "latitude": 46.986899303,
+      "longitude": 31.998135225
+    },
+    {
+      "id": 92,
+      "road_index": "",
+      "region": "м. Миколаїв",
+      "km": "",
+      "location": "просп. Героїв України, 9-Т у напрямку вул. Пушкінська",
+      "speed_limit": 50,
+      "latitude": 46.986318969,
+      "longitude": 31.998382908
+    },
+    {
+      "id": 93,
+      "road_index": "",
+      "region": "м. Миколаїв",
+      "km": "",
+      "location": "просп. Героїв України, 20",
+      "speed_limit": 50,
+      "latitude": 47.002175055,
+      "longitude": 31.99697919
+    },
+    {
+      "id": 94,
+      "road_index": "",
+      "region": "м. Миколаїв",
+      "km": "",
+      "location": "просп. Героїв України, 55",
+      "speed_limit": 50,
+      "latitude": 47.001858009,
+      "longitude": 31.997262228
+    },
+    {
+      "id": 95,
+      "road_index": "",
+      "region": "м. Миколаїв",
+      "km": "",
+      "location": "просп. Центральний, 160",
+      "speed_limit": 50,
+      "latitude": 46.965325247,
+      "longitude": 32.016361852
+    },
+    {
+      "id": 96,
+      "road_index": "",
+      "region": "м. Миколаїв",
+      "km": "",
+      "location": "просп. Центральний, 96",
+      "speed_limit": 50,
+      "latitude": 46.966308378,
+      "longitude": 31.999512255
+    },
+    {
+      "id": 97,
+      "road_index": "",
+      "region": "м. Миколаїв",
+      "km": "",
+      "location": "просп. Богоявленський, 140",
+      "speed_limit": 50,
+      "latitude": 46.917921563,
+      "longitude": 32.045738198
+    },
+    {
+      "id": 98,
+      "road_index": "",
+      "region": "м. Миколаїв",
+      "km": "",
+      "location": "просп. Богоявленський, 125",
+      "speed_limit": 50,
+      "latitude": 46.918633525,
+      "longitude": 32.045615133
+    },
+    {
+      "id": 99,
+      "road_index": "",
+      "region": "м. Миколаїв",
+      "km": "",
+      "location": "просп. Богоявленський, 55/2",
+      "speed_limit": 50,
+      "latitude": 46.927430678,
+      "longitude": 32.04498393
+    },
+    {
+      "id": 100,
+      "road_index": "",
+      "region": "м. Миколаїв",
+      "km": "",
+      "location": "просп. Богоявленський, 42-А",
+      "speed_limit": 50,
+      "latitude": 46.927069886,
+      "longitude": 32.04542666
+    },
+    {
+      "id": 101,
+      "road_index": "",
+      "region": "м. Миколаїв",
+      "km": "",
+      "location": "вул. Велика Морська, 13",
+      "speed_limit": 50,
+      "latitude": 46.980198996,
+      "longitude": 31.972648979
+    },
+    {
+      "id": 102,
+      "road_index": "",
+      "region": "м. Миколаїв",
+      "km": "",
+      "location": "просп. Центральний, 93",
+      "speed_limit": 50,
+      "latitude": 46.966000904,
+      "longitude": 31.999068159
+    },
+    {
+      "id": 103,
+      "road_index": "",
+      "region": "м. Одеса",
+      "km": "",
+      "location": "просп. Добровольського, 123-А",
+      "speed_limit": 50,
+      "latitude": 46.584943694,
+      "longitude": 30.789027593
+    },
+    {
+      "id": 104,
+      "road_index": "",
+      "region": "м. Одеса",
+      "km": "",
+      "location": "просп. Шевченка, 4-А",
+      "speed_limit": 50,
+      "latitude": 46.459230402,
+      "longitude": 30.749679943
+    },
+    {
+      "id": 105,
+      "road_index": "",
+      "region": "м. Одеса",
+      "km": "",
+      "location": "Миколаївська дорога, 287",
+      "speed_limit": 50,
+      "latitude": 46.552339509,
+      "longitude": 30.75869431
+    },
+    {
+      "id": 106,
+      "road_index": "",
+      "region": "м. Одеса",
+      "km": "",
+      "location": "просп. Небесної Сотні, 4",
+      "speed_limit": 50,
+      "latitude": 46.401493244,
+      "longitude": 30.709014314
+    },
+    {
+      "id": 107,
+      "road_index": "",
+      "region": "м. Одеса",
+      "km": "",
+      "location": "Миколаївська дорога, 205",
+      "speed_limit": 50,
+      "latitude": 46.535377126,
+      "longitude": 30.736285495
+    },
+    {
+      "id": 108,
+      "road_index": "",
+      "region": "м. Одеса",
+      "km": "",
+      "location": "вул. Семена Палія, 80",
+      "speed_limit": 50,
+      "latitude": 46.571250313,
+      "longitude": 30.792430396
+    },
+    {
+      "id": 109,
+      "road_index": "",
+      "region": "м. Одеса",
+      "km": "",
+      "location": "Південна дорога, 39",
+      "speed_limit": 50,
+      "latitude": 46.560850564,
+      "longitude": 30.779587265
+    },
+    {
+      "id": 110,
+      "road_index": "",
+      "region": "м. Одеса",
+      "km": "",
+      "location": "Південна дорога, 2",
+      "speed_limit": 50,
+      "latitude": 46.560663674,
+      "longitude": 30.779216306
+    },
+    {
+      "id": 111,
+      "road_index": "",
+      "region": "м. Одеса",
+      "km": "",
+      "location": "вул. Семена Палія, 25A",
+      "speed_limit": 50,
+      "latitude": 46.570918995,
+      "longitude": 30.792602017
+    },
+    {
+      "id": 112,
+      "road_index": "",
+      "region": "м. Полтава",
+      "km": "",
+      "location": "вул. Світанкова, 14",
+      "speed_limit": 50,
+      "latitude": 49.578069765,
+      "longitude": 34.492449277
+    },
+    {
+      "id": 113,
+      "road_index": "",
+      "region": "м. Полтава",
+      "km": "",
+      "location": "вул. Великотирнівська, 19",
+      "speed_limit": 50,
+      "latitude": 49.577323675,
+      "longitude": 34.492615293
+    },
+    {
+      "id": 114,
+      "road_index": "",
+      "region": "м. Полтава",
+      "km": "",
+      "location": "вул. Решетилівська, 35/14",
+      "speed_limit": 50,
+      "latitude": 49.599615147,
+      "longitude": 34.51403095
+    },
+    {
+      "id": 115,
+      "road_index": "",
+      "region": "м. Полтава",
+      "km": "",
+      "location": "вул. Решетилівська, 32",
+      "speed_limit": 50,
+      "latitude": 49.59987226,
+      "longitude": 34.515139886
+    },
+    {
+      "id": 116,
+      "road_index": "",
+      "region": "м. Полтава",
+      "km": "",
+      "location": "вул. Героїв АТО, 31",
+      "speed_limit": 50,
+      "latitude": 49.573296955,
+      "longitude": 34.52763214
+    },
+    {
+      "id": 117,
+      "road_index": "",
+      "region": "м. Полтава",
+      "km": "",
+      "location": "вул. Європейська, 108",
+      "speed_limit": 50,
+      "latitude": 49.566684155,
+      "longitude": 34.530103254
+    },
+    {
+      "id": 118,
+      "road_index": "",
+      "region": "м. Полтава",
+      "km": "",
+      "location": "вул. Європейська, 155",
+      "speed_limit": 50,
+      "latitude": 49.565620043,
+      "longitude": 34.529753953
+    },
+    {
+      "id": 119,
+      "road_index": "",
+      "region": "м. Павлоград",
+      "km": "",
+      "location": "вул. Дніпровська 409",
+      "speed_limit": 50,
+      "latitude": 48.501139,
+      "longitude": 35.9145
+    },
+    {
+      "id": 120,
+      "road_index": "",
+      "region": "м. Павлоград",
+      "km": "",
+      "location": "вул. Дніпровська, 16",
+      "speed_limit": 50,
+      "latitude": 48.52996,
+      "longitude": 35.841518
+    },
+    {
+      "id": 121,
+      "road_index": "",
+      "region": "м. Рівне",
+      "km": "",
+      "location": "вул. Київська, 92 в напрямку вул. Федорова",
+      "speed_limit": 50,
+      "latitude": 50.613657,
+      "longitude": 26.303767
+    },
+    {
+      "id": 122,
+      "road_index": "",
+      "region": "м. Рівне",
+      "km": "",
+      "location": "вул. Київська, 92 в напрямку вул. Захисників Маріуполя",
+      "speed_limit": 50,
+      "latitude": 50.61362,
+      "longitude": 26.30509
+    },
+    {
+      "id": 123,
+      "road_index": "",
+      "region": "м. Рівне",
+      "km": "",
+      "location": "вул. Соборна, 416",
+      "speed_limit": 50,
+      "latitude": 50.635843,
+      "longitude": 26.211943
+    },
+    {
+      "id": 124,
+      "road_index": "",
+      "region": "м. Тернопіль",
+      "km": "",
+      "location": "просп. Злуки, 47Б",
+      "speed_limit": 50,
+      "latitude": 49.557221752,
+      "longitude": 25.633085931
+    },
+    {
+      "id": 125,
+      "road_index": "",
+      "region": "м. Тернопіль",
+      "km": "",
+      "location": "просп. Злуки, 45Б",
+      "speed_limit": 50,
+      "latitude": 49.557571923,
+      "longitude": 25.631186302
+    },
+    {
+      "id": 126,
+      "road_index": "",
+      "region": "м. Тернопіль",
+      "km": "",
+      "location": "вул. Степана Будного, 28",
+      "speed_limit": 50,
+      "latitude": 49.541121927,
+      "longitude": 25.566854092
+    },
+    {
+      "id": 127,
+      "road_index": "",
+      "region": "м. Тернопіль",
+      "km": "",
+      "location": "вул. Протасевича, 8",
+      "speed_limit": 50,
+      "latitude": 49.542796207,
+      "longitude": 25.633201143
+    },
+    {
+      "id": 128,
+      "road_index": "",
+      "region": "м. Тернопіль",
+      "km": "",
+      "location": "просп. Степана Бандери, 90",
+      "speed_limit": 50,
+      "latitude": 49.548753303,
+      "longitude": 25.628049249
+    },
+    {
+      "id": 129,
+      "road_index": "",
+      "region": "м. Ужгород",
+      "km": "",
+      "location": "вул. Минайська, 8",
+      "speed_limit": 50,
+      "latitude": 48.611167,
+      "longitude": 22.291667
+    },
+    {
+      "id": 130,
+      "road_index": "",
+      "region": "м. Ужгород",
+      "km": "",
+      "location": "вул. Минайська, 24",
+      "speed_limit": 50,
+      "latitude": 48.606333,
+      "longitude": 22.288611
+    },
+    {
+      "id": 131,
+      "road_index": "",
+      "region": "м. Ужгород",
+      "km": "",
+      "location": "вул.Собранецька, 152",
+      "speed_limit": 50,
+      "latitude": 48.638989,
+      "longitude": 22.271784
+    },
+    {
+      "id": 132,
+      "road_index": "",
+      "region": "м. Хмельницький",
+      "km": "",
+      "location": "вул. Кам'янецька, 132",
+      "speed_limit": 50,
+      "latitude": 49.393275785,
+      "longitude": 26.956385164
+    },
+    {
+      "id": 133,
+      "road_index": "",
+      "region": "м. Хмельницький",
+      "km": "",
+      "location": "вул. Вінницьке шосе, 8/1",
+      "speed_limit": 50,
+      "latitude": 49.421743041,
+      "longitude": 27.066266602
+    },
+    {
+      "id": 134,
+      "road_index": "",
+      "region": "м. Хмельницький",
+      "km": "",
+      "location": "просп. Миру, 65",
+      "speed_limit": 50,
+      "latitude": 49.438579571,
+      "longitude": 27.004580873
+    },
+    {
+      "id": 135,
+      "road_index": "",
+      "region": "м. Хуст",
+      "km": "",
+      "location": "вул. Волошина, 81",
+      "speed_limit": 50,
+      "latitude": 48.180013227,
+      "longitude": 23.279630358
+    },
+    {
+      "id": 136,
+      "road_index": "",
+      "region": "м. Хуст",
+      "km": "",
+      "location": "вул. Івана Франка, 165",
+      "speed_limit": 50,
+      "latitude": 48.157288931,
+      "longitude": 23.304786611
+    },
+    {
+      "id": 137,
+      "road_index": "",
+      "region": "м. Хуст",
+      "km": "",
+      "location": "вул. Львівська, 157",
+      "speed_limit": 50,
+      "latitude": 48.187238243,
+      "longitude": 23.300804641
+    },
+    {
+      "id": 138,
+      "road_index": "",
+      "region": "м. Черкаси",
+      "km": "",
+      "location": "просп. Хіміків, 30",
+      "speed_limit": 50,
+      "latitude": 49.406840549,
+      "longitude": 32.046665118
+    },
+    {
+      "id": 139,
+      "road_index": "",
+      "region": "м. Черкаси",
+      "km": "",
+      "location": "вул. Благовісна 36/47",
+      "speed_limit": 50,
+      "latitude": 49.452627194,
+      "longitude": 32.034519816
+    },
+    {
+      "id": 140,
+      "road_index": "",
+      "region": "м. Черкаси",
+      "km": "",
+      "location": "вул. Надпільна, 208",
+      "speed_limit": 50,
+      "latitude": 49.443348658,
+      "longitude": 32.046736009
+    },
+    {
+      "id": 141,
+      "road_index": "",
+      "region": "м. Черкаси",
+      "km": "",
+      "location": "вул. Благовісна, 341/40",
+      "speed_limit": 50,
+      "latitude": 49.431805394,
+      "longitude": 32.07241725
+    },
+    {
+      "id": 142,
+      "road_index": "",
+      "region": "м. Черкаси",
+      "km": "",
+      "location": "просп. Хіміків, 50",
+      "speed_limit": 50,
+      "latitude": 49.406644333,
+      "longitude": 32.047587106
+    },
+    {
+      "id": 143,
+      "road_index": "",
+      "region": "м. Черкаси",
+      "km": "",
+      "location": "вул. Чорновола, 119",
+      "speed_limit": 50,
+      "latitude": 49.421379,
+      "longitude": 32.073555
+    },
+    {
+      "id": 144,
+      "road_index": "",
+      "region": "м. Черкаси",
+      "km": "",
+      "location": "вул. Сумгаїтська, 21 (у напрямку вул. Віталія Вергая)",
+      "speed_limit": 50,
+      "latitude": 49.435303,
+      "longitude": 32.016863
+    },
+    {
+      "id": 145,
+      "road_index": "",
+      "region": "м. Черкаси",
+      "km": "",
+      "location": "вул. Сумгаїтська, 21 (у напрямку вул. Академіка Корольова)",
+      "speed_limit": 50,
+      "latitude": 49.435211,
+      "longitude": 32.016323
+    },
+    {
+      "id": 146,
+      "road_index": "",
+      "region": "м. Чернівці",
+      "km": "",
+      "location": "просп. Незалежності 125",
+      "speed_limit": 50,
+      "latitude": 48.268111,
+      "longitude": 25.932944
+    },
+    {
+      "id": 147,
+      "road_index": "",
+      "region": "м. Чернівці",
+      "km": "",
+      "location": "просп. Незалежності 94",
+      "speed_limit": 50,
+      "latitude": 48.268694,
+      "longitude": 25.929639
+    },
+    {
+      "id": 148,
+      "road_index": "",
+      "region": "м. Чернівці",
+      "km": "",
+      "location": "вул. Героїв Майдану 160",
+      "speed_limit": 50,
+      "latitude": 48.272083,
+      "longitude": 25.928417
+    },
+    {
+      "id": 149,
+      "road_index": "",
+      "region": "м. Чернівці",
+      "km": "",
+      "location": "вул. Галицький шлях, 46-В",
+      "speed_limit": 50,
+      "latitude": 48.32175,
+      "longitude": 25.907278
+    },
+    {
+      "id": 150,
+      "road_index": "М-19-03",
+      "region": "м. Чернівці",
+      "km": "0+972",
+      "location": "Південний під'їзд до м. Чернівці",
+      "speed_limit": 50,
+      "latitude": 48.228889,
+      "longitude": 25.978444
+    },
+    {
+      "id": 151,
+      "road_index": "",
+      "region": "м. Чернівці",
+      "km": "",
+      "location": "вул. Винниченка, 116",
+      "speed_limit": 50,
+      "latitude": 48.277060523,
+      "longitude": 25.964965285
+    },
+    {
+      "id": 152,
+      "road_index": "",
+      "region": "м. Чернівці",
+      "km": "",
+      "location": "Старожучківський шлях у напрямку вул. Старокостянтинівська",
+      "speed_limit": 50,
+      "latitude": 48.297695969,
+      "longitude": 25.961748506
+    },
+    {
+      "id": 153,
+      "road_index": "",
+      "region": "м. Чернівці",
+      "km": "",
+      "location": "Старожучківський шлях у напрямку вул. Білоруська",
+      "speed_limit": 50,
+      "latitude": 48.298074436,
+      "longitude": 25.961180291
+    },
+    {
+      "id": 154,
+      "road_index": "",
+      "region": "м. Чернівці",
+      "km": "",
+      "location": "вул. Винниченка, 97",
+      "speed_limit": 50,
+      "latitude": 48.27733895,
+      "longitude": 25.965140904
+    },
+    {
+      "id": 155,
+      "road_index": "",
+      "region": "м. Чернігів",
+      "km": "",
+      "location": "перехрестя просп. Миру - вул. Лісковицька в напрямку вул. Урочище Святе",
+      "speed_limit": 50,
+      "latitude": 51.476482,
+      "longitude": 31.302757
+    },
+    {
+      "id": 156,
+      "road_index": "",
+      "region": "м. Чернігів",
+      "km": "",
+      "location": "вул. Шевченка, 101",
+      "speed_limit": 50,
+      "latitude": 51.506358,
+      "longitude": 31.337475
+    },
+    {
+      "id": 157,
+      "road_index": "",
+      "region": "м. Чернігів",
+      "km": "",
+      "location": "вул. Шевченка, 114",
+      "speed_limit": 50,
+      "latitude": 51.507212,
+      "longitude": 31.339237
+    },
+    {
+      "id": 158,
+      "road_index": "",
+      "region": "м. Чернігів",
+      "km": "",
+      "location": "просп. Левка Лук'яненка, 12 к2",
+      "speed_limit": 50,
+      "latitude": 51.510218369,
+      "longitude": 31.328522939
+    },
+    {
+      "id": 159,
+      "road_index": "",
+      "region": "м. Чернігів",
+      "km": "",
+      "location": "просп. Миру, 192",
+      "speed_limit": 50,
+      "latitude": 51.520277986,
+      "longitude": 31.273892338
+    },
+    {
+      "id": 160,
+      "road_index": "",
+      "region": "м. Чернігів",
+      "km": "",
+      "location": "просп. Миру, 296",
+      "speed_limit": 50,
+      "latitude": 51.533845284,
+      "longitude": 31.266375383
+    },
+    {
+      "id": 161,
+      "road_index": "",
+      "region": "м. Чернігів",
+      "km": "",
+      "location": "просп. Миру, 241-А",
+      "speed_limit": 50,
+      "latitude": 51.533478495,
+      "longitude": 31.266831146
+    },
+    {
+      "id": 162,
+      "road_index": "",
+      "region": "м. Чернігів",
+      "km": "",
+      "location": "вул. Івана Мазепи, 55",
+      "speed_limit": 50,
+      "latitude": 51.48144971,
+      "longitude": 31.271558375
+    },
+    {
+      "id": 163,
+      "road_index": "",
+      "region": "м. Чернігів",
+      "km": "",
+      "location": "вул. Івана Мазепи, 58",
+      "speed_limit": 50,
+      "latitude": 51.481467488,
+      "longitude": 31.271846397
+    },
+    {
+      "id": 164,
+      "road_index": "",
+      "region": "м. Чернігів",
+      "km": "",
+      "location": "вул. Жабинського, 2-Б (навпроти)",
+      "speed_limit": 50,
+      "latitude": 51.490189819,
+      "longitude": 31.269676283
+    },
+    {
+      "id": 165,
+      "road_index": "",
+      "region": "м. Чернігів",
+      "km": "",
+      "location": "вул. Козацька, 22 (навпроти)",
+      "speed_limit": 50,
+      "latitude": 51.512393836,
+      "longitude": 31.267252783
+    },
+    {
+      "id": 166,
+      "road_index": "М-01",
+      "region": "Київська область",
+      "km": "28+342",
+      "location": "Київ – Чернігів – Нові Яриловичі в напрямку м. Київ",
+      "speed_limit": 50,
+      "latitude": 50.507083,
+      "longitude": 30.84225
+    },
+    {
+      "id": 167,
+      "road_index": "М-01",
+      "region": "Київська область",
+      "km": "28+342",
+      "location": "Київ – Чернігів – Нові Яриловичі в напрямку м. Чернігів",
+      "speed_limit": 50,
+      "latitude": 50.50725,
+      "longitude": 30.841861
+    },
+    {
+      "id": 168,
+      "road_index": "M-03",
+      "region": "Київська область",
+      "km": "101+350",
+      "location": "Київ-Харків-Довжанський",
+      "speed_limit": 110,
+      "latitude": 50.206526523,
+      "longitude": 31.776737712
+    },
+    {
+      "id": 169,
+      "road_index": "M-03",
+      "region": "Київська область",
+      "km": "101+400",
+      "location": "Київ-Харків-Довжанський",
+      "speed_limit": 110,
+      "latitude": 50.206349063,
+      "longitude": 31.776124891
+    },
+    {
+      "id": 170,
+      "road_index": "М-03",
+      "region": "Київська область",
+      "km": "49+150",
+      "location": "Київ-Харків-Довжанський",
+      "speed_limit": 110,
+      "latitude": 50.307689466,
+      "longitude": 31.085828805
+    },
+    {
+      "id": 171,
+      "road_index": "M-05",
+      "region": "Київська область",
+      "km": "28+870",
+      "location": "Київ-Одеса",
+      "speed_limit": 110,
+      "latitude": 50.256225699,
+      "longitude": 30.306940114
+    },
+    {
+      "id": 172,
+      "road_index": "М-05",
+      "region": "Київська область",
+      "km": "19+400",
+      "location": "Київ-Одеса",
+      "speed_limit": 50,
+      "latitude": 50.318085323,
+      "longitude": 30.387992873
+    },
+    {
+      "id": 173,
+      "road_index": "M-05",
+      "region": "Київська область",
+      "km": "35+240",
+      "location": "Київ-Одеса",
+      "speed_limit": 50,
+      "latitude": 50.214179175,
+      "longitude": 30.250308779
+    },
+    {
+      "id": 174,
+      "road_index": "M-05",
+      "region": "Київська область",
+      "km": "35 + 352",
+      "location": "Київ-Одеса",
+      "speed_limit": 50,
+      "latitude": 50.213358378,
+      "longitude": 30.250002522
+    },
+    {
+      "id": 175,
+      "road_index": "M-05",
+      "region": "Київська область",
+      "km": "28 + 450",
+      "location": "Київ-Одеса",
+      "speed_limit": 70,
+      "latitude": 50.258287315,
+      "longitude": 30.310923782
+    },
+    {
+      "id": 176,
+      "road_index": "M-05",
+      "region": "Київська область",
+      "km": "24+400",
+      "location": "Київ-Одеса",
+      "speed_limit": 70,
+      "latitude": 50.281932801,
+      "longitude": 30.345964549
+    },
+    {
+      "id": 177,
+      "road_index": "M-05",
+      "region": "Київська область",
+      "km": "24+700",
+      "location": "Київ-Одеса",
+      "speed_limit": 70,
+      "latitude": 50.279347824,
+      "longitude": 30.344920959
+    },
+    {
+      "id": 178,
+      "road_index": "M-05",
+      "region": "Київська область",
+      "km": "15+250",
+      "location": "Київ-Одеса",
+      "speed_limit": 50,
+      "latitude": 50.346160598,
+      "longitude": 30.422015569
+    },
+    {
+      "id": 179,
+      "road_index": "M-05",
+      "region": "Київська область",
+      "km": "15+740",
+      "location": "Київ-Одеса",
+      "speed_limit": 50,
+      "latitude": 50.342830936,
+      "longitude": 30.417507574
+    },
+    {
+      "id": 180,
+      "road_index": "М-06",
+      "region": "Київська область",
+      "km": "21+730",
+      "location": "Київ-Чоп",
+      "speed_limit": 70,
+      "latitude": 50.446310145,
+      "longitude": 30.225973513
+    },
+    {
+      "id": 181,
+      "road_index": "М-06",
+      "region": "Київська область",
+      "km": "21+810",
+      "location": "Київ-Чоп",
+      "speed_limit": 70,
+      "latitude": 50.446327614,
+      "longitude": 30.226586532
+    },
+    {
+      "id": 182,
+      "road_index": "М-06",
+      "region": "Київська область",
+      "km": "49 + 700",
+      "location": "Київ-Чоп",
+      "speed_limit": 110,
+      "latitude": 50.418557212,
+      "longitude": 29.835235967
+    },
+    {
+      "id": 183,
+      "road_index": "М-06",
+      "region": "Київська область",
+      "km": "46+050",
+      "location": "Київ-Чоп",
+      "speed_limit": 110,
+      "latitude": 50.421495303,
+      "longitude": 29.886017119
+    },
+    {
+      "id": 184,
+      "road_index": "М-06",
+      "region": "Київська область",
+      "km": "66+250",
+      "location": "Київ-Чоп",
+      "speed_limit": 110,
+      "latitude": 50.412136102,
+      "longitude": 29.607616926
+    },
+    {
+      "id": 185,
+      "road_index": "M-07",
+      "region": "Київська область",
+      "km": "44+100",
+      "location": "Київ-Ковель-Ягодин",
+      "speed_limit": 90,
+      "latitude": 50.596001071,
+      "longitude": 30.018298938
+    },
+    {
+      "id": 186,
+      "road_index": "М-07",
+      "region": "Київська область",
+      "km": "37+700",
+      "location": "Київ-Ковель-Ягодин",
+      "speed_limit": 50,
+      "latitude": 50.568831759,
+      "longitude": 30.098156945
+    },
+    {
+      "id": 187,
+      "road_index": "P-01",
+      "region": "Київська область",
+      "km": "3+441",
+      "location": "Київ-Обухів",
+      "speed_limit": 50,
+      "latitude": 50.308709137,
+      "longitude": 30.571787545
+    },
+    {
+      "id": 188,
+      "road_index": "P-01",
+      "region": "Київська область",
+      "km": "3+461",
+      "location": "Київ-Обухів",
+      "speed_limit": 50,
+      "latitude": 50.308101724,
+      "longitude": 30.572394639
+    },
+    {
+      "id": 189,
+      "road_index": "P-01",
+      "region": "Київська область",
+      "km": "9+784",
+      "location": "Київ-Обухів",
+      "speed_limit": 50,
+      "latitude": 50.261512088,
+      "longitude": 30.618615795
+    },
+    {
+      "id": 190,
+      "road_index": "P-01",
+      "region": "Київська область",
+      "km": "9+994",
+      "location": "Київ-Обухів",
+      "speed_limit": 50,
+      "latitude": 50.259383011,
+      "longitude": 30.620388516
+    },
+    {
+      "id": 191,
+      "road_index": "P-01",
+      "region": "Київська область",
+      "km": "14+016",
+      "location": "Київ-Обухів",
+      "speed_limit": 50,
+      "latitude": 50.226536403,
+      "longitude": 30.643353059
+    },
+    {
+      "id": 192,
+      "road_index": "P-01",
+      "region": "Київська область",
+      "km": "14+116",
+      "location": "Київ-Обухів",
+      "speed_limit": 50,
+      "latitude": 50.225720333,
+      "longitude": 30.644214899
+    },
+    {
+      "id": 193,
+      "road_index": "P-02",
+      "region": "Київська область",
+      "km": "27+371",
+      "location": "Київ-Іванків-Овруч",
+      "speed_limit": 50,
+      "latitude": 50.652786,
+      "longitude": 30.408656
+    },
+    {
+      "id": 194,
+      "road_index": "P-02",
+      "region": "Київська область",
+      "km": "28+518",
+      "location": "Київ-Іванків-Овруч",
+      "speed_limit": 50,
+      "latitude": 50.662362,
+      "longitude": 30.403434
+    },
+    {
+      "id": 195,
+      "road_index": "H-01",
+      "region": "Київська область",
+      "km": "26+050",
+      "location": "Київ-Знамянка",
+      "speed_limit": 50,
+      "latitude": 50.253120067,
+      "longitude": 30.554389152
+    },
+    {
+      "id": 196,
+      "road_index": "H-01",
+      "region": "Київська область",
+      "km": "26+088",
+      "location": "Київ-Знамянка",
+      "speed_limit": 50,
+      "latitude": 50.253229051,
+      "longitude": 30.554770341
+    },
+    {
+      "id": 197,
+      "road_index": "М-05",
+      "region": "Кіровоградська область",
+      "km": "248+169",
+      "location": "Київ-Одеса",
+      "speed_limit": 110,
+      "latitude": 48.383985761,
+      "longitude": 30.246292617
+    },
+    {
+      "id": 198,
+      "road_index": "М-05",
+      "region": "Кіровоградська область",
+      "km": "253+462",
+      "location": "Київ-Одеса",
+      "speed_limit": 110,
+      "latitude": 48.337709264,
+      "longitude": 30.254345783
+    },
+    {
+      "id": 199,
+      "road_index": "М-21",
+      "region": "Вінницька область",
+      "km": "294+567",
+      "location": "Виступовичі–Житомир–Могилів-Подільський",
+      "speed_limit": 50,
+      "latitude": 49.320542206,
+      "longitude": 28.501842865
+    },
+    {
+      "id": 200,
+      "road_index": "М-21",
+      "region": "Вінницька область",
+      "km": "294+619",
+      "location": "Виступовичі–Житомир–Могилів-Подільський",
+      "speed_limit": 50,
+      "latitude": 49.320199139,
+      "longitude": 28.501113591
+    },
+    {
+      "id": 201,
+      "road_index": "М-21",
+      "region": "Вінницька область",
+      "km": "307+084",
+      "location": "Виступовичі–Житомир–Могилів-Подільський",
+      "speed_limit": 50,
+      "latitude": 49.242592,
+      "longitude": 28.404927
+    },
+    {
+      "id": 202,
+      "road_index": "M-30",
+      "region": "Вінницька область",
+      "km": "417+815",
+      "location": "Стрий-Умань-Дніпро-Ізварине",
+      "speed_limit": 50,
+      "latitude": 49.109723,
+      "longitude": 28.700791
+    },
+    {
+      "id": 203,
+      "road_index": "M-30",
+      "region": "Вінницька область",
+      "km": "376+261",
+      "location": "Стрий-Умань-Дніпро-Ізварине",
+      "speed_limit": 50,
+      "latitude": 49.2516049,
+      "longitude": 28.3628564
+    },
+    {
+      "id": 204,
+      "road_index": "M-30",
+      "region": "Вінницька область",
+      "km": "404+377",
+      "location": "Стрий-Умань-Дніпро-Ізварине",
+      "speed_limit": 50,
+      "latitude": 49.204126628,
+      "longitude": 28.604424435
+    },
+    {
+      "id": 205,
+      "road_index": "M-30",
+      "region": "Вінницька область",
+      "km": "490+890",
+      "location": "Стрий-Умань-Дніпро-Ізварине",
+      "speed_limit": 50,
+      "latitude": 48.809418482,
+      "longitude": 29.405347015
+    },
+    {
+      "id": 206,
+      "road_index": "M-30",
+      "region": "Вінницька область",
+      "km": "491+090",
+      "location": "Стрий-Умань-Дніпро-Ізварине",
+      "speed_limit": 50,
+      "latitude": 48.809323749,
+      "longitude": 29.408132621
+    },
+    {
+      "id": 207,
+      "road_index": "M-30",
+      "region": "Вінницька область",
+      "km": "404+640",
+      "location": "Стрий-Умань-Дніпро-Ізварине",
+      "speed_limit": 50,
+      "latitude": 49.202932779,
+      "longitude": 28.607569741
+    },
+    {
+      "id": 208,
+      "road_index": "M-30",
+      "region": "Вінницька область",
+      "km": "371+527",
+      "location": "Стрий-Умань-Дніпро-Ізварине",
+      "speed_limit": 50,
+      "latitude": 49.258878911,
+      "longitude": 28.298919312
+    },
+    {
+      "id": 209,
+      "road_index": "M-30",
+      "region": "Вінницька область",
+      "km": "417+514",
+      "location": "Стрий-Умань-Дніпро-Ізварине",
+      "speed_limit": 50,
+      "latitude": 49.1124126,
+      "longitude": 28.7003908
+    },
+    {
+      "id": 210,
+      "road_index": "M-30",
+      "region": "Вінницька область",
+      "km": "368+580",
+      "location": "Стрий-Умань-Дніпро-Ізварине",
+      "speed_limit": 50,
+      "latitude": 49.275977,
+      "longitude": 28.268218
+    },
+    {
+      "id": 211,
+      "road_index": "M-30",
+      "region": "Вінницька область",
+      "km": "368+488",
+      "location": "Стрий-Умань-Дніпро-Ізварине",
+      "speed_limit": 50,
+      "latitude": 49.276251,
+      "longitude": 28.266966
+    },
+    {
+      "id": 212,
+      "road_index": "M-07",
+      "region": "Волинська область",
+      "km": "444+971",
+      "location": "Київ-Ковель-Ягодин",
+      "speed_limit": 50,
+      "latitude": 51.202459843,
+      "longitude": 24.663809295
+    },
+    {
+      "id": 213,
+      "road_index": "М-19",
+      "region": "Волинська область",
+      "km": "142+324",
+      "location": "Доманове-Ковель-Чернівці-Тереблече",
+      "speed_limit": 50,
+      "latitude": 50.808389,
+      "longitude": 25.303111
+    },
+    {
+      "id": 214,
+      "road_index": "М-19",
+      "region": "Волинська область",
+      "km": "129+788",
+      "location": "Доманове-Ковель-Чернівці-Тереблече",
+      "speed_limit": 50,
+      "latitude": 50.879893631,
+      "longitude": 25.222557619
+    },
+    {
+      "id": 215,
+      "road_index": "М-19",
+      "region": "Волинська область",
+      "km": "125+475",
+      "location": "Доманове-Ковель-Чернівці-Тереблече",
+      "speed_limit": 50,
+      "latitude": 50.917254,
+      "longitude": 25.206143
+    },
+    {
+      "id": 216,
+      "road_index": "Р-15",
+      "region": "Волинська область",
+      "km": "74+273",
+      "location": "Ковель ‒ Володимир ‒ Червоноград ‒ Жовква",
+      "speed_limit": 50,
+      "latitude": 50.742417,
+      "longitude": 24.158703
+    },
+    {
+      "id": 217,
+      "road_index": "Р-15",
+      "region": "Волинська область",
+      "km": "76+247",
+      "location": "Ковель ‒ Володимир ‒ Червоноград ‒ Жовква",
+      "speed_limit": 50,
+      "latitude": 50.72637,
+      "longitude": 24.152168
+    },
+    {
+      "id": 218,
+      "road_index": "H-22",
+      "region": "Волинська область",
+      "km": "19+098",
+      "location": "Устилуг-Луцьк-Рівне",
+      "speed_limit": 50,
+      "latitude": 50.8204404,
+      "longitude": 24.3817723
+    },
+    {
+      "id": 219,
+      "road_index": "H-22",
+      "region": "Волинська область",
+      "km": "82+575",
+      "location": "Устилуг-Луцьк-Рівне",
+      "speed_limit": 50,
+      "latitude": 50.744346832,
+      "longitude": 25.243019272
+    },
+    {
+      "id": 220,
+      "road_index": "H-22",
+      "region": "Волинська область",
+      "km": "54+015",
+      "location": "Устилуг-Луцьк-Рівне",
+      "speed_limit": 50,
+      "latitude": 50.779361,
+      "longitude": 24.858139
+    },
+    {
+      "id": 221,
+      "road_index": "H-22",
+      "region": "Волинська область",
+      "km": "119+027",
+      "location": "Устилуг-Луцьк-Рівне",
+      "speed_limit": 50,
+      "latitude": 50.781621,
+      "longitude": 25.733929
+    },
+    {
+      "id": 222,
+      "road_index": "H-22",
+      "region": "Волинська область",
+      "km": "64+946",
+      "location": "Устилуг-Луцьк-Рівне",
+      "speed_limit": 50,
+      "latitude": 50.770055,
+      "longitude": 25.008017
+    },
+    {
+      "id": 223,
+      "road_index": "H-22",
+      "region": "Волинська область",
+      "km": "101+613",
+      "location": "Устилуг-Луцьк-Рівне",
+      "speed_limit": 50,
+      "latitude": 50.765066,
+      "longitude": 25.49378
+    },
+    {
+      "id": 224,
+      "road_index": "H-22",
+      "region": "Волинська область",
+      "km": "97+990",
+      "location": "Устилуг-Луцьк-Рівне",
+      "speed_limit": 50,
+      "latitude": 50.74875,
+      "longitude": 25.450667
+    },
+    {
+      "id": 225,
+      "road_index": "H-22",
+      "region": "Волинська область",
+      "km": "95+200",
+      "location": "Устилуг-Луцьк-Рівне",
+      "speed_limit": 50,
+      "latitude": 50.746036018,
+      "longitude": 25.411222638
+    },
+    {
+      "id": 226,
+      "road_index": "Н-08",
+      "region": "Дніпропетровська область",
+      "km": "423+643",
+      "location": "Бориспіль - Дніпро - Запоріжжя (через м. Кременчук) - Маріуполь",
+      "speed_limit": 50,
+      "latitude": 48.336318,
+      "longitude": 35.026958
+    },
+    {
+      "id": 227,
+      "road_index": "M-06",
+      "region": "Житомирська область",
+      "km": "94+461",
+      "location": "Київ-Чоп",
+      "speed_limit": 110,
+      "latitude": 50.342752848,
+      "longitude": 29.226628504
+    },
+    {
+      "id": 228,
+      "road_index": "M-06",
+      "region": "Житомирська область",
+      "km": "94+686",
+      "location": "Київ-Чоп",
+      "speed_limit": 110,
+      "latitude": 50.341938862,
+      "longitude": 29.223532982
+    },
+    {
+      "id": 229,
+      "road_index": "M-06",
+      "region": "Житомирська область",
+      "km": "97+297",
+      "location": "Київ-Чоп",
+      "speed_limit": 110,
+      "latitude": 50.336206479,
+      "longitude": 29.188069455
+    },
+    {
+      "id": 230,
+      "road_index": "M-06",
+      "region": "Житомирська область",
+      "km": "97+627",
+      "location": "Київ-Чоп",
+      "speed_limit": 110,
+      "latitude": 50.335189592,
+      "longitude": 29.18363081
+    },
+    {
+      "id": 231,
+      "road_index": "M-06",
+      "region": "Житомирська область",
+      "km": "158+305",
+      "location": "Київ-Чоп",
+      "speed_limit": 110,
+      "latitude": 50.316699761,
+      "longitude": 28.426503431
+    },
+    {
+      "id": 232,
+      "road_index": "M-06",
+      "region": "Житомирська область",
+      "km": "174+600",
+      "location": "Київ-Чоп",
+      "speed_limit": 110,
+      "latitude": 50.400617167,
+      "longitude": 28.245123459
+    },
+    {
+      "id": 233,
+      "road_index": "M-06",
+      "region": "Житомирська область",
+      "km": "127+246",
+      "location": "Київ-Чоп",
+      "speed_limit": 110,
+      "latitude": 50.286725962,
+      "longitude": 28.823627863
+    },
+    {
+      "id": 234,
+      "road_index": "M-06",
+      "region": "Житомирська область",
+      "km": "230+853",
+      "location": "Київ-Чоп",
+      "speed_limit": 110,
+      "latitude": 50.609254192,
+      "longitude": 27.586373165
+    },
+    {
+      "id": 235,
+      "road_index": "M-06",
+      "region": "Житомирська область",
+      "km": "247+134",
+      "location": "Київ-Чоп",
+      "speed_limit": 70,
+      "latitude": 50.607833,
+      "longitude": 27.365667
+    },
+    {
+      "id": 236,
+      "road_index": "М-06",
+      "region": "Житомирська область",
+      "km": "247+239",
+      "location": "Київ-Чоп",
+      "speed_limit": 70,
+      "latitude": 50.607745,
+      "longitude": 27.364551
+    },
+    {
+      "id": 237,
+      "road_index": "М-21",
+      "region": "Житомирська область",
+      "km": "190+150",
+      "location": "Виступовичі–Житомир–Могилів-Подільський",
+      "speed_limit": 50,
+      "latitude": 50.169457805,
+      "longitude": 28.655706177
+    },
+    {
+      "id": 238,
+      "road_index": "М-21",
+      "region": "Житомирська область",
+      "km": "167+547",
+      "location": "Виступовичі–Житомир–Могилів-Подільський",
+      "speed_limit": 50,
+      "latitude": 50.344862,
+      "longitude": 28.690257
+    },
+    {
+      "id": 239,
+      "road_index": "М-21",
+      "region": "Житомирська область",
+      "km": "230+919",
+      "location": "Виступовичі–Житомир–Могилів-Подільський",
+      "speed_limit": 50,
+      "latitude": 49.828292,
+      "longitude": 28.626459
+    },
+    {
+      "id": 240,
+      "road_index": "M-06",
+      "region": "Закарпатська область",
+      "km": "780+785",
+      "location": "Київ-Чоп",
+      "speed_limit": 50,
+      "latitude": 48.471466833,
+      "longitude": 22.600404833
+    },
+    {
+      "id": 241,
+      "road_index": "M-06",
+      "region": "Закарпатська область",
+      "km": "772+750",
+      "location": "Київ-Чоп",
+      "speed_limit": 50,
+      "latitude": 48.456472989,
+      "longitude": 22.701987568
+    },
+    {
+      "id": 242,
+      "road_index": "M-06",
+      "region": "Закарпатська область",
+      "km": "807 + 021",
+      "location": "Київ-Чоп",
+      "speed_limit": 50,
+      "latitude": 48.579194,
+      "longitude": 22.323477
+    },
+    {
+      "id": 243,
+      "road_index": "M-06",
+      "region": "Закарпатська область",
+      "km": "749 + 346",
+      "location": "Київ-Чоп",
+      "speed_limit": 90,
+      "latitude": 48.55995,
+      "longitude": 22.950553
+    },
+    {
+      "id": 244,
+      "road_index": "H-09",
+      "region": "Закарпатська область",
+      "km": "95+424",
+      "location": "Мукачево-Львів",
+      "speed_limit": 50,
+      "latitude": 48.020372994,
+      "longitude": 23.55218902
+    },
+    {
+      "id": 245,
+      "road_index": "H-09",
+      "region": "Закарпатська область",
+      "km": "98+824",
+      "location": "Мукачево-Львів",
+      "speed_limit": 50,
+      "latitude": 48.009847413,
+      "longitude": 23.592155539
+    },
+    {
+      "id": 246,
+      "road_index": "H-09",
+      "region": "Закарпатська область",
+      "km": "2+395",
+      "location": "Мукачево-Львів",
+      "speed_limit": 50,
+      "latitude": 48.437944,
+      "longitude": 22.747444
+    },
+    {
+      "id": 247,
+      "road_index": "Н-13",
+      "region": "Закарпатська область",
+      "km": "226+887",
+      "location": "Львів-Самбір-Ужгород",
+      "speed_limit": 50,
+      "latitude": 48.674028,
+      "longitude": 22.389333
+    },
+    {
+      "id": 248,
+      "road_index": "M-23",
+      "region": "Закарпатська область",
+      "km": "33+714",
+      "location": "Берегове-Виноградів-Велика Копаня",
+      "speed_limit": 50,
+      "latitude": 48.13973599,
+      "longitude": 22.996342544
+    },
+    {
+      "id": 249,
+      "road_index": "M-23",
+      "region": "Закарпатська область",
+      "km": "39+706",
+      "location": "Берегове-Виноградів-Велика Копаня",
+      "speed_limit": 50,
+      "latitude": 48.159415543,
+      "longitude": 23.042321071
+    },
+    {
+      "id": 250,
+      "road_index": "Т-07-19",
+      "region": "Закарпатська область",
+      "km": "0+694",
+      "location": "Іршава-Виноградів",
+      "speed_limit": 50,
+      "latitude": 48.309678618,
+      "longitude": 23.033015825
+    },
+    {
+      "id": 251,
+      "road_index": "М-08",
+      "region": "Закарпатська область",
+      "km": "7+734",
+      "location": "Обхід м. Ужгорода – КПП \"Ужгород\"",
+      "speed_limit": 50,
+      "latitude": 48.641194,
+      "longitude": 22.314083
+    },
+    {
+      "id": 252,
+      "road_index": "H-09",
+      "region": "Івано-Франківська область",
+      "km": "322+566",
+      "location": "Мукачево-Львів",
+      "speed_limit": 50,
+      "latitude": 48.981222,
+      "longitude": 24.706028
+    },
+    {
+      "id": 253,
+      "road_index": "H-09",
+      "region": "Івано-Франківська область",
+      "km": "244+199",
+      "location": "Мукачево-Львів",
+      "speed_limit": 50,
+      "latitude": 48.461485927,
+      "longitude": 24.564931279
+    },
+    {
+      "id": 254,
+      "road_index": "H-09",
+      "region": "Івано-Франківська область",
+      "km": "240+283",
+      "location": "Мукачево-Львів",
+      "speed_limit": 50,
+      "latitude": 48.436117158,
+      "longitude": 24.549702187
+    },
+    {
+      "id": 255,
+      "road_index": "H-09",
+      "region": "Івано-Франківська область",
+      "km": "227+233",
+      "location": "Мукачево-Львів",
+      "speed_limit": 50,
+      "latitude": 48.370277251,
+      "longitude": 24.563171632
+    },
+    {
+      "id": 256,
+      "road_index": "H-09",
+      "region": "Івано-Франківська область",
+      "km": "224+687",
+      "location": "Мукачево-Львів",
+      "speed_limit": 50,
+      "latitude": 48.358372,
+      "longitude": 24.563541
+    },
+    {
+      "id": 257,
+      "road_index": "H-09",
+      "region": "Івано-Франківська область",
+      "km": "260+135",
+      "location": "Мукачево-Львів",
+      "speed_limit": 50,
+      "latitude": 48.57723,
+      "longitude": 24.601121
+    },
+    {
+      "id": 258,
+      "road_index": "H-09",
+      "region": "Івано-Франківська область",
+      "km": "271+228",
+      "location": "Мукачево-Львів",
+      "speed_limit": 50,
+      "latitude": 48.656498,
+      "longitude": 24.582732
+    },
+    {
+      "id": 259,
+      "road_index": "Н-10",
+      "region": "Івано-Франківська область",
+      "km": "181+215",
+      "location": "Стрий - Івано-Франківськ - Чернівці - Мамалига",
+      "speed_limit": 50,
+      "latitude": 48.474211,
+      "longitude": 25.31455
+    },
+    {
+      "id": 260,
+      "road_index": "Н-10",
+      "region": "Івано-Франківська область",
+      "km": "83+308",
+      "location": "Стрий - Івано-Франківськ - Чернівці - Мамалига",
+      "speed_limit": 50,
+      "latitude": 49.009389,
+      "longitude": 24.569194
+    },
+    {
+      "id": 261,
+      "road_index": "Н-10",
+      "region": "Івано-Франківська область",
+      "km": "120+854",
+      "location": "Стрий - Івано-Франківськ - Чернівці - Мамалига",
+      "speed_limit": 50,
+      "latitude": 48.815472,
+      "longitude": 24.844611
+    },
+    {
+      "id": 262,
+      "road_index": "Н-10",
+      "region": "Івано-Франківська область",
+      "km": "124+050",
+      "location": "Стрий - Івано-Франківськ - Чернівці - Мамалига",
+      "speed_limit": 50,
+      "latitude": 48.789417,
+      "longitude": 24.859556
+    },
+    {
+      "id": 263,
+      "road_index": "Н-10",
+      "region": "Івано-Франківська область",
+      "km": "66+610",
+      "location": "Стрий - Івано-Франківськ - Чернівці - Мамалига",
+      "speed_limit": 50,
+      "latitude": 49.010972,
+      "longitude": 24.377111
+    },
+    {
+      "id": 264,
+      "road_index": "Н-09",
+      "region": "Івано-Франківська область",
+      "km": "233+618",
+      "location": "Мукачево - Львів",
+      "speed_limit": 50,
+      "latitude": 48.409848,
+      "longitude": 24.602904
+    },
+    {
+      "id": 265,
+      "road_index": "M-06",
+      "region": "Львівська область",
+      "km": "648+242",
+      "location": "Київ-Чоп",
+      "speed_limit": 50,
+      "latitude": 49.0705,
+      "longitude": 23.562222
+    },
+    {
+      "id": 266,
+      "road_index": "M-06",
+      "region": "Львівська область",
+      "km": "617+024",
+      "location": "Київ-Чоп",
+      "speed_limit": 50,
+      "latitude": 49.244778,
+      "longitude": 23.852861
+    },
+    {
+      "id": 267,
+      "road_index": "M-06",
+      "region": "Львівська область",
+      "km": "439+352",
+      "location": "Київ-Чоп",
+      "speed_limit": 50,
+      "latitude": 50.069273022,
+      "longitude": 25.165741312
+    },
+    {
+      "id": 268,
+      "road_index": "M-06",
+      "region": "Львівська область",
+      "km": "490 + 400",
+      "location": "Київ-Чоп",
+      "speed_limit": 50,
+      "latitude": 49.969215076,
+      "longitude": 24.592883054
+    },
+    {
+      "id": 269,
+      "road_index": "M-06",
+      "region": "Львівська область",
+      "km": "552+486",
+      "location": "Київ-Чоп",
+      "speed_limit": 90,
+      "latitude": 49.768767006,
+      "longitude": 24.020769109
+    },
+    {
+      "id": 270,
+      "road_index": "M-06",
+      "region": "Львівська область",
+      "km": "528+459",
+      "location": "Київ-Чоп (у напрямку м. Львів)",
+      "speed_limit": 50,
+      "latitude": 49.901777285,
+      "longitude": 24.149771233
+    },
+    {
+      "id": 271,
+      "road_index": "M-06",
+      "region": "Львівська область",
+      "km": "528+459",
+      "location": "Київ-Чоп (у напрямку м. Луцьк)",
+      "speed_limit": 50,
+      "latitude": 49.901947333,
+      "longitude": 24.149546479
+    },
+    {
+      "id": 272,
+      "road_index": "M-06",
+      "region": "Львівська область",
+      "km": "523+260",
+      "location": "Київ-Чоп",
+      "speed_limit": 50,
+      "latitude": 49.917198672,
+      "longitude": 24.201384075
+    },
+    {
+      "id": 273,
+      "road_index": "M-06",
+      "region": "Львівська область",
+      "km": "541+451",
+      "location": "Київ-Чоп",
+      "speed_limit": 50,
+      "latitude": 49.798920114,
+      "longitude": 24.147072386
+    },
+    {
+      "id": 274,
+      "road_index": "M-06",
+      "region": "Львівська область",
+      "km": "541+296",
+      "location": "Київ-Чоп",
+      "speed_limit": 50,
+      "latitude": 49.800237371,
+      "longitude": 24.147855496
+    },
+    {
+      "id": 275,
+      "road_index": "M-06",
+      "region": "Львівська область",
+      "km": "510+120",
+      "location": "Київ-Чоп",
+      "speed_limit": 50,
+      "latitude": 49.932608843,
+      "longitude": 24.365490295
+    },
+    {
+      "id": 276,
+      "road_index": "M-06",
+      "region": "Львівська область",
+      "km": "555+730",
+      "location": "Київ-Чоп",
+      "speed_limit": 50,
+      "latitude": 49.748719024,
+      "longitude": 24.014809349
+    },
+    {
+      "id": 277,
+      "road_index": "M-06",
+      "region": "Львівська область",
+      "km": "555+662",
+      "location": "Київ-Чоп",
+      "speed_limit": 50,
+      "latitude": 49.749283384,
+      "longitude": 24.01485663
+    },
+    {
+      "id": 278,
+      "road_index": "M-06",
+      "region": "Львівська область",
+      "km": "685+309",
+      "location": "Київ-Чоп",
+      "speed_limit": 50,
+      "latitude": 48.887983156,
+      "longitude": 23.250157489
+    },
+    {
+      "id": 279,
+      "road_index": "M-06",
+      "region": "Львівська область",
+      "km": "447 + 803",
+      "location": "Київ-Чоп",
+      "speed_limit": 50,
+      "latitude": 50.002740543,
+      "longitude": 25.115215961
+    },
+    {
+      "id": 280,
+      "road_index": "М-09",
+      "region": "Львівська область",
+      "km": "66+283",
+      "location": "Тернопіль-Львів-Рава-Руська",
+      "speed_limit": 50,
+      "latitude": 49.805139,
+      "longitude": 24.767028
+    },
+    {
+      "id": 281,
+      "road_index": "М-09",
+      "region": "Львівська область",
+      "km": "137+971",
+      "location": "Тернопіль-Львів-Рава-Руська",
+      "speed_limit": 50,
+      "latitude": 49.949948026,
+      "longitude": 24.056686643
+    },
+    {
+      "id": 282,
+      "road_index": "М-10",
+      "region": "Львівська область",
+      "km": "10+100",
+      "location": "Львів-Краковець",
+      "speed_limit": 50,
+      "latitude": 49.874451761,
+      "longitude": 23.888342981
+    },
+    {
+      "id": 283,
+      "road_index": "М-10",
+      "region": "Львівська область",
+      "km": "53 +580",
+      "location": "Львів-Краковець",
+      "speed_limit": 50,
+      "latitude": 49.934776252,
+      "longitude": 23.332832303
+    },
+    {
+      "id": 284,
+      "road_index": "М-10",
+      "region": "Львівська область",
+      "km": "21+671",
+      "location": "Львів-Краковець",
+      "speed_limit": 50,
+      "latitude": 49.910128008,
+      "longitude": 23.740702583
+    },
+    {
+      "id": 285,
+      "road_index": "М-10",
+      "region": "Львівська область",
+      "km": "16+281",
+      "location": "Львів-Краковець",
+      "speed_limit": 50,
+      "latitude": 49.889861,
+      "longitude": 23.806806
+    },
+    {
+      "id": 286,
+      "road_index": "М-10-01",
+      "region": "Львівська область",
+      "km": "12+514",
+      "location": "Західний обхід м. Львова",
+      "speed_limit": 50,
+      "latitude": 49.778094239,
+      "longitude": 23.975539371
+    },
+    {
+      "id": 287,
+      "road_index": "М-10-01",
+      "region": "Львівська область",
+      "km": "3+360",
+      "location": "Західний обхід м. Львова",
+      "speed_limit": 50,
+      "latitude": 49.838564209,
+      "longitude": 23.899195477
+    },
+    {
+      "id": 288,
+      "road_index": "М-11",
+      "region": "Львівська область",
+      "km": "16+153",
+      "location": "Львів-Шегині",
+      "speed_limit": 50,
+      "latitude": 49.80489745,
+      "longitude": 23.817576377
+    },
+    {
+      "id": 289,
+      "road_index": "М-11",
+      "region": "Львівська область",
+      "km": "58+876",
+      "location": "Львів-Шегині",
+      "speed_limit": 50,
+      "latitude": 49.801861,
+      "longitude": 23.242139
+    },
+    {
+      "id": 290,
+      "road_index": "М-11",
+      "region": "Львівська область",
+      "km": "62+177",
+      "location": "Львів-Шегині",
+      "speed_limit": 50,
+      "latitude": 49.801889,
+      "longitude": 23.197194
+    },
+    {
+      "id": 291,
+      "road_index": "М-11",
+      "region": "Львівська область",
+      "km": "13+317",
+      "location": "Львів-Шегині",
+      "speed_limit": 50,
+      "latitude": 49.810882,
+      "longitude": 23.85578
+    },
+    {
+      "id": 292,
+      "road_index": "Н-09",
+      "region": "Львівська область",
+      "km": "433+537",
+      "location": "Мукачево-Львів",
+      "speed_limit": 50,
+      "latitude": 49.751861,
+      "longitude": 24.141361
+    },
+    {
+      "id": 293,
+      "road_index": "Н-17",
+      "region": "Львівська область",
+      "km": "4 + 898",
+      "location": "Львів - Радехів - Луцьк",
+      "speed_limit": 50,
+      "latitude": 49.952889246,
+      "longitude": 24.204485539
+    },
+    {
+      "id": 294,
+      "road_index": "Н-17",
+      "region": "Львівська область",
+      "km": "3+064",
+      "location": "Львів - Радехів - Луцьк",
+      "speed_limit": 50,
+      "latitude": 49.944268023,
+      "longitude": 24.183025214
+    },
+    {
+      "id": 295,
+      "road_index": "М-11",
+      "region": "Львівська область",
+      "km": "71+630",
+      "location": "Львів - Шегині",
+      "speed_limit": 50,
+      "latitude": 49.804621,
+      "longitude": 23.076628
+    },
+    {
+      "id": 296,
+      "road_index": "М-05",
+      "region": "Миколаївська область",
+      "km": "294 + 260",
+      "location": "Київ-Одеса",
+      "speed_limit": 50,
+      "latitude": 47.974214384,
+      "longitude": 30.309845019
+    },
+    {
+      "id": 297,
+      "road_index": "М-14",
+      "region": "Миколаївська область",
+      "km": "139 + 684",
+      "location": "Одеса – Мелітополь – Новоазовськ",
+      "speed_limit": 50,
+      "latitude": 47.019090726,
+      "longitude": 31.995521962
+    },
+    {
+      "id": 298,
+      "road_index": "Н-24",
+      "region": "Миколаївська область",
+      "km": "191 + 346",
+      "location": "Благовіщанське - Миколаїв",
+      "speed_limit": 50,
+      "latitude": 47.279035768,
+      "longitude": 31.799938798
+    },
+    {
+      "id": 299,
+      "road_index": "М-05",
+      "region": "Одеська область",
+      "km": "465+483",
+      "location": "Київ-Одеса",
+      "speed_limit": 110,
+      "latitude": 46.503741863,
+      "longitude": 30.632437794
+    },
+    {
+      "id": 300,
+      "road_index": "М-05",
+      "region": "Одеська область",
+      "km": "364+792",
+      "location": "Київ-Одеса",
+      "speed_limit": 70,
+      "latitude": 47.355231,
+      "longitude": 30.306011
+    },
+    {
+      "id": 301,
+      "road_index": "M-15",
+      "region": "Одеська область",
+      "km": "96+449",
+      "location": "Одеса – Рені (на м. Бухарест)",
+      "speed_limit": 50,
+      "latitude": 46.135148,
+      "longitude": 29.903858
+    },
+    {
+      "id": 302,
+      "road_index": "M-15",
+      "region": "Одеська область",
+      "km": "120+354",
+      "location": "Одеса – Рені (на м. Бухарест)",
+      "speed_limit": 50,
+      "latitude": 46.002353,
+      "longitude": 29.687943
+    },
+    {
+      "id": 303,
+      "road_index": "M-15",
+      "region": "Одеська область",
+      "km": "125+949",
+      "location": "Одеса – Рені (на м. Бухарест)",
+      "speed_limit": 50,
+      "latitude": 45.952815,
+      "longitude": 29.696134
+    },
+    {
+      "id": 304,
+      "road_index": "M-15",
+      "region": "Одеська область",
+      "km": "190+050",
+      "location": "Одеса – Рені (на м. Бухарест)",
+      "speed_limit": 50,
+      "latitude": 45.702245,
+      "longitude": 29.069458
+    },
+    {
+      "id": 305,
+      "road_index": "M-15",
+      "region": "Одеська область",
+      "km": "229+530",
+      "location": "Одеса – Рені (на м. Бухарест)",
+      "speed_limit": 50,
+      "latitude": 45.40621,
+      "longitude": 28.866082
+    },
+    {
+      "id": 306,
+      "road_index": "M-15",
+      "region": "Одеська область",
+      "km": "237+550",
+      "location": "Одеса – Рені (на м. Бухарест)",
+      "speed_limit": 50,
+      "latitude": 45.372377,
+      "longitude": 28.78471
+    },
+    {
+      "id": 307,
+      "road_index": "M-15",
+      "region": "Одеська область",
+      "km": "271+315",
+      "location": "Одеса – Рені (на м. Бухарест)",
+      "speed_limit": 50,
+      "latitude": 45.32507,
+      "longitude": 28.453992
+    },
+    {
+      "id": 308,
+      "road_index": "M-15",
+      "region": "Одеська область",
+      "km": "39+423",
+      "location": "Одеса – Рені (на м. Бухарест)",
+      "speed_limit": 50,
+      "latitude": 46.416841,
+      "longitude": 30.281
+    },
+    {
+      "id": 309,
+      "road_index": "M-15",
+      "region": "Одеська область",
+      "km": "16+729",
+      "location": "Одеса – Рені (на м. Бухарест)",
+      "speed_limit": 50,
+      "latitude": 46.474562,
+      "longitude": 30.556013
+    },
+    {
+      "id": 310,
+      "road_index": "T-16-28",
+      "region": "Одеська область",
+      "km": "3+015",
+      "location": "Спаське-Вилково",
+      "speed_limit": 90,
+      "latitude": 45.73992806,
+      "longitude": 29.44041905
+    },
+    {
+      "id": 311,
+      "road_index": "М-28",
+      "region": "Одеська область",
+      "km": "17+125",
+      "location": "Одеса - Южне",
+      "speed_limit": 90,
+      "latitude": 46.561677,
+      "longitude": 30.831362
+    },
+    {
+      "id": 312,
+      "road_index": "М-28",
+      "region": "Одеська область",
+      "km": "20+980",
+      "location": "Одеса - Южне",
+      "speed_limit": 50,
+      "latitude": 46.570134,
+      "longitude": 30.87927
+    },
+    {
+      "id": 313,
+      "road_index": "M-03",
+      "region": "Полтавська область",
+      "km": "155+696",
+      "location": "Київ-Харків-Довжанський",
+      "speed_limit": 110,
+      "latitude": 50.225551501,
+      "longitude": 32.506604115
+    },
+    {
+      "id": 314,
+      "road_index": "M-03",
+      "region": "Полтавська область",
+      "km": "319+374",
+      "location": "Київ-Харків-Довжанський",
+      "speed_limit": 50,
+      "latitude": 49.600182049,
+      "longitude": 34.272511689
+    },
+    {
+      "id": 315,
+      "road_index": "M-03",
+      "region": "Полтавська область",
+      "km": "324+515",
+      "location": "Київ-Харків-Довжанський",
+      "speed_limit": 90,
+      "latitude": 49.604084021,
+      "longitude": 34.341063764
+    },
+    {
+      "id": 316,
+      "road_index": "М-22",
+      "region": "Полтавська область",
+      "km": "30 + 459",
+      "location": "Полтава-Олександрія",
+      "speed_limit": 50,
+      "latitude": 49.354218132,
+      "longitude": 34.30253125
+    },
+    {
+      "id": 317,
+      "road_index": "М-02",
+      "region": "Сумська область",
+      "km": "167+441",
+      "location": "Кіпті-Глухів-Бачівськ",
+      "speed_limit": 50,
+      "latitude": 51.528528,
+      "longitude": 33.396111
+    },
+    {
+      "id": 318,
+      "road_index": "М-09",
+      "region": "Тернопільська область",
+      "km": "12+205",
+      "location": "Тернопіль – Львів – Рава-Руська",
+      "speed_limit": 50,
+      "latitude": 49.607306,
+      "longitude": 25.408278
+    },
+    {
+      "id": 319,
+      "road_index": "М-19",
+      "region": "Тернопільська область",
+      "km": "303+307",
+      "location": "Доманове-Ковель-Чернівці-Тереблече",
+      "speed_limit": 90,
+      "latitude": 49.682694,
+      "longitude": 25.721639
+    },
+    {
+      "id": 320,
+      "road_index": "М-19",
+      "region": "Тернопільська область",
+      "km": "328+315",
+      "location": "Доманове-Ковель-Чернівці-Тереблече",
+      "speed_limit": 50,
+      "latitude": 49.497111,
+      "longitude": 25.614028
+    },
+    {
+      "id": 321,
+      "road_index": "М-19",
+      "region": "Тернопільська область",
+      "km": "374+935",
+      "location": "Доманове-Ковель-Чернівці-Тереблече",
+      "speed_limit": 50,
+      "latitude": 49.155353,
+      "longitude": 25.851281
+    },
+    {
+      "id": 322,
+      "road_index": "М-19",
+      "region": "Тернопільська область",
+      "km": "268+641",
+      "location": "Доманове-Ковель-Чернівці-Тереблече",
+      "speed_limit": 50,
+      "latitude": 49.985556,
+      "longitude": 25.77575
+    },
+    {
+      "id": 323,
+      "road_index": "М-19",
+      "region": "Тернопільська область",
+      "km": "316+542",
+      "location": "Доманове-Ковель-Чернівці-Тереблече",
+      "speed_limit": 50,
+      "latitude": 49.574806,
+      "longitude": 25.666361
+    },
+    {
+      "id": 324,
+      "road_index": "М-30",
+      "region": "Тернопільська область",
+      "km": "154+464",
+      "location": "Стрий-Умань-Дніпро-Ізварине",
+      "speed_limit": 50,
+      "latitude": 49.544722,
+      "longitude": 25.646306
+    },
+    {
+      "id": 325,
+      "road_index": "М-30",
+      "region": "Тернопільська область",
+      "km": "158+740",
+      "location": "Стрий-Умань-Дніпро-Ізварине",
+      "speed_limit": 50,
+      "latitude": 49.532722,
+      "longitude": 25.702417
+    },
+    {
+      "id": 326,
+      "road_index": "Р-41",
+      "region": "Тернопільська область",
+      "km": "0+738",
+      "location": "Об’їзд м.Тернополя",
+      "speed_limit": 50,
+      "latitude": 49.572767,
+      "longitude": 25.645289
+    },
+    {
+      "id": 327,
+      "road_index": "Н-18",
+      "region": "Тернопільська область",
+      "km": "48+821",
+      "location": "Івано-Франківськ – Бучач – Тернопіль",
+      "speed_limit": 50,
+      "latitude": 49.090722,
+      "longitude": 25.174861
+    },
+    {
+      "id": 328,
+      "road_index": "M-06",
+      "region": "Рівненська область",
+      "km": "340+202",
+      "location": "Київ-Чоп",
+      "speed_limit": 110,
+      "latitude": 50.582574044,
+      "longitude": 26.140464634
+    },
+    {
+      "id": 329,
+      "road_index": "M-06",
+      "region": "Рівненська область",
+      "km": "394+318",
+      "location": "Київ-Чоп",
+      "speed_limit": 50,
+      "latitude": 50.295209156,
+      "longitude": 25.614704258
+    },
+    {
+      "id": 330,
+      "road_index": "M-06",
+      "region": "Рівненська область",
+      "km": "371+971",
+      "location": "Київ-Чоп",
+      "speed_limit": 50,
+      "latitude": 50.439047922,
+      "longitude": 25.766674456
+    },
+    {
+      "id": 331,
+      "road_index": "M-06",
+      "region": "Рівненська область",
+      "km": "328+826",
+      "location": "Київ-Чоп",
+      "speed_limit": 70,
+      "latitude": 50.572236453,
+      "longitude": 26.276105653
+    },
+    {
+      "id": 332,
+      "road_index": "M-06",
+      "region": "Рівненська область",
+      "km": "325+770",
+      "location": "Київ-Чоп",
+      "speed_limit": 50,
+      "latitude": 50.581444,
+      "longitude": 26.316611
+    },
+    {
+      "id": 333,
+      "road_index": "M-06",
+      "region": "Рівненська область",
+      "km": "339+091",
+      "location": "Київ-Чоп",
+      "speed_limit": 50,
+      "latitude": 50.587668,
+      "longitude": 26.149632
+    },
+    {
+      "id": 334,
+      "road_index": "Н-25",
+      "region": "Хмельницька область",
+      "km": "250+404",
+      "location": "Городище - Рівне - Старокостянтинів",
+      "speed_limit": 50,
+      "latitude": 50.185583,
+      "longitude": 27.039306
+    },
+    {
+      "id": 335,
+      "road_index": "М-30",
+      "region": "Черкаська область",
+      "km": "548+324",
+      "location": "Стрий-Умань-Дніпро-Ізварине",
+      "speed_limit": 50,
+      "latitude": 48.73414,
+      "longitude": 30.164618
+    },
+    {
+      "id": 336,
+      "road_index": "Р-62",
+      "region": "Чернівецька область",
+      "km": "100+356",
+      "location": "Криворівня-Чернівці",
+      "speed_limit": 50,
+      "latitude": 48.1863,
+      "longitude": 25.77969
+    },
+    {
+      "id": 337,
+      "road_index": "М-01",
+      "region": "Чернігівська область",
+      "km": "113+864",
+      "location": "Київ-Чернігів-Нові Яриловичі",
+      "speed_limit": 50,
+      "latitude": 51.208031974,
+      "longitude": 31.213326247
+    },
+    {
+      "id": 338,
+      "road_index": "Р-56",
+      "region": "Чернігівська область",
+      "km": "6+801",
+      "location": "Чернігів - Чорнобиль",
+      "speed_limit": 50,
+      "latitude": 51.46759,
+      "longitude": 31.225893
+    },
+    {
+      "id": 339,
+      "road_index": "Н-27",
+      "region": "Чернігівська область",
+      "km": "11+903",
+      "location": "Чернігів-Мена-Сосниця-Грем’яч",
+      "speed_limit": 50,
+      "latitude": 51.542763082,
+      "longitude": 31.441879815
+    },
+    {
+      "id": 340,
+      "road_index": "",
+      "region": "м. Чернігів",
+      "km": "",
+      "location": "перехрестя пр-кт Миру - вул. Лісковицька (в напрямку вул. Шевченка)",
+      "speed_limit": 50,
+      "latitude": 51.476627,
+      "longitude": 31.302394
+    },
+    {
+      "id": 341,
+      "road_index": "M-06",
+      "region": "Житомирська область",
+      "km": "228 + 889",
+      "location": "Київ-Чоп",
+      "speed_limit": 70,
+      "latitude": 50.618894,
+      "longitude": 27.609172
+    },
+    {
+      "id": 342,
+      "road_index": "М07",
+      "region": "Київська область",
+      "km": "23 + 550",
+      "location": "Київ - Ковель - Ягодин",
+      "speed_limit": 50,
+      "latitude": 50.553370914,
+      "longitude": 30.28347603
+    },
+    {
+      "id": 343,
+      "road_index": "",
+      "region": "м. Чорноморськ",
+      "km": "",
+      "location": "перехр. вул. Захисників України та Віталія Шума",
+      "speed_limit": 50,
+      "latitude": 46.3030397,
+      "longitude": 30.6417671
+    },
+    {
+      "id": 344,
+      "road_index": "М-19",
+      "region": "Волинська область",
+      "km": "82+929",
+      "location": "Доманове - Тереблече",
+      "speed_limit": 50,
+      "latitude": 51.183526,
+      "longitude": 24.796231
+    },
+    {
+      "id": 345,
+      "road_index": "",
+      "region": "м. Бровари",
+      "km": "",
+      "location": "перехр. вул. Київська- вул. Героїв України – вул. Чорновола В’ячеслава (в напрямку м. Чернігів, зустрічний напрямок)",
+      "speed_limit": 50,
+      "latitude": 50.515296,
+      "longitude": 30.783976
+    },
+    {
+      "id": 346,
+      "road_index": "",
+      "region": "м. Бровари",
+      "km": "",
+      "location": "перехр. вул. Київська- вул. Героїв України – вул. Чорновола В’ячеслава (в напрямку м. Чернігів, попутний напрямок)",
+      "speed_limit": 50,
+      "latitude": 50.514333,
+      "longitude": 30.783599
+    },
+    {
+      "id": 347,
+      "road_index": "",
+      "region": "м. Бровари",
+      "km": "",
+      "location": "перехр. вул. Київська- вул. Шевченка (в напрямку м. Чернігів, зустрічний напрямок)",
+      "speed_limit": 50,
+      "latitude": 50.506307,
+      "longitude": 30.777072
+    },
+    {
+      "id": 348,
+      "road_index": "",
+      "region": "м. Бровари",
+      "km": "",
+      "location": "перехр. вул. Київська- вул. Шевченка (в напрямку м. Чернігів, попутний напрямок)",
+      "speed_limit": 50,
+      "latitude": 50.50559,
+      "longitude": 30.776793
+    },
+    {
+      "id": 349,
+      "road_index": "H-13",
+      "region": "Львівська область",
+      "km": "10+300",
+      "location": "Львів – Самбір – Ужгород",
+      "speed_limit": 50,
+      "latitude": 49.758932,
+      "longitude": 23.801057
+    },
+    {
+      "id": 350,
+      "road_index": "M-06",
+      "region": "Львівська область",
+      "km": "532+842",
+      "location": "Київ – Чоп",
+      "speed_limit": 50,
+      "latitude": 49.873379,
+      "longitude": 24.164498
+    },
+    {
+      "id": 351,
+      "road_index": "",
+      "region": "м. Обухів",
+      "km": "",
+      "location": "вул. Київська 119",
+      "speed_limit": 50,
+      "latitude": 50.130971,
+      "longitude": 30.658137
+    },
+    {
+      "id": 352,
+      "road_index": "",
+      "region": "м. Вінниця",
+      "km": "",
+      "location": "вул. В'ячеслава Чорновола (біля Київського мосту)",
+      "speed_limit": 50,
+      "latitude": 49.239593,
+      "longitude": 28.467521
+    },
+    {
+      "id": 353,
+      "road_index": "",
+      "region": "м. Вінниця",
+      "km": "",
+      "location": "перехр. Немирівського шосе та вулиці Покровська",
+      "speed_limit": 50,
+      "latitude": 49.223383,
+      "longitude": 28.551465
+    },
+    {
+      "id": 354,
+      "road_index": "P-15",
+      "region": "Львівська область",
+      "km": "137+290",
+      "location": "Ковель - Володимир - Червоноград - Жовква",
+      "speed_limit": 50,
+      "latitude": 50.240647,
+      "longitude": 24.138377
+    },
+    {
+      "id": 355,
+      "road_index": "M-11",
+      "region": "Львівська область",
+      "km": "56+820",
+      "location": "Львів – Шегині",
+      "speed_limit": 50,
+      "latitude": 49.800333,
+      "longitude": 23.270835
+    },
+    {
+      "id": 356,
+      "road_index": "",
+      "region": "м. Золотоноша",
+      "km": "",
+      "location": "вул. Шевченка 107",
+      "speed_limit": 50,
+      "latitude": 49.664417,
+      "longitude": 32.05375
+    },
+    {
+      "id": 357,
+      "road_index": "Р-02",
+      "region": "Київська область",
+      "km": "23+557",
+      "location": "Київ - Іванків - Овруч",
+      "speed_limit": 50,
+      "latitude": 50.627301,
+      "longitude": 30.442579
+    },
+    {
+      "id": 358,
+      "road_index": "M-11",
+      "region": "Львівська область",
+      "km": "24+490",
+      "location": "Львів – Шегині",
+      "speed_limit": 50,
+      "latitude": 49.788167,
+      "longitude": 23.704694
+    },
+    {
+      "id": 359,
+      "road_index": "P-15",
+      "region": "Львівська область",
+      "km": "151+021",
+      "location": "Ковель - Володимир - Червоноград - Жовква",
+      "speed_limit": 50,
+      "latitude": 50.132694,
+      "longitude": 24.052655
+    },
+    {
+      "id": 360,
+      "road_index": "М-06",
+      "region": "Львівська область",
+      "km": "584+510",
+      "location": "Київ - Чоп",
+      "speed_limit": 50,
+      "latitude": 49.510119,
+      "longitude": 23.9610172
+    },
+    {
+      "id": 361,
+      "road_index": "Н-10",
+      "region": "Івано-Франківська область",
+      "km": "89+147",
+      "location": "Н-10 Стрий-Мамалига",
+      "speed_limit": 50,
+      "latitude": 48.983361,
+      "longitude": 24.636333
+    },
+    {
+      "id": 362,
+      "road_index": "",
+      "region": "м. Вишгород",
+      "km": "",
+      "location": "перех. вул. Шолуденка - вул. Борисо-Глібська",
+      "speed_limit": 50,
+      "latitude": 50.596378,
+      "longitude": 30.47057
+    },
+    {
+      "id": 363,
+      "road_index": "",
+      "region": "м. Вишгород",
+      "km": "",
+      "location": "перех. просп. Шевченка - вул. Набережна,",
+      "speed_limit": 50,
+      "latitude": 50.581235,
+      "longitude": 30.494491
+    },
+    {
+      "id": 364,
+      "road_index": "",
+      "region": "м. Біла Церква",
+      "km": "",
+      "location": "бульвар Олександрійський, 113 (смуга руху в напрямку вул. Соборна)",
+      "speed_limit": 50,
+      "latitude": 49.8093581,
+      "longitude": 30.0956339
+    },
+    {
+      "id": 365,
+      "road_index": "",
+      "region": "м. Біла Церква",
+      "km": "",
+      "location": "м. Біла Церква, проспект Князя Володимира (спуск з шляхопроводу в напрямку вул. Людмили Павличенко)",
+      "speed_limit": 50,
+      "latitude": 49.78318,
+      "longitude": 30.1385152
+    },
+    {
+      "id": 366,
+      "road_index": "",
+      "region": "м. Біла Церква",
+      "km": "",
+      "location": "м. Біла Церква, просп. Незалежності, 40 смуга руху у напрямку вул. Людмили Павличенко",
+      "speed_limit": 50,
+      "latitude": 49.7854285,
+      "longitude": 30.1549716
+    },
+    {
+      "id": 367,
+      "road_index": "Н-10",
+      "region": "Івано-Франківська область",
+      "km": "56+938",
+      "location": "Стрий – Мамалига",
+      "speed_limit": 50,
+      "latitude": 49.005333,
+      "longitude": 24.247611
+    },
+    {
+      "id": 368,
+      "road_index": "M-15",
+      "region": "Одеська область",
+      "km": "141+319",
+      "location": "Одеса-Рені",
+      "speed_limit": 50,
+      "latitude": 45.841872274,
+      "longitude": 29.62793961
+    },
+    {
+      "id": 369,
+      "road_index": "M-15",
+      "region": "Одеська область",
+      "km": "142+028",
+      "location": "Одеса-Рені",
+      "speed_limit": 50,
+      "latitude": 45.8370743,
+      "longitude": 29.6220027
+    },
+    {
+      "id": 370,
+      "road_index": "Н-09",
+      "region": "Івано-Франківська область",
+      "km": "321+253",
+      "location": "Мукачево-Львів",
+      "speed_limit": 90,
+      "latitude": 48.969389,
+      "longitude": 24.704528
+    },
+    {
+      "id": 371,
+      "road_index": "М-06",
+      "region": "Львівська область",
+      "km": "645+057",
+      "location": "Київ – Чоп",
+      "speed_limit": 50,
+      "latitude": 49.093917,
+      "longitude": 23.58625
+    },
+    {
+      "id": 372,
+      "road_index": "Н-10",
+      "region": "Івано-Франківська область",
+      "km": "176+645",
+      "location": "Стрий – Мамалига",
+      "speed_limit": 50,
+      "latitude": 48.476601,
+      "longitude": 25.258786
+    },
+    {
+      "id": 373,
+      "road_index": "М-05",
+      "region": "Київська область",
+      "km": "38+825",
+      "location": "Київ-Одеса",
+      "speed_limit": 70,
+      "latitude": 50.185933,
+      "longitude": 30.218654
+    },
+    {
+      "id": 374,
+      "road_index": "М-05",
+      "region": "Київська область",
+      "km": "39+140",
+      "location": "Київ-Одеса",
+      "speed_limit": 70,
+      "latitude": 50.183132,
+      "longitude": 30.218108
+    },
+    {
+      "id": 375,
+      "road_index": "T-14-16",
+      "region": "Львівська область",
+      "km": "10+165",
+      "location": "Львів - Пустомити - Меденичі",
+      "speed_limit": 50,
+      "latitude": 49.7528896,
+      "longitude": 23.9413876
+    },
+    {
+      "id": 376,
+      "road_index": "М-02",
+      "region": "Чернігівська область",
+      "km": "125+385",
+      "location": "Кіпті-Глухів-Бачівськ",
+      "speed_limit": 50,
+      "latitude": 51.329269432,
+      "longitude": 32.894985735
+    },
+    {
+      "id": 377,
+      "road_index": "M-30",
+      "region": "Дніпропетровська область",
+      "km": "985+548",
+      "location": "Стрий – Ізварине",
+      "speed_limit": 50,
+      "latitude": 48.5653405,
+      "longitude": 35.1011315
+    },
+    {
+      "id": 378,
+      "road_index": "",
+      "region": "м. Рівне",
+      "km": "",
+      "location": "вул. Млинівська, 26",
+      "speed_limit": 50,
+      "latitude": 50.6445,
+      "longitude": 26.203944
+    },
+    {
+      "id": 379,
+      "road_index": "",
+      "region": "м. Рівне",
+      "km": "",
+      "location": "вул. Київська, 6",
+      "speed_limit": 50,
+      "latitude": 50.616694,
+      "longitude": 26.271278
+    },
+    {
+      "id": 380,
+      "road_index": "",
+      "region": "м. Рівне",
+      "km": "",
+      "location": "вул. Соборна, 364",
+      "speed_limit": 50,
+      "latitude": 50.626917,
+      "longitude": 26.224139
+    },
+    {
+      "id": 381,
+      "road_index": "",
+      "region": "м. Рівне",
+      "km": "",
+      "location": "вул. Захисників Маріуполя, 5",
+      "speed_limit": 50,
+      "latitude": 50.619583,
+      "longitude": 26.286333
+    },
+    {
+      "id": 382,
+      "road_index": "",
+      "region": "м. Рівне",
+      "km": "",
+      "location": "вул. Романа Шухевича, 2",
+      "speed_limit": 50,
+      "latitude": 50.634306,
+      "longitude": 26.265167
+    },
+    {
+      "id": 383,
+      "road_index": "М-06",
+      "region": "Рівненська область",
+      "km": "322+490",
+      "location": "Київ - Чоп",
+      "speed_limit": 50,
+      "latitude": 50.605518,
+      "longitude": 26.34063
+    },
+    {
+      "id": 384,
+      "road_index": "М-30",
+      "region": "Кіровоградська область",
+      "km": "784+099",
+      "location": "Стрий-Ізварине",
+      "speed_limit": 50,
+      "latitude": 48.675674,
+      "longitude": 32.890016
+    },
+    {
+      "id": 385,
+      "road_index": "",
+      "region": "м. Сміла",
+      "km": "",
+      "location": "перехр. вулиць Незалежності - Олеся Гончара",
+      "speed_limit": 50,
+      "latitude": 49.229639,
+      "longitude": 31.868611
+    },
+    {
+      "id": 386,
+      "road_index": "",
+      "region": "м. Рівне",
+      "km": "",
+      "location": "вул. Кулика і Гудачека, 10",
+      "speed_limit": 50,
+      "latitude": 50.616306,
+      "longitude": 26.20625
+    },
+    {
+      "id": 387,
+      "road_index": "",
+      "region": "м. Рівне",
+      "km": "",
+      "location": "перехр. вул. Соборна- В'ячеслава Чорновола - Міцкевича",
+      "speed_limit": 50,
+      "latitude": 50.619134,
+      "longitude": 26.251968
+    },
+    {
+      "id": 388,
+      "road_index": "",
+      "region": "м. Чернівці",
+      "km": "",
+      "location": "вул. Січових Стрільців, 6",
+      "speed_limit": 50,
+      "latitude": 48.289245,
+      "longitude": 25.957433
+    },
+    {
+      "id": 389,
+      "road_index": "М-11",
+      "region": "Львівська область",
+      "km": "50+620",
+      "location": "Львів-Шегині",
+      "speed_limit": 50,
+      "latitude": 49.803534,
+      "longitude": 23.35322
+    },
+    {
+      "id": 390,
+      "road_index": "Н-08",
+      "region": "Дніпропетровська область",
+      "km": "423+663",
+      "location": "Бориспіль-Маріуполь",
+      "speed_limit": 50,
+      "latitude": 48.336179,
+      "longitude": 35.026755
+    },
+    {
+      "id": 391,
+      "road_index": "P-15",
+      "region": "Волинська область",
+      "km": "72+938",
+      "location": "Ковель-Володимир-Червоноград-Жовква",
+      "speed_limit": 50,
+      "latitude": 50.748889,
+      "longitude": 24.174667
+    },
+    {
+      "id": 392,
+      "road_index": "М-06",
+      "region": "Закарпатська область",
+      "km": "805+120",
+      "location": "Київ-Чоп",
+      "speed_limit": 50,
+      "latitude": 48.571333,
+      "longitude": 22.344306
+    },
+    {
+      "id": 393,
+      "road_index": "",
+      "region": "м. Житомир",
+      "km": "",
+      "location": "вул. Покровська, 21",
+      "speed_limit": 50,
+      "latitude": 50.26065,
+      "longitude": 28.66118
+    },
+    {
+      "id": 394,
+      "road_index": "",
+      "region": "м. Житомир",
+      "km": "",
+      "location": "вул. Покровська, 148а",
+      "speed_limit": 50,
+      "latitude": 50.292845,
+      "longitude": 28.65659
+    },
+    {
+      "id": 395,
+      "road_index": "",
+      "region": "м. Житомир",
+      "km": "",
+      "location": "вул. Покровська, 187",
+      "speed_limit": 50,
+      "latitude": 50.292893,
+      "longitude": 28.656333
+    },
+    {
+      "id": 396,
+      "road_index": "Н-16",
+      "region": "Черкаська область",
+      "km": "192+446",
+      "location": "Золотоноша-Черкаси-Сміла-Умань",
+      "speed_limit": 50,
+      "latitude": 48.802962,
+      "longitude": 30.560558
+    },
+    {
+      "id": 397,
+      "road_index": "",
+      "region": "м. Чернівці",
+      "km": "",
+      "location": "вул.Хотинська, 3",
+      "speed_limit": 50,
+      "latitude": 48.316058,
+      "longitude": 25.92331
+    },
+    {
+      "id": 398,
+      "road_index": "",
+      "region": "м. Сміла",
+      "km": "",
+      "location": "перехр. вул. Героїв Холодноярців - пров. Олексія Цибка",
+      "speed_limit": 50,
+      "latitude": 49.228917,
+      "longitude": 31.906583
+    },
+    {
+      "id": 399,
+      "road_index": "М-06",
+      "region": "Закарпатська область",
+      "km": "805+120",
+      "location": "Київ-Чоп",
+      "speed_limit": 50,
+      "latitude": 48.571333,
+      "longitude": 22.344306
+    },
+    {
+      "id": 400,
+      "road_index": "М-30",
+      "region": "Черкаська область",
+      "km": "530+055",
+      "location": "Стрий-Умань-Дніпро-Ізварине",
+      "speed_limit": 70,
+      "latitude": 48.7905,
+      "longitude": 29.934833
+    },
+    {
+      "id": 401,
+      "road_index": "",
+      "region": "м. Миколаїв",
+      "km": "",
+      "location": "перехрестя вул. Марка Кропивницького та вул. Інженерна",
+      "speed_limit": 50,
+      "latitude": 46.967682,
+      "longitude": 32.000191
+    },
+    {
+      "id": 402,
+      "road_index": "",
+      "region": "м. Стрий",
+      "km": "",
+      "location": "перехр. вул. Шевченка та Олесницького",
+      "speed_limit": 50,
+      "latitude": 49.257528,
+      "longitude": 23.849306
+    },
+    {
+      "id": 403,
+      "road_index": "М-19",
+      "region": "Волинська область",
+      "km": "155+608",
+      "location": "Доманово-Ковель-Чернівці-Тереблече",
+      "speed_limit": 50,
+      "latitude": 50.761083,
+      "longitude": 25.400239
+    },
+    {
+      "id": 404,
+      "road_index": "М-19",
+      "region": "Волинська область",
+      "km": "154+741",
+      "location": "Доманово-Ковель-Чернівці-Тереблече",
+      "speed_limit": 50,
+      "latitude": 50.768917,
+      "longitude": 25.399306
+    },
+    {
+      "id": 405,
+      "road_index": "Н-13",
+      "region": "Закарпатська область",
+      "km": "229+122",
+      "location": "Львів-Самбір-Ужгород",
+      "speed_limit": 50,
+      "latitude": 48.662167,
+      "longitude": 22.364528
+    },
+    {
+      "id": 406,
+      "road_index": "Н-09",
+      "region": "Закарпатська область",
+      "km": "15+826",
+      "location": "Мукачево-Львів",
+      "speed_limit": 50,
+      "latitude": 48.361928,
+      "longitude": 22.859482
+    },
+    {
+      "id": 407,
+      "road_index": "М-06",
+      "region": "Рівненська область",
+      "km": "299+873",
+      "location": "Київ-Чоп",
+      "speed_limit": 50,
+      "latitude": 50.609055,
+      "longitude": 26.64087
+    },
+    {
+      "id": 408,
+      "road_index": "М-06",
+      "region": "Рівненська область",
+      "km": "299+894",
+      "location": "Київ-Чоп",
+      "speed_limit": 50,
+      "latitude": 50.608738,
+      "longitude": 26.64094
+    },
+    {
+      "id": 409,
+      "road_index": "М-06",
+      "region": "Рівненська область",
+      "km": "349+001",
+      "location": "Київ-Чоп",
+      "speed_limit": 50,
+      "latitude": 50.534167,
+      "longitude": 26.042139
+    },
+    {
+      "id": 410,
+      "road_index": "М-06",
+      "region": "Рівненська область",
+      "km": "346+900",
+      "location": "Київ-Чоп",
+      "speed_limit": 50,
+      "latitude": 50.546111,
+      "longitude": 26.066139
+    },
+    {
+      "id": 411,
+      "road_index": "М-30",
+      "region": "Вінницька область",
+      "km": "336+814",
+      "location": "Стрий-Умань-Дніпро-Ізварине",
+      "speed_limit": 50,
+      "latitude": 49.391199,
+      "longitude": 27.885225
+    },
+    {
+      "id": 412,
+      "road_index": "М-30",
+      "region": "Вінницька область",
+      "km": "336+906",
+      "location": "Стрий-Умань-Дніпро-Ізварине",
+      "speed_limit": 50,
+      "latitude": 49.391234,
+      "longitude": 27.886478
+    },
+    {
+      "id": 413,
+      "road_index": "H-01",
+      "region": "Київська область",
+      "km": "80+444",
+      "location": "Київ – Знам’янка",
+      "speed_limit": 50,
+      "latitude": 49.86392,
+      "longitude": 30.829376
+    },
+    {
+      "id": 414,
+      "road_index": "H-01",
+      "region": "Київська область",
+      "km": "79+010",
+      "location": "Київ – Знам’янка",
+      "speed_limit": 50,
+      "latitude": 49.873391,
+      "longitude": 30.823603
+    },
+    {
+      "id": 415,
+      "road_index": "М-21-01",
+      "region": "Житомирська область",
+      "km": "2 + 283",
+      "location": "Північний під’їзд до м. Бердичева",
+      "speed_limit": 50,
+      "latitude": 49.930267,
+      "longitude": 28.603913
+    },
+    {
+      "id": 416,
+      "road_index": "",
+      "region": "м. Житомир",
+      "km": "",
+      "location": "перехр. просп. Незалежності - вул. Отаманів Соколовських",
+      "speed_limit": 50,
+      "latitude": 50.272938,
+      "longitude": 28.666637
+    },
+    {
+      "id": 417,
+      "road_index": "",
+      "region": "м. Житомир",
+      "km": "",
+      "location": "вул. Чуднівська, 103",
+      "speed_limit": 50,
+      "latitude": 50.245238,
+      "longitude": 28.638642
+    },
+    {
+      "id": 418,
+      "road_index": "М-09",
+      "region": "Львівська область",
+      "km": "110+049",
+      "location": "Тернопіль-Львів-Рава-Руська",
+      "speed_limit": 50,
+      "latitude": 49.815417,
+      "longitude": 24.203444
+    },
+    {
+      "id": 419,
+      "road_index": "М-10",
+      "region": "Львівська область",
+      "km": "23+475",
+      "location": "Львів-Краковець",
+      "speed_limit": 50,
+      "latitude": 49.922342,
+      "longitude": 23.72894
+    },
+    {
+      "id": 420,
+      "road_index": "М-19",
+      "region": "Тернопільська область",
+      "km": "250+096",
+      "location": "Доманово-Ковель-Чернівці-Тереблече",
+      "speed_limit": 50,
+      "latitude": 50.113487,
+      "longitude": 25.692679
+    },
+    {
+      "id": 421,
+      "road_index": "М-30",
+      "region": "Кіровоградська область",
+      "km": "619+385",
+      "location": "Стрий-Умань-Дніпро-Ізварине",
+      "speed_limit": 50,
+      "latitude": 48.62994,
+      "longitude": 31.063788
+    },
+    {
+      "id": 422,
+      "road_index": "P-69",
+      "region": "Київська область",
+      "km": "27+784",
+      "location": "Київ – Вишгород – Десна – Чернігів",
+      "speed_limit": 50,
+      "latitude": 50.585588,
+      "longitude": 30.524827
+    },
+    {
+      "id": 423,
+      "road_index": "Н-07",
+      "region": "Київська область",
+      "km": "2+817",
+      "location": "Київ-Суми-Юнаківка",
+      "speed_limit": 50,
+      "latitude": 50.525667,
+      "longitude": 30.912694
+    },
+    {
+      "id": 424,
+      "road_index": "М-01-01",
+      "region": "Київська область",
+      "km": "0+459",
+      "location": "Східний під'їзд до м. Броварів",
+      "speed_limit": 50,
+      "latitude": 50.564389,
+      "longitude": 30.822333
+    },
+    {
+      "id": 425,
+      "road_index": "M-07",
+      "region": "Київська область",
+      "km": "21+843",
+      "location": "Київ – Ковель – Ягодин",
+      "speed_limit": 50,
+      "latitude": 50.547658,
+      "longitude": 30.303145
+    },
+    {
+      "id": 426,
+      "road_index": "H-18",
+      "region": "Івано-Франківська область",
+      "km": "4+482",
+      "location": "Івано-Франківськ – Бучач – Тернопіль",
+      "speed_limit": 50,
+      "latitude": 48.904972,
+      "longitude": 24.825028
+    }
+  ]
+}

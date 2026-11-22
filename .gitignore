@@ -48,3 +48,9 @@ master-db/backups/
 # Python runtime cache
 __pycache__/
 *.pyc
+
+# Native iOS test app: secrets, pods and local builds
+native/Secrets.xcconfig
+native/Pods/
+native/build/
+native/**/xcuserdata/

@@ -1,0 +1,26 @@
+PODS:
+  - GoogleMaps (10.13.0):
+    - GoogleMaps/Maps (= 10.13.0)
+  - GoogleMaps/Maps (10.13.0)
+  - GoogleNavigation (10.13.0):
+    - GoogleMaps (= 10.13.0)
+  - GooglePlaces (10.13.0)
+
+DEPENDENCIES:
+  - GoogleNavigation (= 10.13.0)
+  - GooglePlaces (= 10.13.0)
+
+SPEC REPOS:
+  trunk:
+    - GoogleMaps
+    - GoogleNavigation
+    - GooglePlaces
+
+SPEC CHECKSUMS:
+  GoogleMaps: 6204a0dfa2914b85f6e408cedff5fa19c7243618
+  GoogleNavigation: 805b2749c31c259857b4c9c96cb464615dac17f0
+  GooglePlaces: be954445dc2c2d4270f57d8ddd5405a7f35e483f
+
+PODFILE CHECKSUM: afbb0657a3fc245230f76cdef920422860dcebc5
+
+COCOAPODS: 1.17.0
