@@ -1,7 +1,0 @@
-platform :ios, '16.0'
-use_frameworks!
-
-target 'CamAlertNative' do
-  pod 'GoogleNavigation', '10.13.0'
-  pod 'GooglePlaces', '10.13.0'
-end

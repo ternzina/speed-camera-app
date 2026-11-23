@@ -24,21 +24,36 @@ final class ViewController: UIViewController, CLLocationManagerDelegate, GMSMapV
   private let startButton = UIButton(type: .system)
   private let stopButton = UIButton(type: .system)
   private let bottomBar = UIView()
+  private let tripLabel = UILabel()
+  private let summaryCard = UIView()
+  private let distanceValue = UILabel()
+  private let durationValue = UILabel()
+  private let arrivalValue = UILabel()
+  private let mapMenu = UIStackView()
+  private weak var clearRouteButton: UIButton?
+  private var routeMeters = 0
+  private var routeMinutes = 0
   private let speedValue = UILabel()
+  private var speedAboveBar: NSLayoutConstraint?
+  private var speedAboveFloor: NSLayoutConstraint?
   private var resultsHeight: NSLayoutConstraint?
   private var suggestions: [PlacesClient.Suggestion] = []
   private var placeToken = UUID().uuidString
   private var searchTimer: Timer?
   private var searchTicket = 0
   private var lastLocation: CLLocation?
-  private var destination: GMSNavigationWaypoint?
+  private var destination: GMSNavigationWaypoint? { didSet { refreshDriveChrome() } }
   private var destinationMarker: GMSMarker?
-  private var routeReady = false
+  private var routeReady = false { didSet { refreshDriveChrome() } }
   private var routeTicket = 0
   var focusSearch = false
 
   func focusDestination() {
     searchField.becomeFirstResponder()
+  }
+
+  var navigatorIsIdle: Bool {
+    mapView.navigator?.isGuidanceActive != true && !routeReady && destination == nil
   }
   private let session = CamAlertSession.shared
   private let speaker = AVSpeechSynthesizer()
@@ -94,15 +109,36 @@ final class ViewController: UIViewController, CLLocationManagerDelegate, GMSMapV
     statusLabel.text = "Введите адрес в поле «Куда едем?» или нажмите на карту"
 
     bottomBar.translatesAutoresizingMaskIntoConstraints = false
-    bottomBar.backgroundColor = night ? UIColor(red: 12 / 255, green: 31 / 255, blue: 49 / 255, alpha: 0.94) : UIColor(white: 1, alpha: 0.94)
-    bottomBar.layer.cornerRadius = 18
-    bottomBar.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+    bottomBar.backgroundColor = .clear
 
-    configure(routeButton, title: "Построить маршрут", filled: true, action: #selector(buildRoute))
-    configure(startButton, title: "В путь", filled: true, action: #selector(startGuidance))
-    configure(stopButton, title: "Завершить поездку", filled: false, action: #selector(stopGuidance))
-    startButton.isEnabled = false
-    stopButton.isEnabled = false
+    configure(routeButton, title: "Построить маршрут", filled: true, size: 16, action: #selector(buildRoute))
+    configure(startButton, title: "В путь", filled: true, size: 22, action: #selector(startGuidance))
+    configure(stopButton, title: "Завершить поездку", filled: true, size: 16, action: #selector(stopGuidance))
+    summaryCard.translatesAutoresizingMaskIntoConstraints = false
+    summaryCard.backgroundColor = night ? UIColor(red: 16 / 255, green: 38 / 255, blue: 59 / 255, alpha: 0.94) : UIColor(white: 1, alpha: 0.96)
+    summaryCard.layer.cornerRadius = 16
+    let summary = UIStackView(arrangedSubviews: [
+      routeStat(distanceValue, "Расстояние", night: night),
+      routeStat(durationValue, "В пути", night: night),
+      routeStat(arrivalValue, "Прибытие", night: night),
+    ])
+    summary.axis = .horizontal
+    summary.distribution = .fillEqually
+    summary.translatesAutoresizingMaskIntoConstraints = false
+    summaryCard.addSubview(summary)
+    NSLayoutConstraint.activate([
+      summary.topAnchor.constraint(equalTo: summaryCard.topAnchor, constant: 6),
+      summary.leadingAnchor.constraint(equalTo: summaryCard.leadingAnchor, constant: 4),
+      summary.trailingAnchor.constraint(equalTo: summaryCard.trailingAnchor, constant: -4),
+      summary.bottomAnchor.constraint(equalTo: summaryCard.bottomAnchor, constant: -6),
+      summaryCard.heightAnchor.constraint(greaterThanOrEqualToConstant: 52),
+    ])
+    tripLabel.isHidden = true
+    let controls = UIStackView(arrangedSubviews: [summaryCard, statusLabel, routeButton, startButton, stopButton])
+    controls.axis = .vertical
+    controls.spacing = 8
+    controls.translatesAutoresizingMaskIntoConstraints = false
+    bottomBar.addSubview(controls)
 
     backButton.setTitle("‹  Назад", for: .normal)
     backButton.setTitleColor(CamAlertPalette.blue, for: .normal)
@@ -113,7 +149,7 @@ final class ViewController: UIViewController, CLLocationManagerDelegate, GMSMapV
     backButton.addTarget(self, action: #selector(closeDrive), for: .touchUpInside)
     backButton.translatesAutoresizingMaskIntoConstraints = false
 
-    speedValue.font = .camalert(28, weight: .black)
+    speedValue.font = .camalert(26, weight: .black)
     speedValue.textColor = night ? .white : CamAlertPalette.ink
     speedValue.text = "0"
     speedValue.textAlignment = .center
@@ -127,20 +163,46 @@ final class ViewController: UIViewController, CLLocationManagerDelegate, GMSMapV
     speedStack.alignment = .center
     let speedCircle = UIView()
     speedCircle.backgroundColor = bottomBar.backgroundColor
-    speedCircle.layer.cornerRadius = 40
+    speedCircle.layer.cornerRadius = 32
     speedCircle.layer.borderWidth = 1.5
     speedCircle.layer.borderColor = UIColor(red: 18 / 255, green: 96 / 255, blue: 232 / 255, alpha: 0.45).cgColor
     speedCircle.translatesAutoresizingMaskIntoConstraints = false
     speedStack.translatesAutoresizingMaskIntoConstraints = false
     speedCircle.addSubview(speedStack)
 
-    let buttons = UIStackView(arrangedSubviews: [routeButton, startButton])
-    buttons.axis = .vertical
-    buttons.spacing = 8
-    buttons.translatesAutoresizingMaskIntoConstraints = false
-    bottomBar.addSubview(statusLabel)
-    bottomBar.addSubview(buttons)
-    bottomBar.addSubview(stopButton)
+    let layers = mapTool("▦", action: #selector(toggleMapMenu))
+    let locate = mapTool("⌖", action: #selector(recenterMap))
+    let clear = mapTool("×", action: #selector(clearRoute))
+    clear.setTitleColor(UIColor(red: 154 / 255, green: 52 / 255, blue: 18 / 255, alpha: 1), for: .normal)
+    clearRouteButton = clear
+    mapMenu.axis = .vertical
+    mapMenu.spacing = 0
+    mapMenu.isHidden = true
+    mapMenu.backgroundColor = night ? UIColor(red: 22 / 255, green: 48 / 255, blue: 74 / 255, alpha: 1) : .white
+    mapMenu.layer.cornerRadius = 12
+    mapMenu.clipsToBounds = true
+    mapMenu.translatesAutoresizingMaskIntoConstraints = false
+    for (title, kind) in [("Схема", GMSMapViewType.normal), ("Спутник", GMSMapViewType.satellite), ("Гибрид", GMSMapViewType.hybrid)] {
+      let row = UIButton(type: .system)
+      row.setTitle(title, for: .normal)
+      row.setTitleColor(night ? .white : CamAlertPalette.ink, for: .normal)
+      row.titleLabel?.font = .camalert(15, weight: .bold)
+      row.contentHorizontalAlignment = .leading
+      row.contentEdgeInsets = UIEdgeInsets(top: 8, left: 12, bottom: 8, right: 12)
+      row.addAction(UIAction { [weak self] _ in self?.chooseMap(kind) }, for: .touchUpInside)
+      row.heightAnchor.constraint(equalToConstant: 40).isActive = true
+      mapMenu.addArrangedSubview(row)
+    }
+    let toolRow = UIStackView(arrangedSubviews: [layers, locate, clear])
+    toolRow.axis = .horizontal
+    toolRow.spacing = 8
+    toolRow.alignment = .center
+    let mapTools = UIStackView(arrangedSubviews: [mapMenu, toolRow])
+    mapTools.axis = .vertical
+    mapTools.spacing = 6
+    mapTools.alignment = .leading
+    mapTools.translatesAutoresizingMaskIntoConstraints = false
+    controls.addArrangedSubview(mapTools)
     cameraBanner.axis = .horizontal
     cameraBanner.spacing = 8
     cameraBanner.alignment = .center
@@ -205,29 +267,26 @@ final class ViewController: UIViewController, CLLocationManagerDelegate, GMSMapV
       cameraBanner.topAnchor.constraint(equalTo: searchCard.bottomAnchor, constant: 6),
       cameraBanner.leadingAnchor.constraint(equalTo: guide.leadingAnchor, constant: 12),
       cameraBanner.trailingAnchor.constraint(lessThanOrEqualTo: guide.trailingAnchor, constant: -72),
-      speedCircle.leadingAnchor.constraint(equalTo: guide.leadingAnchor, constant: 16),
-      speedCircle.bottomAnchor.constraint(equalTo: bottomBar.topAnchor, constant: -10),
-      speedCircle.widthAnchor.constraint(equalToConstant: 80),
-      speedCircle.heightAnchor.constraint(equalToConstant: 80),
+      speedCircle.leadingAnchor.constraint(equalTo: guide.leadingAnchor, constant: 12),
+      speedCircle.widthAnchor.constraint(equalToConstant: 64),
+      speedCircle.heightAnchor.constraint(equalToConstant: 64),
       speedStack.centerXAnchor.constraint(equalTo: speedCircle.centerXAnchor),
       speedStack.centerYAnchor.constraint(equalTo: speedCircle.centerYAnchor),
-      bottomBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-      bottomBar.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-      bottomBar.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-      statusLabel.topAnchor.constraint(equalTo: bottomBar.topAnchor, constant: 12),
-      statusLabel.leadingAnchor.constraint(equalTo: guide.leadingAnchor, constant: 16),
-      statusLabel.trailingAnchor.constraint(equalTo: guide.trailingAnchor, constant: -16),
-      buttons.topAnchor.constraint(equalTo: statusLabel.bottomAnchor, constant: 8),
-      buttons.leadingAnchor.constraint(equalTo: guide.leadingAnchor, constant: 16),
-      buttons.trailingAnchor.constraint(equalTo: guide.trailingAnchor, constant: -16),
-      routeButton.heightAnchor.constraint(equalToConstant: 48),
-      startButton.heightAnchor.constraint(equalToConstant: 58),
-      stopButton.topAnchor.constraint(equalTo: buttons.bottomAnchor, constant: 8),
-      stopButton.leadingAnchor.constraint(equalTo: guide.leadingAnchor, constant: 16),
-      stopButton.trailingAnchor.constraint(equalTo: guide.trailingAnchor, constant: -16),
-      stopButton.bottomAnchor.constraint(equalTo: guide.bottomAnchor, constant: -10),
-      stopButton.heightAnchor.constraint(equalToConstant: 46),
+      bottomBar.leadingAnchor.constraint(equalTo: guide.leadingAnchor, constant: 12),
+      bottomBar.trailingAnchor.constraint(equalTo: guide.trailingAnchor, constant: -12),
+      bottomBar.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -8),
+      controls.topAnchor.constraint(equalTo: bottomBar.topAnchor, constant: 10),
+      controls.leadingAnchor.constraint(equalTo: bottomBar.leadingAnchor, constant: 10),
+      controls.trailingAnchor.constraint(equalTo: bottomBar.trailingAnchor, constant: -10),
+      controls.bottomAnchor.constraint(equalTo: bottomBar.bottomAnchor, constant: -10),
+      routeButton.heightAnchor.constraint(equalToConstant: 44),
+      startButton.heightAnchor.constraint(equalToConstant: 52),
+      stopButton.heightAnchor.constraint(equalToConstant: 44),
+      mapMenu.widthAnchor.constraint(equalToConstant: 168),
     ])
+    speedAboveBar = speedCircle.bottomAnchor.constraint(equalTo: bottomBar.topAnchor, constant: -10)
+    speedAboveFloor = speedCircle.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -16)
+    refreshDriveChrome()
 
     NotificationCenter.default.addObserver(self, selector: #selector(routeRequested(_:)), name: .camalertRouteTo, object: nil)
     locationManager.delegate = self
@@ -246,6 +305,7 @@ final class ViewController: UIViewController, CLLocationManagerDelegate, GMSMapV
 
   override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
+    scheduleVoiceRestartHint()
     if focusSearch {
       focusSearch = false
       searchField.becomeFirstResponder()
@@ -273,24 +333,178 @@ final class ViewController: UIViewController, CLLocationManagerDelegate, GMSMapV
     chrome.bringSubviewToFront(searchCard)
     chrome.bringSubviewToFront(cameraBanner)
     chrome.bringSubviewToFront(bottomBar)
+    if let tools = mapMenu.superview { chrome.bringSubviewToFront(tools) }
     if let circle = speedValue.superview?.superview { chrome.bringSubviewToFront(circle) }
     chrome.bringSubviewToFront(backButton)
   }
 
-  private func configure(_ button: UIButton, title: String, filled: Bool, action: Selector) {
+  private func mapTool(_ title: String, action: Selector) -> UIButton {
+    let night = CamAlertPalette.night(session.settings)
+    let button = UIButton(type: .system)
+    button.setTitle(title, for: .normal)
+    button.setTitleColor(night ? .white : CamAlertPalette.ink, for: .normal)
+    button.titleLabel?.font = .camalert(18, weight: .bold)
+    button.backgroundColor = night ? UIColor(red: 12 / 255, green: 31 / 255, blue: 49 / 255, alpha: 0.94) : UIColor(white: 1, alpha: 0.94)
+    button.layer.cornerRadius = 14
+    button.translatesAutoresizingMaskIntoConstraints = false
+    button.widthAnchor.constraint(equalToConstant: 40).isActive = true
+    button.heightAnchor.constraint(equalToConstant: 40).isActive = true
+    button.addTarget(self, action: action, for: .touchUpInside)
+    return button
+  }
+
+  @objc private func toggleMapMenu() {
+    mapMenu.isHidden.toggle()
+  }
+
+  private func chooseMap(_ kind: GMSMapViewType) {
+    mapView.mapType = kind
+    mapMenu.isHidden = true
+  }
+
+  private func refreshDriveChrome() {
+    guard isViewLoaded else { return }
+    let guiding = mapView.navigator?.isGuidanceActive == true
+    routeButton.isHidden = guiding || routeReady || destination == nil
+    startButton.isHidden = guiding || !routeReady
+    stopButton.isHidden = !guiding
+    tripLabel.isHidden = true
+    let quiet: Set<String> = [
+      "Введите адрес в поле «Куда едем?» или нажмите на карту",
+      "Нажмите на карту, чтобы построить маршрут",
+      "Введите адрес или нажмите на карту",
+      "Маршрут закрыт",
+      "Навигация начата",
+      "Навигация завершена",
+      "Маршрут обновлён",
+      "Ожидание геолокации",
+    ]
+    summaryCard.isHidden = !(routeReady || guiding)
+    clearRouteButton?.isHidden = destination == nil && !routeReady && !guiding
+    statusLabel.isHidden = !summaryCard.isHidden || quiet.contains(statusLabel.text ?? "")
+    routeButton.isEnabled = !routeButton.isHidden
+    startButton.isEnabled = !startButton.isHidden
+    stopButton.isEnabled = !stopButton.isHidden
+    bottomBar.isHidden = false
+    speedAboveBar?.isActive = true
+    speedAboveFloor?.isActive = false
+  }
+
+  private func routeStat(_ value: UILabel, _ caption: String, night: Bool) -> UIView {
+    value.font = .camalert(18, weight: .heavy)
+    value.textColor = night ? .white : CamAlertPalette.ink
+    value.textAlignment = .center
+    value.text = "—"
+    value.adjustsFontSizeToFitWidth = true
+    value.minimumScaleFactor = 0.7
+    let note = UILabel()
+    note.text = caption
+    note.font = .camalert(11, weight: .semibold)
+    note.textColor = night ? CamAlertPalette.mutedNight : CamAlertPalette.muted
+    note.textAlignment = .center
+    let column = UIStackView(arrangedSubviews: [value, note])
+    column.axis = .vertical
+    column.alignment = .center
+    column.spacing = 1
+    return column
+  }
+
+  private func rememberRoute(meters: Int, minutes: Int) {
+    routeMeters = max(0, meters)
+    routeMinutes = max(1, minutes)
+    distanceValue.text = routeMeters >= 1000
+      ? String(format: routeMeters >= 10000 ? "%.0f км" : "%.1f км", Double(routeMeters) / 1000)
+      : "\(routeMeters) м"
+    durationValue.text = routeMinutes >= 60
+      ? "\(routeMinutes / 60) ч. \(routeMinutes % 60) мин"
+      : "\(routeMinutes) мин"
+    let arrival = Date().addingTimeInterval(TimeInterval(routeMinutes * 60))
+    let clock = DateFormatter()
+    clock.dateFormat = "HH:mm"
+    arrivalValue.text = clock.string(from: arrival)
+  }
+
+  @objc private func recenterMap() {
+    if mapView.navigator?.isGuidanceActive == true {
+      mapView.cameraMode = .following
+      return
+    }
+    guard let location = lastLocation ?? locationManager.location else { return }
+    mapView.animate(to: GMSCameraPosition(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude, zoom: max(mapView.camera.zoom, 15)))
+  }
+
+  @objc private func clearRoute() {
+    if mapView.navigator?.isGuidanceActive == true {
+      stopGuidance()
+      return
+    }
+    mapView.navigator?.clearDestinations()
+    routeReady = false
+    destination = nil
+    routeMeters = 0
+    routeMinutes = 0
+    destinationMarker?.map = nil
+    destinationMarker = nil
+    statusLabel.text = "Маршрут закрыт"
+    refreshDriveChrome()
+  }
+
+  private func configure(_ button: UIButton, title: String, filled: Bool, size: CGFloat = 15, action: Selector) {
     button.translatesAutoresizingMaskIntoConstraints = false
     var config = UIButton.Configuration.filled()
     config.title = title
     config.baseBackgroundColor = filled ? CamAlertPalette.blue : UIColor(red: 117 / 255, green: 34 / 255, blue: 44 / 255, alpha: 0.94)
     config.baseForegroundColor = .white
-    config.cornerStyle = .large
+    config.cornerStyle = .fixed
+    config.background.cornerRadius = filled ? 18 : 14
+    config.contentInsets = NSDirectionalEdgeInsets(top: 6, leading: 12, bottom: 6, trailing: 12)
+    config.titleLineBreakMode = .byTruncatingTail
+    button.maximumContentSizeCategory = .extraExtraLarge
+    button.titleLabel?.adjustsFontSizeToFitWidth = true
+    button.titleLabel?.minimumScaleFactor = 0.7
     config.titleTextAttributesTransformer = UIConfigurationTextAttributesTransformer { incoming in
       var outgoing = incoming
-      outgoing.font = .camalert(filled ? 17 : 15, weight: .heavy)
+      outgoing.font = .camalert(size, weight: .heavy)
       return outgoing
     }
     button.configuration = config
     button.addTarget(self, action: action, for: .touchUpInside)
+  }
+
+  private func scheduleVoiceRestartHint() {
+    DispatchQueue.main.async { [weak self] in
+      self?.considerVoiceRestartHint()
+    }
+  }
+
+  /// Public Google callback is the terms completion. The sheet waits until that
+  /// dialog and the location prompt are both gone, then appears once.
+  private func considerVoiceRestartHint(attempt: Int = 0) {
+    let key = "camalert.voiceRestart.shown"
+    guard !UserDefaults.standard.bool(forKey: key) else { return }
+    guard !ProcessInfo.processInfo.arguments.contains("--voice-check") else { return }
+    guard GMSNavigationServices.areTermsAndConditionsAccepted() else { return }
+    switch locationManager.authorizationStatus {
+    case .authorizedAlways, .authorizedWhenInUse:
+      break
+    default:
+      return
+    }
+    guard let window = view.window else { return }
+    let presenter = window.rootViewController ?? self
+    let dialogStillUp = presentedViewController != nil || presenter.presentedViewController != nil
+    if dialogStillUp {
+      guard attempt < 8 else { return }
+      DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) { [weak self] in
+        self?.considerVoiceRestartHint(attempt: attempt + 1)
+      }
+      return
+    }
+    UserDefaults.standard.set(true, forKey: key)
+    let sheet = VoiceRestartController(language: session.settings.language)
+    sheet.modalPresentationStyle = .overFullScreen
+    sheet.modalTransitionStyle = .crossDissolve
+    presenter.present(sheet, animated: true)
   }
 
   private func showTerms() {
@@ -303,6 +517,7 @@ final class ViewController: UIViewController, CLLocationManagerDelegate, GMSMapV
       }
       self.mapView.isNavigationEnabled = true
       self.liftChrome()
+      self.scheduleVoiceRestartHint()
       if self.destination != nil {
         self.buildRoute()
       } else if self.lastLocation == nil {
@@ -318,6 +533,7 @@ final class ViewController: UIViewController, CLLocationManagerDelegate, GMSMapV
     case .authorizedWhenInUse, .authorizedAlways:
       manager.startUpdatingLocation()
       mapView.isMyLocationEnabled = true
+      scheduleVoiceRestartHint()
     case .denied, .restricted:
       statusLabel.text = "Геолокация запрещена"
     default:
@@ -452,6 +668,10 @@ final class ViewController: UIViewController, CLLocationManagerDelegate, GMSMapV
     }
     warnedAt = Date()
     statusLabel.text = title
+    guard PremiumStore.shared.featuresOpen else {
+      PremiumOffer.present(from: self)
+      return
+    }
     var history = UserDefaults.standard.array(forKey: "camalert.history") as? [[String: String]] ?? []
     history.insert(["title": title, "when": ISO8601DateFormatter().string(from: Date())], at: 0)
     UserDefaults.standard.set(Array(history.prefix(40)), forKey: "camalert.history")
@@ -514,7 +734,13 @@ final class ViewController: UIViewController, CLLocationManagerDelegate, GMSMapV
   }
 
   func navigatorDidChangeRoute(_ navigator: GMSNavigator) {
-    if navigator.isGuidanceActive { statusLabel.text = "Маршрут обновлён" }
+    if navigator.isGuidanceActive {
+      let meters = Int(navigator.distanceToNextDestination.rounded())
+      let minutes = max(1, Int((navigator.timeToNextDestination / 60).rounded()))
+      rememberRoute(meters: meters, minutes: minutes)
+      statusLabel.text = "Маршрут обновлён"
+      refreshDriveChrome()
+    }
   }
 
   func mapView(_ mapView: GMSMapView, didTapAt coordinate: CLLocationCoordinate2D) {
@@ -556,7 +782,7 @@ final class ViewController: UIViewController, CLLocationManagerDelegate, GMSMapV
       navigationController.popViewController(animated: true)
       return
     }
-    NotificationCenter.default.post(name: .camalertShowTab, object: "welcome")
+    NotificationCenter.default.post(name: .camalertShowTab, object: "home")
   }
 
   @objc private func routeRequested(_ note: Notification) {
@@ -679,30 +905,38 @@ final class ViewController: UIViewController, CLLocationManagerDelegate, GMSMapV
   @objc private func buildRoute() {
     guard GMSNavigationServices.areTermsAndConditionsAccepted() else {
       statusLabel.text = "Примите условия Google"
+      refreshDriveChrome()
       showTerms()
       return
     }
     guard let navigator = mapView.navigator else {
       statusLabel.text = "Навигатор ещё не готов"
+      refreshDriveChrome()
       showTerms()
       return
     }
     guard let destination else {
       statusLabel.text = "Введите адрес или нажмите на карту"
+      refreshDriveChrome()
       return
     }
     routeReady = false
     startButton.isEnabled = false
     statusLabel.text = "Строим маршрут"
+    refreshDriveChrome()
     mapView.travelMode = .driving
     mapView.cameraMode = .free
     routeTicket += 1
     let ticket = routeTicket
     let options = GMSNavigationMutableRoutingOptions(routingStrategy: .defaultBest)
+    if !PremiumStore.shared.featuresOpen {
+      options.alternateRoutesStrategy = .none
+    }
     navigator.setDestinations([destination], routingOptions: options) { [weak self] routeStatus in
       guard let self, self.routeTicket == ticket else { return }
       guard routeStatus == .OK else {
         self.statusLabel.text = self.routeFailure(routeStatus)
+        self.refreshDriveChrome()
         return
       }
       self.routeReady = true
@@ -711,9 +945,9 @@ final class ViewController: UIViewController, CLLocationManagerDelegate, GMSMapV
       self.mapView.cameraMode = .overview
       let meters = Int(navigator.distanceToNextDestination.rounded())
       let minutes = max(1, Int((navigator.timeToNextDestination / 60).rounded()))
-      self.statusLabel.text = meters >= 1000
-        ? String(format: "Маршрут готов · %.1f км · %d мин. Нажмите «В путь»", Double(meters) / 1000, minutes)
-        : "Маршрут готов · \(meters) м · \(minutes) мин. Нажмите «В путь»"
+      self.rememberRoute(meters: meters, minutes: minutes)
+      self.statusLabel.text = "Маршрут готов"
+      self.refreshDriveChrome()
       DispatchQueue.main.async {
         guard self.routeTicket == ticket else { return }
         self.mapView.cameraMode = .free
@@ -746,14 +980,18 @@ final class ViewController: UIViewController, CLLocationManagerDelegate, GMSMapV
       statusLabel.text = "Сначала постройте маршрут"
       return
     }
+    let open = PremiumStore.shared.featuresOpen
+    if open { PremiumStore.shared.beginTripIfOpen() }
     mapView.settings.isNavigationHeaderEnabled = true
-    navigator.voiceGuidance = .alertsAndGuidance
+    navigator.voiceGuidance = open ? .alertsAndGuidance : .silent
     navigator.isGuidanceActive = true
     navigator.add(self)
-    locationManager.allowsBackgroundLocationUpdates = true
+    locationManager.allowsBackgroundLocationUpdates = open
+    if !open { PremiumOffer.present(from: self) }
     mapView.cameraMode = .following
     stopButton.isEnabled = true
     statusLabel.text = "Навигация начата"
+    refreshDriveChrome()
   }
 
   @objc private func stopGuidance() {
@@ -771,6 +1009,11 @@ final class ViewController: UIViewController, CLLocationManagerDelegate, GMSMapV
     mapView.settings.isNavigationHeaderEnabled = false
     mapView.cameraMode = .free
     statusLabel.text = "Навигация завершена"
+    routeMeters = 0
+    routeMinutes = 0
+    locationManager.allowsBackgroundLocationUpdates = false
+    PremiumStore.shared.endTrip()
+    refreshDriveChrome()
   }
 
   private func runVoiceCheck() {
@@ -906,5 +1149,61 @@ private enum VoiceCheckLog {
 
   private static func fileURL() -> URL? {
     FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("voice-check.log")
+  }
+}
+
+final class VoiceRestartController: UIViewController {
+  private let language: String
+
+  init(language: String) {
+    self.language = language
+    super.init(nibName: nil, bundle: nil)
+    modalPresentationStyle = .overFullScreen
+  }
+
+  required init?(coder: NSCoder) { nil }
+
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    let night = CamAlertPalette.night(CamAlertSession.shared.settings)
+    let copy = CamAlertPhrases.voiceRestart(language)
+    view.backgroundColor = UIColor(white: 0, alpha: 0.45)
+    let card = UIView()
+    card.backgroundColor = night ? UIColor(red: 16 / 255, green: 38 / 255, blue: 59 / 255, alpha: 1) : .white
+    card.layer.cornerRadius = 22
+    card.translatesAutoresizingMaskIntoConstraints = false
+    let title = UILabel()
+    title.text = copy.title
+    title.font = .camalert(22, weight: .heavy)
+    title.textColor = night ? .white : CamAlertPalette.ink
+    title.numberOfLines = 2
+    let message = UILabel()
+    message.text = copy.message
+    message.font = .camalert(16)
+    message.textColor = night ? CamAlertPalette.mutedNight : UIColor(red: 67 / 255, green: 93 / 255, blue: 120 / 255, alpha: 1)
+    message.numberOfLines = 0
+    let button = UIButton(type: .system)
+    button.setTitle(copy.button, for: .normal)
+    button.setTitleColor(.white, for: .normal)
+    button.titleLabel?.font = .camalert(17, weight: .heavy)
+    button.backgroundColor = CamAlertPalette.blue
+    button.layer.cornerRadius = 16
+    button.addAction(UIAction { [weak self] _ in self?.dismiss(animated: true) }, for: .touchUpInside)
+    let stack = UIStackView(arrangedSubviews: [title, message, button])
+    stack.axis = .vertical
+    stack.spacing = 14
+    stack.translatesAutoresizingMaskIntoConstraints = false
+    card.addSubview(stack)
+    view.addSubview(card)
+    NSLayoutConstraint.activate([
+      card.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 22),
+      card.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -22),
+      card.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+      stack.topAnchor.constraint(equalTo: card.topAnchor, constant: 22),
+      stack.leadingAnchor.constraint(equalTo: card.leadingAnchor, constant: 20),
+      stack.trailingAnchor.constraint(equalTo: card.trailingAnchor, constant: -20),
+      stack.bottomAnchor.constraint(equalTo: card.bottomAnchor, constant: -20),
+      button.heightAnchor.constraint(equalToConstant: 52),
+    ])
   }
 }

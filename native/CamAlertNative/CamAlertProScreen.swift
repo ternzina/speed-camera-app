@@ -20,13 +20,23 @@ final class PremiumViewController: UIViewController {
   private let planRow = UIStackView()
   private let terms = UILabel()
   private let note = UILabel()
+  private let buyButton = UIButton(type: .system)
+  private let trialNote = UILabel()
+  private let statusCard = UIView()
+  private let planValue = UILabel()
+  private let renewalValue = UILabel()
+  private let renewalRow = UIStackView()
   private let stage = UIScrollView()
+  private let strip = UIStackView()
   private let dots = UIStackView()
+  private let closeButton = UIButton(type: .system)
   private var cardWidth: CGFloat = 280
-  private var topGap: NSLayoutConstraint?
+  private var contentBottom: NSLayoutConstraint?
+  private var heroTextTop: NSLayoutConstraint?
   private var stagePage = 0
   private var stageTimer: Timer?
-  private var carouselLinked = false
+  private var waitingToBuy = false
+  private var buying = false
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -35,6 +45,8 @@ final class PremiumViewController: UIViewController {
     scroll.translatesAutoresizingMaskIntoConstraints = false
     scroll.alwaysBounceVertical = true
     scroll.contentInsetAdjustmentBehavior = .never
+    scroll.delaysContentTouches = false
+    scroll.canCancelContentTouches = false
     let stack = UIStackView()
     stack.axis = .vertical
     stack.spacing = 7
@@ -49,23 +61,16 @@ final class PremiumViewController: UIViewController {
       stack.topAnchor.constraint(equalTo: scroll.contentLayoutGuide.topAnchor),
       stack.leadingAnchor.constraint(equalTo: scroll.frameLayoutGuide.leadingAnchor, constant: 16),
       stack.trailingAnchor.constraint(equalTo: scroll.frameLayoutGuide.trailingAnchor, constant: -16),
-      stack.bottomAnchor.constraint(equalTo: scroll.contentLayoutGuide.bottomAnchor, constant: -18),
       stack.widthAnchor.constraint(equalTo: scroll.frameLayoutGuide.widthAnchor, constant: -32),
     ])
-    let gap = UIView()
-    gap.translatesAutoresizingMaskIntoConstraints = false
-    let gapHeight = gap.heightAnchor.constraint(equalToConstant: 59)
-    gapHeight.isActive = true
-    topGap = gapHeight
-    stack.addArrangedSubview(gap)
-    stack.setCustomSpacing(0, after: gap)
     stack.addArrangedSubview(hero())
     stack.addArrangedSubview(stageFrame())
-    planRow.axis = .horizontal
-    planRow.spacing = 6
+    stack.addArrangedSubview(makeStatusCard())
+    planRow.axis = .vertical
+    planRow.spacing = 8
     planRow.distribution = .fillEqually
     stack.addArrangedSubview(planRow)
-    terms.numberOfLines = 0
+    terms.numberOfLines = 2
     terms.textAlignment = .center
     terms.textColor = cream
     terms.font = .camalert(13, weight: .semibold)
@@ -76,33 +81,55 @@ final class PremiumViewController: UIViewController {
     note.font = .camalert(11)
     note.text = ""
     stack.addArrangedSubview(note)
+    trialNote.numberOfLines = 0
+    trialNote.textAlignment = .center
+    trialNote.textColor = gold
+    trialNote.font = .camalert(14, weight: .semibold)
+    stack.addArrangedSubview(trialNote)
     stack.addArrangedSubview(unlockButton())
-    let charge = UILabel()
-    charge.text = "CamAlert деньги не списывает. Оплату проводит Apple или Google."
-    charge.textColor = UIColor(red: 197 / 255, green: 203 / 255, blue: 222 / 255, alpha: 1)
-    charge.font = .camalert(11)
-    charge.textAlignment = .center
-    charge.numberOfLines = 0
-    stack.addArrangedSubview(charge)
-    stack.addArrangedSubview(utilityRow())
+    stack.addArrangedSubview(link("↻  Восстановить покупки", action: #selector(restorePurchases)))
     stack.addArrangedSubview(link("Управление подпиской", action: #selector(manage)))
-    stack.addArrangedSubview(legalRow())
+    contentBottom = stack.bottomAnchor.constraint(equalTo: scroll.contentLayoutGuide.bottomAnchor, constant: -18)
+    contentBottom?.isActive = true
     showPlans(prices: [:])
+    refreshBuyButton()
+    NotificationCenter.default.addObserver(self, selector: #selector(premiumChanged), name: .camalertPremium, object: nil)
+    applyPremiumState()
+    closeButton.setTitle("×", for: .normal)
+    closeButton.setTitleColor(cream, for: .normal)
+    closeButton.titleLabel?.font = .camalert(26, weight: .light)
+    closeButton.layer.cornerRadius = 18
+    closeButton.layer.borderWidth = 1
+    closeButton.layer.borderColor = UIColor(white: 1, alpha: 0.45).cgColor
+    closeButton.backgroundColor = UIColor(red: 6 / 255, green: 12 / 255, blue: 34 / 255, alpha: 0.55)
+    closeButton.addTarget(self, action: #selector(goBack), for: .touchUpInside)
+    closeButton.translatesAutoresizingMaskIntoConstraints = false
+    view.addSubview(closeButton)
+    NSLayoutConstraint.activate([
+      closeButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 6),
+      closeButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 14),
+      closeButton.widthAnchor.constraint(equalToConstant: 36),
+      closeButton.heightAnchor.constraint(equalToConstant: 36),
+    ])
     Task { await loadProducts() }
   }
 
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     navigationController?.setNavigationBarHidden(true, animated: animated)
+    applyPremiumState()
+    Task { await PremiumStore.shared.refresh() }
   }
 
   override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
-    if !carouselLinked, let outer = view.subviews.first as? UIScrollView {
-      outer.panGestureRecognizer.require(toFail: stage.panGestureRecognizer)
-      carouselLinked = true
+    if cardWidth > 0, strip.arrangedSubviews.isEmpty { layoutCards() }
+    if ProcessInfo.processInfo.arguments.contains("--premium-end"), let scroll = view.subviews.first as? UIScrollView {
+      DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) {
+        let y = max(0, scroll.contentSize.height - scroll.bounds.height)
+        scroll.setContentOffset(CGPoint(x: 0, y: y), animated: false)
+      }
     }
-    if cardWidth > 0, stage.subviews.isEmpty { layoutCards() }
     stageTimer?.invalidate()
     stageTimer = Timer.scheduledTimer(withTimeInterval: 4.5, repeats: true) { [weak self] _ in
       self?.advanceStage()
@@ -116,8 +143,9 @@ final class PremiumViewController: UIViewController {
 
   override func viewDidLayoutSubviews() {
     super.viewDidLayoutSubviews()
-    topGap?.constant = view.safeAreaInsets.top
-    let width = max(230, stage.bounds.width - 62)
+    contentBottom?.constant = -(view.safeAreaInsets.bottom + 16)
+    heroTextTop?.constant = max(view.safeAreaInsets.top + 8, 78)
+    let width = max(210, stage.bounds.width - 48)
     guard abs(width - cardWidth) > 1, stage.bounds.width > 0 else { return }
     cardWidth = width
     layoutCards()
@@ -128,26 +156,15 @@ final class PremiumViewController: UIViewController {
     image.contentMode = .scaleAspectFill
     image.clipsToBounds = true
     image.translatesAutoresizingMaskIntoConstraints = false
-    image.heightAnchor.constraint(equalToConstant: 184).isActive = true
+    image.heightAnchor.constraint(equalToConstant: 220).isActive = true
     let shade = UIView()
     shade.backgroundColor = UIColor(red: 4 / 255, green: 10 / 255, blue: 31 / 255, alpha: 0.24)
     shade.translatesAutoresizingMaskIntoConstraints = false
-    image.isUserInteractionEnabled = true
-    let close = UIButton(type: .system)
-    close.setTitle("×", for: .normal)
-    close.setTitleColor(cream, for: .normal)
-    close.titleLabel?.font = .camalert(28, weight: .light)
-    close.layer.cornerRadius = 22
-    close.layer.borderWidth = 1
-    close.layer.borderColor = UIColor(white: 1, alpha: 0.45).cgColor
-    close.backgroundColor = UIColor(red: 6 / 255, green: 12 / 255, blue: 34 / 255, alpha: 0.55)
-    close.addTarget(self, action: #selector(goBack), for: .touchUpInside)
-    close.translatesAutoresizingMaskIntoConstraints = false
     let camera = cameraMark()
     let logo = UILabel()
     logo.text = "CamAlert"
     logo.textColor = cream
-    logo.font = .camalert(23, weight: .heavy)
+    logo.font = .camalert(20, weight: .heavy)
     let pro = UILabel()
     pro.text = " PRO "
     pro.textColor = UIColor(red: 9 / 255, green: 14 / 255, blue: 35 / 255, alpha: 1)
@@ -162,7 +179,9 @@ final class PremiumViewController: UIViewController {
     let title = UILabel()
     title.text = "Штрафы в прошлом"
     title.textColor = headlineColor
-    title.font = .italicSystemFont(ofSize: 28).withWeight(.black)
+    title.font = .italicSystemFont(ofSize: 22).withWeight(.black)
+    title.adjustsFontSizeToFitWidth = true
+    title.minimumScaleFactor = 0.75
     title.textAlignment = .center
     title.numberOfLines = 2
     let swoosh = UIView()
@@ -174,41 +193,37 @@ final class PremiumViewController: UIViewController {
     let lead = UILabel()
     lead.text = "Предупреждения о камерах, удобная навигация и уверенность в дороге."
     lead.textColor = cream
-    lead.font = .camalert(14, weight: .medium)
+    lead.font = .camalert(13, weight: .medium)
     lead.textAlignment = .center
     lead.numberOfLines = 2
     let column = UIStackView(arrangedSubviews: [brand, title, swoosh, lead])
     column.axis = .vertical
     column.alignment = .center
-    column.spacing = 6
+    column.spacing = 4
     column.translatesAutoresizingMaskIntoConstraints = false
     column.isUserInteractionEnabled = false
     image.addSubview(shade)
     image.addSubview(column)
+    heroTextTop = column.topAnchor.constraint(equalTo: image.topAnchor, constant: 54)
     NSLayoutConstraint.activate([
       shade.topAnchor.constraint(equalTo: image.topAnchor),
       shade.leadingAnchor.constraint(equalTo: image.leadingAnchor),
       shade.trailingAnchor.constraint(equalTo: image.trailingAnchor),
       shade.bottomAnchor.constraint(equalTo: image.bottomAnchor),
       column.centerXAnchor.constraint(equalTo: image.centerXAnchor),
-      column.topAnchor.constraint(equalTo: image.topAnchor, constant: 15),
-      column.leadingAnchor.constraint(greaterThanOrEqualTo: image.leadingAnchor, constant: 24),
+      heroTextTop!,
+      column.leadingAnchor.constraint(greaterThanOrEqualTo: image.leadingAnchor, constant: 56),
       column.trailingAnchor.constraint(lessThanOrEqualTo: image.trailingAnchor, constant: -24),
       swoosh.widthAnchor.constraint(equalToConstant: 180),
     ])
     let wrap = UIView()
     wrap.translatesAutoresizingMaskIntoConstraints = false
     wrap.addSubview(image)
-    wrap.addSubview(close)
     NSLayoutConstraint.activate([
       image.topAnchor.constraint(equalTo: wrap.topAnchor),
       image.leadingAnchor.constraint(equalTo: wrap.leadingAnchor, constant: -16),
       image.trailingAnchor.constraint(equalTo: wrap.trailingAnchor, constant: 16),
       image.bottomAnchor.constraint(equalTo: wrap.bottomAnchor),
-      close.topAnchor.constraint(equalTo: wrap.topAnchor, constant: 8),
-      close.leadingAnchor.constraint(equalTo: wrap.leadingAnchor, constant: -2),
-      close.widthAnchor.constraint(equalToConstant: 44),
-      close.heightAnchor.constraint(equalToConstant: 44),
     ])
     return wrap
   }
@@ -239,28 +254,37 @@ final class PremiumViewController: UIViewController {
 
   private func stageFrame() -> UIView {
     let frame = UIView()
-    frame.backgroundColor = UIColor(red: 31 / 255, green: 20 / 255, blue: 72 / 255, alpha: 0.64)
-    frame.layer.borderWidth = 1
-    frame.layer.borderColor = UIColor(red: 111 / 255, green: 48 / 255, blue: 197 / 255, alpha: 0.9).cgColor
+    frame.backgroundColor = .clear
     frame.translatesAutoresizingMaskIntoConstraints = false
-    frame.heightAnchor.constraint(equalToConstant: 190).isActive = true
+    frame.heightAnchor.constraint(equalToConstant: 176).isActive = true
     stage.showsHorizontalScrollIndicator = false
     stage.alwaysBounceHorizontal = true
     stage.isDirectionalLockEnabled = true
+    stage.clipsToBounds = true
     stage.delegate = self
     stage.translatesAutoresizingMaskIntoConstraints = false
+    strip.axis = .horizontal
+    strip.spacing = 12
+    strip.alignment = .fill
+    strip.translatesAutoresizingMaskIntoConstraints = false
+    stage.addSubview(strip)
     dots.axis = .horizontal
-    dots.spacing = 8
+    dots.spacing = 6
     dots.translatesAutoresizingMaskIntoConstraints = false
     frame.addSubview(stage)
     frame.addSubview(dots)
     NSLayoutConstraint.activate([
-      stage.topAnchor.constraint(equalTo: frame.topAnchor, constant: 6),
+      stage.topAnchor.constraint(equalTo: frame.topAnchor),
       stage.leadingAnchor.constraint(equalTo: frame.leadingAnchor, constant: -16),
       stage.trailingAnchor.constraint(equalTo: frame.trailingAnchor, constant: 16),
-      stage.bottomAnchor.constraint(equalTo: frame.bottomAnchor, constant: -6),
+      stage.heightAnchor.constraint(equalToConstant: 160),
+      strip.topAnchor.constraint(equalTo: stage.contentLayoutGuide.topAnchor),
+      strip.leadingAnchor.constraint(equalTo: stage.contentLayoutGuide.leadingAnchor, constant: 16),
+      strip.trailingAnchor.constraint(equalTo: stage.contentLayoutGuide.trailingAnchor, constant: -16),
+      strip.bottomAnchor.constraint(equalTo: stage.contentLayoutGuide.bottomAnchor),
+      strip.heightAnchor.constraint(equalTo: stage.frameLayoutGuide.heightAnchor),
       dots.centerXAnchor.constraint(equalTo: frame.centerXAnchor),
-      dots.bottomAnchor.constraint(equalTo: frame.bottomAnchor, constant: -2),
+      dots.bottomAnchor.constraint(equalTo: frame.bottomAnchor),
     ])
     for index in slides.indices {
       let dot = UIView()
@@ -275,45 +299,134 @@ final class PremiumViewController: UIViewController {
     return frame
   }
 
+  private var cardStride: CGFloat { cardWidth + 12 }
+
   private func layoutCards() {
-    stage.subviews.forEach { $0.removeFromSuperview() }
-    var x: CGFloat = 16
-    for slide in slides {
+    strip.arrangedSubviews.forEach { $0.removeFromSuperview() }
+    let loop = slides + Array(slides.prefix(min(2, slides.count)))
+    for slide in loop {
       let card = ProSlideCard(slide: slide, photo: UIImage(named: "pro-evening-road"), gold: gold, cream: cream)
-      card.frame = CGRect(x: x, y: 8, width: cardWidth, height: 166)
-      stage.addSubview(card)
-      x += cardWidth + 12
+      card.translatesAutoresizingMaskIntoConstraints = false
+      card.widthAnchor.constraint(equalToConstant: cardWidth).isActive = true
+      strip.addArrangedSubview(card)
     }
-    stage.contentSize = CGSize(width: x + 4, height: 178)
+    let page = min(max(stagePage, 0), slides.count - 1)
+    stagePage = page
+    stage.layoutIfNeeded()
+    stage.setContentOffset(CGPoint(x: CGFloat(page) * cardStride, y: 0), animated: false)
+  }
+
+  private func makeStatusCard() -> UIView {
+    statusCard.backgroundColor = UIColor(red: 16 / 255, green: 26 / 255, blue: 58 / 255, alpha: 1)
+    statusCard.layer.cornerRadius = 16
+    statusCard.layer.borderWidth = 1
+    statusCard.layer.borderColor = UIColor(red: 255 / 255, green: 198 / 255, blue: 41 / 255, alpha: 0.45).cgColor
+    statusCard.isHidden = true
+    let badge = UIImageView(image: UIImage(systemName: "crown.fill"))
+    badge.tintColor = gold
+    badge.contentMode = .scaleAspectFit
+    badge.translatesAutoresizingMaskIntoConstraints = false
+    badge.widthAnchor.constraint(equalToConstant: 22).isActive = true
+    badge.heightAnchor.constraint(equalToConstant: 22).isActive = true
+    let title = UILabel()
+    title.text = "CamAlert Premium"
+    title.textColor = cream
+    title.font = .camalert(18, weight: .heavy)
+    let status = UILabel()
+    status.text = "Подписка активна"
+    status.textColor = UIColor(red: 47 / 255, green: 196 / 255, blue: 112 / 255, alpha: 1)
+    status.font = .camalert(13, weight: .semibold)
+    let heading = UIStackView(arrangedSubviews: [title, status])
+    heading.axis = .vertical
+    heading.spacing = 2
+    let head = UIStackView(arrangedSubviews: [badge, heading])
+    head.axis = .horizontal
+    head.alignment = .center
+    head.spacing = 10
+    planValue.textColor = cream
+    planValue.font = .camalert(15, weight: .semibold)
+    planValue.textAlignment = .right
+    renewalValue.textColor = cream
+    renewalValue.font = .camalert(15, weight: .semibold)
+    renewalValue.textAlignment = .right
+    renewalValue.numberOfLines = 2
+    let tariff = statusLine("Ваш тариф", planValue)
+    renewalRow.axis = .horizontal
+    renewalRow.alignment = .firstBaseline
+    renewalRow.spacing = 12
+    let renewalTitle = UILabel()
+    renewalTitle.text = "Следующее продление"
+    renewalTitle.textColor = UIColor(red: 186 / 255, green: 196 / 255, blue: 214 / 255, alpha: 1)
+    renewalTitle.font = .camalert(14)
+    renewalRow.addArrangedSubview(renewalTitle)
+    renewalRow.addArrangedSubview(renewalValue)
+    let note = UILabel()
+    note.text = "Все функции Premium доступны"
+    note.textColor = cream
+    note.font = .camalert(14, weight: .semibold)
+    note.numberOfLines = 0
+    let detail = UILabel()
+    detail.text = "Навигация, предупреждения о камерах и другие возможности вашего тарифа."
+    detail.textColor = UIColor(red: 186 / 255, green: 196 / 255, blue: 214 / 255, alpha: 1)
+    detail.font = .camalert(12)
+    detail.numberOfLines = 0
+    let column = UIStackView(arrangedSubviews: [head, tariff, renewalRow, note, detail])
+    column.axis = .vertical
+    column.spacing = 10
+    column.translatesAutoresizingMaskIntoConstraints = false
+    column.isLayoutMarginsRelativeArrangement = true
+    column.layoutMargins = UIEdgeInsets(top: 14, left: 14, bottom: 14, right: 14)
+    statusCard.addSubview(column)
+    NSLayoutConstraint.activate([
+      column.topAnchor.constraint(equalTo: statusCard.topAnchor),
+      column.leadingAnchor.constraint(equalTo: statusCard.leadingAnchor),
+      column.trailingAnchor.constraint(equalTo: statusCard.trailingAnchor),
+      column.bottomAnchor.constraint(equalTo: statusCard.bottomAnchor),
+    ])
+    return statusCard
+  }
+
+  private func statusLine(_ title: String, _ value: UILabel) -> UIStackView {
+    let label = UILabel()
+    label.text = title
+    label.textColor = UIColor(red: 186 / 255, green: 196 / 255, blue: 214 / 255, alpha: 1)
+    label.font = .camalert(14)
+    label.setContentHuggingPriority(.defaultLow, for: .horizontal)
+    value.setContentCompressionResistancePriority(.required, for: .horizontal)
+    let row = UIStackView(arrangedSubviews: [label, value])
+    row.axis = .horizontal
+    row.alignment = .firstBaseline
+    row.spacing = 12
+    return row
   }
 
   private func unlockButton() -> UIButton {
-    let button = UIButton(type: .system)
-    button.setTitle("Разблокировать PRO  ›", for: .normal)
-    button.setTitleColor(UIColor(red: 17 / 255, green: 16 / 255, blue: 26 / 255, alpha: 1), for: .normal)
-    button.titleLabel?.font = .camalert(18, weight: .black)
-    button.backgroundColor = gold
-    button.layer.cornerRadius = 25
-    button.layer.borderWidth = 1
-    button.layer.borderColor = UIColor(red: 255 / 255, green: 228 / 255, blue: 125 / 255, alpha: 1).cgColor
-    button.heightAnchor.constraint(equalToConstant: 50).isActive = true
-    button.addTarget(self, action: #selector(buySelected), for: .touchUpInside)
-    return button
+    buyButton.setTitle("Разблокировать PRO  ›", for: .normal)
+    buyButton.setTitleColor(UIColor(red: 17 / 255, green: 16 / 255, blue: 26 / 255, alpha: 1), for: .normal)
+    buyButton.setTitleColor(UIColor(red: 17 / 255, green: 16 / 255, blue: 26 / 255, alpha: 0.45), for: .disabled)
+    buyButton.titleLabel?.font = .camalert(16, weight: .black)
+    buyButton.titleLabel?.adjustsFontSizeToFitWidth = true
+    buyButton.titleLabel?.minimumScaleFactor = 0.75
+    buyButton.backgroundColor = gold
+    buyButton.layer.cornerRadius = 16
+    buyButton.layer.borderWidth = 1
+    buyButton.layer.borderColor = UIColor(red: 255 / 255, green: 228 / 255, blue: 125 / 255, alpha: 1).cgColor
+    buyButton.heightAnchor.constraint(equalToConstant: 52).isActive = true
+    buyButton.isExclusiveTouch = true
+    buyButton.addTarget(self, action: #selector(buyTouchDown), for: .touchDown)
+    buyButton.addTarget(self, action: #selector(buyTouchUp), for: .touchUpOutside)
+    buyButton.addTarget(self, action: #selector(buyTouchUp), for: .touchCancel)
+    buyButton.addTarget(self, action: #selector(buySelected), for: .touchUpInside)
+    return buyButton
   }
 
-  private func utilityRow() -> UIView {
-    let restore = link("↻  Восстановить покупки", action: #selector(restorePurchases))
-    return restore
-  }
+  @objc private func buyTouchDown() { buyButton.alpha = 0.72 }
 
-  private func legalRow() -> UIView {
-    let row = UIStackView(arrangedSubviews: [
-      textLink("Условия использования", "https://camera.21wek.com/"),
-      textLink("Политика конфиденциальности", "https://camera.21wek.com/privacy.html"),
-    ])
-    row.axis = .horizontal
-    row.distribution = .fillEqually
-    return row
+  @objc private func buyTouchUp() { buyButton.alpha = 1 }
+
+  private func refreshBuyButton() {
+    buyButton.isEnabled = true
+    if !buying { buyButton.alpha = 1 }
   }
 
   private func link(_ title: String, action: Selector) -> UIButton {
@@ -326,20 +439,6 @@ final class PremiumViewController: UIViewController {
     return button
   }
 
-  private func textLink(_ title: String, _ url: String) -> UIButton {
-    let button = UIButton(type: .system)
-    let text = NSAttributedString(string: title, attributes: [
-      .underlineStyle: NSUnderlineStyle.single.rawValue,
-      .foregroundColor: UIColor(red: 213 / 255, green: 217 / 255, blue: 232 / 255, alpha: 1),
-      .font: UIFont.camalert(11),
-    ])
-    button.setAttributedTitle(text, for: .normal)
-    button.addAction(UIAction { _ in
-      if let url = URL(string: url) { UIApplication.shared.open(url) }
-    }, for: .touchUpInside)
-    return button
-  }
-
   private func showPlans(prices: [String: String]) {
     planRow.arrangedSubviews.forEach { $0.removeFromSuperview() }
     let names = [
@@ -348,51 +447,100 @@ final class PremiumViewController: UIViewController {
       "camalert_premium_yearly": "Год",
       "camalert_premium_lifetime": "Навсегда",
     ]
-    for id in PremiumAccess.plans {
+    let waiting = "Цена появится из магазина"
+    var row: UIStackView?
+    for (index, id) in PremiumAccess.plans.enumerated() {
+      if index % 2 == 0 {
+        let line = UIStackView()
+        line.axis = .horizontal
+        line.spacing = 8
+        line.distribution = .fillEqually
+        row = line
+        planRow.addArrangedSubview(line)
+      }
       let button = UIButton(type: .custom)
-      let price = prices[id] ?? "Цена появится из магазина"
-      let yearly = id == "camalert_premium_yearly"
-      button.backgroundColor = yearly
-        ? UIColor(red: 142 / 255, green: 95 / 255, blue: 24 / 255, alpha: 0.48)
+      let price = prices[id] ?? waiting
+      let chosen = id == selected
+      button.backgroundColor = chosen
+        ? UIColor(red: 142 / 255, green: 95 / 255, blue: 24 / 255, alpha: 0.55)
         : UIColor(red: 19 / 255, green: 28 / 255, blue: 62 / 255, alpha: 0.82)
-      button.layer.cornerRadius = 15
-      button.layer.borderWidth = id == selected ? 2 : 1.2
-      button.layer.borderColor = (yearly || id == selected)
-        ? gold.cgColor
-        : UIColor(red: 200 / 255, green: 207 / 255, blue: 244 / 255, alpha: 0.4).cgColor
+      button.layer.cornerRadius = 14
+      button.layer.borderWidth = chosen ? 2 : 1
+      button.layer.borderColor = (chosen ? gold : UIColor(white: 1, alpha: 0.16)).cgColor
       let period = UILabel()
       period.text = names[id] ?? id
       period.textColor = cream
-      period.font = .camalert(13, weight: .heavy)
+      period.font = .camalert(15, weight: .heavy)
       period.textAlignment = .center
+      period.numberOfLines = 1
+      period.adjustsFontSizeToFitWidth = true
+      period.minimumScaleFactor = 0.7
       let priceLabel = UILabel()
-      priceLabel.text = price
+      priceLabel.text = id == "camalert_premium_yearly" ? "\(price)\n\(shortTrial(for: id))" : price
       priceLabel.textColor = cream
-      priceLabel.font = .camalert(13, weight: .heavy)
+      priceLabel.font = .camalert(11, weight: .semibold)
       priceLabel.textAlignment = .center
-      priceLabel.adjustsFontSizeToFitWidth = true
-      priceLabel.minimumScaleFactor = 0.25
+      priceLabel.numberOfLines = 2
+      priceLabel.lineBreakMode = .byWordWrapping
       let column = UIStackView(arrangedSubviews: [period, priceLabel])
       column.axis = .vertical
-      column.spacing = 1
+      column.spacing = 2
       column.isUserInteractionEnabled = false
       column.translatesAutoresizingMaskIntoConstraints = false
       button.addSubview(column)
       NSLayoutConstraint.activate([
-        column.leadingAnchor.constraint(equalTo: button.leadingAnchor, constant: 4),
-        column.trailingAnchor.constraint(equalTo: button.trailingAnchor, constant: -4),
+        column.leadingAnchor.constraint(equalTo: button.leadingAnchor, constant: 8),
+        column.trailingAnchor.constraint(equalTo: button.trailingAnchor, constant: -8),
         column.centerYAnchor.constraint(equalTo: button.centerYAnchor),
       ])
-      button.heightAnchor.constraint(equalToConstant: 74).isActive = true
+      button.heightAnchor.constraint(equalToConstant: 76).isActive = true
       button.addAction(UIAction { [weak self] _ in
         self?.selected = id
         self?.showPlans(prices: prices)
-        self?.terms.text = "\(names[id] ?? "") · \(price)"
+        self?.refreshBuyButton()
       }, for: .touchUpInside)
-      planRow.addArrangedSubview(button)
+      row?.addArrangedSubview(button)
     }
-    let price = prices[selected] ?? "Цена появится из магазина"
-    terms.text = "\(names[selected] ?? "") · \(price)"
+    let price = prices[selected] ?? waiting
+    if selected == "camalert_premium_yearly" {
+      terms.text = "\(shortTrial(for: selected)), затем \(price) в год"
+    } else {
+      terms.text = "\(names[selected] ?? "") · \(price)"
+    }
+    updateTrialNote()
+    refreshBuyButton()
+  }
+
+  private func shortTrial(for id: String) -> String {
+    if let product = products.first(where: { $0.id == id }), let phrase = Self.freeTrialPhrase(product) {
+      return phrase
+    }
+    return "3 дня бесплатно"
+  }
+
+  private func updateTrialNote() {
+    let active = PremiumStore.shared.subscribed || ProcessInfo.processInfo.arguments.contains("--premium-card")
+    trialNote.isHidden = active
+    guard !active else { return }
+    let offer = products.first { $0.id == "camalert_premium_yearly" }.flatMap { Self.freeTrialPhrase($0) } ?? "3 дня бесплатно"
+    trialNote.text = "\(offer) для новых покупателей с годовой подпиской. Дальше она продлевается сама, пока её не отменят."
+  }
+
+  private static func freeTrialPhrase(_ product: Product) -> String? {
+    guard let offer = product.subscription?.introductoryOffer, offer.paymentMode == .freeTrial else { return nil }
+    let count = offer.period.value * max(offer.periodCount, 1)
+    switch offer.period.unit {
+    case .day:
+      return "\(count) \(PremiumAccess.count(count, one: "день", few: "дня", many: "дней")) бесплатно"
+    case .week:
+      return "\(count) \(PremiumAccess.count(count, one: "неделя", few: "недели", many: "недель")) бесплатно"
+    case .month:
+      return "\(count) \(PremiumAccess.count(count, one: "месяц", few: "месяца", many: "месяцев")) бесплатно"
+    case .year:
+      return "\(count) \(PremiumAccess.count(count, one: "год", few: "года", many: "лет")) бесплатно"
+    default:
+      return "Пробный период бесплатно"
+    }
   }
 
   private func loadProducts() async {
@@ -402,20 +550,34 @@ final class PremiumViewController: UIViewController {
     products = loaded
     await MainActor.run {
       self.showPlans(prices: prices)
+      self.refreshBuyButton()
       if loaded.isEmpty { self.note.text = "" }
+      if self.waitingToBuy { self.buySelected() }
     }
   }
 
   @objc private func buySelected() {
+    buyTouchUp()
+    guard !buying else { return }
     guard let product = products.first(where: { $0.id == selected }) else {
-      note.text = "Этот продукт ещё не пришёл из App Store."
+      waitingToBuy = true
+      note.text = "Открываем оплату…"
       return
     }
+    waitingToBuy = false
+    buying = true
     Task {
+      defer { Task { @MainActor in self.buying = false } }
       do {
         let result = try await product.purchase()
         if case .success(let verification) = result, case .verified = verification {
-          await MainActor.run { self.note.text = "Магазин подтвердил покупку: \(product.displayName)" }
+          await PremiumStore.shared.refresh()
+          await MainActor.run {
+            self.applyPremiumState()
+            if !PremiumStore.shared.subscribed {
+              self.note.text = "Магазин подтвердил покупку: \(product.displayName)"
+            }
+          }
         }
       } catch {
         await MainActor.run { self.note.text = "Покупка не завершилась" }
@@ -426,7 +588,40 @@ final class PremiumViewController: UIViewController {
   @objc private func restorePurchases() {
     Task {
       try? await AppStore.sync()
-      await MainActor.run { self.note.text = "Запрос восстановления отправлен в App Store." }
+      await PremiumStore.shared.refresh()
+      await MainActor.run {
+        self.applyPremiumState()
+        if !PremiumStore.shared.subscribed {
+          self.note.text = "Запрос восстановления отправлен в App Store."
+        }
+      }
+    }
+  }
+
+  @objc private func premiumChanged() { applyPremiumState() }
+
+  private func applyPremiumState() {
+    let preview = ProcessInfo.processInfo.arguments.contains("--premium-card")
+    let store = PremiumStore.shared
+    let active = store.subscribed || preview
+    statusCard.isHidden = !active
+    planRow.isHidden = active
+    terms.isHidden = active
+    buyButton.isHidden = active
+    updateTrialNote()
+    guard active else { return }
+    let productId = store.subscribed ? store.productId : "camalert_premium_monthly"
+    planValue.text = PremiumAccess.planTitle(productId)
+    let expires: Double? = store.subscribed ? store.expiresAt : Date().addingTimeInterval(30 * 24 * 60 * 60).timeIntervalSince1970 * 1000
+    if productId?.hasSuffix("lifetime") == true || expires == nil {
+      renewalRow.isHidden = true
+    } else if let expires {
+      let formatter = DateFormatter()
+      formatter.locale = Locale(identifier: "ru_RU")
+      formatter.dateStyle = .long
+      formatter.timeStyle = .none
+      renewalValue.text = formatter.string(from: Date(timeIntervalSince1970: expires / 1000))
+      renewalRow.isHidden = false
     }
   }
 
@@ -435,9 +630,18 @@ final class PremiumViewController: UIViewController {
   }
 
   private func advanceStage() {
-    guard slides.count > 1, cardWidth > 0, stage.isDragging == false, stage.isTracking == false else { return }
-    stagePage = (stagePage + 1) % slides.count
-    stage.setContentOffset(CGPoint(x: CGFloat(stagePage) * (cardWidth + 12), y: 0), animated: true)
+    guard slides.count > 1, cardWidth > 0, stage.isDragging == false, stage.isTracking == false, stage.isDecelerating == false else { return }
+    if stagePage >= slides.count { settleLoop() }
+    stagePage += 1
+    stage.setContentOffset(CGPoint(x: CGFloat(stagePage) * cardStride, y: 0), animated: true)
+  }
+
+  private func settleLoop() {
+    guard cardStride > 0, slides.count > 1 else { return }
+    let page = Int(round(stage.contentOffset.x / cardStride))
+    guard page >= slides.count else { return }
+    stagePage = page % slides.count
+    stage.setContentOffset(CGPoint(x: CGFloat(stagePage) * cardStride, y: 0), animated: false)
   }
 
   @objc private func goBack() {
@@ -452,15 +656,23 @@ final class PremiumViewController: UIViewController {
 
 extension PremiumViewController: UIScrollViewDelegate {
   func scrollViewDidScroll(_ scrollView: UIScrollView) {
-    guard cardWidth > 0 else { return }
-    let page = Int(round(scrollView.contentOffset.x / (cardWidth + 12)))
-    let index = min(max(page, 0), slides.count - 1)
-    stagePage = index
+    guard cardStride > 0, slides.count > 0 else { return }
+    let page = Int(round(scrollView.contentOffset.x / cardStride))
+    stagePage = page
+    let index = ((page % slides.count) + slides.count) % slides.count
     for case let dot as UIView in dots.arrangedSubviews {
       let on = dot.tag == index
       dot.backgroundColor = on ? gold : UIColor(white: 1, alpha: 0.35)
       dot.constraints.filter { $0.firstAttribute == .width }.forEach { $0.constant = on ? 18 : 8 }
     }
+  }
+
+  func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+    settleLoop()
+  }
+
+  func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
+    settleLoop()
   }
 }
 
@@ -477,94 +689,68 @@ private final class ProSlideCard: UIView {
     image.clipsToBounds = true
     image.tag = 41
     addSubview(image)
-    let art = ProSlideArt(kind: slide.id, gold: gold)
-    art.tag = 42
-    addSubview(art)
+    let badge = UIView()
+    badge.tag = 42
+    badge.backgroundColor = UIColor(red: 8 / 255, green: 12 / 255, blue: 32 / 255, alpha: 0.72)
+    badge.layer.cornerRadius = 28
+    badge.layer.borderWidth = 1.5
+    badge.layer.borderColor = gold.cgColor
+    let symbol = UIImage.SymbolConfiguration(pointSize: 26, weight: .semibold)
+    let icon = UIImageView(image: UIImage(systemName: ProSlideCard.symbolName(slide.id), withConfiguration: symbol))
+    icon.tintColor = gold
+    icon.contentMode = .scaleAspectFit
+    icon.tag = 44
+    badge.addSubview(icon)
+    addSubview(badge)
+    let scrim = UIView()
+    scrim.tag = 43
+    scrim.backgroundColor = UIColor(red: 8 / 255, green: 12 / 255, blue: 32 / 255, alpha: 0.78)
+    addSubview(scrim)
     let title = UILabel()
     title.text = slide.title
     title.textColor = cream
-    title.font = .camalert(18, weight: .black)
+    title.font = .camalert(16, weight: .black)
+    title.numberOfLines = 1
+    title.adjustsFontSizeToFitWidth = true
+    title.minimumScaleFactor = 0.75
     let body = UILabel()
     body.text = slide.text
     body.textColor = cream
     body.font = .camalert(12)
     body.numberOfLines = 2
+    body.lineBreakMode = .byWordWrapping
     let copy = UIStackView(arrangedSubviews: [title, body])
     copy.axis = .vertical
+    copy.spacing = 2
     copy.translatesAutoresizingMaskIntoConstraints = false
     addSubview(copy)
     NSLayoutConstraint.activate([
-      copy.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 13),
+      copy.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 12),
       copy.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -12),
-      copy.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -9),
+      copy.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8),
     ])
   }
 
   required init?(coder: NSCoder) { nil }
+
+  fileprivate static func symbolName(_ id: String) -> String {
+    switch id {
+    case "navigation": return "map.fill"
+    case "voice": return "speaker.wave.2.fill"
+    case "background": return "iphone"
+    case "settings": return "slider.horizontal.3"
+    default: return "camera.fill"
+    }
+  }
+
   override func layoutSubviews() {
     super.layoutSubviews()
     viewWithTag(41)?.frame = bounds
-    viewWithTag(42)?.frame = bounds
-  }
-}
-
-private final class ProSlideArt: UIView {
-  private let kind: String
-  private let gold: UIColor
-  init(kind: String, gold: UIColor) {
-    self.kind = kind
-    self.gold = gold
-    super.init(frame: .zero)
-    isUserInteractionEnabled = false
-    backgroundColor = .clear
-    autoresizingMask = [.flexibleWidth, .flexibleHeight]
-  }
-  required init?(coder: NSCoder) { nil }
-  override func draw(_ rect: CGRect) {
-    guard let context = UIGraphicsGetCurrentContext() else { return }
-    context.setStrokeColor(gold.cgColor)
-    context.setFillColor(gold.cgColor)
-    context.setLineWidth(4)
-    switch kind {
-    case "navigation":
-      context.setStrokeColor(UIColor(red: 86 / 255, green: 201 / 255, blue: 255 / 255, alpha: 1).cgColor)
-      context.setLineWidth(5)
-      context.move(to: CGPoint(x: rect.midX - 40, y: 36))
-      context.addQuadCurve(to: CGPoint(x: rect.midX + 30, y: rect.midY + 10), control: CGPoint(x: rect.midX - 10, y: rect.midY))
-      context.strokePath()
-      context.setFillColor(UIColor(red: 23 / 255, green: 141 / 255, blue: 228 / 255, alpha: 1).cgColor)
-      context.fillEllipse(in: CGRect(x: rect.midX + 18, y: rect.midY, width: 18, height: 18))
-    case "voice":
-      context.setLineWidth(3)
-      context.strokeEllipse(in: CGRect(x: rect.midX - 27, y: 28, width: 54, height: 65))
-      context.setStrokeColor(gold.withAlphaComponent(0.42).cgColor)
-      context.strokeEllipse(in: CGRect(x: rect.midX - 42, y: 16, width: 84, height: 90))
-      context.setFillColor(gold.cgColor)
-      context.fill(CGRect(x: rect.midX - 9, y: 42, width: 18, height: 35))
-    case "background":
-      context.setFillColor(UIColor(red: 255 / 255, green: 229 / 255, blue: 161 / 255, alpha: 1).cgColor)
-      context.fillEllipse(in: CGRect(x: rect.midX + 28, y: 18, width: 29, height: 29))
-      context.setStrokeColor(UIColor(red: 227 / 255, green: 232 / 255, blue: 244 / 255, alpha: 1).cgColor)
-      context.setLineWidth(2)
-      context.stroke(CGRect(x: rect.midX - 16, y: 36, width: 43, height: 72))
-    case "settings":
-      context.setLineWidth(4)
-      for index in 0..<3 {
-        let y = 48 + CGFloat(index) * 18
-        context.move(to: CGPoint(x: 48, y: y))
-        context.addLine(to: CGPoint(x: rect.width - 70, y: y))
-        context.strokePath()
-        let knobX: CGFloat = index == 1 ? rect.midX + 20 : rect.midX - 30
-        context.setFillColor(gold.cgColor)
-        context.fillEllipse(in: CGRect(x: knobX, y: y - 8, width: 16, height: 16))
-      }
-    default:
-      context.setLineWidth(3)
-      context.stroke(CGRect(x: rect.midX - 28, y: 30, width: 56, height: 36))
-      context.fillEllipse(in: CGRect(x: rect.midX - 10, y: 38, width: 20, height: 20))
-      context.setFillColor(UIColor(red: 8 / 255, green: 15 / 255, blue: 41 / 255, alpha: 1).cgColor)
-      context.fillEllipse(in: CGRect(x: rect.midX - 5, y: 43, width: 10, height: 10))
-    }
+    let side: CGFloat = 56
+    let badgeY = max(12, (bounds.height * 0.50 - side) / 2)
+    viewWithTag(42)?.frame = CGRect(x: (bounds.width - side) / 2, y: badgeY, width: side, height: side)
+    viewWithTag(42)?.viewWithTag(44)?.frame = CGRect(x: 13, y: 13, width: 30, height: 30)
+    viewWithTag(43)?.frame = CGRect(x: 0, y: bounds.height * 0.52, width: bounds.width, height: bounds.height * 0.48)
   }
 }
 
@@ -572,5 +758,77 @@ private extension UIFont {
   func withWeight(_ weight: UIFont.Weight) -> UIFont {
     let descriptor = fontDescriptor.addingAttributes([.traits: [UIFontDescriptor.TraitKey.weight: weight]])
     return UIFont(descriptor: descriptor, size: pointSize)
+  }
+}
+
+enum PremiumOffer {
+  private static var shownAt = Date.distantPast
+
+  static func present(from viewController: UIViewController) {
+    guard !ProcessInfo.processInfo.arguments.contains("--voice-check") else { return }
+    guard !ProcessInfo.processInfo.arguments.contains("--premium-check") else { return }
+    guard Date().timeIntervalSince(shownAt) > 90 else { return }
+    let root = viewController.view.window?.rootViewController ?? viewController
+    guard root.presentedViewController == nil else { return }
+    shownAt = Date()
+    let sheet = PremiumOfferController()
+    sheet.modalPresentationStyle = .overFullScreen
+    sheet.modalTransitionStyle = .crossDissolve
+    root.present(sheet, animated: true)
+  }
+}
+
+private final class PremiumOfferController: UIViewController {
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    view.backgroundColor = UIColor(white: 0, alpha: 0.45)
+    let card = UIView()
+    card.backgroundColor = UIColor(red: 16 / 255, green: 26 / 255, blue: 58 / 255, alpha: 1)
+    card.layer.cornerRadius = 16
+    card.translatesAutoresizingMaskIntoConstraints = false
+    let title = UILabel()
+    title.text = "CamAlert Premium"
+    title.textColor = .white
+    title.font = .camalert(18, weight: .heavy)
+    let message = UILabel()
+    message.text = "Голосовая навигация, голосовые предупреждения, работа в фоне и альтернативные маршруты входят в Premium."
+    message.textColor = UIColor(red: 213 / 255, green: 217 / 255, blue: 232 / 255, alpha: 1)
+    message.font = .camalert(14)
+    message.numberOfLines = 0
+    let open = UIButton(type: .system)
+    open.setTitle("Открыть Premium", for: .normal)
+    open.setTitleColor(UIColor(red: 17 / 255, green: 16 / 255, blue: 26 / 255, alpha: 1), for: .normal)
+    open.titleLabel?.font = .camalert(16, weight: .bold)
+    open.backgroundColor = UIColor(red: 255 / 255, green: 198 / 255, blue: 41 / 255, alpha: 1)
+    open.layer.cornerRadius = 14
+    open.heightAnchor.constraint(equalToConstant: 44).isActive = true
+    open.addAction(UIAction { [weak self] _ in
+      let presenter = self?.presentingViewController
+      self?.dismiss(animated: true) {
+        let screen = PremiumViewController()
+        screen.modalPresentationStyle = .fullScreen
+        presenter?.present(screen, animated: true)
+      }
+    }, for: .touchUpInside)
+    let later = UIButton(type: .system)
+    later.setTitle("Не сейчас", for: .normal)
+    later.setTitleColor(.white, for: .normal)
+    later.titleLabel?.font = .camalert(15, weight: .semibold)
+    later.addAction(UIAction { [weak self] _ in self?.dismiss(animated: true) }, for: .touchUpInside)
+    let stack = UIStackView(arrangedSubviews: [title, message, open, later])
+    stack.axis = .vertical
+    stack.spacing = 12
+    stack.translatesAutoresizingMaskIntoConstraints = false
+    card.addSubview(stack)
+    view.addSubview(card)
+    NSLayoutConstraint.activate([
+      card.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
+      card.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24),
+      card.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+      stack.topAnchor.constraint(equalTo: card.topAnchor, constant: 18),
+      stack.leadingAnchor.constraint(equalTo: card.leadingAnchor, constant: 16),
+      stack.trailingAnchor.constraint(equalTo: card.trailingAnchor, constant: -16),
+      stack.bottomAnchor.constraint(equalTo: card.bottomAnchor, constant: -16),
+    ])
   }
 }

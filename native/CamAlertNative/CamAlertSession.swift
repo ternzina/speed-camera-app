@@ -1,4 +1,5 @@
 import Foundation
+import StoreKit
 
 final class CamAlertSession {
   static let shared = CamAlertSession()
@@ -23,11 +24,17 @@ final class CamAlertSession {
     if defaults.object(forKey: "camalert.warnings") != nil { settings.cameraWarnings = defaults.bool(forKey: "camalert.warnings") }
     if defaults.object(forKey: "camalert.smart") != nil { settings.smartDistance = defaults.bool(forKey: "camalert.smart") }
     if let theme = defaults.string(forKey: "camalert.theme") { settings.driveTheme = theme }
+    if !defaults.bool(forKey: "camalert.theme.dayDefault") {
+      if settings.driveTheme == "auto" { settings.driveTheme = "day" }
+      defaults.set(true, forKey: "camalert.theme.dayDefault")
+      defaults.set(settings.driveTheme, forKey: "camalert.theme")
+    }
     if defaults.object(forKey: "camalert.city") != nil { settings.cityDistance = defaults.double(forKey: "camalert.city") }
     if defaults.object(forKey: "camalert.road") != nil { settings.roadDistance = defaults.double(forKey: "camalert.road") }
     if defaults.object(forKey: "camalert.highway") != nil { settings.highwayDistance = defaults.double(forKey: "camalert.highway") }
     if defaults.object(forKey: "camalert.fast") != nil { settings.fastDistance = defaults.double(forKey: "camalert.fast") }
     catalog.loadBundled()
+    PremiumStore.shared.prepare()
   }
 
   func save() {
@@ -145,5 +152,142 @@ struct SectionPace: Equatable {
     let elapsed = now.timeIntervalSince(pace.startedAt)
     let average = elapsed >= 5 && distance >= 20 ? Int((distance / elapsed * 3.6).rounded()) : nil
     return SectionPace(distance: distance, startedAt: pace.startedAt, last: point, averageKmh: average)
+  }
+}
+
+extension Notification.Name {
+  static let camalertPremium = Notification.Name("camalert.premium")
+}
+
+/// Apple entitlements are the source of truth. The saved record only bridges
+/// the gap until StoreKit answers again after a restart.
+final class PremiumStore {
+  static let shared = PremiumStore()
+  private let defaults = UserDefaults.standard
+  private let firstKey = "camalert.firstLaunchAt"
+  private let productKey = "camalert.premium.product"
+  private let revokedKey = "camalert.premium.revoked"
+  private let expiresKey = "camalert.premium.expires"
+  private(set) var tripCarried = false
+  private var updates: Task<Void, Never>?
+
+  private init() {}
+
+  var firstLaunchAt: Double {
+    if defaults.object(forKey: firstKey) == nil {
+      defaults.set(Date().timeIntervalSince1970 * 1000, forKey: firstKey)
+    }
+    return defaults.double(forKey: firstKey)
+  }
+
+  var productId: String? { defaults.string(forKey: productKey) }
+  var revoked: Bool { defaults.bool(forKey: revokedKey) }
+  var expiresAt: Double? {
+    guard defaults.object(forKey: expiresKey) != nil else { return nil }
+    return defaults.double(forKey: expiresKey)
+  }
+
+  var period: String? {
+    guard let productId else { return nil }
+    if productId.hasSuffix("lifetime") { return "lifetime" }
+    if productId.hasSuffix("weekly") { return "weekly" }
+    if productId.hasSuffix("monthly") { return "monthly" }
+    if productId.hasSuffix("yearly") { return "yearly" }
+    return nil
+  }
+
+  var subscribed: Bool {
+    PremiumAccess.allows(productId: productId, revoked: revoked, period: period, expiresAt: expiresAt, now: now)
+  }
+
+  var featuresOpen: Bool {
+    PremiumAccess.featuresOpen(
+      productId: productId,
+      revoked: revoked,
+      period: period,
+      expiresAt: expiresAt,
+      firstLaunchAt: firstLaunchAt,
+      now: now,
+      tripCarried: tripCarried
+    )
+  }
+
+  func beginTripIfOpen() {
+    let open = PremiumAccess.featuresOpen(
+      productId: productId, revoked: revoked, period: period, expiresAt: expiresAt,
+      firstLaunchAt: firstLaunchAt, now: now, tripCarried: false
+    )
+    if open { tripCarried = true }
+  }
+
+  func endTrip() { tripCarried = false }
+
+  func prepare() {
+    _ = firstLaunchAt
+    guard updates == nil else { return }
+    updates = Task { [weak self] in
+      await self?.refresh()
+      guard let self else { return }
+      for await update in Transaction.updates {
+        if case .verified = update { await self.refresh() }
+      }
+    }
+    if ProcessInfo.processInfo.arguments.contains("--premium-check") { writeCheck() }
+  }
+
+  func refresh() async {
+    var chosen: (id: String, revoked: Bool, expires: Double?)?
+    for await result in Transaction.currentEntitlements {
+      guard case .verified(let transaction) = result else { continue }
+      guard PremiumAccess.plans.contains(transaction.productID) else { continue }
+      let candidate = (
+        id: transaction.productID,
+        revoked: transaction.revocationDate != nil,
+        expires: transaction.expirationDate.map { $0.timeIntervalSince1970 * 1000 }
+      )
+      if chosen == nil || prefers(candidate, over: chosen!) { chosen = candidate }
+    }
+    let saved = chosen
+    await MainActor.run {
+      if let saved {
+        self.defaults.set(saved.id, forKey: self.productKey)
+        self.defaults.set(saved.revoked, forKey: self.revokedKey)
+        if let expires = saved.expires { self.defaults.set(expires, forKey: self.expiresKey) }
+        else { self.defaults.removeObject(forKey: self.expiresKey) }
+      } else {
+        self.defaults.removeObject(forKey: self.productKey)
+        self.defaults.set(false, forKey: self.revokedKey)
+        self.defaults.removeObject(forKey: self.expiresKey)
+      }
+      NotificationCenter.default.post(name: .camalertPremium, object: nil)
+    }
+  }
+
+  private var now: Double { Date().timeIntervalSince1970 * 1000 }
+
+  private func prefers(_ candidate: (id: String, revoked: Bool, expires: Double?), over current: (id: String, revoked: Bool, expires: Double?)) -> Bool {
+    if candidate.id.hasSuffix("lifetime") { return true }
+    if current.id.hasSuffix("lifetime") { return false }
+    return (candidate.expires ?? 0) > (current.expires ?? 0)
+  }
+
+  private func writeCheck() {
+    let start = 1_700_000_000_000.0
+    let trial = Double(PremiumAccess.introductoryMs)
+    let hour = 60.0 * 60 * 1000
+    func line(_ name: String, _ value: Bool) -> String { "PREMIUMCHECK \(name)=\(value)" }
+    let rows = [
+      line("allows-nil", PremiumAccess.allows(productId: nil, revoked: false, period: nil, expiresAt: nil, now: start)),
+      line("trial-open", PremiumAccess.featuresOpen(productId: nil, revoked: false, period: nil, expiresAt: nil, firstLaunchAt: start, now: start + hour, tripCarried: false)),
+      line("trial-closed", PremiumAccess.featuresOpen(productId: nil, revoked: false, period: nil, expiresAt: nil, firstLaunchAt: start, now: start + trial + hour, tripCarried: false)),
+      line("sub-open", PremiumAccess.featuresOpen(productId: "camalert_premium_monthly", revoked: false, period: "monthly", expiresAt: start + 10 * hour, firstLaunchAt: start - trial, now: start, tripCarried: false)),
+      line("sub-expired", PremiumAccess.featuresOpen(productId: "camalert_premium_monthly", revoked: false, period: "monthly", expiresAt: start - hour, firstLaunchAt: start - trial, now: start, tripCarried: false)),
+      line("lifetime", PremiumAccess.featuresOpen(productId: "camalert_premium_lifetime", revoked: false, period: "lifetime", expiresAt: nil, firstLaunchAt: start - trial, now: start, tripCarried: false)),
+      line("trip-carried", PremiumAccess.featuresOpen(productId: nil, revoked: false, period: nil, expiresAt: nil, firstLaunchAt: start - trial, now: start, tripCarried: true)),
+      line("revoked", PremiumAccess.allows(productId: "camalert_premium_lifetime", revoked: true, period: "lifetime", expiresAt: nil, now: start)),
+    ]
+    NSLog("%@", rows.joined(separator: "\n"))
+    guard let url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("premium-check.txt") else { return }
+    try? rows.joined(separator: "\n").write(to: url, atomically: true, encoding: String.Encoding.utf8)
   }
 }

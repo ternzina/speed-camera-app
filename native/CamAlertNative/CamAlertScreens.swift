@@ -102,6 +102,8 @@ final class HomeViewController: UIViewController {
     let text = NSMutableAttributedString(string: "Cam", attributes: [.foregroundColor: ink, .font: UIFont.camalert(28, weight: .black)])
     text.append(NSAttributedString(string: "Alert", attributes: [.foregroundColor: CamAlertPalette.cyan, .font: UIFont.camalert(28, weight: .black)]))
     brand.attributedText = text
+    brand.setContentCompressionResistancePriority(.required, for: .horizontal)
+    brand.setContentHuggingPriority(.required, for: .horizontal)
     let mark = UILabel()
     mark.text = "A"
     mark.font = .italicSystemFont(ofSize: 26)
@@ -124,14 +126,19 @@ final class HomeViewController: UIViewController {
     settings.widthAnchor.constraint(equalToConstant: 48).isActive = true
     settings.heightAnchor.constraint(equalToConstant: 48).isActive = true
     let back = UIButton(type: .system)
-    back.setTitle("‹  Назад", for: .normal)
-    back.setTitleColor(night ? .white : CamAlertPalette.ink, for: .normal)
-    back.titleLabel?.font = .camalert(16, weight: .bold)
+    let arrow = UIImage.SymbolConfiguration(pointSize: 18, weight: .bold)
+    back.setImage(UIImage(systemName: "chevron.left", withConfiguration: arrow), for: .normal)
+    back.tintColor = night ? .white : CamAlertPalette.ink
     back.backgroundColor = night ? UIColor(red: 16 / 255, green: 38 / 255, blue: 59 / 255, alpha: 0.94) : UIColor(white: 1, alpha: 0.96)
     back.layer.cornerRadius = 14
-    back.contentEdgeInsets = UIEdgeInsets(top: 8, left: 10, bottom: 8, right: 12)
+    back.accessibilityLabel = "Назад"
     back.addTarget(self, action: #selector(reopenWelcome), for: .touchUpInside)
-    let row = UIStackView(arrangedSubviews: [back, mark, brand, settings])
+    back.translatesAutoresizingMaskIntoConstraints = false
+    back.widthAnchor.constraint(equalToConstant: 44).isActive = true
+    back.heightAnchor.constraint(equalToConstant: 44).isActive = true
+    let spacer = UIView()
+    spacer.setContentHuggingPriority(.defaultLow, for: .horizontal)
+    let row = UIStackView(arrangedSubviews: [back, mark, brand, spacer, settings])
     row.axis = .horizontal
     row.alignment = .center
     row.spacing = 8
@@ -175,7 +182,7 @@ final class HomeViewController: UIViewController {
     dot.heightAnchor.constraint(equalToConstant: 8).isActive = true
     let detail = UILabel()
     detail.text = value
-    detail.font = .camalert(11, weight: .semibold)
+    detail.font = .camalert(10, weight: .semibold)
     detail.textColor = muted
     let values = UIStackView(arrangedSubviews: [dot, detail])
     values.spacing = 5
@@ -226,8 +233,14 @@ final class HomeViewController: UIViewController {
 
   private func titleBlock(ink: UIColor, muted: UIColor) -> UIView {
     let title = UILabel()
-    title.text = CamAlertPhrases.home(session.settings.language).title
-    title.font = .camalert(34, weight: .black)
+    let words = CamAlertPhrases.home(session.settings.language).title
+    title.attributedText = NSAttributedString(string: words, attributes: [
+      .font: UIFont.camalert(34, weight: .black),
+      .foregroundColor: ink,
+      .kern: -0.8,
+    ])
+    title.adjustsFontSizeToFitWidth = true
+    title.minimumScaleFactor = 0.75
     title.textColor = ink
     let subtitle = UILabel()
     subtitle.text = CamAlertPhrases.home(session.settings.language).subtitle
@@ -245,6 +258,8 @@ final class HomeViewController: UIViewController {
     button.setTitle(title, for: .normal)
     button.setTitleColor(.white, for: .normal)
     button.titleLabel?.font = .camalert(17, weight: .heavy)
+    button.titleLabel?.adjustsFontSizeToFitWidth = true
+    button.titleLabel?.minimumScaleFactor = 0.75
     button.backgroundColor = CamAlertPalette.blue
     button.layer.cornerRadius = 20
     button.heightAnchor.constraint(equalToConstant: 58).isActive = true
@@ -257,6 +272,8 @@ final class HomeViewController: UIViewController {
     button.setTitle(title, for: .normal)
     button.setTitleColor(night ? UIColor(red: 214 / 255, green: 230 / 255, blue: 255 / 255, alpha: 1) : CamAlertPalette.blue, for: .normal)
     button.titleLabel?.font = .camalert(17, weight: .heavy)
+    button.titleLabel?.adjustsFontSizeToFitWidth = true
+    button.titleLabel?.minimumScaleFactor = 0.75
     button.backgroundColor = night ? UIColor(red: 16 / 255, green: 38 / 255, blue: 59 / 255, alpha: 1) : .white
     button.layer.cornerRadius = 20
     button.layer.borderWidth = 1.5
@@ -332,7 +349,7 @@ final class HomeViewController: UIViewController {
     return row
   }
 
-  @objc private func startTrip() { NotificationCenter.default.post(name: .camalertShowTab, object: "drive") }
+  @objc private func startTrip() { NotificationCenter.default.post(name: .camalertShowTab, object: "trip") }
   @objc private func openSearch() { NotificationCenter.default.post(name: .camalertShowTab, object: "search") }
   @objc private func openCountries() { NotificationCenter.default.post(name: .camalertShowTab, object: "countries") }
   @objc private func openSettings() { NotificationCenter.default.post(name: .camalertShowTab, object: "settings") }
@@ -780,7 +797,9 @@ final class SettingsViewController: UIViewController, UISearchBarDelegate {
     back.addTarget(self, action: #selector(goBack), for: .touchUpInside)
     let title = UILabel()
     title.text = titleText
-    title.font = .camalert(32, weight: .black)
+    title.font = .camalert(22, weight: .heavy)
+    title.adjustsFontSizeToFitWidth = true
+    title.minimumScaleFactor = 0.7
     title.textColor = ink
     title.numberOfLines = 2
     let row = UIStackView(arrangedSubviews: [back, title])
@@ -853,13 +872,33 @@ final class SettingsViewController: UIViewController, UISearchBarDelegate {
     button.layer.cornerRadius = 14
     button.clipsToBounds = true
     button.contentHorizontalAlignment = .left
-    button.contentEdgeInsets = UIEdgeInsets(top: 12, left: 14, bottom: 12, right: 14)
-    let text = subtitle == nil ? title : "\(title)\n\(subtitle!)"
-    button.setTitle(text, for: .normal)
-    button.titleLabel?.numberOfLines = 2
-    button.titleLabel?.lineBreakMode = .byWordWrapping
-    button.titleLabel?.font = .camalert(15, weight: .semibold)
-    button.setTitleColor(.white, for: .normal)
+    let titleLabel = UILabel()
+    titleLabel.text = title
+    titleLabel.numberOfLines = 0
+    titleLabel.font = .camalert(15, weight: .semibold)
+    titleLabel.textColor = .white
+    var lines: [UIView] = [titleLabel]
+    if let subtitle {
+      let detail = UILabel()
+      detail.text = subtitle
+      detail.numberOfLines = 0
+      detail.lineBreakMode = .byWordWrapping
+      detail.font = .camalert(13)
+      detail.textColor = UIColor(white: 1, alpha: 0.9)
+      lines.append(detail)
+    }
+    let column = UIStackView(arrangedSubviews: lines)
+    column.axis = .vertical
+    column.spacing = 4
+    column.isUserInteractionEnabled = false
+    column.translatesAutoresizingMaskIntoConstraints = false
+    button.addSubview(column)
+    NSLayoutConstraint.activate([
+      column.topAnchor.constraint(equalTo: button.topAnchor, constant: 12),
+      column.leadingAnchor.constraint(equalTo: button.leadingAnchor, constant: 14),
+      column.trailingAnchor.constraint(equalTo: button.trailingAnchor, constant: -14),
+      column.bottomAnchor.constraint(equalTo: button.bottomAnchor, constant: -12),
+    ])
     button.addTarget(self, action: action, for: .touchUpInside)
     return button
   }
@@ -875,13 +914,16 @@ final class SettingsViewController: UIViewController, UISearchBarDelegate {
       button.setTitle(label, for: .normal)
       button.titleLabel?.font = .camalert(13, weight: .bold)
       button.titleLabel?.numberOfLines = 2
+      button.titleLabel?.lineBreakMode = .byWordWrapping
       button.titleLabel?.textAlignment = .center
       button.layer.cornerRadius = 13
-      button.backgroundColor = selected ? UIColor(red: 16 / 255, green: 38 / 255, blue: 59 / 255, alpha: 1) : (night ? CamAlertPalette.cardNight : UIColor(red: 240 / 255, green: 242 / 255, blue: 245 / 255, alpha: 1))
-      button.setTitleColor(selected ? .white : UIColor(red: 77 / 255, green: 94 / 255, blue: 112 / 255, alpha: 1), for: .normal)
+      button.backgroundColor = selected
+        ? (night ? CamAlertPalette.blue : UIColor(red: 16 / 255, green: 38 / 255, blue: 59 / 255, alpha: 1))
+        : (night ? UIColor(red: 36 / 255, green: 52 / 255, blue: 72 / 255, alpha: 1) : UIColor(red: 232 / 255, green: 236 / 255, blue: 241 / 255, alpha: 1))
+      button.setTitleColor(night || selected ? .white : CamAlertPalette.ink, for: .normal)
       button.layer.borderWidth = 1
       button.layer.borderColor = (selected ? UIColor(red: 35 / 255, green: 211 / 255, blue: 239 / 255, alpha: 1) : UIColor(red: 228 / 255, green: 232 / 255, blue: 237 / 255, alpha: 1)).cgColor
-      button.heightAnchor.constraint(equalToConstant: 64).isActive = true
+      button.heightAnchor.constraint(equalToConstant: 48).isActive = true
       button.addAction(UIAction { [weak self] _ in
         guard let self else { return }
         self.session.settings.driveTheme = value
@@ -905,10 +947,13 @@ final class SettingsViewController: UIViewController, UISearchBarDelegate {
       let selected = session.settings.language == code
       button.setTitle(code == "uk" ? "UA" : code.uppercased(), for: .normal)
       button.titleLabel?.font = .camalert(16, weight: .bold)
-      button.backgroundColor = selected ? UIColor(red: 207 / 255, green: 215 / 255, blue: 255 / 255, alpha: 1) : UIColor(red: 238 / 255, green: 238 / 255, blue: 238 / 255, alpha: 1)
-      button.setTitleColor(ink, for: .normal)
-      button.layer.cornerRadius = 16
-      button.heightAnchor.constraint(equalToConstant: 48).isActive = true
+      let night = CamAlertPalette.night(session.settings)
+      button.backgroundColor = selected
+        ? CamAlertPalette.blue
+        : (night ? UIColor(red: 28 / 255, green: 51 / 255, blue: 76 / 255, alpha: 1) : UIColor(red: 236 / 255, green: 240 / 255, blue: 245 / 255, alpha: 1))
+      button.setTitleColor(night || selected ? .white : CamAlertPalette.ink, for: .normal)
+      button.layer.cornerRadius = 14
+      button.heightAnchor.constraint(equalToConstant: 40).isActive = true
       button.addAction(UIAction { [weak self] _ in
         self?.session.settings.language = code
         self?.session.save()
@@ -955,7 +1000,7 @@ final class SettingsViewController: UIViewController, UISearchBarDelegate {
   private func heading(_ text: String, _ color: UIColor) -> UILabel {
     let label = UILabel()
     label.text = text
-    label.font = .camalert(18, weight: .heavy)
+    label.font = .camalert(16, weight: .heavy)
     label.textColor = color
     label.numberOfLines = 0
     return label
@@ -1166,7 +1211,11 @@ final class SettingsViewController: UIViewController, UISearchBarDelegate {
   @objc private func openWelcome() { NotificationCenter.default.post(name: .camalertShowTab, object: "welcome") }
   @objc private func openHistory() { navigationController?.pushViewController(HistoryViewController(), animated: true) }
   @objc private func openReport() { navigationController?.pushViewController(ReportViewController(), animated: true) }
-  @objc private func openPremium() { navigationController?.pushViewController(PremiumViewController(), animated: true) }
+  @objc private func openPremium() {
+    let screen = PremiumViewController()
+    screen.modalPresentationStyle = .fullScreen
+    present(screen, animated: true)
+  }
   @objc private func openPrivacy() {
     if let url = URL(string: "https://camera.21wek.com/privacy.html") { UIApplication.shared.open(url) }
   }
@@ -1537,9 +1586,11 @@ final class CameraBrowseViewController: UIViewController, GMSMapViewDelegate {
     back.contentHorizontalAlignment = .leading
     back.addAction(UIAction { _ in NotificationCenter.default.post(name: .camalertShowTab, object: "drive") }, for: .touchUpInside)
     let title = UILabel()
-    title.font = .camalert(34, weight: .black)
+    title.font = .camalert(28, weight: .heavy)
     title.textColor = ink
     title.numberOfLines = 2
+    title.adjustsFontSizeToFitWidth = true
+    title.minimumScaleFactor = 0.7
     title.text = language == "uk" ? "Камери на дорогах" : language == "en" ? "Road Cameras" : language == "pl" ? "Kamery drogowe" : "Камеры на дорогах"
     let subtitle = UILabel()
     subtitle.font = .camalert(15, weight: .semibold)

@@ -218,7 +218,7 @@ struct AlertSettings: Equatable {
   var highwayDistance = 1200.0
   var fastDistance = 1500.0
   var nightDrive = false
-  var driveTheme = "auto"
+  var driveTheme = "day"
 }
 
 enum CameraSurfaces {
@@ -366,7 +366,7 @@ enum PolandEngine {
 }
 
 enum PremiumAccess {
-  static let enforcement = false
+  static let enforcement = true
   static let introductoryMs = 72 * 60 * 60 * 1000
   static let plans = [
     "camalert_premium_weekly",
@@ -381,6 +381,45 @@ enum PremiumAccess {
     if period == "lifetime" { return true }
     if let expiresAt, expiresAt > now { return true }
     return false
+  }
+
+  /// Paid features stay open during the 72-hour trial, with a real subscription,
+  /// and until the trip that already started has finished.
+  static func featuresOpen(productId: String?, revoked: Bool, period: String?, expiresAt: Double?, firstLaunchAt: Double, now: Double, tripCarried: Bool) -> Bool {
+    if tripCarried { return true }
+    if allows(productId: productId, revoked: revoked, period: period, expiresAt: expiresAt, now: now) { return true }
+    return now - firstLaunchAt < Double(introductoryMs)
+  }
+
+  static func planTitle(_ productId: String?) -> String {
+    switch productId {
+    case "camalert_premium_weekly": return "Недельный"
+    case "camalert_premium_monthly": return "Месячный"
+    case "camalert_premium_yearly": return "Годовой"
+    case "camalert_premium_lifetime": return "Навсегда"
+    default: return ""
+    }
+  }
+
+  static func trialLine(firstLaunchAt: Double, now: Double) -> String {
+    let left = Double(introductoryMs) - (now - firstLaunchAt)
+    if left <= 0 { return "Бесплатные 3 дня закончились." }
+    let hoursLeft = left / 3_600_000
+    if hoursLeft >= 24 {
+      let days = max(1, Int((hoursLeft / 24).rounded(.up)))
+      return "Бесплатно ещё \(days) \(count(days, one: "день", few: "дня", many: "дней")). Все функции открыты без подписки."
+    }
+    let hours = max(1, Int(hoursLeft.rounded(.up)))
+    return "Бесплатно ещё \(hours) \(count(hours, one: "час", few: "часа", many: "часов")). Все функции открыты без подписки."
+  }
+
+  static func count(_ value: Int, one: String, few: String, many: String) -> String {
+    let n = abs(value) % 100
+    let digit = n % 10
+    if n >= 11 && n <= 14 { return many }
+    if digit == 1 { return one }
+    if digit >= 2 && digit <= 4 { return few }
+    return many
   }
 }
 

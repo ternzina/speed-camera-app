@@ -8,10 +8,16 @@ extension Notification.Name {
 }
 
 extension UIFont {
-  /// Matches the original app, which follows the iPhone text size.
+  /// One step from the iPhone text size, capped so the original layout does not balloon.
+  /// A plain font is used on purpose: UIButton.Configuration scales a metrics font a second time.
   static func camalert(_ size: CGFloat, weight: UIFont.Weight = .regular) -> UIFont {
-    let base = systemFont(ofSize: size, weight: weight)
-    return UIFontMetrics(forTextStyle: .body).scaledFont(for: base, maximumPointSize: size * 1.35)
+    let category = UITraitCollection.current.preferredContentSizeCategory
+    let body = UIFont.preferredFont(
+      forTextStyle: .body,
+      compatibleWith: UITraitCollection(preferredContentSizeCategory: category)
+    ).pointSize
+    let factor = min(max(body / 17, 0.9), 1.2)
+    return systemFont(ofSize: (size * factor * 2).rounded() / 2, weight: weight)
   }
 }
 
@@ -147,6 +153,41 @@ enum CamAlertPhrases {
     }
   }
 
+  struct VoiceRestart {
+    let title: String
+    let message: String
+    let button: String
+  }
+
+  static func voiceRestart(_ language: String) -> VoiceRestart {
+    switch language {
+    case "uk":
+      return VoiceRestart(
+        title: "Залишився один крок",
+        message: "Початкове налаштування завершено.\n\nЩоб голосова навігація працювала правильно, повністю закрийте CamAlert, змахнувши його картку вгору в списку відкритих програм, потім запустіть застосунок знову.\n\nЦе потрібно зробити лише один раз після встановлення.",
+        button: "Зрозуміло"
+      )
+    case "en":
+      return VoiceRestart(
+        title: "One step left",
+        message: "Initial setup is complete.\n\nFor voice navigation to work properly, fully close CamAlert by swiping its card up in the list of open apps, then open the app again.\n\nYou only need to do this once after installation.",
+        button: "Got it"
+      )
+    case "pl":
+      return VoiceRestart(
+        title: "Został jeden krok",
+        message: "Początkowa konfiguracja została zakończona.\n\nAby nawigacja głosowa działała poprawnie, całkowicie zamknij CamAlert, przesuwając jego kartę w górę na liście otwartych aplikacji, a następnie uruchom aplikację ponownie.\n\nTrzeba to zrobić tylko raz po instalacji.",
+        button: "Rozumiem"
+      )
+    default:
+      return VoiceRestart(
+        title: "Остался один шаг",
+        message: "Первоначальная настройка завершена.\n\nЧтобы голосовая навигация работала правильно, полностью закройте CamAlert, смахнув его карточку вверх в списке открытых приложений, затем запустите приложение снова.\n\nЭто нужно сделать только один раз после установки.",
+        button: "Понятно"
+      )
+    }
+  }
+
   static func countryName(_ code: String, language: String) -> String {
     let upper = code.uppercased()
     if upper == "UA" { return language == "en" ? "Ukraine" : language == "pl" ? "Ukraina" : language == "uk" ? "Україна" : "Украина" }
@@ -155,9 +196,49 @@ enum CamAlertPhrases {
   }
 }
 
+final class DriveHostController: UIViewController {
+  let home = HomeViewController()
+  let map = ViewController()
+
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    embed(home)
+    embed(map)
+    map.view.isHidden = !ProcessInfo.processInfo.arguments.contains("--voice-check")
+    home.view.isHidden = !map.view.isHidden
+  }
+
+  func showMap(search: Bool) {
+    map.view.isHidden = false
+    home.view.isHidden = true
+    view.bringSubviewToFront(map.view)
+    if search { map.focusDestination() }
+  }
+
+  func showHome() {
+    guard map.navigatorIsIdle else { return }
+    map.view.isHidden = true
+    home.view.isHidden = false
+    view.bringSubviewToFront(home.view)
+  }
+
+  private func embed(_ child: UIViewController) {
+    addChild(child)
+    child.view.translatesAutoresizingMaskIntoConstraints = false
+    view.addSubview(child.view)
+    NSLayoutConstraint.activate([
+      child.view.topAnchor.constraint(equalTo: view.topAnchor),
+      child.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+      child.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+      child.view.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+    ])
+    child.didMove(toParent: self)
+  }
+}
+
 final class CamAlertShellController: UIViewController {
   private let session = CamAlertSession.shared
-  private var mapScreen: ViewController?
+  private var driveHost: DriveHostController?
   private let nearby = NearbyViewController()
   private let settings = SettingsViewController()
   private var pages: [UINavigationController] = []
@@ -192,7 +273,9 @@ final class CamAlertShellController: UIViewController {
       bar.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -8),
       bar.heightAnchor.constraint(equalToConstant: 64),
     ])
-    attach(0)
+    if !ProcessInfo.processInfo.arguments.contains("--show-premium") {
+      attach(0)
+    }
     NotificationCenter.default.addObserver(self, selector: #selector(showRequested(_:)), name: .camalertShowTab, object: nil)
     rebuildTabs()
   }
@@ -201,6 +284,11 @@ final class CamAlertShellController: UIViewController {
     super.viewDidAppear(animated)
     if ProcessInfo.processInfo.arguments.contains("--voice-check") {
       show("drive")
+    }
+    if ProcessInfo.processInfo.arguments.contains("--show-premium"), presentedViewController == nil {
+      let screen = PremiumViewController()
+      screen.modalPresentationStyle = .fullScreen
+      present(screen, animated: false)
     }
   }
 
@@ -218,13 +306,14 @@ final class CamAlertShellController: UIViewController {
     let items = [("drive", "🚗", copy.drive), ("map", "🗺️", copy.map), ("nearby", "📍", copy.nearby), ("settings", "⚙️", copy.settings)]
     for item in items {
       let button = UIButton(type: .custom)
-      button.setTitle("\(item.1)\n\(item.2)", for: .normal)
+      let label = NSMutableAttributedString(string: "\(item.1)\n", attributes: [.font: UIFont.camalert(17)])
+      label.append(NSAttributedString(string: item.2, attributes: [.font: UIFont.camalert(12, weight: .medium)]))
+      button.setAttributedTitle(label, for: .normal)
       button.titleLabel?.numberOfLines = 2
       button.titleLabel?.textAlignment = .center
-      button.titleLabel?.lineBreakMode = .byWordWrapping
+      button.titleLabel?.lineBreakMode = .byTruncatingTail
       button.titleLabel?.adjustsFontSizeToFitWidth = true
-      button.titleLabel?.minimumScaleFactor = 0.7
-      button.titleLabel?.font = .camalert(11, weight: .medium)
+      button.titleLabel?.minimumScaleFactor = 0.72
       button.setTitleColor(UIColor(red: 16 / 255, green: 38 / 255, blue: 59 / 255, alpha: 1), for: .normal)
       button.layer.cornerRadius = 13
       button.tag = ["drive", "map", "nearby", "settings"].firstIndex(of: item.0) ?? 0
@@ -243,7 +332,12 @@ final class CamAlertShellController: UIViewController {
     for button in tabButtons {
       let on = button.accessibilityIdentifier == current
       button.backgroundColor = on ? (night ? UIColor(red: 41 / 255, green: 67 / 255, blue: 90 / 255, alpha: 1) : UIColor(red: 238 / 255, green: 240 / 255, blue: 243 / 255, alpha: 1)) : .clear
-      button.setTitleColor(night ? .white : UIColor(red: 16 / 255, green: 38 / 255, blue: 59 / 255, alpha: 1), for: .normal)
+      let color = night ? UIColor.white : UIColor(red: 16 / 255, green: 38 / 255, blue: 59 / 255, alpha: 1)
+      if let title = button.attributedTitle(for: .normal) {
+        let colored = NSMutableAttributedString(attributedString: title)
+        colored.addAttribute(.foregroundColor, value: color, range: NSRange(location: 0, length: colored.length))
+        button.setAttributedTitle(colored, for: .normal)
+      }
     }
   }
 
@@ -256,10 +350,10 @@ final class CamAlertShellController: UIViewController {
   }
 
   private func attach(_ index: Int) {
-    if index == 0, mapScreen == nil {
-      let screen = ViewController()
-      mapScreen = screen
-      pages[0].setViewControllers([screen], animated: false)
+    if index == 0, driveHost == nil {
+      let host = DriveHostController()
+      driveHost = host
+      pages[0].setViewControllers([host], animated: false)
       pages[0].setNavigationBarHidden(true, animated: false)
     }
     for (offset, page) in pages.enumerated() {
@@ -294,7 +388,19 @@ final class CamAlertShellController: UIViewController {
     }
     if name == "search" {
       show("drive")
-      mapScreen?.focusDestination()
+      driveHost?.showMap(search: true)
+      return
+    }
+    if name == "trip" {
+      PremiumStore.shared.beginTripIfOpen()
+      show("drive")
+      driveHost?.showMap(search: false)
+      return
+    }
+    if name == "home" {
+      PremiumStore.shared.endTrip()
+      show("drive")
+      driveHost?.showHome()
       return
     }
     if name == "settings" { settings.segment = "settings" }
@@ -374,7 +480,10 @@ final class NearbyViewController: UIViewController, CLLocationManagerDelegate {
     back.addAction(UIAction { _ in NotificationCenter.default.post(name: .camalertShowTab, object: "drive") }, for: .touchUpInside)
     let title = UILabel()
     title.text = copy.title
-    title.font = .camalert(34, weight: .black)
+    title.font = .camalert(22, weight: .heavy)
+    title.adjustsFontSizeToFitWidth = true
+    title.minimumScaleFactor = 0.75
+    title.numberOfLines = 2
     title.textColor = ink
     let header = UIStackView(arrangedSubviews: [back, title])
     header.axis = .horizontal
@@ -396,15 +505,17 @@ final class NearbyViewController: UIViewController, CLLocationManagerDelegate {
       }
       let button = UIButton(type: .system)
       button.setTitle(name, for: .normal)
-      button.titleLabel?.numberOfLines = 2
+      button.titleLabel?.numberOfLines = 3
+      button.titleLabel?.lineBreakMode = .byWordWrapping
       button.titleLabel?.textAlignment = .center
-      button.titleLabel?.font = .camalert(14, weight: .heavy)
+      button.titleLabel?.font = .camalert(12, weight: .semibold)
+      button.contentEdgeInsets = UIEdgeInsets(top: 6, left: 6, bottom: 6, right: 6)
       button.setTitleColor(ink, for: .normal)
       button.backgroundColor = night ? CamAlertPalette.cardNight : .white
       button.layer.cornerRadius = 16
       button.layer.borderWidth = 1
       button.layer.borderColor = UIColor(red: 228 / 255, green: 232 / 255, blue: 237 / 255, alpha: 1).cgColor
-      button.heightAnchor.constraint(equalToConstant: 78).isActive = true
+      button.heightAnchor.constraint(equalToConstant: 56).isActive = true
       let category = categories[index]
       let selected = category.id == selectedId
       if selected {
